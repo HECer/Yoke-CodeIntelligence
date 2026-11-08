@@ -74,6 +74,102 @@ def simulated_trial(assigned=False, termination=True, leaking=False, close=True,
     return row, api, win, error
 
 
+class ActivationCommandBoundary(unittest.TestCase):
+    def test_plan_keeps_original_controls_and_the_same_nested_ownership(self):
+        original = PROBE.commands()
+        rows = PROBE.activation_command_boundary_commands()
+        self.assertEqual([row[0] for row in rows],
+                         ["nested-snapshot-activation-automatic",
+                          "nested-snapshot-activation-fixed-management"])
+        self.assertTrue(all(row[2:] == (2, "snapshot") for row in rows))
+        self.assertEqual(PROBE.commands(), original)
+        self.assertEqual(PROBE.TRIAL_SECONDS, 20)
+        self.assertEqual(PROBE.CLEANUP_SECONDS, 2)
+
+    def test_fixed_import_adds_only_the_explicit_module_dependency(self):
+        automatic, imported = PROBE.activation_command_boundary_commands()
+        marker = "[Console]::Error.WriteLine('owned-activation-before-location-ms:'"
+        self.assertEqual(automatic[1][automatic[1].index(marker):],
+                         imported[1][imported[1].index(marker):])
+        self.assertNotIn("Import-Module", automatic[1])
+        self.assertEqual(imported[1].count("Import-Module"), 1)
+        self.assertIn("($PSHOME+'\\Modules\\Microsoft.PowerShell.Management"
+                      "\\Microsoft.PowerShell.Management.psd1') -ErrorAction Stop", imported[1])
+        self.assertLess(imported[1].index("before-management-import-ms:"),
+                        imported[1].index("Import-Module"))
+        self.assertLess(imported[1].index("Import-Module"),
+                        imported[1].index("after-management-import-ms:"))
+        self.assertLess(imported[1].index("after-management-import-ms:"),
+                        imported[1].index("before-location-ms:"))
+
+    def test_phase_markers_preserve_actual_location_join_append_order(self):
+        for row in PROBE.activation_command_boundary_commands():
+            script = row[1]
+            last = -1
+            for fragment in ["before-location-ms:", "$location=(Get-Location).Path",
+                             "after-location-ms:", "before-join-ms:",
+                             "$log=Join-Path $location 'activation.log'", "after-join-ms:",
+                             "before-append-ms:", '[IO.File]::AppendAllText($log, "ran`n")',
+                             "after-append-ms:", "[Console]::Out.Write('private-output')",
+                             "[Console]::Error.Write('private-error')", "owned-activation-end-ms:"]:
+                position = script.index(fragment)
+                self.assertGreater(position, last)
+                last = position
+            self.assertNotIn("PSModulePath", script)
+            self.assertNotIn("Write-Output", script)
+
+    def test_two_original_trials_fit_one_separate_minute(self):
+        bound = len(PROBE.activation_command_boundary_commands()) * (
+            PROBE.TRIAL_SECONDS + PROBE.MEMBER_SECONDS + PROBE.CLEANUP_SECONDS
+            + 2 * PROBE.READER_JOIN_SECONDS)
+        self.assertLess(bound, 60)
+
+    def test_cli_retains_baseline_environment_and_only_the_two_new_trials(self):
+        with tempfile.TemporaryDirectory() as raw:
+            output = (Path(raw) / "new-output").resolve()
+            environment = {"SystemRoot": raw, "PSModulePath": "unselected-private-value"}
+            with mock.patch.object(PROBE, "os", types.SimpleNamespace(name="nt", environ=environment)), \
+                 mock.patch.object(PROBE.shutil, "disk_usage", return_value=types.SimpleNamespace(free=500_000_000)), \
+                 mock.patch.object(PROBE.Path, "is_file", return_value=True), \
+                 mock.patch.object(PROBE, "trial", return_value={"diagnosticComplete": True}) as trial, \
+                 mock.patch("builtins.print"):
+                self.assertEqual(PROBE.main(["--output", str(output), "--activation-command-boundary"]), 0)
+            self.assertEqual([call.args[3] for call in trial.call_args_list],
+                             PROBE.activation_command_boundary_commands())
+            self.assertTrue(all(call.args[2] == PROBE.selected_environment(environment)
+                                for call in trial.call_args_list))
+            report = json.loads((output / "result.json").read_text(encoding="utf8"))
+            self.assertEqual(report["diagnosticMode"], "activation-command-boundary")
+            self.assertFalse(report["nativeAcceptance"])
+            self.assertFalse(report["nativeYokeImageReadOrExecuted"])
+            self.assertNotIn("unselected-private-value", json.dumps(report))
+
+    def test_other_modes_and_option_values_refuse_before_output_or_trial(self):
+        for extra in (["--activation-command-boundary=true"],
+                      *[["--activation-command-boundary", flag] for flag in
+                        ("--captured-write-output", "--local-app-data", "--command-boundary",
+                         "--fixed-import-original")]):
+            with self.subTest(extra=extra), mock.patch.object(PROBE.Path, "mkdir") as mkdir, \
+                 mock.patch.object(PROBE, "trial") as trial, mock.patch("sys.stderr"):
+                with self.assertRaises(SystemExit) as refused:
+                    PROBE.main(["--output", "unused-owned-output", *extra])
+                self.assertEqual(refused.exception.code, 2)
+                mkdir.assert_not_called()
+                trial.assert_not_called()
+
+    def test_existing_output_is_preserved_without_starting_a_trial(self):
+        with tempfile.TemporaryDirectory() as raw:
+            marker = Path(raw) / "foreign-marker"
+            marker.write_bytes(b"preserve")
+            with mock.patch.object(PROBE, "os", types.SimpleNamespace(name="nt", environ={})), \
+                 mock.patch.object(PROBE.shutil, "disk_usage", return_value=types.SimpleNamespace(free=500_000_000)), \
+                 mock.patch.object(PROBE, "trial") as trial:
+                with self.assertRaises(FileExistsError):
+                    PROBE.main(["--output", raw, "--activation-command-boundary"])
+            self.assertEqual(marker.read_bytes(), b"preserve")
+            trial.assert_not_called()
+
+
 class PowerShellDiagnostic(unittest.TestCase):
     def test_console_control_keeps_nested_snapshot_inputs_and_last_original_trial(self):
         definitions = PROBE.commands()

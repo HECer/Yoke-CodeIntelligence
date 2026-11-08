@@ -534,26 +534,44 @@ fn query_revocation_during_body_and_disabled_query_authentication_refuse_without
     socket.write_all(&q[1..]).unwrap();
     let mut response = vec![];
     socket.read_to_end(&mut response).unwrap();
-    assert!(response.starts_with(b"HTTP/1.1 403"));
+    // Sending a partial body does not acknowledge server-side authentication.
+    // Revocation before that check returns 401; its later recheck returns 403.
+    let status = response
+        .get(9..12)
+        .and_then(|bytes| std::str::from_utf8(bytes).ok())
+        .and_then(|text| text.parse::<u16>().ok());
+    assert!(
+        response.starts_with(b"HTTP/1.1 401 ") || response.starts_with(b"HTTP/1.1 403 "),
+        "Revoked query must refuse; status={status:?} response_bytes={}",
+        response.len()
+    );
     assert!(!String::from_utf8_lossy(&response).contains("\"rows\""));
     assert_eq!(count(root.path()), 1);
     h.shutdown().unwrap();
-    let (root, h) = query_start(&s, false, true);
-    let mut socket = TcpStream::connect(h.local_addr()).unwrap();
-    socket
-        .set_read_timeout(Some(Duration::from_secs(2)))
-        .unwrap();
-    let authority = h
-        .endpoint()
-        .strip_prefix("http://")
-        .unwrap()
-        .trim_end_matches('/');
-    write!(socket,"POST /v1/digest-query HTTP/1.1\r\nHost: {authority}\r\nAuthorization: Bearer {}\r\nContent-Type: application/json\r\nContent-Length: 8000\r\n\r\n",hex::encode(TOKEN)).unwrap();
-    let mut response = vec![];
-    socket.read_to_end(&mut response).unwrap();
-    assert!(response.starts_with(b"HTTP/1.1 403"));
-    assert_eq!(count(root.path()), 0);
-    h.shutdown().unwrap();
+    // These requests withhold the entire body. Both prior revocation and a
+    // disabled host query grant must refuse at authentication, without a wait.
+    for (allow_query, revoked, status) in [(true, true, 401), (false, false, 403)] {
+        let (root, h) = query_start(&s, allow_query, true);
+        if revoked {
+            h.revoke("sender", &Deadline::new(20000)).unwrap();
+        }
+        let mut socket = TcpStream::connect(h.local_addr()).unwrap();
+        socket
+            .set_read_timeout(Some(Duration::from_secs(2)))
+            .unwrap();
+        let authority = h
+            .endpoint()
+            .strip_prefix("http://")
+            .unwrap()
+            .trim_end_matches('/');
+        write!(socket,"POST /v1/digest-query HTTP/1.1\r\nHost: {authority}\r\nAuthorization: Bearer {}\r\nContent-Type: application/json\r\nContent-Length: 8000\r\n\r\n",hex::encode(TOKEN)).unwrap();
+        let mut response = vec![];
+        socket.read_to_end(&mut response).unwrap();
+        assert!(response.starts_with(format!("HTTP/1.1 {status} ").as_bytes()));
+        assert!(!String::from_utf8_lossy(&response).contains("\"rows\""));
+        assert_eq!(count(root.path()), 0);
+        h.shutdown().unwrap();
+    }
 }
 #[test]
 fn query_corrupt_storage_expiry_and_unknown_remote_permissions_never_become_empty_complete_results()
@@ -1126,9 +1144,24 @@ fn detached_host_cancellation_remains_binding_after_start_returns() {
     std::thread::sleep(Duration::from_millis(30));
     let at = std::time::Instant::now();
     cancel.store(true, Ordering::SeqCst);
-    h.wait().unwrap();
-    assert!(at.elapsed() < Duration::from_secs(1));
-    assert_eq!(count(root.path()), 0);
+    let stored = std::time::Instant::now();
+    let report = h.wait().unwrap();
+    // Capture join latency before reading SQLite; observation cannot enlarge
+    // the existing cancellation bound or include unrelated state-query time.
+    let elapsed = at.elapsed();
+    let after_store = stored.elapsed();
+    let requests = report["requests"]
+        .as_u64()
+        .expect("Owned receiver request count");
+    let records = count(root.path());
+    assert!(
+        elapsed < Duration::from_secs(1),
+        "Owned receiver cancellation exceeded bound; elapsed_us={} after_store_us={} accepted_requests={requests} records={records} cancelled={} receiver_joined=true",
+        elapsed.as_micros(),
+        after_store.as_micros(),
+        cancel.load(Ordering::SeqCst)
+    );
+    assert_eq!(records, 0);
 }
 
 #[test]

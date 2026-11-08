@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "upstreamRevision": "ede329aaf0c824bea75455a2926f01420d7aa620",
+  "sourceBlobs": {
+    "src/serena/tools/config_tools.py": "afe21fec0939fc788b556d3e86494a69d5dbe68d",
+    "src/serena/tools/repl_tools.py": "7d097cfb4a0b660b775c6ee5f5acf71e035d04e4"
+  },
+  "tools": {
+    "activate_project": {
+      "type": "object",
+      "properties": {
+        "project": { "type": "string" },
+        "session_id": { "type": "string", "deprecated": true },
+        "session": { "type": "string" }
+      },
+      "required": ["project"],
+      "additionalProperties": false,
+      "oneOf": [{ "required": ["session"] }, { "required": ["session_id"] }]
+    },
+    "serena_repl": {
+      "type": "object",
+      "properties": {
+        "session_id": { "type": "string", "deprecated": true },
+        "code": { "type": "string" },
+        "session": { "type": "string" }
+      },
+      "required": ["code"],
+      "additionalProperties": false,
+      "oneOf": [{ "required": ["session"] }, { "required": ["session_id"] }]
+    }
+  }
+}

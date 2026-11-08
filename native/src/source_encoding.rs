@@ -13,14 +13,20 @@ pub const VERSION: &str = "source_encoding_v1";
 #[serde(rename_all = "snake_case")]
 pub enum Codec {
     Utf8,
+    Utf8Sig,
     Utf16,
     Utf16Le,
     Utf16Be,
+    Utf32,
+    Utf32Le,
+    Utf32Be,
     Latin1,
+    Ascii,
+    Windows1252,
 }
 impl Codec {
     /// Deliberately finite, documented Python 3.11 standard aliases. No registry,
-    /// platform defaults, heuristic detection, Windows-1252 or replacement mode.
+    /// platform defaults, heuristic detection or replacement mode.
     pub fn parse(value: &str) -> Result<Self> {
         ensure!(
             value.len() <= 32 && value.is_ascii(),
@@ -28,12 +34,18 @@ impl Codec {
         );
         let name = value.to_ascii_lowercase().replace('-', "_");
         Ok(match name.as_str() {
+            "ascii" | "us_ascii" | "646" => Self::Ascii,
             "utf_8" | "utf8" | "u8" | "utf" | "cp65001" => Self::Utf8,
+            "utf_8_sig" => Self::Utf8Sig,
             "utf_16" | "utf16" | "u16" => Self::Utf16,
             "utf_16_le" | "utf_16le" => Self::Utf16Le,
             "utf_16_be" | "utf_16be" => Self::Utf16Be,
+            "utf_32" | "utf32" | "u32" => Self::Utf32,
+            "utf_32_le" | "utf_32le" => Self::Utf32Le,
+            "utf_32_be" | "utf_32be" => Self::Utf32Be,
             "latin_1" | "latin1" | "iso_8859_1" | "iso8859_1" | "8859" | "cp819" | "latin"
             | "l1" => Self::Latin1,
+            "cp1252" | "windows_1252" => Self::Windows1252,
             _ => bail!("source_encoding_unsupported"),
         })
     }
@@ -136,11 +148,20 @@ impl View {
                 _ => bail!("source_encoding_utf16_bom_required"),
             };
             2
+        } else if codec == Codec::Utf32 {
+            codec = match raw.get(..4) {
+                Some([0xff, 0xfe, 0x00, 0x00]) => Codec::Utf32Le,
+                Some([0x00, 0x00, 0xfe, 0xff]) => Codec::Utf32Be,
+                _ => bail!("source_encoding_utf32_bom_required"),
+            };
+            4
+        } else if codec == Codec::Utf8Sig && raw.starts_with(&[0xef, 0xbb, 0xbf]) {
+            3
         } else {
             0
         };
-        if codec == Codec::Utf8 {
-            let text = std::str::from_utf8(&raw)?;
+        if matches!(codec, Codec::Utf8 | Codec::Utf8Sig) {
+            let text = std::str::from_utf8(&raw[prefix..])?;
             ensure!(text.len() <= MAX_TEXT, "source_encoding_decoded_budget");
             let text = text.to_owned();
             let text_hash = checked_hash(text.as_bytes(), check)?;
@@ -161,10 +182,31 @@ impl View {
                 if i % 8192 <= 3 {
                     check()?;
                 }
-                let ch = if codec == Codec::Latin1 {
+                let ch = if matches!(codec, Codec::Latin1 | Codec::Ascii) {
+                    ensure!(
+                        codec != Codec::Ascii || raw[i] < 0x80,
+                        "source_encoding_invalid_ascii"
+                    );
                     let c = char::from(raw[i]);
                     i += 1;
                     c
+                } else if codec == Codec::Windows1252 {
+                    let c = cp1252_decode(raw[i])?;
+                    i += 1;
+                    c
+                } else if matches!(codec, Codec::Utf32Le | Codec::Utf32Be) {
+                    let unit = raw.get(i..i + 4).ok_or_else(|| {
+                        anyhow::anyhow!("source_encoding_utf32_incomplete_code_unit")
+                    })?;
+                    let bytes = [unit[0], unit[1], unit[2], unit[3]];
+                    let scalar = if codec == Codec::Utf32Le {
+                        u32::from_le_bytes(bytes)
+                    } else {
+                        u32::from_be_bytes(bytes)
+                    };
+                    i += 4;
+                    char::from_u32(scalar)
+                        .ok_or_else(|| anyhow::anyhow!("source_encoding_utf32_invalid_scalar"))?
                 } else {
                     let unit = |at: usize| -> Result<u16> {
                         let pair = raw
@@ -247,9 +289,9 @@ impl View {
         self.raw.len() + self.text.len() + self.boundaries.len() * 8
     }
     pub fn to_raw(&self, decoded: usize) -> Result<usize> {
-        if self.codec == Codec::Utf8 {
+        if matches!(self.codec, Codec::Utf8 | Codec::Utf8Sig) {
             crate::paths::utf8_range(&self.text, 0, decoded)?;
-            return Ok(decoded);
+            return Ok(decoded + self.prefix);
         }
         let value = u32::try_from(decoded)?;
         let i = self
@@ -259,9 +301,12 @@ impl View {
         Ok(self.boundaries[i].1 as usize)
     }
     pub fn to_decoded(&self, original: usize) -> Result<usize> {
-        if self.codec == Codec::Utf8 {
-            crate::paths::utf8_range(&self.text, 0, original)?;
-            return Ok(original);
+        if matches!(self.codec, Codec::Utf8 | Codec::Utf8Sig) {
+            let decoded = original
+                .checked_sub(self.prefix)
+                .ok_or_else(|| anyhow::anyhow!("source_encoding_invalid_raw_boundary"))?;
+            crate::paths::utf8_range(&self.text, 0, decoded)?;
+            return Ok(decoded);
         }
         // The consumed BOM is immutable prefix data. A whole-file read may
         // include it, but edits must begin at the first actual text boundary.
@@ -293,6 +338,10 @@ impl View {
         Ok(&self.text[a..b])
     }
     pub fn encode_like(&self, text: &str, check: &impl Fn() -> Result<()>) -> Result<Vec<u8>> {
+        ensure!(
+            self.codec != Codec::Utf8Sig || self.prefix != 0 || !text.starts_with('\u{feff}'),
+            "source_encoding_utf8_sig_ambiguous_leading_bom"
+        );
         let mut bytes = encode(text, self.codec, check)?;
         if self.prefix != 0 {
             ensure!(
@@ -328,6 +377,62 @@ fn checked_hash(bytes: &[u8], check: &impl Fn() -> Result<()>) -> Result<String>
     Ok(hex::encode(hash.finalize()))
 }
 
+// Python 3.11 cp1252 strict mapping: undefined entries are rejected, not
+// mapped to C1 controls as in the WHATWG web encoding.
+const CP1252_HIGH: [Option<char>; 32] = [
+    Some('\u{20ac}'),
+    None,
+    Some('\u{201a}'),
+    Some('\u{0192}'),
+    Some('\u{201e}'),
+    Some('\u{2026}'),
+    Some('\u{2020}'),
+    Some('\u{2021}'),
+    Some('\u{02c6}'),
+    Some('\u{2030}'),
+    Some('\u{0160}'),
+    Some('\u{2039}'),
+    Some('\u{0152}'),
+    None,
+    Some('\u{017d}'),
+    None,
+    None,
+    Some('\u{2018}'),
+    Some('\u{2019}'),
+    Some('\u{201c}'),
+    Some('\u{201d}'),
+    Some('\u{2022}'),
+    Some('\u{2013}'),
+    Some('\u{2014}'),
+    Some('\u{02dc}'),
+    Some('\u{2122}'),
+    Some('\u{0161}'),
+    Some('\u{203a}'),
+    Some('\u{0153}'),
+    None,
+    Some('\u{017e}'),
+    Some('\u{0178}'),
+];
+fn cp1252_decode(byte: u8) -> Result<char> {
+    if (0x80..=0x9f).contains(&byte) {
+        CP1252_HIGH[(byte - 0x80) as usize]
+            .ok_or_else(|| anyhow::anyhow!("source_encoding_undefined_windows1252_byte"))
+    } else {
+        Ok(char::from(byte))
+    }
+}
+fn cp1252_encode(ch: char) -> Result<u8> {
+    let n = u32::from(ch);
+    if n <= 0x7f || (0xa0..=0xff).contains(&n) {
+        return Ok(n as u8);
+    }
+    CP1252_HIGH
+        .iter()
+        .position(|&entry| entry == Some(ch))
+        .map(|i| i as u8 + 0x80)
+        .ok_or_else(|| anyhow::anyhow!("source_encoding_unrepresentable_windows1252"))
+}
+
 fn encode(text: &str, codec: Codec, check: &impl Fn() -> Result<()>) -> Result<Vec<u8>> {
     check()?;
     ensure!(text.len() <= MAX_TEXT, "source_encoding_decoded_budget");
@@ -337,6 +442,10 @@ fn encode(text: &str, codec: Codec, check: &impl Fn() -> Result<()>) -> Result<V
             check()?;
         }
         let add = match codec {
+            Codec::Ascii => {
+                ensure!(ch.is_ascii(), "source_encoding_unrepresentable_ascii");
+                1
+            }
             Codec::Latin1 => {
                 ensure!(
                     u32::from(ch) <= 255,
@@ -344,9 +453,15 @@ fn encode(text: &str, codec: Codec, check: &impl Fn() -> Result<()>) -> Result<V
                 );
                 1
             }
+            Codec::Windows1252 => {
+                cp1252_encode(ch)?;
+                1
+            }
             Codec::Utf16Le | Codec::Utf16Be => ch.len_utf16() * 2,
-            Codec::Utf8 => ch.len_utf8(),
+            Codec::Utf32Le | Codec::Utf32Be => 4,
+            Codec::Utf8 | Codec::Utf8Sig => ch.len_utf8(),
             Codec::Utf16 => bail!("source_encoding_utf16_bom_required"),
+            Codec::Utf32 => bail!("source_encoding_utf32_bom_required"),
         };
         size = size
             .checked_add(add)
@@ -359,8 +474,18 @@ fn encode(text: &str, codec: Codec, check: &impl Fn() -> Result<()>) -> Result<V
             check()?;
         }
         match codec {
-            Codec::Latin1 => bytes.push(ch as u8),
-            Codec::Utf8 => bytes.extend_from_slice(ch.encode_utf8(&mut [0; 4]).as_bytes()),
+            Codec::Latin1 | Codec::Ascii => bytes.push(ch as u8),
+            Codec::Windows1252 => bytes.push(cp1252_encode(ch)?),
+            Codec::Utf32Le | Codec::Utf32Be => {
+                bytes.extend_from_slice(&if codec == Codec::Utf32Le {
+                    u32::from(ch).to_le_bytes()
+                } else {
+                    u32::from(ch).to_be_bytes()
+                });
+            }
+            Codec::Utf8 | Codec::Utf8Sig => {
+                bytes.extend_from_slice(ch.encode_utf8(&mut [0; 4]).as_bytes())
+            }
             _ => {
                 for unit in ch.encode_utf16(&mut [0; 2]) {
                     bytes.extend_from_slice(&if codec == Codec::Utf16Le {
@@ -383,6 +508,24 @@ pub(crate) fn encode_new(text: &str, policy: Option<Policy>, d: &Deadline) -> Re
         ensure!(body.len() <= MAX_RAW - 2, "source_encoding_raw_budget");
         let mut raw = Vec::with_capacity(body.len() + 2);
         raw.extend_from_slice(&[0xff, 0xfe]);
+        raw.extend_from_slice(&body);
+        return Ok(raw);
+    }
+    if policy.is_some_and(|p| p.codec() == Codec::Utf8Sig) {
+        let body = encode(text, Codec::Utf8, &|| d.check())?;
+        ensure!(body.len() <= MAX_RAW - 3, "source_encoding_raw_budget");
+        let mut raw = Vec::with_capacity(body.len() + 3);
+        raw.extend_from_slice(&[0xef, 0xbb, 0xbf]);
+        raw.extend_from_slice(&body);
+        return Ok(raw);
+    }
+    // As with UTF-16, new BOM-selected files use deterministic little endian;
+    // existing UTF-32 files retain their exact captured order and prefix.
+    if policy.is_some_and(|p| p.codec() == Codec::Utf32) {
+        let body = encode(text, Codec::Utf32Le, &|| d.check())?;
+        ensure!(body.len() <= MAX_RAW - 4, "source_encoding_raw_budget");
+        let mut raw = Vec::with_capacity(body.len() + 4);
+        raw.extend_from_slice(&[0xff, 0xfe, 0x00, 0x00]);
         raw.extend_from_slice(&body);
         return Ok(raw);
     }

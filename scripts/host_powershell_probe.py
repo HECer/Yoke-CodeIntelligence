@@ -142,6 +142,34 @@ def fixed_import_original_commands():
     return [("nested-snapshot-fixed-import-original", prelude + script, count, resume)]
 
 
+def activation_command_boundary_commands():
+    """Isolate the Management cmdlets used by the owned activation canary.
+
+    These are diagnostic literals, not a prelude inserted into host commands.
+    Both children retain the existing nested Jobs and original trial deadline.
+    """
+    def phase(name):
+        return ("[Console]::Error.WriteLine('owned-activation-" + name + "-ms:'"
+                "+$activationClock.ElapsedMilliseconds.ToString([Globalization.CultureInfo]::InvariantCulture)); ")
+
+    prefix = ("$ErrorActionPreference='Stop'; "
+              "$activationClock=[Diagnostics.Stopwatch]::StartNew(); ")
+    original = (phase("before-location")
+                + "$location=(Get-Location).Path; " + phase("after-location")
+                + phase("before-join")
+                + "$log=Join-Path $location 'activation.log'; " + phase("after-join")
+                + phase("before-append")
+                + "[IO.File]::AppendAllText($log, \"ran`n\"); " + phase("after-append")
+                + "[Console]::Out.Write('private-output'); "
+                "[Console]::Error.Write('private-error'); " + phase("end"))
+    imported = (phase("before-management-import")
+                + "Import-Module -Name ($PSHOME+'\\Modules\\Microsoft.PowerShell.Management"
+                "\\Microsoft.PowerShell.Management.psd1') -ErrorAction Stop; "
+                + phase("after-management-import"))
+    return [("nested-snapshot-activation-" + name, prefix + prelude + original, 2, "snapshot")
+            for name, prelude in (("automatic", ""), ("fixed-management", imported))]
+
+
 def local_app_data_environment(source):
     value = source.get("LOCALAPPDATA")
     require(isinstance(value, str) and 0 < len(value) <= 32767
@@ -527,11 +555,14 @@ def main(arguments=None):
                       help="Run separate lookup and fixed module-import boundary controls")
     mode.add_argument("--fixed-import-original", action="store_true",
                       help="Run the exact original folder command after fixed Utility import")
+    mode.add_argument("--activation-command-boundary", action="store_true",
+                      help="Compare owned activation Management cmdlets with a fixed import")
     args = parser.parse_args(arguments)
     definitions = (captured_write_output_commands() if args.captured_write_output else
                    local_app_data_commands() if args.local_app_data else
                    command_boundary_commands() if args.command_boundary else
-                   fixed_import_original_commands() if args.fixed_import_original else commands())
+                   fixed_import_original_commands() if args.fixed_import_original else
+                   activation_command_boundary_commands() if args.activation_command_boundary else commands())
     require(os.name == "nt", "PowerShell diagnostic requires Windows")
     revision = os.environ.get("GITHUB_SHA")
     require(revision is None or re.fullmatch(r"[0-9a-f]{40}", revision), "Diagnostic source revision invalid")
@@ -550,7 +581,8 @@ def main(arguments=None):
               "diagnosticMode": ("captured-write-output" if args.captured_write_output else
                                  "local-app-data" if args.local_app_data else
                                  "command-boundary" if args.command_boundary else
-                                 "fixed-import-original" if args.fixed_import_original else "canonical"),
+                                 "fixed-import-original" if args.fixed_import_original else
+                                 "activation-command-boundary" if args.activation_command_boundary else "canonical"),
               "nativeYokeImageReadOrExecuted": False, "trialDeadlineSeconds": TRIAL_SECONDS,
               "memberObservationSeconds": MEMBER_SECONDS, "maxObservedMembers": MAX_MEMBERS,
               "sourceRevision": revision,

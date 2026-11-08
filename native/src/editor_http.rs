@@ -460,6 +460,25 @@ fn respond(
         serialization_succeeded: serialization.0,
         serialized_bytes: serialization.1,
     };
+    write_serialized_response(stream, status, body, deadline)?;
+    #[cfg(test)]
+    {
+        Ok(completion)
+    }
+    #[cfg(not(test))]
+    {
+        Ok(())
+    }
+}
+
+// Serialization and socket writes share this same request deadline in respond.
+// The separate stage lets the backpressure fixture start with encoded bytes.
+fn write_serialized_response(
+    stream: &mut TcpStream,
+    status: u16,
+    body: Vec<u8>,
+    deadline: &Deadline,
+) -> HttpResult<()> {
     let reason = match status {
         200 => "OK",
         400 => "Bad Request",
@@ -485,9 +504,6 @@ fn respond(
         let mut bytes = headers.into_bytes();
         bytes.extend(body);
         let _ = stream.write(&bytes);
-        #[cfg(test)]
-        return Ok(completion);
-        #[cfg(not(test))]
         return Ok(());
     }
     for bytes in [headers.as_bytes(), body.as_slice()] {
@@ -508,14 +524,7 @@ fn respond(
         }
     }
     remaining(deadline)?;
-    #[cfg(test)]
-    {
-        Ok(completion)
-    }
-    #[cfg(not(test))]
-    {
-        Ok(())
-    }
+    Ok(())
 }
 
 #[cfg(test)]
@@ -581,6 +590,12 @@ mod tests {
 
     #[test]
     fn backpressured_socket_writes_cannot_extend_the_response_deadline() {
+        let body = json!({"ok":true,"data":"x".repeat(4 * 1024 * 1024)});
+        // Encoding is setup for this socket-write test. The real respond path
+        // still serializes under its original request deadline; the expired
+        // response test independently requires that serialization to refuse.
+        let body = serde_json::to_vec(&body).unwrap();
+        let serialized_bytes = body.len();
         let listener = TcpListener::bind((Ipv4Addr::LOCALHOST, 0)).unwrap();
         let client = TcpStream::connect(listener.local_addr().unwrap()).unwrap();
         client
@@ -616,19 +631,12 @@ mod tests {
         // make room for a tiny response. Keep the actual response substantially
         // larger than these bounded socket buffers so pressure lasts through
         // the original response deadline, rather than assuming it stays full.
-        let body = json!({"ok":true,"data":"x".repeat(4 * 1024 * 1024)});
         let (sender, receiver) = std::sync::mpsc::channel();
         let task = thread::spawn(move || {
             let deadline = Deadline::new(250);
             let started = std::time::Instant::now();
-            let result = respond(&mut stream, Response { status: 200, body }, &deadline);
-            let completion = result.as_ref().ok().map(|receipt| {
-                (
-                    receipt.status,
-                    receipt.serialization_succeeded,
-                    receipt.serialized_bytes,
-                )
-            });
+            let result = write_serialized_response(&mut stream, 200, body, &deadline);
+            let completion = result.as_ref().ok().map(|()| (200, serialized_bytes));
             let failure_status = result.as_ref().err().map(|error| error.status);
             let timeout = result.is_err_and(|error| error.status == 408);
             let _ = sender.send((timeout, started.elapsed(), failure_status, completion));
@@ -642,7 +650,7 @@ mod tests {
             result.expect("Writer must stop at its deadline");
         assert!(
             timeout,
-            "Fixture must reach genuinely backpressured response writing: status={failure_status:?}, queued={queued}, elapsed={elapsed:?}, completion(status,serialization_succeeded,serialized_bytes)={completion:?}"
+            "Fixture must reach genuinely backpressured response writing: status={failure_status:?}, queued={queued}, elapsed={elapsed:?}, completion(status,preencoded_bytes)={completion:?}"
         );
         assert!(elapsed < Duration::from_secs(3));
     }
@@ -657,17 +665,18 @@ mod tests {
         let (mut stream, _) = listener.accept().unwrap();
         let deadline = Deadline::new(1);
         thread::sleep(Duration::from_millis(5));
-        assert!(
-            respond(
-                &mut stream,
-                Response {
-                    status: 200,
-                    body: json!({"ok":true,"data":{}})
-                },
-                &deadline
-            )
-            .is_ok()
-        );
+        let completion = respond(
+            &mut stream,
+            Response {
+                status: 200,
+                body: json!({"ok":true,"data":{}}),
+            },
+            &deadline,
+        )
+        .unwrap_or_else(|failure| panic!("Expired response transport failed: {}", failure.status));
+        assert_eq!(completion.status, 408);
+        assert!(!completion.serialization_succeeded);
+        assert_eq!(completion.serialized_bytes, 0);
         drop(stream);
         let mut response = String::new();
         client.read_to_string(&mut response).unwrap();

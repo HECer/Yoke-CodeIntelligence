@@ -51,6 +51,7 @@ fn legacy_binding(servers: &BTreeMap<String, crate::lsp::Server>) -> Value {
     )
 }
 struct Projection {
+    automatic_backend_selection: bool,
     servers: BTreeMap<String, crate::lsp::Server>,
     configurations: BTreeMap<String, crate::lsp::HostConfiguration>,
     selected_backends: Option<Vec<String>>,
@@ -58,6 +59,7 @@ struct Projection {
 }
 impl Projection {
     fn apply(self, engine: &mut Engine) {
+        engine.automatic_backend_selection = self.automatic_backend_selection;
         engine.servers = self.servers;
         engine.server_configurations = self.configurations;
         engine.selected_backends = self.selected_backends;
@@ -103,6 +105,7 @@ impl Registry {
         host: &HostProfile,
         project: &str,
         selection: Option<&LanguageSelection>,
+        automatic: Option<&crate::server_autoselection::Decision>,
     ) -> Result<Projection> {
         let mut servers = self.servers.clone();
         let mut configurations = self.configurations.clone();
@@ -111,6 +114,12 @@ impl Registry {
             .as_ref()
             .and_then(|s| s.select(project))
             .map(<[String]>::to_vec);
+        let automatic_backend_selection = host.language_server_auto_selection.is_some()
+            && selection.is_none()
+            && backends.is_none();
+        if automatic_backend_selection {
+            backends = automatic.map(|choice| choice.backend_id.iter().cloned().collect());
+        }
         if let Some(selection) = selection {
             grant(host)
                 .context("dashboard_language_grant_required")?
@@ -125,6 +134,7 @@ impl Registry {
             }
         }
         Ok(Projection {
+            automatic_backend_selection,
             servers,
             configurations,
             selected_backends: backends,
@@ -148,8 +158,10 @@ impl Registry {
         host: &HostProfile,
         project: &str,
         selection: Option<&LanguageSelection>,
+        automatic: Option<&crate::server_autoselection::Decision>,
     ) -> Result<()> {
-        self.projection(host, project, selection)?.apply(engine);
+        self.projection(host, project, selection, automatic)?
+            .apply(engine);
         Ok(())
     }
     pub(super) fn check(
@@ -158,13 +170,15 @@ impl Registry {
         host: &HostProfile,
         project: &str,
         selection: Option<&LanguageSelection>,
+        automatic: Option<&crate::server_autoselection::Decision>,
     ) -> Result<()> {
-        let projected = self.projection(host, project, selection)?;
+        let projected = self.projection(host, project, selection, automatic)?;
         ensure!(
             legacy_binding(&engine.servers) == legacy_binding(&projected.servers)
                 && serde_json::to_value(&engine.server_configurations)?
                     == serde_json::to_value(&projected.configurations)?
                 && engine.selected_backends == projected.selected_backends
+                && engine.automatic_backend_selection == projected.automatic_backend_selection
                 && crate::server_selection::bindings(&engine.backend_servers)?
                     == crate::server_selection::bindings(&projected.registered_backends)?,
             "dashboard_language_registry_changed"
@@ -181,7 +195,14 @@ impl Session {
         let registry = self.dashboard_language_registry.as_ref()?;
         let project = &self.state.active_project;
         let selected = self.state.language_server_overrides.get(project);
-        let projected = registry.projection(&self.host, project, selected).ok()?;
+        let projected = registry
+            .projection(
+                &self.host,
+                project,
+                selected,
+                self.state.automatic_language_servers.get(project),
+            )
+            .ok()?;
         Some(
             json!({"backendChoices":allowed.backend_ids,"legacyChoices":allowed.legacy_languages,
             "selectedBackends":projected.selected_backends,"selectedLegacyLanguages":projected.servers.keys().collect::<Vec<_>>(),
@@ -217,6 +238,7 @@ impl Session {
             &self.host,
             &project,
             next.language_server_overrides.get(&project),
+            next.automatic_language_servers.get(&project),
         )?;
         if next.language_server_overrides == self.state.language_server_overrides {
             return Ok(json!({"changed":false}));

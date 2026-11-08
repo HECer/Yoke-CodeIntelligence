@@ -256,7 +256,7 @@ fn existing_pin_is_enforced_and_discovered_selection_becomes_stale_after_source_
 }
 
 #[test]
-fn discovery_cannot_register_runtime_execute_templates_or_activate_commands() {
+fn discovery_keeps_activation_declarations_inert_and_cannot_supply_runtime_authority() {
     let root = tempfile::tempdir().unwrap();
     let source = root.path().join("project.yml");
     let p = selection(
@@ -264,11 +264,43 @@ fn discovery_cannot_register_runtime_execute_templates_or_activate_commands() {
         vec![json!({"path":source,"target":{"kind":"project","project":"default"}})],
         vec![],
     );
+    let body = b"activation_command: private_owned_canary\n";
+    fs::write(&source, body).unwrap();
+    let output = invoke(root.path(), "discover", &p, 4_000_000, &[]);
+    let discovered = good(&output);
+    assert_eq!(discovered["discoveryComplete"], true);
+    assert_eq!(discovered["complete"], false);
+    for field in ["sourceExecuted", "templatesEvaluated", "storeOpened"] {
+        assert_eq!(discovered[field], false, "{field}");
+    }
+    let projection = &discovered["projection"];
+    for field in [
+        "activationCommandsExecuted",
+        "projectRegistrationsFromYaml",
+        "runtimeTrustFromYaml",
+        "storeOpened",
+        "sourceExecuted",
+        "complete",
+    ] {
+        assert_eq!(projection[field], false, "{field}");
+    }
+    assert_eq!(projection["activationExecutionAuthorityRequired"], true);
+    assert!(yoke::model::valid_id(
+        projection["activationConfigurationSha256"]
+            .as_str()
+            .unwrap()
+    ));
+    assert!(
+        projection["hostProfile"]
+            .get("activationCommands")
+            .is_none()
+    );
+    assert!(projection["hostProfile"].get("activationRuntime").is_none());
+    assert!(!String::from_utf8_lossy(&output.stdout).contains("private_owned_canary"));
+    assert_eq!(fs::read(&source).unwrap(), body);
+    assert!(!root.path().join(".yoke").exists());
+    assert!(!root.path().join("private_owned_canary").exists());
     for (body, marker) in [
-        (
-            "activation_command: private_owned_canary\n",
-            "session_config_activation_command_unavailable",
-        ),
         (
             "initial_prompt: '{{ private_owned_canary }}'\n",
             "session_config_template_evaluation_unavailable",

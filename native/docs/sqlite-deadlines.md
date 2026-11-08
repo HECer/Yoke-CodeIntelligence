@@ -65,3 +65,29 @@ Separate opening tests cover zero/extreme durations, cancellation before state
 creation, actual rollback-journal reader exclusion, both physical lease files,
 the inherited host ceiling, recovery, preserved workspace/Unicode data and setup
 policy disposal after a successful opening.
+
+## Opt-in opening observations
+
+Rust hosts may explicitly supply `store::OpeningObservations` to
+`Store::open_with_timeout_observed` or `Engine::open_with_timeout_observed`.
+Ordinary constructors collect no observations and retain their original errors,
+SQL, locks, cancellation and timeout policy. The compiler-body fixture uses the
+observed constructor with the same original ten-second Store setup budget and
+formats the observations only when opening fails.
+
+The value resets on every observed call and retains fifteen fixed first-entry
+slots plus the last entered phase. Entries contain only closed enum labels and
+monotonic elapsed durations. There are no callbacks, locks, observer I/O, paths,
+SQL text, source bytes, error strings or absolute timestamps. Observations are
+not serialized, returned through a tool, persisted or used for state authority.
+They are not completion receipts. A phase identifies an entered boundary; an
+overrun observed at the next check does not establish which OS API caused it.
+Engine root canonicalization precedes the Store trace, as it precedes the
+original Store opening deadline. An error before Store admission leaves the
+fresh value empty. Successful opening still requires the actual returned Store.
+The Store's `Ready` boundary does not certify later Engine initialization.
+
+The seven schema statements and their transaction behavior are unchanged. A
+separate owned Python/SQLite experiment found fewer commits when wrapping schema
+creation in a transaction, but did not reproduce the hosted ten-second timeout;
+it does not justify a production schema or durability change.
