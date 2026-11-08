@@ -1,0 +1,31 @@
+{
+  "sourceCommit": "8950d290512b775e7ef63bfd6c0814e4d133618d",
+  "runtimeCommit": "9587dac869fb8a6abcfc843654bb663c50e51c3f",
+  "parentCommit": "d648ce1b483e1912715be1ed49c8d3ce79341a13",
+  "paths": [
+    "native/README.md",
+    "native/docs/mixed-views.md",
+    "native/src/mixed_meaning_input.rs",
+    "native/src/mixed_view.rs",
+    "native/src/mixed_view_cli.rs",
+    "native/src/mixed_view_query.rs",
+    "native/tests/mixed_pdf_view.rs",
+    "native/tests/mixed_view_cli.rs"
+  ],
+  "nativeInputsMatched": 739,
+  "nativeGroups": 13,
+  "nativeTotals": {
+    "passed": 588,
+    "failed": 0,
+    "ignored": 7
+  },
+  "newCases": {
+    "defaultIntegration": 7,
+    "actualPdfWorkerIncludedInDefault": 1
+  },
+  "nativeBinarySha256": "cab36c4bd13a2574fd26f3b00a6f0c5cba7a00a0dee09361ff6aaf8d6800cea9",
+  "nativeBinaryBytes": 159289344,
+  "binaryHashObservedAt": "2026-10-20T06:02:27.159477+00:00",
+  "wholeNativeRerun": false,
+  "fullR4Complete": false
+}

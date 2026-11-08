@@ -1,0 +1,30 @@
+    Finished `test` profile [unoptimized] target(s) in 0.72s
+     Running tests\federated_collections.rs (target\debug\deps\federated_collections-97e4dc2b6e05984f.exe)
+
+running 4 tests
+test source_only_archive_does_not_invent_canonical_graph_authority ... ok
+test unknown_authority_kinds_and_nested_fields_are_not_silently_accepted ... ok
+test archived_foreign_collection_requires_current_host_context_for_every_operation ... ok
+test archived_sources_outlive_original_receipts_but_not_changed_receiver_policy ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.84s
+
+     Running tests\federation.rs (target\debug\deps\federation-a6d0d4a87e5d87b1.exe)
+
+running 13 tests
+test correctly_signed_malicious_sources_still_fail_receiver_safety_policy ... ok
+test corrupt_remote_graph_cannot_be_returned_as_a_successful_empty_index ... ok
+test canonical_editor_overlays_round_trip_without_saved_source_or_reexport_authority ... ok
+test granted_foreign_search_reuses_verified_sources_without_native_publication ... ok
+test host_exclude_patterns_cannot_be_bypassed_with_path_case_aliases ... ok
+test nonce_reuse_expired_import_and_current_grant_revocation_are_distinct ... ok
+test receiver_effective_ignore_precedence_handles_virtual_paths_and_whitelists ... ok
+test receiver_ignore_excludes_links_and_remote_policy_text_cannot_change_host_authority ... ok
+test source_namespace_capacity_accounts_for_every_file_in_prior_receipts ... ok
+test signed_sources_are_separate_immutable_and_locally_reindexed_without_source_writes ... ok
+test tampered_bytes_signatures_scope_and_workspace_are_rejected_before_persistence ... ok
+test valid_signature_does_not_authorize_protected_secret_binary_or_colliding_source ... ok
+test sqlite_writer_contention_consumes_only_the_remaining_import_deadline ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.24s
+

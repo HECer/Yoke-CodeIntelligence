@@ -1,0 +1,942 @@
+{
+  "schemaVersion": 1,
+  "files": {
+    "target/cache-origin-plans/r5b-normal-20261016.json": {
+      "sha256": "1f7f893c22bb9d61512d2ac0c2fae166f2ce798ffcf7c7431e9fb70baefe7f4d",
+      "bytes": 836807
+    },
+    "target/cache-origin-plans/r5b-qualified-20261016.json": {
+      "sha256": "acb573a361d2e368b31055410273258e6f8516e1c0862f23911370f853fbf71e",
+      "bytes": 1464035
+    },
+    "target/cache-origin-quarantines/r5b-normal-20261016/receipt.json": {
+      "sha256": "b4063df5b638d39151e09f687fb11d8aaa63d92bed5cda93c40d2c69b17fccf1",
+      "bytes": 902424
+    },
+    "target/cache-origin-quarantines/r5b-qualified-20261016/receipt.json": {
+      "sha256": "9b6ea66711d5f76bb21752639f2d5a4a5be760a2000c62cbbeb93e4a05b430c0",
+      "bytes": 1700479
+    },
+    "target/parity-validation-20261015/acceptance_wave4.py": {
+      "sha256": "b51bbffbddd07be0aa6ef019fc950d772c628d77b3567f646d7a837726aa3d15",
+      "bytes": 27430
+    },
+    "target/parity-validation-20261015/affected-r5b-20261016-full/clippy/clippy.log": {
+      "sha256": "3498d5829cba0a0dd1844e4edd6eea77e65929e07e3ef97fb3955b647743bceb",
+      "bytes": 179
+    },
+    "target/parity-validation-20261015/affected-r5b-20261016-full/clippy/receipt.json": {
+      "sha256": "ea217228172607df1a50bbe5df910f3400c8f10e54da05ac89dd7877461c150e",
+      "bytes": 1861
+    },
+    "target/parity-validation-20261015/affected-r5b-20261016-full/clippy/source-after.json": {
+      "sha256": "08bf5536bbc475c1d0a66bef7eeeb5d35bc0a0dbad221668d4d884ed2658d9e4",
+      "bytes": 478760
+    },
+    "target/parity-validation-20261015/affected-r5b-20261016-full/clippy/source-before.json": {
+      "sha256": "08bf5536bbc475c1d0a66bef7eeeb5d35bc0a0dbad221668d4d884ed2658d9e4",
+      "bytes": 478760
+    },
+    "target/parity-validation-20261015/affected-r5b-20261016-full/format/format.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "target/parity-validation-20261015/affected-r5b-20261016-full/format/receipt.json": {
+      "sha256": "9179c74d1fd5ebfbb68d2e42b52a3e24dc5fc3297fb9671d61f25fbde1277f02",
+      "bytes": 1763
+    },
+    "target/parity-validation-20261015/affected-r5b-20261016-full/format/source-after.json": {
+      "sha256": "08bf5536bbc475c1d0a66bef7eeeb5d35bc0a0dbad221668d4d884ed2658d9e4",
+      "bytes": 478760
+    },
+    "target/parity-validation-20261015/affected-r5b-20261016-full/format/source-before.json": {
+      "sha256": "08bf5536bbc475c1d0a66bef7eeeb5d35bc0a0dbad221668d4d884ed2658d9e4",
+      "bytes": 478760
+    },
+    "target/parity-validation-20261015/affected-r5b-20261016-full/freeze.json": {
+      "sha256": "4a58943dfbb201b1ac33c9c3499b045501934cbe9ceb07be35b71d2f78326dce",
+      "bytes": 298
+    },
+    "target/parity-validation-20261015/affected-r5b-20261016-full/python/python.log": {
+      "sha256": "ddd192e8cab9ca07b98172cc34e66b09916691653a93d2cdad01e2f4024dfba3",
+      "bytes": 1882
+    },
+    "target/parity-validation-20261015/affected-r5b-20261016-full/python/receipt.json": {
+      "sha256": "ae3d36a6113dd442b26ebcd32eab2ee18d55d96952ed0c6c15b67b50875dc5e0",
+      "bytes": 3678
+    },
+    "target/parity-validation-20261015/affected-r5b-20261016-full/python/source-after.json": {
+      "sha256": "08bf5536bbc475c1d0a66bef7eeeb5d35bc0a0dbad221668d4d884ed2658d9e4",
+      "bytes": 478760
+    },
+    "target/parity-validation-20261015/affected-r5b-20261016-full/python/source-before.json": {
+      "sha256": "08bf5536bbc475c1d0a66bef7eeeb5d35bc0a0dbad221668d4d884ed2658d9e4",
+      "bytes": 478760
+    },
+    "target/parity-validation-20261015/affected-r5b-20261016-full/runner.py": {
+      "sha256": "b51bbffbddd07be0aa6ef019fc950d772c628d77b3567f646d7a837726aa3d15",
+      "bytes": 27430
+    },
+    "target/parity-validation-20261015/affected-r5b-20261016-full/source-freeze.json": {
+      "sha256": "08bf5536bbc475c1d0a66bef7eeeb5d35bc0a0dbad221668d4d884ed2658d9e4",
+      "bytes": 478760
+    },
+    "target/parity-validation-20261015/affected-r5b-20261016-full/typescript/receipt.json": {
+      "sha256": "373130ac1280cf6c9fc5ea427142ce6d28dd167d53bbbe42095d839f958ec36a",
+      "bytes": 2655
+    },
+    "target/parity-validation-20261015/affected-r5b-20261016-full/typescript/source-after.json": {
+      "sha256": "08bf5536bbc475c1d0a66bef7eeeb5d35bc0a0dbad221668d4d884ed2658d9e4",
+      "bytes": 478760
+    },
+    "target/parity-validation-20261015/affected-r5b-20261016-full/typescript/source-before.json": {
+      "sha256": "08bf5536bbc475c1d0a66bef7eeeb5d35bc0a0dbad221668d4d884ed2658d9e4",
+      "bytes": 478760
+    },
+    "target/parity-validation-20261015/affected-r5b-20261016-full/typescript/typecheck.log": {
+      "sha256": "ca76bbbc554c0e3ab10606a9d43f484df25001ba560b45987878ba20a5bd47a5",
+      "bytes": 77
+    },
+    "target/parity-validation-20261015/affected-r5b-20261016-full/typescript/typescript.log": {
+      "sha256": "c60e74eaf7965b6c2a82349c0764b49b823476016b2425ab1e95993fb721c5ab",
+      "bytes": 27405
+    },
+    "target/parity-validation-20261015/affected-r5b-process-20261016-full/clippy/clippy.log": {
+      "sha256": "9498808de28a6d65b0d8909ae491f90bcfd83cdb935b95ea4f4034674b813a59",
+      "bytes": 60
+    },
+    "target/parity-validation-20261015/affected-r5b-process-20261016-full/clippy/receipt.json": {
+      "sha256": "5548569ced9d876c43bf40a73a0ad76621d595ddfea6b4ceaf945fbe21095b0a",
+      "bytes": 1875
+    },
+    "target/parity-validation-20261015/affected-r5b-process-20261016-full/clippy/source-after.json": {
+      "sha256": "d9b2112398d06212d977212518c2377f6ed2d8df89c359a9925b1b7999bbfa31",
+      "bytes": 478870
+    },
+    "target/parity-validation-20261015/affected-r5b-process-20261016-full/clippy/source-before.json": {
+      "sha256": "d9b2112398d06212d977212518c2377f6ed2d8df89c359a9925b1b7999bbfa31",
+      "bytes": 478870
+    },
+    "target/parity-validation-20261015/affected-r5b-process-20261016-full/format/format.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "target/parity-validation-20261015/affected-r5b-process-20261016-full/format/receipt.json": {
+      "sha256": "0deeb4090b0da4d4d01efb0d933254e5adfefe90d94ceda0bb75ffee5a5a9345",
+      "bytes": 1779
+    },
+    "target/parity-validation-20261015/affected-r5b-process-20261016-full/format/source-after.json": {
+      "sha256": "d9b2112398d06212d977212518c2377f6ed2d8df89c359a9925b1b7999bbfa31",
+      "bytes": 478870
+    },
+    "target/parity-validation-20261015/affected-r5b-process-20261016-full/format/source-before.json": {
+      "sha256": "d9b2112398d06212d977212518c2377f6ed2d8df89c359a9925b1b7999bbfa31",
+      "bytes": 478870
+    },
+    "target/parity-validation-20261015/affected-r5b-process-20261016-full/freeze.json": {
+      "sha256": "fca059ddd843396509ce04ed4fc26800204c7c6173b4e59a34c4ec405c9808c1",
+      "bytes": 298
+    },
+    "target/parity-validation-20261015/affected-r5b-process-20261016-full/native/bin-inventory-all.log": {
+      "sha256": "76c40caa1ef9332cc5f595472661c1833ca8fedf17a2beb434676e5bd8ab846f",
+      "bytes": 283
+    },
+    "target/parity-validation-20261015/affected-r5b-process-20261016-full/native/bin-inventory-ignored.log": {
+      "sha256": "0fc9e70cef706a13b8dc99012b775ec83a41e75094a03d4cf5b665c28cd1c2e4",
+      "bytes": 164
+    },
+    "target/parity-validation-20261015/affected-r5b-process-20261016-full/native/bin-inventory.json": {
+      "sha256": "4f6e43f9be957f7f7e811b22046c1dac926ac167ad49d3dab95672b8cb49d75d",
+      "bytes": 128
+    },
+    "target/parity-validation-20261015/affected-r5b-process-20261016-full/native/bin-tests.log": {
+      "sha256": "9dd9e85e8bce3daf87c75613a4a583c92fe7d6b258975615d4abeff7621b3569",
+      "bytes": 255
+    },
+    "target/parity-validation-20261015/affected-r5b-process-20261016-full/native/cargo-metadata.log": {
+      "sha256": "f4ccf576fc0f026b3a3515b59d46df4716ad891c32accac84abf16cf7a0059b6",
+      "bytes": 75746
+    },
+    "target/parity-validation-20261015/affected-r5b-process-20261016-full/native/cleaned-before.json": {
+      "sha256": "c1193a8cc3a92f9f6322ef0a3f886aa04a15f16f9ffff9299e1ba998d111ee02",
+      "bytes": 1481
+    },
+    "target/parity-validation-20261015/affected-r5b-process-20261016-full/native/doctests.log": {
+      "sha256": "96382a3306829316142ccf87c23f209221e9e06247144376af00523ab08eb1fb",
+      "bytes": 192
+    },
+    "target/parity-validation-20261015/affected-r5b-process-20261016-full/native/example-inventory-all.log": {
+      "sha256": "c6cfb0986bd3ded022a47b85117d55c0b6c5293827f04f29ec0fbd3aaec61fe9",
+      "bytes": 301
+    },
+    "target/parity-validation-20261015/affected-r5b-process-20261016-full/native/example-inventory-ignored.log": {
+      "sha256": "512b16f6b2b0eb3d394dc8f30e4799da70d174276c54467a3c7ac2ea827385c9",
+      "bytes": 183
+    },
+    "target/parity-validation-20261015/affected-r5b-process-20261016-full/native/example-inventory.json": {
+      "sha256": "55bdaa1d7804729589a0d5d0aece2bf6327a77497bd6bea5965d8bbc50959cff",
+      "bytes": 142
+    },
+    "target/parity-validation-20261015/affected-r5b-process-20261016-full/native/example-tests.log": {
+      "sha256": "55b244a434792d4f2b9c729c913083f54965fb921c64bc498828a916d75b580d",
+      "bytes": 274
+    },
+    "target/parity-validation-20261015/affected-r5b-process-20261016-full/native/integration-00-cleaned.json": {
+      "sha256": "94fce75227313097f24d1c3b41e0ba298c463480e5d04b2ed524ff630c34edac",
+      "bytes": 347
+    },
+    "target/parity-validation-20261015/affected-r5b-process-20261016-full/native/integration-00-inventory-all.log": {
+      "sha256": "ecb15123b1e68197341b2fb097895944731ed8a4a1e720e8d295be60602ac4e0",
+      "bytes": 1551
+    },
+    "target/parity-validation-20261015/affected-r5b-process-20261016-full/native/integration-00-inventory-ignored.log": {
+      "sha256": "f9935919dfd07ac4fa44afeb097c3dfa1ad6e7a652717b898506a58abfc3b629",
+      "bytes": 305
+    },
+    "target/parity-validation-20261015/affected-r5b-process-20261016-full/native/integration-00-inventory.json": {
+      "sha256": "edb761c8de16b1a5d3b273e5918a03fac78163b7a0167b0baaee145c053ce801",
+      "bytes": 1487
+    },
+    "target/parity-validation-20261015/affected-r5b-process-20261016-full/native/integration-00.log": {
+      "sha256": "508c56b754f3282ee397ad1a27aa111c9103dc8e9a52fc2782a99d2573423735",
+      "bytes": 1709
+    },
+    "target/parity-validation-20261015/affected-r5b-process-20261016-full/native/integration-01-cleaned.json": {
+      "sha256": "0c26e793393015c9dd9970ae1e29aeb8803aada5a9b713d97b1fddf61f10f0f6",
+      "bytes": 369
+    },
+    "target/parity-validation-20261015/affected-r5b-process-20261016-full/native/integration-01-inventory-all.log": {
+      "sha256": "d9af96621bfdcb9fd8bac155ca7c1eebe5d83a40df7e8292df57c49cf2cc6167",
+      "bytes": 910
+    },
+    "target/parity-validation-20261015/affected-r5b-process-20261016-full/native/integration-01-inventory-ignored.log": {
+      "sha256": "1e4e326bd458503006d6ac86c08e7ca2ee63da2dcf131f6c3031e560f356f13f",
+      "bytes": 327
+    },
+    "target/parity-validation-20261015/affected-r5b-process-20261016-full/native/integration-01-inventory.json": {
+      "sha256": "537ceba57ed9b56b81fa17788f9dd8ac70e91b9e42a9c3df055f44fbfdbb8761",
+      "bytes": 818
+    },
+    "target/parity-validation-20261015/affected-r5b-process-20261016-full/native/integration-01.log": {
+      "sha256": "7be1071f18bd1f7136c60c458835c34bc6c94550b75e061034d3687270f69085",
+      "bytes": 1008
+    },
+    "target/parity-validation-20261015/affected-r5b-process-20261016-full/native/integration-02-cleaned.json": {
+      "sha256": "55517537f782d113d7f4f92944dafebeb06e57b0acf750e2a19b2606a8863d39",
+      "bytes": 361
+    },
+    "target/parity-validation-20261015/affected-r5b-process-20261016-full/native/integration-02-inventory-all.log": {
+      "sha256": "68f0af8177da7c1ca52a7b01a7771bd20218b36c67539e31a11c1726449eb9be",
+      "bytes": 1035
+    },
+    "target/parity-validation-20261015/affected-r5b-process-20261016-full/native/integration-02-inventory-ignored.log": {
+      "sha256": "f5d09582c989ab5e8cc1caf88c2794d8364234481270979655389eee4fbc683a",
+      "bytes": 319
+    },
+    "target/parity-validation-20261015/affected-r5b-process-20261016-full/native/integration-02-inventory.json": {
+      "sha256": "6f7de2f2f1c9d178967b2d69fbf7c593fb7006d5903d2ae6704e579429b223c0",
+      "bytes": 946
+    },
+    "target/parity-validation-20261015/affected-r5b-process-20261016-full/native/integration-02.log": {
+      "sha256": "5f868b40fc79e5f879d2dccf827d254a2678ff203b3c41fbc273ddb71371c0a1",
+      "bytes": 1139
+    },
+    "target/parity-validation-20261015/affected-r5b-process-20261016-full/native/integration-03-cleaned.json": {
+      "sha256": "fc4c9ff56e81329ab9d8d1e138f7d720063a5a2d18d66da1a5c53b8ddeb2933a",
+      "bytes": 359
+    },
+    "target/parity-validation-20261015/affected-r5b-process-20261016-full/native/integration-03-inventory-all.log": {
+      "sha256": "1be0806cf9da47ee76145b4faf72f05fc885ea6c4d33cef548eeda21e92f33e1",
+      "bytes": 1006
+    },
+    "target/parity-validation-20261015/affected-r5b-process-20261016-full/native/integration-03-inventory-ignored.log": {
+      "sha256": "c887e7f9610f5f22de889473b9102a8b2483fb53bb76f2e8f429758cf47252ee",
+      "bytes": 317
+    },
+    "target/parity-validation-20261015/affected-r5b-process-20261016-full/native/integration-03-inventory.json": {
+      "sha256": "a37ce1d8846b74e375717bc084c5654d72ae71d579f70f90719f786b27bd5d06",
+      "bytes": 914
+    },
+    "target/parity-validation-20261015/affected-r5b-process-20261016-full/native/integration-03.log": {
+      "sha256": "03e82a9285438ed6d08b034188396c04b758792b8f223f62995434961a350378",
+      "bytes": 1104
+    },
+    "target/parity-validation-20261015/affected-r5b-process-20261016-full/native/integration-04-inventory-all.log": {
+      "sha256": "22c17397e4bb5417078ee71abef448470a55dd8fe009898a9ee4155a7b51879b",
+      "bytes": 2350
+    },
+    "target/parity-validation-20261015/affected-r5b-process-20261016-full/native/integration-04-inventory-ignored.log": {
+      "sha256": "f4b8ad46c8204113e9299428e91365814cc7bfb1a802d0492549525258fe9507",
+      "bytes": 295
+    },
+    "target/parity-validation-20261015/affected-r5b-process-20261016-full/native/integration-04-inventory.json": {
+      "sha256": "70ba29c0e94ec2b6ce85b8071700078fcee69d6164fd5b093e745c8a1414c8f1",
+      "bytes": 2311
+    },
+    "target/parity-validation-20261015/affected-r5b-process-20261016-full/native/library-c-acl-0.log": {
+      "sha256": "bf8c4bc4eebe25b2becbcbe8e241c33c3263a59d794772f21f408a54b09abe41",
+      "bytes": 774
+    },
+    "target/parity-validation-20261015/affected-r5b-process-20261016-full/native/library-c-acl-1.log": {
+      "sha256": "4a6ca81e3ff4e96d3723b08cd11fb37ac17679a1ea6cdbca09bc459263779e3d",
+      "bytes": 723
+    },
+    "target/parity-validation-20261015/affected-r5b-process-20261016-full/native/library-c-acl-2.log": {
+      "sha256": "2f2280a0a860a206e281d68efd3760d04e8afb24b2b6eb37c6233ba9a113cb06",
+      "bytes": 717
+    },
+    "target/parity-validation-20261015/affected-r5b-process-20261016-full/native/library-d.log": {
+      "sha256": "842d0236f4435ae0cf397fa14e4101c2996ada2a04c79f5e4c744200b9f3f180",
+      "bytes": 38907
+    },
+    "target/parity-validation-20261015/affected-r5b-process-20261016-full/native/library-inventory-all.log": {
+      "sha256": "50041e75dcbed56577b92579922876ad794f81e4a1afc839ac9ee73cade048ff",
+      "bytes": 36581
+    },
+    "target/parity-validation-20261015/affected-r5b-process-20261016-full/native/library-inventory-ignored.log": {
+      "sha256": "ab0e5013a5165e964793c4723734c22d282e6128161d3425b11661382ceecf87",
+      "bytes": 952
+    },
+    "target/parity-validation-20261015/affected-r5b-process-20261016-full/native/library-inventory.json": {
+      "sha256": "f2bd148cb49241017daf5d41201f3a625509540c6c23d76e4415d257e34f03a3",
+      "bytes": 38270
+    },
+    "target/parity-validation-20261015/affected-r5b-process-20261016-full/native/source-before.json": {
+      "sha256": "d9b2112398d06212d977212518c2377f6ed2d8df89c359a9925b1b7999bbfa31",
+      "bytes": 478870
+    },
+    "target/parity-validation-20261015/affected-r5b-process-20261016-full/native/target-inventory.json": {
+      "sha256": "ddd387b4a9c767354555a9bd3f9c74aee78b955c82bc43fda1d3e1a79468f504",
+      "bytes": 75194
+    },
+    "target/parity-validation-20261015/affected-r5b-process-20261016-full/python/python.log": {
+      "sha256": "5dc335610c18598c1afa0dd01ec4cac61c4f94b6d94257e677106ef9ba43b0f9",
+      "bytes": 1882
+    },
+    "target/parity-validation-20261015/affected-r5b-process-20261016-full/python/receipt.json": {
+      "sha256": "fcd0c5c1c2752016e548b2288c56971927622221ab8bd7ec5f520e55a144eaa8",
+      "bytes": 3694
+    },
+    "target/parity-validation-20261015/affected-r5b-process-20261016-full/python/source-after.json": {
+      "sha256": "d9b2112398d06212d977212518c2377f6ed2d8df89c359a9925b1b7999bbfa31",
+      "bytes": 478870
+    },
+    "target/parity-validation-20261015/affected-r5b-process-20261016-full/python/source-before.json": {
+      "sha256": "d9b2112398d06212d977212518c2377f6ed2d8df89c359a9925b1b7999bbfa31",
+      "bytes": 478870
+    },
+    "target/parity-validation-20261015/affected-r5b-process-20261016-full/runner.py": {
+      "sha256": "b51bbffbddd07be0aa6ef019fc950d772c628d77b3567f646d7a837726aa3d15",
+      "bytes": 27430
+    },
+    "target/parity-validation-20261015/affected-r5b-process-20261016-full/source-freeze.json": {
+      "sha256": "d9b2112398d06212d977212518c2377f6ed2d8df89c359a9925b1b7999bbfa31",
+      "bytes": 478870
+    },
+    "target/parity-validation-20261015/affected-r5b-process-20261016-full/typescript/receipt.json": {
+      "sha256": "2c93de4da3c021957e802ed181f3d7129ad492a6550135caf1757ae1aa299354",
+      "bytes": 2677
+    },
+    "target/parity-validation-20261015/affected-r5b-process-20261016-full/typescript/source-after.json": {
+      "sha256": "d9b2112398d06212d977212518c2377f6ed2d8df89c359a9925b1b7999bbfa31",
+      "bytes": 478870
+    },
+    "target/parity-validation-20261015/affected-r5b-process-20261016-full/typescript/source-before.json": {
+      "sha256": "d9b2112398d06212d977212518c2377f6ed2d8df89c359a9925b1b7999bbfa31",
+      "bytes": 478870
+    },
+    "target/parity-validation-20261015/affected-r5b-process-20261016-full/typescript/typecheck.log": {
+      "sha256": "ca76bbbc554c0e3ab10606a9d43f484df25001ba560b45987878ba20a5bd47a5",
+      "bytes": 77
+    },
+    "target/parity-validation-20261015/affected-r5b-process-20261016-full/typescript/typescript.log": {
+      "sha256": "20ac8c730733a8d293a7447ddb95ca01da31bdaf4be09e6b3e2886bc7b5692f8",
+      "bytes": 27249
+    },
+    "target/parity-validation-20261015/cache-origin-admission-v4/cache_origin.py": {
+      "sha256": "a24fd7ab1c40c0c815117878f16be97760076a6efffd56479386cc363d4865db",
+      "bytes": 24659
+    },
+    "target/parity-validation-20261015/next-affected-metadata-v1/render_metadata.py": {
+      "sha256": "c3d37b28520203529c77a451ebd328f23e9a62c0bb838b7ddf8d27609399d3d9",
+      "bytes": 17424
+    },
+    "target/parity-validation-20261015/next-combined-preservation-v2/preserve_combined.py": {
+      "sha256": "4f4e598146bcb8b96f8cc256f63b4f73c6d8e34202f66f90f2de1c020b7263d6",
+      "bytes": 34090
+    },
+    "target/parity-validation-20261015/next-git-affected-admission-tests-v1/git_affected_admission_tests.rs": {
+      "sha256": "3f1cd41920aaa1881ddbadf554a4bc4cbba0768045a525c79a467106ce2e5b24",
+      "bytes": 19409
+    },
+    "target/parity-validation-20261015/next-git-affected-contract-drafts-v1/CONTRACT.md": {
+      "sha256": "ce3161b7f33c8b7dcc1e89c214f3bb98bb8e0f5cc1a08fc8eff27f2768977f68",
+      "bytes": 23252
+    },
+    "target/parity-validation-20261015/next-git-affected-implementation-v1/clippy-oracle-before-v1.rs": {
+      "sha256": "512f2d446acbcf7634a0f79330b38512e83210046d7b946e165642290f586585",
+      "bytes": 13723
+    },
+    "target/parity-validation-20261015/next-git-affected-implementation-v1/clippy-repair-v1/native/src/git_affected_admission_tests.rs": {
+      "sha256": "70649562f4ac87276bb9c8beba0255551eabc170007684c5449675faa2c915ee",
+      "bytes": 23497
+    },
+    "target/parity-validation-20261015/next-git-affected-implementation-v1/clippy-repair-v1/native/src/git_affected_output.rs": {
+      "sha256": "7a39ea657bbf2696c5007dd4e0d422d9d6b431f66b19b77d67de55e028e9ae4b",
+      "bytes": 37892
+    },
+    "target/parity-validation-20261015/next-git-affected-implementation-v1/clippy-repair-v1/native/src/git_affected_tests.rs": {
+      "sha256": "511b6164669565c4baa9b913cfb55f79be951e3a720e0b1844faadf1f2e70be7",
+      "bytes": 48609
+    },
+    "target/parity-validation-20261015/next-git-affected-implementation-v1/clippy-repair-v1/native/src/git_affected_walk.rs": {
+      "sha256": "780cffdcd58cce8c1e398bae0d665cf3bccd1a58d3e176721abb69e316b24e7f",
+      "bytes": 17364
+    },
+    "target/parity-validation-20261015/next-git-affected-implementation-v1/clippy-repair-v1/native/src/git_impact_details_scope_tests.rs": {
+      "sha256": "6d7efb8f7defd2cf047d5270650324b9ed8c24ea381a5f2beec1e28e9fe02d8e",
+      "bytes": 7441
+    },
+    "target/parity-validation-20261015/next-git-affected-implementation-v1/final-image-quality-v1.json": {
+      "sha256": "a3c40b90bb1232496b89ec5af68c1d34998eb7fd2534e20c5d17655c46e9b33a",
+      "bytes": 67432
+    },
+    "target/parity-validation-20261015/next-git-affected-implementation-v1/inspect_private_state_failure.py": {
+      "sha256": "8c9729e486f5b57611fb88b67460bfb5679871471ef25a0f3eb290df7def0d46",
+      "bytes": 815
+    },
+    "target/parity-validation-20261015/next-git-affected-implementation-v1/shadow_gate.py": {
+      "sha256": "d3b861aa34e3d7889b0b18f791496fed04c768f40ca9a231b3372564a10713d0",
+      "bytes": 7376
+    },
+    "target/parity-validation-20261015/next-git-affected-implementation-v1/shadow_quality.py": {
+      "sha256": "5b844195b9f66ad62d807f56c693a249cef97237880651db11c0f461f78c9d64",
+      "bytes": 3828
+    },
+    "target/parity-validation-20261015/next-git-affected-library-midwork-v1/native/src/git_affected_tests.rs": {
+      "sha256": "eb5f47386759e31d53fb8d056069fc9ba6f7dadd78eebaa44b717bc8b09a2e02",
+      "bytes": 45696
+    },
+    "target/parity-validation-20261015/next-git-affected-library-prep-v1/PRIVATE-CASES.md": {
+      "sha256": "ff9a2a17a174c59bf66d846df96ae979e204cee5c952b2248a4567ea31175813",
+      "bytes": 10757
+    },
+    "target/parity-validation-20261015/next-git-affected-promotion-v1/APPLY-PLAN.json": {
+      "sha256": "9a3a6f643d706efc9da066a629e3b1f4777ede266a8ffa81167d7d7d1e2e2800",
+      "bytes": 5365
+    },
+    "target/parity-validation-20261015/next-git-affected-promotion-v1/application-root-reviewed-quality-v1/journal.jsonl": {
+      "sha256": "affe6aaeb27750e0af83c26593959a7d71916b49885fdd06a6f50c22c507a8cb",
+      "bytes": 8914
+    },
+    "target/parity-validation-20261015/next-git-affected-promotion-v1/application-root-reviewed-quality-v1/normal-after.json": {
+      "sha256": "08bf5536bbc475c1d0a66bef7eeeb5d35bc0a0dbad221668d4d884ed2658d9e4",
+      "bytes": 478760
+    },
+    "target/parity-validation-20261015/next-git-affected-promotion-v1/application-root-reviewed-quality-v1/normal-before.json": {
+      "sha256": "3f3f86ff7e0fefc2cb9d1defb104b3c2a1aec909a5198493da6522d292967ecd",
+      "bytes": 477350
+    },
+    "target/parity-validation-20261015/next-git-affected-promotion-v1/application-root-reviewed-quality-v1/normal-context.json": {
+      "sha256": "acb569d57b6a4329b71aeb68133d02a113c18f5c474c2b13f49b2d5a276b0af5",
+      "bytes": 502
+    },
+    "target/parity-validation-20261015/next-git-affected-promotion-v1/application-root-reviewed-quality-v1/receipt.json": {
+      "sha256": "651f19063e9259e9b2543df3a3b9ecbbde1ff0422e2bb443ac518ae6dbb13336",
+      "bytes": 1181
+    },
+    "target/parity-validation-20261015/next-git-affected-promotion-v1/promote.py": {
+      "sha256": "1715240d6f520183a497070801228e4afeb2535134732b4e34818601489463c6",
+      "bytes": 14960
+    },
+    "target/parity-validation-20261015/next-process-cleanup-repair-v1/aborted-native-control-v1.json": {
+      "sha256": "7ee19ed6841bb9443baf08686aa8ca11fa1cd44e6bc9322bd5e6957bdcc5a4de",
+      "bytes": 1356
+    },
+    "target/parity-validation-20261015/next-process-cleanup-repair-v1/acl-attempt-inspection-v1.json": {
+      "sha256": "18446221c742a331bee182673bea290fa09bce058def3cb26226ed0775cdbce9",
+      "bytes": 1523
+    },
+    "target/parity-validation-20261015/next-process-cleanup-repair-v1/inspect_acl_attempt.py": {
+      "sha256": "3ca4f982516116afa4a8245612a594f22c585402b2439842350f134b2ba9440a",
+      "bytes": 2292
+    },
+    "target/parity-validation-20261015/next-process-cleanup-repair-v1/process-cleanup.before.mjs": {
+      "sha256": "05134d2c2ff4f8ac3503957f6254d43126a35adcf5f0399d4fd247f626f66f04",
+      "bytes": 1048
+    },
+    "target/parity-validation-20261015/next-process-cleanup-repair-v1/process-helper-and-lifetime-green-20261016/receipt.json": {
+      "sha256": "ecac4464efee6c5a44266de7badb2a61024a046a8a69e225803ef7433f3322f4",
+      "bytes": 1900
+    },
+    "target/parity-validation-20261015/next-process-cleanup-repair-v1/process-helper-and-lifetime-green-20261016/run.log": {
+      "sha256": "bfba6180d5a809a48b35bf0cefa6ccd909c7f954a6a05cb35ac9deda1076667e",
+      "bytes": 3743
+    },
+    "target/parity-validation-20261015/next-process-cleanup-repair-v1/process-helper-nonzero-red-20261016/receipt.json": {
+      "sha256": "7f6e2502cf5c764349a168261c8023c006c496607909f10b00e8faf89bc95188",
+      "bytes": 1088
+    },
+    "target/parity-validation-20261015/next-process-cleanup-repair-v1/process-helper-nonzero-red-20261016/run.log": {
+      "sha256": "f29f6117e78baf9891e37a12bf46d3a77a8c55fd5170eee749da75bdc9a2bd79",
+      "bytes": 944
+    },
+    "target/parity-validation-20261015/next-process-cleanup-repair-v1/process.before.ts": {
+      "sha256": "00c923dafca5beeb1bb4638250c973f3fad5a6b648baa507d260771673dab0e4",
+      "bytes": 4104
+    },
+    "target/parity-validation-20261015/next-process-cleanup-repair-v1/process_gate.py": {
+      "sha256": "34b652c84f4bb9bc317739f398bbf6d7063296a9ca72d6d13b3bff5c505286c7",
+      "bytes": 2142
+    },
+    "target/parity-validation-20261015/next-process-cleanup-repair-v1/qualify_acl_root.py": {
+      "sha256": "cd8c210670e259a80d9bee9ab43f79011f12d71f40c7d3a48dee04352e6de2ff",
+      "bytes": 2493
+    },
+    "target/parity-validation-20261015/next-process-cleanup-repair-v1/repair-overlay-v1.json": {
+      "sha256": "bfd0b91ddd6f379ac5f2004ac4565d32d740116da0a7bf07930c0ee030e299b6",
+      "bytes": 936
+    },
+    "target/parity-validation-20261015/next-process-cleanup-repair-v1/source-with-process-repair-v1.json": {
+      "sha256": "d9b2112398d06212d977212518c2377f6ed2d8df89c359a9925b1b7999bbfa31",
+      "bytes": 478870
+    },
+    "target/parity-validation-20261015/next-process-cleanup-repair-v1/stop_failed_acl_attempt.py": {
+      "sha256": "3900a81484b9cd445cdf28efc2e81cfae0545de771bdff9ef566b7581d6dc630",
+      "bytes": 2204
+    },
+    "target/parity-validation-20261015/next-process-cleanup-repair-v1/user-temp-acl-qualification-v1/acl-0.log": {
+      "sha256": "0417dac73d2a2e996bdcb4c1897be8a59b6174f1a296d58cf7dcf0327f2d3d34",
+      "bytes": 364
+    },
+    "target/parity-validation-20261015/next-process-cleanup-repair-v1/user-temp-acl-qualification-v1/acl-1.log": {
+      "sha256": "707e05e5c157f16d1b18e449b6d08aba617ee9fd8b49ea68e13320c5e75d9c9c",
+      "bytes": 364
+    },
+    "target/parity-validation-20261015/next-process-cleanup-repair-v1/user-temp-acl-qualification-v1/acl-2.log": {
+      "sha256": "0494ab5f606e635bdfdb6580a1910bf96a588ffeabcbb85a5bed5210891e1582",
+      "bytes": 362
+    },
+    "target/parity-validation-20261015/next-process-cleanup-repair-v1/user-temp-acl-qualification-v1/receipt.json": {
+      "sha256": "c91495a75dd66da2b8877b1d74eb2ed45827414f2cec952f7b8e2dbf1d2dd439",
+      "bytes": 1729
+    },
+    "target/parity-validation-20261015/next-wave5-preservation/receipt_core.py": {
+      "sha256": "35e097ea51dee414c88c68d645ad43ca6bc2d71c6335152f05107e99a22f99f3",
+      "bytes": 24933
+    },
+    "target/parity-validation-20261015/r5b-behavior-unavailable-red-20261016-1443/receipt.json": {
+      "sha256": "e548a8ac360c3348e57a505f2958773607ca517c554dc09210afb8fa3c49157e",
+      "bytes": 1647
+    },
+    "target/parity-validation-20261015/r5b-behavior-unavailable-red-20261016-1443/run.log": {
+      "sha256": "63aaae5c69ee3e8380596130e13de7dae94f365bf704996c3b5c286998ef462e",
+      "bytes": 6629
+    },
+    "target/parity-validation-20261015/r5b-behavior-unavailable-red-20261016-1443/source-after.json": {
+      "sha256": "91a01f29501205f27ce692f3ae54759e4b06ef467e0e526afea64672fa7bc607",
+      "bytes": 66466
+    },
+    "target/parity-validation-20261015/r5b-behavior-unavailable-red-20261016-1443/source-before.json": {
+      "sha256": "91a01f29501205f27ce692f3ae54759e4b06ef467e0e526afea64672fa7bc607",
+      "bytes": 66466
+    },
+    "target/parity-validation-20261015/r5b-cli-and-r5a-regression-20261016/receipt.json": {
+      "sha256": "24dbd9e7a1e6335d6e6e076ae214d6acf32779151dffc9d48cf16d3d1672a612",
+      "bytes": 1963
+    },
+    "target/parity-validation-20261015/r5b-cli-and-r5a-regression-20261016/run.log": {
+      "sha256": "9be629922f036ab4b15e9b9f118483feb5de0fef41a2e1a88f77f378e5681738",
+      "bytes": 8985
+    },
+    "target/parity-validation-20261015/r5b-cli-and-r5a-regression-20261016/source-after.json": {
+      "sha256": "68092f31fc2210bf3ae7f50a06974942e803eaa3b1beb49c71fccaa0cf9640fc",
+      "bytes": 67323
+    },
+    "target/parity-validation-20261015/r5b-cli-and-r5a-regression-20261016/source-before.json": {
+      "sha256": "68092f31fc2210bf3ae7f50a06974942e803eaa3b1beb49c71fccaa0cf9640fc",
+      "bytes": 67323
+    },
+    "target/parity-validation-20261015/r5b-cli-unavailable-red-20261016/receipt.json": {
+      "sha256": "02a8370d563a52f9b28438da438b15c9eb4b598b031e94c40f90cbf85ced8d8c",
+      "bytes": 1632
+    },
+    "target/parity-validation-20261015/r5b-cli-unavailable-red-20261016/run.log": {
+      "sha256": "9f054b6fc8595cf33241571d7b779d9ed3ff1e5fbdde068187ffb2f6dba9bb4f",
+      "bytes": 5933
+    },
+    "target/parity-validation-20261015/r5b-cli-unavailable-red-20261016/source-after.json": {
+      "sha256": "d0c4b0c8f708f5c9210be9cfe274dde509fce8eb5df35c3493856c1897964ada",
+      "bytes": 67219
+    },
+    "target/parity-validation-20261015/r5b-cli-unavailable-red-20261016/source-before.json": {
+      "sha256": "d0c4b0c8f708f5c9210be9cfe274dde509fce8eb5df35c3493856c1897964ada",
+      "bytes": 67219
+    },
+    "target/parity-validation-20261015/r5b-private-first-20261016/receipt.json": {
+      "sha256": "1df7db59a61a676bf7949ea7b6b536f2b4468c3ef762a13387a980cba7d820eb",
+      "bytes": 1626
+    },
+    "target/parity-validation-20261015/r5b-private-first-20261016/run.log": {
+      "sha256": "113ca9f718596f56ed9704f7e2bb1a25d3d133f198a87e4673518c77b36c6633",
+      "bytes": 166968
+    },
+    "target/parity-validation-20261015/r5b-private-first-20261016/source-after.json": {
+      "sha256": "d1b7fda94b41137086488c7469604d8a2b0558cd8bf08aeb26568e9a612e1e3a",
+      "bytes": 67323
+    },
+    "target/parity-validation-20261015/r5b-private-first-20261016/source-before.json": {
+      "sha256": "d1b7fda94b41137086488c7469604d8a2b0558cd8bf08aeb26568e9a612e1e3a",
+      "bytes": 67323
+    },
+    "target/parity-validation-20261015/r5b-private-fixture-repaired-20261016/receipt.json": {
+      "sha256": "77742fa367d627f476d2bf4959109df223d517aa6353df6cd3c70f0306f62c54",
+      "bytes": 1635
+    },
+    "target/parity-validation-20261015/r5b-private-fixture-repaired-20261016/run.log": {
+      "sha256": "03ac68f2f0185ce22380a6006819c105f619abc4b558ba99d799e7404723566e",
+      "bytes": 5091
+    },
+    "target/parity-validation-20261015/r5b-private-fixture-repaired-20261016/source-after.json": {
+      "sha256": "68092f31fc2210bf3ae7f50a06974942e803eaa3b1beb49c71fccaa0cf9640fc",
+      "bytes": 67323
+    },
+    "target/parity-validation-20261015/r5b-private-fixture-repaired-20261016/source-before.json": {
+      "sha256": "68092f31fc2210bf3ae7f50a06974942e803eaa3b1beb49c71fccaa0cf9640fc",
+      "bytes": 67323
+    },
+    "target/parity-validation-20261015/r5b-qualification-20261016-1440/receipt.json": {
+      "sha256": "4bf10bdf3d26075896d6e01871e82d70718e25a328ad2fac848a1392fd2c702a",
+      "bytes": 1640
+    },
+    "target/parity-validation-20261015/r5b-qualification-20261016-1440/run.log": {
+      "sha256": "02b4849dac44a1da1006a0d4a9f2e4c4df1f2a2108eaea5c405ff617c6dc577a",
+      "bytes": 816
+    },
+    "target/parity-validation-20261015/r5b-qualification-20261016-1440/source-after.json": {
+      "sha256": "fdf0e951b085866163fc5a7c2239d0d68a3cca626ec864e2a31994d13fc74997",
+      "bytes": 66256
+    },
+    "target/parity-validation-20261015/r5b-qualification-20261016-1440/source-before.json": {
+      "sha256": "fdf0e951b085866163fc5a7c2239d0d68a3cca626ec864e2a31994d13fc74997",
+      "bytes": 66256
+    },
+    "target/parity-validation-20261015/r5b-quality-clippy-20261016/receipt.json": {
+      "sha256": "c5ea68876adea5fccb9eab69b9289d0001504476643c9c819aac963cf8ef4dac",
+      "bytes": 1030
+    },
+    "target/parity-validation-20261015/r5b-quality-clippy-20261016/run.log": {
+      "sha256": "fb31711b8e7b07d0792eae5757a8bed5a7b8b6b38cec44c9072eb45f03792ca3",
+      "bytes": 201
+    },
+    "target/parity-validation-20261015/r5b-quality-clippy-20261016/source-after.json": {
+      "sha256": "a3c40b90bb1232496b89ec5af68c1d34998eb7fd2534e20c5d17655c46e9b33a",
+      "bytes": 67432
+    },
+    "target/parity-validation-20261015/r5b-quality-clippy-20261016/source-before.json": {
+      "sha256": "a3c40b90bb1232496b89ec5af68c1d34998eb7fd2534e20c5d17655c46e9b33a",
+      "bytes": 67432
+    },
+    "target/parity-validation-20261015/r5b-quality-format-20261016/receipt.json": {
+      "sha256": "2eaada87c575dd74161c82096971e515dddfdc10316d8fb46013304de1e6820b",
+      "bytes": 837
+    },
+    "target/parity-validation-20261015/r5b-quality-format-20261016/run.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "target/parity-validation-20261015/r5b-quality-format-20261016/source-after.json": {
+      "sha256": "a3c40b90bb1232496b89ec5af68c1d34998eb7fd2534e20c5d17655c46e9b33a",
+      "bytes": 67432
+    },
+    "target/parity-validation-20261015/r5b-quality-format-20261016/source-before.json": {
+      "sha256": "a3c40b90bb1232496b89ec5af68c1d34998eb7fd2534e20c5d17655c46e9b33a",
+      "bytes": 67432
+    },
+    "target/parity-validation-20261015/r5b-quality-private-20261016/receipt.json": {
+      "sha256": "82262bef5d5591167430c13e3d6302d4b7af57dee45415d80b7930211c95094c",
+      "bytes": 1626
+    },
+    "target/parity-validation-20261015/r5b-quality-private-20261016/run.log": {
+      "sha256": "8f3dd4faa52cc8354c1bc69317f5b1fffbb58c12683af07394e7a6b67cf4901c",
+      "bytes": 5091
+    },
+    "target/parity-validation-20261015/r5b-quality-private-20261016/source-after.json": {
+      "sha256": "a3c40b90bb1232496b89ec5af68c1d34998eb7fd2534e20c5d17655c46e9b33a",
+      "bytes": 67432
+    },
+    "target/parity-validation-20261015/r5b-quality-private-20261016/source-before.json": {
+      "sha256": "a3c40b90bb1232496b89ec5af68c1d34998eb7fd2534e20c5d17655c46e9b33a",
+      "bytes": 67432
+    }
+  },
+  "focused": [
+    {
+      "role": "qualification",
+      "path": "target/parity-validation-20261015/r5b-qualification-20261016-1440",
+      "expected": {
+        "scope": "isolated_source_image_selected_gate_not_normal_checkout_acceptance",
+        "exitCode": 0,
+        "groups": 1,
+        "passed": 3,
+        "failed": 0,
+        "ignored": 0,
+        "sourceFiles": 635,
+        "imageManifestSha256": "fdf0e951b085866163fc5a7c2239d0d68a3cca626ec864e2a31994d13fc74997",
+        "reviewedManifestFileSha256": "fdf0e951b085866163fc5a7c2239d0d68a3cca626ec864e2a31994d13fc74997"
+      }
+    },
+    {
+      "role": "libraryCausalRed",
+      "path": "target/parity-validation-20261015/r5b-behavior-unavailable-red-20261016-1443",
+      "expected": {
+        "scope": "isolated_source_image_selected_gate_not_normal_checkout_acceptance",
+        "exitCode": 101,
+        "groups": 1,
+        "passed": 0,
+        "failed": 12,
+        "ignored": 0,
+        "sourceFiles": 637,
+        "imageManifestSha256": "91a01f29501205f27ce692f3ae54759e4b06ef467e0e526afea64672fa7bc607",
+        "reviewedManifestFileSha256": "91a01f29501205f27ce692f3ae54759e4b06ef467e0e526afea64672fa7bc607"
+      }
+    },
+    {
+      "role": "cliCausalRed",
+      "path": "target/parity-validation-20261015/r5b-cli-unavailable-red-20261016",
+      "expected": {
+        "scope": "isolated_source_image_selected_gate_not_normal_checkout_acceptance",
+        "exitCode": 101,
+        "groups": 1,
+        "passed": 0,
+        "failed": 8,
+        "ignored": 0,
+        "sourceFiles": 644,
+        "imageManifestSha256": "d0c4b0c8f708f5c9210be9cfe274dde509fce8eb5df35c3493856c1897964ada",
+        "reviewedManifestFileSha256": "d0c4b0c8f708f5c9210be9cfe274dde509fce8eb5df35c3493856c1897964ada"
+      }
+    },
+    {
+      "role": "combinedPublicAndR5aRegression",
+      "path": "target/parity-validation-20261015/r5b-cli-and-r5a-regression-20261016",
+      "expected": {
+        "scope": "isolated_source_image_selected_gate_not_normal_checkout_acceptance",
+        "exitCode": 0,
+        "groups": 8,
+        "passed": 72,
+        "failed": 0,
+        "ignored": 0,
+        "sourceFiles": 645,
+        "imageManifestSha256": "68092f31fc2210bf3ae7f50a06974942e803eaa3b1beb49c71fccaa0cf9640fc",
+        "reviewedManifestFileSha256": "68092f31fc2210bf3ae7f50a06974942e803eaa3b1beb49c71fccaa0cf9640fc"
+      }
+    },
+    {
+      "role": "privateFixtureFailureForensics",
+      "path": "target/parity-validation-20261015/r5b-private-first-20261016",
+      "expected": {
+        "scope": "isolated_source_image_selected_gate_not_normal_checkout_acceptance",
+        "exitCode": 101,
+        "groups": 1,
+        "passed": 34,
+        "failed": 2,
+        "ignored": 0,
+        "sourceFiles": 645,
+        "imageManifestSha256": "d1b7fda94b41137086488c7469604d8a2b0558cd8bf08aeb26568e9a612e1e3a",
+        "reviewedManifestFileSha256": "d1b7fda94b41137086488c7469604d8a2b0558cd8bf08aeb26568e9a612e1e3a"
+      }
+    },
+    {
+      "role": "privateFixtureRepaired",
+      "path": "target/parity-validation-20261015/r5b-private-fixture-repaired-20261016",
+      "expected": {
+        "scope": "isolated_source_image_selected_gate_not_normal_checkout_acceptance",
+        "exitCode": 0,
+        "groups": 1,
+        "passed": 36,
+        "failed": 0,
+        "ignored": 0,
+        "sourceFiles": 645,
+        "imageManifestSha256": "68092f31fc2210bf3ae7f50a06974942e803eaa3b1beb49c71fccaa0cf9640fc",
+        "reviewedManifestFileSha256": "68092f31fc2210bf3ae7f50a06974942e803eaa3b1beb49c71fccaa0cf9640fc"
+      }
+    },
+    {
+      "role": "finalImageFormat",
+      "path": "target/parity-validation-20261015/r5b-quality-format-20261016",
+      "expected": {
+        "scope": "isolated_image_only_not_normal_checkout_acceptance",
+        "exitCode": 0,
+        "sourceFiles": 646,
+        "reviewedManifestFileSha256": "a3c40b90bb1232496b89ec5af68c1d34998eb7fd2534e20c5d17655c46e9b33a"
+      }
+    },
+    {
+      "role": "finalImageClippy",
+      "path": "target/parity-validation-20261015/r5b-quality-clippy-20261016",
+      "expected": {
+        "scope": "isolated_image_only_not_normal_checkout_acceptance",
+        "exitCode": 0,
+        "sourceFiles": 646,
+        "reviewedManifestFileSha256": "a3c40b90bb1232496b89ec5af68c1d34998eb7fd2534e20c5d17655c46e9b33a"
+      }
+    },
+    {
+      "role": "finalImagePrivate",
+      "path": "target/parity-validation-20261015/r5b-quality-private-20261016",
+      "expected": {
+        "scope": "isolated_source_image_selected_gate_not_normal_checkout_acceptance",
+        "exitCode": 0,
+        "groups": 1,
+        "passed": 36,
+        "failed": 0,
+        "ignored": 0,
+        "sourceFiles": 646,
+        "imageManifestSha256": "a3c40b90bb1232496b89ec5af68c1d34998eb7fd2534e20c5d17655c46e9b33a",
+        "reviewedManifestFileSha256": "a3c40b90bb1232496b89ec5af68c1d34998eb7fd2534e20c5d17655c46e9b33a"
+      }
+    }
+  ],
+  "failedAttempt": {
+    "tag": "affected-r5b-20261016-full",
+    "accepted": false,
+    "phases": {
+      "format": {
+        "accepted": true,
+        "groups": 0,
+        "passed": 0,
+        "failed": 0,
+        "ignored": 0
+      },
+      "clippy": {
+        "accepted": true,
+        "groups": 0,
+        "passed": 0,
+        "failed": 0,
+        "ignored": 0
+      },
+      "python": {
+        "accepted": true,
+        "groups": 1,
+        "passed": 11,
+        "failed": 0,
+        "ignored": 0
+      },
+      "typescript": {
+        "accepted": false,
+        "groups": 1,
+        "passed": 248,
+        "failed": 1,
+        "ignored": 3
+      }
+    },
+    "unselectedPhases": [
+      "native"
+    ],
+    "summaryPreserved": false
+  },
+  "promotionRoot": "target/parity-validation-20261015/next-git-affected-promotion-v1/application-root-reviewed-quality-v1",
+  "imageManifest": "target/parity-validation-20261015/next-git-affected-implementation-v1/final-image-quality-v1.json",
+  "normalCachePlan": "target/cache-origin-plans/r5b-normal-20261016.json",
+  "normalCacheReceipt": "target/cache-origin-quarantines/r5b-normal-20261016/receipt.json",
+  "imageCachePlan": "target/cache-origin-plans/r5b-qualified-20261016.json",
+  "imageCacheReceipt": "target/cache-origin-quarantines/r5b-qualified-20261016/receipt.json",
+  "processRepairRoot": "target/parity-validation-20261015/next-process-cleanup-repair-v1",
+  "abortedAttempt": {
+    "tag": "affected-r5b-process-20261016-full",
+    "accepted": false,
+    "nativePhaseAborted": true,
+    "reason": "The three explicit ACL fixtures failed setup under the chosen C root ACL; restart with a fresh user Temp child. No product test assertion or source changed.",
+    "rootReviewedDiagnosis": "Root selected C:/Yoke-Test-ACL with an inherited modify-only ACL; WRITE_OWNER was denied during setup of three explicit ACL fixtures. This was an environment selection error. No product source changed.",
+    "phases": {
+      "format": {
+        "accepted": true,
+        "groups": 0,
+        "passed": 0,
+        "failed": 0,
+        "ignored": 0
+      },
+      "clippy": {
+        "accepted": true,
+        "groups": 0,
+        "passed": 0,
+        "failed": 0,
+        "ignored": 0
+      },
+      "python": {
+        "accepted": true,
+        "groups": 1,
+        "passed": 11,
+        "failed": 0,
+        "ignored": 0
+      },
+      "typescript": {
+        "accepted": true,
+        "groups": 1,
+        "passed": 250,
+        "failed": 0,
+        "ignored": 3
+      }
+    },
+    "partialNativeFiles": [
+      "bin-inventory-all.log",
+      "bin-inventory-ignored.log",
+      "bin-inventory.json",
+      "bin-tests.log",
+      "cargo-metadata.log",
+      "cleaned-before.json",
+      "doctests.log",
+      "example-inventory-all.log",
+      "example-inventory-ignored.log",
+      "example-inventory.json",
+      "example-tests.log",
+      "integration-00-cleaned.json",
+      "integration-00-inventory-all.log",
+      "integration-00-inventory-ignored.log",
+      "integration-00-inventory.json",
+      "integration-00.log",
+      "integration-01-cleaned.json",
+      "integration-01-inventory-all.log",
+      "integration-01-inventory-ignored.log",
+      "integration-01-inventory.json",
+      "integration-01.log",
+      "integration-02-cleaned.json",
+      "integration-02-inventory-all.log",
+      "integration-02-inventory-ignored.log",
+      "integration-02-inventory.json",
+      "integration-02.log",
+      "integration-03-cleaned.json",
+      "integration-03-inventory-all.log",
+      "integration-03-inventory-ignored.log",
+      "integration-03-inventory.json",
+      "integration-03.log",
+      "integration-04-inventory-all.log",
+      "integration-04-inventory-ignored.log",
+      "integration-04-inventory.json",
+      "library-c-acl-0.log",
+      "library-c-acl-1.log",
+      "library-c-acl-2.log",
+      "library-d.log",
+      "library-inventory-all.log",
+      "library-inventory-ignored.log",
+      "library-inventory.json",
+      "source-before.json",
+      "target-inventory.json"
+    ],
+    "nativeFinalReceiptPreserved": false,
+    "summaryPreserved": false,
+    "control": "target/parity-validation-20261015/next-process-cleanup-repair-v1/aborted-native-control-v1.json",
+    "inspection": "target/parity-validation-20261015/next-process-cleanup-repair-v1/acl-attempt-inspection-v1.json"
+  },
+  "aclQualification": {
+    "root": "target/parity-validation-20261015/next-process-cleanup-repair-v1/user-temp-acl-qualification-v1",
+    "scope": "three_exact_acl_fixture_qualification_not_full_acceptance",
+    "tempRoot": "C:\\Users\\HEC_e\\AppData\\Local\\Temp\\yoke-r5b-acl-qualification-20261016",
+    "tests": [
+      "host_install::io::tests::explicit_low_integrity_label_is_preserved_or_refused_before_human_bytes",
+      "host_install::io::tests::prepared_output_preserves_owner_and_nondefault_group_before_human_bytes",
+      "host_install::io::tests::staged_registered_reopen_checks_original_security_before_any_mutation"
+    ],
+    "countsAreNonadditive": true
+  }
+}

@@ -1,0 +1,42 @@
+python.exe : test_actual_artifact_log_tampering_refuses_before_coverage_publication
+(test_native_shards.WholeTargetCoverage.test_actual_artifact_log_tampering_refuses_before_coverage_publication) ... ok
+In Zeile:2 Zeichen:54
++ ...  $env:PATH; & C:\Python314\python.exe -X utf8 -B -m unittest discover ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (test_actual_art...ication) ... ok:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+test_actual_current_cargo_inventory_is_covered_without_any_build_or_execution
+(test_native_shards.WholeTargetCoverage.test_actual_current_cargo_inventory_is_covered_without_any_build_or_execution)
+... ok
+test_all_eight_same_source_receipts_are_required_before_platform_success
+(test_native_shards.WholeTargetCoverage.test_all_eight_same_source_receipts_are_required_before_platform_success) ...
+ok
+test_commands_have_only_target_selection_and_original_platform_thread_counts
+(test_native_shards.WholeTargetCoverage.test_commands_have_only_target_selection_and_original_platform_thread_counts)
+... ok
+test_default_target_kinds_keep_whole_tests_docs_and_compile_only_examples
+(test_native_shards.WholeTargetCoverage.test_default_target_kinds_keep_whole_tests_docs_and_compile_only_examples) ...
+ok
+test_empty_duplicate_boolean_negative_and_oversized_partition_inputs_refuse
+(test_native_shards.WholeTargetCoverage.test_empty_duplicate_boolean_negative_and_oversized_partition_inputs_refuse)
+... ok
+test_execution_refuses_non_ci_before_metadata_build_or_native_process_use
+(test_native_shards.WholeTargetCoverage.test_execution_refuses_non_ci_before_metadata_build_or_native_process_use) ...
+ok
+test_external_target_source_refuses_even_with_an_existing_file
+(test_native_shards.WholeTargetCoverage.test_external_target_source_refuses_even_with_an_existing_file) ... ok
+{"complete": true, "platform": "Windows", "sourceRevision": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "shards": 8, "wholeGroups": 14, "inventorySha256": "af74a2c4371e7d7ae418ce8cda9feb7889a14af158cbd33055b90e6b0086bd33", "scope": "All default workspace target groups; individual function counts are not inferred"}
+{"group": "owned:lib:target_0:test", "exitCode": 1}
+{"group": "owned:test:target_10:test", "exitCode": 0}
+test_failed_group_still_runs_remaining_whole_groups_and_cannot_publish_success (test_native_shards.WholeTargetCoverage.
+test_failed_group_still_runs_remaining_whole_groups_and_cannot_publish_success) ... ok
+test_failed_missing_substituted_or_changed_scope_receipts_refuse
+(test_native_shards.WholeTargetCoverage.test_failed_missing_substituted_or_changed_scope_receipts_refuse) ... ok
+test_missing_duplicate_and_unknown_target_metadata_never_yields_partial_success (test_native_shards.WholeTargetCoverage
+.test_missing_duplicate_and_unknown_target_metadata_never_yields_partial_success) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.339s
+
+OK

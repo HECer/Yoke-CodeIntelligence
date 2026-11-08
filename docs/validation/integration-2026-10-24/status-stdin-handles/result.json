@@ -1,0 +1,88 @@
+{
+  "baseline": "2f5f1bc7838d4960a21ad40ff7d1ec420aab9356",
+  "wholePython": {
+    "passed": 87,
+    "failed": 0,
+    "skipped": 0
+  },
+  "typecheckExit": 0,
+  "npmExit": 0,
+  "npm": {
+    "passed": 260,
+    "failed": 0,
+    "existingSkipped": 3
+  },
+  "nativeFmt": {
+    "roots": 368,
+    "failed": 0
+  },
+  "finalChangedRustFilesFormatExit": 0,
+  "nativeCompilationOrExecutionAttemptedLocally": false,
+  "actualInertPowerShell5CasesPassed": 5,
+  "modernPowerShellAvailable": false,
+  "nativeNewBootstrapAndBOMRegressionExecutedLocally": false,
+  "jsonParserAndCargoProfilesWorkflowScriptsTypescriptAndVsixExactToBaseline": true,
+  "originalNativeShellOperationBudgetsPreserved": true,
+  "localFullNativeBuildAdmissionBytes": 1200000000,
+  "freeBytesObserved": 1099579392,
+  "hostedNewBootstrapAcceptanceVerified": false,
+  "hostedRefusalEncodingCauseProven": false,
+  "fullStatusComplete": false,
+  "products": [
+    {
+      "path": "native/src/host_install_source_status.rs",
+      "sha256": "530aaf40a2eb47b8638e6294c58b667b8a94bd83588c98291b6507ae1361545c",
+      "gitBlobSha": "751531c6a61897fa75a1d16d11612bb65219aded"
+    },
+    {
+      "path": "native/tests/claude_source_hooks.rs",
+      "sha256": "b07d5289d2819e961249ae5fdcc702d694abdace19d7cf2cfa4d6f2c3dac591b",
+      "gitBlobSha": "dc105415f5989959d0ad640f671de6e765367973"
+    },
+    {
+      "path": "native/tests/process.rs",
+      "sha256": "46b87eaf5591642c2ae1a01370ec611a19eeb8014e5949314f873e5a6478541e",
+      "gitBlobSha": "4415a7421555002f826361f262c16a254b45d350"
+    },
+    {
+      "path": "docs/validation/integration-2026-10-24/status-stdin-handles/inert-probe.py",
+      "sha256": "7720bcd3f547fe259b46fcb8afa5260f718307a6b6069e5af3dd994866ed0b4d",
+      "gitBlobSha": "b8935fd623679f10d75bdb29e99aa1bf99ab5502"
+    }
+  ],
+  "logs": [
+    {
+      "path": "python-all.txt",
+      "sha256": "e873f5e7f673dd363d3db8630974cfb59195b79db66a1bd846c01d434dca01c4",
+      "originalSha256": "9fbcde523ba9e000f94b82f0afc5ffffb5ecc9bb13e35b0b895c262645646d6a",
+      "originalEncoding": "utf-16"
+    },
+    {
+      "path": "native-fmt.txt",
+      "sha256": "49f385c37548415c5c3e7171ad0500e48bf2a935e8dc6414fc3556b9a673a0a0",
+      "originalSha256": "72783b69578f249abfe1450531bf6eb8c0beed2af00510f6fae7e2b34524326a",
+      "originalEncoding": "utf-16"
+    },
+    {
+      "path": "typecheck.txt",
+      "sha256": "9fc4adb1378eb3571020ea1acec7d83f289c64c9548dad44deca472ced3cb53b",
+      "originalSha256": "ddb2d0a3068c5082afc31e855c23e7ab3f0db774266a644b7dfcbb894b8a808f",
+      "originalEncoding": "utf-16"
+    },
+    {
+      "path": "npm-test.txt",
+      "sha256": "152d73205889770abc853f0748dfbd5b145b4663f1094638c9a668e7fd8e2e3f",
+      "originalSha256": "e7ec9b128acfb807ade0218aa6c99555df67aaf4d4d97c493329d05160750e50",
+      "originalEncoding": "utf-16"
+    }
+  ],
+  "inertHostTools": {
+    "PowerShellVersion": "5.1.19041.6456",
+    "PowerShellEdition": "Desktop",
+    "ShellPath": "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+    "SelectedShellFileVersion": "10.0.19041.4522 (WinBuild.160101.0800)",
+    "PythonVersion": "Python 3.14.7"
+  },
+  "windowsEvidenceSha256": "d2452329ea81aaa2f1ffd5ea990863e802e5623ff44bca19d33dfb4a43958729",
+  "probeEvidenceSha256": "48333a606ee74a6db853d788f1ab2a208efed574362f825c7587dc3c6ff20b6a"
+}

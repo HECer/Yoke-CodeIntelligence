@@ -1,0 +1,511 @@
+warning: function `rank_balanced` is never used
+   --> native\src\retrieval.rs:127:4
+    |
+127 | fn rank_balanced(
+    |    ^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: fields `scope_root`, `path`, `start_byte`, `end_byte`, and `cost` are never read
+  --> native\src\retrieval_balanced.rs:7:9
+   |
+ 6 | pub(super) struct AdmissionUnit {
+   |                   ------------- fields in this struct
+ 7 |     pub scope_root: String,
+   |         ^^^^^^^^^^
+ 8 |     pub path: String,
+   |         ^^^^
+ 9 |     pub start_byte: usize,
+   |         ^^^^^^^^^^
+10 |     pub end_byte: usize,
+   |         ^^^^^^^^
+11 |     pub entity_id: String,
+12 |     pub cost: usize,
+   |         ^^^^
+   |
+   = note: `AdmissionUnit` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+
+warning: fields `path`, `score`, and `query_coverage_count` are never read
+  --> native\src\retrieval_balanced.rs:34:9
+   |
+31 | pub(super) struct ScoredRow {
+   |                   --------- fields in this struct
+...
+34 |     pub path: String,
+   |         ^^^^
+35 |     pub score: f64,
+   |         ^^^^^
+36 |     pub query_coverage_count: usize,
+   |         ^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `ScoredRow` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+
+warning: fields `entity_id`, `weighted_length`, and `term_counts` are never read
+  --> native\src\retrieval_balanced.rs:61:9
+   |
+60 | pub(super) struct LexicalDocument {
+   |                   --------------- fields in this struct
+61 |     pub entity_id: String,
+   |         ^^^^^^^^^
+62 |     pub weighted_length: usize,
+   |         ^^^^^^^^^^^^^^^
+63 |     pub term_counts: Vec<u32>,
+   |         ^^^^^^^^^^^
+   |
+   = note: `LexicalDocument` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+
+warning: fields `entity_id`, `scope_root`, and `bm25` are never read
+  --> native\src\retrieval_balanced.rs:73:9
+   |
+72 | pub(super) struct LexicalMassRow {
+   |                   -------------- fields in this struct
+73 |     pub entity_id: String,
+   |         ^^^^^^^^^
+74 |     pub scope_root: String,
+   |         ^^^^^^^^^^
+75 |     pub bm25: f64,
+   |         ^^^^
+   |
+   = note: `LexicalMassRow` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+
+warning: fields `observation_id`, `source`, and `target` are never read
+  --> native\src\retrieval_balanced.rs:91:9
+   |
+90 | pub(super) struct ResolvedObservation {
+   |                   ------------------- fields in this struct
+91 |     pub observation_id: String,
+   |         ^^^^^^^^^^^^^^
+92 |     pub source: String,
+   |         ^^^^^^
+93 |     pub target: Option<String>,
+   |         ^^^^^^
+   |
+   = note: `ResolvedObservation` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+
+warning: fields `diagnostics`, `scopes`, `declaration_bindings`, and `source_omissions` are never read
+   --> native\src\retrieval_balanced.rs:128:9
+    |
+127 | pub(super) struct MetadataCostRows {
+    |                   ---------------- fields in this struct
+128 |     pub diagnostics: Vec<usize>,
+    |         ^^^^^^^^^^^
+129 |     pub scopes: Vec<usize>,
+    |         ^^^^^^
+130 |     pub declaration_bindings: Vec<usize>,
+    |         ^^^^^^^^^^^^^^^^^^^^
+131 |     pub source_omissions: Vec<usize>,
+    |         ^^^^^^^^^^^^^^^^
+    |
+    = note: `MetadataCostRows` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+
+warning: constant `POLICY` is never used
+  --> native\src\retrieval_scopes.rs:15:18
+   |
+15 | pub(crate) const POLICY: &str = "yoke-retrieval-scopes-1";
+   |                  ^^^^^^
+
+warning: multiple variants are never constructed
+  --> native\src\retrieval_scopes.rs:21:5
+   |
+20 | pub(crate) enum RetrievalHardError {
+   |                 ------------------ variants in this enum
+21 |     InvalidRequest(&'static str),
+   |     ^^^^^^^^^^^^^^
+22 |     Authority(&'static str),
+   |     ^^^^^^^^^
+23 |     SourceIntegrity(&'static str),
+   |     ^^^^^^^^^^^^^^^
+24 |     DeniedSource(&'static str),
+   |     ^^^^^^^^^^^^
+25 |     Cancelled(&'static str),
+   |     ^^^^^^^^^
+26 |     Deadline(&'static str),
+   |     ^^^^^^^^
+27 |     Capacity(&'static str),
+   |     ^^^^^^^^
+   |
+   = note: `RetrievalHardError` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+
+warning: multiple fields are never read
+  --> native\src\retrieval_scopes.rs:57:5
+   |
+56 | pub(crate) struct CheckedRetrievalRun<'store, 'input, 'deadline> {
+   |                   ------------------- fields in this struct
+57 |     store: &'store Store,
+   |     ^^^^^
+...
+60 |     source_scope: CapturedSourceScope<'input>,
+   |     ^^^^^^^^^^^^
+61 |     deadline: &'deadline Deadline,
+62 |     output_limit: usize,
+   |     ^^^^^^^^^^^^
+63 |     snapshot_hash: String,
+   |     ^^^^^^^^^^^^^
+64 |     graph_hash: String,
+   |     ^^^^^^^^^^
+65 |     verified: BTreeMap<String, VerifiedSource>,
+   |     ^^^^^^^^
+66 |     admitted_documents: BTreeSet<String>,
+   |     ^^^^^^^^^^^^^^^^^^
+
+warning: multiple fields are never read
+  --> native\src\retrieval_scopes.rs:71:5
+   |
+70 | pub(crate) struct CheckedScopePartition<'store> {
+   |                   --------------------- fields in this struct
+71 |     store: &'store Store,
+   |     ^^^^^
+72 |     snapshot_id: String,
+   |     ^^^^^^^^^^^
+73 |     snapshot_hash: String,
+   |     ^^^^^^^^^^^^^
+74 |     graph_hash: String,
+   |     ^^^^^^^^^^
+75 |     source_scope_binding: String,
+   |     ^^^^^^^^^^^^^^^^^^^^
+...
+80 |     ownership: BTreeMap<String, usize>,
+   |     ^^^^^^^^^
+81 |     diagnostics: Vec<ScopeDiagnostic>,
+82 |     omitted_diagnostic_count: usize,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: fields `owner` and `ordinal` are never read
+  --> native\src\retrieval_scopes.rs:86:5
+   |
+85 | pub(crate) struct ScopeHandle<'partition, 'store> {
+   |                   ----------- fields in this struct
+86 |     owner: &'partition CheckedScopePartition<'store>,
+   |     ^^^^^
+87 |     ordinal: usize,
+   |     ^^^^^^^
+
+warning: variants `Ready`, `NotApplicable`, and `UnsupportedPolicy` are never constructed
+  --> native\src\retrieval_scopes.rs:91:5
+   |
+90 | pub(crate) enum ProbeOutcome<'store> {
+   |                 ------------ variants in this enum
+91 |     Ready(CheckedScopePartition<'store>),
+   |     ^^^^^
+92 |     NotApplicable(PolicyFallback),
+   |     ^^^^^^^^^^^^^
+93 |     UnsupportedPolicy(PolicyFallback),
+   |     ^^^^^^^^^^^^^^^^^
+
+warning: field `omitted_diagnostic_count` is never read
+   --> native\src\retrieval_scopes.rs:100:5
+    |
+ 96 | pub(crate) struct PolicyFallback {
+    |                   -------------- field in this struct
+...
+100 |     omitted_diagnostic_count: usize,
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: method `omitted_diagnostic_count` is never used
+   --> native\src\retrieval_scopes.rs:112:19
+    |
+102 | impl PolicyFallback {
+    | ------------------- method in this implementation
+...
+112 |     pub(crate) fn omitted_diagnostic_count(&self) -> usize {
+    |                   ^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: variant `RootUnassigned` is never constructed
+   --> native\src\retrieval_scopes.rs:121:5
+    |
+118 | pub(crate) enum ScopeKind {
+    |                 --------- variant in this enum
+...
+121 |     RootUnassigned,
+    |     ^^^^^^^^^^^^^^
+    |
+    = note: `ScopeKind` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+
+warning: method `as_str` is never used
+   --> native\src\retrieval_scopes.rs:124:19
+    |
+123 | impl ScopeKind {
+    | -------------- method in this implementation
+124 |     pub(crate) fn as_str(self) -> &'static str {
+    |                   ^^^^^^
+
+warning: method `as_str` is never used
+   --> native\src\retrieval_scopes.rs:140:19
+    |
+139 | impl Ecosystem {
+    | -------------- method in this implementation
+140 |     pub(crate) fn as_str(self) -> &'static str {
+    |                   ^^^^^^
+
+warning: variant `Standalone` is never constructed
+   --> native\src\retrieval_scopes.rs:154:5
+    |
+150 | pub(crate) enum MembershipReason {
+    |                 ---------------- variant in this enum
+...
+154 |     Standalone,
+    |     ^^^^^^^^^^
+    |
+    = note: `MembershipReason` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+
+warning: method `as_str` is never used
+   --> native\src\retrieval_scopes.rs:157:19
+    |
+156 | impl MembershipReason {
+    | --------------------- method in this implementation
+157 |     pub(crate) fn as_str(self) -> &'static str {
+    |                   ^^^^^^
+
+warning: fields `ecosystem`, `name`, `declaration_path`, and `primary` are never read
+   --> native\src\retrieval_scopes.rs:168:5
+    |
+167 | pub(crate) struct PackageLabel {
+    |                   ------------ fields in this struct
+168 |     ecosystem: Ecosystem,
+    |     ^^^^^^^^^
+169 |     name: String,
+    |     ^^^^
+170 |     declaration_path: String,
+    |     ^^^^^^^^^^^^^^^^
+171 |     primary: bool,
+    |     ^^^^^^^
+
+warning: methods `ecosystem`, `name`, `declaration_path`, and `is_primary` are never used
+   --> native\src\retrieval_scopes.rs:174:19
+    |
+173 | impl PackageLabel {
+    | ----------------- methods in this implementation
+174 |     pub(crate) fn ecosystem(&self) -> Ecosystem {
+    |                   ^^^^^^^^^
+...
+177 |     pub(crate) fn name(&self) -> &str {
+    |                   ^^^^
+...
+180 |     pub(crate) fn declaration_path(&self) -> &str {
+    |                   ^^^^^^^^^^^^^^^^
+...
+183 |     pub(crate) fn is_primary(&self) -> bool {
+    |                   ^^^^^^^^^^
+
+warning: field `content_hash` is never read
+   --> native\src\retrieval_scopes.rs:190:5
+    |
+188 | pub(crate) struct ManifestBinding {
+    |                   --------------- field in this struct
+189 |     path: String,
+190 |     content_hash: String,
+    |     ^^^^^^^^^^^^
+
+warning: method `content_hash` is never used
+   --> native\src\retrieval_scopes.rs:196:19
+    |
+192 | impl ManifestBinding {
+    | -------------------- method in this implementation
+...
+196 |     pub(crate) fn content_hash(&self) -> &str {
+    |                   ^^^^^^^^^^^^
+
+warning: field `declaration_path` is never read
+   --> native\src\retrieval_scopes.rs:204:5
+    |
+201 | pub(crate) struct WorkspaceMembership {
+    |                   ------------------- field in this struct
+...
+204 |     declaration_path: Option<String>,
+    |     ^^^^^^^^^^^^^^^^
+
+warning: method `declaration_path` is never used
+   --> native\src\retrieval_scopes.rs:214:19
+    |
+207 | impl WorkspaceMembership {
+    | ------------------------ method in this implementation
+...
+214 |     pub(crate) fn declaration_path(&self) -> Option<&str> {
+    |                   ^^^^^^^^^^^^^^^^
+
+warning: fields `path`, `content_hash`, `line`, and `column` are never read
+   --> native\src\retrieval_scopes.rs:224:5
+    |
+222 | pub(crate) struct ScopeDiagnostic {
+    |                   --------------- fields in this struct
+223 |     code: &'static str,
+224 |     path: String,
+    |     ^^^^
+225 |     content_hash: Option<String>,
+    |     ^^^^^^^^^^^^
+226 |     selector: Option<String>,
+227 |     line: Option<usize>,
+    |     ^^^^
+228 |     column: Option<usize>,
+    |     ^^^^^^
+
+warning: methods `path`, `content_hash`, `line`, and `column` are never used
+   --> native\src\retrieval_scopes.rs:234:19
+    |
+230 | impl ScopeDiagnostic {
+    | -------------------- methods in this implementation
+...
+234 |     pub(crate) fn path(&self) -> &str {
+    |                   ^^^^
+...
+237 |     pub(crate) fn content_hash(&self) -> Option<&str> {
+    |                   ^^^^^^^^^^^^
+...
+243 |     pub(crate) fn line(&self) -> Option<usize> {
+    |                   ^^^^
+...
+246 |     pub(crate) fn column(&self) -> Option<usize> {
+    |                   ^^^^^^
+
+warning: field `declarations` is never read
+   --> native\src\retrieval_scopes.rs:256:5
+    |
+251 | pub(crate) struct CheckedScope {
+    |                   ------------ field in this struct
+...
+256 |     declarations: Vec<ManifestBinding>,
+    |     ^^^^^^^^^^^^
+
+warning: method `declarations` is never used
+   --> native\src\retrieval_scopes.rs:272:19
+    |
+259 | impl CheckedScope {
+    | ----------------- method in this implementation
+...
+272 |     pub(crate) fn declarations(&self) -> impl Iterator<Item = &ManifestBinding> {
+    |                   ^^^^^^^^^^^^
+
+warning: field `path` is never read
+   --> native\src\retrieval_scopes.rs:301:5
+    |
+300 | pub(crate) struct VerifiedSource {
+    |                   -------------- field in this struct
+301 |     path: String,
+    |     ^^^^
+    |
+    = note: `VerifiedSource` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis
+
+warning: method `path` is never used
+   --> native\src\retrieval_scopes.rs:306:19
+    |
+305 | impl VerifiedSource {
+    | ------------------- method in this implementation
+306 |     pub(crate) fn path(&self) -> &str {
+    |                   ^^^^
+
+warning: method `ownership_bytes` is never used
+   --> native\src\retrieval_scopes.rs:364:19
+    |
+345 | impl RunUsage {
+    | ------------- method in this implementation
+...
+364 |     pub(crate) fn ownership_bytes(self) -> usize {
+    |                   ^^^^^^^^^^^^^^^
+
+warning: method `output_limit` is never used
+   --> native\src\retrieval_scopes.rs:398:19
+    |
+388 | impl<'store, 'input, 'deadline> CheckedRetrievalRun<'store, 'input, 'deadline> {
+    | ------------------------------------------------------------------------------ method in this implementation
+...
+398 |     pub(crate) fn output_limit(&self) -> usize {
+    |                   ^^^^^^^^^^^^
+
+warning: method `omitted_diagnostic_count` is never used
+   --> native\src\retrieval_scopes.rs:442:19
+    |
+420 | impl<'store> CheckedScopePartition<'store> {
+    | ------------------------------------------ method in this implementation
+...
+442 |     pub(crate) fn omitted_diagnostic_count(&self) -> usize {
+    |                   ^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: `yoke-code-intelligence` (lib test) generated 35 warnings
+    Finished `test` profile [unoptimized] target(s) in 1.35s
+     Running unittests src\lib.rs (target\debug\deps\yoke-35b101204e4eb110.exe)
+
+running 15 tests
+
+thread 'retrieval::balanced::tests::canonical_arcs_keep_parallel_observations_and_two_self_loop_orientations' (80396) panicked at native\src\retrieval_balanced_tests.rs:308:91:
+called `Result::unwrap()` on an `Err` value: Internal("implementation_unavailable")
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread 'retrieval::balanced::tests::equal_scope_seeds_preserve_zero_mass_scopes_and_equalize_positive_scope_mass' (46104) panicked at native\src\retrieval_balanced_tests.rs:265:44:
+called `Result::unwrap()` on an `Err` value: Internal("implementation_unavailable")
+
+thread 'retrieval::balanced::tests::equal_fusion_ties_use_exact_root_then_entity_id_and_reject_nonfinite_scores' (79300) panicked at native\src\retrieval_balanced_tests.rs:380:44:
+called `Result::unwrap()` on an `Err` value: Internal("implementation_unavailable")
+
+thread 'retrieval::balanced::tests::graph_propagation_preserves_literal_parallel_degree_ratio_after_24_iterations' (92204) panicked at native\src\retrieval_balanced_tests.rs:338:65:
+called `Result::unwrap()` on an `Err` value: Internal("implementation_unavailable")
+test retrieval::balanced::tests::equal_scope_seeds_preserve_zero_mass_scopes_and_equalize_positive_scope_mass ... FAILED
+test retrieval::balanced::tests::equal_fusion_ties_use_exact_root_then_entity_id_and_reject_nonfinite_scores ... FAILED
+test retrieval::balanced::tests::canonical_arcs_keep_parallel_observations_and_two_self_loop_orientations ... FAILED
+test retrieval::balanced::tests::graph_propagation_preserves_literal_parallel_degree_ratio_after_24_iterations ... FAILED
+thread 'retrieval::balanced::tests::literal_fusion_prioritizes_local_rank_then_coverage_before_cross_scope_score' (100292) panicked at native\src\retrieval_balanced_tests.rs:148:44:
+Fusion must be available: Internal("implementation_unavailable")
+
+
+thread 'retrieval::balanced::tests::literal_remainder_has_protected_three_two_two_then_pools_one_whole_unit' (23872) panicked at native\src\retrieval_balanced_tests.rs:26:54:
+Rounding schedule must be available: Internal("implementation_unavailable")
+
+thread 'retrieval::balanced::tests::literal_document_32m_charges_overlapping_child_bodies_as_distinct_units' (99240) panicked at native\src\retrieval_balanced_tests.rs:100:10:
+Document unit schedule must be available: Internal("implementation_unavailable")
+
+thread 'retrieval::balanced::tests::literal_source_28m_schedule_defers_a_large_head_and_keeps_other_packages' (79004) panicked at native\src\retrieval_balanced_tests.rs:53:10:
+Source unit schedule must be available: Internal("implementation_unavailable")
+test retrieval::balanced::tests::literal_fusion_prioritizes_local_rank_then_coverage_before_cross_scope_score ... FAILED
+test retrieval::balanced::tests::literal_remainder_has_protected_three_two_two_then_pools_one_whole_unit ... FAILED
+test retrieval::balanced::tests::literal_document_32m_charges_overlapping_child_bodies_as_distinct_units ... FAILED
+test retrieval::balanced::tests::literal_source_28m_schedule_defers_a_large_head_and_keeps_other_packages ... FAILED
+
+thread 'retrieval::balanced::tests::local_bm25_matches_the_independent_31_document_literal_oracle' (12648) panicked at native\src\retrieval_balanced_tests.rs:227:42:
+called `Result::unwrap()` on an `Err` value: Internal("implementation_unavailable")
+
+thread 'retrieval::balanced::tests::optional_metadata_256kb_cost_ceiling_admits_literal_62_rows_without_partial_rows' (46020) panicked at native\src\retrieval_balanced_tests.rs:418:58:
+called `Result::unwrap()` on an `Err` value: Internal("implementation_unavailable")
+
+thread 'retrieval::balanced::tests::optional_metadata_count_caps_keep_literal_prefixes_and_all_omitted_counts' (67116) panicked at native\src\retrieval_balanced_tests.rs:405:58:
+called `Result::unwrap()` on an `Err` value: Internal("implementation_unavailable")
+
+thread 'retrieval::balanced::tests::optional_metadata_respects_smaller_caller_remainder_in_diagnostic_first_order' (68704) panicked at native\src\retrieval_balanced_tests.rs:431:54:
+called `Result::unwrap()` on an `Err` value: Internal("implementation_unavailable")
+test retrieval::balanced::tests::local_bm25_matches_the_independent_31_document_literal_oracle ... FAILED
+test retrieval::balanced::tests::optional_metadata_256kb_cost_ceiling_admits_literal_62_rows_without_partial_rows ... FAILED
+
+thread 'retrieval::balanced::tests::per_file_rejections_are_exhaustive_even_beyond_the_final_limit' (100816) panicked at native\src\retrieval_balanced_tests.rs:173:42:
+called `Result::unwrap()` on an `Err` value: Internal("implementation_unavailable")
+test retrieval::balanced::tests::optional_metadata_respects_smaller_caller_remainder_in_diagnostic_first_order ... FAILED
+test retrieval::balanced::tests::optional_metadata_count_caps_keep_literal_prefixes_and_all_omitted_counts ... FAILED
+test retrieval::balanced::tests::per_file_rejections_are_exhaustive_even_beyond_the_final_limit ... 
+thread 'retrieval::balanced::tests::zero_cost_units_are_finite_and_an_oversized_head_cannot_block_a_later_unit' (99364) panicked at native\src\retrieval_balanced_tests.rs:123:51:
+called `Result::unwrap()` on an `Err` value: Internal("implementation_unavailable")
+FAILED
+
+thread 'retrieval::balanced::tests::zero_graph_weight_or_zero_lexical_mass_skips_iterations_and_returns_zero_raw_graph_scores' (66424) panicked at native\src\retrieval_balanced_tests.rs:357:65:
+called `Result::unwrap()` on an `Err` value: Internal("implementation_unavailable")
+test retrieval::balanced::tests::zero_cost_units_are_finite_and_an_oversized_head_cannot_block_a_later_unit ... FAILED
+test retrieval::balanced::tests::zero_graph_weight_or_zero_lexical_mass_skips_iterations_and_returns_zero_raw_graph_scores ... FAILED
+
+failures:
+
+failures:
+    retrieval::balanced::tests::canonical_arcs_keep_parallel_observations_and_two_self_loop_orientations
+    retrieval::balanced::tests::equal_fusion_ties_use_exact_root_then_entity_id_and_reject_nonfinite_scores
+    retrieval::balanced::tests::equal_scope_seeds_preserve_zero_mass_scopes_and_equalize_positive_scope_mass
+    retrieval::balanced::tests::graph_propagation_preserves_literal_parallel_degree_ratio_after_24_iterations
+    retrieval::balanced::tests::literal_document_32m_charges_overlapping_child_bodies_as_distinct_units
+    retrieval::balanced::tests::literal_fusion_prioritizes_local_rank_then_coverage_before_cross_scope_score
+    retrieval::balanced::tests::literal_remainder_has_protected_three_two_two_then_pools_one_whole_unit
+    retrieval::balanced::tests::literal_source_28m_schedule_defers_a_large_head_and_keeps_other_packages
+    retrieval::balanced::tests::local_bm25_matches_the_independent_31_document_literal_oracle
+    retrieval::balanced::tests::optional_metadata_256kb_cost_ceiling_admits_literal_62_rows_without_partial_rows
+    retrieval::balanced::tests::optional_metadata_count_caps_keep_literal_prefixes_and_all_omitted_counts
+    retrieval::balanced::tests::optional_metadata_respects_smaller_caller_remainder_in_diagnostic_first_order
+    retrieval::balanced::tests::per_file_rejections_are_exhaustive_even_beyond_the_final_limit
+    retrieval::balanced::tests::zero_cost_units_are_finite_and_an_oversized_head_cannot_block_a_later_unit
+    retrieval::balanced::tests::zero_graph_weight_or_zero_lexical_mass_skips_iterations_and_returns_zero_raw_graph_scores
+
+test result: FAILED. 0 passed; 15 failed; 0 ignored; 0 measured; 217 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `--lib`

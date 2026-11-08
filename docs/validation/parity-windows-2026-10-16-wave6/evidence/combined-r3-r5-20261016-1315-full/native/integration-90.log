@@ -1,0 +1,27 @@
+    Finished `test` profile [unoptimized] target(s) in 0.71s
+     Running tests\provider_batches_review.rs (target\debug\deps\provider_batches_review-fb8e8e5278794de4.exe)
+
+running 10 tests
+test every_source_is_verified_before_first_chunk_reservation_or_launch ... ok
+test complete_bound_reply_with_nonzero_exit_still_preserves_cost_and_usage ... ok
+test each_chunk_keeps_native_protocol_one_and_legacy_attempt_bound_request_identity ... ok
+test failed_new_batch_leaves_existing_other_model_corpus_byte_identical ... ok
+test legal_reversed_cohere_items_are_reassembled_by_id_before_publication ... ok
+test full_vector_store_capacity_is_rejected_before_any_reservation_or_child ... ok
+test unbound_reported_cost_remains_unknown_and_only_never_sent_attempt_is_released ... ok
+test worst_finite_float_serialization_rejects_entire_batch_before_billing ... ok
+test model_child_can_acquire_sqlite_write_transaction_while_parent_holds_only_client_lease ... ok
+test retained_batch_rejects_unknown_nested_fields_and_rebound_request_identity ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.93s
+
+     Running tests\provider_scope_review.rs (target\debug\deps\provider_scope_review-efdd81e89803991c.exe)
+
+running 4 tests
+test corrupt_cas_size_is_refused_before_source_allocation_or_provider_launch ... ok
+test escaped_request_is_admitted_before_serialization_allocation_and_billing ... ok
+test explicitly_captured_readonly_dependencies_keep_exact_model_source_binding ... ok
+test persisted_unknown_native_identity_does_not_grant_model_source_authority ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.59s
+

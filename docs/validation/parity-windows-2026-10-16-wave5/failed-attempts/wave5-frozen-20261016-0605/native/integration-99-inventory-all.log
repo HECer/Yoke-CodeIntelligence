@@ -1,0 +1,19 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 3.57s
+     Running tests\skill_takeaways_contract_review.rs (target\debug\deps\skill_takeaways_contract_review-28e43c35279ec703.exe)
+confirm_accepts_an_existing_takeaway_filename_suffix: test
+confirm_accepts_the_known_absolute_takeaway_path_without_arbitrary_file_authority: test
+confirmed_only_fold_with_no_ready_takeaways_keeps_version_revision_and_empty_sections: test
+folded_result_takeaways_report_the_same_version_as_the_published_state: test
+show_orders_waiting_takeaways_by_newest_date_then_filename_and_renders_short_dates: test
+unicode_lowercase_teacher_and_duplicate_confirmations_are_noops: test
+unknown_confirm_and_fold_succeed_without_creating_a_skill_or_operation: test
+
+7 tests, 0 benchmarks
+     Running tests\skill_takeaways_review.rs (target\debug\deps\skill_takeaways_review-0d15ce095fce6336.exe)
+deeply_nested_skill_frontmatter_is_admitted_before_yaml_materialization: test
+malformed_recovery_is_rejected_before_any_prepared_publication: test
+oversized_fold_is_rejected_before_publishing_an_unrecoverable_plan: test
+resealed_pending_operation_cannot_redirect_the_revision_to_another_skill: test
+
+4 tests, 0 benchmarks

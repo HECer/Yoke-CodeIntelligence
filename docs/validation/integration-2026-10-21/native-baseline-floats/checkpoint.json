@@ -1,0 +1,112 @@
+{
+  "sourceCommit": "bcf442b32a6dd03bcd3c6c8e8794eaf3fd929079",
+  "registeredGroups": 316,
+  "completedGroups": 316,
+  "frozenInputs": 941,
+  "sourceUnchanged": true,
+  "cliUnchanged": true,
+  "toolsUnchanged": true,
+  "totals": {
+    "passed": 2951,
+    "failed": 10,
+    "ignored": 53
+  },
+  "examplesBuild": {
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "build",
+      "--workspace",
+      "--locked",
+      "-j",
+      "2",
+      "--target-dir",
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+      "--examples"
+    ],
+    "exitCode": 0,
+    "seconds": 6.9390000000130385,
+    "exampleCodeExecuted": false
+  },
+  "runtimeFailures": [
+    {
+      "group": "adversarial",
+      "test": "sqlite_sidecar_links_cannot_rewrite_files_outside_state",
+      "originalFixtureCase": true,
+      "os1314": true
+    },
+    {
+      "group": "facade_file_delete",
+      "test": "source_symlink_cannot_redirect_a_forced_file_deletion",
+      "originalFixtureCase": true,
+      "os1314": true
+    },
+    {
+      "group": "federation",
+      "test": "receiver_ignore_excludes_links_and_remote_policy_text_cannot_change_host_authority",
+      "originalFixtureCase": true,
+      "os1314": true
+    },
+    {
+      "group": "feedback_cli",
+      "test": "windows_host_aliases_cannot_read_protected_files_or_alternate_streams",
+      "originalFixtureCase": true,
+      "os1314": true
+    },
+    {
+      "group": "git_affected_cli",
+      "test": "affected_options_leaf_and_ancestor_reparse_points_refuse_after_real_options_success",
+      "originalFixtureCase": true,
+      "os1314": true
+    },
+    {
+      "group": "git_impact_details_cli",
+      "test": "windows_real_options_file_and_ancestor_reparse_points_refuse_after_genuine_positive",
+      "originalFixtureCase": true,
+      "os1314": true
+    },
+    {
+      "group": "graph_collections",
+      "test": "collection_sqlite_sidecars_cannot_write_through_links",
+      "originalFixtureCase": true,
+      "os1314": true
+    },
+    {
+      "group": "maintenance",
+      "test": "blob_links_are_refused_and_external_targets_are_preserved",
+      "originalFixtureCase": true,
+      "os1314": true
+    },
+    {
+      "group": "meaning_archive_cli",
+      "test": "existing_output_file_directory_and_hardlink_are_never_overwritten",
+      "originalFixtureCase": true,
+      "os1314": true
+    },
+    {
+      "group": "media",
+      "test": "media_cannot_bypass_source_scope_links_ignore_or_protected_paths",
+      "originalFixtureCase": true,
+      "os1314": true
+    }
+  ],
+  "compileFailures": [],
+  "unexplainedRuntimeFailures": [],
+  "unexplainedCommandFailures": [],
+  "allRuntimeFailuresMatchPriorOs1314Fixtures": true,
+  "ignoredCases": 53,
+  "actualJunctionSecurityCasesPassed": [
+    {
+      "group": "decision_records",
+      "test": "windows_junction_parents_cannot_redirect_import_or_export"
+    },
+    {
+      "group": "facade_directory_move",
+      "test": "an_actual_unprivileged_junction_refuses_before_provider_start"
+    }
+  ],
+  "userSettingDecision": "continue_without_enabling_developer_mode",
+  "symlinkProbe": "C:/Users/Lomi/AppData/Local/Temp/yoke-owned-link-probe-60352f6b5c4e48eab9cae956e55d6e92/probe.json",
+  "rawLogsUnmodified": true,
+  "fullWindowsCertified": false,
+  "fullStatusCertified": false
+}

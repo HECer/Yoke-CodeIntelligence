@@ -1,0 +1,34 @@
+    Finished `test` profile [unoptimized] target(s) in 0.94s
+     Running tests\mcp_collection_grants_review.rs (target\debug\deps\mcp_collection_grants_review-75ef68191c99f6f8.exe)
+
+running 3 tests
+test non_session_profile_rejects_host_collection_grants_before_opening_source_state ... ok
+test collection_grants_are_borrowed_per_dispatch_and_sources_remain_noncanonical ... ok
+test replacing_principal_policy_cancels_running_session_before_waiting_for_read_lease ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.73s
+
+     Running tests\mcp_http.rs (target\debug\deps\mcp_http-e26509408743c132.exe)
+
+running 18 tests
+test admission_caps_reject_declared_bodies_headers_deep_json_and_session_version_changes ... ok
+test already_started_runtime_initialization_expires_at_the_admitted_session_ttl ... ok
+test connection_close_reaches_eof_while_initialized_python_runtime_is_still_live ... ok
+test delete_rotation_revocation_and_shutdown_prove_each_owned_python_exit ... ok
+test explicit_browser_origin_preflight_and_auth_errors_preserve_exact_cors_scope ... ok
+test explicit_http_serena_runtime_persists_per_sid_and_rejects_foreign_session_labels ... ok
+test hostile_http_framing_origin_host_versions_and_json_are_rejected_before_sessions ... ok
+test http_python_cancellation_invalidates_lost_namespace_and_proves_process_exit ... ok
+test live_principal_rotation_and_host_profile_changes_invalidate_old_sessions ... ok
+test network_cancellation_interrupts_running_provider_and_shutdown_cleans_workers ... ok
+test queued_request_is_rechecked_after_current_principal_revocation ... ok
+test real_tcp_session_preserves_profile_initialization_and_closes_without_sse ... ok
+test real_tls_requires_pinned_trust_and_remote_binding_requires_explicit_tls ... ok
+test revoke_and_stop_cancel_runtime_during_initial_handshake ... ok
+test running_query_obeys_host_deadline_despite_client_timeout_and_returns_http_error ... ok
+test runtime_host_preflight_never_executes_and_other_profiles_cannot_attach_python ... ok
+test session_capacity_expiry_and_slow_connection_shutdown_are_bounded ... ok
+test stalled_runtime_initialization_obeys_ttl_and_shutdown_cancellation ... ok
+
+test result: ok. 18 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 25.81s
+

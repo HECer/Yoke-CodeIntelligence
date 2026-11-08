@@ -1,0 +1,32 @@
+    Finished `test` profile [unoptimized] target(s) in 1.25s
+     Running tests\container.rs (E:\Yoke-Build-Cache\meaning-aliases-20261016\debug\deps\container-68202891ec839f65.exe)
+
+running 7 tests
+test labeled_cli_creation_failure_preserves_daemon_diagnostics_without_a_passing_receipt ... ok
+test missing_trust_mutable_images_root_users_and_unavailable_docker_never_create_approval ... ok
+test real_daemon_digest_pinned_offline_container_verification ... ignored, Requires an explicitly supplied locally installed digest-pinned Linux image and live Docker daemon
+test labeled_cli_timeout_still_removes_exact_owned_container_and_never_passes ... ok
+test labeled_cli_fixture_requires_isolation_and_owned_cleanup_before_passing_receipt ... ok
+test labeled_cli_zero_tests_integrity_failure_and_cleanup_failure_are_failed_receipts ... ok
+test remote_daemon_or_conflicting_host_prefix_is_refused_before_any_cli_execution ... ok
+
+test result: ok. 6 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 26.88s
+
+     Running tests\contracts.rs (E:\Yoke-Build-Cache\meaning-aliases-20261016\debug\deps\contracts-0798b794d24c3dcf.exe)
+
+running 12 tests
+test graphql_and_protobuf_ignore_comment_and_description_headers ... ok
+test literal_ast_contracts_ignore_comments_strings_and_dynamic_arguments ... ok
+test a_root_manifest_does_not_merge_independent_service_scopes ... ok
+test duplicate_and_cross_service_contract_names_remain_unresolved ... ok
+test malformed_contract_documents_produce_diagnostics_instead_of_empty_success ... ok
+test openapi_operations_use_the_actual_nested_operation_key_after_unicode ... ok
+test prisma_fields_and_mapped_models_link_to_migrations_as_candidates ... ok
+test python_routes_and_rust_environment_calls_are_source_bound_without_execution ... ok
+test schema_body_braces_may_follow_the_name_on_another_line ... ok
+test quoted_sql_identifiers_are_not_keywords_and_json_duplicates_are_rejected ... ok
+test sql_comments_and_string_data_cannot_fabricate_migrations_or_accesses ... ok
+test typescript_jsonc_config_is_valid_but_openapi_json_remains_strict ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.32s
+

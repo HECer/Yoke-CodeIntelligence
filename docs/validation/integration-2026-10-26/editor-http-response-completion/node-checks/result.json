@@ -1,0 +1,28 @@
+{
+  "completed": true,
+  "scope": "exact-clean-test-boundary-diagnostic-source",
+  "parentHead": "771833bb5180f3d51e092e64de5fd22c783c920a",
+  "nativeImageRead": false,
+  "nativeImageExecuted": false,
+  "releaseQualification": false,
+  "checks": [
+    {
+      "name": "typecheck",
+      "exitCode": 0,
+      "naturalTreeExit": true
+    },
+    {
+      "name": "npm-test",
+      "exitCode": 0,
+      "naturalTreeExit": true
+    }
+  ],
+  "mutexAbandoned": false,
+  "sourceFiles": 1135,
+  "sourcesUnchanged": true,
+  "controlsUnchanged": true,
+  "driverSha256": "664feb952fdafdac4489ef1fbc110f30535d3f31e948836ac8f81fe31ea4fdd0",
+  "npmTestsPassed": 260,
+  "npmTestsSkipped": 3,
+  "cleanHeadVerified": true
+}

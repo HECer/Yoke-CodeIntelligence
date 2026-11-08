@@ -1,0 +1,374 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-19T02:42:16.476426+00:00",
+  "parentCommit": "7d69047d37db24ec94098bb6e68839c6e8cc5a22",
+  "accepted": false,
+  "broadLocalChecksPassed": false,
+  "followupChecksPassed": true,
+  "summary": {
+    "allChecksPassed": false,
+    "sourceUnchanged": true,
+    "checks": [
+      {
+        "gate": "format",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "fmt",
+          "--all",
+          "--check"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 4.74,
+        "recordedAt": "2026-10-19T02:34:34.368830+00:00",
+        "resultGroups": []
+      },
+      {
+        "gate": "process-and-repl",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "test",
+          "--locked",
+          "-j2",
+          "--test",
+          "process",
+          "--test",
+          "agent_repl",
+          "--",
+          "--test-threads=2"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 86.826,
+        "recordedAt": "2026-10-19T02:36:01.200705+00:00",
+        "resultGroups": [
+          {
+            "passed": 22,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 7,
+            "failed": 0,
+            "ignored": 0
+          }
+        ]
+      },
+      {
+        "gate": "short-temp-process-and-repl",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "test",
+          "--locked",
+          "-j2",
+          "--test",
+          "process",
+          "--test",
+          "agent_repl",
+          "--",
+          "--test-threads=2"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 5.854,
+        "recordedAt": "2026-10-19T02:36:07.055672+00:00",
+        "resultGroups": [
+          {
+            "passed": 22,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 7,
+            "failed": 0,
+            "ignored": 0
+          }
+        ]
+      },
+      {
+        "gate": "affected-runtime-contracts",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "test",
+          "--locked",
+          "-j2",
+          "--lib",
+          "--test",
+          "runtime",
+          "--test",
+          "debug_adapter",
+          "--test",
+          "lsp",
+          "--test",
+          "lsp_lifecycle",
+          "--test",
+          "lsp_source_execution",
+          "--test",
+          "media",
+          "--",
+          "--test-threads=2"
+        ],
+        "exitCode": 101,
+        "elapsedSeconds": 143.232,
+        "recordedAt": "2026-10-19T02:38:30.288094+00:00",
+        "resultGroups": [
+          {
+            "passed": 402,
+            "failed": 0,
+            "ignored": 7
+          },
+          {
+            "passed": 7,
+            "failed": 0,
+            "ignored": 1
+          },
+          {
+            "passed": 10,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 5,
+            "failed": 0,
+            "ignored": 2
+          },
+          {
+            "passed": 12,
+            "failed": 1,
+            "ignored": 0
+          }
+        ]
+      },
+      {
+        "gate": "clippy",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "clippy",
+          "--workspace",
+          "--all-targets",
+          "--locked",
+          "--keep-going",
+          "-j2",
+          "--",
+          "-D",
+          "warnings"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 90.918,
+        "recordedAt": "2026-10-19T02:40:01.206476+00:00",
+        "resultGroups": []
+      },
+      {
+        "gate": "typescript-typecheck",
+        "command": [
+          "npm.cmd",
+          "run",
+          "typecheck"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 5.851,
+        "recordedAt": "2026-10-19T02:40:07.058232+00:00",
+        "resultGroups": []
+      },
+      {
+        "gate": "typescript-tests",
+        "command": [
+          "npm.cmd",
+          "test"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 63.015,
+        "recordedAt": "2026-10-19T02:41:10.074218+00:00",
+        "resultGroups": []
+      }
+    ],
+    "scope": "Local Windows environment repair; hosted shell deadline cause and platform acceptance require fresh remote validation. Short-TEMP groups overlap normal-TEMP groups."
+  },
+  "followupSummary": {
+    "allChecksPassed": true,
+    "sourceUnchanged": true,
+    "sourceReference": "../windows-environment-r1/source-before.json",
+    "checks": [
+      {
+        "gate": "remaining-runtime",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "test",
+          "--locked",
+          "-j2",
+          "--test",
+          "runtime",
+          "--",
+          "--test-threads=2"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 6.518,
+        "recordedAt": "2026-10-19T02:41:26.692063+00:00",
+        "resultGroups": [
+          {
+            "passed": 14,
+            "failed": 0,
+            "ignored": 0
+          }
+        ]
+      },
+      {
+        "gate": "actual-installed-language-servers",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "test",
+          "--locked",
+          "-j2",
+          "--test",
+          "live",
+          "--",
+          "--ignored",
+          "--test-threads=2"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 40.327,
+        "recordedAt": "2026-10-19T02:42:07.019182+00:00",
+        "resultGroups": [
+          {
+            "passed": 4,
+            "failed": 0,
+            "ignored": 0
+          }
+        ]
+      }
+    ],
+    "scope": "Separate tests after the first command stopped at the original Windows OS1314 media fixture setup failure. No security fixture is suppressed."
+  },
+  "findings": [
+    "The reduced Windows environment omits SystemDrive before the patch. Both new process regressions fail before correction.",
+    "A real .NET Framework known-folder probe throws ArgumentException for CommonApplicationData/CommonOemLinks without SystemDrive. Adding only SystemDrive removes both errors; adding only PUBLIC does not.",
+    "PowerShell Write-Output is fast locally both before and after the change. The exact hosted 20-second Agent-REPL timeout is not reproduced here; a fresh hosted run is required to establish its outcome.",
+    "Seven native reduced-environment launchers now retain SystemDrive. Arbitrary inherited secrets stay filtered; explicit host environment removal and values retain precedence.",
+    "The unchanged media security fixture fails during real Windows symlink creation (OS1314). Cargo stopped that command before the runtime target; the latter and four actual installed-server gates are executed in the separate follow-up.",
+    "Short-TEMP test groups overlap normal-TEMP groups. Scoped tests do not establish whole-native, Linux/macOS, optional-provider or release acceptance."
+  ],
+  "artifacts": [
+    {
+      "path": "affected-runtime-contracts.log",
+      "bytes": 51890,
+      "sha256": "caaa6c3d857e30a6750e830d7c4dc1133b42ec433a46194e4f99126e68a68dbe"
+    },
+    {
+      "path": "clippy.log",
+      "bytes": 172,
+      "sha256": "f754e7a5fc54a0f5c186780883d64d1cfc9df811afd13986e3eec9054697ed46"
+    },
+    {
+      "path": "Folders.cs",
+      "bytes": 450,
+      "sha256": "94701271a664675dae26c53206046028db5f14c1b76ca18e7c5a777477f4d7ec"
+    },
+    {
+      "path": "followup/actual-installed-language-servers.log",
+      "bytes": 652,
+      "sha256": "7f1dddfe446b963e5e13b18f528180212d0f840496c851be1642a8b84d53cec2"
+    },
+    {
+      "path": "followup/receipts.json",
+      "bytes": 964,
+      "sha256": "02e22c08e965ff3e923139f71f8bcd94d1bed9e388e95e0659bca63fa5347f5a"
+    },
+    {
+      "path": "followup/remaining-runtime.log",
+      "bytes": 1300,
+      "sha256": "870b310740822b446fe931a56092bad5de3968dc16cb52709de62775c6a9204d"
+    },
+    {
+      "path": "followup/run-local-validation.py",
+      "bytes": 2655,
+      "sha256": "2706571bb475edecf7d93f62db67fb0a5f1f25a2800cc52a8daf57049bbd54dc"
+    },
+    {
+      "path": "followup/summary.json",
+      "bytes": 1361,
+      "sha256": "5ee45f7f5bfc1c364d22f168b88b0f689eafcf531dd343ddeb4ea6d0393ba95f"
+    },
+    {
+      "path": "format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "isolated-variable-results.json",
+      "bytes": 286,
+      "sha256": "71e097e41dd110b05e8c2e0be9f0e9faf9bb433ed3a561534cba43fa5740ea29"
+    },
+    {
+      "path": "process-and-repl.log",
+      "bytes": 2972,
+      "sha256": "f5f1aa2128edc21d641a53de8d47c66784e1c92de3cdaec233f4c9ed51429c01"
+    },
+    {
+      "path": "receipts.json",
+      "bytes": 3475,
+      "sha256": "a38ece32f5bed594ca28b4c8f68ef326a5d5b26d2acfcd1bddaec466aa5295db"
+    },
+    {
+      "path": "results.json",
+      "bytes": 1659,
+      "sha256": "b310c5ca8ea1c67a5682a056acdd288302d27bc0ac03d5de56d75d3f4a7c92c7"
+    },
+    {
+      "path": "run-local-validation.py",
+      "bytes": 3448,
+      "sha256": "d0ac2c63b6e22f5c772a752761daf52034ce7392542730c1722fc9f0eafa398e"
+    },
+    {
+      "path": "runtime-change.patch",
+      "bytes": 9153,
+      "sha256": "bdf44d6f0f9373d344e1a4cc29593c6f0db5938f7b4c27641dc9854b88ee6a47"
+    },
+    {
+      "path": "rust-before-fix-receipt.json",
+      "bytes": 260,
+      "sha256": "65bbe5e7511943f5e28a579304e17e185ef314d0de17d988f5b0b12ee1f95dcf"
+    },
+    {
+      "path": "rust-before-fix.log",
+      "bytes": 2265,
+      "sha256": "3460a35c4060b73cf2e207603c5e581a66bca2f7dd6b147f17d7531d5e476662"
+    },
+    {
+      "path": "short-temp-process-and-repl.log",
+      "bytes": 2860,
+      "sha256": "0a9df0e05501eb4b0f4e5f0c8747f76218bbf167b58a586c3b4e6eb5bebffdf4"
+    },
+    {
+      "path": "short-temp.json",
+      "bytes": 254,
+      "sha256": "f7b24206f6ba082d2de0fd7a81ed1a318d5dd624cbb8a9bc06bcaeebdc370f72"
+    },
+    {
+      "path": "source-after.json",
+      "bytes": 65939,
+      "sha256": "0bbbc75f91dfcf588c19b05f04c85140cb265608880ad831888da4155df1ac57"
+    },
+    {
+      "path": "source-before.json",
+      "bytes": 65939,
+      "sha256": "0bbbc75f91dfcf588c19b05f04c85140cb265608880ad831888da4155df1ac57"
+    },
+    {
+      "path": "summary.json",
+      "bytes": 4080,
+      "sha256": "ae62f3737d143c675a2d4bf82e0c13a27759bf609e9be8cec3e0a77a6d58d694"
+    },
+    {
+      "path": "typescript-tests.log",
+      "bytes": 25041,
+      "sha256": "fbf58e6c23380b6ebf0caf2f8ff3b85f093ec7c2a6bb225f9a5371aea73b5e57"
+    },
+    {
+      "path": "typescript-typecheck.log",
+      "bytes": 101,
+      "sha256": "30ef9ce16cf042ab6f160e0a76c1fbfe22f02a3c3a3659ee62863ffc1efdbfdf"
+    }
+  ]
+}

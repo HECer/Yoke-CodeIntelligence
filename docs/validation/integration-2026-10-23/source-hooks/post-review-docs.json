@@ -1,0 +1,45 @@
+{
+  "sourceCommit": "8966d8cad00b4ddcd9549d86b86a3564815107a0",
+  "qualifiedFrozenInputs": 1075,
+  "changedFrozenInputs": {
+    "docs/REMAINING_WORK.md": {
+      "before": "dfe026aded587c57265ed0e1cc310d4778dabc75a2c140f61a3ae332a45b9310",
+      "after": "8603fcee506eea23aa301f8c9e1c9167127df06a4738f1497737a49561776210"
+    },
+    "docs/STATUS.md": {
+      "before": "331364c8db170251f0408ca4a3f453e782b44b5fae52fbe6ab2045e15a4d9ae2",
+      "after": "efe4d2071a13eec90b7f632a7ff9a2a56e341968f3d32156c5ff5b74617126ce"
+    },
+    "docs/parity/native-reconciliation-2026-10-15.json": {
+      "before": "450feb2586cfeda74a7058e8ca93f3771dbbc3c07ec85d30e1fa579822af3aa0",
+      "after": "d3566a75f8a1a01580e929c53b5085f0f7713d332be27079ba7dd63b34508851"
+    },
+    "native/docs/host-install.md": {
+      "before": "8734fa78a7561935462b6090f8d51cbefc683856beb8771f3f22a884c7e5cf3a",
+      "after": "f689919f0c98d030941d6985603e45f9f6f8109e0c79431dbb7ae5eb62395fab"
+    }
+  },
+  "onlyDocumentationChangedAfterQualification": true,
+  "addedContractDocument": "native/docs/claude-source-hooks.md",
+  "newEvidenceDocuments": [
+    "README.md",
+    "index.json",
+    "raw.zip",
+    "post-review-docs.json"
+  ],
+  "productGitBlobsExact": {
+    "native/src/claude_source_hook_cli.rs": "07d655f567ea7aab77e7af3eb3fe19e391e4fd5f",
+    "native/src/host_config.rs": "61d9cc3b44203a17d1ca091d300bc994221de34b",
+    "native/src/host_config_claude_hooks.rs": "2c4270eff299ac9d0489ba311ee6b797a906495c",
+    "native/src/host_install.rs": "d7d3160be7f54fb00112ff8084b9c7d4c9d03065",
+    "native/src/host_install_adapter.rs": "1fddeb5a252e141bf505d4e8bc46ec2fb8b907b8",
+    "native/src/host_install_cli.rs": "9b4db61e3e2df53276703ec9ed084762fd4c9ceb",
+    "native/src/host_install_source_hooks.rs": "560f2fc6c5547746dfaa662539993ce8686b7cbf",
+    "native/src/host_install_source_status.rs": "5ab63755a4614d19ed05b465ebc33ea2b9a42398",
+    "native/src/main.rs": "0bc529c3d93b75d89814c119040fcab3bb5ccc63",
+    "native/tests/claude_source_hooks.rs": "44306f841521070486f0671fd01cdb3b054e8963"
+  },
+  "originalLedgerSummaryAndAllExistingReconciliationFieldsExact": true,
+  "testsRerunAfterDocumentation": false,
+  "addedContractDocumentSha256": "425bfd3b821c7d8725bb8d0c0dc6118fbc664a23f8976939eae9679baebcb974"
+}

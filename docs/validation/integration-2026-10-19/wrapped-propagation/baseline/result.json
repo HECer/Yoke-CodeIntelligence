@@ -1,0 +1,38 @@
+{
+  "sourceUnchanged": true,
+  "inputs": 736,
+  "commands": [
+    {
+      "name": "native",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--no-fail-fast",
+        "--test",
+        "propagated_delete_contract",
+        "--",
+        "--test-threads=1",
+        "wrapped_policy_removes_only_complete_parenthesized_await_and_void_statements"
+      ],
+      "exitCode": 101,
+      "seconds": 26.73519569999189,
+      "totals": {
+        "passed": 0,
+        "failed": 1,
+        "ignored": 0
+      },
+      "groups": 1,
+      "failures": [
+        "wrapped_policy_removes_only_complete_parenthesized_await_and_void_statements"
+      ]
+    }
+  ],
+  "allChecksPassed": false,
+  "wholeNativeRerun": false
+}

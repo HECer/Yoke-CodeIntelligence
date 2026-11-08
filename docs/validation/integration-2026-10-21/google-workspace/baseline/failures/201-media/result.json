@@ -1,0 +1,79 @@
+{
+  "group": "media",
+  "index": 201,
+  "freeBytesBefore": 3287666688,
+  "commands": [
+    {
+      "name": "compile",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--test",
+        "media",
+        "--no-run",
+        "--message-format=json-render-diagnostics"
+      ],
+      "exitCode": 0,
+      "seconds": 5.751710100012133
+    },
+    {
+      "name": "test",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--test",
+        "media",
+        "--no-fail-fast",
+        "--",
+        "--test-threads=1"
+      ],
+      "exitCode": 101,
+      "seconds": 6.363306699990062
+    }
+  ],
+  "deletedNewTestArtifacts": [
+    {
+      "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\media-c3510bf242d2afd5.exe",
+      "bytes": 109963264,
+      "sha256": "e09cb600494d4a69fd253a38534e4f5baead9bfebe22fefb9a1c90526ca45b1c",
+      "deleted": true
+    },
+    {
+      "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\media-c3510bf242d2afd5.pdb",
+      "bytes": 16035840,
+      "sha256": "abe2db9ce1a8ac5e6ce0b0b90486f9a5be5c27a0e9c58f1d9bef3f2eaf828186",
+      "deleted": true
+    }
+  ],
+  "testExecutables": [
+    {
+      "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\media-c3510bf242d2afd5.exe",
+      "sha256": "e09cb600494d4a69fd253a38534e4f5baead9bfebe22fefb9a1c90526ca45b1c",
+      "existedBefore": false
+    }
+  ],
+  "totals": {
+    "passed": 12,
+    "failed": 1,
+    "ignored": 0
+  },
+  "resultGroups": 1,
+  "failures": [
+    "media_cannot_bypass_source_scope_links_ignore_or_protected_paths"
+  ],
+  "allChecksPassed": false,
+  "sourceUnchanged": true,
+  "freeBytesAfter": 3287687168
+}

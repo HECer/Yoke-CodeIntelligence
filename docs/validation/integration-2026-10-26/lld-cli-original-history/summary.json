@@ -1,0 +1,161 @@
+{
+  "schema": 1,
+  "scope": "E89 Windows fixed final-bin LLD CLI, matching version and original archive history only",
+  "sourceCommit": "e89ae42cbb925a9e0cf6f36d9d451f34d0ac6f6e",
+  "compilerGuards": {
+    "passed": 50,
+    "failed": 0,
+    "skipped": 0
+  },
+  "historyGuards": {
+    "passed": 41,
+    "failed": 0,
+    "skipped": 0
+  },
+  "producer": {
+    "run": "release-cli-compiler-lld-e89-r1",
+    "owner": "integration-20261026-compiler-lld-v1",
+    "completed": true,
+    "seconds": 505.3784010999989,
+    "innerPostCargoQuiescenceSeconds": 0.0104588,
+    "naturalRootAndJobsBeforeCleanup": true,
+    "image": {
+      "path": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-e89-r1\\owned-release-cli.exe",
+      "sha256": "6a642395eef5fef74c2bdda8730fc68b996bf8a38a0136cd27df054b8c50d1e6",
+      "fileIdentity": [
+        5078471845122615367,
+        281474980425018
+      ],
+      "bytes": 142666240,
+      "mtimeNs": 1792994292562241400,
+      "links": 1,
+      "noReparseAncestors": true,
+      "writersAndDeletionDeniedThroughRecheck": true
+    },
+    "sourceInputCount": 1050,
+    "selectedArtifactFresh": false,
+    "profile": {
+      "opt_level": "3",
+      "debuginfo": 0,
+      "debug_assertions": false,
+      "overflow_checks": false,
+      "test": false
+    },
+    "manifestReleaseProfile": {
+      "lto": "thin",
+      "codegen-units": 1,
+      "strip": "symbols"
+    }
+  },
+  "version": {
+    "run": "release-cli-compiler-lld-version-e89-r1",
+    "observed": "yoke 0.5.0",
+    "matchingSourceAndToolProofs": true
+  },
+  "history": {
+    "owner": "local-original-archive-history-lld-consumer-v1",
+    "schema": 1,
+    "sourceCommit": "e89ae42cbb925a9e0cf6f36d9d451f34d0ac6f6e",
+    "runId": "original-history-lld-e89-r1",
+    "producerRunId": "release-cli-compiler-lld-e89-r1",
+    "versionRunId": "release-cli-compiler-lld-version-e89-r1",
+    "completed": true,
+    "nativeImageReadAttempted": true,
+    "nativeImageRead": true,
+    "nativeExecutionRequested": true,
+    "localAcceptanceOnly": true,
+    "ownerRetirementQualification": false,
+    "archivePurgeQualification": false,
+    "nativeBrowserAcceptanceClaimed": false,
+    "releaseQualification": false,
+    "vsixQualification": false,
+    "sourceInputsUnchanged": true,
+    "protectedMetadataUnchanged": true,
+    "allOriginalRecordsIndependentlyReadBack": true,
+    "treeExitedBeforeCleanup": true,
+    "matchingVersionReceiptAdmitted": true,
+    "failureCode": null,
+    "phase": "complete",
+    "nativeSha256": "6a642395eef5fef74c2bdda8730fc68b996bf8a38a0136cd27df054b8c50d1e6",
+    "variants": [
+      {
+        "variant": "native",
+        "packages": [
+          {
+            "frameSha256": "e7aaa3ab1bedf8f99404afd724841d922b4bb5e2907b80112ce8764bedeb3fa0",
+            "records": 28
+          },
+          {
+            "frameSha256": "3656b228b2ac708be35009d0a6f5a390aed5db6e520424455e7993df0df85395",
+            "records": 14
+          }
+        ],
+        "originalRecordsReadBack": 42,
+        "bothSessionExitsBeforeCleanup": true,
+        "persistentRuntimeExitBeforeCleanup": false
+      },
+      {
+        "variant": "serena",
+        "packages": [
+          {
+            "frameSha256": "7a5c1778915683949e6fdf0c62a382526fac6191e6a5c0ddb9e5cfb571a9cd87",
+            "records": 28
+          },
+          {
+            "frameSha256": "e4118ab5eef9f7ce26b0d7a918201c4fe89e8f02ad5dc2dbcbc21eb58447bdc6",
+            "records": 14
+          }
+        ],
+        "originalRecordsReadBack": 42,
+        "bothSessionExitsBeforeCleanup": true,
+        "persistentRuntimeExitBeforeCleanup": false
+      },
+      {
+        "variant": "persistent-python",
+        "packages": [
+          {
+            "frameSha256": "747973c59fddbef4862c8b32faa2b2666d2d41dbba7c3150076e78469f6c6da2",
+            "records": 28
+          },
+          {
+            "frameSha256": "e5ec25f9ba62e1c708720d8a6a72840acc0a839a47d5362f48382b577be7fd53",
+            "records": 14
+          }
+        ],
+        "originalRecordsReadBack": 42,
+        "bothSessionExitsBeforeCleanup": true,
+        "persistentRuntimeExitBeforeCleanup": true
+      }
+    ],
+    "producerSourceInputCount": 1050,
+    "historySourceInputCount": 1087,
+    "originalControlCount": 7,
+    "transactionControlCount": 11,
+    "legacyHistoryControlCount": 5,
+    "consumerControlCount": 5,
+    "harnessSourceCount": 2
+  },
+  "unchangedBudgets": {
+    "buildSeconds": 3600,
+    "innerNaturalQuiescenceSeconds": 60,
+    "outerNaturalDrainSeconds": 1,
+    "soleAbortSeconds": 2,
+    "startFreeBytes": 4000000000,
+    "reserveBytes": 500000000,
+    "imageAdmissionBytes": 1200000000,
+    "imageCapBytes": 512000000
+  },
+  "limitations": [
+    "Default target and external tool/dependency caches remain trusted; no exhaustive build-input attestation or exclusive helper-cause claim.",
+    "Tool imageExecuted:false is scoped to metadata-pin operation; Cargo invokes the selected linker. No linker image bytes read or hashed by pin.",
+    "Old E89 MSVC producers remain failed/unread/unadopted.",
+    "Compiler README is historical v2; new manifest/code define LLD. Denied optional metadata-scope/README changes were not performed.",
+    "Private frames/source/config bodies/capability logs and raw private worker output are excluded; public summaries cannot reconstruct those frames.",
+    "Initial evidence export r1 stopped on its own one-MB text cap before a ZIP existed. R2 uses the original two-MB Git-list cap only for named Git/history file listings; runtime guards unchanged.",
+    "New runtime response-boundary fixes and fresh unit validation are separate pending work."
+  ],
+  "currentHeadAcceptance": false,
+  "newVsixQualification": false,
+  "releaseQualification": false,
+  "wholeProjectComplete": false
+}

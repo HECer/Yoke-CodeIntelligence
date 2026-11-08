@@ -1,0 +1,173 @@
+{
+  "sourceCommit": "98ffa7824a696c53cfa8b4bdb9ecc49cf60bcb9a",
+  "registeredGroups": 320,
+  "completedGroups": 320,
+  "frozenInputs": 1002,
+  "sourceUnchanged": true,
+  "cliUnchanged": true,
+  "toolsUnchanged": true,
+  "totals": {
+    "passed": 2991,
+    "failed": 10,
+    "ignored": 53
+  },
+  "examplesBuild": {
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "build",
+      "--workspace",
+      "--locked",
+      "-j",
+      "2",
+      "--target-dir",
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+      "--examples"
+    ],
+    "exitCode": 0,
+    "seconds": 6.3927062999864575,
+    "exampleCodeExecuted": false
+  },
+  "runtimeFailures": [
+    {
+      "group": "adversarial",
+      "test": "sqlite_sidecar_links_cannot_rewrite_files_outside_state",
+      "originalFixtureCase": true,
+      "os1314": true
+    },
+    {
+      "group": "facade_file_delete",
+      "test": "source_symlink_cannot_redirect_a_forced_file_deletion",
+      "originalFixtureCase": true,
+      "os1314": true
+    },
+    {
+      "group": "federation",
+      "test": "receiver_ignore_excludes_links_and_remote_policy_text_cannot_change_host_authority",
+      "originalFixtureCase": true,
+      "os1314": true
+    },
+    {
+      "group": "feedback_cli",
+      "test": "windows_host_aliases_cannot_read_protected_files_or_alternate_streams",
+      "originalFixtureCase": true,
+      "os1314": true
+    },
+    {
+      "group": "git_affected_cli",
+      "test": "affected_options_leaf_and_ancestor_reparse_points_refuse_after_real_options_success",
+      "originalFixtureCase": true,
+      "os1314": true
+    },
+    {
+      "group": "git_impact_details_cli",
+      "test": "windows_real_options_file_and_ancestor_reparse_points_refuse_after_genuine_positive",
+      "originalFixtureCase": true,
+      "os1314": true
+    },
+    {
+      "group": "graph_collections",
+      "test": "collection_sqlite_sidecars_cannot_write_through_links",
+      "originalFixtureCase": true,
+      "os1314": true
+    },
+    {
+      "group": "maintenance",
+      "test": "blob_links_are_refused_and_external_targets_are_preserved",
+      "originalFixtureCase": true,
+      "os1314": true
+    },
+    {
+      "group": "meaning_archive_cli",
+      "test": "existing_output_file_directory_and_hardlink_are_never_overwritten",
+      "originalFixtureCase": true,
+      "os1314": true
+    },
+    {
+      "group": "media",
+      "test": "media_cannot_bypass_source_scope_links_ignore_or_protected_paths",
+      "originalFixtureCase": true,
+      "os1314": true
+    }
+  ],
+  "originalFixtureSourceFiles": [
+    {
+      "path": "native/tests/adversarial.rs",
+      "gitBlobBytes": 11248,
+      "sha256": "589a4128dcf66f616dbda476fab062a169d8c22d63c0e9f086fde09ee91096d7",
+      "byteExactBetweenSourceCommits": true
+    },
+    {
+      "path": "native/tests/facade_file_delete.rs",
+      "gitBlobBytes": 17307,
+      "sha256": "51fc3754cf5963b0c5651ce35be7d9bdd93ecd3e3dbc15d971a971308c72f4d3",
+      "byteExactBetweenSourceCommits": true
+    },
+    {
+      "path": "native/tests/federation.rs",
+      "gitBlobBytes": 24995,
+      "sha256": "821f710fba665655bff235079aa54b582125c13a5a790d3c5bfdd8a4661a04ac",
+      "byteExactBetweenSourceCommits": true
+    },
+    {
+      "path": "native/tests/feedback_cli.rs",
+      "gitBlobBytes": 38312,
+      "sha256": "7c6005fe8014f42b3e2c7d27a513011dc09a2732ab5f4af02eb370bb6a5f1e97",
+      "byteExactBetweenSourceCommits": true
+    },
+    {
+      "path": "native/tests/git_affected_cli.rs",
+      "gitBlobBytes": 17753,
+      "sha256": "cc505044835c6cf3ae9777c3233f74a1e28e6d0ad0737fc482dce0718a978ef1",
+      "byteExactBetweenSourceCommits": true
+    },
+    {
+      "path": "native/tests/git_impact_details_cli.rs",
+      "gitBlobBytes": 38731,
+      "sha256": "72b98fbce4943f31583b36fcbd23dd4b219b4f193698f650340580babcd9af10",
+      "byteExactBetweenSourceCommits": true
+    },
+    {
+      "path": "native/tests/graph_collections.rs",
+      "gitBlobBytes": 30742,
+      "sha256": "c40e82d41f164f2c304e1bc70f1355a63bd58e6e12ea5820b774cff775e92a58",
+      "byteExactBetweenSourceCommits": true
+    },
+    {
+      "path": "native/tests/maintenance.rs",
+      "gitBlobBytes": 11069,
+      "sha256": "c5d23438f512a3696bef5d2b2c2f7b743439c9a9c52023a217f1883645201148",
+      "byteExactBetweenSourceCommits": true
+    },
+    {
+      "path": "native/tests/meaning_archive_cli.rs",
+      "gitBlobBytes": 19545,
+      "sha256": "bb0b4639a1ecde3d3516f88b562f088b8502aa3ae419182227d774ad61a486af",
+      "byteExactBetweenSourceCommits": true
+    },
+    {
+      "path": "native/tests/media.rs",
+      "gitBlobBytes": 25875,
+      "sha256": "1324fe40913df0e5f26049ed39ac698edadf31accebe2a5a32bceccc82a0d5c7",
+      "byteExactBetweenSourceCommits": true
+    }
+  ],
+  "compileFailures": [],
+  "unexplainedRuntimeFailures": [],
+  "unexplainedCommandFailures": [],
+  "allRuntimeFailuresMatchPriorOs1314Fixtures": true,
+  "ignoredCases": 53,
+  "actualJunctionSecurityCasesPassed": [
+    {
+      "group": "decision_records",
+      "test": "windows_junction_parents_cannot_redirect_import_or_export"
+    },
+    {
+      "group": "facade_directory_move",
+      "test": "an_actual_unprivileged_junction_refuses_before_provider_start"
+    }
+  ],
+  "userSettingDecision": "continue_without_enabling_developer_mode",
+  "rawLogsUnmodified": true,
+  "fullWindowsCertified": false,
+  "fullStatusCertified": false
+}

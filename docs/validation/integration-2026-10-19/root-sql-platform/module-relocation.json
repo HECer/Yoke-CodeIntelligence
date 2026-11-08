@@ -1,0 +1,9 @@
+{
+  "file": "native/src/project_session.rs",
+  "beforeSha256": "f3ee5d3840b8320a2c3fbbb845f51835b6927d795b4736e53857c3ea8e93fe53",
+  "afterSha256": "52b842f9c04a9a097e88ab4a9893d32dfed62e782b5b37a4dd2d60a00a0addcd",
+  "testModuleSha256": "4607992fc7e19a82b6388398e3f5bc1dc861f6b823a30f6607e71a3340338d73",
+  "proof": "Exact prior-source reconstruction by relocating the unchanged trailing cfg(test) root_spelling_tests module before fn label; no other non-test content changed",
+  "priorGapBeforeLines": 1,
+  "priorGapAfterLines": 0
+}

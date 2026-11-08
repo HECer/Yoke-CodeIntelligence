@@ -1,0 +1,18 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 22s
+     Running tests\git_owners.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\git_owners-3b54c702c2046e09.exe)
+
+running 10 tests
+test base_and_head_rules_stay_qualified_and_live_rule_changes_cannot_override_them ... ok
+test caller_transaction_sql_length_cancellation_and_deadline_are_preserved ... ok
+test cli_is_offline_readonly_and_uses_exact_newline_inclusive_output_budget ... ok
+test explicit_empty_rule_has_its_own_exact_quote_and_preserves_legacy_parent ... ok
+test first_captured_path_precedence_and_uncaptured_higher_rules_remain_visible ... ok
+test independent_rule_budgets_are_exact_and_zero_never_means_default ... ok
+test invalid_options_unknown_protocol_fields_and_missing_store_cannot_initialize_state ... ok
+test same_label_from_distinct_rules_keeps_each_path_and_original_token_range ... ok
+test tampered_rule_cas_refuses_without_empty_or_live_fallback ... ok
+test unsupported_active_rules_remain_indeterminate_with_all_supported_matches_visible ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.93s
+

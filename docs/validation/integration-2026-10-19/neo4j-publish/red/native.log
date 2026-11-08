@@ -1,0 +1,22 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 48s
+     Running tests\neo4j_publish.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\neo4j_publish-491c3a1e96396b67.exe)
+
+running 1 test
+test verified_payload_preserves_parallel_directions_exact_evidence_and_original_source_bytes ... FAILED
+
+failures:
+
+---- verified_payload_preserves_parallel_directions_exact_evidence_and_original_source_bytes stdout ----
+
+thread 'verified_payload_preserves_parallel_directions_exact_evidence_and_original_source_bytes' (19184) panicked at native\tests\neo4j_publish.rs:33:6:
+called `Result::unwrap()` on an `Err` value: neo4j_publish_unavailable
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    verified_payload_preserves_parallel_directions_exact_evidence_and_original_source_bytes
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s
+
+error: test failed, to rerun pass `--test neo4j_publish`

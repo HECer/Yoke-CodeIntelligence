@@ -1,0 +1,38 @@
+{
+  "scoped_parent_performance": {
+    "executable": "target\\debug\\deps\\scoped_parent_performance-d7d573f20e7ab13e.exe",
+    "ignored": [],
+    "registered": [
+      "wide_comment_siblings_preserve_source_facts_within_the_request_deadline"
+    ]
+  },
+  "scoped_resolution": {
+    "executable": "target\\debug\\deps\\scoped_resolution-1bfc4b64fd13bc76.exe",
+    "ignored": [],
+    "registered": [
+      "a_rebound_receiver_in_a_conditional_branch_cannot_keep_a_definite_type_candidate",
+      "containers_and_function_return_annotations_cannot_be_used_as_receiver_types",
+      "destructured_locals_cannot_be_replaced_by_an_unrelated_global_function",
+      "embedded_typescript_imports_bind_using_the_embedded_language_family",
+      "explicit_interface_method_declarations_are_candidates_with_exact_signatures",
+      "extends_and_implements_remain_distinct_and_inherited_member_calls_are_candidates",
+      "grouped_rust_imports_can_select_symbols_from_inline_modules",
+      "identical_methods_in_separate_namespaces_do_not_cross_bind",
+      "imported_aliases_select_the_declared_module_instead_of_another_same_named_symbol",
+      "imported_receiver_types_and_constructor_fields_stay_in_the_imported_class",
+      "java_explicit_receiver_cannot_bind_to_the_callers_own_same_named_method",
+      "keyword_argument_and_object_key_spelling_are_not_symbol_references",
+      "lexical_shadowing_and_reassignment_block_unique_global_name_guesses",
+      "multiline_signatures_preserve_the_complete_header_without_the_body",
+      "named_reexports_follow_the_captured_module_chain",
+      "namespace_import_member_calls_and_non_call_references_keep_exact_utf8_anchors",
+      "nested_functions_reference_the_nearest_lexical_function",
+      "relative_module_paths_that_escape_the_captured_root_remain_unresolved",
+      "rust_future_non_hoisted_let_binding_does_not_shadow_an_earlier_call",
+      "rust_impl_receivers_and_explicit_type_paths_bind_to_the_same_method_owner",
+      "shared_inheritance_paths_cannot_amplify_work_past_the_original_request_budget",
+      "typed_receivers_do_not_cross_bind_methods_with_the_same_name",
+      "union_receiver_candidates_preserve_parallel_possible_dispatch"
+    ]
+  }
+}

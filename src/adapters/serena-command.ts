@@ -1,6 +1,7 @@
 import { randomUUID } from 'node:crypto';
 import { join } from 'node:path';
-import { readFileSync, existsSync, lstatSync, rmSync } from 'node:fs';
+import { readFileSync, existsSync, lstatSync } from 'node:fs';
+import { rm } from 'node:fs/promises';
 import { CodeIntelligence } from '../engine.js';
 import { Workspace } from '../core/workspace.js';
 import { FileEdit } from '../core/types.js';
@@ -68,6 +69,6 @@ export async function runSerena(engine: CodeIntelligence, mode: 'capabilities' |
     }
     finally {
         adapter.close();
-        rmSync(dir, { recursive: true, force: true, maxRetries: 3, retryDelay: 50 });
+        await rm(dir, { recursive: true, force: true, maxRetries: 20, retryDelay: 100 });
     }
 }

@@ -1,0 +1,35 @@
+    Finished `test` profile [unoptimized] target(s) in 0.74s
+     Running tests\federation.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\federation-7b5a146e77cd3691.exe)
+
+running 13 tests
+test canonical_editor_overlays_round_trip_without_saved_source_or_reexport_authority ... ok
+test correctly_signed_malicious_sources_still_fail_receiver_safety_policy ... ok
+test corrupt_remote_graph_cannot_be_returned_as_a_successful_empty_index ... ok
+test granted_foreign_search_reuses_verified_sources_without_native_publication ... ok
+test host_exclude_patterns_cannot_be_bypassed_with_path_case_aliases ... ok
+test nonce_reuse_expired_import_and_current_grant_revocation_are_distinct ... ok
+test receiver_effective_ignore_precedence_handles_virtual_paths_and_whitelists ... ok
+test receiver_ignore_excludes_links_and_remote_policy_text_cannot_change_host_authority ... FAILED
+test signed_sources_are_separate_immutable_and_locally_reindexed_without_source_writes ... ok
+test source_namespace_capacity_accounts_for_every_file_in_prior_receipts ... ok
+test sqlite_writer_contention_consumes_only_the_remaining_import_deadline ... ok
+test tampered_bytes_signatures_scope_and_workspace_are_rejected_before_persistence ... ok
+test valid_signature_does_not_authorize_protected_secret_binary_or_colliding_source ... ok
+
+failures:
+
+---- receiver_ignore_excludes_links_and_remote_policy_text_cannot_change_host_authority stdout ----
+
+thread 'receiver_ignore_excludes_links_and_remote_policy_text_cannot_change_host_authority' (27720) panicked at native\tests\federation.rs:303:6:
+called `Result::unwrap()` on an `Err` value: Os { code: 1314, kind: Uncategorized, message: "Dem Client fehlt ein erforderliches Recht." }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    receiver_ignore_excludes_links_and_remote_policy_text_cannot_change_host_authority
+
+test result: FAILED. 12 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.34s
+
+error: test failed, to rerun pass `--test federation`
+error: 1 target failed:
+    `--test federation`

@@ -1,0 +1,83 @@
+    Finished `test` profile [unoptimized] target(s) in 0.71s
+     Running tests\meaning_archive_cli.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\meaning_archive_cli-6b0740a70c15a6fa.exe)
+
+running 10 tests
+test duplicate_malformed_and_over_budget_bytes_cannot_initialize_a_registry ... ok
+test existing_output_file_directory_and_hardlink_are_never_overwritten ... FAILED
+test export_refuses_incomplete_store_without_initializing_any_state ... ok
+test inspect_supplied_bytes_is_storeless_and_emits_unknown_metadata_without_quotes ... ok
+test invalid_budgets_and_missing_existing_store_fail_before_filesystem_initialization ... ok
+test permission_and_explicit_cas_precede_any_input_or_registry_creation ... ok
+test published_view_export_preserves_full_typed_archive_without_source_publication ... ok
+test source_provider_flags_are_rejected_without_reading_selected_files ... ok
+test stdout_loss_reports_already_durable_registration_and_output_archive_identities ... ok
+test typed_registration_cas_and_load_keep_exact_bytes_after_all_original_state_is_removed ... ok
+
+failures:
+
+---- existing_output_file_directory_and_hardlink_are_never_overwritten stdout ----
+
+thread 'existing_output_file_directory_and_hardlink_are_never_overwritten' (18580) panicked at native\tests\meaning_archive_cli.rs:381:60:
+called `Result::unwrap()` on an `Err` value: Os { code: 1314, kind: Uncategorized, message: "Dem Client fehlt ein erforderliches Recht." }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    existing_output_file_directory_and_hardlink_are_never_overwritten
+
+test result: FAILED. 9 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 11.02s
+
+error: test failed, to rerun pass `--test meaning_archive_cli`
+     Running tests\meaning_cli.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\meaning_cli-5d8e7c06959aee42.exe)
+
+running 13 tests
+test meaning_alias_cli_replays_exact_graph_without_provider_source_capture_or_writes ... ok
+test meaning_alias_limits_fail_before_creating_state ... ok
+test meaning_cli_admits_the_entire_selection_and_cost_before_first_worker ... ok
+test meaning_cli_build_reference_is_bounded_and_graph_reads_never_create_overflow_artifacts ... ok
+test meaning_cli_builds_queries_and_reuses_immutable_receipts_without_read_time_execution ... ok
+test meaning_cli_failed_later_claim_keeps_billing_and_no_partial_publication ... ok
+test meaning_cli_output_pipe_loss_reports_the_already_durable_job_and_graph ... ok
+test meaning_cli_read_commands_require_existing_store_and_reject_execution_configuration ... ok
+test meaning_cli_rejects_ambiguous_host_json_and_invalid_output_budget_before_state ... ok
+test meaning_cli_requires_explicit_provider_permission_before_opening_source_state ... ok
+test meaning_group_cli_rejects_ambiguous_host_review_and_limits_before_store_creation ... ok
+test meaning_group_cli_replays_parent_and_preserves_all_sql_cas_and_original_claims ... ok
+test meaning_group_cli_requires_existing_store_and_refuses_capture_or_execution_flags ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 6.03s
+
+     Running tests\meaning_groups_admission.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\meaning_groups_admission-4e7ce53475b6f6a6.exe)
+
+running 7 tests
+test meaning_group_admission_every_hard_limit_and_all_zero_capacities_are_checked ... ok
+test meaning_group_admission_library_serialized_review_is_bounded_before_parent_loading ... ok
+test meaning_group_admission_nested_unknown_fields_and_duplicate_json_keys_refuse ... ok
+test meaning_group_admission_oversized_blank_rationale_hits_byte_guard_before_trimming ... ok
+test meaning_group_admission_per_group_member_limit_is_independent_of_total_capacity ... ok
+test meaning_group_admission_rationale_limit_counts_exact_utf8_bytes ... ok
+test meaning_group_admission_zero_output_is_a_valid_capacity ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+
+     Running tests\meaning_join_cli.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\meaning_join_cli-3b172059ae4aa7bd.exe)
+
+running 13 tests
+test checked_lookup_degrees_and_directed_trace_keep_selfloops_and_raw_slot_counts ... ok
+test compact_utf8_hash_oracle_binds_membership_policy_and_projection_independently ... ok
+test empty_join_groups_keep_equal_labels_and_cross_graph_references_distinct ... ok
+test exact_joint_input_capacity_and_representative_changes_preserve_logical_membership ... ok
+test join_and_checked_queries_honor_expired_and_shared_cancelled_deadlines_without_writes ... ok
+test join_capacities_and_exact_output_newline_refuse_the_whole_request_without_publication ... ok
+test join_global_capture_and_execution_flags_refuse_with_valid_registered_parents ... ok
+test join_host_admission_precedes_missing_or_incomplete_store_initialization ... ok
+test join_order_and_host_member_order_do_not_change_projection_bytes_or_identity ... ok
+test join_refuses_forged_pins_unselected_members_and_tampered_parent_receipts ... ok
+test joined_graphs_retain_all_original_claims_directed_copies_slots_and_receipts_without_live_source ... ok
+test library_replay_restores_sqlite_limits_and_respects_an_existing_read_transaction ... ok
+test malformed_join_queries_refuse_before_creating_workspace_state ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 19.80s
+
+error: 1 target failed:
+    `--test meaning_archive_cli`

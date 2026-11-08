@@ -1,0 +1,79 @@
+{
+  "schema": "native_dashboard_language_selection_partial_acceptance_v1",
+  "product": "Code Intelligence",
+  "version": "0.5.0",
+  "productCommit": "4d353f0a9c0e31da3e0888b7990f84be8d06dce3",
+  "productRemoteBlobsVerified": 8,
+  "finalCheckedSourceInputs": 1134,
+  "sourceInputManifestSha256": "2458f8ef6104220481d4a8f805427ba6f05f7717272bd7954071c444a1db85a4",
+  "finalWholeLibraryPassed": 600,
+  "existingLibraryIgnored": 7,
+  "finalLibraryFailed": 0,
+  "finalLibraryFiltered": 0,
+  "allTargetClippyWarningsDenied": true,
+  "formatCargoRoots": 368,
+  "typescriptTypecheck": true,
+  "typescriptPassed": 260,
+  "typescriptExistingSkips": 3,
+  "earlierWholeManagementPassed": 13,
+  "earlierWholeManagementIsNotFinalSource": true,
+  "earlierToFinalDelta": {
+    "native/src/compatibility.rs": {
+      "tested13": "60161f20ea53c45e65a51008c1d1eb1b7f1ac677d74a270015682b83938a30f7",
+      "final": "490247050fc6f4d8a247a24776c22af2683e7e043aad22103f3bef342d1f425b"
+    },
+    "native/src/session_dashboard.html": {
+      "tested13": "09acb92e1f2dd1d6be2074b61cc196e227c913fa6ad6f1391f4e8395579939d5",
+      "final": "b4350b1a3b0c116305637083e65ac8189f974bfad4257163e90cfbf28bfe4e67"
+    },
+    "native/src/session_dashboard.rs": {
+      "tested13": "7484c8f0d5ec377346153173d6d8bf515471c281c553371d105f064c437be2cd",
+      "final": "7c400b47fcc8b7e5e707485041635fa34075136f3c2ee4af679bc05104084649"
+    },
+    "native/src/session_dashboard_languages.rs": {
+      "tested13": "d6db7995a7f621ad171efb2e374e8e07bc6a3c5610bbf1673ba31996f9d80bac",
+      "final": "9a31a4fc1da5103d079893a240be61fb6bd55e22d263846059817659eb06fbb2"
+    },
+    "native/src/session_dashboard_session.rs": {
+      "tested13": "b8599682de920a86c8aa18842186c82fd91f71a619bc649c36ac68f36ac0c4aa",
+      "final": "1020f371f40b4b2155359fcfaa4069140d635fb84d715d8c5f3b538c3a55f71d"
+    }
+  },
+  "expandedQualifierComplete": false,
+  "newCliBuildComplete": false,
+  "newCliBuildStoppedByUnchanged500MbDiskGuard": true,
+  "newCliLiveAcceptanceComplete": false,
+  "newNativeBrowserAcceptanceComplete": false,
+  "preparedLiveControllersRun": false,
+  "allOwnedJobsEmpty": true,
+  "finalHtmlSha256": "b4350b1a3b0c116305637083e65ac8189f974bfad4257163e90cfbf28bfe4e67",
+  "syntheticVisualWidths": [
+    1366,
+    390
+  ],
+  "syntheticProviderReorderAndStaleProjectInspected": true,
+  "nativeTransportScreenshotsClaimed": false,
+  "rawMembersReopenedAndExact": 96,
+  "rawArchiveBytes": 985945,
+  "rawArchiveSha256": "8f61d503149bbab8e1ae3a5e94e96a359bd08bf4eb198b42167fc93374c73e23",
+  "postQualificationExistingDocumentationChangesOnly": [
+    "README.md",
+    "docs/ARCHITECTURE.md",
+    "docs/REMAINING_WORK.md",
+    "docs/STATUS.md",
+    "docs/parity/native-reconciliation-2026-10-15.json",
+    "native/docs/session-dashboard.md"
+  ],
+  "allOther1128FrozenInputsExact": true,
+  "existingReconciliationValuesPreserved": true,
+  "conservativeEncodedSessionStateUpperBoundBytes": 61859,
+  "retainedSessionReopenLimitBytes": 64000,
+  "systemOrPrivilegeSettingsChanged": false,
+  "manualDeletion": false,
+  "analyzedSourceExecuted": false,
+  "defaultModelCalls": false,
+  "existingCredentialsAccessed": false,
+  "fullDashboardActionComplete": false,
+  "fullContractCertified": false,
+  "universalRuntimeCertified": false
+}

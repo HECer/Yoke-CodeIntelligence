@@ -1,0 +1,1315 @@
+{
+  "schema": 1,
+  "testedHead": "553e5dc162a0352b05e0be3abe91860924b4f922",
+  "mergeCheckout": "1944cb38da18958e24875516ecfedfa4e7c6e915",
+  "headAndMergeTree": "41eecbe6dfccc88d82422a483fd96780c76ee936",
+  "mergeParents": [
+    "e18afea4ee894331f06856904e90300aaf800f94",
+    "553e5dc162a0352b05e0be3abe91860924b4f922"
+  ],
+  "windowsScopedGroups": {
+    "lib": {
+      "passed": 768,
+      "failed": 0,
+      "ignored": 7,
+      "filtered": 0
+    },
+    "session_dashboard": {
+      "passed": 13,
+      "failed": 0,
+      "ignored": 0,
+      "filtered": 0
+    },
+    "session_dashboard_management": {
+      "passed": 24,
+      "failed": 0,
+      "ignored": 0,
+      "filtered": 0
+    }
+  },
+  "windowsScopedTotal": {
+    "passed": 805,
+    "failed": 0,
+    "ignored": 7,
+    "filtered": 0
+  },
+  "windowsStillFailing": {
+    "pythonOriginalCases": 2,
+    "process": {
+      "passed": 6,
+      "failed": 1
+    },
+    "replPush": {
+      "passed": 21,
+      "failed": 1
+    },
+    "replPr": {
+      "passed": 22,
+      "failed": 0
+    }
+  },
+  "macos": {
+    "failingGroups": 12,
+    "failedCases": 69,
+    "closedPdfLimitFailures": 43,
+    "promptCases": 25,
+    "promptObserved": {
+      "spawnEINVAL22": 16,
+      "directMemoryRefusal": 4,
+      "genericExecutableUnavailable": 1,
+      "missingResponse": 2,
+      "initializeFirst": 2
+    },
+    "historyCases": 1,
+    "library": {
+      "passed": 473,
+      "failed": 1,
+      "ignored": 6,
+      "filtered": 0
+    },
+    "sourceInputsMatchingAcrossEightMaps": 1086,
+    "selectedGitBlobMatches": 23,
+    "namedPassingGroups": {
+      "runtime": 14,
+      "process": 5,
+      "github_app_ingress": 20,
+      "session_dashboard": 13
+    },
+    "newDashboardUnitCasesPassed": 4,
+    "cleanupRegressionCasesPassed": 12,
+    "historyFirstSizeSleepReturnedMs": 155.738458,
+    "historyDeadlineMs": 65,
+    "historySizesBodies": [
+      1,
+      0
+    ]
+  },
+  "canonicalAndCapturedAndLocalAppData": [
+    {
+      "run": 40231599084,
+      "shard": 0,
+      "mode": "local-app-data",
+      "sourceRevision": "553e5dc162a0352b05e0be3abe91860924b4f922",
+      "sourceSha256": "801926b98a8ccb2cbe6fe5d6742f565b9a99917366cf51a54e14e897c516aa34",
+      "trial": {
+        "name": "nested-snapshot-folder-local-app-data",
+        "jobsRequested": 2,
+        "resumeMode": "snapshot",
+        "startedSuspended": true,
+        "assignedBeforeResume": true,
+        "timedOut": false,
+        "nativeAcceptance": false,
+        "membersBeforeCleanup": {
+          "complete": true,
+          "members": [],
+          "unavailable": [],
+          "assignedAtQuery": 0,
+          "returnedAtQuery": 0,
+          "startedElapsedSeconds": 15.855502399999978,
+          "finishedElapsedSeconds": 15.855528499999991
+        },
+        "pid": 6096,
+        "snapshotEntriesScanned": 1384,
+        "snapshotEndError": 18,
+        "resumedThreads": [
+          {
+            "primary": true,
+            "previousSuspendCount": 1
+          }
+        ],
+        "primaryObservedResumed": true,
+        "resumeElapsedSeconds": 0.011672599999997146,
+        "exitCode": 0,
+        "activeBeforeCleanup": [
+          0,
+          0
+        ],
+        "treeExitedBeforeCleanup": true,
+        "activeAfterCleanup": [
+          0,
+          0
+        ],
+        "rootExitedAfterCleanup": true,
+        "elapsedSeconds": 15.855661499999997,
+        "stdout": "owned-windows-runtime\r\n",
+        "stderr": "owned-script-entry\r\nowned-host-version:5.1.26100.33648\r\nowned-before-folder\r\nowned-after-folder\r\nowned-before-write-output\r\nowned-after-write-output\r\nowned-script-end\r\n",
+        "streamEOF": [
+          true,
+          true
+        ],
+        "readerError": [
+          false,
+          false
+        ],
+        "outputExceeded": [
+          false,
+          false
+        ],
+        "diagnosticComplete": true
+      }
+    },
+    {
+      "run": 40231599084,
+      "shard": 0,
+      "mode": "captured-write-output",
+      "sourceRevision": "553e5dc162a0352b05e0be3abe91860924b4f922",
+      "sourceSha256": "801926b98a8ccb2cbe6fe5d6742f565b9a99917366cf51a54e14e897c516aa34",
+      "trial": {
+        "name": "nested-snapshot-captured-write-output",
+        "jobsRequested": 2,
+        "resumeMode": "snapshot",
+        "startedSuspended": true,
+        "assignedBeforeResume": true,
+        "timedOut": false,
+        "nativeAcceptance": false,
+        "membersBeforeCleanup": {
+          "complete": true,
+          "members": [],
+          "unavailable": [],
+          "assignedAtQuery": 0,
+          "returnedAtQuery": 0,
+          "startedElapsedSeconds": 15.910738999999978,
+          "finishedElapsedSeconds": 15.91076609999999
+        },
+        "pid": 7664,
+        "snapshotEntriesScanned": 1380,
+        "snapshotEndError": 18,
+        "resumedThreads": [
+          {
+            "primary": true,
+            "previousSuspendCount": 1
+          }
+        ],
+        "primaryObservedResumed": true,
+        "resumeElapsedSeconds": 0.011537200000020675,
+        "exitCode": 0,
+        "activeBeforeCleanup": [
+          0,
+          0
+        ],
+        "treeExitedBeforeCleanup": true,
+        "activeAfterCleanup": [
+          0,
+          0
+        ],
+        "rootExitedAfterCleanup": true,
+        "elapsedSeconds": 15.910957199999984,
+        "stdout": "owned-shell-test\r\n",
+        "stderr": "owned-script-entry\r\nowned-host-version:5.1.26100.33648\r\nowned-before-captured-write-output\r\nowned-after-captured-write-output\r\nowned-script-end\r\n",
+        "streamEOF": [
+          true,
+          true
+        ],
+        "readerError": [
+          false,
+          false
+        ],
+        "outputExceeded": [
+          false,
+          false
+        ],
+        "diagnosticComplete": true
+      }
+    },
+    {
+      "run": 40231599084,
+      "shard": 0,
+      "mode": "canonical",
+      "sourceRevision": "553e5dc162a0352b05e0be3abe91860924b4f922",
+      "sourceSha256": "801926b98a8ccb2cbe6fe5d6742f565b9a99917366cf51a54e14e897c516aa34",
+      "trial": {
+        "name": "nested-snapshot-folder",
+        "jobsRequested": 2,
+        "resumeMode": "snapshot",
+        "startedSuspended": true,
+        "assignedBeforeResume": true,
+        "timedOut": false,
+        "nativeAcceptance": false,
+        "membersBeforeCleanup": {
+          "complete": true,
+          "members": [],
+          "unavailable": [],
+          "assignedAtQuery": 0,
+          "returnedAtQuery": 0,
+          "startedElapsedSeconds": 15.867102699999975,
+          "finishedElapsedSeconds": 15.86713149999997
+        },
+        "pid": 4292,
+        "snapshotEntriesScanned": 1574,
+        "snapshotEndError": 18,
+        "resumedThreads": [
+          {
+            "primary": true,
+            "previousSuspendCount": 1
+          }
+        ],
+        "primaryObservedResumed": true,
+        "resumeElapsedSeconds": 0.012439099999994596,
+        "exitCode": 0,
+        "activeBeforeCleanup": [
+          0,
+          0
+        ],
+        "treeExitedBeforeCleanup": true,
+        "activeAfterCleanup": [
+          0,
+          0
+        ],
+        "rootExitedAfterCleanup": true,
+        "elapsedSeconds": 15.867281899999966,
+        "stdout": "owned-windows-runtime\r\n",
+        "stderr": "owned-script-entry\r\nowned-host-version:5.1.26100.33648\r\nowned-before-folder\r\nowned-after-folder\r\nowned-before-write-output\r\nowned-after-write-output\r\nowned-script-end\r\n",
+        "streamEOF": [
+          true,
+          true
+        ],
+        "readerError": [
+          false,
+          false
+        ],
+        "outputExceeded": [
+          false,
+          false
+        ],
+        "diagnosticComplete": true
+      }
+    },
+    {
+      "run": 40231599084,
+      "shard": 5,
+      "mode": "captured-write-output",
+      "sourceRevision": "553e5dc162a0352b05e0be3abe91860924b4f922",
+      "sourceSha256": "801926b98a8ccb2cbe6fe5d6742f565b9a99917366cf51a54e14e897c516aa34",
+      "trial": {
+        "name": "nested-snapshot-captured-write-output",
+        "jobsRequested": 2,
+        "resumeMode": "snapshot",
+        "startedSuspended": true,
+        "assignedBeforeResume": true,
+        "timedOut": false,
+        "nativeAcceptance": false,
+        "membersBeforeCleanup": {
+          "complete": true,
+          "members": [],
+          "unavailable": [],
+          "assignedAtQuery": 0,
+          "returnedAtQuery": 0,
+          "startedElapsedSeconds": 12.132809800000018,
+          "finishedElapsedSeconds": 12.132837100000074
+        },
+        "pid": 3320,
+        "snapshotEntriesScanned": 1257,
+        "snapshotEndError": 18,
+        "resumedThreads": [
+          {
+            "primary": true,
+            "previousSuspendCount": 1
+          }
+        ],
+        "primaryObservedResumed": true,
+        "resumeElapsedSeconds": 0.00980220000008103,
+        "exitCode": 0,
+        "activeBeforeCleanup": [
+          0,
+          0
+        ],
+        "treeExitedBeforeCleanup": true,
+        "activeAfterCleanup": [
+          0,
+          0
+        ],
+        "rootExitedAfterCleanup": true,
+        "elapsedSeconds": 12.132946700000048,
+        "stdout": "owned-shell-test\r\n",
+        "stderr": "owned-script-entry\r\nowned-host-version:5.1.26100.33648\r\nowned-before-captured-write-output\r\nowned-after-captured-write-output\r\nowned-script-end\r\n",
+        "streamEOF": [
+          true,
+          true
+        ],
+        "readerError": [
+          false,
+          false
+        ],
+        "outputExceeded": [
+          false,
+          false
+        ],
+        "diagnosticComplete": true
+      }
+    },
+    {
+      "run": 40231599084,
+      "shard": 5,
+      "mode": "canonical",
+      "sourceRevision": "553e5dc162a0352b05e0be3abe91860924b4f922",
+      "sourceSha256": "801926b98a8ccb2cbe6fe5d6742f565b9a99917366cf51a54e14e897c516aa34",
+      "trial": {
+        "name": "nested-snapshot-folder",
+        "jobsRequested": 2,
+        "resumeMode": "snapshot",
+        "startedSuspended": true,
+        "assignedBeforeResume": true,
+        "timedOut": false,
+        "nativeAcceptance": false,
+        "membersBeforeCleanup": {
+          "complete": true,
+          "members": [],
+          "unavailable": [],
+          "assignedAtQuery": 0,
+          "returnedAtQuery": 0,
+          "startedElapsedSeconds": 11.997266299999978,
+          "finishedElapsedSeconds": 11.997293199999945
+        },
+        "pid": 1152,
+        "snapshotEntriesScanned": 1246,
+        "snapshotEndError": 18,
+        "resumedThreads": [
+          {
+            "primary": true,
+            "previousSuspendCount": 1
+          }
+        ],
+        "primaryObservedResumed": true,
+        "resumeElapsedSeconds": 0.008942199999978584,
+        "exitCode": 0,
+        "activeBeforeCleanup": [
+          0,
+          0
+        ],
+        "treeExitedBeforeCleanup": true,
+        "activeAfterCleanup": [
+          0,
+          0
+        ],
+        "rootExitedAfterCleanup": true,
+        "elapsedSeconds": 11.997427000000016,
+        "stdout": "owned-windows-runtime\r\n",
+        "stderr": "owned-script-entry\r\nowned-host-version:5.1.26100.33648\r\nowned-before-folder\r\nowned-after-folder\r\nowned-before-write-output\r\nowned-after-write-output\r\nowned-script-end\r\n",
+        "streamEOF": [
+          true,
+          true
+        ],
+        "readerError": [
+          false,
+          false
+        ],
+        "outputExceeded": [
+          false,
+          false
+        ],
+        "diagnosticComplete": true
+      }
+    },
+    {
+      "run": 40231599084,
+      "shard": 2,
+      "mode": "local-app-data",
+      "sourceRevision": "553e5dc162a0352b05e0be3abe91860924b4f922",
+      "sourceSha256": "801926b98a8ccb2cbe6fe5d6742f565b9a99917366cf51a54e14e897c516aa34",
+      "trial": {
+        "name": "nested-snapshot-folder-local-app-data",
+        "jobsRequested": 2,
+        "resumeMode": "snapshot",
+        "startedSuspended": true,
+        "assignedBeforeResume": true,
+        "timedOut": true,
+        "nativeAcceptance": false,
+        "membersBeforeCleanup": {
+          "complete": true,
+          "members": [
+            {
+              "pid": 4404,
+              "root": true,
+              "inOuterOwnedJob": true,
+              "creationTime100ns": 134374363718543544,
+              "imagePath": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+              "exited": false,
+              "exitCode": null,
+              "unavailable": []
+            },
+            {
+              "pid": 6680,
+              "root": false,
+              "inOuterOwnedJob": true,
+              "creationTime100ns": 134374363718674795,
+              "imagePath": "C:\\Windows\\System32\\conhost.exe",
+              "exited": false,
+              "exitCode": null,
+              "unavailable": []
+            }
+          ],
+          "unavailable": [],
+          "assignedAtQuery": 2,
+          "returnedAtQuery": 2,
+          "startedElapsedSeconds": 19.763042300000052,
+          "finishedElapsedSeconds": 19.763587700000016
+        },
+        "pid": 4404,
+        "snapshotEntriesScanned": 1103,
+        "snapshotEndError": 18,
+        "resumedThreads": [
+          {
+            "primary": true,
+            "previousSuspendCount": 1
+          }
+        ],
+        "primaryObservedResumed": true,
+        "resumeElapsedSeconds": 0.012279600000056234,
+        "activeBeforeCleanup": [
+          2,
+          2
+        ],
+        "treeExitedBeforeCleanup": false,
+        "activeAfterCleanup": [
+          0,
+          0
+        ],
+        "rootExitedAfterCleanup": true,
+        "elapsedSeconds": 20.020455999999967,
+        "stdout": "",
+        "stderr": "owned-script-entry\r\nowned-host-version:5.1.26100.33648\r\nowned-before-folder\r\nowned-after-folder\r\nowned-before-write-output\r\n",
+        "streamEOF": [
+          true,
+          true
+        ],
+        "readerError": [
+          false,
+          false
+        ],
+        "outputExceeded": [
+          false,
+          false
+        ],
+        "diagnosticComplete": false
+      }
+    },
+    {
+      "run": 40231606053,
+      "shard": 0,
+      "mode": "canonical",
+      "sourceRevision": "1944cb38da18958e24875516ecfedfa4e7c6e915",
+      "sourceSha256": "801926b98a8ccb2cbe6fe5d6742f565b9a99917366cf51a54e14e897c516aa34",
+      "trial": {
+        "name": "nested-snapshot-folder",
+        "jobsRequested": 2,
+        "resumeMode": "snapshot",
+        "startedSuspended": true,
+        "assignedBeforeResume": true,
+        "timedOut": false,
+        "nativeAcceptance": false,
+        "membersBeforeCleanup": {
+          "complete": true,
+          "members": [],
+          "unavailable": [],
+          "assignedAtQuery": 0,
+          "returnedAtQuery": 0,
+          "startedElapsedSeconds": 18.046941900000036,
+          "finishedElapsedSeconds": 18.046967600000016
+        },
+        "pid": 5176,
+        "snapshotEntriesScanned": 1484,
+        "snapshotEndError": 18,
+        "resumedThreads": [
+          {
+            "primary": true,
+            "previousSuspendCount": 1
+          }
+        ],
+        "primaryObservedResumed": true,
+        "resumeElapsedSeconds": 0.012065200000051846,
+        "exitCode": 0,
+        "activeBeforeCleanup": [
+          0,
+          0
+        ],
+        "treeExitedBeforeCleanup": true,
+        "activeAfterCleanup": [
+          0,
+          0
+        ],
+        "rootExitedAfterCleanup": true,
+        "elapsedSeconds": 18.04708530000005,
+        "stdout": "owned-windows-runtime\r\n",
+        "stderr": "owned-script-entry\r\nowned-host-version:5.1.26100.33648\r\nowned-before-folder\r\nowned-after-folder\r\nowned-before-write-output\r\nowned-after-write-output\r\nowned-script-end\r\n",
+        "streamEOF": [
+          true,
+          true
+        ],
+        "readerError": [
+          false,
+          false
+        ],
+        "outputExceeded": [
+          false,
+          false
+        ],
+        "diagnosticComplete": true
+      }
+    },
+    {
+      "run": 40231599084,
+      "shard": 5,
+      "mode": "local-app-data",
+      "sourceRevision": "553e5dc162a0352b05e0be3abe91860924b4f922",
+      "sourceSha256": "801926b98a8ccb2cbe6fe5d6742f565b9a99917366cf51a54e14e897c516aa34",
+      "trial": {
+        "name": "nested-snapshot-folder-local-app-data",
+        "jobsRequested": 2,
+        "resumeMode": "snapshot",
+        "startedSuspended": true,
+        "assignedBeforeResume": true,
+        "timedOut": false,
+        "nativeAcceptance": false,
+        "membersBeforeCleanup": {
+          "complete": true,
+          "members": [],
+          "unavailable": [],
+          "assignedAtQuery": 0,
+          "returnedAtQuery": 0,
+          "startedElapsedSeconds": 12.186616399999934,
+          "finishedElapsedSeconds": 12.186644499999943
+        },
+        "pid": 6300,
+        "snapshotEntriesScanned": 1250,
+        "snapshotEndError": 18,
+        "resumedThreads": [
+          {
+            "primary": true,
+            "previousSuspendCount": 1
+          }
+        ],
+        "primaryObservedResumed": true,
+        "resumeElapsedSeconds": 0.009457300000008217,
+        "exitCode": 0,
+        "activeBeforeCleanup": [
+          0,
+          0
+        ],
+        "treeExitedBeforeCleanup": true,
+        "activeAfterCleanup": [
+          0,
+          0
+        ],
+        "rootExitedAfterCleanup": true,
+        "elapsedSeconds": 12.186769000000027,
+        "stdout": "owned-windows-runtime\r\n",
+        "stderr": "owned-script-entry\r\nowned-host-version:5.1.26100.33648\r\nowned-before-folder\r\nowned-after-folder\r\nowned-before-write-output\r\nowned-after-write-output\r\nowned-script-end\r\n",
+        "streamEOF": [
+          true,
+          true
+        ],
+        "readerError": [
+          false,
+          false
+        ],
+        "outputExceeded": [
+          false,
+          false
+        ],
+        "diagnosticComplete": true
+      }
+    },
+    {
+      "run": 40231606053,
+      "shard": 0,
+      "mode": "captured-write-output",
+      "sourceRevision": "1944cb38da18958e24875516ecfedfa4e7c6e915",
+      "sourceSha256": "801926b98a8ccb2cbe6fe5d6742f565b9a99917366cf51a54e14e897c516aa34",
+      "trial": {
+        "name": "nested-snapshot-captured-write-output",
+        "jobsRequested": 2,
+        "resumeMode": "snapshot",
+        "startedSuspended": true,
+        "assignedBeforeResume": true,
+        "timedOut": false,
+        "nativeAcceptance": false,
+        "membersBeforeCleanup": {
+          "complete": true,
+          "members": [],
+          "unavailable": [],
+          "assignedAtQuery": 0,
+          "returnedAtQuery": 0,
+          "startedElapsedSeconds": 17.948862899999995,
+          "finishedElapsedSeconds": 17.948891500000002
+        },
+        "pid": 6216,
+        "snapshotEntriesScanned": 1488,
+        "snapshotEndError": 18,
+        "resumedThreads": [
+          {
+            "primary": true,
+            "previousSuspendCount": 1
+          }
+        ],
+        "primaryObservedResumed": true,
+        "resumeElapsedSeconds": 0.01258279999996148,
+        "exitCode": 0,
+        "activeBeforeCleanup": [
+          0,
+          0
+        ],
+        "treeExitedBeforeCleanup": true,
+        "activeAfterCleanup": [
+          0,
+          0
+        ],
+        "rootExitedAfterCleanup": true,
+        "elapsedSeconds": 17.9490313,
+        "stdout": "owned-shell-test\r\n",
+        "stderr": "owned-script-entry\r\nowned-host-version:5.1.26100.33648\r\nowned-before-captured-write-output\r\nowned-after-captured-write-output\r\nowned-script-end\r\n",
+        "streamEOF": [
+          true,
+          true
+        ],
+        "readerError": [
+          false,
+          false
+        ],
+        "outputExceeded": [
+          false,
+          false
+        ],
+        "diagnosticComplete": true
+      }
+    },
+    {
+      "run": 40231606053,
+      "shard": 0,
+      "mode": "local-app-data",
+      "sourceRevision": "1944cb38da18958e24875516ecfedfa4e7c6e915",
+      "sourceSha256": "801926b98a8ccb2cbe6fe5d6742f565b9a99917366cf51a54e14e897c516aa34",
+      "trial": {
+        "name": "nested-snapshot-folder-local-app-data",
+        "jobsRequested": 2,
+        "resumeMode": "snapshot",
+        "startedSuspended": true,
+        "assignedBeforeResume": true,
+        "timedOut": false,
+        "nativeAcceptance": false,
+        "membersBeforeCleanup": {
+          "complete": true,
+          "members": [],
+          "unavailable": [],
+          "assignedAtQuery": 0,
+          "returnedAtQuery": 0,
+          "startedElapsedSeconds": 17.809303899999975,
+          "finishedElapsedSeconds": 17.80933349999998
+        },
+        "pid": 7412,
+        "snapshotEntriesScanned": 1477,
+        "snapshotEndError": 18,
+        "resumedThreads": [
+          {
+            "primary": true,
+            "previousSuspendCount": 1
+          }
+        ],
+        "primaryObservedResumed": true,
+        "resumeElapsedSeconds": 0.012897299999963252,
+        "exitCode": 0,
+        "activeBeforeCleanup": [
+          0,
+          0
+        ],
+        "treeExitedBeforeCleanup": true,
+        "activeAfterCleanup": [
+          0,
+          0
+        ],
+        "rootExitedAfterCleanup": true,
+        "elapsedSeconds": 17.809483799999953,
+        "stdout": "owned-windows-runtime\r\n",
+        "stderr": "owned-script-entry\r\nowned-host-version:5.1.26100.33648\r\nowned-before-folder\r\nowned-after-folder\r\nowned-before-write-output\r\nowned-after-write-output\r\nowned-script-end\r\n",
+        "streamEOF": [
+          true,
+          true
+        ],
+        "readerError": [
+          false,
+          false
+        ],
+        "outputExceeded": [
+          false,
+          false
+        ],
+        "diagnosticComplete": true
+      }
+    },
+    {
+      "run": 40231599084,
+      "shard": 2,
+      "mode": "canonical",
+      "sourceRevision": "553e5dc162a0352b05e0be3abe91860924b4f922",
+      "sourceSha256": "801926b98a8ccb2cbe6fe5d6742f565b9a99917366cf51a54e14e897c516aa34",
+      "trial": {
+        "name": "nested-snapshot-folder",
+        "jobsRequested": 2,
+        "resumeMode": "snapshot",
+        "startedSuspended": true,
+        "assignedBeforeResume": true,
+        "timedOut": true,
+        "nativeAcceptance": false,
+        "membersBeforeCleanup": {
+          "complete": true,
+          "members": [
+            {
+              "pid": 2236,
+              "root": true,
+              "inOuterOwnedJob": true,
+              "creationTime100ns": 134374363289505452,
+              "imagePath": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+              "exited": false,
+              "exitCode": null,
+              "unavailable": []
+            },
+            {
+              "pid": 4128,
+              "root": false,
+              "inOuterOwnedJob": true,
+              "creationTime100ns": 134374363289631702,
+              "imagePath": "C:\\Windows\\System32\\conhost.exe",
+              "exited": false,
+              "exitCode": null,
+              "unavailable": []
+            }
+          ],
+          "unavailable": [],
+          "assignedAtQuery": 2,
+          "returnedAtQuery": 2,
+          "startedElapsedSeconds": 19.762131699999827,
+          "finishedElapsedSeconds": 19.762516399999868
+        },
+        "pid": 2236,
+        "snapshotEntriesScanned": 1097,
+        "snapshotEndError": 18,
+        "resumedThreads": [
+          {
+            "primary": true,
+            "previousSuspendCount": 1
+          }
+        ],
+        "primaryObservedResumed": true,
+        "resumeElapsedSeconds": 0.011554499999874679,
+        "activeBeforeCleanup": [
+          2,
+          2
+        ],
+        "treeExitedBeforeCleanup": false,
+        "activeAfterCleanup": [
+          0,
+          0
+        ],
+        "rootExitedAfterCleanup": true,
+        "elapsedSeconds": 20.036153199999944,
+        "stdout": "",
+        "stderr": "owned-script-entry\r\nowned-host-version:5.1.26100.33648\r\nowned-before-folder\r\nowned-after-folder\r\nowned-before-write-output\r\n",
+        "streamEOF": [
+          true,
+          true
+        ],
+        "readerError": [
+          false,
+          false
+        ],
+        "outputExceeded": [
+          false,
+          false
+        ],
+        "diagnosticComplete": false
+      }
+    },
+    {
+      "run": 40231606053,
+      "shard": 2,
+      "mode": "captured-write-output",
+      "sourceRevision": "1944cb38da18958e24875516ecfedfa4e7c6e915",
+      "sourceSha256": "801926b98a8ccb2cbe6fe5d6742f565b9a99917366cf51a54e14e897c516aa34",
+      "trial": {
+        "name": "nested-snapshot-captured-write-output",
+        "jobsRequested": 2,
+        "resumeMode": "snapshot",
+        "startedSuspended": true,
+        "assignedBeforeResume": true,
+        "timedOut": true,
+        "nativeAcceptance": false,
+        "membersBeforeCleanup": {
+          "complete": true,
+          "members": [
+            {
+              "pid": 1780,
+              "root": true,
+              "inOuterOwnedJob": true,
+              "creationTime100ns": 134374357793135595,
+              "imagePath": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+              "exited": false,
+              "exitCode": null,
+              "unavailable": []
+            },
+            {
+              "pid": 1656,
+              "root": false,
+              "inOuterOwnedJob": true,
+              "creationTime100ns": 134374357793287869,
+              "imagePath": "C:\\Windows\\System32\\conhost.exe",
+              "exited": false,
+              "exitCode": null,
+              "unavailable": []
+            }
+          ],
+          "unavailable": [],
+          "assignedAtQuery": 2,
+          "returnedAtQuery": 2,
+          "startedElapsedSeconds": 19.753767499999867,
+          "finishedElapsedSeconds": 19.754181000000017
+        },
+        "pid": 1780,
+        "snapshotEntriesScanned": 1124,
+        "snapshotEndError": 18,
+        "resumedThreads": [
+          {
+            "primary": true,
+            "previousSuspendCount": 1
+          }
+        ],
+        "primaryObservedResumed": true,
+        "resumeElapsedSeconds": 0.01448789999994915,
+        "activeBeforeCleanup": [
+          2,
+          2
+        ],
+        "treeExitedBeforeCleanup": false,
+        "activeAfterCleanup": [
+          0,
+          0
+        ],
+        "rootExitedAfterCleanup": true,
+        "elapsedSeconds": 20.033815999999888,
+        "stdout": "",
+        "stderr": "owned-script-entry\r\nowned-host-version:5.1.26100.33648\r\nowned-before-captured-write-output\r\n",
+        "streamEOF": [
+          true,
+          true
+        ],
+        "readerError": [
+          false,
+          false
+        ],
+        "outputExceeded": [
+          false,
+          false
+        ],
+        "diagnosticComplete": false
+      }
+    },
+    {
+      "run": 40231606053,
+      "shard": 2,
+      "mode": "local-app-data",
+      "sourceRevision": "1944cb38da18958e24875516ecfedfa4e7c6e915",
+      "sourceSha256": "801926b98a8ccb2cbe6fe5d6742f565b9a99917366cf51a54e14e897c516aa34",
+      "trial": {
+        "name": "nested-snapshot-folder-local-app-data",
+        "jobsRequested": 2,
+        "resumeMode": "snapshot",
+        "startedSuspended": true,
+        "assignedBeforeResume": true,
+        "timedOut": true,
+        "nativeAcceptance": false,
+        "membersBeforeCleanup": {
+          "complete": true,
+          "members": [
+            {
+              "pid": 8736,
+              "root": true,
+              "inOuterOwnedJob": true,
+              "creationTime100ns": 134374358007478931,
+              "imagePath": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+              "exited": false,
+              "exitCode": null,
+              "unavailable": []
+            },
+            {
+              "pid": 7832,
+              "root": false,
+              "inOuterOwnedJob": true,
+              "creationTime100ns": 134374358007613629,
+              "imagePath": "C:\\Windows\\System32\\conhost.exe",
+              "exited": false,
+              "exitCode": null,
+              "unavailable": []
+            }
+          ],
+          "unavailable": [],
+          "assignedAtQuery": 2,
+          "returnedAtQuery": 2,
+          "startedElapsedSeconds": 19.75379410000005,
+          "finishedElapsedSeconds": 19.75417020000009
+        },
+        "pid": 8736,
+        "snapshotEntriesScanned": 1120,
+        "snapshotEndError": 18,
+        "resumedThreads": [
+          {
+            "primary": true,
+            "previousSuspendCount": 1
+          }
+        ],
+        "primaryObservedResumed": true,
+        "resumeElapsedSeconds": 0.012541100000134975,
+        "activeBeforeCleanup": [
+          2,
+          2
+        ],
+        "treeExitedBeforeCleanup": false,
+        "activeAfterCleanup": [
+          0,
+          0
+        ],
+        "rootExitedAfterCleanup": true,
+        "elapsedSeconds": 20.0226725,
+        "stdout": "",
+        "stderr": "owned-script-entry\r\nowned-host-version:5.1.26100.33648\r\nowned-before-folder\r\nowned-after-folder\r\nowned-before-write-output\r\n",
+        "streamEOF": [
+          true,
+          true
+        ],
+        "readerError": [
+          false,
+          false
+        ],
+        "outputExceeded": [
+          false,
+          false
+        ],
+        "diagnosticComplete": false
+      }
+    },
+    {
+      "run": 40231599084,
+      "shard": 2,
+      "mode": "captured-write-output",
+      "sourceRevision": "553e5dc162a0352b05e0be3abe91860924b4f922",
+      "sourceSha256": "801926b98a8ccb2cbe6fe5d6742f565b9a99917366cf51a54e14e897c516aa34",
+      "trial": {
+        "name": "nested-snapshot-captured-write-output",
+        "jobsRequested": 2,
+        "resumeMode": "snapshot",
+        "startedSuspended": true,
+        "assignedBeforeResume": true,
+        "timedOut": true,
+        "nativeAcceptance": false,
+        "membersBeforeCleanup": {
+          "complete": true,
+          "members": [
+            {
+              "pid": 5616,
+              "root": true,
+              "inOuterOwnedJob": true,
+              "creationTime100ns": 134374363504225069,
+              "imagePath": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+              "exited": false,
+              "exitCode": null,
+              "unavailable": []
+            },
+            {
+              "pid": 8704,
+              "root": false,
+              "inOuterOwnedJob": true,
+              "creationTime100ns": 134374363504359566,
+              "imagePath": "C:\\Windows\\System32\\conhost.exe",
+              "exited": false,
+              "exitCode": null,
+              "unavailable": []
+            }
+          ],
+          "unavailable": [],
+          "assignedAtQuery": 2,
+          "returnedAtQuery": 2,
+          "startedElapsedSeconds": 19.753934500000014,
+          "finishedElapsedSeconds": 19.754437199999984
+        },
+        "pid": 5616,
+        "snapshotEntriesScanned": 1106,
+        "snapshotEndError": 18,
+        "resumedThreads": [
+          {
+            "primary": true,
+            "previousSuspendCount": 1
+          }
+        ],
+        "primaryObservedResumed": true,
+        "resumeElapsedSeconds": 0.012395100000048842,
+        "activeBeforeCleanup": [
+          2,
+          2
+        ],
+        "treeExitedBeforeCleanup": false,
+        "activeAfterCleanup": [
+          0,
+          0
+        ],
+        "rootExitedAfterCleanup": true,
+        "elapsedSeconds": 20.026878800000077,
+        "stdout": "",
+        "stderr": "owned-script-entry\r\nowned-host-version:5.1.26100.33648\r\nowned-before-captured-write-output\r\n",
+        "streamEOF": [
+          true,
+          true
+        ],
+        "readerError": [
+          false,
+          false
+        ],
+        "outputExceeded": [
+          false,
+          false
+        ],
+        "diagnosticComplete": false
+      }
+    },
+    {
+      "run": 40231606053,
+      "shard": 2,
+      "mode": "canonical",
+      "sourceRevision": "1944cb38da18958e24875516ecfedfa4e7c6e915",
+      "sourceSha256": "801926b98a8ccb2cbe6fe5d6742f565b9a99917366cf51a54e14e897c516aa34",
+      "trial": {
+        "name": "nested-snapshot-folder",
+        "jobsRequested": 2,
+        "resumeMode": "snapshot",
+        "startedSuspended": true,
+        "assignedBeforeResume": true,
+        "timedOut": true,
+        "nativeAcceptance": false,
+        "membersBeforeCleanup": {
+          "complete": true,
+          "members": [
+            {
+              "pid": 7056,
+              "root": true,
+              "inOuterOwnedJob": true,
+              "creationTime100ns": 134374357578177722,
+              "imagePath": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+              "exited": false,
+              "exitCode": null,
+              "unavailable": []
+            },
+            {
+              "pid": 2768,
+              "root": false,
+              "inOuterOwnedJob": true,
+              "creationTime100ns": 134374357578305640,
+              "imagePath": "C:\\Windows\\System32\\conhost.exe",
+              "exited": false,
+              "exitCode": null,
+              "unavailable": []
+            }
+          ],
+          "unavailable": [],
+          "assignedAtQuery": 2,
+          "returnedAtQuery": 2,
+          "startedElapsedSeconds": 19.75907940000002,
+          "finishedElapsedSeconds": 19.759490199999846
+        },
+        "pid": 7056,
+        "snapshotEntriesScanned": 1092,
+        "snapshotEndError": 18,
+        "resumedThreads": [
+          {
+            "primary": true,
+            "previousSuspendCount": 1
+          }
+        ],
+        "primaryObservedResumed": true,
+        "resumeElapsedSeconds": 0.011665099999845552,
+        "activeBeforeCleanup": [
+          2,
+          2
+        ],
+        "treeExitedBeforeCleanup": false,
+        "activeAfterCleanup": [
+          0,
+          0
+        ],
+        "rootExitedAfterCleanup": true,
+        "elapsedSeconds": 20.031334499999957,
+        "stdout": "",
+        "stderr": "owned-script-entry\r\nowned-host-version:5.1.26100.33648\r\nowned-before-folder\r\nowned-after-folder\r\nowned-before-write-output\r\n",
+        "streamEOF": [
+          true,
+          true
+        ],
+        "readerError": [
+          false,
+          false
+        ],
+        "outputExceeded": [
+          false,
+          false
+        ],
+        "diagnosticComplete": false
+      }
+    }
+  ],
+  "localNewControls": {
+    "schema": 2,
+    "diagnosticOnly": true,
+    "nativeAcceptance": false,
+    "diagnosticComplete": true,
+    "diagnosticMode": "command-boundary",
+    "nativeYokeImageReadOrExecuted": false,
+    "trialDeadlineSeconds": 20,
+    "memberObservationSeconds": 0.25,
+    "maxObservedMembers": 16,
+    "sourceRevision": null,
+    "sourceSha256": "e8761dda29bb5a139e6e01df4cda90043421b9087cc1266be001a74717d31b81",
+    "environmentNames": [
+      "CI",
+      "DO_NOT_TRACK",
+      "LANG",
+      "NO_COLOR",
+      "PATH",
+      "SystemDrive",
+      "SystemRoot",
+      "TEMP",
+      "TMP",
+      "USERPROFILE",
+      "WINDIR"
+    ],
+    "trials": [
+      {
+        "name": "nested-snapshot-command-lookup",
+        "jobsRequested": 2,
+        "resumeMode": "snapshot",
+        "startedSuspended": true,
+        "assignedBeforeResume": true,
+        "timedOut": false,
+        "nativeAcceptance": false,
+        "membersBeforeCleanup": {
+          "complete": true,
+          "members": [],
+          "unavailable": [],
+          "assignedAtQuery": 0,
+          "returnedAtQuery": 0,
+          "startedElapsedSeconds": 0.25289129999964644,
+          "finishedElapsedSeconds": 0.2529151999997339
+        },
+        "pid": 1536,
+        "snapshotEntriesScanned": 4055,
+        "snapshotEndError": 18,
+        "resumedThreads": [
+          {
+            "primary": true,
+            "previousSuspendCount": 1
+          }
+        ],
+        "primaryObservedResumed": true,
+        "resumeElapsedSeconds": 0.03903660000014497,
+        "exitCode": 0,
+        "activeBeforeCleanup": [
+          0,
+          0
+        ],
+        "treeExitedBeforeCleanup": true,
+        "activeAfterCleanup": [
+          0,
+          0
+        ],
+        "rootExitedAfterCleanup": true,
+        "elapsedSeconds": 0.2530261000001701,
+        "stdout": "owned-shell-test\r\n",
+        "stderr": "owned-script-entry\r\nowned-host-version:5.1.19041.6456\r\nowned-before-boundary-clock\r\nowned-before-command-lookup-ms:0\r\nowned-after-command-lookup-ms:49\r\nowned-before-captured-write-output\r\nowned-before-command-invoke-ms:53\r\nowned-after-command-invoke-ms:55\r\nowned-after-captured-write-output\r\nowned-script-end\r\n",
+        "streamEOF": [
+          true,
+          true
+        ],
+        "readerError": [
+          false,
+          false
+        ],
+        "outputExceeded": [
+          false,
+          false
+        ],
+        "diagnosticComplete": true
+      },
+      {
+        "name": "nested-snapshot-fixed-module-import",
+        "jobsRequested": 2,
+        "resumeMode": "snapshot",
+        "startedSuspended": true,
+        "assignedBeforeResume": true,
+        "timedOut": false,
+        "nativeAcceptance": false,
+        "membersBeforeCleanup": {
+          "complete": true,
+          "members": [],
+          "unavailable": [],
+          "assignedAtQuery": 0,
+          "returnedAtQuery": 0,
+          "startedElapsedSeconds": 0.24113820000002306,
+          "finishedElapsedSeconds": 0.24116520000006858
+        },
+        "pid": 22336,
+        "snapshotEntriesScanned": 4056,
+        "snapshotEndError": 18,
+        "resumedThreads": [
+          {
+            "primary": true,
+            "previousSuspendCount": 1
+          }
+        ],
+        "primaryObservedResumed": true,
+        "resumeElapsedSeconds": 0.039592000000084226,
+        "exitCode": 0,
+        "activeBeforeCleanup": [
+          0,
+          0
+        ],
+        "treeExitedBeforeCleanup": true,
+        "activeAfterCleanup": [
+          0,
+          0
+        ],
+        "rootExitedAfterCleanup": true,
+        "elapsedSeconds": 0.2412717999995948,
+        "stdout": "owned-shell-test\r\n",
+        "stderr": "owned-script-entry\r\nowned-host-version:5.1.19041.6456\r\nowned-before-boundary-clock\r\nowned-before-fixed-module-import-ms:0\r\nowned-after-fixed-module-import-ms:40\r\nowned-before-command-lookup-ms:40\r\nowned-after-command-lookup-ms:44\r\nowned-before-captured-write-output\r\nowned-before-command-invoke-ms:49\r\nowned-after-command-invoke-ms:49\r\nowned-after-captured-write-output\r\nowned-script-end\r\n",
+        "streamEOF": [
+          true,
+          true
+        ],
+        "readerError": [
+          false,
+          false
+        ],
+        "outputExceeded": [
+          false,
+          false
+        ],
+        "diagnosticComplete": true
+      }
+    ]
+  },
+  "localCheckScope": {
+    "nodePassed": 260,
+    "nodeFailed": 0,
+    "nodeOriginalSkipped": 3,
+    "typecheckExitCode": 0,
+    "actionlintExitCode": 0,
+    "pythonRuns": 2,
+    "pythonOwnedControllerCompleted": false,
+    "ownedCompilerHelperRemainingBeforeForce": "vctip.exe",
+    "ownedJobsEmptyAfterForce": true,
+    "selectedInputsUnchanged": 1134,
+    "pythonTestsPassed": 142,
+    "pythonTestsFailed": 0
+  },
+  "completion": {
+    "windowsAccepted": false,
+    "macosAccepted": false,
+    "releaseAccepted": false,
+    "fullProjectComplete": false,
+    "newWindowsBoundaryHostedAccepted": false
+  }
+}

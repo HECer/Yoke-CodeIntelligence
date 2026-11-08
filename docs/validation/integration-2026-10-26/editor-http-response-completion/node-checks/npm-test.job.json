@@ -1,0 +1,40 @@
+{
+  "command": [
+    "C:\\Program Files\\nodejs\\node.exe",
+    "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js",
+    "test"
+  ],
+  "deadlineSeconds": 180,
+  "logCapBytes": 16000000,
+  "stdinClosed": true,
+  "startedSuspended": true,
+  "assignedBeforeResume": true,
+  "completed": true,
+  "treeExitedBeforeCleanup": true,
+  "minimumFreeObserved": 4927823872,
+  "cleanupErrors": [],
+  "streamEOF": [
+    true,
+    true
+  ],
+  "readerErrors": [
+    false,
+    false
+  ],
+  "pid": 23148,
+  "resumePreviousSuspendCount": 1,
+  "exitCode": 0,
+  "membersAtRootObservation": [],
+  "rootExitedAtObservation": true,
+  "activeAtRootObservation": 0,
+  "originalDrainSeconds": 1,
+  "activeBeforeCleanup": 0,
+  "membersAfterOriginalDrain": [],
+  "cleanupSeconds": 2,
+  "activeAfterCleanup": 0,
+  "rootExitedAfterCleanup": true,
+  "elapsedSeconds": 55.516987400005746,
+  "capturedLogBytes": 25012,
+  "outputExceeded": false,
+  "cleanupUnproven": false
+}

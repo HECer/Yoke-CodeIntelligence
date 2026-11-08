@@ -1,0 +1,1030 @@
+{
+  "schemaVersion": 1,
+  "kind": "native-semantic-identity",
+  "sourceCommit": "5b2ac3cf4f9534d4b7fcdbb6c59e209097b62a1e",
+  "baseIntegration": "7a61aa782462614843fcd879dfffa31e9dacd382",
+  "scope": {
+    "nativeGroups": 10,
+    "nativePassed": 574,
+    "nativeFailed": 1,
+    "nativeIgnored": 7,
+    "nativeInputs": 784,
+    "retainedInputs": 780,
+    "newCasesPassed": 22,
+    "newIntegrationCasesPassed": 18,
+    "newUnitCasesPassed": 4,
+    "newCasesFailed": 0,
+    "broaderNativeScopePassed": false,
+    "failedPrerequisiteTest": "windows_host_aliases_cannot_read_protected_files_or_alternate_streams",
+    "formatBuildClippyPassed": true,
+    "allRetainedChecksPassed": true,
+    "wholeNativeRerun": false,
+    "fullContractCertified": false,
+    "liveModelQualityQualified": false
+  },
+  "finalPhase": "final-r1",
+  "retainedPhase": "retained-r1",
+  "phases": [
+    {
+      "phase": "compile-r1",
+      "resultPath": "runs/compile-r1/result.json",
+      "allChecksPassed": true,
+      "inputs": 781
+    },
+    {
+      "phase": "feature-r1",
+      "resultPath": "runs/feature-r1/result.json",
+      "allChecksPassed": false,
+      "inputs": 783
+    },
+    {
+      "phase": "feature-r2",
+      "resultPath": "runs/feature-r2/result.json",
+      "allChecksPassed": true,
+      "inputs": 783
+    },
+    {
+      "phase": "feature-r3",
+      "resultPath": "runs/feature-r3/result.json",
+      "allChecksPassed": false,
+      "inputs": 783
+    },
+    {
+      "phase": "feature-r4",
+      "resultPath": "runs/feature-r4/result.json",
+      "allChecksPassed": true,
+      "inputs": 783
+    },
+    {
+      "phase": "feature-r5",
+      "resultPath": "runs/feature-r5/result.json",
+      "allChecksPassed": false,
+      "inputs": 783
+    },
+    {
+      "phase": "feature-r6",
+      "resultPath": "runs/feature-r6/result.json",
+      "allChecksPassed": true,
+      "inputs": 783
+    },
+    {
+      "phase": "final-r1",
+      "resultPath": "runs/final-r1/result.json",
+      "allChecksPassed": false,
+      "inputs": 784
+    },
+    {
+      "phase": "retained-r1",
+      "resultPath": "runs/retained-r1/result.json",
+      "allChecksPassed": true,
+      "inputs": 780
+    }
+  ],
+  "files": [
+    {
+      "path": "archive-recipe.py",
+      "bytes": 10369,
+      "sha256": "e60e5ae29f2dca1df840f8023dd5ac49049a2751f25b9fb217c3f09e23be3288"
+    },
+    {
+      "path": "final-source/docs/ARCHITECTURE.md",
+      "bytes": 41597,
+      "sha256": "710900c1abc5a03b9205883b4dcc71a873b6d2636e1782feafb4e36d8d2a54e1"
+    },
+    {
+      "path": "final-source/docs/parity/native-reconciliation-2026-10-15.json",
+      "bytes": 590033,
+      "sha256": "87cd3be7092d8e91fb0f3c5a3575b7b937cc9b9002dcae202c6fac907b9ef456"
+    },
+    {
+      "path": "final-source/docs/REMAINING_WORK.md",
+      "bytes": 10686,
+      "sha256": "7be2b66f2f5f96108ef72af0172fc18bccc20af504009ef7e4d6d950f606c99e"
+    },
+    {
+      "path": "final-source/docs/STATUS.md",
+      "bytes": 128431,
+      "sha256": "d230147d8cba121d0053743690493a90907653453c02f6f2cbd83c6eb4bff748"
+    },
+    {
+      "path": "final-source/native/docs/meaning-identity.md",
+      "bytes": 14085,
+      "sha256": "63d5c61da310aea487c197b6f1f9e16ea431e70fb4f82c48bdd90129584c51d9"
+    },
+    {
+      "path": "final-source/native/README.md",
+      "bytes": 28898,
+      "sha256": "183fa1c575726afcdaab9d63a0f63eae6b60c5da312b927e270f647c709bfdea"
+    },
+    {
+      "path": "final-source/native/src/lib.rs",
+      "bytes": 33513,
+      "sha256": "c14dd21d2979880c32fc1c2e8efb9d1de8a576df7af8d0b7bdb1d1e1820d0af9"
+    },
+    {
+      "path": "final-source/native/src/main.rs",
+      "bytes": 181374,
+      "sha256": "e1aef6c2536d2687b4b48e3bd8662f8d5a7bb4cecf20bfcf15abcf2cefbf2090"
+    },
+    {
+      "path": "final-source/native/src/meaning_aliases.rs",
+      "bytes": 16857,
+      "sha256": "eb1ccc0822b6652a4fb3c84a34f6d3b47302e90bda6c35b0b1e1f1a5e874f3a1"
+    },
+    {
+      "path": "final-source/native/src/meaning_identity.rs",
+      "bytes": 18111,
+      "sha256": "0d645d9d120fa2ae666b6998f50978fa2465d8c003f826e967b4180b3f6dfe68"
+    },
+    {
+      "path": "final-source/native/src/meaning_identity_build.rs",
+      "bytes": 10464,
+      "sha256": "0f2abca9cbaa4151ff8ae91b59dc6dd33b8faf1d3406184ddbaac500b43edbd9"
+    },
+    {
+      "path": "final-source/native/src/meaning_identity_cli.rs",
+      "bytes": 9082,
+      "sha256": "ac6bca7dc906017d90fb5d3ca4d69052246e7a51beea106098d255e5fc0385ea"
+    },
+    {
+      "path": "final-source/native/src/meaning_identity_input.rs",
+      "bytes": 3329,
+      "sha256": "c4a180f86fc9c72fc7d0234f2b43f4fa0ecde018ed997dda564d5a567c9190bc"
+    },
+    {
+      "path": "final-source/native/src/meaning_identity_lexical.rs",
+      "bytes": 11447,
+      "sha256": "a714d6d35eb4a216a318ab4a7f9642d92c485b37a4f17cb71c55e308be0b99ef"
+    },
+    {
+      "path": "final-source/native/src/meaning_identity_projection.rs",
+      "bytes": 6454,
+      "sha256": "ec3b7b81cae57d7e91f3dcce1b3f4dbb7c557b8bceea11115c9b25cdc9669b74"
+    },
+    {
+      "path": "final-source/native/src/meaning_identity_store.rs",
+      "bytes": 17416,
+      "sha256": "03f4adf5a6db9e3b33d7cb3264131e33d960bfbef52f123b893281f370ba3174"
+    },
+    {
+      "path": "final-source/native/src/meaning_join.rs",
+      "bytes": 25828,
+      "sha256": "eab4f978354cc6aa6945f9c54d6f9f59cc04c07ef0b332efe03d9d6d8dd13f2c"
+    },
+    {
+      "path": "final-source/native/src/meaning_join_query.rs",
+      "bytes": 8086,
+      "sha256": "35229a5426ad53dd7dc8298806daf0ff011e3fe791edc79287a58aec010aa163"
+    },
+    {
+      "path": "final-source/native/src/retention.rs",
+      "bytes": 83474,
+      "sha256": "d185960215c8ab8c86738faa0e3617e4d373d7cad3fd9881eae43aec5e8b74e7"
+    },
+    {
+      "path": "final-source/native/tests/meaning_identity.rs",
+      "bytes": 39045,
+      "sha256": "109a3c032f6d3a56cc8727905540312815458f40f68d81d668ac6f84c3da92e5"
+    },
+    {
+      "path": "final-source/README.md",
+      "bytes": 14212,
+      "sha256": "aab2eedd6f1b1e809d78556f60220734e82fcf36af725ec9f1782f2acc4d56f9"
+    },
+    {
+      "path": "host-prerequisites.json",
+      "bytes": 124,
+      "sha256": "8a6d98f0690221b3002d5b9fcb1ee4133247e24bb7c3d3e185bb608adccc2ab2"
+    },
+    {
+      "path": "host-privileges.txt",
+      "bytes": 702,
+      "sha256": "130ef0a8b51a8ff846df4d0a63c05735d8c6cafc927c5c3d6aefe5b5b7e618f5"
+    },
+    {
+      "path": "minhash-oracle-result.json",
+      "bytes": 222,
+      "sha256": "b395777b34839f3ee6e3f2f230b722d5931b71779078112e6f8c07fa48846f91"
+    },
+    {
+      "path": "minhash-oracle.py",
+      "bytes": 573,
+      "sha256": "177ba500c3163f7827dd80d780f26a5640cb6c7178a132097b86264ebbddc219"
+    },
+    {
+      "path": "prior-pr-body.md",
+      "bytes": 21362,
+      "sha256": "913c348c6463ed2d04b04bfeed2d85eaeb734f724a7bd0cdbbd65c1b9b86d0e6"
+    },
+    {
+      "path": "qualification-recipe.py",
+      "bytes": 4271,
+      "sha256": "226574c0a6df0b9d34f52845ec4f3bd094c9f31b1b91f2f31ef40e0d8df5a958"
+    },
+    {
+      "path": "qualification.json",
+      "bytes": 3586,
+      "sha256": "7256733b150faceeafcdf651405ef896d8fccba75bdf8f1543630c3e1f3597ae"
+    },
+    {
+      "path": "README.md",
+      "bytes": 5124,
+      "sha256": "8909d4799fd2328d5b0aee6a60574e1697f3aa8dd341ee43c12c9ec1cf62b9a4"
+    },
+    {
+      "path": "runs/compile-r1/check.log",
+      "bytes": 168,
+      "sha256": "45dc4e1e4cea18828fce662c8d7cbbc6f6a5a637835ea8a90e1a835e5eca604d"
+    },
+    {
+      "path": "runs/compile-r1/result.json",
+      "bytes": 529,
+      "sha256": "23dbda58ed31fbd79d88a8a1d8ccfe5a0b92e41407f573f11e16a99953417c93"
+    },
+    {
+      "path": "runs/compile-r1/runner.py",
+      "bytes": 5052,
+      "sha256": "7639ae207dd0e5849a1e1c7e0c592e9dee1138f8b9c216bb69ffab7514bce562"
+    },
+    {
+      "path": "runs/compile-r1/source/native/README.md",
+      "bytes": 28498,
+      "sha256": "1bb4608c7432e7d6bdc6d8ff03b5eaae03b6edd40a539d26cd45ea7b8283c9af"
+    },
+    {
+      "path": "runs/compile-r1/source/native/src/lib.rs",
+      "bytes": 33513,
+      "sha256": "c14dd21d2979880c32fc1c2e8efb9d1de8a576df7af8d0b7bdb1d1e1820d0af9"
+    },
+    {
+      "path": "runs/compile-r1/source/native/src/main.rs",
+      "bytes": 180150,
+      "sha256": "336c051aca06890eb173adc7a958f7fb409c92f89a448c09c4eecad6fe492764"
+    },
+    {
+      "path": "runs/compile-r1/source/native/src/meaning_aliases.rs",
+      "bytes": 16857,
+      "sha256": "eb1ccc0822b6652a4fb3c84a34f6d3b47302e90bda6c35b0b1e1f1a5e874f3a1"
+    },
+    {
+      "path": "runs/compile-r1/source/native/src/meaning_identity.rs",
+      "bytes": 16052,
+      "sha256": "bcf926f6ab9ddef6d6369420fd6c9bdeeb4a386182916a2b74eed6a104d78957"
+    },
+    {
+      "path": "runs/compile-r1/source/native/src/meaning_identity_build.rs",
+      "bytes": 10415,
+      "sha256": "7de98441362d3801a0c82efbc90ef733fb05c6c6c6703658c92eedeb4c063ee3"
+    },
+    {
+      "path": "runs/compile-r1/source/native/src/meaning_identity_input.rs",
+      "bytes": 3320,
+      "sha256": "cbfe137c8f6ec650eedbdf2f0fd67abf7c14f5dfc362ac4135103c78642b3c49"
+    },
+    {
+      "path": "runs/compile-r1/source/native/src/meaning_identity_lexical.rs",
+      "bytes": 5924,
+      "sha256": "ab0d81b4a0448e6480a4ea66bc1ead746f80d2a9426d8c05182305a888da569d"
+    },
+    {
+      "path": "runs/compile-r1/source/native/src/meaning_identity_projection.rs",
+      "bytes": 6454,
+      "sha256": "ec3b7b81cae57d7e91f3dcce1b3f4dbb7c557b8bceea11115c9b25cdc9669b74"
+    },
+    {
+      "path": "runs/compile-r1/source/native/src/meaning_identity_store.rs",
+      "bytes": 15872,
+      "sha256": "781a798848f8d6640282c5ee8db2f771a9a6fbbe94f4516c86965ae3d0c277b8"
+    },
+    {
+      "path": "runs/compile-r1/source/native/src/retention.rs",
+      "bytes": 82590,
+      "sha256": "5511054c92392d64c9b223c4269ff0172360fe2ef3294617d122de906ba1355a"
+    },
+    {
+      "path": "runs/compile-r1/source-after.json",
+      "bytes": 84702,
+      "sha256": "8c3ddc01e78d96c86b6f9b53712afe8ea98c31a3017af58eb29e0850609ef8b2"
+    },
+    {
+      "path": "runs/compile-r1/source-before.json",
+      "bytes": 84702,
+      "sha256": "8c3ddc01e78d96c86b6f9b53712afe8ea98c31a3017af58eb29e0850609ef8b2"
+    },
+    {
+      "path": "runs/feature-r1/native.log",
+      "bytes": 2539,
+      "sha256": "7262adaf219d153cdf926c082338da9ca34b9fa6f01b798753b3956609e0fa65"
+    },
+    {
+      "path": "runs/feature-r1/result.json",
+      "bytes": 795,
+      "sha256": "1aa5c7666a7538497ee730da75143c8daea96136e3ef923c5d5549edc238aad0"
+    },
+    {
+      "path": "runs/feature-r1/runner.py",
+      "bytes": 5052,
+      "sha256": "7639ae207dd0e5849a1e1c7e0c592e9dee1138f8b9c216bb69ffab7514bce562"
+    },
+    {
+      "path": "runs/feature-r1/source/native/README.md",
+      "bytes": 28498,
+      "sha256": "1bb4608c7432e7d6bdc6d8ff03b5eaae03b6edd40a539d26cd45ea7b8283c9af"
+    },
+    {
+      "path": "runs/feature-r1/source/native/src/lib.rs",
+      "bytes": 33513,
+      "sha256": "c14dd21d2979880c32fc1c2e8efb9d1de8a576df7af8d0b7bdb1d1e1820d0af9"
+    },
+    {
+      "path": "runs/feature-r1/source/native/src/main.rs",
+      "bytes": 181374,
+      "sha256": "e1aef6c2536d2687b4b48e3bd8662f8d5a7bb4cecf20bfcf15abcf2cefbf2090"
+    },
+    {
+      "path": "runs/feature-r1/source/native/src/meaning_aliases.rs",
+      "bytes": 16857,
+      "sha256": "eb1ccc0822b6652a4fb3c84a34f6d3b47302e90bda6c35b0b1e1f1a5e874f3a1"
+    },
+    {
+      "path": "runs/feature-r1/source/native/src/meaning_identity.rs",
+      "bytes": 16204,
+      "sha256": "fee2e2a65b3c19b0206e62bb063e9c13d21d22a2cb18ebda8485441d30b34814"
+    },
+    {
+      "path": "runs/feature-r1/source/native/src/meaning_identity_build.rs",
+      "bytes": 10415,
+      "sha256": "7de98441362d3801a0c82efbc90ef733fb05c6c6c6703658c92eedeb4c063ee3"
+    },
+    {
+      "path": "runs/feature-r1/source/native/src/meaning_identity_cli.rs",
+      "bytes": 8279,
+      "sha256": "fc021b7440fd0b27a6e8f28b9df11664e126617ac3d32400d5a0ed21fac9f34a"
+    },
+    {
+      "path": "runs/feature-r1/source/native/src/meaning_identity_input.rs",
+      "bytes": 3320,
+      "sha256": "cbfe137c8f6ec650eedbdf2f0fd67abf7c14f5dfc362ac4135103c78642b3c49"
+    },
+    {
+      "path": "runs/feature-r1/source/native/src/meaning_identity_lexical.rs",
+      "bytes": 5924,
+      "sha256": "ab0d81b4a0448e6480a4ea66bc1ead746f80d2a9426d8c05182305a888da569d"
+    },
+    {
+      "path": "runs/feature-r1/source/native/src/meaning_identity_projection.rs",
+      "bytes": 6454,
+      "sha256": "ec3b7b81cae57d7e91f3dcce1b3f4dbb7c557b8bceea11115c9b25cdc9669b74"
+    },
+    {
+      "path": "runs/feature-r1/source/native/src/meaning_identity_store.rs",
+      "bytes": 16773,
+      "sha256": "d269f77a398642b0b2433daadd3dabaaba3b8df7ddb9e27adfab2f5850f03092"
+    },
+    {
+      "path": "runs/feature-r1/source/native/src/retention.rs",
+      "bytes": 83474,
+      "sha256": "d185960215c8ab8c86738faa0e3617e4d373d7cad3fd9881eae43aec5e8b74e7"
+    },
+    {
+      "path": "runs/feature-r1/source/native/tests/meaning_identity.rs",
+      "bytes": 29073,
+      "sha256": "c51cdaa35f3577de40d8a65e051b4a403592b2791f031b86170cbaaf5e72a20b"
+    },
+    {
+      "path": "runs/feature-r1/source-after.json",
+      "bytes": 84918,
+      "sha256": "664fcfffc6842c11bdee31bc4d731aa7761a8e897057f6a2a95b1384e535b269"
+    },
+    {
+      "path": "runs/feature-r1/source-before.json",
+      "bytes": 84918,
+      "sha256": "664fcfffc6842c11bdee31bc4d731aa7761a8e897057f6a2a95b1384e535b269"
+    },
+    {
+      "path": "runs/feature-r2/native.log",
+      "bytes": 72516,
+      "sha256": "8fa89d94c78cf222d5a1cdb75a1ec5c2454c8baec754a9e27a9ea45b572155c7"
+    },
+    {
+      "path": "runs/feature-r2/result.json",
+      "bytes": 812,
+      "sha256": "6361a110c38163a3b80e07b9c56bcaf2d21487c955dcece72aaeda437fedcdfb"
+    },
+    {
+      "path": "runs/feature-r2/runner.py",
+      "bytes": 5052,
+      "sha256": "7639ae207dd0e5849a1e1c7e0c592e9dee1138f8b9c216bb69ffab7514bce562"
+    },
+    {
+      "path": "runs/feature-r2/source/native/README.md",
+      "bytes": 28498,
+      "sha256": "1bb4608c7432e7d6bdc6d8ff03b5eaae03b6edd40a539d26cd45ea7b8283c9af"
+    },
+    {
+      "path": "runs/feature-r2/source/native/src/lib.rs",
+      "bytes": 33513,
+      "sha256": "c14dd21d2979880c32fc1c2e8efb9d1de8a576df7af8d0b7bdb1d1e1820d0af9"
+    },
+    {
+      "path": "runs/feature-r2/source/native/src/main.rs",
+      "bytes": 181374,
+      "sha256": "e1aef6c2536d2687b4b48e3bd8662f8d5a7bb4cecf20bfcf15abcf2cefbf2090"
+    },
+    {
+      "path": "runs/feature-r2/source/native/src/meaning_aliases.rs",
+      "bytes": 16857,
+      "sha256": "eb1ccc0822b6652a4fb3c84a34f6d3b47302e90bda6c35b0b1e1f1a5e874f3a1"
+    },
+    {
+      "path": "runs/feature-r2/source/native/src/meaning_identity.rs",
+      "bytes": 16204,
+      "sha256": "fee2e2a65b3c19b0206e62bb063e9c13d21d22a2cb18ebda8485441d30b34814"
+    },
+    {
+      "path": "runs/feature-r2/source/native/src/meaning_identity_build.rs",
+      "bytes": 10415,
+      "sha256": "7de98441362d3801a0c82efbc90ef733fb05c6c6c6703658c92eedeb4c063ee3"
+    },
+    {
+      "path": "runs/feature-r2/source/native/src/meaning_identity_cli.rs",
+      "bytes": 8279,
+      "sha256": "fc021b7440fd0b27a6e8f28b9df11664e126617ac3d32400d5a0ed21fac9f34a"
+    },
+    {
+      "path": "runs/feature-r2/source/native/src/meaning_identity_input.rs",
+      "bytes": 3320,
+      "sha256": "cbfe137c8f6ec650eedbdf2f0fd67abf7c14f5dfc362ac4135103c78642b3c49"
+    },
+    {
+      "path": "runs/feature-r2/source/native/src/meaning_identity_lexical.rs",
+      "bytes": 11447,
+      "sha256": "a714d6d35eb4a216a318ab4a7f9642d92c485b37a4f17cb71c55e308be0b99ef"
+    },
+    {
+      "path": "runs/feature-r2/source/native/src/meaning_identity_projection.rs",
+      "bytes": 6454,
+      "sha256": "ec3b7b81cae57d7e91f3dcce1b3f4dbb7c557b8bceea11115c9b25cdc9669b74"
+    },
+    {
+      "path": "runs/feature-r2/source/native/src/meaning_identity_store.rs",
+      "bytes": 16773,
+      "sha256": "d269f77a398642b0b2433daadd3dabaaba3b8df7ddb9e27adfab2f5850f03092"
+    },
+    {
+      "path": "runs/feature-r2/source/native/src/retention.rs",
+      "bytes": 83474,
+      "sha256": "d185960215c8ab8c86738faa0e3617e4d373d7cad3fd9881eae43aec5e8b74e7"
+    },
+    {
+      "path": "runs/feature-r2/source/native/tests/meaning_identity.rs",
+      "bytes": 31388,
+      "sha256": "8ba1d1c7b1e783ea48d0afa334e613c8bde6c12655373229d9e4504e1ad0c33a"
+    },
+    {
+      "path": "runs/feature-r2/source-after.json",
+      "bytes": 84918,
+      "sha256": "6a1a0fef759f666c3fb1fa869710c37e4f134e57fcf44601211b5db0feff78b6"
+    },
+    {
+      "path": "runs/feature-r2/source-before.json",
+      "bytes": 84918,
+      "sha256": "6a1a0fef759f666c3fb1fa869710c37e4f134e57fcf44601211b5db0feff78b6"
+    },
+    {
+      "path": "runs/feature-r3/native.log",
+      "bytes": 1061,
+      "sha256": "48260be62b652e099d0ed95b67c36d9855271d9009cdfcf338e4958e673286b3"
+    },
+    {
+      "path": "runs/feature-r3/result.json",
+      "bytes": 794,
+      "sha256": "3c258e8170176778c9ebb90c9afd684ac9f71f70c576c5efd5e39fa34f32e011"
+    },
+    {
+      "path": "runs/feature-r3/runner.py",
+      "bytes": 5052,
+      "sha256": "7639ae207dd0e5849a1e1c7e0c592e9dee1138f8b9c216bb69ffab7514bce562"
+    },
+    {
+      "path": "runs/feature-r3/source/native/README.md",
+      "bytes": 28498,
+      "sha256": "1bb4608c7432e7d6bdc6d8ff03b5eaae03b6edd40a539d26cd45ea7b8283c9af"
+    },
+    {
+      "path": "runs/feature-r3/source/native/src/lib.rs",
+      "bytes": 33513,
+      "sha256": "c14dd21d2979880c32fc1c2e8efb9d1de8a576df7af8d0b7bdb1d1e1820d0af9"
+    },
+    {
+      "path": "runs/feature-r3/source/native/src/main.rs",
+      "bytes": 181374,
+      "sha256": "e1aef6c2536d2687b4b48e3bd8662f8d5a7bb4cecf20bfcf15abcf2cefbf2090"
+    },
+    {
+      "path": "runs/feature-r3/source/native/src/meaning_aliases.rs",
+      "bytes": 16857,
+      "sha256": "eb1ccc0822b6652a4fb3c84a34f6d3b47302e90bda6c35b0b1e1f1a5e874f3a1"
+    },
+    {
+      "path": "runs/feature-r3/source/native/src/meaning_identity.rs",
+      "bytes": 16414,
+      "sha256": "fb6b111aa6ec09e153b63c180ffb22a0f5deaaf31dc815f650f2c65816108b2d"
+    },
+    {
+      "path": "runs/feature-r3/source/native/src/meaning_identity_build.rs",
+      "bytes": 10415,
+      "sha256": "7de98441362d3801a0c82efbc90ef733fb05c6c6c6703658c92eedeb4c063ee3"
+    },
+    {
+      "path": "runs/feature-r3/source/native/src/meaning_identity_cli.rs",
+      "bytes": 8279,
+      "sha256": "fc021b7440fd0b27a6e8f28b9df11664e126617ac3d32400d5a0ed21fac9f34a"
+    },
+    {
+      "path": "runs/feature-r3/source/native/src/meaning_identity_input.rs",
+      "bytes": 3320,
+      "sha256": "cbfe137c8f6ec650eedbdf2f0fd67abf7c14f5dfc362ac4135103c78642b3c49"
+    },
+    {
+      "path": "runs/feature-r3/source/native/src/meaning_identity_lexical.rs",
+      "bytes": 11447,
+      "sha256": "a714d6d35eb4a216a318ab4a7f9642d92c485b37a4f17cb71c55e308be0b99ef"
+    },
+    {
+      "path": "runs/feature-r3/source/native/src/meaning_identity_projection.rs",
+      "bytes": 6454,
+      "sha256": "ec3b7b81cae57d7e91f3dcce1b3f4dbb7c557b8bceea11115c9b25cdc9669b74"
+    },
+    {
+      "path": "runs/feature-r3/source/native/src/meaning_identity_store.rs",
+      "bytes": 16773,
+      "sha256": "d269f77a398642b0b2433daadd3dabaaba3b8df7ddb9e27adfab2f5850f03092"
+    },
+    {
+      "path": "runs/feature-r3/source/native/src/retention.rs",
+      "bytes": 83474,
+      "sha256": "d185960215c8ab8c86738faa0e3617e4d373d7cad3fd9881eae43aec5e8b74e7"
+    },
+    {
+      "path": "runs/feature-r3/source/native/tests/meaning_identity.rs",
+      "bytes": 35039,
+      "sha256": "456994007d73e528eda2db3f33316d2b49aafafebead4d32e3a1703e5a8db570"
+    },
+    {
+      "path": "runs/feature-r3/source-after.json",
+      "bytes": 84918,
+      "sha256": "da85256c6e8ede366533dcc218a65f6b27e3dc84f50c3fdf81e3b5c1946a1651"
+    },
+    {
+      "path": "runs/feature-r3/source-before.json",
+      "bytes": 84918,
+      "sha256": "da85256c6e8ede366533dcc218a65f6b27e3dc84f50c3fdf81e3b5c1946a1651"
+    },
+    {
+      "path": "runs/feature-r4/native.log",
+      "bytes": 2027,
+      "sha256": "7795a9e21c915d6f893e73bce50f0821396eea4f54f72d971f54812b1eef5e90"
+    },
+    {
+      "path": "runs/feature-r4/result.json",
+      "bytes": 793,
+      "sha256": "6ed63585aac49b62c87dae5dfeb19d443d17029182a55e438fae0046e4031a8a"
+    },
+    {
+      "path": "runs/feature-r4/runner.py",
+      "bytes": 5052,
+      "sha256": "7639ae207dd0e5849a1e1c7e0c592e9dee1138f8b9c216bb69ffab7514bce562"
+    },
+    {
+      "path": "runs/feature-r4/source/native/README.md",
+      "bytes": 28498,
+      "sha256": "1bb4608c7432e7d6bdc6d8ff03b5eaae03b6edd40a539d26cd45ea7b8283c9af"
+    },
+    {
+      "path": "runs/feature-r4/source/native/src/lib.rs",
+      "bytes": 33513,
+      "sha256": "c14dd21d2979880c32fc1c2e8efb9d1de8a576df7af8d0b7bdb1d1e1820d0af9"
+    },
+    {
+      "path": "runs/feature-r4/source/native/src/main.rs",
+      "bytes": 181374,
+      "sha256": "e1aef6c2536d2687b4b48e3bd8662f8d5a7bb4cecf20bfcf15abcf2cefbf2090"
+    },
+    {
+      "path": "runs/feature-r4/source/native/src/meaning_aliases.rs",
+      "bytes": 16857,
+      "sha256": "eb1ccc0822b6652a4fb3c84a34f6d3b47302e90bda6c35b0b1e1f1a5e874f3a1"
+    },
+    {
+      "path": "runs/feature-r4/source/native/src/meaning_identity.rs",
+      "bytes": 16414,
+      "sha256": "fb6b111aa6ec09e153b63c180ffb22a0f5deaaf31dc815f650f2c65816108b2d"
+    },
+    {
+      "path": "runs/feature-r4/source/native/src/meaning_identity_build.rs",
+      "bytes": 10464,
+      "sha256": "0f2abca9cbaa4151ff8ae91b59dc6dd33b8faf1d3406184ddbaac500b43edbd9"
+    },
+    {
+      "path": "runs/feature-r4/source/native/src/meaning_identity_cli.rs",
+      "bytes": 8279,
+      "sha256": "fc021b7440fd0b27a6e8f28b9df11664e126617ac3d32400d5a0ed21fac9f34a"
+    },
+    {
+      "path": "runs/feature-r4/source/native/src/meaning_identity_input.rs",
+      "bytes": 3320,
+      "sha256": "cbfe137c8f6ec650eedbdf2f0fd67abf7c14f5dfc362ac4135103c78642b3c49"
+    },
+    {
+      "path": "runs/feature-r4/source/native/src/meaning_identity_lexical.rs",
+      "bytes": 11447,
+      "sha256": "a714d6d35eb4a216a318ab4a7f9642d92c485b37a4f17cb71c55e308be0b99ef"
+    },
+    {
+      "path": "runs/feature-r4/source/native/src/meaning_identity_projection.rs",
+      "bytes": 6454,
+      "sha256": "ec3b7b81cae57d7e91f3dcce1b3f4dbb7c557b8bceea11115c9b25cdc9669b74"
+    },
+    {
+      "path": "runs/feature-r4/source/native/src/meaning_identity_store.rs",
+      "bytes": 17206,
+      "sha256": "75ee02957585101407483ecee2d598ae09811ff92a7bd8937db4c02ffc294e5c"
+    },
+    {
+      "path": "runs/feature-r4/source/native/src/retention.rs",
+      "bytes": 83474,
+      "sha256": "d185960215c8ab8c86738faa0e3617e4d373d7cad3fd9881eae43aec5e8b74e7"
+    },
+    {
+      "path": "runs/feature-r4/source/native/tests/meaning_identity.rs",
+      "bytes": 35068,
+      "sha256": "57347e207cc6f927d8fbd88a15af3a8b46c3cead84f1118936ea820a9480301c"
+    },
+    {
+      "path": "runs/feature-r4/source-after.json",
+      "bytes": 84918,
+      "sha256": "05627ade9805402621ce7752e06b5d1cbbc0d9ee4cee875edf84f4629d430ba6"
+    },
+    {
+      "path": "runs/feature-r4/source-before.json",
+      "bytes": 84918,
+      "sha256": "05627ade9805402621ce7752e06b5d1cbbc0d9ee4cee875edf84f4629d430ba6"
+    },
+    {
+      "path": "runs/feature-r5/native.log",
+      "bytes": 1558,
+      "sha256": "9bc849ab833026c5bda4ae9e2cfb1b9385b19921cd962bec5afb9a571ea62d6b"
+    },
+    {
+      "path": "runs/feature-r5/result.json",
+      "bytes": 842,
+      "sha256": "dfd47dc60891730690abf9abac69750302ec23174df9c46b4c4bff305fb03f92"
+    },
+    {
+      "path": "runs/feature-r5/runner.py",
+      "bytes": 5052,
+      "sha256": "7639ae207dd0e5849a1e1c7e0c592e9dee1138f8b9c216bb69ffab7514bce562"
+    },
+    {
+      "path": "runs/feature-r5/source/native/README.md",
+      "bytes": 28498,
+      "sha256": "1bb4608c7432e7d6bdc6d8ff03b5eaae03b6edd40a539d26cd45ea7b8283c9af"
+    },
+    {
+      "path": "runs/feature-r5/source/native/src/lib.rs",
+      "bytes": 33513,
+      "sha256": "c14dd21d2979880c32fc1c2e8efb9d1de8a576df7af8d0b7bdb1d1e1820d0af9"
+    },
+    {
+      "path": "runs/feature-r5/source/native/src/main.rs",
+      "bytes": 181374,
+      "sha256": "e1aef6c2536d2687b4b48e3bd8662f8d5a7bb4cecf20bfcf15abcf2cefbf2090"
+    },
+    {
+      "path": "runs/feature-r5/source/native/src/meaning_aliases.rs",
+      "bytes": 16857,
+      "sha256": "eb1ccc0822b6652a4fb3c84a34f6d3b47302e90bda6c35b0b1e1f1a5e874f3a1"
+    },
+    {
+      "path": "runs/feature-r5/source/native/src/meaning_identity.rs",
+      "bytes": 18111,
+      "sha256": "0d645d9d120fa2ae666b6998f50978fa2465d8c003f826e967b4180b3f6dfe68"
+    },
+    {
+      "path": "runs/feature-r5/source/native/src/meaning_identity_build.rs",
+      "bytes": 10464,
+      "sha256": "0f2abca9cbaa4151ff8ae91b59dc6dd33b8faf1d3406184ddbaac500b43edbd9"
+    },
+    {
+      "path": "runs/feature-r5/source/native/src/meaning_identity_cli.rs",
+      "bytes": 9082,
+      "sha256": "ac6bca7dc906017d90fb5d3ca4d69052246e7a51beea106098d255e5fc0385ea"
+    },
+    {
+      "path": "runs/feature-r5/source/native/src/meaning_identity_input.rs",
+      "bytes": 3320,
+      "sha256": "cbfe137c8f6ec650eedbdf2f0fd67abf7c14f5dfc362ac4135103c78642b3c49"
+    },
+    {
+      "path": "runs/feature-r5/source/native/src/meaning_identity_lexical.rs",
+      "bytes": 11447,
+      "sha256": "a714d6d35eb4a216a318ab4a7f9642d92c485b37a4f17cb71c55e308be0b99ef"
+    },
+    {
+      "path": "runs/feature-r5/source/native/src/meaning_identity_projection.rs",
+      "bytes": 6454,
+      "sha256": "ec3b7b81cae57d7e91f3dcce1b3f4dbb7c557b8bceea11115c9b25cdc9669b74"
+    },
+    {
+      "path": "runs/feature-r5/source/native/src/meaning_identity_store.rs",
+      "bytes": 17206,
+      "sha256": "75ee02957585101407483ecee2d598ae09811ff92a7bd8937db4c02ffc294e5c"
+    },
+    {
+      "path": "runs/feature-r5/source/native/src/retention.rs",
+      "bytes": 83474,
+      "sha256": "d185960215c8ab8c86738faa0e3617e4d373d7cad3fd9881eae43aec5e8b74e7"
+    },
+    {
+      "path": "runs/feature-r5/source/native/tests/meaning_identity.rs",
+      "bytes": 39015,
+      "sha256": "948a903cbaf4a2c7ca0dbdaf04059b09e3a8b95310d2bf8007965233cdee7712"
+    },
+    {
+      "path": "runs/feature-r5/source-after.json",
+      "bytes": 84918,
+      "sha256": "3b691a2c2339f59db84c97396e96d72aea718061ce25763d33ee2a59793472c3"
+    },
+    {
+      "path": "runs/feature-r5/source-before.json",
+      "bytes": 84918,
+      "sha256": "3b691a2c2339f59db84c97396e96d72aea718061ce25763d33ee2a59793472c3"
+    },
+    {
+      "path": "runs/feature-r6/native.log",
+      "bytes": 3572,
+      "sha256": "d1b8b386d26a4c1b85b18e4d943242f296d53480a6733b6101d9a3dc67ae1e33"
+    },
+    {
+      "path": "runs/feature-r6/result.json",
+      "bytes": 840,
+      "sha256": "a04bb70467d130cbef3ffcd8d380011d2a146942161509868a9561cde87da5a5"
+    },
+    {
+      "path": "runs/feature-r6/runner.py",
+      "bytes": 5052,
+      "sha256": "7639ae207dd0e5849a1e1c7e0c592e9dee1138f8b9c216bb69ffab7514bce562"
+    },
+    {
+      "path": "runs/feature-r6/source/native/README.md",
+      "bytes": 28498,
+      "sha256": "1bb4608c7432e7d6bdc6d8ff03b5eaae03b6edd40a539d26cd45ea7b8283c9af"
+    },
+    {
+      "path": "runs/feature-r6/source/native/src/lib.rs",
+      "bytes": 33513,
+      "sha256": "c14dd21d2979880c32fc1c2e8efb9d1de8a576df7af8d0b7bdb1d1e1820d0af9"
+    },
+    {
+      "path": "runs/feature-r6/source/native/src/main.rs",
+      "bytes": 181374,
+      "sha256": "e1aef6c2536d2687b4b48e3bd8662f8d5a7bb4cecf20bfcf15abcf2cefbf2090"
+    },
+    {
+      "path": "runs/feature-r6/source/native/src/meaning_aliases.rs",
+      "bytes": 16857,
+      "sha256": "eb1ccc0822b6652a4fb3c84a34f6d3b47302e90bda6c35b0b1e1f1a5e874f3a1"
+    },
+    {
+      "path": "runs/feature-r6/source/native/src/meaning_identity.rs",
+      "bytes": 18111,
+      "sha256": "0d645d9d120fa2ae666b6998f50978fa2465d8c003f826e967b4180b3f6dfe68"
+    },
+    {
+      "path": "runs/feature-r6/source/native/src/meaning_identity_build.rs",
+      "bytes": 10464,
+      "sha256": "0f2abca9cbaa4151ff8ae91b59dc6dd33b8faf1d3406184ddbaac500b43edbd9"
+    },
+    {
+      "path": "runs/feature-r6/source/native/src/meaning_identity_cli.rs",
+      "bytes": 9082,
+      "sha256": "ac6bca7dc906017d90fb5d3ca4d69052246e7a51beea106098d255e5fc0385ea"
+    },
+    {
+      "path": "runs/feature-r6/source/native/src/meaning_identity_input.rs",
+      "bytes": 3329,
+      "sha256": "c4a180f86fc9c72fc7d0234f2b43f4fa0ecde018ed997dda564d5a567c9190bc"
+    },
+    {
+      "path": "runs/feature-r6/source/native/src/meaning_identity_lexical.rs",
+      "bytes": 11447,
+      "sha256": "a714d6d35eb4a216a318ab4a7f9642d92c485b37a4f17cb71c55e308be0b99ef"
+    },
+    {
+      "path": "runs/feature-r6/source/native/src/meaning_identity_projection.rs",
+      "bytes": 6454,
+      "sha256": "ec3b7b81cae57d7e91f3dcce1b3f4dbb7c557b8bceea11115c9b25cdc9669b74"
+    },
+    {
+      "path": "runs/feature-r6/source/native/src/meaning_identity_store.rs",
+      "bytes": 17416,
+      "sha256": "03f4adf5a6db9e3b33d7cb3264131e33d960bfbef52f123b893281f370ba3174"
+    },
+    {
+      "path": "runs/feature-r6/source/native/src/retention.rs",
+      "bytes": 83474,
+      "sha256": "d185960215c8ab8c86738faa0e3617e4d373d7cad3fd9881eae43aec5e8b74e7"
+    },
+    {
+      "path": "runs/feature-r6/source/native/tests/meaning_identity.rs",
+      "bytes": 39123,
+      "sha256": "25abb20037df464bb916fc7380acbd5a6791109d95a83cd35579de68d075a294"
+    },
+    {
+      "path": "runs/feature-r6/source-after.json",
+      "bytes": 84918,
+      "sha256": "917109e3a08ca176e1caf6290a415afae54100e9f337da106f581f90af7caf42"
+    },
+    {
+      "path": "runs/feature-r6/source-before.json",
+      "bytes": 84918,
+      "sha256": "917109e3a08ca176e1caf6290a415afae54100e9f337da106f581f90af7caf42"
+    },
+    {
+      "path": "runs/final-r1/build.log",
+      "bytes": 60,
+      "sha256": "b925dc6c1c48c839766da7189f7e20dae0a02ec2048d55432873411d14f085fa"
+    },
+    {
+      "path": "runs/final-r1/clippy.log",
+      "bytes": 168,
+      "sha256": "fe679471262956f4a410ed604059eefa23a235928f673943db44e8b5a62ddd05"
+    },
+    {
+      "path": "runs/final-r1/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "runs/final-r1/native.log",
+      "bytes": 82762,
+      "sha256": "b46255488d80f7aadb1addc1e325339ec125fcdc745631ed2bc799f3f2dca6e2"
+    },
+    {
+      "path": "runs/final-r1/result.json",
+      "bytes": 2302,
+      "sha256": "effe0ada6b559a5c6e0aad577f8cddfb5ef8e57d2f0fad5dd5cf2271727decfd"
+    },
+    {
+      "path": "runs/final-r1/runner.py",
+      "bytes": 5052,
+      "sha256": "7639ae207dd0e5849a1e1c7e0c592e9dee1138f8b9c216bb69ffab7514bce562"
+    },
+    {
+      "path": "runs/final-r1/source/native/docs/meaning-identity.md",
+      "bytes": 14085,
+      "sha256": "63d5c61da310aea487c197b6f1f9e16ea431e70fb4f82c48bdd90129584c51d9"
+    },
+    {
+      "path": "runs/final-r1/source/native/README.md",
+      "bytes": 28898,
+      "sha256": "183fa1c575726afcdaab9d63a0f63eae6b60c5da312b927e270f647c709bfdea"
+    },
+    {
+      "path": "runs/final-r1/source/native/src/lib.rs",
+      "bytes": 33513,
+      "sha256": "c14dd21d2979880c32fc1c2e8efb9d1de8a576df7af8d0b7bdb1d1e1820d0af9"
+    },
+    {
+      "path": "runs/final-r1/source/native/src/main.rs",
+      "bytes": 181374,
+      "sha256": "e1aef6c2536d2687b4b48e3bd8662f8d5a7bb4cecf20bfcf15abcf2cefbf2090"
+    },
+    {
+      "path": "runs/final-r1/source/native/src/meaning_aliases.rs",
+      "bytes": 16857,
+      "sha256": "eb1ccc0822b6652a4fb3c84a34f6d3b47302e90bda6c35b0b1e1f1a5e874f3a1"
+    },
+    {
+      "path": "runs/final-r1/source/native/src/meaning_identity.rs",
+      "bytes": 18111,
+      "sha256": "0d645d9d120fa2ae666b6998f50978fa2465d8c003f826e967b4180b3f6dfe68"
+    },
+    {
+      "path": "runs/final-r1/source/native/src/meaning_identity_build.rs",
+      "bytes": 10464,
+      "sha256": "0f2abca9cbaa4151ff8ae91b59dc6dd33b8faf1d3406184ddbaac500b43edbd9"
+    },
+    {
+      "path": "runs/final-r1/source/native/src/meaning_identity_cli.rs",
+      "bytes": 9082,
+      "sha256": "ac6bca7dc906017d90fb5d3ca4d69052246e7a51beea106098d255e5fc0385ea"
+    },
+    {
+      "path": "runs/final-r1/source/native/src/meaning_identity_input.rs",
+      "bytes": 3329,
+      "sha256": "c4a180f86fc9c72fc7d0234f2b43f4fa0ecde018ed997dda564d5a567c9190bc"
+    },
+    {
+      "path": "runs/final-r1/source/native/src/meaning_identity_lexical.rs",
+      "bytes": 11447,
+      "sha256": "a714d6d35eb4a216a318ab4a7f9642d92c485b37a4f17cb71c55e308be0b99ef"
+    },
+    {
+      "path": "runs/final-r1/source/native/src/meaning_identity_projection.rs",
+      "bytes": 6454,
+      "sha256": "ec3b7b81cae57d7e91f3dcce1b3f4dbb7c557b8bceea11115c9b25cdc9669b74"
+    },
+    {
+      "path": "runs/final-r1/source/native/src/meaning_identity_store.rs",
+      "bytes": 17416,
+      "sha256": "03f4adf5a6db9e3b33d7cb3264131e33d960bfbef52f123b893281f370ba3174"
+    },
+    {
+      "path": "runs/final-r1/source/native/src/retention.rs",
+      "bytes": 83474,
+      "sha256": "d185960215c8ab8c86738faa0e3617e4d373d7cad3fd9881eae43aec5e8b74e7"
+    },
+    {
+      "path": "runs/final-r1/source/native/tests/meaning_identity.rs",
+      "bytes": 39045,
+      "sha256": "109a3c032f6d3a56cc8727905540312815458f40f68d81d668ac6f84c3da92e5"
+    },
+    {
+      "path": "runs/final-r1/source-after.json",
+      "bytes": 85024,
+      "sha256": "755d3d02970cfeeead31c4740302e703a46334e2afad52f3feaaa5b887fa24a0"
+    },
+    {
+      "path": "runs/final-r1/source-before.json",
+      "bytes": 85024,
+      "sha256": "755d3d02970cfeeead31c4740302e703a46334e2afad52f3feaaa5b887fa24a0"
+    },
+    {
+      "path": "runs/retained-r1/python-contracts.log",
+      "bytes": 2845,
+      "sha256": "9c546624e0ce4872278fc5aa4289629398105c6ca6a888bb93f70957c493a25f"
+    },
+    {
+      "path": "runs/retained-r1/result.json",
+      "bytes": 737,
+      "sha256": "9cea21a0902aa5fb92ea085fbdc196044b26f69ee9a002edff863aec36a86a88"
+    },
+    {
+      "path": "runs/retained-r1/runner.py",
+      "bytes": 2198,
+      "sha256": "6e0a63f5a2e912ccdf131dc4f9a87ae113b7c2b6cca8280efbbecd5aed36e7c1"
+    },
+    {
+      "path": "runs/retained-r1/source-after.json",
+      "bytes": 83844,
+      "sha256": "6a80d9b265bbe081652fb6856100894d107a0e52bcb69d1ddb3ed194619a552f"
+    },
+    {
+      "path": "runs/retained-r1/source-before.json",
+      "bytes": 83844,
+      "sha256": "6a80d9b265bbe081652fb6856100894d107a0e52bcb69d1ddb3ed194619a552f"
+    },
+    {
+      "path": "runs/retained-r1/tests.log",
+      "bytes": 25040,
+      "sha256": "752286ff0ed61baa84567e962c70b742f03bdbfeb86d9202a840baf0659f9ab9"
+    },
+    {
+      "path": "runs/retained-r1/typecheck.log",
+      "bytes": 101,
+      "sha256": "30ef9ce16cf042ab6f160e0a76c1fbfe22f02a3c3a3659ee62863ffc1efdbfdf"
+    },
+    {
+      "path": "source-materialization.json",
+      "bytes": 258462,
+      "sha256": "9bd6002a43e402b9ba44201ee4af8501cb26b22e27dc82934034358700e59f53"
+    },
+    {
+      "path": "tool-runtimes.json",
+      "bytes": 1070,
+      "sha256": "1c06a30ad24a8110e5cfb31d258c3f8bcf760f8318ed86131e1a8fbdef73e624"
+    },
+    {
+      "path": "tracker/after.json",
+      "bytes": 590033,
+      "sha256": "87cd3be7092d8e91fb0f3c5a3575b7b937cc9b9002dcae202c6fac907b9ef456"
+    },
+    {
+      "path": "tracker/before.json",
+      "bytes": 587961,
+      "sha256": "dca00b6eef6f1f544d49611f04c7d0a96ff8597743b541b0c20ccfe55a678cde"
+    },
+    {
+      "path": "tracker/proof.json",
+      "bytes": 386,
+      "sha256": "8ad82d95598a69655e28aeb73f2f150b5809ddbaa345b75fe31bf336b5cbd8a5"
+    },
+    {
+      "path": "tracker-recipe.py",
+      "bytes": 4655,
+      "sha256": "5a298242dd96e2ea8370399b93adee1da97c2c27a46fecfe8709b6bd58702af2"
+    }
+  ]
+}

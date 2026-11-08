@@ -1,0 +1,361 @@
+{
+  "schema": 1,
+  "application": "Code Intelligence",
+  "nativeVersion": "0.5.0",
+  "retainedTypeScriptVersion": "0.3.0",
+  "sourceCommit": "a9608c7f1c544ad720e2662d23670f9bf00b4560",
+  "platform": "x86_64-pc-windows-msvc",
+  "sourceInputCount": 1044,
+  "controlInputCount": 5,
+  "wholeNativeGroups": 5,
+  "nativePassed": 760,
+  "nativeFailed": 0,
+  "nativeExistingIgnored": 7,
+  "nativeFilteredOut": 0,
+  "ignoredNames": [
+    "test host_install::output_recovery_tests::output_recovery_worker ... ignored, spawned only with an explicitly selected parent-owned temp fixture",
+    "test retrieval_saved_graph::tests::oversized_saved_row_refuses_before_raw_payload_read_and_auto_fallback ... ignored, qualified SQLite64MB row fixture:reserve>=512MB RAM/1GB disk; not executed",
+    "test retrieval_scopes::capacity_tests::genuine_4096_utf8_path_is_captured_and_4097_is_refused_by_existing_capture_boundary ... ignored, qualified Windows long-path job; creation/capture failure is setup failure, never skip-as-pass",
+    "test retrieval_scopes::capacity_tests::genuine_one_million_observations_is_byte_dominated_then_plus_one_refuses_before_graph_loading ... ignored, optional very large job:qualify>=8GB RAM/12GB disk, no runtime guarantee; may hit earlier constructor limit",
+    "test retrieval_scopes::capacity_tests::real_100k_files_pass_then_one_real_function_rejects_entity_100001_before_graph_reload ... ignored, qualified root job:100K real files, estimated<=2GB RAM/3GB disk; no SLA",
+    "test retrieval_scopes::capacity_tests::real_graph_exact_64mb_passes_and_plus_one_refuses_before_saved_graph_loading ... ignored, qualified root job:64K real files/two64MB graphs, estimated<=2GB RAM/3GB disk",
+    "test retrieval_scopes::capacity_tests::real_ownership_exact_16mb_passes_and_next_byte_refuses_before_body_scoring ... ignored, qualified root job:38277 real paths/two~53MB graphs, estimated<=2GB RAM/3GB disk"
+  ],
+  "clippy": {
+    "exitCode": 0,
+    "warningDiagnostics": 0,
+    "errorDiagnostics": 0,
+    "compilerArtifactObservations": 757,
+    "nativeArtifactObservations": 370,
+    "distinctNativeTargets": 368,
+    "metadataOnly": true
+  },
+  "otherChecks": {
+    "typecheckExitCode": 0,
+    "nodePassed": 260,
+    "nodeFailed": 0,
+    "nodeExistingSkipped": 3,
+    "pythonTests": 126,
+    "pythonFailed": 0,
+    "pythonSkipped": 0,
+    "formatExitCode": 0,
+    "actionlintVersion": "1.7.12",
+    "actionlintExitCode": 0
+  },
+  "buildAndTestRuns": [
+    {
+      "runId": "build-agent-repl-reviewed",
+      "mode": "build",
+      "target": "agent_repl",
+      "sourceCommit": "a9608c7f1c544ad720e2662d23670f9bf00b4560",
+      "completed": true,
+      "inputsUnchanged": true,
+      "sourceInputCount": 1044,
+      "metadataOnly": false,
+      "selectedImage": {
+        "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\agent_repl-10fb918f43249624.exe",
+        "sha256": "f75ac26c7de139a0a1a9c526fa9abf79e4197674496aba6ba487bb2e4a52ca54",
+        "fileIdentity": [
+          5078471845122615367,
+          4503599630868130
+        ],
+        "bytes": 120782848,
+        "mtimeNs": 1792930123531719000,
+        "links": 1,
+        "noReparseAncestors": true,
+        "writersAndDeletionDeniedThroughRecheck": true
+      },
+      "ownerTreeExitedBeforeCleanup": true,
+      "minimumFreeObserved": 3387154432
+    },
+    {
+      "runId": "build-github-app-ingress-reviewed",
+      "mode": "build",
+      "target": "github_app_ingress",
+      "sourceCommit": "a9608c7f1c544ad720e2662d23670f9bf00b4560",
+      "completed": true,
+      "inputsUnchanged": true,
+      "sourceInputCount": 1044,
+      "metadataOnly": false,
+      "selectedImage": {
+        "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\github_app_ingress-8f322f3539c37f3a.exe",
+        "sha256": "2fab3595fa379f9b9a94850fa031421f83231e32a57cb409944d9e3c5068c11e",
+        "fileIdentity": [
+          5078471845122615367,
+          5066549582017160
+        ],
+        "bytes": 100324352,
+        "mtimeNs": 1792930080564331900,
+        "links": 1,
+        "noReparseAncestors": true,
+        "writersAndDeletionDeniedThroughRecheck": true
+      },
+      "ownerTreeExitedBeforeCleanup": true,
+      "minimumFreeObserved": 3471122432
+    },
+    {
+      "runId": "build-lib-reviewed",
+      "mode": "build",
+      "target": "lib",
+      "sourceCommit": "a9608c7f1c544ad720e2662d23670f9bf00b4560",
+      "completed": true,
+      "inputsUnchanged": true,
+      "sourceInputCount": 1044,
+      "metadataOnly": false,
+      "selectedImage": {
+        "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\yoke-3731cc109f7cf153.exe",
+        "sha256": "ed4b576c9f6e7943148a7f024caf8eb91456431a6969eba2ebe6634e78be625d",
+        "fileIdentity": [
+          5078471845122615367,
+          2814749770673045
+        ],
+        "bytes": 155207680,
+        "mtimeNs": 1792929152557105600,
+        "links": 1,
+        "noReparseAncestors": true,
+        "writersAndDeletionDeniedThroughRecheck": true
+      },
+      "ownerTreeExitedBeforeCleanup": true,
+      "minimumFreeObserved": 4000227328
+    },
+    {
+      "runId": "build-process-reviewed",
+      "mode": "build",
+      "target": "process",
+      "sourceCommit": "a9608c7f1c544ad720e2662d23670f9bf00b4560",
+      "completed": true,
+      "inputsUnchanged": true,
+      "sourceInputCount": 1044,
+      "metadataOnly": false,
+      "selectedImage": {
+        "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\process-bb4aecb482f54758.exe",
+        "sha256": "988e5ebe13d8be8045ef15b98cbfae3d1e0001160bd85f2bde9dab01d1ca7b72",
+        "fileIdentity": [
+          5078471845122615367,
+          8162774328029163
+        ],
+        "bytes": 91957248,
+        "mtimeNs": 1792930104947708600,
+        "links": 1,
+        "noReparseAncestors": true,
+        "writersAndDeletionDeniedThroughRecheck": true
+      },
+      "ownerTreeExitedBeforeCleanup": true,
+      "minimumFreeObserved": 3363672064
+    },
+    {
+      "runId": "build-repository-discovery-reviewed",
+      "mode": "build",
+      "target": "repository_discovery",
+      "sourceCommit": "a9608c7f1c544ad720e2662d23670f9bf00b4560",
+      "completed": true,
+      "inputsUnchanged": true,
+      "sourceInputCount": 1044,
+      "metadataOnly": false,
+      "selectedImage": {
+        "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\repository_discovery-fcc86edaab9d0a52.exe",
+        "sha256": "215d215cf8283e1a696b0664e189dcbdaade6a4ef22057a8a66c64fae1ec1619",
+        "fileIdentity": [
+          5078471845122615367,
+          5910974512143720
+        ],
+        "bytes": 91261952,
+        "mtimeNs": 1792930041985424000,
+        "links": 1,
+        "noReparseAncestors": true,
+        "writersAndDeletionDeniedThroughRecheck": true
+      },
+      "ownerTreeExitedBeforeCleanup": true,
+      "minimumFreeObserved": 3352584192
+    },
+    {
+      "runId": "clippy-reviewed",
+      "mode": "clippy",
+      "target": null,
+      "sourceCommit": "a9608c7f1c544ad720e2662d23670f9bf00b4560",
+      "completed": true,
+      "inputsUnchanged": true,
+      "sourceInputCount": 1044,
+      "metadataOnly": true,
+      "ownerTreeExitedBeforeCleanup": true,
+      "minimumFreeObserved": 3489431552
+    },
+    {
+      "runId": "test-agent-repl-reviewed",
+      "mode": "test",
+      "target": "agent_repl",
+      "sourceCommit": "a9608c7f1c544ad720e2662d23670f9bf00b4560",
+      "completed": true,
+      "inputsUnchanged": true,
+      "sourceInputCount": 1044,
+      "testSummary": {
+        "passed": 22,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filteredOut": 0,
+        "existingIgnoredPromoted": false,
+        "summaryLineCountIncludingNestedOutput": 1
+      },
+      "metadataOnly": false,
+      "selectedImage": {
+        "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\agent_repl-10fb918f43249624.exe",
+        "sha256": "f75ac26c7de139a0a1a9c526fa9abf79e4197674496aba6ba487bb2e4a52ca54",
+        "fileIdentity": [
+          5078471845122615367,
+          4503599630868130
+        ],
+        "bytes": 120782848,
+        "mtimeNs": 1792930123531719000,
+        "links": 1,
+        "noReparseAncestors": true,
+        "writersAndDeletionDeniedThroughRecheck": true
+      },
+      "ownerTreeExitedBeforeCleanup": true,
+      "minimumFreeObserved": 3496820736
+    },
+    {
+      "runId": "test-github-app-ingress-reviewed",
+      "mode": "test",
+      "target": "github_app_ingress",
+      "sourceCommit": "a9608c7f1c544ad720e2662d23670f9bf00b4560",
+      "completed": true,
+      "inputsUnchanged": true,
+      "sourceInputCount": 1044,
+      "testSummary": {
+        "passed": 20,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filteredOut": 0,
+        "existingIgnoredPromoted": false,
+        "summaryLineCountIncludingNestedOutput": 1
+      },
+      "metadataOnly": false,
+      "selectedImage": {
+        "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\github_app_ingress-8f322f3539c37f3a.exe",
+        "sha256": "2fab3595fa379f9b9a94850fa031421f83231e32a57cb409944d9e3c5068c11e",
+        "fileIdentity": [
+          5078471845122615367,
+          5066549582017160
+        ],
+        "bytes": 100324352,
+        "mtimeNs": 1792930080564331900,
+        "links": 1,
+        "noReparseAncestors": true,
+        "writersAndDeletionDeniedThroughRecheck": true
+      },
+      "ownerTreeExitedBeforeCleanup": true,
+      "minimumFreeObserved": 3625156608
+    },
+    {
+      "runId": "test-lib-reviewed",
+      "mode": "test",
+      "target": "lib",
+      "sourceCommit": "a9608c7f1c544ad720e2662d23670f9bf00b4560",
+      "completed": true,
+      "inputsUnchanged": true,
+      "sourceInputCount": 1044,
+      "testSummary": {
+        "passed": 703,
+        "failed": 0,
+        "ignored": 7,
+        "measured": 0,
+        "filteredOut": 0,
+        "existingIgnoredPromoted": false,
+        "summaryLineCountIncludingNestedOutput": 1
+      },
+      "metadataOnly": false,
+      "selectedImage": {
+        "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\yoke-3731cc109f7cf153.exe",
+        "sha256": "ed4b576c9f6e7943148a7f024caf8eb91456431a6969eba2ebe6634e78be625d",
+        "fileIdentity": [
+          5078471845122615367,
+          2814749770673045
+        ],
+        "bytes": 155207680,
+        "mtimeNs": 1792929152557105600,
+        "links": 1,
+        "noReparseAncestors": true,
+        "writersAndDeletionDeniedThroughRecheck": true
+      },
+      "ownerTreeExitedBeforeCleanup": true,
+      "minimumFreeObserved": 4285210624
+    },
+    {
+      "runId": "test-process-reviewed",
+      "mode": "test",
+      "target": "process",
+      "sourceCommit": "a9608c7f1c544ad720e2662d23670f9bf00b4560",
+      "completed": true,
+      "inputsUnchanged": true,
+      "sourceInputCount": 1044,
+      "testSummary": {
+        "passed": 7,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filteredOut": 0,
+        "existingIgnoredPromoted": false,
+        "summaryLineCountIncludingNestedOutput": 1
+      },
+      "metadataOnly": false,
+      "selectedImage": {
+        "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\process-bb4aecb482f54758.exe",
+        "sha256": "988e5ebe13d8be8045ef15b98cbfae3d1e0001160bd85f2bde9dab01d1ca7b72",
+        "fileIdentity": [
+          5078471845122615367,
+          8162774328029163
+        ],
+        "bytes": 91957248,
+        "mtimeNs": 1792930104947708600,
+        "links": 1,
+        "noReparseAncestors": true,
+        "writersAndDeletionDeniedThroughRecheck": true
+      },
+      "ownerTreeExitedBeforeCleanup": true,
+      "minimumFreeObserved": 3511820288
+    },
+    {
+      "runId": "test-repository-discovery-reviewed",
+      "mode": "test",
+      "target": "repository_discovery",
+      "sourceCommit": "a9608c7f1c544ad720e2662d23670f9bf00b4560",
+      "completed": true,
+      "inputsUnchanged": true,
+      "sourceInputCount": 1044,
+      "testSummary": {
+        "passed": 8,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filteredOut": 0,
+        "existingIgnoredPromoted": false,
+        "summaryLineCountIncludingNestedOutput": 1
+      },
+      "metadataOnly": false,
+      "selectedImage": {
+        "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\repository_discovery-fcc86edaab9d0a52.exe",
+        "sha256": "215d215cf8283e1a696b0664e189dcbdaade6a4ef22057a8a66c64fae1ec1619",
+        "fileIdentity": [
+          5078471845122615367,
+          5910974512143720
+        ],
+        "bytes": 91261952,
+        "mtimeNs": 1792930041985424000,
+        "links": 1,
+        "noReparseAncestors": true,
+        "writersAndDeletionDeniedThroughRecheck": true
+      },
+      "ownerTreeExitedBeforeCleanup": true,
+      "minimumFreeObserved": 3771932672
+    }
+  ],
+  "hostedAcceptance": false,
+  "unixAcceptance": false,
+  "completeNativeDefaultSuite": false,
+  "historyLiveAcceptance": false,
+  "releaseVsixAcceptance": false,
+  "fullProjectCompletion": false,
+  "nativeImageOrPdbBytesArchived": false
+}

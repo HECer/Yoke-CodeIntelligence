@@ -1,0 +1,42 @@
+{
+  "sourceCommit": "d87dd7e2f9f91203285cfcdb8149d7d2a40a6f98",
+  "baseCommit": "2ea772a1a343e2b326f0febf4ac1d850ada6cec5",
+  "worktree": "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-ci-tls-ip2ly52_\\checkout",
+  "files": [
+    ".github/workflows/rust.yml",
+    "scripts/run_native_tests.py",
+    "scripts/tests/test_native_test_runner.py"
+  ],
+  "frozenInputs": 1041,
+  "nativeTreeUnchanged": true,
+  "byteExactSourceBlobs": true,
+  "rustTests": {
+    "google-http-lib": [
+      13,
+      0,
+      0
+    ],
+    "google-http-cli": [
+      4,
+      0,
+      0
+    ]
+  },
+  "pythonTests": 19,
+  "npm": {
+    "passed": 260,
+    "failed": 0,
+    "existingSkipped": 3
+  },
+  "formatTargetRoots": 338,
+  "allQualifiedJobsEmpty": true,
+  "sourceInputsUnchangedBeforeDocs": true,
+  "systemSettingsChanged": false,
+  "parentEnvironmentChanged": false,
+  "nativeTlsRefusalUnchanged": true,
+  "fullNativeCertified": false,
+  "fullStatusComplete": false,
+  "reportedUbuntuRerunPending": true,
+  "rawMembers": 71,
+  "reportedJob": "https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/39733018177/job/119672163627"
+}

@@ -1,0 +1,19 @@
+    Finished `test` profile [unoptimized] target(s) in 0.72s
+     Running tests\historical_view_fixture_qualification.rs (target\debug\deps\historical_view_fixture_qualification-51cfbc36f26879ae.exe)
+
+running 2 tests
+test genuine_source_only_views_qualify_epoch8_and_epoch9_and_the_mutation_oracle ... ok
+test genuine_original_and_rebound_typed_archives_qualify_both_epochs_without_a_live_store ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 7.10s
+
+     Running tests\historical_view_receipts.rs (target\debug\deps\historical_view_receipts-9bd63eedbe6a9c95.exe)
+
+running 4 tests
+test h11_new_digest_oracle_sorts_nested_objects_without_reordering_arrays_or_erasing_nulls ... ok
+test h11_different_currencies_and_versions_remain_original_nonaggregated_receipts ... ok
+test h11_checked_archives_keep_original_reports_after_later_ledger_reconciliation_and_store_removal ... ok
+test h11_published_comparison_preserves_null_zero_independent_usage_and_receipt_reuse ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.91s
+

@@ -1,0 +1,15 @@
+{
+  "command": [
+    "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+    "test",
+    "--locked",
+    "-j2",
+    "--test",
+    "process",
+    "runtime_environment",
+    "--",
+    "--test-threads=2"
+  ],
+  "exitCode": 101,
+  "elapsedSeconds": 75.427
+}

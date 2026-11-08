@@ -1,0 +1,71 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 12.21s
+     Running tests\model_bedrock_cli_actual.rs (target\debug\deps\model_bedrock_cli_actual-0bfd6a33f71dc038.exe)
+
+running 2 tests
+test actual_cli_bedrock_batch_has_three_accounted_attempts_and_one_complete_corpus ... ignored, Actual Windows credentials and three owned TCP Bedrock attempts; cleans only fake generation
+test actual_cli_bedrock_summary_uses_chunked_session_and_one_accounted_attempt ... ignored, Actual Windows Credential Manager and owned loopback HTTP; creates and removes one unique fake AWS credential generation
+
+test result: ok. 0 passed; 0 failed; 2 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\model_bedrock_review.rs (target\debug\deps\model_bedrock_review-bf263af38b3aa1ee.exe)
+
+running 7 tests
+test arn_slashes_and_dot_segments_stay_inside_one_signed_model_segment ... ok
+test cohere_maps_two_ordered_vectors_to_exact_supplied_source_ids ... ok
+test missing_usage_stays_unknown_and_reported_zero_remains_known ... ok
+test unsupported_dialect_operation_and_wrong_source_scope_precede_credentials ... ok
+test unicode_escaped_inner_object_keys_never_echo_temporary_credentials ... ok
+test rerank_rejects_foreign_missing_duplicate_and_out_of_range_results ... ok
+test session_expiring_inside_credential_callback_never_reaches_wire ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.18s
+
+     Running tests\model_http.rs (target\debug\deps\model_http-68d161d3020e979e.exe)
+
+running 16 tests
+test azure_deployment_labels_cannot_normalize_into_different_route_segments ... ok
+test host_preflight_is_pure_and_rejects_implicit_or_credential_bearing_network_targets ... ok
+test anthropic_messages_wire_schema_and_cache_usage_are_distinct ... ok
+test malformed_bindings_unknown_operations_and_hard_secret_paths_never_read_credentials ... ok
+test malformed_native_input_and_untrusted_hosts_never_resolve_credentials ... ok
+test embeddings_preserve_source_order_and_query_has_no_source_claim ... ok
+test azure_v1_and_dated_deployment_routes_keep_distinct_model_contracts ... ok
+test malformed_optional_usage_is_not_silently_reported_as_zero ... ok
+test openai_chat_preserves_exact_native_binding_and_one_owned_http_request ... ok
+test hostile_http_framing_compression_duplicate_json_and_redirects_fail_closed ... ok
+test redirects_never_forward_fake_credentials_to_another_owned_server ... ok
+test portable_wire_schema_does_not_relax_local_summary_budget ... ok
+test rerank_uses_exact_candidate_ids_and_media_requires_explicit_vision ... ok
+test refusal_truncation_foreign_citations_and_credential_echo_preserve_reported_usage ... ok
+test tls_is_authenticated_with_only_owned_fake_credential_material ... ok
+test response_deadline_is_absolute_and_credentials_are_preflight_only ... ok
+
+test result: ok. 16 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.45s
+
+     Running tests\model_http_cli.rs (target\debug\deps\model_http_cli-2f155f4d3d0c5f8b.exe)
+
+running 4 tests
+test actual_cli_http_summary_preserves_source_binding_and_unknown_billing ... ignored, Actual Windows Credential Manager and owned loopback HTTP; creates and removes one unique fake credential
+test missing_http_authority_fails_before_profile_or_source_state_is_opened ... ok
+test worker_rejects_changed_host_profile_before_waiting_for_stdin_or_reading_credentials ... ok
+test profile_authority_fields_and_inline_secrets_are_rejected_before_source_state ... ok
+
+test result: ok. 3 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.16s
+
+     Running tests\model_http_review.rs (target\debug\deps\model_http_review-cbcd6667172ac33b.exe)
+
+running 3 tests
+test unicode_escaped_credential_echo_is_rejected_after_decoding_model_text ... ok
+test credential_with_quote_and_backslash_is_rejected_after_json_unescaping ... ok
+test present_malformed_tool_calls_cannot_be_treated_as_absent_tools ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+     Running tests\model_identity.rs (target\debug\deps\model_identity-19f2f210e851753e.exe)
+
+running 1 test
+test large_identity_preserves_exact_released_json_bytes_without_a_second_corpus_buffer ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.41s
+

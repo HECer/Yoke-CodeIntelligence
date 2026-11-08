@@ -1,0 +1,23 @@
+✔ provider cleanup closes a real child and its stdio within a bounded interval (3602.2904ms)
+ℹ {"actualChildPid":81664,"beforeSafetyCleanup":{"exited":true,"closed":true,"streams":{"stdin":true,"stdout":true,"stderr":true}}}
+✔ an expired process deadline refuses before any actual child launch (4.3611ms)
+✔ an already cancelled process refuses before any actual child launch (0.9932ms)
+✔ a deadline expiring immediately after actual spawn closes the child and stdio before rejection (3404.5028ms)
+✔ cancellation immediately after actual spawn closes the child and stdio before rejection (3545.549ms)
+✔ an armed ordinary process deadline closes a stalled actual child and all stdio (5033.1904ms)
+✔ an armed ordinary cancellation closes a ready actual child and all stdio (4082.4593ms)
+✔ an ordinary successful actual process preserves captured output and closes all stdio (113.9939ms)
+✔ a failed Windows tree helper falls back only after its actual nonzero exit (300.2914ms)
+ℹ {"fixture":"controlled Windows helper nonzero exit","actualTargetPid":68764,"actualHelperPid":103040,"helperState":{"exited":true,"closed":true,"exitCode":7},"attempts":[{"signal":"SIGKILL","helperExited":true,"helperExitCode":7}],"beforeSafetyCleanup":{"stdin":true,"stdout":true,"stderr":true}}
+✔ a real missing owned executable reports unavailable after failed-spawn resource cleanup (22.4732ms)
+ℹ {"fixture":"missing executable","actualLaunches":1,"resultError":{"name":"CIError","code":"PROCESS_UNAVAILABLE","message":"spawn D:\\Yoke-Test-Scratch\\process-helper-and-lifetime-green-20261016\\yoke-owned-spawn-failure-tyrAIR\\missing-owned-executable.exe ENOENT"},"atSettlement":[{"pid":null,"initialPid":null,"childClosed":true,"errors":[{"name":"Error","code":"ENOENT","syscall":"spawn D:\\Yoke-Test-Scratch\\process-helper-and-lifetime-green-20261016\\yoke-owned-spawn-failure-tyrAIR\\missing-owned-executable.exe"}],"streams":{"stdin":{"shape":"Socket","closeObserved":true,"destroyed":true},"stdout":{"shape":"Socket","closeObserved":true,"destroyed":true},"stderr":{"shape":"Socket","closeObserved":true,"destroyed":true}}}],"finalObserved":[{"pid":null,"initialPid":null,"childClosed":true,"errors":[{"name":"Error","code":"ENOENT","syscall":"spawn D:\\Yoke-Test-Scratch\\process-helper-and-lifetime-green-20261016\\yoke-owned-spawn-failure-tyrAIR\\missing-owned-executable.exe"}],"streams":{"stdin":{"shape":"Socket","closeObserved":true,"destroyed":true},"stdout":{"shape":"Socket","closeObserved":true,"destroyed":true},"stderr":{"shape":"Socket","closeObserved":true,"destroyed":true}}}]}
+✔ a real nonexistent owned cwd reports unavailable after failed-spawn resource cleanup (6.1684ms)
+ℹ {"fixture":"missing cwd","actualLaunches":1,"resultError":{"name":"CIError","code":"PROCESS_UNAVAILABLE","message":"spawn C:\\Program Files\\nodejs\\node.exe ENOENT"},"atSettlement":[{"pid":null,"initialPid":null,"childClosed":true,"errors":[{"name":"Error","code":"ENOENT","syscall":"spawn C:\\Program Files\\nodejs\\node.exe"}],"streams":{"stdin":{"shape":"Socket","closeObserved":true,"destroyed":true},"stdout":{"shape":"Socket","closeObserved":true,"destroyed":true},"stderr":{"shape":"Socket","closeObserved":true,"destroyed":true}}}],"finalObserved":[{"pid":null,"initialPid":null,"childClosed":true,"errors":[{"name":"Error","code":"ENOENT","syscall":"spawn C:\\Program Files\\nodejs\\node.exe"}],"streams":{"stdin":{"shape":"Socket","closeObserved":true,"destroyed":true},"stdout":{"shape":"Socket","closeObserved":true,"destroyed":true},"stderr":{"shape":"Socket","closeObserved":true,"destroyed":true}}}]}
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 16527.848

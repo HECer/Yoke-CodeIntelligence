@@ -1,0 +1,230 @@
+{
+  "complete": true,
+  "sourceCommitBeforeFeature": "6d04f481416d1136adfafa37f3b0bffd2ac59995",
+  "sourceCommit": "cb901cec65ca267cea1f39825d13fd465e1e553a",
+  "groups": {
+    "new-catalog-contracts": [
+      16,
+      0,
+      0,
+      0
+    ],
+    "existing-template-contracts": [
+      13,
+      0,
+      0,
+      0
+    ],
+    "test-session_config_discovery": [
+      12,
+      0,
+      0,
+      0
+    ],
+    "test-session_config_cli": [
+      5,
+      0,
+      0,
+      0
+    ],
+    "test-session_primary_read_only": [
+      8,
+      0,
+      0,
+      0
+    ],
+    "test-session_optional_defaults": [
+      8,
+      0,
+      0,
+      0
+    ],
+    "test-session_steering": [
+      12,
+      0,
+      0,
+      0
+    ],
+    "test-session_startup_project": [
+      8,
+      0,
+      0,
+      0
+    ],
+    "test-session_mcp": [
+      3,
+      0,
+      0,
+      0
+    ],
+    "test-session_memory_patterns": [
+      9,
+      0,
+      0,
+      0
+    ],
+    "test-server_catalog": [
+      2,
+      0,
+      0,
+      0
+    ],
+    "test-server_selection": [
+      8,
+      0,
+      0,
+      0
+    ],
+    "test-server_settings": [
+      8,
+      0,
+      0,
+      0
+    ],
+    "test-server_workspace_settings": [
+      7,
+      0,
+      0,
+      0
+    ],
+    "test-lsp_resource_settings": [
+      10,
+      0,
+      0,
+      0
+    ],
+    "test-source_line_endings": [
+      10,
+      0,
+      0,
+      0
+    ],
+    "test-source_exclusions": [
+      7,
+      0,
+      0,
+      0
+    ],
+    "test-project_session": [
+      6,
+      0,
+      0,
+      0
+    ],
+    "library-all": [
+      586,
+      0,
+      7,
+      0
+    ],
+    "main-all": [
+      4,
+      0,
+      0,
+      0
+    ]
+  },
+  "rustTotals": {
+    "passed": 742,
+    "failed": 0,
+    "existingIgnored": 7,
+    "filtered": 0
+  },
+  "wholeGroups": 20,
+  "addedFunctionsIncluded": 20,
+  "sourceInputs": 1118,
+  "sourceInputsUnchanged": true,
+  "currentCliSha256": "acc1da83befe9dc686015f94dbb002a05fc6b0337b44982739298f304cbc5dd0",
+  "existingInlineAndDefaultRawBytesExact": true,
+  "actualCli": {
+    "complete": true,
+    "allJobsEmpty": true,
+    "sourceInputs": 1118,
+    "sourceInputsUnchanged": true,
+    "currentCliSha256": "acc1da83befe9dc686015f94dbb002a05fc6b0337b44982739298f304cbc5dd0",
+    "oldCliSha256": "d06d1c80a4e178cb0bdb3793503d1d1ea6944ba6689d066ffa90180c1607c6ca",
+    "oldAndNewLiteralPlanRawBytesExact": true,
+    "oldAndNewInlineTemplatePlanRawBytesExact": true,
+    "repeatedRenderedPlanRawBytesExact": true,
+    "oldLiteralAndNewRenderedExportedProfilesByteExact": true,
+    "oldIndependentWarmRepeatAndNewRenderedProfileSessionMcpRawBytesExact": true,
+    "allOriginalNonemptySnapshotGraphRecordRowsExact": true,
+    "originalSourcesAndSelectionsExact": true,
+    "ownedParentProcessCalls": 12,
+    "modelCalls": 0,
+    "analyzedSourceExecuted": false,
+    "renderedGuidanceActuallyUsedInSession": true
+  },
+  "actualLargeCatalogRequest": {
+    "complete": true,
+    "allJobsEmpty": true,
+    "currentCliSha256": "acc1da83befe9dc686015f94dbb002a05fc6b0337b44982739298f304cbc5dd0",
+    "sourceInputs": 1118,
+    "sourceInputsUnchanged": true,
+    "resolvedContextBytes": 300106,
+    "workerRequestBytes": 300169,
+    "requestAndContextCanonicalHashesActuallyMatched": true,
+    "originalCatalogsAndContextExact": true,
+    "modelCalls": 0,
+    "analyzedSourceExecuted": false
+  },
+  "largeContextCallsOutsideRustFunctionTotals": 1,
+  "allJobsEmpty": true,
+  "completeFormatRoots": 364,
+  "clippyAllTargetsWarningsDeniedPassed": true,
+  "pythonTestsPassed": 47,
+  "typecheckPassed": true,
+  "npm": {
+    "passed": 260,
+    "existingSkipped": 3
+  },
+  "dependencyOrProfileChanges": false,
+  "originalFourProductionFilesHadAndRetainLf": true,
+  "oldWholeGroupAndClippyReuse": "Green2 and qualified1 have byte-identical 1118 frozen inputs; green2 whole groups 16/13 and all-target Clippy are included once, not rerun or counted twice.",
+  "firstDiskStop": {
+    "complete": false,
+    "allJobsEmpty": true,
+    "sourceInputs": 1118,
+    "sourceInputsUnchanged": true,
+    "currentCliSha256": "d06d1c80a4e178cb0bdb3793503d1d1ea6944ba6689d066ffa90180c1607c6ca",
+    "freeBytes": 363798528
+  },
+  "storageRecovery": {
+    "complete": true,
+    "files": 5,
+    "allJobsEmpty": true,
+    "sourceInputsUnchanged": true,
+    "freeBytes": 1348923392,
+    "unvalidatedOrProtectedArtifactsTouched": false,
+    "artifactDeletion": false
+  },
+  "storageCompletedDistinctTargetPdbs": {
+    "complete": true,
+    "files": 16,
+    "allJobsEmpty": true,
+    "sourceInputsUnchanged": true,
+    "onlyAlreadyCompletedDifferentCargoTargets": true,
+    "cargoCommandsInThisController": 0,
+    "artifactDeletion": false,
+    "freeBytes": 2090131456
+  },
+  "intermediateCompilerCheck": {
+    "complete": true,
+    "allJobsEmpty": true,
+    "sourceInputs": 1117,
+    "freeBytes": 1308549120
+  },
+  "archive": {
+    "path": "raw-logs.zip",
+    "members": 234,
+    "bytes": 1066931,
+    "sha256": "b6f99e7584ec38dd50775b51f39d48e64191ce8c8ecf7e23d83173e2df22ec83"
+  },
+  "fullWindowsOrHostedAcceptanceClaimed": false,
+  "fullStatusComplete": false,
+  "remaining": [
+    "Automatically derived runtime/tool variables, default/upstream prompt catalogs, Python-Jinja conformance and external clients/layouts/extensions",
+    "Original 353 identities, R1-R9 and 77 unknown runtime requirements",
+    "Current whole Windows, Unix, hosted CI, canonical VSIX, Google, main and release acceptance"
+  ]
+}

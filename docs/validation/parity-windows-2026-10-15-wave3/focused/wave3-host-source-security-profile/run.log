@@ -1,0 +1,42 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 41.51s
+     Running unittests src\lib.rs (target\debug\deps\yoke-35b101204e4eb110.exe)
+
+running 34 tests
+test host_install::output_recovery_tests::actual_apply_exposes_no_human_bytes_before_durable_output_identity ... ok
+test host_install::output_recovery_tests::actual_allocating_process_exit_rolls_back_without_output ... ok
+test host_install::output_recovery_tests::actual_apply_post_prepared_kill_still_resumes_as_a_positive_harness_control ... ok
+test host_install::output_recovery_tests::actual_apply_pre_identity_process_exit_rolls_back_without_unidentified_output ... ok
+test host_install::output_recovery_tests::actual_allocating_kill_resumes_without_creating_unowned_output ... ok
+test host_install::output_recovery_tests::actual_apply_pre_identity_kill_resumes_after_os_removes_unregistered_empty_output ... ok
+test host_install::output_recovery_tests::actual_disarmed_process_exit_rolls_back_the_exact_empty_registered_object ... ok
+test host_install::output_recovery_tests::actual_disarmed_kill_resumes_the_exact_empty_registered_object ... ok
+test host_install::output_recovery_tests::actual_disarmed_recovery_preserves_a_replacement_empty_file ... ok
+test host_install::output_recovery_tests::actual_apply_rechecks_live_original_acl_before_moving_original ... ok
+test host_install::output_recovery_tests::actual_apply_rechecks_live_prepared_output_acl_before_moving_original ... ok
+test host_install::output_recovery_tests::actual_flushed_recovery_preserves_replacement_identical_canonical_bytes ... ok
+test host_install::output_recovery_tests::actual_flushed_process_exit_rolls_back_before_prepared_identity_event ... ok
+test host_install::output_recovery_tests::actual_flushed_kill_resumes_before_prepared_identity_event ... ok
+test host_install::output_recovery_tests::actual_partial_kill_resumes_a_raw_prefix_ending_inside_utf8 ... ok
+test host_install::output_recovery_tests::actual_partial_recovery_preflights_second_root_before_first_append ... ok
+test host_install::output_recovery_tests::actual_partial_recovery_preserves_noncanonical_bytes_on_registered_identity ... ok
+test host_install::output_recovery_tests::actual_partial_process_exit_rolls_back_the_same_raw_prefix_object ... ok
+test host_install::output_recovery_tests::actual_partial_recovery_preserves_replacement_identical_raw_prefix ... ok
+test host_install::output_recovery_tests::actual_populating_process_exit_rolls_back_without_copying_human_bytes ... ok
+test host_install::output_recovery_tests::actual_pre_identity_crash_preserves_foreign_canonical_bytes_occupant ... ok
+test host_install::output_recovery_tests::actual_populating_lineage_cannot_restart_when_registered_output_disappears ... ok
+test host_install::output_recovery_tests::actual_pre_identity_crash_preserves_foreign_empty_occupant ... ok
+test host_install::output_recovery_tests::actual_populating_kill_resumes_the_exact_registered_object ... ok
+test host_install::output_recovery_tests::actual_registered_process_exit_rolls_back_after_os_removes_armed_output ... ok
+test host_install::output_recovery_tests::actual_pre_identity_recovery_refuses_changed_original_acl_without_retry ... ok
+test host_install::output_recovery_tests::actual_registered_kill_resumes_with_a_new_bounded_attempt ... ok
+test host_install::output_recovery_tests::output_recovery_worker ... ignored, spawned only with an explicitly selected parent-owned temp fixture
+test host_install::output_recovery_tests::actual_prepared_recovery_refuses_acl_tampering_before_publication ... ok
+test host_install::output_recovery_tests::actual_registered_retry_limit_refuses_fourth_allocation_but_allows_rollback ... ok
+test host_install::output_recovery_tests::strict_v2_rollback_rejects_an_output_identity_that_was_never_registered ... ok
+test host_install::output_recovery_tests::actual_retained_reader_blocks_prefix_recovery_without_mutating_state ... ok
+test host_install::output_recovery_tests::strict_v2_persisted_history_rejects_changed_or_removed_source_security ... ok
+test host_install::output_recovery_tests::sixteen_root_v2_history_reserves_only_remaining_output_work ... ok
+
+test result: ok. 33 passed; 0 failed; 1 ignored; 0 measured; 115 filtered out; finished in 35.72s
+

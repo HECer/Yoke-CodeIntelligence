@@ -1,0 +1,29 @@
+    Finished `test` profile [unoptimized] target(s) in 0.69s
+     Running tests\lsp.rs (target\debug\deps\lsp-ad376eb03f90ca87.exe)
+
+running 10 tests
+test host_registered_semantic_rename_uses_the_requested_mcp_snapshot ... ok
+test lsp_deadline_includes_a_server_that_refuses_to_read_didopen ... ok
+test lsp_shutdown_grace_uses_the_remaining_request_deadline ... ok
+test protocol_fixture_locations_bind_to_exact_immutable_source ... ok
+test protocol_fixture_rename_prepares_a_plan_without_touching_source ... ok
+test protocol_fixture_unsafe_workspace_edits_fail_closed ... ok
+test semantic_positions_preserve_cr_crlf_lf_and_unicode_boundaries ... ok
+test repeated_large_lsp_locations_remain_exact_anchors_with_bounded_body_bytes ... ok
+test semantic_calls_refuse_rebound_source_under_a_published_snapshot_id ... ok
+test semantic_location_link_selection_must_be_inside_its_target_range ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.65s
+
+     Running tests\lsp_action_resolve.rs (target\debug\deps\lsp_action_resolve-53fe1341ce53a403.exe)
+
+running 6 tests
+test actual_typescript_lazy_fix_all_preserves_the_unexecuted_auxiliary_command_boundary ... ignored, requires YOKE_TS_LSP selecting the actual installed TypeScript language server
+test deferred_edit_with_a_follow_up_command_is_resolved_but_cannot_prepare_a_partial_action ... ok
+test lazy_code_actions_preserve_opaque_identity_and_prepare_checked_edits_before_owned_shutdown ... ok
+test action_context_preserves_validated_provider_diagnostic_data_and_refuses_outside_ranges ... ok
+test unavailable_disabled_command_and_unrequested_actions_do_not_invoke_resolution ... ok
+test resolution_refuses_changed_action_identity_foreign_ranges_and_materialized_source_mutation ... ok
+
+test result: ok. 5 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 6.83s
+

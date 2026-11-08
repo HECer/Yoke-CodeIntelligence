@@ -1,0 +1,14 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 4.56s
+     Running tests\decision_records_review.rs (target\debug\deps\decision_records_review-272e23eefba2afee.exe)
+changed_value_with_both_literals_in_candidate_does_not_claim_a_transition: test
+cli_budget_artifacts_keep_personal_record_content_in_the_personal_store: test
+personal_record_source_history_cannot_be_retired_from_the_source_store: test
+shared_personal_store_preserves_source_workspace_isolation_for_identical_keys: test
+
+4 tests, 0 benchmarks
+     Running tests\decision_retention.rs (target\debug\deps\decision_retention-27a552f5b67e515c.exe)
+authored_revisions_are_known_roots_and_retain_their_historical_source: test
+widened_authored_revision_cannot_authorize_history_retirement_or_blob_purge: test
+
+2 tests, 0 benchmarks

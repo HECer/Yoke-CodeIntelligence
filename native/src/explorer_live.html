@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Yoke · Live source Explorer</title>
+<style>
+:root{color-scheme:dark;font:14px system-ui,sans-serif;background:#10171d;color:#e6eef1}*{box-sizing:border-box}body{margin:0}header{padding:14px 20px;border-bottom:1px solid #30434e;display:flex;gap:12px;align-items:center;flex-wrap:wrap}h1{font-size:17px;margin:0}.tag{font-size:11px;color:#73e1c5}button{font:inherit;color:inherit;background:#192831;border:1px solid #536c79;border-radius:6px;padding:8px 10px;cursor:pointer}button:disabled{opacity:.5;cursor:default}button:focus-visible{outline:3px solid #73e1c5;outline-offset:2px}#state{margin:0;padding:10px 20px;font-size:12px;color:#a9bdc8;overflow-wrap:anywhere}#state[data-error=true]{color:#ffb8b8}iframe{display:block;width:100%;height:calc(100vh - 116px);min-height:580px;border:0}@media(max-width:650px){header{padding:12px}#state{padding:10px 12px}iframe{height:calc(100vh - 180px)}}
+</style></head><body>
+<header><h1>Yoke <span class="tag">LIVE SOURCE EXPLORER</span></h1><button id="reload" disabled>Reload saved view</button><button id="rebuild" disabled>Rebuild from disk</button><small id="permission">Checking host permission…</small></header>
+<p id="state" role="status">Loading the captured view…</p><iframe id="view" title="Immutable captured source graph" sandbox="allow-scripts allow-downloads"></iframe>
+<script>
+'use strict';
+const token=location.hash.slice(1),state=document.getElementById('state'),frame=document.getElementById('view'),reload=document.getElementById('reload'),rebuild=document.getElementById('rebuild');
+let snapshot=null,revision=null,allowed=false,busy=false;
+function status(message,error=false){state.textContent=message;state.dataset.error=String(error);}
+function controls(){reload.disabled=busy||!/^[a-f0-9]{64}$/.test(token);rebuild.disabled=busy||!allowed||snapshot===null;}
+async function request(path,options={}){
+  const response=await fetch(path,{...options,headers:{Authorization:'Bearer '+token,...options.headers},cache:'no-store',credentials:'omit',redirect:'error',signal:AbortSignal.timeout(610000)});
+  if(!response.ok){let message='Request refused ('+response.status+')';try{message=(await response.json()).error||message;}catch{}throw new Error(message);}
+  return response;
+}
+async function load(){
+  const response=await request('/api/view'),nextSnapshot=response.headers.get('X-Yoke-Snapshot'),nextRevision=Number(response.headers.get('X-Yoke-Revision'));
+  if(!/^[a-f0-9]{64}$/.test(nextSnapshot)||!Number.isSafeInteger(nextRevision)||nextRevision<0)throw new Error('Invalid captured view binding');
+  const html=await response.text();frame.srcdoc=html;snapshot=nextSnapshot;revision=nextRevision;allowed=response.headers.get('X-Yoke-Rebuild')==='true';
+  document.getElementById('permission').textContent=allowed?'Host permits manual capture':'Read-only saved view · rebuild not granted';
+  status('Snapshot '+snapshot.slice(0,16)+' · revision '+revision+' · disk freshness is not checked until an explicit rebuild.');
+}
+async function operation(action){
+  if(busy)return;busy=true;controls();
+  try{await action();}catch(error){if(snapshot===null)document.getElementById('permission').textContent='Source view unavailable';status(error.message+' — the displayed view is retained.',true);}finally{busy=false;controls();}
+}
+reload.addEventListener('click',()=>operation(async()=>{status('Loading the saved server view…');await load();}));
+rebuild.addEventListener('click',()=>operation(async()=>{
+  status('Capturing files and building a new immutable view…');
+  const response=await request('/api/rebuild',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({expectedSnapshotId:snapshot,expectedRevision:revision})});
+  const result=await response.json();await load();if(!result.changed)status('Capture completed with unchanged source · snapshot '+snapshot.slice(0,16)+' · revision '+revision+'.');
+}));
+if(!/^[a-f0-9]{64}$/.test(token)){document.getElementById('permission').textContent='No source access';status('Open the private capability URL announced by the host. Do not share that URL.',true);controls();}
+else operation(load);
+</script></body></html>

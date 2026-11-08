@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "upstreamRevision": "4f2520efb128dd02e66a2302095bdbbb26ddd5a0",
+  "platform": "windows",
+  "baselineCommit": "0dd2818",
+  "scope": "Rust LSP client, declarative backend catalog, immutable semantic overlays",
+  "catalogBackends": 77,
+  "catalogRuntimeCertification": "not implied by metadata",
+  "readOrPlanOperations": 17,
+  "focusedGate": {"passed": 33, "failed": 0, "legacyLsp": 10, "enrichment": 19, "overlays": 2, "catalog": 2},
+  "actualProviderGate": {
+    "passed": 3,
+    "failed": 0,
+    "seconds": 74.55,
+    "providers": ["jedi-language-server 0.47", "rust-analyzer 1.94", "typescript-language-server 5.1.3"],
+    "upstreamApplicationRequired": false,
+    "originalSourceUnchanged": true
+  },
+  "review": {"independent": true, "importantFindingsRepaired": 6, "remainingImportantFindingsInReviewedScope": 0},
+  "deferredBoundaries": ["Actual Godot/GDScript certification", "Remaining backend runtime certification", "Linux/macOS runtime certification", "Directory WorkspaceEdit resource operations", "Server command execution", "Proprietary IDE refactoring implementations", "Full persistent tool-programming agent REPL (next wave)"]
+}

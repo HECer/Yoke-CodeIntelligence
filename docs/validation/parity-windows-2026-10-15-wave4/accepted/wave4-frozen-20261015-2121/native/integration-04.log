@@ -1,0 +1,37 @@
+    Finished `test` profile [unoptimized] target(s) in 0.65s
+     Running tests\agent_repl.rs (target\debug\deps\agent_repl-84e669809669db1b.exe)
+
+running 21 tests
+test exception_rendering_never_reads_user_overridden_exception_properties ... ok
+test composite_rename_selects_the_captured_parent_file_provider_not_the_logical_ast_language ... ok
+test edits_are_guarded_plans_shell_is_separate_and_results_do_not_execute_repr ... ok
+test external_project_context_composes_read_queries_and_cannot_prepare_edits ... ok
+test external_inspection_facades_query_only_registered_source_without_activating_or_preparing_plans ... ok
+test facade_requested_options_are_enforced_or_rejected_without_silent_dropping ... ok
+test explicitly_selected_shell_runs_and_cell_errors_preserve_namespace ... ok
+test forged_worker_callback_authority_keys_are_rejected_and_worker_state_is_lost ... ok
+test line_bulk_and_symbol_edits_are_source_checked_independent_immutable_plans ... ok
+test memory_facade_global_namespace_uses_only_the_registered_global_store ... ok
+test independent_jb_declaration_uses_the_same_python_regex_and_guarded_provider_bridge ... ok
+test pure_facade_has_no_python_shell_or_caller_selected_host_authority ... ok
+test inspection_facades_are_source_bound_reads_in_planning_mode_with_honest_kind_registry ... ok
+test persistent_cells_compose_real_source_queries_and_source_bound_notes ... ok
+test semantic_refactoring_facades_check_modes_before_provider_queries_or_durable_plans ... ok
+test surrogate_dict_keys_are_normalized_without_losing_the_persistent_worker ... ok
+test semantic_rename_facade_only_prepares_registered_provider_guarded_plans ... ok
+test symbol_references_and_semantic_diagnostics_use_registered_source_provider ... ok
+test provider_hierarchies_and_symbol_diagnostics_keep_exact_source_scope ... ok
+test trust_output_and_deadline_failures_are_explicit_and_discard_worker_state ... ok
+test python_regex_declaration_and_semantic_implementations_preserve_snapshot_anchors ... ok
+
+test result: ok. 21 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 14.28s
+
+     Running tests\agent_repl_lifecycle.rs (target\debug\deps\agent_repl_lifecycle-77917d73f0e63410.exe)
+
+running 3 tests
+test checked_owned_termination_proves_windows_child_and_descendant_exit ... ok
+test connection_state_cannot_attach_or_detach_runtime_after_profile_binding ... ok
+test cancelled_python_cell_stops_owned_process_before_original_request_timeout ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.12s
+

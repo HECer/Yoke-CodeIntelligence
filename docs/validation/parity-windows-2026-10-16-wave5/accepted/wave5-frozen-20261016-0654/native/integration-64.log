@@ -1,0 +1,21 @@
+    Finished `test` profile [unoptimized] target(s) in 0.66s
+     Running tests\meaning_commit_review.rs (target\debug\deps\meaning_commit_review-13cd89b423bf2ad5.exe)
+
+running 1 test
+test a_failed_status_after_commit_reports_both_durable_identities_without_claiming_incomplete_work ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.45s
+
+     Running tests\meaning_graph.rs (target\debug\deps\meaning_graph-6b84601965ba426b.exe)
+
+running 7 tests
+test empty_extraction_records_no_claims_without_claiming_semantic_completeness ... ok
+test model_concepts_relations_and_ordered_roles_keep_exact_source_and_inference_labels ... ok
+test exact_claim_dedup_remaps_endpoints_but_aliases_do_not_merge_distinct_concepts ... ok
+test nonzero_excerpts_and_identical_quotes_in_distinct_files_keep_their_own_bindings ... ok
+test utf8_support_escape_forged_source_identity_and_false_coverage_fail_closed ... ok
+test ambiguous_keys_roles_coverage_and_capacity_are_not_accepted_as_inference ... ok
+test overlapping_support_cannot_expand_small_inputs_into_unbounded_quotation_artifacts ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+

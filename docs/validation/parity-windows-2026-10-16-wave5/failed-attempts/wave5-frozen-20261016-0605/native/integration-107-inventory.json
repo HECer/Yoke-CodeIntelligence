@@ -1,0 +1,13 @@
+{
+  "yaml_admission_review": {
+    "executable": "target\\debug\\deps\\yaml_admission_review-91453fd17d0712c3.exe",
+    "ignored": [],
+    "registered": [
+      "container_aliases_include_nested_scalar_bytes",
+      "expanded_scalar_byte_budget_is_shared_across_documents",
+      "retained_nested_anchor_copies_are_charged_without_aliases",
+      "scalar_aliases_are_admitted_before_total_clone_allocation",
+      "small_unicode_aliases_and_independent_documents_remain_supported"
+    ]
+  }
+}

@@ -1,0 +1,15 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 37s
+     Running tests\postgres_catalog.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\postgres_catalog-8df809963e4d3afb.exe)
+
+running 7 tests
+test actual_received_catalog_rows_preserve_oid_overloads_and_parallel_composite_keys ... ok
+test declared_direction_and_parallel_edges_survive_degree_and_trace_queries ... ok
+test foreign_key_endpoint_only_references_are_explicit_and_conflicts_refused ... ok
+test host_permissions_and_literal_loopback_are_required_before_executable_lookup ... ok
+test independent_row_cell_node_observation_wire_and_query_quotas_refuse_overflow ... ok
+test invalid_protocol_duplicate_identity_and_missing_completion_are_refused ... ok
+test raw_unicode_record_ranges_and_frozen_archive_replay_are_exact ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+

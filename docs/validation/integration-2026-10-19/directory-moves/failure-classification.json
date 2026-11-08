@@ -1,0 +1,71 @@
+{
+  "failures": [
+    {
+      "testName": "sqlite_sidecar_links_cannot_rewrite_files_outside_state",
+      "windowsError1314": true,
+      "windowsSharingError32": false,
+      "output": "thread 'sqlite_sidecar_links_cannot_rewrite_files_outside_state' (22812) panicked at native\\tests\\adversarial.rs:20:60:\ncalled `Result::unwrap()` on an `Err` value: Os { code: 1314, kind: Uncategorized, message: \"Dem Client fehlt ein erforderliches Recht.\" }\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace"
+    },
+    {
+      "testName": "source_symlink_cannot_redirect_a_forced_file_deletion",
+      "windowsError1314": true,
+      "windowsSharingError32": false,
+      "output": "thread 'source_symlink_cannot_redirect_a_forced_file_deletion' (22620) panicked at native\\tests\\facade_file_delete.rs:487:81:\ncalled `Result::unwrap()` on an `Err` value: Os { code: 1314, kind: Uncategorized, message: \"Dem Client fehlt ein erforderliches Recht.\" }\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace"
+    },
+    {
+      "testName": "directory_missing_excluded_and_readonly_sources_have_no_file_rename_authority",
+      "windowsError1314": false,
+      "windowsSharingError32": false,
+      "output": "thread 'directory_missing_excluded_and_readonly_sources_have_no_file_rename_authority' (23140) panicked at native\\tests\\facade_file_rename.rs:131:5:\nAdmission failure started a provider\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace"
+    },
+    {
+      "testName": "receiver_ignore_excludes_links_and_remote_policy_text_cannot_change_host_authority",
+      "windowsError1314": true,
+      "windowsSharingError32": false,
+      "output": "thread 'receiver_ignore_excludes_links_and_remote_policy_text_cannot_change_host_authority' (21508) panicked at native\\tests\\federation.rs:303:6:\ncalled `Result::unwrap()` on an `Err` value: Os { code: 1314, kind: Uncategorized, message: \"Dem Client fehlt ein erforderliches Recht.\" }\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace"
+    },
+    {
+      "testName": "windows_host_aliases_cannot_read_protected_files_or_alternate_streams",
+      "windowsError1314": true,
+      "windowsSharingError32": false,
+      "output": "thread 'windows_host_aliases_cannot_read_protected_files_or_alternate_streams' (5764) panicked at native\\tests\\feedback_cli.rs:1100:59:\ncalled `Result::unwrap()` on an `Err` value: Os { code: 1314, kind: Uncategorized, message: \"Dem Client fehlt ein erforderliches Recht.\" }\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace"
+    },
+    {
+      "testName": "affected_options_leaf_and_ancestor_reparse_points_refuse_after_real_options_success",
+      "windowsError1314": true,
+      "windowsSharingError32": false,
+      "output": "thread 'affected_options_leaf_and_ancestor_reparse_points_refuse_after_real_options_success' (22792) panicked at native\\tests\\git_affected_cli.rs:505:10:\nReal Windows file reparse fixture prerequisite: Os { code: 1314, kind: Uncategorized, message: \"Dem Client fehlt ein erforderliches Recht.\" }\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace"
+    },
+    {
+      "testName": "windows_real_options_file_and_ancestor_reparse_points_refuse_after_genuine_positive",
+      "windowsError1314": true,
+      "windowsSharingError32": false,
+      "output": "thread 'windows_real_options_file_and_ancestor_reparse_points_refuse_after_genuine_positive' (12052) panicked at native\\tests\\git_impact_details_cli.rs:698:10:\nreal Windows file reparse prerequisite: Os { code: 1314, kind: Uncategorized, message: \"Dem Client fehlt ein erforderliches Recht.\" }\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace"
+    },
+    {
+      "testName": "collection_sqlite_sidecars_cannot_write_through_links",
+      "windowsError1314": true,
+      "windowsSharingError32": false,
+      "output": "thread 'collection_sqlite_sidecars_cannot_write_through_links' (20876) panicked at native\\tests\\graph_collections.rs:612:60:\ncalled `Result::unwrap()` on an `Err` value: Os { code: 1314, kind: Uncategorized, message: \"Dem Client fehlt ein erforderliches Recht.\" }\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace"
+    },
+    {
+      "testName": "blob_links_are_refused_and_external_targets_are_preserved",
+      "windowsError1314": true,
+      "windowsSharingError32": false,
+      "output": "thread 'blob_links_are_refused_and_external_targets_are_preserved' (5456) panicked at native\\tests\\maintenance.rs:213:56:\ncalled `Result::unwrap()` on an `Err` value: Os { code: 1314, kind: Uncategorized, message: \"Dem Client fehlt ein erforderliches Recht.\" }\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace"
+    },
+    {
+      "testName": "existing_output_file_directory_and_hardlink_are_never_overwritten",
+      "windowsError1314": true,
+      "windowsSharingError32": false,
+      "output": "thread 'existing_output_file_directory_and_hardlink_are_never_overwritten' (920) panicked at native\\tests\\meaning_archive_cli.rs:381:60:\ncalled `Result::unwrap()` on an `Err` value: Os { code: 1314, kind: Uncategorized, message: \"Dem Client fehlt ein erforderliches Recht.\" }\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace"
+    },
+    {
+      "testName": "media_cannot_bypass_source_scope_links_ignore_or_protected_paths",
+      "windowsError1314": true,
+      "windowsSharingError32": false,
+      "output": "thread 'media_cannot_bypass_source_scope_links_ignore_or_protected_paths' (1560) panicked at native\\tests\\media.rs:284:6:\ncalled `Result::unwrap()` on an `Err` value: Os { code: 1314, kind: Uncategorized, message: \"Dem Client fehlt ein erforderliches Recht.\" }\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace"
+    }
+  ],
+  "allObservedFailuresAreFixturePrerequisite1314": false
+}

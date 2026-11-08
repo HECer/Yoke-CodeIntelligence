@@ -1,0 +1,22 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence-r1-directory\native)
+    Finished `test` profile [unoptimized] target(s) in 11.17s
+     Running tests\facade_directory_move.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\facade_directory_move-ea1514a7032e37fa.exe)
+
+running 1 test
+test directory_destination_parent_requires_its_exact_existing_host_spelling ... FAILED
+
+failures:
+
+---- directory_destination_parent_requires_its_exact_existing_host_spelling stdout ----
+
+thread 'directory_destination_parent_requires_its_exact_existing_host_spelling' (19836) panicked at native\tests\facade_directory_move.rs:331:5:
+A directory plan used an alias spelling of its existing parent
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    directory_destination_parent_requires_its_exact_existing_host_spelling
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 6 filtered out; finished in 0.30s
+
+error: test failed, to rerun pass `--test facade_directory_move`

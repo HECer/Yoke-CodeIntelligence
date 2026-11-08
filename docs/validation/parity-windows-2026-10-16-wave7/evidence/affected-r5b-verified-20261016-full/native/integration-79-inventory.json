@@ -1,0 +1,23 @@
+{
+  "model_http_cli": {
+    "executable": "target\\debug\\deps\\model_http_cli-2f155f4d3d0c5f8b.exe",
+    "ignored": [
+      "actual_cli_http_summary_preserves_source_binding_and_unknown_billing"
+    ],
+    "registered": [
+      "actual_cli_http_summary_preserves_source_binding_and_unknown_billing",
+      "missing_http_authority_fails_before_profile_or_source_state_is_opened",
+      "profile_authority_fields_and_inline_secrets_are_rejected_before_source_state",
+      "worker_rejects_changed_host_profile_before_waiting_for_stdin_or_reading_credentials"
+    ]
+  },
+  "model_http_review": {
+    "executable": "target\\debug\\deps\\model_http_review-cbcd6667172ac33b.exe",
+    "ignored": [],
+    "registered": [
+      "credential_with_quote_and_backslash_is_rejected_after_json_unescaping",
+      "present_malformed_tool_calls_cannot_be_treated_as_absent_tools",
+      "unicode_escaped_credential_echo_is_rejected_after_decoding_model_text"
+    ]
+  }
+}

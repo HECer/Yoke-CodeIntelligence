@@ -1,0 +1,75 @@
+{
+  "collections_cli_review": {
+    "executable": "target\\debug\\deps\\collections_cli_review-ed5442fa2c1097ed.exe",
+    "ignored": [],
+    "registered": [
+      "native_archived_source_reads_use_native_proof_without_foreign_authority"
+    ]
+  },
+  "compatibility": {
+    "executable": "target\\debug\\deps\\compatibility-aaf6d1ef7522c50c.exe",
+    "ignored": [],
+    "registered": [
+      "compatibility_session_ids_cannot_select_another_host_session",
+      "public_contract_types_defaults_and_owned_python_runtime_are_enforced",
+      "public_debug_information_topic_is_explicit_and_does_not_execute_a_backend",
+      "public_external_project_queries_route_readonly_aliases_without_activation_or_edits",
+      "public_serena_mcp_profile_lists_contracts_and_routes_without_native_write_tools",
+      "serena_profile_inventories_all_public_tools_and_routes_authored_notes"
+    ]
+  },
+  "compatibility_review": {
+    "executable": "target\\debug\\deps\\compatibility_review-9ce121d21093fef0.exe",
+    "ignored": [],
+    "registered": [
+      "public_reference_kind_filters_cannot_silently_return_unfiltered_results"
+    ]
+  },
+  "config_graph": {
+    "executable": "target\\debug\\deps\\config_graph-fd77e767d27e6ba0.exe",
+    "ignored": [],
+    "registered": [
+      "config_keys_and_references_parse_json_toml_yaml_and_xml",
+      "dotnet_projects_forms_and_byond_assets_keep_authored_dependency_paths",
+      "literal_dotted_keys_cannot_collapse_into_nested_key_paths",
+      "local_json_references_link_declared_keys_and_duplicate_fields_are_rejected",
+      "mcp_config_environment_values_are_never_persisted_or_executed",
+      "mcp_launcher_packages_are_described_without_argument_or_environment_values",
+      "xml_configuration_repeated_names_keep_distinct_parent_paths",
+      "yaml_alias_expansion_budget_fails_without_publishing"
+    ]
+  },
+  "container": {
+    "executable": "target\\debug\\deps\\container-68202891ec839f65.exe",
+    "ignored": [
+      "real_daemon_digest_pinned_offline_container_verification"
+    ],
+    "registered": [
+      "labeled_cli_creation_failure_preserves_daemon_diagnostics_without_a_passing_receipt",
+      "labeled_cli_fixture_requires_isolation_and_owned_cleanup_before_passing_receipt",
+      "labeled_cli_timeout_still_removes_exact_owned_container_and_never_passes",
+      "labeled_cli_zero_tests_integrity_failure_and_cleanup_failure_are_failed_receipts",
+      "missing_trust_mutable_images_root_users_and_unavailable_docker_never_create_approval",
+      "real_daemon_digest_pinned_offline_container_verification",
+      "remote_daemon_or_conflicting_host_prefix_is_refused_before_any_cli_execution"
+    ]
+  },
+  "contracts": {
+    "executable": "target\\debug\\deps\\contracts-0798b794d24c3dcf.exe",
+    "ignored": [],
+    "registered": [
+      "a_root_manifest_does_not_merge_independent_service_scopes",
+      "duplicate_and_cross_service_contract_names_remain_unresolved",
+      "graphql_and_protobuf_ignore_comment_and_description_headers",
+      "literal_ast_contracts_ignore_comments_strings_and_dynamic_arguments",
+      "malformed_contract_documents_produce_diagnostics_instead_of_empty_success",
+      "openapi_operations_use_the_actual_nested_operation_key_after_unicode",
+      "prisma_fields_and_mapped_models_link_to_migrations_as_candidates",
+      "python_routes_and_rust_environment_calls_are_source_bound_without_execution",
+      "quoted_sql_identifiers_are_not_keywords_and_json_duplicates_are_rejected",
+      "schema_body_braces_may_follow_the_name_on_another_line",
+      "sql_comments_and_string_data_cannot_fabricate_migrations_or_accesses",
+      "typescript_jsonc_config_is_valid_but_openapi_json_remains_strict"
+    ]
+  }
+}

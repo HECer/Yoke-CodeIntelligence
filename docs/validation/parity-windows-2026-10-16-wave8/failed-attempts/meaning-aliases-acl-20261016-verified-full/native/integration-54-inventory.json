@@ -1,0 +1,38 @@
+{
+  "host_install_cli": {
+    "executable": "E:\\Yoke-Build-Cache\\meaning-aliases-20261016\\debug\\deps\\host_install_cli-580c103695fa8de9.exe",
+    "ignored": [],
+    "registered": [
+      "host_install_cli_initialization_admits_a_valid_output_budget_before_writing_state",
+      "host_install_cli_initialization_output_failure_identifies_its_durable_result",
+      "host_install_cli_initialization_permission_precedes_selection_and_plan_reads",
+      "host_install_cli_initialization_refuses_foreign_scaffold_bytes_without_disclosing_them",
+      "host_install_cli_initialization_repairs_an_owned_scaffold_and_replays_without_source_changes",
+      "host_install_cli_installs_and_uninstalls_only_its_owned_fragment",
+      "host_install_cli_output_failure_identifies_the_committed_result_and_can_be_retried",
+      "host_install_cli_planning_and_status_are_pure_and_keep_human_text_private",
+      "host_install_cli_rejects_ambiguous_selection_and_small_write_output_before_mutation",
+      "host_install_cli_valid_output_budget_is_admitted_before_any_host_state_or_file_write",
+      "host_install_cli_write_permission_precedes_selection_or_plan_reads"
+    ]
+  },
+  "host_output_disposition": {
+    "executable": "E:\\Yoke-Build-Cache\\meaning-aliases-20261016\\debug\\deps\\host_output_disposition-9c7bbb14919ba5e0.exe",
+    "ignored": [
+      "disposition_probe_worker"
+    ],
+    "registered": [
+      "armed_empty_output_is_deleted_after_real_process_exit",
+      "armed_empty_output_is_deleted_after_real_process_kill",
+      "disarmed_output_can_be_explicitly_deleted_by_extended_delete_on_the_same_handle",
+      "disarmed_output_can_be_explicitly_deleted_by_legacy_boolean_on_the_same_handle",
+      "disposition_probe_worker",
+      "extended_zero_flags_are_characterized_after_exit_and_kill",
+      "legacy_false_does_not_disarm_creation_time_delete_on_close",
+      "required_same_handle_disarm_preserves_subsequent_bytes_after_real_process_exit",
+      "required_same_handle_disarm_preserves_subsequent_bytes_after_real_process_kill",
+      "required_same_handle_disarm_survives_real_process_exit",
+      "required_same_handle_disarm_survives_real_process_kill"
+    ]
+  }
+}

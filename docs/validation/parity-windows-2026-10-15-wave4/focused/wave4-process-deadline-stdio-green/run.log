@@ -1,0 +1,31 @@
+✔ provider cleanup closes a real child and its stdio within a bounded interval (1829.5295ms)
+✔ an expired process deadline refuses before any actual child launch (1.7104ms)
+✔ an already cancelled process refuses before any actual child launch (1.0053ms)
+✔ a deadline expiring immediately after actual spawn closes the child and stdio before rejection (1743.8969ms)
+✔ cancellation immediately after actual spawn closes the child and stdio before rejection (1762.3246ms)
+✔ an armed ordinary process deadline closes a stalled actual child and all stdio (3439.492ms)
+✔ an armed ordinary cancellation closes a ready actual child and all stdio (2850.367ms)
+✔ an ordinary successful actual process preserves captured output and closes all stdio (84.6855ms)
+(node:81660) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ MCP initializes, exposes exactly eight tools and returns one complete content payload (1038.1516ms)
+✔ MCP rejects tools before initialization and reports unknown tools (337.6724ms)
+✔ MCP invalid JSON does not poison the next valid request (350.9996ms)
+✔ MCP cancellation reaches the active request AbortSignal (1.3598ms)
+✔ actual CLI emits parseable JSON with runtime warnings kept on stderr (1461.7824ms)
+✔ CLI help and invalid tool exit status work without external packages (1566.6036ms)
+✔ CLI canonical graph export is a real, readable graph file (2026.7693ms)
+✔ deleting a tracked Git file produces a new snapshot rather than perpetual WORKSPACE_BUSY (751.9719ms)
+✔ loopback explorer requires a bearer token and refuses write tools (1083.0706ms)
+✔ loopback explorer rejects a cross-site Origin even with a valid token (646.7031ms)
+✔ bounded subprocess capture never treats truncated logs as complete (711.5413ms)
+✔ subprocess deadlines kill a stalled process instead of waiting indefinitely (2787.9323ms)
+✔ publisher dry run names the public owner and makes no remote changes (83.4841ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 13359.4739

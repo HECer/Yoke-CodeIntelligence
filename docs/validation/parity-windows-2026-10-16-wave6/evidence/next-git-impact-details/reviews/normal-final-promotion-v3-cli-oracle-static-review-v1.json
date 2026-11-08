@@ -1,0 +1,124 @@
+{
+  "actions": {
+    "createOnly": 13,
+    "destinationsOperationsMatchD50Base": true,
+    "exactBeforeToAfterMapProjection": true,
+    "onlyBasePayloadOverrides": [
+      "native/src/main.rs",
+      "native/src/meaning_archive_cli.rs",
+      "native/tests/git_impact_details_cli.rs"
+    ],
+    "otherNormalMapChanges": [],
+    "replaceExact": 3,
+    "total": 16
+  },
+  "actualFinalGates": {
+    "format": {
+      "exitCode": 0,
+      "helperClosureVerified": true,
+      "log": "target/parity-validation-20261015/r5-store-repaired-format-20261016-1252/run.log",
+      "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "receipt": "target/parity-validation-20261015/r5-store-repaired-format-20261016-1252/receipt.json",
+      "receiptSha256": "f8e5b567a6489c599c937e478ecd4340bc34b5651d626ca971f3d2b94eb55d1d",
+      "sourceBeforeAfterExactFinalMap": true
+    },
+    "legacyMeaningArchiveCli": {
+      "exitCode": 0,
+      "failed": 0,
+      "groups": 1,
+      "helperClosureVerified": true,
+      "ignored": 0,
+      "log": "target/parity-validation-20261015/r5-store-repaired-meaning-cli-20261016-1248/run.log",
+      "logSha256": "43030db5546a8b3ff72919c976bdb864e93f88b37abdae21674f1b98755e415b",
+      "passed": 10,
+      "receipt": "target/parity-validation-20261015/r5-store-repaired-meaning-cli-20261016-1248/receipt.json",
+      "receiptSha256": "9eb1a60010d3ff7b55cf584cb61c41c6a49c7ed47f214bb083c5a501b22816c8",
+      "sourceBeforeAfterExactFinalMap": true
+    },
+    "private": {
+      "exitCode": 0,
+      "failed": 0,
+      "groups": 1,
+      "helperClosureVerified": true,
+      "ignored": 0,
+      "log": "target/parity-validation-20261015/r5-store-repaired-private-20261016-1243/run.log",
+      "logSha256": "493014ad7615eaa487308d2d7fd5c98e363777758fa99ca1878100fbe49aabf5",
+      "passed": 4,
+      "receipt": "target/parity-validation-20261015/r5-store-repaired-private-20261016-1243/receipt.json",
+      "receiptSha256": "ac8ab17593fe04ef577376f57c2b084dc58ca484a8d53ec65dfaef8793e38e9e",
+      "sourceBeforeAfterExactFinalMap": true
+    },
+    "public": {
+      "exitCode": 0,
+      "failed": 0,
+      "groups": 5,
+      "helperClosureVerified": true,
+      "ignored": 0,
+      "log": "target/parity-validation-20261015/r5-store-repaired-public-20261016-1240/run.log",
+      "logSha256": "8e871704f80d67c378523bc866588b613a95e468cb74ad7a3258585e93f6d0f9",
+      "passed": 49,
+      "receipt": "target/parity-validation-20261015/r5-store-repaired-public-20261016-1240/receipt.json",
+      "receiptSha256": "3db419a69e82fec428c68ee2ecce87d7908a574c95bce837c041464eab592734",
+      "sourceBeforeAfterExactFinalMap": true
+    },
+    "strictClippy": {
+      "exitCode": 0,
+      "helperClosureVerified": true,
+      "log": "target/parity-validation-20261015/r5-store-repaired-clippy-20261016-1252/run.log",
+      "logSha256": "46e70a36e45af55dba72c52cbd270b81101838e162ae062e97e62d5dec6639d1",
+      "receipt": "target/parity-validation-20261015/r5-store-repaired-clippy-20261016-1252/receipt.json",
+      "receiptSha256": "44c3a0dc45e8b3a0a78cf64393b939f29caaf29aa5a79a197d94b0e4602f0068",
+      "sourceBeforeAfterExactFinalMap": true
+    }
+  },
+  "applierReview": {
+    "exactReplacementPreimagesAndStagedReplacement": true,
+    "exclusiveCreate": true,
+    "fsyncedInFlightJournalBeforeTargetAttempt": true,
+    "fullFreshNormalMapPreflightAndPostflight": true,
+    "guardedBoundedReads": true,
+    "partialFailureRetainsEvidenceWithoutAutomaticRollback": true,
+    "postwriteByteVerification": true,
+    "rootReceiptHashAndSourceClosure": true,
+    "threeReplacementBackupsBeforeTargetWrites": true
+  },
+  "applierSha256": "64be3d9a6e91808807abaaf28e0e3abdb391e28ece0ee27a5beff94a8a2a71b9",
+  "author": "cli_oracle_repair independent reviewer",
+  "closure": {
+    "packetArtifacts": 35,
+    "pythonAstParsedOnly": [
+      "apply_normal.py",
+      "prepare_packet.py"
+    ],
+    "targetedSourcePinsCheckedOnV2": 33,
+    "v3PayloadsPreimagesPatchesMapsByteExactV2": true,
+    "v3SourcePinsByteExactV2": true
+  },
+  "finalImage": {
+    "files": 1568,
+    "mapSha256": "00fece6c858b70a0cfe9f9d01919bcf4e6f51722b4ec1d82483ba6a4e2df3cee"
+  },
+  "limits": {
+    "cargoNodeRustcOrProductRuntimeByReviewer": false,
+    "fullCurrentNormalInventoryByReviewer": false,
+    "helperExecutionOrImportByReviewer": false,
+    "normalAcceptanceOrUniversalParityClaim": false,
+    "normalOrImageWritesByReviewer": false,
+    "old193PinsOr3327EvidenceRescanned": false,
+    "rootMustStillBindReviewedReceiptDocumentAndRunFreshFullAFDCPreflight": true
+  },
+  "manifestSha256": "4ede4e32b6671a4af17d65ea4edb9c733b2d1b16e25a80c923a519750b81bcdd",
+  "normalAfter": {
+    "files": 2419,
+    "mapSha256": "11f688628aa77bf3f50c440cd954aa49e0588800aeabb838bc17d09efe9ef30f"
+  },
+  "normalBefore": {
+    "files": 2406,
+    "mapSha256": "afdc36edc71c1396dece79d8cc5ae1d5fddf81100c687a5878e373ac43825bcf"
+  },
+  "packet": "target/parity-validation-20261015/next-git-impact-details/revisions/normal-final-promotion-v3",
+  "remainingConcreteBlockers": [],
+  "resolvedV2Finding": "Private selector was incorrectly required after Cargo --. V3 requires exactly one exact selector before --, one --lib, no --test, and a thread-only harness tail. Actual valid four-pass private receipt satisfies the corrected grammar.",
+  "status": "STATIC_CLEAR",
+  "v3HelperOtherDelta": "Only operational OUTPUT directory versioned v2 to v3; all other helper bytes outside corrected private require are unchanged."
+}

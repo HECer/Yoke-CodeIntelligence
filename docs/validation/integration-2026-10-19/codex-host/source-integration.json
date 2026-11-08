@@ -1,0 +1,27 @@
+{
+  "sourceCommit": "17967c5fbe627fd290cc3002661220082785b94a",
+  "runtimeCommit": "823ccf98662e7f9843481bdb611652aa618edfb9",
+  "parentCommit": "2e943bff9c64fea2384251bff3ad0cb74c8565cd",
+  "paths": [
+    "native/docs/host-install.md",
+    "native/src/host_install.rs",
+    "native/src/host_install_adapter.rs",
+    "native/src/host_install_adapter_tests.rs",
+    "native/src/host_install_cli.rs",
+    "native/src/host_install_recovery.rs",
+    "native/src/host_install_recovery_v2.rs",
+    "native/src/host_output_recovery_tests.rs",
+    "native/tests/codex_host_cli.rs"
+  ],
+  "newCases": 12,
+  "nativeGroups": 13,
+  "nativeTotals": {
+    "passed": 558,
+    "failed": 0,
+    "ignored": 8
+  },
+  "nativeInputsMatched": 727,
+  "nativeBinarySha256": "f3c482051981b32305a200c2245572d7bc505420145e3db529e8a1ab4e41f430",
+  "actualClient": "codex-cli 0.163.0",
+  "wholeNativeRerun": false
+}

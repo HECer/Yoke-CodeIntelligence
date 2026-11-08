@@ -1,0 +1,103 @@
+{
+  "sourceUnchanged": true,
+  "inputs": 736,
+  "commands": [
+    {
+      "name": "native",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--no-fail-fast",
+        "--lib",
+        "--test",
+        "member_decorators",
+        "--test",
+        "sibling_declarators",
+        "--test",
+        "python_empty_suite",
+        "--test",
+        "symbol_delete_ranges",
+        "--test",
+        "declaration_attachment_ranges",
+        "--test",
+        "protocol_connection",
+        "--test",
+        "plan_integrity",
+        "--test",
+        "plan_feedback",
+        "--test",
+        "semantic_refactor",
+        "--test",
+        "refactor_intents",
+        "--test",
+        "propagated_delete_contract",
+        "--",
+        "--test-threads=1"
+      ],
+      "exitCode": 0,
+      "seconds": 338.6891292000073,
+      "totals": {
+        "passed": 577,
+        "failed": 0,
+        "ignored": 11
+      },
+      "groups": 12,
+      "failures": []
+    },
+    {
+      "name": "format",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "fmt",
+        "--all",
+        "--check"
+      ],
+      "exitCode": 0,
+      "seconds": 11.861480999999912
+    },
+    {
+      "name": "build",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "build",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--bin",
+        "yoke"
+      ],
+      "exitCode": 0,
+      "seconds": 16.323212799994508
+    },
+    {
+      "name": "clippy",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "clippy",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exitCode": 0,
+      "seconds": 119.3345471000066
+    }
+  ],
+  "allChecksPassed": true,
+  "wholeNativeRerun": false
+}

@@ -1,0 +1,80 @@
+{
+  "baseline": "cb55165f969f27bc62846bd8aa9901e7db371118",
+  "wholePython": {
+    "passed": 103,
+    "failed": 0,
+    "skipped": 0,
+    "warningsAreErrors": true
+  },
+  "nativeFmt": {
+    "roots": 368,
+    "failed": 0
+  },
+  "typecheckExit": 0,
+  "npmExit": 0,
+  "npm": {
+    "passed": 260,
+    "failed": 0,
+    "existingSkipped": 3
+  },
+  "newNativeTestsNotExecutedLocally": 2,
+  "existingNativeTestsExtendedNotExecutedLocally": 2,
+  "originalHttpTestBrowserCargoAndWorkflowExactToBaseline": true,
+  "preparedTimeoutBytesLimit": 512,
+  "fixedPrequeueFaultBytes": 106,
+  "fixedPrequeueFaultStaticJsonAdmissionChecked": true,
+  "priorHostedSerializationCauseProven": false,
+  "nativeCompilationOrExecutionAttemptedLocally": false,
+  "nativeYokeImageReadOrExecutedLocally": false,
+  "nativeHttpAcceptanceVerified": false,
+  "fullStatusComplete": false,
+  "localNativeFullBuildAdmissionBytes": 1200000000,
+  "freeBytesObserved": 1085566976,
+  "sources": [
+    {
+      "path": "native/src/session_dashboard.rs",
+      "sha256": "e75567e2578aa4cb04cddec01379c9d568e1ff6ccf2b02999601a4b6abe9b3ff",
+      "gitBlobSha": "688048cdf9cd2e17c2948050d0159d6c6fbf32b9"
+    },
+    {
+      "path": "native/src/session_dashboard_management.rs",
+      "sha256": "cf6bb6acefe73d6af1ca6af5924c4bf8a8262afb25eb6b151a5df315c3f03835",
+      "gitBlobSha": "5d230b19e764f6cff98cafb0d981d4b02cd239d7"
+    },
+    {
+      "path": "native/docs/session-dashboard.md",
+      "sha256": "537c72a7628997f9d3df132c83a8ac9fd7042633a56c4e1762131bb5f9da885d",
+      "gitBlobSha": "6025a155fa2b574862c594f0a54b142458305591"
+    }
+  ],
+  "logs": [
+    {
+      "path": "python-all.txt",
+      "sha256": "fcea12d1449d038e99f2929f6a08d670074f096068f2153a307fe5688fc1f425",
+      "originalSha256": "0af402aef3e00df689330e028577e7de8bbca376c6a1c6d60c921baa9fc87f23",
+      "originalEncoding": "utf-16",
+      "displayTransform": "UTF-16 to UTF-8, LF, trim trailing whitespace"
+    },
+    {
+      "path": "native-fmt.txt",
+      "sha256": "49f385c37548415c5c3e7171ad0500e48bf2a935e8dc6414fc3556b9a673a0a0",
+      "originalSha256": "72783b69578f249abfe1450531bf6eb8c0beed2af00510f6fae7e2b34524326a",
+      "originalEncoding": "utf-16",
+      "displayTransform": "UTF-16 to UTF-8, LF, trim trailing whitespace"
+    },
+    {
+      "path": "typecheck.txt",
+      "sha256": "278e4b77dca55cab4ae372f67d1160ae622af85da21e1aee2b70a9ee161cca9e",
+      "originalSha256": "a38f7ec58d76c1644baeed55e7753b7f3a110291a83854bd8cc419176cad4c93",
+      "originalEncoding": "utf-16",
+      "displayTransform": "UTF-16 to UTF-8, LF, trim trailing whitespace"
+    },
+    {
+      "path": "npm-test.txt",
+      "sha256": "31ff8cdffea0dc63790e5f9e5bc39a175823a2bdb2221b13837cc836b26b6a69",
+      "originalSha256": "d0b2457992e02e40d8a9c45c12bf1d84999913eecd5dbd807b33371497948043",
+      "originalEncoding": "utf-16",
+      "displayTransform": "UTF-16 to UTF-8, LF, trim trailing whitespace"
+    }
+  ]
+}

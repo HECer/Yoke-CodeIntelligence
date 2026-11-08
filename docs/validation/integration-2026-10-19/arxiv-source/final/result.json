@@ -1,0 +1,52 @@
+{
+  "checks": [
+    {
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--no-fail-fast",
+        "--lib",
+        "--test",
+        "arxiv_source",
+        "--test",
+        "arxiv_source_http",
+        "--test",
+        "arxiv_source_cli",
+        "--test",
+        "source_acquisition",
+        "--test",
+        "source_acquisition_http",
+        "--test",
+        "source_acquisition_cli",
+        "--test",
+        "postgres_catalog",
+        "--test",
+        "postgres_catalog_cli",
+        "--test",
+        "federation_http",
+        "--test",
+        "media",
+        "--test",
+        "model_http",
+        "--test",
+        "model_http_cli",
+        "--test",
+        "model_http_review",
+        "--test",
+        "process",
+        "--",
+        "--test-threads=1"
+      ],
+      "exitCode": 101,
+      "seconds": 304.2458748817444
+    }
+  ],
+  "inputs": 694,
+  "sourceUnchanged": true
+}

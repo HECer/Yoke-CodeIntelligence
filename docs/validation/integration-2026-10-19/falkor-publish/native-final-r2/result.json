@@ -1,0 +1,61 @@
+{
+  "actualImageTag": "6.0.2",
+  "manifestDigest": "sha256:288aaa7d0583c7c15fb28509544c0418186ef064f551bfb477f3df26b1a892fb",
+  "ownedQemuPid": 25244,
+  "listenerPidVerified": true,
+  "nativeTransportTested": true,
+  "nativeBinarySha256": "5e5240250fc94c705d8d2c9db08b0f6b522f641901489d0bb2a4e00595c67f2f",
+  "nativeTlsStaticCa": true,
+  "wrongHostnameRefused": true,
+  "wrongStaticRootRefused": true,
+  "privateUnicodePassword": true,
+  "schemaGrantIndependent": true,
+  "bootstrapOperations": 9,
+  "bootstrapJournalEvents": 19,
+  "lostStdoutIdentityRetained": true,
+  "responseLostAfterActualCommit": true,
+  "forcedConcurrentUpdatesExactlyOneCommit": true,
+  "loserCreatedNoRowsOrCounterChanges": true,
+  "historicalReadRecoveryAfterLaterActive": true,
+  "wrongSchemaRefusedWithoutRepair": true,
+  "foreignExistingGraphRefusedWithoutChanges": true,
+  "nativeWatchExecConflictKeepsOnlyForeignWriteAndPendingIntent": true,
+  "workflows": [
+    {
+      "tls": false,
+      "planId": "984e3d97a210016c9e8cd32939b1e27c3f25765c09a5f0c8360ff57d2f950460",
+      "revisionId": "6e2b3c12d5cf948d2b83a2bcca6ac6d0b8975240e6df2629f8d36b0f27f9dfbc",
+      "allOriginalRowsAndEvidenceExact": true,
+      "sameJournalNoResend": true,
+      "sameRevisionReplay": true,
+      "countGuardRolledBackCounter": true,
+      "readOnlyRecoveryRefusedUntilPostconditionRestored": true
+    },
+    {
+      "tls": true,
+      "planId": "f04a0a3ecf8fdf3a4b86f815e135816dcbee24124edd840f8e0165fd0ca6f26f",
+      "revisionId": "bf1ab4ba9e184d51c12d9098c32122d9010fb5505c05ca7f1aff6293b0cee576",
+      "allOriginalRowsAndEvidenceExact": true,
+      "sameJournalNoResend": true,
+      "sameRevisionReplay": true,
+      "countGuardRolledBackCounter": true,
+      "readOnlyRecoveryRefusedUntilPostconditionRestored": true
+    },
+    {
+      "tls": false,
+      "planId": "a2e4320ebcb70986f237d417cc84639929cc5adc488f274cf3d9d7d325a984af",
+      "revisionId": "c53d26c2cf48cb63fb1aeb6a162f92b232b7e83efe85f44db9c84b36502070e5",
+      "allOriginalRowsAndEvidenceExact": true,
+      "sameJournalNoResend": true,
+      "sameRevisionReplay": true,
+      "countGuardRolledBackCounter": true,
+      "readOnlyRecoveryRefusedUntilPostconditionRestored": true
+    }
+  ],
+  "qemuUserNetworkRestricted": true,
+  "hostForwardsLoopbackOnly": true,
+  "projectCodeExecuted": false,
+  "defaultModelOrBrowserStarted": false,
+  "ownedCredentialsRemoved": 5,
+  "ownedQemuStopped": true
+}

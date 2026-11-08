@@ -1,0 +1,20 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+error[E0716]: temporary value dropped while borrowed
+   --> native\tests\meaning_identity.rs:367:48
+    |
+367 |     let ledger = Ledger::new(&f.engine.store, &d());
+    |                                                ^^^ - temporary value is freed at the end of this statement
+    |                                                |
+    |                                                creates a temporary value which is freed while still in use
+368 |     ledger.settle(&original_attempt, Some(7)).unwrap();
+    |     ------ borrow later used here
+    |
+help: consider using a `let` binding to create a longer lived value
+    |
+367 ~     let binding = d();
+368 ~     let ledger = Ledger::new(&f.engine.store, &binding);
+    |
+
+For more information about this error, try `rustc --explain E0716`.
+error: could not compile `yoke-code-intelligence` (test "meaning_identity") due to 1 previous error
+warning: build failed, waiting for other jobs to finish...

@@ -1,0 +1,26 @@
+{
+  "checkedAtUtc": "2026-10-15T17:36:47.997548+00:00",
+  "scope": "focused_gate_not_frozen_suite",
+  "command": [
+    "cargo",
+    "test",
+    "--workspace",
+    "--locked",
+    "-j",
+    "2",
+    "--no-fail-fast",
+    "--lib",
+    "--",
+    "--ignored",
+    "--list"
+  ],
+  "exitCode": 0,
+  "seconds": 0.984,
+  "tempRoot": "D:\\Yoke-Test-Scratch\\wave3-inventory-default-ignored",
+  "logSha256": "85f440b5fdc1576862084e5e4df4386158db65f6f42b06d2f1bf8de04f383057",
+  "groups": 0,
+  "passed": 0,
+  "failed": 0,
+  "ignored": 0,
+  "sourceChanges": []
+}

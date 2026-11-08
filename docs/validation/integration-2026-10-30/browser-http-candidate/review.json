@@ -1,0 +1,72 @@
+{
+  "baseline": "d6b9da55be23f3c7810292bc3412d67884b664cc",
+  "testsUseOnlyMockedHttpCredentialsAndNativePeers": true,
+  "focusedPythonTestsPassed": 79,
+  "liveHttpBrowserQualification": false,
+  "nativeImagePayloadReadOrExecuted": false,
+  "mutationChecks": [
+    {
+      "erasedCheck": "absolute-http-deadline-erased",
+      "testsRun": 1,
+      "expectedFailures": 1,
+      "unexpectedErrors": 0
+    },
+    {
+      "erasedCheck": "credential-identity-erased",
+      "testsRun": 1,
+      "expectedFailures": 1,
+      "unexpectedErrors": 0
+    },
+    {
+      "erasedCheck": "credential-metadata-erased",
+      "testsRun": 1,
+      "expectedFailures": 6,
+      "unexpectedErrors": 0
+    },
+    {
+      "erasedCheck": "credential-removal-erased",
+      "testsRun": 1,
+      "expectedFailures": 1,
+      "unexpectedErrors": 0
+    },
+    {
+      "erasedCheck": "http-result-admission-erased",
+      "testsRun": 1,
+      "expectedFailures": 21,
+      "unexpectedErrors": 0
+    },
+    {
+      "erasedCheck": "session-revocation-erased",
+      "testsRun": 1,
+      "expectedFailures": 1,
+      "unexpectedErrors": 0
+    }
+  ],
+  "qualifiedIngressSourceCommit": "99b73b3fe24e1b03ef66b03f51211a2644ee9d27",
+  "files": {
+    "scripts/host_history_browser_http.py": "2c7c5946b679fc256b76d3549445bbeac3b2c584fcb7f26f6cc37c75bf181c52",
+    "scripts/host_history_browser.py": "c83a45232342c93def634ce34f7f58ea6ccee1662b6923628963db4e10c74036",
+    "scripts/tests/test_host_history_browser_http.py": "209be47bcc01c639a8cb62e94f2fa046620d344abdfd7a8fd93b00986d50ab3f",
+    "scripts/tests/test_host_history_browser.py": "f56d9f1706e8e49f91af12e622fa899a3e385aae5d5a050393eb3d04b90b8530",
+    ".github/workflows/rust.yml": "b02f6338106c5282c10bcea5e8f3f7a6887b81f0e4614bfa665507e35e8501eb"
+  },
+  "windowsSdkDeclarationChecked": {
+    "version": "10.0.26100.0",
+    "header": "um/wincred.h",
+    "credentialPersistSession": 1,
+    "x64CredentialBytes": 80,
+    "runtimeQualification": false
+  },
+  "integratedChecks": {
+    "sourceRevision": "5b5bb369454ef3eb94d5cb2aff6eff7878d65acd",
+    "typecheckExitCode": 0,
+    "npmTestExitCode": 0,
+    "npmPassed": 266,
+    "npmSkipped": 3,
+    "npmFailed": 0,
+    "powerShellCaptureSha256": {
+      "typecheck.log": "b7409419606e5cc1f6babbff1010bd8956d298b99be885f96e5c9b615a7a1092",
+      "npm-test.log": "4cec31c9373137153ed093dda53a295d61a04289eb98b7bbf751f0b33becccea"
+    }
+  }
+}

@@ -1,0 +1,276 @@
+{
+  "schemaVersion": 1,
+  "project": "Yoke Code Intelligence",
+  "nativeVersion": "0.4.0",
+  "retainedTypeScriptVersion": "0.3.0",
+  "analyzer": "yoke-tree-sitter-4",
+  "status": "verified_native_local_workflows_full_migration_and_upstream_parity_open",
+  "baseCommit": "e18afea4ee894331f06856904e90300aaf800f94",
+  "branch": "feat/native-rust-core",
+  "environment": {
+    "os": "Microsoft Windows 10.0.26200",
+    "target": "x86_64-pc-windows-msvc",
+    "cpu": "AMD Ryzen 9 5950X 16-Core Processor",
+    "logicalProcessors": 32,
+    "memoryBytes": 102976720896,
+    "rustc": "rustc 1.94.1 (e408947bf 2026-03-25)",
+    "cargo": "cargo 1.94.1 (29ea6fb6a 2026-03-24)",
+    "node": "v24.13.0",
+    "python": "3.12.9",
+    "rustAnalyzer": "rust-analyzer 1.94.1 (e408947b 2026-03-25)",
+    "typescript": "5.8.3",
+    "typescriptLanguageServer": "5.1.3",
+    "vscode": "1.140.0"
+  },
+  "standardRust": {
+    "command": "cargo test --workspace --locked -j 2",
+    "exitCode": 0,
+    "passed": 159,
+    "failed": 0,
+    "ignored": 5,
+    "suiteSummaries": 27,
+    "elapsedSecondsIncludingCompilation": 69.83,
+    "evidence": "native-tests.txt",
+    "fixtureBoundary": "Node framed stdio servers are labeled protocol fixtures; ordinary native capture, graph, changes, HTTP, media and SQLite tests use real operations."
+  },
+  "retainedTypeScript": {
+    "command": "npm test",
+    "exitCode": 0,
+    "tests": 243,
+    "passed": 240,
+    "failed": 0,
+    "skipped": 3,
+    "durationMs": 117421.2458,
+    "evidence": "native-typescript-tests.txt",
+    "skippedReasons": [
+      "Go stdlib parser requires an unavailable Go toolchain on this Windows host.",
+      "Two symbolic-link gates require Windows symlink privileges."
+    ],
+    "note": "Earlier Linux optional-provider evidence in report.json remains historical; this run is Windows/Node 24."
+  },
+  "checks": {
+    "rustfmt": {
+      "command": "cargo fmt --all --check",
+      "exitCode": 0,
+      "evidence": "native-format.txt"
+    },
+    "clippy": {
+      "command": "cargo clippy --workspace --all-targets --locked -- -D warnings",
+      "exitCode": 0,
+      "evidence": "native-clippy.txt"
+    },
+    "typescript": {
+      "command": "npm run typecheck",
+      "exitCode": 0,
+      "evidence": "native-typecheck.txt"
+    },
+    "packagingFixtures": {
+      "command": "python -m unittest discover -s scripts/tests -v",
+      "passed": 8,
+      "failed": 0,
+      "exitCode": 0,
+      "evidence": "native-packaging-tests.txt",
+      "boundary": "Offline mocked exact-revision license APIs and synthetic archive inputs; no claim of live Linux/macOS extension-host execution."
+    }
+  },
+  "liveLanguageServers": {
+    "command": "cargo test --locked --test live -- --ignored --test-threads=1",
+    "explicitEnvironment": "YOKE_TS_LSP points to installed real typescript-language-server CLI",
+    "passed": 3,
+    "failed": 0,
+    "durationSeconds": 25.7,
+    "evidence": "native-live-tests.txt",
+    "operations": [
+      "rust-analyzer definition, references and rename planning",
+      "rust-analyzer MCP historical-snapshot references after saved-source change",
+      "TypeScript cross-file definition and rename planning"
+    ],
+    "originalSourcePreserved": true
+  },
+  "actualWindowsCredentials": {
+    "command": "cargo test --locked --test credentials -- --ignored",
+    "passed": 2,
+    "failed": 0,
+    "executed": "Earlier in the same development session; credential module unchanged afterward.",
+    "durationSeconds": 0.05,
+    "checks": [
+      "Actual Windows Credential Manager round-trip and overwrite refusal",
+      "Actual concurrent creation keeps one key"
+    ],
+    "temporaryEntriesRemoved": true,
+    "secretBytesPrinted": false
+  },
+  "review": {
+    "acceptedWithinImplementedScope": true,
+    "independentReviewers": [
+      "rust_review",
+      "rust_contracts"
+    ],
+    "supportedFindingsRepaired": [
+      "Publication/source scope and generic CAS artifact access",
+      "LSP stdin/shutdown shared deadlines, URI and aggregate output bounds",
+      "PDF Unicode code-space decoding and complete bounded page-tree validation",
+      "Remaining SQLite admission/commit timeout after asset parsing",
+      "Corrupt stored snapshot/workspace and graph-member identity attribution",
+      "Portable license discovery preserves exact Git object identity and excludes unrelated sibling-crate notices"
+    ],
+    "limitations": [
+      "No certification of full PDF rendering/accessibility/OCR.",
+      "No OS sandbox guarantee for trusted external servers.",
+      "No cryptographic authenticity claim for locally stored metadata."
+    ]
+  },
+  "browser": {
+    "earlierActualNativeExport": {
+      "passed": true,
+      "entities": 8,
+      "observations": 7,
+      "checks": [
+        "Real captured invoice graph",
+        "Search invoiceTotal and exact Unicode source anchors",
+        "390-pixel viewport without horizontal overflow",
+        "Hostile embedded source rendered as inert text",
+        "No external assets, network dependencies or console errors"
+      ],
+      "screenshot": "Retained locally: browser-screenshot-localhost-mv78jj20-2464e827.png (not bundled)."
+    },
+    "latestPreviewReattachment": {
+      "passed": false,
+      "reason": "T3 browser could not reach this host's localhost (ERR_CONNECTION_REFUSED); separate local HTTP probe returned 200.",
+      "nativeHtmlChangedAfterEarlierSuccessfulRun": false,
+      "note": "Retained earlier live evidence; do not count failed reattachment as a new browser pass."
+    }
+  },
+  "scope": {
+    "defaultRequires": {
+      "node": false,
+      "python": false,
+      "graft": false,
+      "serena": false,
+      "graphify": false,
+      "model": false,
+      "apiKey": false
+    },
+    "structuralProgrammingLanguages": 24,
+    "grammarVariants": 27,
+    "mcpTools": 8,
+    "sourceAssertions": "Exact UTF-8 source bytes and hashes; structural links and statistical rankings are labeled candidates.",
+    "nativePdf": {
+      "provider": "yoke-native-pdf-text-1",
+      "library": "lopdf-0.42.0",
+      "workerMemoryBytes": 268435456,
+      "workerCpuSeconds": 20,
+      "extractionScope": "direct_page_content_streams",
+      "exhaustive": false,
+      "formXObjects": "explicitly omitted with page warnings",
+      "ocr": false
+    },
+    "maintenance": {
+      "physicalBytesReclaimed": 0,
+      "destructivePurgeAvailable": false,
+      "method": "exclusive-client recoverable orphan quarantine preserving all history and published roots"
+    },
+    "remoteSource": {
+      "transport": "offline Ed25519 signed envelopes",
+      "privateKeys": "Windows Credential Manager only",
+      "networkService": false
+    }
+  },
+  "remaining": [
+    "Configured compiler/solution-build ownership not fully ported to Rust.",
+    "Selected dataflow and per-test execution mapping remain in retained independent TypeScript runtime.",
+    "Neural inference/reranking/OCR/ASR/media providers not fully ported or certified.",
+    "Full signed network/TLS/user administration transport remains separate from native offline exchange.",
+    "Destructive history retention and Docker verification are not fully ported.",
+    "Persistent debugger/REPL and advanced IDE refactorings lack verified native equivalents.",
+    "Language servers other than the actual rust-analyzer and TypeScript gates need their own certification.",
+    "Hosted Linux/macOS CI definitions exist but have not run here.",
+    "No feature-for-feature proprietary/commercial upstream parity or whole-agent token/cost/performance claim."
+  ],
+  "distributionEvidence": "native-distribution.json",
+  "embeddedReportStage": "Written before archive creation; final archive digests and packaged-host execution are in the external distribution companion.",
+  "publication": {
+    "gitHub": false,
+    "registry": false
+  },
+  "release": {
+    "command": "cargo build --workspace --release --locked -j 2 --bins --examples",
+    "exitCode": 0,
+    "elapsedSeconds": 188.456,
+    "evidence": "native-build.txt",
+    "binary": "target/release/yoke.exe",
+    "version": "yoke 0.4.0",
+    "bytes": 54324736,
+    "sha256": "596a5ca09b1c01231ec7823d17f56bee1276fd215f6b8c70b9e3dd089beebb1d"
+  },
+  "releaseSmoke": {
+    "selfIndex": {
+      "snapshotId": "acb0ae3d891fc0651f1ce53e1806516d2b6f5afe646b05ffe2f90043eb541213",
+      "files": 237,
+      "entities": 1604,
+      "observations": 18180,
+      "parsedFiles": 41,
+      "reusedFiles": 196,
+      "durationMs": 1105,
+      "localOnly": true,
+      "modelCalls": 0,
+      "fullResponseArtifactId": "c177aa57536886129880fff40f8a81fd0ce95ba360a33d9c47c1a0e62f11d174",
+      "evidence": "native-self-index.json"
+    },
+    "artifactPaging": {
+      "passed": true,
+      "snapshotNeutral": true,
+      "firstChunkUtf8Bytes": 6400,
+      "nextCursor": "6400",
+      "totalBytes": 38975,
+      "evidence": "native-release-artifact.json"
+    }
+  },
+  "actualVscodeRelease": {
+    "passed": true,
+    "runtime": "rust",
+    "bundledRuntime": false,
+    "vscodeVersion": "1.140.0",
+    "unsavedSourceBound": true,
+    "workspaceExecutableIgnored": true,
+    "protectedOpenBufferExcluded": true,
+    "savedSourceUnchanged": true,
+    "evidence": "native-vscode-release.json"
+  },
+  "benchmark": {
+    "kind": "synthetic-native-microbenchmark",
+    "files": 500,
+    "entities": 2000,
+    "observations": 2000,
+    "coldMs": 4098.3449,
+    "unchangedStrictCaptureMs": 433.1677,
+    "oneFileChangeMs": 617.7549,
+    "explicitSnapshotQueryMs": 26.0672,
+    "cold": {
+      "parsed": 500,
+      "reused": 0
+    },
+    "unchanged": {
+      "parsed": 0,
+      "reused": 500
+    },
+    "oneFileChange": {
+      "parsed": 1,
+      "reused": 499
+    },
+    "queryStatus": "ok",
+    "evidence": "native-benchmark.json",
+    "limitations": [
+      "One synthetic corpus and one process; no upstream comparison, whole-agent token/cost measurement or cross-platform performance claim.",
+      "Final measurement ran after implementation agents stopped and before VS Code/package checks."
+    ]
+  },
+  "recordedAt": "2026-10-14T01:16:01.091507+00:00",
+  "sourceCorpus": {
+    "sha256": "e2f4b6976965ca5b543dc33e1b16abee871948374598cf42afdc7461b92a4794",
+    "files": 212,
+    "manifest": "native-source-manifest.json",
+    "method": "sha256(sorted relative path + NUL + file SHA-256 + LF), using current working-tree bytes; Git tracked and nonignored new files, excluding docs/validation to avoid circular report/log identities",
+    "note": "Base commit plus local implemented changes; not a claim of remote publication."
+  }
+}

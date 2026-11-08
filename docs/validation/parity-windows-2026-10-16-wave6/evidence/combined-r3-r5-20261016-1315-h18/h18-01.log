@@ -1,0 +1,31 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 8.55s
+     Running tests\meaning_view_archives.rs (target\debug\deps\meaning_view_archives-51ea5f08bcf57128.exe)
+
+running 9 tests
+test missing_historical_uncited_file_and_wrong_same_path_bytes_are_not_repaired_from_live_state ... ok
+test complete_wire_and_distinct_source_limits_are_admitted_without_store_side_effects ... ok
+test archive_replay_rejects_publicly_resealed_source_view_and_meaning_changes ... ok
+test portable_transport_keeps_task_totals_current_attempt_usage_and_original_unknown_response_distinct ... ok
+test portable_wire_rejects_unknown_nested_properties_duplicate_keys_and_unknown_profiles ... ok
+test portable_archive_replays_both_epochs_without_a_store_live_tree_or_worker ... ok
+test portable_bridge_requires_complete_raw_closure_and_rejects_foreign_or_unpaired_sidecars ... ok
+test replay_preserves_typed_claim_ids_ordered_roles_exact_quotes_and_unknown_receipts ... ok
+test published_id_preparation_returns_exact_checked_transport_without_load_or_publication ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 17.95s
+
+     Running tests\registry_replay_review.rs (target\debug\deps\registry_replay_review-8390e9e4e28b3782.exe)
+
+running 8 tests
+test native8_retarget_is_rejected_after_origin_deleted ... ok
+test historical4_keeps_its_identity_and_reports_unreplayed_claims ... ok
+test native8_relabel_is_rejected_after_origin_deleted ... ok
+test native9_archive_selects_proven_epoch_without_global_activation ... ok
+test view8_retarget_is_rejected_after_origin_deleted ... ok
+test view8_relabel_is_rejected_after_origin_deleted ... ok
+test producer_labels_cannot_change_a_proven_capture_epoch ... ok
+test unchanged_native8_and_view8_remain_standalone ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.91s
+

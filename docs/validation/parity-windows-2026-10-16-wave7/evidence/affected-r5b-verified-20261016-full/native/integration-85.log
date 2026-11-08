@@ -1,0 +1,23 @@
+    Finished `test` profile [unoptimized] target(s) in 0.71s
+     Running tests\parity_cli.rs (target\debug\deps\parity_cli-c7f5b814c46c6b5e.exe)
+
+running 8 tests
+test public_named_notes_cli_is_persistent_and_global_store_is_explicit ... ok
+test public_graph_view_cli_combines_manifest_nodes_and_reads_historical_view ... ok
+test public_graph_cli_analyzes_and_exports_without_overwriting_human_cards ... ok
+test public_retrieval_cli_ranks_task_words_in_source_bodies ... ok
+test public_session_stdio_cli_serves_the_extended_profile_and_exits_on_eof ... ok
+test public_agent_repl_cli_executes_persistent_cells_only_with_host_trust ... ok
+test public_session_cli_resumes_host_registered_project_and_notes ... ok
+test public_serena_stdio_cli_preserves_cells_and_reports_errors_under_host_authority ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.98s
+
+     Running tests\parity_construct_review.rs (target\debug\deps\parity_construct_review-cc6b783fc409aaf8.exe)
+
+running 2 tests
+test lisp_let_binding_pairs_are_not_invocations_of_same_named_functions ... ok
+test quoted_lisp_declarations_do_not_create_executable_declaration_entities ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

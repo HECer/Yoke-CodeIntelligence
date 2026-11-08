@@ -1,0 +1,584 @@
+{
+  "schemaVersion": 1,
+  "project": "Yoke Code Intelligence",
+  "nativeVersion": "0.5.0",
+  "retainedTypeScriptVersion": "0.3.0",
+  "status": "verified_implemented_local_replacement_workflows",
+  "baseCommit": "d7b01d981e672599172e38f1520abb1150f692aa",
+  "branch": "feat/native-rust-core",
+  "recordedAt": "2026-10-14T14:25:38.279063+00:00",
+  "environment": {
+    "os": "Windows-11-10.0.26200-SP0",
+    "target": "x86_64-pc-windows-msvc",
+    "rustc": "rustc 1.94.1 (e408947bf 2026-03-25)",
+    "cargo": "cargo 1.94.1 (29ea6fb6a 2026-03-24)",
+    "node": "v24.13.0",
+    "python": "3.12.9",
+    "rustAnalyzer": "rust-analyzer 1.94.1 (e408947b 2026-03-25)",
+    "typescript": "5.8.3",
+    "typescriptLanguageServer": "5.1.3",
+    "jediLanguageServer": "0.47.0",
+    "vscode": "1.140.0"
+  },
+  "standardRust": {
+    "command": "cargo test --workspace --locked -j 2 -- --test-threads=2",
+    "exitCode": 0,
+    "passed": 288,
+    "failed": 0,
+    "ignored": 10,
+    "suiteSummaries": 42,
+    "suites": [
+      {
+        "suite": "unittests src\\lib.rs",
+        "passed": 14,
+        "failed": 0,
+        "ignored": 0,
+        "seconds": 3.84
+      },
+      {
+        "suite": "unittests src\\main.rs",
+        "passed": 0,
+        "failed": 0,
+        "ignored": 0,
+        "seconds": 0.0
+      },
+      {
+        "suite": "tests\\adversarial.rs",
+        "passed": 14,
+        "failed": 0,
+        "ignored": 0,
+        "seconds": 1.44
+      },
+      {
+        "suite": "tests\\artifacts.rs",
+        "passed": 4,
+        "failed": 0,
+        "ignored": 0,
+        "seconds": 0.46
+      },
+      {
+        "suite": "tests\\client_lock.rs",
+        "passed": 2,
+        "failed": 0,
+        "ignored": 0,
+        "seconds": 0.12
+      },
+      {
+        "suite": "tests\\container.rs",
+        "passed": 6,
+        "failed": 0,
+        "ignored": 1,
+        "seconds": 27.84
+      },
+      {
+        "suite": "tests\\contracts.rs",
+        "passed": 12,
+        "failed": 0,
+        "ignored": 0,
+        "seconds": 1.09
+      },
+      {
+        "suite": "tests\\core.rs",
+        "passed": 6,
+        "failed": 0,
+        "ignored": 0,
+        "seconds": 0.63
+      },
+      {
+        "suite": "tests\\credentials.rs",
+        "passed": 2,
+        "failed": 0,
+        "ignored": 2,
+        "seconds": 0.0
+      },
+      {
+        "suite": "tests\\dataflow.rs",
+        "passed": 7,
+        "failed": 0,
+        "ignored": 0,
+        "seconds": 0.56
+      },
+      {
+        "suite": "tests\\deadlines.rs",
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0,
+        "seconds": 0.15
+      },
+      {
+        "suite": "tests\\editor.rs",
+        "passed": 6,
+        "failed": 0,
+        "ignored": 0,
+        "seconds": 0.77
+      },
+      {
+        "suite": "tests\\editor_http.rs",
+        "passed": 10,
+        "failed": 0,
+        "ignored": 0,
+        "seconds": 4.45
+      },
+      {
+        "suite": "tests\\export.rs",
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0,
+        "seconds": 0.18
+      },
+      {
+        "suite": "tests\\federation.rs",
+        "passed": 12,
+        "failed": 0,
+        "ignored": 0,
+        "seconds": 4.77
+      },
+      {
+        "suite": "tests\\federation_http.rs",
+        "passed": 16,
+        "failed": 0,
+        "ignored": 0,
+        "seconds": 6.84
+      },
+      {
+        "suite": "tests\\graph.rs",
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0,
+        "seconds": 0.13
+      },
+      {
+        "suite": "tests\\host_cli.rs",
+        "passed": 2,
+        "failed": 0,
+        "ignored": 0,
+        "seconds": 0.82
+      },
+      {
+        "suite": "tests\\host_credentials.rs",
+        "passed": 1,
+        "failed": 0,
+        "ignored": 1,
+        "seconds": 0.0
+      },
+      {
+        "suite": "tests\\knowledge.rs",
+        "passed": 13,
+        "failed": 0,
+        "ignored": 0,
+        "seconds": 1.42
+      },
+      {
+        "suite": "tests\\knowledge_cli.rs",
+        "passed": 2,
+        "failed": 0,
+        "ignored": 0,
+        "seconds": 0.27
+      },
+      {
+        "suite": "tests\\ledger.rs",
+        "passed": 5,
+        "failed": 0,
+        "ignored": 0,
+        "seconds": 0.45
+      },
+      {
+        "suite": "tests\\live.rs",
+        "passed": 0,
+        "failed": 0,
+        "ignored": 4,
+        "seconds": 0.0
+      },
+      {
+        "suite": "tests\\lsp.rs",
+        "passed": 10,
+        "failed": 0,
+        "ignored": 0,
+        "seconds": 7.6
+      },
+      {
+        "suite": "tests\\maintenance.rs",
+        "passed": 12,
+        "failed": 0,
+        "ignored": 0,
+        "seconds": 1.29
+      },
+      {
+        "suite": "tests\\media.rs",
+        "passed": 13,
+        "failed": 0,
+        "ignored": 0,
+        "seconds": 8.61
+      },
+      {
+        "suite": "tests\\ollama.rs",
+        "passed": 11,
+        "failed": 0,
+        "ignored": 1,
+        "seconds": 0.8
+      },
+      {
+        "suite": "tests\\operations.rs",
+        "passed": 8,
+        "failed": 0,
+        "ignored": 0,
+        "seconds": 0.85
+      },
+      {
+        "suite": "tests\\platform_credentials.rs",
+        "passed": 3,
+        "failed": 0,
+        "ignored": 0,
+        "seconds": 0.0
+      },
+      {
+        "suite": "tests\\process.rs",
+        "passed": 5,
+        "failed": 0,
+        "ignored": 0,
+        "seconds": 2.31
+      },
+      {
+        "suite": "tests\\projects.rs",
+        "passed": 7,
+        "failed": 0,
+        "ignored": 0,
+        "seconds": 33.29
+      },
+      {
+        "suite": "tests\\providers.rs",
+        "passed": 11,
+        "failed": 0,
+        "ignored": 0,
+        "seconds": 16.74
+      },
+      {
+        "suite": "tests\\publication.rs",
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0,
+        "seconds": 0.13
+      },
+      {
+        "suite": "tests\\retention.rs",
+        "passed": 16,
+        "failed": 0,
+        "ignored": 0,
+        "seconds": 2.2
+      },
+      {
+        "suite": "tests\\retrieval.rs",
+        "passed": 5,
+        "failed": 0,
+        "ignored": 0,
+        "seconds": 0.7
+      },
+      {
+        "suite": "tests\\runtime.rs",
+        "passed": 14,
+        "failed": 0,
+        "ignored": 0,
+        "seconds": 7.84
+      },
+      {
+        "suite": "tests\\semantic_mcp.rs",
+        "passed": 7,
+        "failed": 0,
+        "ignored": 0,
+        "seconds": 4.21
+      },
+      {
+        "suite": "tests\\store_identity.rs",
+        "passed": 4,
+        "failed": 0,
+        "ignored": 0,
+        "seconds": 0.33
+      },
+      {
+        "suite": "tests\\test_map.rs",
+        "passed": 12,
+        "failed": 0,
+        "ignored": 0,
+        "seconds": 7.21
+      },
+      {
+        "suite": "tests\\workflow_cli.rs",
+        "passed": 8,
+        "failed": 0,
+        "ignored": 1,
+        "seconds": 2.02
+      },
+      {
+        "suite": "tests\\workspace.rs",
+        "passed": 4,
+        "failed": 0,
+        "ignored": 0,
+        "seconds": 1.17
+      },
+      {
+        "suite": "yoke",
+        "passed": 0,
+        "failed": 0,
+        "ignored": 0,
+        "seconds": 0.0
+      }
+    ],
+    "elapsedSecondsIncludingCompilation": 316.424402,
+    "evidence": "native-workflows-rust-tests.txt",
+    "fixtureBoundary": "Framed LSP/model servers and compiled Docker CLI fixtures are labeled protocol fixtures. Compiler, Python debugger, Node coverage, file/SQLite operations and TLS tests execute actual components."
+  },
+  "actualHostGates": {
+    "command": "cargo test --workspace --locked -j 2 --test live --test container --test credentials --test host_credentials --test workflow_cli -- --ignored --test-threads=1",
+    "exitCode": 0,
+    "passed": 9,
+    "failed": 0,
+    "ignored": 0,
+    "suiteSummaries": 5,
+    "suites": [
+      {
+        "suite": "tests\\container.rs",
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0,
+        "seconds": 13.13
+      },
+      {
+        "suite": "tests\\credentials.rs",
+        "passed": 2,
+        "failed": 0,
+        "ignored": 0,
+        "seconds": 0.28
+      },
+      {
+        "suite": "tests\\host_credentials.rs",
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0,
+        "seconds": 0.15
+      },
+      {
+        "suite": "tests\\live.rs",
+        "passed": 4,
+        "failed": 0,
+        "ignored": 0,
+        "seconds": 88.15
+      },
+      {
+        "suite": "tests\\workflow_cli.rs",
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0,
+        "seconds": 5.55
+      }
+    ],
+    "elapsedSecondsIncludingStartup": 110.3296793,
+    "evidence": "native-workflows-live-host-tests.txt",
+    "explicitEnvironment": {
+      "YOKE_TS_LSP": "<actual installed typescript-language-server CLI>",
+      "YOKE_PYTHON_LSP": "<actual installed jedi-language-server executable>",
+      "YOKE_DOCKER_TEST_IMAGE": "busybox@sha256:9db7b59979c38555a39def84a31fb98b5296952f9e3afd4f6f11f05b07adfab0"
+    },
+    "operations": [
+      "Four actual rust-analyzer, TypeScript and Jedi cross-file/historical/Unicode definition/reference/hover/rename workflows",
+      "Actual Windows signing-seed roundtrip, overwrite refusal and concurrent creation",
+      "Actual OS-held TLS private key and service token creation and overwrite refusal",
+      "Actual native CLI TLS service/client authorization and certificate verification",
+      "Actual offline Linux container: nonroot/read-only/capabilities/network/cgroup assertions, failure exit7 and exact owned cleanup"
+    ],
+    "temporaryCredentialEntriesRemoved": true,
+    "ownedContainersRemoved": true
+  },
+  "retainedTypeScript": {
+    "command": "npm test",
+    "exitCode": 0,
+    "tests": 243,
+    "passed": 240,
+    "failed": 0,
+    "skipped": 3,
+    "durationMs": 190750.4655,
+    "evidence": "native-workflows-typescript-tests.txt",
+    "skippedReasons": [
+      "Go stdlib parser requires unavailable Go toolchain on this Windows host.",
+      "Two symbolic-link gates require Windows symlink privileges."
+    ]
+  },
+  "checks": {
+    "rustfmt": {
+      "command": "cargo fmt --all --check",
+      "exitCode": 0,
+      "evidence": "native-workflows-format.txt"
+    },
+    "clippy": {
+      "command": "cargo clippy --workspace --all-targets --locked --keep-going -j 2 -- -D warnings",
+      "exitCode": 0,
+      "evidence": "native-workflows-clippy.txt"
+    },
+    "typescript": {
+      "command": "npm run typecheck",
+      "exitCode": 0,
+      "evidence": "native-workflows-typecheck.txt"
+    },
+    "packagingFixtures": {
+      "command": "python -m unittest discover -s scripts/tests -v",
+      "passed": 10,
+      "failed": 0,
+      "exitCode": 0,
+      "evidence": "native-workflows-packaging-tests.txt",
+      "boundary": "Offline exact-revision license API and synthetic archive/binary fixtures; includes meaningful stale-binary rejection and required public-guide regressions."
+    }
+  },
+  "actualLocalModels": {
+    "embedding": {
+      "model": "all-minilm:22m",
+      "digest": "1b226e2802dbb772b5fc32a58f103ca1804ef7501331012de126ab22f67475ef",
+      "passed": true,
+      "scope": "Actual ignored Rust embedding gate and native worker stdio query, 384 finite nonzero coordinates and exact bindings; no quality evaluation.",
+      "evidence": "native-workflows-ollama-live.json"
+    },
+    "rerank": {
+      "model": "smollm2:135m",
+      "digest": "9077fe9d2ae1a4a41a868836b56b8163731a8fe16621397028c2c76f838c6907",
+      "passed": true,
+      "scope": "One exact captured candidate through ProviderSpec and Store/Ledger; inferred score, not evidence.",
+      "evidence": "native-workflows-ollama-structured-live.json"
+    },
+    "summary": {
+      "model": "smollm2:135m",
+      "digest": "9077fe9d2ae1a4a41a868836b56b8163731a8fe16621397028c2c76f838c6907",
+      "passed": true,
+      "scope": "One 83-byte concise inferred statement, exact source/citation and durable artifact/accounting; final 60s retry after preserved earlier timeout failures.",
+      "evidence": "native-workflows-ollama-summary-live.json"
+    },
+    "usageAndBilling": "Provider reported/unverified or unknown; sent unknown attempts keep reservations, zero known actual is not verified free billing.",
+    "weightsBundled": false,
+    "ownedServersStopped": true,
+    "neuralQualityEvaluated": false,
+    "actualVisionEvaluated": false
+  },
+  "portableCredentials": {
+    "evidence": "native-workflows-portable-credentials.json",
+    "linux": "Actual owned-source harness compilation with140 dependencies and three Unix filesystem-lock tests in Ubuntu; no full app/runtime/native store gate.",
+    "macos": "Owned-source Windows-host x86_64-apple-darwin crosscheck with26 dependencies; no macOS runtime or actual Keychain gate.",
+    "historicalTranscriptBoundary": "Original standalone console transcripts were not retained; equivalent reproduction argv and retained artifacts are explicitly identified."
+  },
+  "review": {
+    "acceptedWithinImplementedScope": true,
+    "independentReviewers": [
+      "native_analysis",
+      "native_models",
+      "native_operations"
+    ],
+    "supportedFindingsRepaired": [
+      "Persistent source/graph identities, copied-file bounds and Windows Unicode LSP document URIs",
+      "Native worker stdin deadline and strict duplicate-key/value-free host-input JSON",
+      "Conservative test widening includes all persisted known tests",
+      "Compiler context identity includes actual compiler/standard-library hashes",
+      "Debugger variable/stack inspection avoids custom repr/equality/dictionary/string hooks; unsupported mappings fail explicitly",
+      "TLS socket-level shared deadlines, corrupt scoped-list failures and bounded revocation/shutdown",
+      "Ledger unverified accounting, UTF-8 concise-summary output bounds and actual-model integration",
+      "Cross-platform native credential SDK/lock boundaries and source crosschecks",
+      "Archive executable version check and required root public guidance"
+    ],
+    "independentSecurityCertification": false
+  },
+  "release": {
+    "command": "cargo build --workspace --release --locked -j 2 --bins --examples",
+    "exitCode": 0,
+    "elapsedSeconds": 620.1454383,
+    "evidence": "native-workflows-build.txt",
+    "binary": "target/release/yoke.exe",
+    "version": "yoke 0.5.0",
+    "bytes": 58597888,
+    "sha256": "3be3bb82cc4ae7524d1e820bc54592fbe537789bb5991b2de588e2f4fb65f803"
+  },
+  "actualVscodeRelease": {
+    "kind": "actual-vscode-extension-host",
+    "passed": true,
+    "runtime": "rust",
+    "bundledRuntime": false,
+    "vscodeVersion": "1.140.0",
+    "unsavedSourceBound": true,
+    "workspaceExecutableIgnored": true,
+    "protectedOpenBufferExcluded": true,
+    "savedSourceUnchanged": true,
+    "command": "powershell -NoProfile -File scripts/test-vscode.ps1 -NativeExecutable target/release/yoke.exe",
+    "evidence": "native-workflows-vscode-release.json"
+  },
+  "benchmark": {
+    "cold": {
+      "parsed": 500,
+      "reused": 0
+    },
+    "coldMs": 5539.4402,
+    "entities": 2000,
+    "explicitSnapshotQueryMs": 51.225300000000004,
+    "files": 500,
+    "kind": "synthetic-native-microbenchmark",
+    "limitations": [
+      "One synthetic corpus and one process; no upstream comparison, whole-agent token/cost measurement or cross-platform performance claim."
+    ],
+    "observations": 2000,
+    "oneFileChange": {
+      "parsed": 1,
+      "reused": 499
+    },
+    "oneFileChangeMs": 1846.3681,
+    "queryStatus": "ok",
+    "unchanged": {
+      "parsed": 0,
+      "reused": 500
+    },
+    "unchangedStrictCaptureMs": 1078.2632999999998,
+    "version": "0.5.0",
+    "command": "target/release/examples/benchmark.exe 500",
+    "evidence": "native-workflows-benchmark.json",
+    "measurementBoundary": "Release binary after implementation agents/model servers/build stopped, before VS Code host startup; single synthetic corpus, no upstream/whole-agent comparison."
+  },
+  "sourceCorpus": {
+    "sha256": "3a612b041eceaac38d518905cc893cb5cc0ae52502631341814c0f1dcf9f6be3",
+    "files": 252,
+    "manifest": "native-workflows-source-manifest.json",
+    "method": "Current working-tree bytes; Git tracked and nonignored new files excluding docs/validation. Base commit plus local implemented changes; no remote publication implied."
+  },
+  "defaultRequires": {
+    "graft": false,
+    "serena": false,
+    "graphify": false,
+    "node": false,
+    "python": false,
+    "model": false,
+    "apiKey": false
+  },
+  "scope": {
+    "structuralProgrammingLanguages": 24,
+    "grammarVariants": 27,
+    "mcpTools": 8,
+    "hostWorkflows": [
+      "configured compiler/virtual builds",
+      "intraprocedural dataflow",
+      "per-test coverage/selection",
+      "model protocols/accounting/Ollama",
+      "persistent Python debugger/REPL",
+      "signed authenticated TLS source transport",
+      "reviewed history retirement/quarantine purge",
+      "digest-pinned offline Docker verification"
+    ],
+    "privateCredentials": "Native OS stores and zeroizing memory; no plaintext fallback.",
+    "originalProjectStatePurged": false,
+    "destructivePurgeImplementedAndTestedInOwnedFixtures": true,
+    "browser": "Prior actual0.4 browser evidence remains historical; export code unchanged. No new browser pass counted."
+  },
+  "remainingCertification": [
+    "All arbitrary language servers and advanced IDE refactorings beyond implemented operations.",
+    "Actual Linux/macOS full application, native credential-store and packaged extension-host runs.",
+    "Neural semantic quality, actual vision, general OCR/ASR/video interpretation and externally verified billing.",
+    "Whole-agent state synchronization, proprietary hosted-product parity and whole-agent token/cost/performance comparisons.",
+    "Formal/whole-program dataflow correctness, hostile-host isolation and independent security certification."
+  ],
+  "distributionEvidence": "native-distribution-0.5.json",
+  "embeddedReportStage": "Written after local release gates and before archive creation. Exact archive digests and packaged extension-host proof live in the separate distribution companion to avoid circular archive identities.",
+  "publication": {
+    "gitHub": false,
+    "registry": false
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--workspace",
+    "--locked",
+    "--offline",
+    "-j",
+    "1",
+    "--test",
+    "view_comparison_cli",
+    "--",
+    "--test-threads=1"
+  ],
+  "exitCode": 101,
+  "seconds": 56.531,
+  "sourceBefore": {
+    "native/src/main.rs": "3a815f70eeaa1a9ab76355ce8d42bf6dd72c27ef76205abc0029edea023d2854",
+    "native/src/view_comparison_cli.rs": null,
+    "native/tests/view_comparison_cli.rs": "519154995bd15e67dd75b80aa40fb2c6f64894af65f4d915ebdc44506511e294"
+  },
+  "sourceAfter": {
+    "native/src/main.rs": "3a815f70eeaa1a9ab76355ce8d42bf6dd72c27ef76205abc0029edea023d2854",
+    "native/src/view_comparison_cli.rs": null,
+    "native/tests/view_comparison_cli.rs": "519154995bd15e67dd75b80aa40fb2c6f64894af65f4d915ebdc44506511e294"
+  },
+  "sourceUnchanged": true,
+  "logSha256": "ba47dd1b5b494da9d065303f817c6e3d5deea91f7f9ca07ad36f29f7b7342045",
+  "interpretation": "Scoped development probe only; nonadditive and not whole-project acceptance."
+}

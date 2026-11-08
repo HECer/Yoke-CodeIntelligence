@@ -1,0 +1,21 @@
+{
+  "meaning_protocol": {
+    "executable": "target\\debug\\deps\\meaning_protocol-883198981305159f.exe",
+    "ignored": [],
+    "registered": [
+      "meaning_ollama_accounting_keeps_invalid_usage_unknown_in_bound_error",
+      "meaning_ollama_accounting_preserves_usage_after_invalid_shape_and_duplicate_json",
+      "meaning_ollama_accounting_preserves_usage_after_postcall_digest_change",
+      "meaning_ollama_success_keeps_exact_no_claims_and_reported_usage"
+    ]
+  },
+  "meaning_retention_review": {
+    "executable": "target\\debug\\deps\\meaning_retention_review-22514ce83193a930.exe",
+    "ignored": [],
+    "registered": [
+      "corrupted_job_cache_and_graph_rows_refuse_retirement_and_purge_before_deleting_history",
+      "original_and_rebound_meaning_roots_survive_retirement_quarantine_and_purge_with_controls",
+      "supplied_job_cache_and_graph_metadata_cannot_override_the_persisted_retention_proof"
+    ]
+  }
+}

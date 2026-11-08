@@ -1,0 +1,76 @@
+{
+  "ASTParsedFiles": 3,
+  "H18ExpectedNames": 51,
+  "H18Targets": 6,
+  "embeddedHelperPinsMatch": true,
+  "independentReviewPinsMatch": true,
+  "oldFrozenPreparationPins": {
+    "H18-EXPECTED-TESTS.json": "0c21b1e45653b00393243efeb8ffcef5c1741b863f2283ad739fc2aa2e59b7d2",
+    "PREPARATION-MANIFEST.json": "1af60d5b080aff516c328ab694181876c72b13fb33030ec8f0a09d0a58aed494",
+    "README.md": "364b6b10bf91eb583478ffbe07bf86f2cff22c53f66eda8b85b925218ca4ce82",
+    "STATIC-REVIEW.json": "40589aae5bfbf71eb3d8ce03c70bb67e7735a3fdbb604f7fcf44de85883908ea",
+    "normal_runner_common.py": "ef78be98e82967e3d3d96fcfc8e6f6ec1a4a21428a9f80f3c0b7f0ceb72a15eb",
+    "run_h18_normal.py": "427a1a400480ea690ff8ad46715042101380583f154f2f09c5ddf2d091c59749",
+    "run_r3_windows_acceptance.py": "444a015ea324d94f70cff6db6eccec95ac1c8b4ff459fb5c31e38dba66b47dc7"
+  },
+  "originalACLFixtures": 3,
+  "originalFullPhaseOrder": [
+    "format",
+    "clippy",
+    "python",
+    "typescript",
+    "native",
+    "finalize"
+  ],
+  "originalThreeH18CommandsExactlyRetained": [
+    [
+      "cargo",
+      "test",
+      "--workspace",
+      "--locked",
+      "-j",
+      "2",
+      "--no-fail-fast",
+      "--test",
+      "selected_view_analysis",
+      "--test",
+      "protocol_connection",
+      "--",
+      "--test-threads=4"
+    ],
+    [
+      "cargo",
+      "test",
+      "--workspace",
+      "--locked",
+      "-j",
+      "2",
+      "--no-fail-fast",
+      "--test",
+      "meaning_view_archives",
+      "--test",
+      "registry_replay_review",
+      "--",
+      "--test-threads=4"
+    ],
+    [
+      "cargo",
+      "test",
+      "--workspace",
+      "--locked",
+      "-j",
+      "2",
+      "--no-fail-fast",
+      "--test",
+      "collection_registry_access",
+      "--test",
+      "graph_view",
+      "--",
+      "--test-threads=4"
+    ]
+  ],
+  "preparedModulesImported": false,
+  "status": "STATIC_PURE_CHECKS_ONLY_UNEXECUTED",
+  "templateApproved": false,
+  "wrappersOrGatesExecuted": false
+}

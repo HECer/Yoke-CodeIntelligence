@@ -1,0 +1,59 @@
+{
+  "qualifiedSourceCommit": "dd0d2cf768fb6207dd006f9c9e2b57e9763115b7",
+  "qualifiedInputCount": 1122,
+  "onlyDocumentationAndAdditiveReconciliationChangedAfterQualification": true,
+  "frozenInputChanges": [
+    {
+      "path": "README.md",
+      "qualifiedSha256": "99e993d2f104f5de19bdb7cb88ac2a77408756e0b7ea5ccbc3f7e59486f79c80",
+      "postReviewSha256": "7c4c392c71660742b08dfbb00d1ce3bc376f8db5ba3a5a9d1eefe24fa759cba8"
+    },
+    {
+      "path": "SECURITY.md",
+      "qualifiedSha256": "db180e5f23b2ceccd10ef605f4a6db14d0488ce4265798b588a21790d3f6a50c",
+      "postReviewSha256": "8907b233b46660cfe59fcf0d7259acab6ec16ebdf685bc1a367ea58594735387"
+    },
+    {
+      "path": "docs/ARCHITECTURE.md",
+      "qualifiedSha256": "6c80f72aa971802909f97b3c00afc8d7b446fde78e653832046c1f96156acc9b",
+      "postReviewSha256": "346b0158be4e4de113679f8b2423598eda9025beeea78c9ecf43f50cd72d8b2a"
+    },
+    {
+      "path": "docs/REMAINING_WORK.md",
+      "qualifiedSha256": "7d0b9e730e2d68af1249f3abd8b24ae35d79d400bdefae20b245893f49356475",
+      "postReviewSha256": "2a5b1750f7875f2130e94709d90f0842388c9072b2b26de313527c2c1363542b"
+    },
+    {
+      "path": "docs/STATUS.md",
+      "qualifiedSha256": "867eefec135650399b7742b4024b4dc1c80f7a5c1fadb0d9d0e525c7dee5ff76",
+      "postReviewSha256": "fdf3f950ce32801fed3451c10eab2cd58de1735e91717b470685f75b527a63a3"
+    },
+    {
+      "path": "docs/parity/native-reconciliation-2026-10-15.json",
+      "qualifiedSha256": "7fe0b7f79c4fcb367e09d9b336608c70fdc8f1bad778b87ef34e59cca7dbc7ff",
+      "postReviewSha256": "0a2f882d7e3f830eb0653870da923319bc93ece6171ed877d9feec8c03c9868b"
+    },
+    {
+      "path": "native/docs/session-config.md",
+      "qualifiedSha256": "4abab6b8b51c1f92be028d4e81dc9dffa36196c67a2a7f4024c5f61f504ddb68",
+      "postReviewSha256": "341bcd10c882db764e8512f86e41ee1faaece05510b1169a7b62b38b400a4b64"
+    },
+    {
+      "path": "native/docs/session-steering.md",
+      "qualifiedSha256": "da452bd574a77baecdd59b68256f66655594f7a3aa464bc88cf754c04023e529",
+      "postReviewSha256": "604fe425481be6ab04c2878e038504df804e04a400fe9b58dd08e4ef14b91bce"
+    }
+  ],
+  "separatelyTrackedDocumentation": {
+    "native/docs/prompt-templates.md": {
+      "beforeSha256": "a3935bd4e695a33d9242dcb3e4e56dc0490b8300d1324b092c70ca21261f4012",
+      "afterSha256": "796221fee4a313d40610b4c651be40f2509ff0c7c931109b18635bd174bcaa3b"
+    },
+    "native/docs/prompt-catalogs.md": {
+      "beforeSha256": "f93a0bca070ad17b49c3d31367ee0cb3f692db6edc83dc2f0af0d6e1a3819dcb",
+      "afterSha256": "0d310e21c69c67842284f129e8e4657c5b672c56b123fd9bef8147de376e8731"
+    }
+  },
+  "newRuntimeContractSha256": "fecf16e941e206ea6515b7841512128021e4b7f1573a261f216afa2e32b60d02",
+  "previousReconciliationKeysAndValuesExact": true
+}

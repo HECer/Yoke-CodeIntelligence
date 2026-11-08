@@ -1,0 +1,976 @@
+{
+  "schemaVersion": 1,
+  "kind": "native-immutable-compiler-move",
+  "sourceCommit": "b1da9f70a57bbca1f1573b9b54d58beca517c63c",
+  "baseIntegration": "d36a6d0459e0b38352a04be30ce1f284e63ac768",
+  "scope": [
+    "Actual explicitly host-selected TS5.8.3 Move to existing captured ES module",
+    "Native original-byte/syntax/static-binding/import-export/result admission",
+    "Explicit AST provenance without invented graph identity",
+    "Existing verify/approval/apply/conditional recovery gates",
+    "Scoped Windows development evidence; full STATUS remains incomplete"
+  ],
+  "finalPhase": "final-r2",
+  "libraryPhase": "final-r2",
+  "retainedPhase": "retained-r1",
+  "phases": [
+    {
+      "phase": "compile-r1",
+      "resultPath": "runs/compile-r1/result.json",
+      "allChecksPassed": true,
+      "inputs": 792
+    },
+    {
+      "phase": "feature-r1",
+      "resultPath": "runs/feature-r1/result.json",
+      "allChecksPassed": true,
+      "inputs": 793
+    },
+    {
+      "phase": "feature-r2",
+      "resultPath": "runs/feature-r2/result.json",
+      "allChecksPassed": false,
+      "inputs": 793
+    },
+    {
+      "phase": "feature-r3",
+      "resultPath": "runs/feature-r3/result.json",
+      "allChecksPassed": false,
+      "inputs": 793
+    },
+    {
+      "phase": "feature-r4",
+      "resultPath": "runs/feature-r4/result.json",
+      "allChecksPassed": true,
+      "inputs": 794
+    },
+    {
+      "phase": "feature-r5",
+      "resultPath": "runs/feature-r5/result.json",
+      "allChecksPassed": false,
+      "inputs": 794
+    },
+    {
+      "phase": "feature-r6",
+      "resultPath": "runs/feature-r6/result.json",
+      "allChecksPassed": true,
+      "inputs": 794
+    },
+    {
+      "phase": "final-r1",
+      "resultPath": "runs/final-r1/result.json",
+      "allChecksPassed": false,
+      "inputs": 795
+    },
+    {
+      "phase": "final-r2",
+      "resultPath": "runs/final-r2/result.json",
+      "allChecksPassed": true,
+      "inputs": 795
+    },
+    {
+      "phase": "live-stdlib-cli",
+      "resultPath": "runs/live-stdlib-cli/result.json",
+      "allChecksPassed": true,
+      "inputs": null
+    },
+    {
+      "phase": "retained-r1",
+      "resultPath": "runs/retained-r1/result.json",
+      "allChecksPassed": true,
+      "inputs": 789
+    }
+  ],
+  "files": [
+    {
+      "path": "runs/ci-compiler-move-alias-probe.cjs",
+      "bytes": 3213,
+      "sha256": "c8f01a3a2f569abbd19f5b3b6e947850786b7c07346d6ffb17221d508925a1e1"
+    },
+    {
+      "path": "runs/combined-checks.json",
+      "bytes": 35341,
+      "sha256": "257513b3226dac8c3201b3e1d518500fe4918c2850087902422c7c8a5959125c"
+    },
+    {
+      "path": "runs/compile-r1/check.log",
+      "bytes": 982,
+      "sha256": "246de98611af97538ea4551d775b2917d8d21a00485c82a4c5159449fb2f0b4e"
+    },
+    {
+      "path": "runs/compile-r1/result.json",
+      "bytes": 536,
+      "sha256": "7f7737f76f3a70969560f114f52d0a8ab0c5b4f8cb81afb07ff3ad5a5d91f427"
+    },
+    {
+      "path": "runs/compile-r1/runner.py",
+      "bytes": 3313,
+      "sha256": "6a4397f333fac072dca3e00245b3c10e0528a9130062aae0f94ad6d9ff1ed9bd"
+    },
+    {
+      "path": "runs/compile-r1/source/native/src/compiler_move.rs",
+      "bytes": 14201,
+      "sha256": "34c6468d5195b72bcdb258dbd63a66467e26a4812b27b39b53ac6472f43bc7fb"
+    },
+    {
+      "path": "runs/compile-r1/source/native/src/compiler_move_ast.rs",
+      "bytes": 17042,
+      "sha256": "25fb719e8e761f69ad606838aa9e5c1828f458d38d8d5a971f508c63896a0fa4"
+    },
+    {
+      "path": "runs/compile-r1/source/native/src/compiler_move_bindings.rs",
+      "bytes": 25029,
+      "sha256": "7d56bac53c0d0e597c98eda59006237864bb15e6a89e9841217cf807c0620ecd"
+    },
+    {
+      "path": "runs/compile-r1/source/native/src/compiler_move_worker.cjs",
+      "bytes": 10931,
+      "sha256": "0357dcb5953dd9886b25dfceab1c2fb08bb13e0d9de8b566149156dec3791e3b"
+    },
+    {
+      "path": "runs/compile-r1/source/native/src/compiler_worker.cjs",
+      "bytes": 13236,
+      "sha256": "1b473d71ae8573ec2ce73461a1988ee45058e274d87341fbc4f594bca3bb5ca6"
+    },
+    {
+      "path": "runs/compile-r1/source/native/src/lib.rs",
+      "bytes": 33561,
+      "sha256": "ef26db11571a4782fc515a23c04552e625b21737b490be71c9939e0440313bcf"
+    },
+    {
+      "path": "runs/compile-r1/source/native/src/project_session.rs",
+      "bytes": 67895,
+      "sha256": "842607374c30719efca1ca3c53e732fb695988a78c95419f254b11d90ffdeedc"
+    },
+    {
+      "path": "runs/compile-r1/source/native/src/projects.rs",
+      "bytes": 8745,
+      "sha256": "336385eb413ceb2bed223311575ed735010bd804b06043c2fcfa3e4e14580b67"
+    },
+    {
+      "path": "runs/compile-r1/source-after.json",
+      "bytes": 85880,
+      "sha256": "b1dc9937fef2013dc87c47d632ee47786d1c86fb1a814966ff1acb50f1e4330d"
+    },
+    {
+      "path": "runs/compile-r1/source-before.json",
+      "bytes": 85880,
+      "sha256": "b1dc9937fef2013dc87c47d632ee47786d1c86fb1a814966ff1acb50f1e4330d"
+    },
+    {
+      "path": "runs/evidence.py",
+      "bytes": 5828,
+      "sha256": "e4a7842c7a934f9a197cdcc56f3a80780d21999bc1a258638ada80bc41e5ee96"
+    },
+    {
+      "path": "runs/exploratory-alias-probe.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "runs/exploratory-alias-probe.stdout",
+      "bytes": 1851,
+      "sha256": "af120df56a86de0300e2881c5fdda81b72b1768579bc90519cfcbdda0484fdfc"
+    },
+    {
+      "path": "runs/exploratory-probe-compiler.json",
+      "bytes": 298,
+      "sha256": "b14f7f4c7f20adc062d8a070817756965e49dcf350e1970e72117fd1aa6ca6a7"
+    },
+    {
+      "path": "runs/feature-r1/native.log",
+      "bytes": 707,
+      "sha256": "1a6ab9d4910eaa22cd37eb9b3e44e3f9fe1c90fb2446db609e976dfa15aa0618"
+    },
+    {
+      "path": "runs/feature-r1/result.json",
+      "bytes": 764,
+      "sha256": "9d5171fa3ab19456de294b572b2902f07cd682280242fda2278065c2ef3eb753"
+    },
+    {
+      "path": "runs/feature-r1/runner.py",
+      "bytes": 3313,
+      "sha256": "6a4397f333fac072dca3e00245b3c10e0528a9130062aae0f94ad6d9ff1ed9bd"
+    },
+    {
+      "path": "runs/feature-r1/source/native/src/compiler_inline.rs",
+      "bytes": 33184,
+      "sha256": "183a848a5fc86335f5b6feb58f22fc08f4ac32c28f2d383d9cad83be9ceb32fc"
+    },
+    {
+      "path": "runs/feature-r1/source/native/src/compiler_move.rs",
+      "bytes": 17347,
+      "sha256": "13f25bbdcc5a2cf6f725eb608394722e3619ff84942c47d74a21c6506ff87630"
+    },
+    {
+      "path": "runs/feature-r1/source/native/src/compiler_move_ast.rs",
+      "bytes": 18678,
+      "sha256": "a06761c339ac9ede1c3de52fa3cd14aad0ac3e8c63c4e805c64db048f1ff614d"
+    },
+    {
+      "path": "runs/feature-r1/source/native/src/compiler_move_bindings.rs",
+      "bytes": 26114,
+      "sha256": "fb25f908dca30dc5f8d943cead5327f96ec6724c32e2a1d2a48f94dd185eebba"
+    },
+    {
+      "path": "runs/feature-r1/source/native/src/compiler_move_worker.cjs",
+      "bytes": 11247,
+      "sha256": "906048d91e3c75322d6ebf5309de2ac388a6854b9dc433f17fd8668d8b2130a6"
+    },
+    {
+      "path": "runs/feature-r1/source/native/src/compiler_worker.cjs",
+      "bytes": 13236,
+      "sha256": "1b473d71ae8573ec2ce73461a1988ee45058e274d87341fbc4f594bca3bb5ca6"
+    },
+    {
+      "path": "runs/feature-r1/source/native/src/lib.rs",
+      "bytes": 33561,
+      "sha256": "ef26db11571a4782fc515a23c04552e625b21737b490be71c9939e0440313bcf"
+    },
+    {
+      "path": "runs/feature-r1/source/native/src/project_session.rs",
+      "bytes": 67895,
+      "sha256": "842607374c30719efca1ca3c53e732fb695988a78c95419f254b11d90ffdeedc"
+    },
+    {
+      "path": "runs/feature-r1/source/native/src/projects.rs",
+      "bytes": 8745,
+      "sha256": "336385eb413ceb2bed223311575ed735010bd804b06043c2fcfa3e4e14580b67"
+    },
+    {
+      "path": "runs/feature-r1/source/native/tests/compiler_move.rs",
+      "bytes": 5047,
+      "sha256": "4848f0ca41cd1545cb19812061aee25a812c340f15688c3f8a58162aded52ca9"
+    },
+    {
+      "path": "runs/feature-r1/source-after.json",
+      "bytes": 85984,
+      "sha256": "9ef128b1ad0f33bdd91efee9fbbe9888e9baef1f6891dbac15072acd85ab2890"
+    },
+    {
+      "path": "runs/feature-r1/source-before.json",
+      "bytes": 85984,
+      "sha256": "9ef128b1ad0f33bdd91efee9fbbe9888e9baef1f6891dbac15072acd85ab2890"
+    },
+    {
+      "path": "runs/feature-r2/native.log",
+      "bytes": 920,
+      "sha256": "a6db423134a613b81836ada0c2b1ceba7b0cdd218936aefa2868614598828b61"
+    },
+    {
+      "path": "runs/feature-r2/result.json",
+      "bytes": 767,
+      "sha256": "ac6104e232d01e320d1574af504cfb52c32e87add8cde591d78ce2297d197de6"
+    },
+    {
+      "path": "runs/feature-r2/runner.py",
+      "bytes": 3313,
+      "sha256": "6a4397f333fac072dca3e00245b3c10e0528a9130062aae0f94ad6d9ff1ed9bd"
+    },
+    {
+      "path": "runs/feature-r2/source/native/src/compiler_inline.rs",
+      "bytes": 33184,
+      "sha256": "183a848a5fc86335f5b6feb58f22fc08f4ac32c28f2d383d9cad83be9ceb32fc"
+    },
+    {
+      "path": "runs/feature-r2/source/native/src/compiler_move.rs",
+      "bytes": 17347,
+      "sha256": "13f25bbdcc5a2cf6f725eb608394722e3619ff84942c47d74a21c6506ff87630"
+    },
+    {
+      "path": "runs/feature-r2/source/native/src/compiler_move_ast.rs",
+      "bytes": 18678,
+      "sha256": "a06761c339ac9ede1c3de52fa3cd14aad0ac3e8c63c4e805c64db048f1ff614d"
+    },
+    {
+      "path": "runs/feature-r2/source/native/src/compiler_move_bindings.rs",
+      "bytes": 26181,
+      "sha256": "08c01c9cce45002508c7cbecf50e91406d75d516cfec4d00734a379c930a83f7"
+    },
+    {
+      "path": "runs/feature-r2/source/native/src/compiler_move_worker.cjs",
+      "bytes": 11247,
+      "sha256": "906048d91e3c75322d6ebf5309de2ac388a6854b9dc433f17fd8668d8b2130a6"
+    },
+    {
+      "path": "runs/feature-r2/source/native/src/compiler_worker.cjs",
+      "bytes": 13236,
+      "sha256": "1b473d71ae8573ec2ce73461a1988ee45058e274d87341fbc4f594bca3bb5ca6"
+    },
+    {
+      "path": "runs/feature-r2/source/native/src/lib.rs",
+      "bytes": 33561,
+      "sha256": "ef26db11571a4782fc515a23c04552e625b21737b490be71c9939e0440313bcf"
+    },
+    {
+      "path": "runs/feature-r2/source/native/src/project_session.rs",
+      "bytes": 67914,
+      "sha256": "b97257603634a7610b7353fa473de7097474671f6b5e8e371c0afd16de0753a3"
+    },
+    {
+      "path": "runs/feature-r2/source/native/src/projects.rs",
+      "bytes": 8745,
+      "sha256": "336385eb413ceb2bed223311575ed735010bd804b06043c2fcfa3e4e14580b67"
+    },
+    {
+      "path": "runs/feature-r2/source/native/tests/compiler_move.rs",
+      "bytes": 18274,
+      "sha256": "e451b9a33267b17e94eed5ecaba62f5b2768f6c6c31c711422ff417ce9e7e79c"
+    },
+    {
+      "path": "runs/feature-r2/source-after.json",
+      "bytes": 85984,
+      "sha256": "a5ddbde30e9838cba71e1c85b635cfbfd063c77718089982bd8ef8d7c97d61c2"
+    },
+    {
+      "path": "runs/feature-r2/source-before.json",
+      "bytes": 85984,
+      "sha256": "a5ddbde30e9838cba71e1c85b635cfbfd063c77718089982bd8ef8d7c97d61c2"
+    },
+    {
+      "path": "runs/feature-r3/native.log",
+      "bytes": 2192,
+      "sha256": "1db8fd0b7949299373f3a5f1d19094db5b5252c04c02979ccbb27a1bb2bb1e49"
+    },
+    {
+      "path": "runs/feature-r3/result.json",
+      "bytes": 956,
+      "sha256": "a24001f39714372501118f0c53869d7834e6e64f17220afe37cdb53b605b9933"
+    },
+    {
+      "path": "runs/feature-r3/runner.py",
+      "bytes": 3313,
+      "sha256": "6a4397f333fac072dca3e00245b3c10e0528a9130062aae0f94ad6d9ff1ed9bd"
+    },
+    {
+      "path": "runs/feature-r3/source/native/src/compiler_inline.rs",
+      "bytes": 33184,
+      "sha256": "183a848a5fc86335f5b6feb58f22fc08f4ac32c28f2d383d9cad83be9ceb32fc"
+    },
+    {
+      "path": "runs/feature-r3/source/native/src/compiler_move.rs",
+      "bytes": 17347,
+      "sha256": "13f25bbdcc5a2cf6f725eb608394722e3619ff84942c47d74a21c6506ff87630"
+    },
+    {
+      "path": "runs/feature-r3/source/native/src/compiler_move_ast.rs",
+      "bytes": 18678,
+      "sha256": "a06761c339ac9ede1c3de52fa3cd14aad0ac3e8c63c4e805c64db048f1ff614d"
+    },
+    {
+      "path": "runs/feature-r3/source/native/src/compiler_move_bindings.rs",
+      "bytes": 26181,
+      "sha256": "08c01c9cce45002508c7cbecf50e91406d75d516cfec4d00734a379c930a83f7"
+    },
+    {
+      "path": "runs/feature-r3/source/native/src/compiler_move_worker.cjs",
+      "bytes": 11247,
+      "sha256": "906048d91e3c75322d6ebf5309de2ac388a6854b9dc433f17fd8668d8b2130a6"
+    },
+    {
+      "path": "runs/feature-r3/source/native/src/compiler_worker.cjs",
+      "bytes": 13236,
+      "sha256": "1b473d71ae8573ec2ce73461a1988ee45058e274d87341fbc4f594bca3bb5ca6"
+    },
+    {
+      "path": "runs/feature-r3/source/native/src/lib.rs",
+      "bytes": 33561,
+      "sha256": "ef26db11571a4782fc515a23c04552e625b21737b490be71c9939e0440313bcf"
+    },
+    {
+      "path": "runs/feature-r3/source/native/src/project_session.rs",
+      "bytes": 67914,
+      "sha256": "b97257603634a7610b7353fa473de7097474671f6b5e8e371c0afd16de0753a3"
+    },
+    {
+      "path": "runs/feature-r3/source/native/src/projects.rs",
+      "bytes": 8745,
+      "sha256": "336385eb413ceb2bed223311575ed735010bd804b06043c2fcfa3e4e14580b67"
+    },
+    {
+      "path": "runs/feature-r3/source/native/tests/compiler_move.rs",
+      "bytes": 18193,
+      "sha256": "7c16a6edfe14523692bbadd6c7e03650e5a65c75c5413e89bd0574fedd04a160"
+    },
+    {
+      "path": "runs/feature-r3/source-after.json",
+      "bytes": 85984,
+      "sha256": "e224290151dddf88db7589217145f68efaba2cb8b8dd98f0bc26240be294120b"
+    },
+    {
+      "path": "runs/feature-r3/source-before.json",
+      "bytes": 85984,
+      "sha256": "e224290151dddf88db7589217145f68efaba2cb8b8dd98f0bc26240be294120b"
+    },
+    {
+      "path": "runs/feature-r4/native.log",
+      "bytes": 56679,
+      "sha256": "2121646f8a04a084bfedbfd1e9e44b36d43b75ffc64bee25a3655d2eee86d617"
+    },
+    {
+      "path": "runs/feature-r4/result.json",
+      "bytes": 784,
+      "sha256": "fd987667a46f57f7b21570e7ba68b4e5b7d1dcce44bf391625079f4d70e97a9e"
+    },
+    {
+      "path": "runs/feature-r4/runner.py",
+      "bytes": 3313,
+      "sha256": "6a4397f333fac072dca3e00245b3c10e0528a9130062aae0f94ad6d9ff1ed9bd"
+    },
+    {
+      "path": "runs/feature-r4/source/native/src/compiler_inline.rs",
+      "bytes": 33184,
+      "sha256": "183a848a5fc86335f5b6feb58f22fc08f4ac32c28f2d383d9cad83be9ceb32fc"
+    },
+    {
+      "path": "runs/feature-r4/source/native/src/compiler_move.rs",
+      "bytes": 18679,
+      "sha256": "db125ffa1386b72c3229d2d84f80d7d18399929fff5783329ec8cd1c874698ce"
+    },
+    {
+      "path": "runs/feature-r4/source/native/src/compiler_move_ast.rs",
+      "bytes": 20115,
+      "sha256": "394bde5167b7b3e42918aa69c5a894b67d5130acbd8016fe01bb0aa78598611f"
+    },
+    {
+      "path": "runs/feature-r4/source/native/src/compiler_move_bindings.rs",
+      "bytes": 26372,
+      "sha256": "42371cea49191f7173fea6a1589f3fb11e312c2d86980d1a9baca79d7adaf18c"
+    },
+    {
+      "path": "runs/feature-r4/source/native/src/compiler_move_tests.rs",
+      "bytes": 8104,
+      "sha256": "90dd9b45414ac51b0bbb1faef1fc6c3619e43329b69f213c8d5d559716976aa7"
+    },
+    {
+      "path": "runs/feature-r4/source/native/src/compiler_move_worker.cjs",
+      "bytes": 11795,
+      "sha256": "64606ca36d18fdb2b68056c567b71ab1a454ba45a3510144d10e95bdce05114a"
+    },
+    {
+      "path": "runs/feature-r4/source/native/src/compiler_worker.cjs",
+      "bytes": 13236,
+      "sha256": "1b473d71ae8573ec2ce73461a1988ee45058e274d87341fbc4f594bca3bb5ca6"
+    },
+    {
+      "path": "runs/feature-r4/source/native/src/lib.rs",
+      "bytes": 33561,
+      "sha256": "ef26db11571a4782fc515a23c04552e625b21737b490be71c9939e0440313bcf"
+    },
+    {
+      "path": "runs/feature-r4/source/native/src/project_session.rs",
+      "bytes": 67914,
+      "sha256": "b97257603634a7610b7353fa473de7097474671f6b5e8e371c0afd16de0753a3"
+    },
+    {
+      "path": "runs/feature-r4/source/native/src/projects.rs",
+      "bytes": 8745,
+      "sha256": "336385eb413ceb2bed223311575ed735010bd804b06043c2fcfa3e4e14580b67"
+    },
+    {
+      "path": "runs/feature-r4/source/native/tests/compiler_move.rs",
+      "bytes": 18636,
+      "sha256": "492aec2904f830a3b20feb8f31332936a6fec62f4931007f45a4d2c98dc83af0"
+    },
+    {
+      "path": "runs/feature-r4/source-after.json",
+      "bytes": 86092,
+      "sha256": "d03ae8926ece9e1eec46de06bee1c411ea32a1f00fc3afb82a3c4958b1605bf2"
+    },
+    {
+      "path": "runs/feature-r4/source-before.json",
+      "bytes": 86092,
+      "sha256": "d03ae8926ece9e1eec46de06bee1c411ea32a1f00fc3afb82a3c4958b1605bf2"
+    },
+    {
+      "path": "runs/feature-r5/native.log",
+      "bytes": 2647,
+      "sha256": "bbdf1754ff8c9a1a2e28e354bcc1acf6b6aa4ccc24ecde39c929010d03e19376"
+    },
+    {
+      "path": "runs/feature-r5/result.json",
+      "bytes": 958,
+      "sha256": "3e6a454d67c9c65e216de7b058bae687bc16a05fe8d097ba10397c55c115589e"
+    },
+    {
+      "path": "runs/feature-r5/runner.py",
+      "bytes": 3313,
+      "sha256": "6a4397f333fac072dca3e00245b3c10e0528a9130062aae0f94ad6d9ff1ed9bd"
+    },
+    {
+      "path": "runs/feature-r5/source/native/src/compiler_inline.rs",
+      "bytes": 33184,
+      "sha256": "183a848a5fc86335f5b6feb58f22fc08f4ac32c28f2d383d9cad83be9ceb32fc"
+    },
+    {
+      "path": "runs/feature-r5/source/native/src/compiler_move.rs",
+      "bytes": 18679,
+      "sha256": "db125ffa1386b72c3229d2d84f80d7d18399929fff5783329ec8cd1c874698ce"
+    },
+    {
+      "path": "runs/feature-r5/source/native/src/compiler_move_ast.rs",
+      "bytes": 20115,
+      "sha256": "394bde5167b7b3e42918aa69c5a894b67d5130acbd8016fe01bb0aa78598611f"
+    },
+    {
+      "path": "runs/feature-r5/source/native/src/compiler_move_bindings.rs",
+      "bytes": 26372,
+      "sha256": "42371cea49191f7173fea6a1589f3fb11e312c2d86980d1a9baca79d7adaf18c"
+    },
+    {
+      "path": "runs/feature-r5/source/native/src/compiler_move_tests.rs",
+      "bytes": 8104,
+      "sha256": "90dd9b45414ac51b0bbb1faef1fc6c3619e43329b69f213c8d5d559716976aa7"
+    },
+    {
+      "path": "runs/feature-r5/source/native/src/compiler_move_worker.cjs",
+      "bytes": 11795,
+      "sha256": "64606ca36d18fdb2b68056c567b71ab1a454ba45a3510144d10e95bdce05114a"
+    },
+    {
+      "path": "runs/feature-r5/source/native/src/compiler_worker.cjs",
+      "bytes": 13236,
+      "sha256": "1b473d71ae8573ec2ce73461a1988ee45058e274d87341fbc4f594bca3bb5ca6"
+    },
+    {
+      "path": "runs/feature-r5/source/native/src/lib.rs",
+      "bytes": 33561,
+      "sha256": "ef26db11571a4782fc515a23c04552e625b21737b490be71c9939e0440313bcf"
+    },
+    {
+      "path": "runs/feature-r5/source/native/src/project_session.rs",
+      "bytes": 67914,
+      "sha256": "b97257603634a7610b7353fa473de7097474671f6b5e8e371c0afd16de0753a3"
+    },
+    {
+      "path": "runs/feature-r5/source/native/src/projects.rs",
+      "bytes": 8745,
+      "sha256": "336385eb413ceb2bed223311575ed735010bd804b06043c2fcfa3e4e14580b67"
+    },
+    {
+      "path": "runs/feature-r5/source/native/tests/compiler_move.rs",
+      "bytes": 24504,
+      "sha256": "56671e2ece4e9e62d46e27ab8798fb4a995ad4829f47edd3cab0b15efe818164"
+    },
+    {
+      "path": "runs/feature-r5/source-after.json",
+      "bytes": 86092,
+      "sha256": "4b5d4bf627f9bc36b391308d0dfe588cb687774055deb355a3bf176a08eef571"
+    },
+    {
+      "path": "runs/feature-r5/source-before.json",
+      "bytes": 86092,
+      "sha256": "4b5d4bf627f9bc36b391308d0dfe588cb687774055deb355a3bf176a08eef571"
+    },
+    {
+      "path": "runs/feature-r6/native.log",
+      "bytes": 1603,
+      "sha256": "3e8f7cefdf26d5067132d01230a810bf45edf6046cfe1542237f7f03f25d259b"
+    },
+    {
+      "path": "runs/feature-r6/result.json",
+      "bytes": 766,
+      "sha256": "3d6ea513d70e69300ae6e727e830de1768eb9651d6cef69ccac6462262b9b407"
+    },
+    {
+      "path": "runs/feature-r6/runner.py",
+      "bytes": 3313,
+      "sha256": "6a4397f333fac072dca3e00245b3c10e0528a9130062aae0f94ad6d9ff1ed9bd"
+    },
+    {
+      "path": "runs/feature-r6/source/native/src/compiler_inline.rs",
+      "bytes": 33184,
+      "sha256": "183a848a5fc86335f5b6feb58f22fc08f4ac32c28f2d383d9cad83be9ceb32fc"
+    },
+    {
+      "path": "runs/feature-r6/source/native/src/compiler_move.rs",
+      "bytes": 18679,
+      "sha256": "db125ffa1386b72c3229d2d84f80d7d18399929fff5783329ec8cd1c874698ce"
+    },
+    {
+      "path": "runs/feature-r6/source/native/src/compiler_move_ast.rs",
+      "bytes": 20115,
+      "sha256": "394bde5167b7b3e42918aa69c5a894b67d5130acbd8016fe01bb0aa78598611f"
+    },
+    {
+      "path": "runs/feature-r6/source/native/src/compiler_move_bindings.rs",
+      "bytes": 26372,
+      "sha256": "42371cea49191f7173fea6a1589f3fb11e312c2d86980d1a9baca79d7adaf18c"
+    },
+    {
+      "path": "runs/feature-r6/source/native/src/compiler_move_tests.rs",
+      "bytes": 8104,
+      "sha256": "90dd9b45414ac51b0bbb1faef1fc6c3619e43329b69f213c8d5d559716976aa7"
+    },
+    {
+      "path": "runs/feature-r6/source/native/src/compiler_move_worker.cjs",
+      "bytes": 11795,
+      "sha256": "64606ca36d18fdb2b68056c567b71ab1a454ba45a3510144d10e95bdce05114a"
+    },
+    {
+      "path": "runs/feature-r6/source/native/src/compiler_worker.cjs",
+      "bytes": 13236,
+      "sha256": "1b473d71ae8573ec2ce73461a1988ee45058e274d87341fbc4f594bca3bb5ca6"
+    },
+    {
+      "path": "runs/feature-r6/source/native/src/lib.rs",
+      "bytes": 33561,
+      "sha256": "ef26db11571a4782fc515a23c04552e625b21737b490be71c9939e0440313bcf"
+    },
+    {
+      "path": "runs/feature-r6/source/native/src/project_session.rs",
+      "bytes": 67914,
+      "sha256": "b97257603634a7610b7353fa473de7097474671f6b5e8e371c0afd16de0753a3"
+    },
+    {
+      "path": "runs/feature-r6/source/native/src/projects.rs",
+      "bytes": 8745,
+      "sha256": "336385eb413ceb2bed223311575ed735010bd804b06043c2fcfa3e4e14580b67"
+    },
+    {
+      "path": "runs/feature-r6/source/native/tests/compiler_move.rs",
+      "bytes": 25782,
+      "sha256": "759439b2806cb0dedd3156d812ac7a34ef5e29e4b5693e84e4ecab19919d63df"
+    },
+    {
+      "path": "runs/feature-r6/source-after.json",
+      "bytes": 86092,
+      "sha256": "c9dc264eac973e62ae54e428d9a3994d604c616111e5fe01543cb68d712b4ecb"
+    },
+    {
+      "path": "runs/feature-r6/source-before.json",
+      "bytes": 86092,
+      "sha256": "c9dc264eac973e62ae54e428d9a3994d604c616111e5fe01543cb68d712b4ecb"
+    },
+    {
+      "path": "runs/final-r1/build.log",
+      "bytes": 60,
+      "sha256": "d6e43857ac705bdfefb91decf60c0dbdadb3662720a503dd5fb9346a84a67d9d"
+    },
+    {
+      "path": "runs/final-r1/clippy.log",
+      "bytes": 2997,
+      "sha256": "2882d5454882110b75c47ac17567cf7de539844915858c725540f2293c38f4ab"
+    },
+    {
+      "path": "runs/final-r1/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "runs/final-r1/native.log",
+      "bytes": 17953,
+      "sha256": "d5bfdcb0ed96d53b1ff30b9c7ca9bf0c71d63a3675977e6aadd00d058f3b5660"
+    },
+    {
+      "path": "runs/final-r1/result.json",
+      "bytes": 2408,
+      "sha256": "2a9c5c14d7b7ae6eb0cc755c5122dffd2799cce9e429b8c5d2d30c62acfe25a8"
+    },
+    {
+      "path": "runs/final-r1/runner.py",
+      "bytes": 3313,
+      "sha256": "6a4397f333fac072dca3e00245b3c10e0528a9130062aae0f94ad6d9ff1ed9bd"
+    },
+    {
+      "path": "runs/final-r1/source/native/docs/compiler-move.md",
+      "bytes": 4751,
+      "sha256": "8bed5e93a9a033173d91f91f961435e8d4c0d7cb9a08c0340f46dcac7da8fcfa"
+    },
+    {
+      "path": "runs/final-r1/source/native/README.md",
+      "bytes": 29450,
+      "sha256": "248d8d178aa9cc02fceabfb320b204cd56245a779956e0e0bd4d11473345801e"
+    },
+    {
+      "path": "runs/final-r1/source/native/src/compiler_inline.rs",
+      "bytes": 33184,
+      "sha256": "183a848a5fc86335f5b6feb58f22fc08f4ac32c28f2d383d9cad83be9ceb32fc"
+    },
+    {
+      "path": "runs/final-r1/source/native/src/compiler_move.rs",
+      "bytes": 18679,
+      "sha256": "db125ffa1386b72c3229d2d84f80d7d18399929fff5783329ec8cd1c874698ce"
+    },
+    {
+      "path": "runs/final-r1/source/native/src/compiler_move_ast.rs",
+      "bytes": 20115,
+      "sha256": "394bde5167b7b3e42918aa69c5a894b67d5130acbd8016fe01bb0aa78598611f"
+    },
+    {
+      "path": "runs/final-r1/source/native/src/compiler_move_bindings.rs",
+      "bytes": 26372,
+      "sha256": "42371cea49191f7173fea6a1589f3fb11e312c2d86980d1a9baca79d7adaf18c"
+    },
+    {
+      "path": "runs/final-r1/source/native/src/compiler_move_tests.rs",
+      "bytes": 8104,
+      "sha256": "90dd9b45414ac51b0bbb1faef1fc6c3619e43329b69f213c8d5d559716976aa7"
+    },
+    {
+      "path": "runs/final-r1/source/native/src/compiler_move_worker.cjs",
+      "bytes": 11795,
+      "sha256": "64606ca36d18fdb2b68056c567b71ab1a454ba45a3510144d10e95bdce05114a"
+    },
+    {
+      "path": "runs/final-r1/source/native/src/compiler_worker.cjs",
+      "bytes": 13236,
+      "sha256": "1b473d71ae8573ec2ce73461a1988ee45058e274d87341fbc4f594bca3bb5ca6"
+    },
+    {
+      "path": "runs/final-r1/source/native/src/lib.rs",
+      "bytes": 33561,
+      "sha256": "ef26db11571a4782fc515a23c04552e625b21737b490be71c9939e0440313bcf"
+    },
+    {
+      "path": "runs/final-r1/source/native/src/project_session.rs",
+      "bytes": 67914,
+      "sha256": "b97257603634a7610b7353fa473de7097474671f6b5e8e371c0afd16de0753a3"
+    },
+    {
+      "path": "runs/final-r1/source/native/src/projects.rs",
+      "bytes": 8745,
+      "sha256": "336385eb413ceb2bed223311575ed735010bd804b06043c2fcfa3e4e14580b67"
+    },
+    {
+      "path": "runs/final-r1/source/native/tests/compiler_move.rs",
+      "bytes": 25782,
+      "sha256": "759439b2806cb0dedd3156d812ac7a34ef5e29e4b5693e84e4ecab19919d63df"
+    },
+    {
+      "path": "runs/final-r1/source-after.json",
+      "bytes": 86195,
+      "sha256": "860939001b0df3eca656192e805bc88504b00b379f1f5fdd8b4a89530bed9c1e"
+    },
+    {
+      "path": "runs/final-r1/source-before.json",
+      "bytes": 86195,
+      "sha256": "860939001b0df3eca656192e805bc88504b00b379f1f5fdd8b4a89530bed9c1e"
+    },
+    {
+      "path": "runs/final-r2/build.log",
+      "bytes": 61,
+      "sha256": "18ebe86c2f93acdc585dd7794429e42f0e16f5ec4e5f11a0d8eeadb7c250d0c9"
+    },
+    {
+      "path": "runs/final-r2/clippy.log",
+      "bytes": 168,
+      "sha256": "5e8931c605aacec48b85f5b0352de4859a58b3c85eae1ca140df9f3d459f7ac7"
+    },
+    {
+      "path": "runs/final-r2/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "runs/final-r2/native.log",
+      "bytes": 73482,
+      "sha256": "96b8162e9ec0403225547d4b2ad46016116057ff1f874cd6c27682916c95ae00"
+    },
+    {
+      "path": "runs/final-r2/result.json",
+      "bytes": 2423,
+      "sha256": "45d142b13348850dfe53eba5cb8b95df78d585de3d4c1bb9f3c4b8aaa9c0d25a"
+    },
+    {
+      "path": "runs/final-r2/runner.py",
+      "bytes": 3313,
+      "sha256": "6a4397f333fac072dca3e00245b3c10e0528a9130062aae0f94ad6d9ff1ed9bd"
+    },
+    {
+      "path": "runs/final-r2/source/native/docs/compiler-move.md",
+      "bytes": 4751,
+      "sha256": "8bed5e93a9a033173d91f91f961435e8d4c0d7cb9a08c0340f46dcac7da8fcfa"
+    },
+    {
+      "path": "runs/final-r2/source/native/README.md",
+      "bytes": 29450,
+      "sha256": "248d8d178aa9cc02fceabfb320b204cd56245a779956e0e0bd4d11473345801e"
+    },
+    {
+      "path": "runs/final-r2/source/native/src/compiler_inline.rs",
+      "bytes": 33184,
+      "sha256": "183a848a5fc86335f5b6feb58f22fc08f4ac32c28f2d383d9cad83be9ceb32fc"
+    },
+    {
+      "path": "runs/final-r2/source/native/src/compiler_move.rs",
+      "bytes": 18679,
+      "sha256": "db125ffa1386b72c3229d2d84f80d7d18399929fff5783329ec8cd1c874698ce"
+    },
+    {
+      "path": "runs/final-r2/source/native/src/compiler_move_ast.rs",
+      "bytes": 20187,
+      "sha256": "7f3ced51caecb3dfd84fa8f1979f2f4e439a93da1e235dcde106b5010d896723"
+    },
+    {
+      "path": "runs/final-r2/source/native/src/compiler_move_bindings.rs",
+      "bytes": 26504,
+      "sha256": "6e19839ebacf2dadeb4cd267fb8b215dcb5b53b140da9cd2a925e677fe1f3f44"
+    },
+    {
+      "path": "runs/final-r2/source/native/src/compiler_move_tests.rs",
+      "bytes": 8104,
+      "sha256": "90dd9b45414ac51b0bbb1faef1fc6c3619e43329b69f213c8d5d559716976aa7"
+    },
+    {
+      "path": "runs/final-r2/source/native/src/compiler_move_worker.cjs",
+      "bytes": 11795,
+      "sha256": "64606ca36d18fdb2b68056c567b71ab1a454ba45a3510144d10e95bdce05114a"
+    },
+    {
+      "path": "runs/final-r2/source/native/src/compiler_worker.cjs",
+      "bytes": 13236,
+      "sha256": "1b473d71ae8573ec2ce73461a1988ee45058e274d87341fbc4f594bca3bb5ca6"
+    },
+    {
+      "path": "runs/final-r2/source/native/src/lib.rs",
+      "bytes": 33561,
+      "sha256": "ef26db11571a4782fc515a23c04552e625b21737b490be71c9939e0440313bcf"
+    },
+    {
+      "path": "runs/final-r2/source/native/src/project_session.rs",
+      "bytes": 67914,
+      "sha256": "b97257603634a7610b7353fa473de7097474671f6b5e8e371c0afd16de0753a3"
+    },
+    {
+      "path": "runs/final-r2/source/native/src/projects.rs",
+      "bytes": 8745,
+      "sha256": "336385eb413ceb2bed223311575ed735010bd804b06043c2fcfa3e4e14580b67"
+    },
+    {
+      "path": "runs/final-r2/source/native/tests/compiler_move.rs",
+      "bytes": 25782,
+      "sha256": "759439b2806cb0dedd3156d812ac7a34ef5e29e4b5693e84e4ecab19919d63df"
+    },
+    {
+      "path": "runs/final-r2/source-after.json",
+      "bytes": 86195,
+      "sha256": "13343add9fd80a4493a9c7e9dce96841659d58e99ac654e5cf12ddcc6ca66175"
+    },
+    {
+      "path": "runs/final-r2/source-before.json",
+      "bytes": 86195,
+      "sha256": "13343add9fd80a4493a9c7e9dce96841659d58e99ac654e5cf12ddcc6ca66175"
+    },
+    {
+      "path": "runs/live-stdlib-cli/consumer.ts",
+      "bytes": 66,
+      "sha256": "b507cc65ea36fb0e2815620f6e953f50b211505cb6fc7057e68eb78b3a8f727a"
+    },
+    {
+      "path": "runs/live-stdlib-cli/host.json",
+      "bytes": 209,
+      "sha256": "f5f7b44dedf76ebede559982d62e272216172c48e25a5530d6ae92ec7e11191e"
+    },
+    {
+      "path": "runs/live-stdlib-cli/independent-tsc.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "runs/live-stdlib-cli/independent-tsc.stdout",
+      "bytes": 639,
+      "sha256": "5654b3ac703d1bba0b7c399f4b336e0324e978b5749c84545cdb71da91ed8457"
+    },
+    {
+      "path": "runs/live-stdlib-cli/prepare.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "runs/live-stdlib-cli/prepare.stdout",
+      "bytes": 9172,
+      "sha256": "acb936c249ef1e6212d17b6ee5223e350e9fa44b9b7f5e535ffbcd658b40271d"
+    },
+    {
+      "path": "runs/live-stdlib-cli/requests.json",
+      "bytes": 167,
+      "sha256": "a5f7d46ed182fb8ca1e2578cc6fd7ecf5e9900dfd6d2f7e13b003f5f88ff5fab"
+    },
+    {
+      "path": "runs/live-stdlib-cli/result.json",
+      "bytes": 2447,
+      "sha256": "e0455d64534f43ca66d7ed357dc074bd90f86ef4094b6c43443e1b2320fe7092"
+    },
+    {
+      "path": "runs/live-stdlib-cli/runner.py",
+      "bytes": 3925,
+      "sha256": "74bb9531af6f15f7edcb9bc405696f55494612bee25831feec8b1e8699c75f7e"
+    },
+    {
+      "path": "runs/live-stdlib-cli/source.ts",
+      "bytes": 117,
+      "sha256": "a45bfc367ef03fc54ae51a8db648ffc1810c916dfa73b2571251382fd4617fde"
+    },
+    {
+      "path": "runs/live-stdlib-cli/target.ts",
+      "bytes": 22,
+      "sha256": "adf8d526e612268dd898c7ed971e3989cf135fe1d414bbac5fc6a0d2ecf6b644"
+    },
+    {
+      "path": "runs/live-stdlib-cli/tsconfig.json",
+      "bytes": 177,
+      "sha256": "47b41c64d2e3ec660e6562a92ddca1a7984db6353d810d38dc03ff64b8c8cf87"
+    },
+    {
+      "path": "runs/materialization.json",
+      "bytes": 252888,
+      "sha256": "e2dc56a179da130f48857beb3050e20fc78b83f7002384542188b1855eadb3c0"
+    },
+    {
+      "path": "runs/metadata-proof.json",
+      "bytes": 294,
+      "sha256": "3de5fcb1671a073839ead85bb413aaca30cabf41176d9ed790ed7c9dc4f87bf9"
+    },
+    {
+      "path": "runs/metadata.py",
+      "bytes": 8166,
+      "sha256": "68651970f3694a29ddf7cbcd9d4efaa2c38a7a3e14121e70721213faa47cf3e7"
+    },
+    {
+      "path": "runs/qualification.json",
+      "bytes": 5060,
+      "sha256": "f3d3a7544cd177e49658a4601634d7cad828b8d140acbe1c2f0f7fb44d1655dc"
+    },
+    {
+      "path": "runs/retained-r1/python-contracts.log",
+      "bytes": 2845,
+      "sha256": "0b409befa008bd605f5442da3345228bfbe86a2bbb73d5f18e6e21b0a35cfc5f"
+    },
+    {
+      "path": "runs/retained-r1/result.json",
+      "bytes": 738,
+      "sha256": "879ebeae1fde5a7768e96a99c2098ebf4b3df0a4cb6ec42efa5bf1848ad87c4d"
+    },
+    {
+      "path": "runs/retained-r1/runner.py",
+      "bytes": 2190,
+      "sha256": "078b1ef8e8563e3d00df57c8471abbf62eb2a2d3069d22ef96a568227377a9ea"
+    },
+    {
+      "path": "runs/retained-r1/source-after.json",
+      "bytes": 84807,
+      "sha256": "974ee77159278ebb94a8b6b0156df4a8368c5d3a93b6ada2f73834df6e607c44"
+    },
+    {
+      "path": "runs/retained-r1/source-before.json",
+      "bytes": 84807,
+      "sha256": "974ee77159278ebb94a8b6b0156df4a8368c5d3a93b6ada2f73834df6e607c44"
+    },
+    {
+      "path": "runs/retained-r1/tests.log",
+      "bytes": 25037,
+      "sha256": "e9990fe62c96f8864c23ab9e6d1e47cab0e65226b4a4fc5cfd4ab9297ea34c23"
+    },
+    {
+      "path": "runs/retained-r1/typecheck.log",
+      "bytes": 101,
+      "sha256": "30ef9ce16cf042ab6f160e0a76c1fbfe22f02a3c3a3659ee62863ffc1efdbfdf"
+    },
+    {
+      "path": "runs/tools.json",
+      "bytes": 712,
+      "sha256": "3df9b263046d6158d705c27a82be775dd40a6f27bc1ba49e5009513493647e16"
+    }
+  ]
+}

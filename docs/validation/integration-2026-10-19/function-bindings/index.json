@@ -1,0 +1,780 @@
+{
+  "schemaVersion": 1,
+  "kind": "native_function_binding_propagation_v3",
+  "asOf": "2026-10-20T05:30:07.628561+00:00",
+  "sourceCommit": "bed2bc9612e4db5e90c6d710602b37d6da2f6d9d",
+  "runtimeCommit": "c1eb4fb0bbc715468e253789f412ff411da46058",
+  "parentCommit": "2bc4df49423332497a14118cbd45d72c32ecb352",
+  "paths": [
+    "native/README.md",
+    "native/docs/propagated-delete.md",
+    "native/src/semantic_propagated_delete.rs",
+    "native/tests/fixtures/propagated-delete-lsp.mjs",
+    "native/tests/propagated_delete_contract.rs",
+    "native/tests/session_refactor.rs"
+  ],
+  "newCases": {
+    "defaultIntegration": 10,
+    "actualFunctionBindingsCli": 1
+  },
+  "nativeGroups": 15,
+  "nativeTotals": {
+    "passed": 592,
+    "failed": 0,
+    "ignored": 13
+  },
+  "nativeInputsMatched": 738,
+  "nativeBinarySha256": "f9852499f3f049332f1c12331f30384518588d3a4a96f47cf1a1d5f316afeb39",
+  "nativeBinaryBytes": 159188480,
+  "actualCliExecutableHashMatchesFinalBinary": true,
+  "binaryHashObservedAt": "2026-10-20T05:28:18.364134+00:00",
+  "actualTools": {
+    "node": "C:\\Program Files\\nodejs\\node.exe",
+    "nodeSha256": "ba4e6d110e8c1592a1ecd390f6b05f3da124b13871a5be62b341a07a853c6c32",
+    "nodeVersion": "v24.21.0",
+    "compiler": "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\typescript-5.8.3-lsp-5.1.3\\node_modules\\typescript\\lib\\tsc.js",
+    "compilerSha256": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983",
+    "compilerVersion": "Version 5.8.3",
+    "server": "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\typescript-5.8.3-lsp-5.1.3\\node_modules\\typescript-language-server\\lib\\cli.mjs",
+    "serverSha256": "3c2a7818315bd8399e56f461fe7da01c0f8f67a9c66108af0b655605b088dd77",
+    "serverVersion": "5.1.3",
+    "compilerLibrary": "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\typescript-5.8.3-lsp-5.1.3\\node_modules\\typescript\\lib\\typescript.js",
+    "compilerLibrarySha256": "dd17428736a07e1db1a138d8a14295ddb2699ba780ee15038acdd2c6da5373a0"
+  },
+  "wholeNativeRerun": false,
+  "platform": "Windows",
+  "nativeInputs": 738,
+  "integratedInputs": 744,
+  "finalNative": {
+    "sourceUnchanged": true,
+    "inputs": 738,
+    "commands": [
+      {
+        "name": "native",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "test",
+          "--workspace",
+          "--locked",
+          "-j",
+          "2",
+          "--target-dir",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+          "--no-fail-fast",
+          "--lib",
+          "--test",
+          "session_refactor",
+          "--test",
+          "project_session",
+          "--test",
+          "session_mcp",
+          "--test",
+          "session_review",
+          "--test",
+          "session_epoch_selection",
+          "--test",
+          "session_root_aliases",
+          "--test",
+          "workflow_cli",
+          "--test",
+          "protocol_connection",
+          "--test",
+          "semantic_refactor",
+          "--test",
+          "refactor_intents",
+          "--test",
+          "propagated_delete_contract",
+          "--test",
+          "propagated_delete_live",
+          "--test",
+          "plan_integrity",
+          "--test",
+          "sibling_declarators",
+          "--",
+          "--test-threads=1"
+        ],
+        "exitCode": 0,
+        "seconds": 536.9077382999822,
+        "totals": {
+          "passed": 592,
+          "failed": 0,
+          "ignored": 13
+        },
+        "groups": 15,
+        "failures": []
+      },
+      {
+        "name": "format",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "fmt",
+          "--all",
+          "--check"
+        ],
+        "exitCode": 0,
+        "seconds": 16.051672400004463
+      },
+      {
+        "name": "build",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "build",
+          "--workspace",
+          "--locked",
+          "-j",
+          "2",
+          "--target-dir",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+          "--bin",
+          "yoke"
+        ],
+        "exitCode": 0,
+        "seconds": 21.182990099972812
+      },
+      {
+        "name": "clippy",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "clippy",
+          "--workspace",
+          "--locked",
+          "-j",
+          "2",
+          "--target-dir",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+          "--all-targets",
+          "--",
+          "-D",
+          "warnings"
+        ],
+        "exitCode": 0,
+        "seconds": 103.24552289998974
+      }
+    ],
+    "allChecksPassed": true,
+    "wholeNativeRerun": false
+  },
+  "actualFunctionBindingsAndExistingV2Cli": {
+    "sourceUnchanged": true,
+    "inputs": 738,
+    "commands": [
+      {
+        "name": "native",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "test",
+          "--workspace",
+          "--locked",
+          "-j",
+          "2",
+          "--target-dir",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+          "--no-fail-fast",
+          "--test",
+          "session_refactor",
+          "--",
+          "--test-threads=1",
+          "--ignored",
+          "--nocapture"
+        ],
+        "exitCode": 0,
+        "seconds": 50.784620799997356,
+        "totals": {
+          "passed": 2,
+          "failed": 0,
+          "ignored": 0
+        },
+        "groups": 1,
+        "failures": []
+      }
+    ],
+    "allChecksPassed": true,
+    "wholeNativeRerun": false
+  },
+  "integrated": {
+    "sourceUnchanged": true,
+    "frozenInputs": 744,
+    "commands": [
+      {
+        "name": "format",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "fmt",
+          "--all",
+          "--check"
+        ],
+        "exitCode": 0,
+        "seconds": 6.7
+      },
+      {
+        "name": "python-contracts",
+        "command": [
+          "C:\\Python314\\python.exe",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "scripts/tests",
+          "-v"
+        ],
+        "exitCode": 0,
+        "seconds": 1.36
+      },
+      {
+        "name": "typecheck",
+        "command": [
+          "npm.cmd",
+          "run",
+          "typecheck"
+        ],
+        "exitCode": 0,
+        "seconds": 5.75
+      },
+      {
+        "name": "tests",
+        "command": [
+          "npm.cmd",
+          "test"
+        ],
+        "exitCode": 0,
+        "seconds": 63.99
+      }
+    ],
+    "allChecksPassed": true,
+    "wholeNativeRerun": false
+  },
+  "priorEvidenceReadme": {
+    "bytes": 32991,
+    "sha256": "b51a07df1710680723f591cfad0d1f04ebaa04fa041b2f041194c3413de17020"
+  },
+  "priorPRBodyArchive": {
+    "path": "prior-pr-body.md",
+    "bytes": 6151,
+    "sha256": "39882b2bd084116b61c9a5065f0414666f91cd5c4efd475ebcbc65c069350f91"
+  },
+  "oldPolicyBoundariesChanged": false,
+  "analyzerOrOriginalEntityIdentityChanged": false,
+  "legacyPlanShapeOrIdentityFormulaChanged": false,
+  "analyzedModuleExecuted": false,
+  "approvalOrExecutionAuthorityAdded": false,
+  "nonWindowsRuntimeValidated": false,
+  "fullUpstreamContractCertified": false,
+  "mainOrReleaseVerified": false,
+  "notes": [
+    "Own MIT explicit captured_es_function_propagation_v3 extends finite module admission to single plain const/let/var statements whose direct initializer is arrow_function or anonymous function_expression with a body. Existing regular function declarations remain. V1/default and V2 retain their original module boundary. V3 inherits V2 wrappers and surviving-AST postcondition; no new input field or execution/write/approval authority is introduced.",
+    "Each variable_declarator must match an existing captured function entity path/language/kind/fullrange/name-range/name exactly. Whole statement/export ranges supply keyword/semicolon/wrapper removal without modifying original entity/evidence/producer/analyzer identities. Immutable base Graph equality and original disk bytes are checked. Multiple/pattern/ambient/using/nonfunction/parenthesized/named-inner-expression forms and direct declaration comments refuse. Surviving assignment/value/constructor consumers cannot be forced away.",
+    "Same exact provider definitions/references, source/context consistency, conservative possible/literal candidates, original-region dependency closure/privatecycles/export retention and unknown-consumer flags remain. Ordinary unused bindings are not swept. Source/graph/file/declaration/reference/usage/deadline/cancellation capacities remain; physical originals are rechecked. One canonical guarded plan retains normal approval/verification/write/stale/recovery and existing nontransactional publication boundaries, not a future-consumer lease.",
+    "Eleven new distinct cases:10default integration+1actual CLI gate. Tables cover both analyzer epochs and three keywords, original coordinates/immutable Graph/BOM/nonBMP/CRLF, older-policy refusal, supported mixed modules, unsupported shapes/forceconsumers, cycles/export/survivingdeps/argumentclosure, exact declaration16/17 and usage128/129 limits, missing/malformed/omitted/truncated/foreign/tampered proofs and automatic-semicolon merging. Existing native client and sibling guards remain.",
+    "Baseline0/1/0 with738inputs unchanged reproduces unsupportedv3 before implementation. R1two groups38/0/1 and R2three groups56/0/3 pass, including all new default functions by R2. Own protocol fixture retains named-function lookup precedence and adds a variable fallback; it is explicitly not a compiler. The now-supportedv3 negative version selector is promoted to unsupportedv4. First actual2/0/0 passes before the sole subsequent source change: private helper lifetime spelling is elided without behavior changes. Final and actual phases use identical final source; all logs/manifests/modified source variants remain nonadditive.",
+    "Actual final2/0/0 overlaps two ignored session_refactor cases: existingv2 and newv3. V3 runs6real nativeCLI fixtures(TS/JSxconst/let/var), covering arrow, anonymous function and async arrow targets plus Greek dependency/target identifiers for var. Trusted Node24.21.0/TypeScript5.8.3/language-server5.1.3 perform exact-bound source navigation and copied tsc --noEmit. Preapproval/preverification/execution/write/recovery denials, approved exact application and byte-for-byte recovery pass without executing analyzed modules. Actual selected CLI SHA before/after use matches final binary. This is finite qualification, not exhaustive binding/dispatch/alias/rebinding/runtime/consumer proof.",
+    "Final15selected native groups and format/build/alltargetClippy-Dwarnings are embedded with738inputs unchanged. All738inputs have exact or CRLF-only integration materialization proof; PGJSONL stays2779bytes/f67a05349a6cedf55222afd3bb3231c169d382dd4b078d76544daac517530b47 raw-equal. Integratedformat/Python17/typecheck/TS260+3skip pass with744inputs unchanged. Original353inventory/73unreconciled/77backendunknown, falsefullContract flags, prior evidence README bytes and all prior failures remain.",
+    "Other data/declaration/file/language forms, general alias/rebinding/consumer handling, full upstream/IDE/nonWindows/whole-native/platform/main/release and broaderR1-R9 remain open. Existing OS1314 prerequisites are outside this selection. Full task and AgentMemory actions remain active."
+  ],
+  "artifacts": [
+    {
+      "path": "baseline/native.log",
+      "bytes": 1255,
+      "sha256": "fd7dbe82d15ff89a03133fccec6bf587fc3f38d527cf27dcebbf9032f5dbdaab"
+    },
+    {
+      "path": "baseline/result.json",
+      "bytes": 966,
+      "sha256": "8feaac47f9f99eea4a9b8c5b751c088299987dce3d4b397d332659f891f8af1f"
+    },
+    {
+      "path": "baseline/runner.py",
+      "bytes": 4636,
+      "sha256": "3bedd534845690f16a4fd96b2b5eaeeb4fd66355c171645a86314e97c78426c5"
+    },
+    {
+      "path": "baseline/source/native/docs/propagated-delete.md",
+      "bytes": 6458,
+      "sha256": "41b29fb7ccdab9290bab251c01f9ab70f578dea4f05b2ef7ea35888e3dbdfe4d"
+    },
+    {
+      "path": "baseline/source/native/README.md",
+      "bytes": 25471,
+      "sha256": "069378948db1aff8ba18b8b83094f8dd673583a29530fcd37ae46ab63e74c062"
+    },
+    {
+      "path": "baseline/source/native/src/semantic_propagated_delete.rs",
+      "bytes": 30192,
+      "sha256": "4b763b29981283d4acf6b24bc95e2803c31d14895f49b5d397a76612e883553c"
+    },
+    {
+      "path": "baseline/source/native/src/semantic_propagated_delete_ast.rs",
+      "bytes": 4979,
+      "sha256": "801d709a447e86de66c2d9883ce3f3de323776a87e5566e4d53fa0f41a8e93ff"
+    },
+    {
+      "path": "baseline/source/native/tests/fixtures/propagated-delete-lsp.mjs",
+      "bytes": 3553,
+      "sha256": "c0ca6470084786067070d3b90b158c2277e037e5b33668c927b2f4e7db0ae6c2"
+    },
+    {
+      "path": "baseline/source/native/tests/propagated_delete_contract.rs",
+      "bytes": 34527,
+      "sha256": "98cd03e3fc823c1931fdb3e0859c45f646002e95a28a787e96f32c8b9bfe28de"
+    },
+    {
+      "path": "baseline/source/native/tests/session_refactor.rs",
+      "bytes": 23170,
+      "sha256": "14c34919fe0353b0e917bdabaab88055fea618b6a5a82ec3bab61a923ee9fc87"
+    },
+    {
+      "path": "baseline/source-after.json",
+      "bytes": 79794,
+      "sha256": "ae790ed32fd164318b09bc39e1ffc49a22b20ab351e3b7431fc00a72b3158891"
+    },
+    {
+      "path": "baseline/source-before.json",
+      "bytes": 79794,
+      "sha256": "ae790ed32fd164318b09bc39e1ffc49a22b20ab351e3b7431fc00a72b3158891"
+    },
+    {
+      "path": "final/build.log",
+      "bytes": 61,
+      "sha256": "f197b65a91410736437b53d2d551ede12fe94c29c723e2829085cc3498d1600a"
+    },
+    {
+      "path": "final/clippy.log",
+      "bytes": 168,
+      "sha256": "d06aace4276f79c57627e2dfcc8d31d8866cde965170193c3ff3b0fe4de0aa02"
+    },
+    {
+      "path": "final/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "final/native.log",
+      "bytes": 70158,
+      "sha256": "3fae8c1b96a65392138b074444d2a77ae12e2a0807c50c9ea6488bef03f2ec45"
+    },
+    {
+      "path": "final/result.json",
+      "bytes": 2541,
+      "sha256": "4bfe3897ca0b73c43d41ad04aee3a4fb49d14973977f6c65d3b18c6aaeb0713e"
+    },
+    {
+      "path": "final/runner.py",
+      "bytes": 4636,
+      "sha256": "3bedd534845690f16a4fd96b2b5eaeeb4fd66355c171645a86314e97c78426c5"
+    },
+    {
+      "path": "final/source/native/docs/propagated-delete.md",
+      "bytes": 8648,
+      "sha256": "ca47b8f54b71a79e683391081082643d5678d457238540fd0b10ba3cc668232d"
+    },
+    {
+      "path": "final/source/native/README.md",
+      "bytes": 25815,
+      "sha256": "6b09f3966d43bfb44385d249e9c19c6a16292e21273ebea73139c3390d1e3ee7"
+    },
+    {
+      "path": "final/source/native/src/semantic_propagated_delete.rs",
+      "bytes": 31415,
+      "sha256": "aa51e72641a6a8a6608fb9dbc453261a92fe5bd38eed8ada05d3bc0a91244ff7"
+    },
+    {
+      "path": "final/source/native/src/semantic_propagated_delete_ast.rs",
+      "bytes": 4979,
+      "sha256": "801d709a447e86de66c2d9883ce3f3de323776a87e5566e4d53fa0f41a8e93ff"
+    },
+    {
+      "path": "final/source/native/tests/fixtures/propagated-delete-lsp.mjs",
+      "bytes": 3646,
+      "sha256": "42bf6b0a4635a6298b5ed168ea54b64bc26afed3d5d75b7d8b10f499d3450ab1"
+    },
+    {
+      "path": "final/source/native/tests/propagated_delete_contract.rs",
+      "bytes": 43637,
+      "sha256": "9349df393fbb96a7509bddfd5d1cc8badb7672da68fa74e762bf018bab6723ec"
+    },
+    {
+      "path": "final/source/native/tests/session_refactor.rs",
+      "bytes": 28620,
+      "sha256": "09f81f562c9a38568e166dc7ca34c93252266f22c1fbb22ef582c855c6d2ef2e"
+    },
+    {
+      "path": "final/source-after.json",
+      "bytes": 79794,
+      "sha256": "0b08005465a08a5fae12f26e0f976b0d45fdbb0aafb6345c42ecb830756c6aa3"
+    },
+    {
+      "path": "final/source-before.json",
+      "bytes": 79794,
+      "sha256": "0b08005465a08a5fae12f26e0f976b0d45fdbb0aafb6345c42ecb830756c6aa3"
+    },
+    {
+      "path": "frozen-tracker.json",
+      "bytes": 570961,
+      "sha256": "32e551878c496ef2684ed42c3402805a727ab34104efbb07e4832328f4c4fda2"
+    },
+    {
+      "path": "integrated/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "integrated/python-contracts.log",
+      "bytes": 2845,
+      "sha256": "ac5f531de43f2e517e131cfef94463bc91f276d9703b5624c32954df4384e5de"
+    },
+    {
+      "path": "integrated/result.json",
+      "bytes": 957,
+      "sha256": "ef372f0354c72211ed50102b92f41f6331b9aa7578a6842d4fef7c99bd1bd6a8"
+    },
+    {
+      "path": "integrated/source-after.json",
+      "bytes": 79753,
+      "sha256": "25b9393ad8c9b9a1a6e7180643fa65935d054ba2105a441acb6e293d8e16620a"
+    },
+    {
+      "path": "integrated/source-before.json",
+      "bytes": 79753,
+      "sha256": "25b9393ad8c9b9a1a6e7180643fa65935d054ba2105a441acb6e293d8e16620a"
+    },
+    {
+      "path": "integrated/tests.log",
+      "bytes": 25041,
+      "sha256": "0398237843de6eec7d23bd9c688734edc9577daf9b02e98ef596fe743cdc3a83"
+    },
+    {
+      "path": "integrated/typecheck.log",
+      "bytes": 101,
+      "sha256": "30ef9ce16cf042ab6f160e0a76c1fbfe22f02a3c3a3659ee62863ffc1efdbfdf"
+    },
+    {
+      "path": "live-final/native.log",
+      "bytes": 29678,
+      "sha256": "4046984c40c559588807a160fa88277a0039cbd4ee51f83d68310bd5e5877bb2"
+    },
+    {
+      "path": "live-final/result.json",
+      "bytes": 814,
+      "sha256": "60ec8d48d010ba2073906aa65efbe8e6db13a79acf0b5cc5f982891010b1c990"
+    },
+    {
+      "path": "live-final/runner.py",
+      "bytes": 4636,
+      "sha256": "3bedd534845690f16a4fd96b2b5eaeeb4fd66355c171645a86314e97c78426c5"
+    },
+    {
+      "path": "live-final/source/native/docs/propagated-delete.md",
+      "bytes": 8648,
+      "sha256": "ca47b8f54b71a79e683391081082643d5678d457238540fd0b10ba3cc668232d"
+    },
+    {
+      "path": "live-final/source/native/README.md",
+      "bytes": 25815,
+      "sha256": "6b09f3966d43bfb44385d249e9c19c6a16292e21273ebea73139c3390d1e3ee7"
+    },
+    {
+      "path": "live-final/source/native/src/semantic_propagated_delete.rs",
+      "bytes": 31415,
+      "sha256": "aa51e72641a6a8a6608fb9dbc453261a92fe5bd38eed8ada05d3bc0a91244ff7"
+    },
+    {
+      "path": "live-final/source/native/src/semantic_propagated_delete_ast.rs",
+      "bytes": 4979,
+      "sha256": "801d709a447e86de66c2d9883ce3f3de323776a87e5566e4d53fa0f41a8e93ff"
+    },
+    {
+      "path": "live-final/source/native/tests/fixtures/propagated-delete-lsp.mjs",
+      "bytes": 3646,
+      "sha256": "42bf6b0a4635a6298b5ed168ea54b64bc26afed3d5d75b7d8b10f499d3450ab1"
+    },
+    {
+      "path": "live-final/source/native/tests/propagated_delete_contract.rs",
+      "bytes": 43637,
+      "sha256": "9349df393fbb96a7509bddfd5d1cc8badb7672da68fa74e762bf018bab6723ec"
+    },
+    {
+      "path": "live-final/source/native/tests/session_refactor.rs",
+      "bytes": 28620,
+      "sha256": "09f81f562c9a38568e166dc7ca34c93252266f22c1fbb22ef582c855c6d2ef2e"
+    },
+    {
+      "path": "live-final/source-after.json",
+      "bytes": 79794,
+      "sha256": "0b08005465a08a5fae12f26e0f976b0d45fdbb0aafb6345c42ecb830756c6aa3"
+    },
+    {
+      "path": "live-final/source-before.json",
+      "bytes": 79794,
+      "sha256": "0b08005465a08a5fae12f26e0f976b0d45fdbb0aafb6345c42ecb830756c6aa3"
+    },
+    {
+      "path": "live-final/tool-runtimes.json",
+      "bytes": 938,
+      "sha256": "e8680ee51c5161b5725d52108ca0c2aeea7bec589c7ff208a19ad8dc850d010a"
+    },
+    {
+      "path": "live-r1/native.log",
+      "bytes": 29678,
+      "sha256": "0ab85a70bcf02a1dc049af85c6ba486e4e8b709b31a1ae986ffb3fc30730fe56"
+    },
+    {
+      "path": "live-r1/result.json",
+      "bytes": 812,
+      "sha256": "173924a4e7a053dc860c1c159108c277cd0e39e4effcd2cb7fbb703e1c0cceb7"
+    },
+    {
+      "path": "live-r1/runner.py",
+      "bytes": 4636,
+      "sha256": "3bedd534845690f16a4fd96b2b5eaeeb4fd66355c171645a86314e97c78426c5"
+    },
+    {
+      "path": "live-r1/source/native/docs/propagated-delete.md",
+      "bytes": 8648,
+      "sha256": "ca47b8f54b71a79e683391081082643d5678d457238540fd0b10ba3cc668232d"
+    },
+    {
+      "path": "live-r1/source/native/README.md",
+      "bytes": 25815,
+      "sha256": "6b09f3966d43bfb44385d249e9c19c6a16292e21273ebea73139c3390d1e3ee7"
+    },
+    {
+      "path": "live-r1/source/native/src/semantic_propagated_delete.rs",
+      "bytes": 31419,
+      "sha256": "05261e4156db280f2cbb29965e9553c6752b488eb739e8f12a2a1e0ee2821ef8"
+    },
+    {
+      "path": "live-r1/source/native/src/semantic_propagated_delete_ast.rs",
+      "bytes": 4979,
+      "sha256": "801d709a447e86de66c2d9883ce3f3de323776a87e5566e4d53fa0f41a8e93ff"
+    },
+    {
+      "path": "live-r1/source/native/tests/fixtures/propagated-delete-lsp.mjs",
+      "bytes": 3646,
+      "sha256": "42bf6b0a4635a6298b5ed168ea54b64bc26afed3d5d75b7d8b10f499d3450ab1"
+    },
+    {
+      "path": "live-r1/source/native/tests/propagated_delete_contract.rs",
+      "bytes": 43637,
+      "sha256": "9349df393fbb96a7509bddfd5d1cc8badb7672da68fa74e762bf018bab6723ec"
+    },
+    {
+      "path": "live-r1/source/native/tests/session_refactor.rs",
+      "bytes": 28620,
+      "sha256": "09f81f562c9a38568e166dc7ca34c93252266f22c1fbb22ef582c855c6d2ef2e"
+    },
+    {
+      "path": "live-r1/source-after.json",
+      "bytes": 79794,
+      "sha256": "5db792d7972615a2fc6dcd8ae9e09099aef674c8c07d53a4805d960f37e8dc56"
+    },
+    {
+      "path": "live-r1/source-before.json",
+      "bytes": 79794,
+      "sha256": "5db792d7972615a2fc6dcd8ae9e09099aef674c8c07d53a4805d960f37e8dc56"
+    },
+    {
+      "path": "live-r1/tool-runtimes.json",
+      "bytes": 938,
+      "sha256": "e8680ee51c5161b5725d52108ca0c2aeea7bec589c7ff208a19ad8dc850d010a"
+    },
+    {
+      "path": "prior-pr-body.md",
+      "bytes": 6151,
+      "sha256": "39882b2bd084116b61c9a5065f0414666f91cd5c4efd475ebcbc65c069350f91"
+    },
+    {
+      "path": "r1/native.log",
+      "bytes": 4152,
+      "sha256": "99394760f74582ba4feb5637ddfdc1e4584d3568ed69c051a19af78c5d33d240"
+    },
+    {
+      "path": "r1/result.json",
+      "bytes": 829,
+      "sha256": "e095967ee875673d02f5cb409fc7a9ad04208e541faec34e52569c439423fafd"
+    },
+    {
+      "path": "r1/runner.py",
+      "bytes": 4636,
+      "sha256": "3bedd534845690f16a4fd96b2b5eaeeb4fd66355c171645a86314e97c78426c5"
+    },
+    {
+      "path": "r1/source/native/docs/propagated-delete.md",
+      "bytes": 6458,
+      "sha256": "41b29fb7ccdab9290bab251c01f9ab70f578dea4f05b2ef7ea35888e3dbdfe4d"
+    },
+    {
+      "path": "r1/source/native/README.md",
+      "bytes": 25471,
+      "sha256": "069378948db1aff8ba18b8b83094f8dd673583a29530fcd37ae46ab63e74c062"
+    },
+    {
+      "path": "r1/source/native/src/semantic_propagated_delete.rs",
+      "bytes": 31419,
+      "sha256": "05261e4156db280f2cbb29965e9553c6752b488eb739e8f12a2a1e0ee2821ef8"
+    },
+    {
+      "path": "r1/source/native/src/semantic_propagated_delete_ast.rs",
+      "bytes": 4979,
+      "sha256": "801d709a447e86de66c2d9883ce3f3de323776a87e5566e4d53fa0f41a8e93ff"
+    },
+    {
+      "path": "r1/source/native/tests/fixtures/propagated-delete-lsp.mjs",
+      "bytes": 3646,
+      "sha256": "42bf6b0a4635a6298b5ed168ea54b64bc26afed3d5d75b7d8b10f499d3450ab1"
+    },
+    {
+      "path": "r1/source/native/tests/propagated_delete_contract.rs",
+      "bytes": 35466,
+      "sha256": "1ed6fb8dd3684702c40a40780377a8bd79ad994f15a495cf2a10e7444522b1be"
+    },
+    {
+      "path": "r1/source/native/tests/session_refactor.rs",
+      "bytes": 23170,
+      "sha256": "14c34919fe0353b0e917bdabaab88055fea618b6a5a82ec3bab61a923ee9fc87"
+    },
+    {
+      "path": "r1/source-after.json",
+      "bytes": 79794,
+      "sha256": "2cfde0d2433854656d93fbbe870a4ee9907762cb98f6186f5ee21eb5bd675f97"
+    },
+    {
+      "path": "r1/source-before.json",
+      "bytes": 79794,
+      "sha256": "2cfde0d2433854656d93fbbe870a4ee9907762cb98f6186f5ee21eb5bd675f97"
+    },
+    {
+      "path": "r2/native.log",
+      "bytes": 6426,
+      "sha256": "3d6830fd59864af8f64be9cbe29c31f9589f38e14e0256b1a3c60bdc2dc1f6e6"
+    },
+    {
+      "path": "r2/result.json",
+      "bytes": 878,
+      "sha256": "11188d1f950745cd6046f177736e7fb7cc734e9f149918fd7f7faa43034a5d46"
+    },
+    {
+      "path": "r2/runner.py",
+      "bytes": 4636,
+      "sha256": "3bedd534845690f16a4fd96b2b5eaeeb4fd66355c171645a86314e97c78426c5"
+    },
+    {
+      "path": "r2/source/native/docs/propagated-delete.md",
+      "bytes": 6458,
+      "sha256": "41b29fb7ccdab9290bab251c01f9ab70f578dea4f05b2ef7ea35888e3dbdfe4d"
+    },
+    {
+      "path": "r2/source/native/README.md",
+      "bytes": 25471,
+      "sha256": "069378948db1aff8ba18b8b83094f8dd673583a29530fcd37ae46ab63e74c062"
+    },
+    {
+      "path": "r2/source/native/src/semantic_propagated_delete.rs",
+      "bytes": 31419,
+      "sha256": "05261e4156db280f2cbb29965e9553c6752b488eb739e8f12a2a1e0ee2821ef8"
+    },
+    {
+      "path": "r2/source/native/src/semantic_propagated_delete_ast.rs",
+      "bytes": 4979,
+      "sha256": "801d709a447e86de66c2d9883ce3f3de323776a87e5566e4d53fa0f41a8e93ff"
+    },
+    {
+      "path": "r2/source/native/tests/fixtures/propagated-delete-lsp.mjs",
+      "bytes": 3646,
+      "sha256": "42bf6b0a4635a6298b5ed168ea54b64bc26afed3d5d75b7d8b10f499d3450ab1"
+    },
+    {
+      "path": "r2/source/native/tests/propagated_delete_contract.rs",
+      "bytes": 43637,
+      "sha256": "9349df393fbb96a7509bddfd5d1cc8badb7672da68fa74e762bf018bab6723ec"
+    },
+    {
+      "path": "r2/source/native/tests/session_refactor.rs",
+      "bytes": 28620,
+      "sha256": "09f81f562c9a38568e166dc7ca34c93252266f22c1fbb22ef582c855c6d2ef2e"
+    },
+    {
+      "path": "r2/source-after.json",
+      "bytes": 79794,
+      "sha256": "e107866c5850abe90e440215b36caab1f34b16a0f8937a87c0c289a479970f24"
+    },
+    {
+      "path": "r2/source-before.json",
+      "bytes": 79794,
+      "sha256": "e107866c5850abe90e440215b36caab1f34b16a0f8937a87c0c289a479970f24"
+    },
+    {
+      "path": "runners/ci-bindings-check.py",
+      "bytes": 4636,
+      "sha256": "3bedd534845690f16a4fd96b2b5eaeeb4fd66355c171645a86314e97c78426c5"
+    },
+    {
+      "path": "runners/ci-bindings-commit-setup.py",
+      "bytes": 1757,
+      "sha256": "2e5687dc92d8bee341d0e1f0116772b363f170dfe34d551e1ed8a5e3f66420fe"
+    },
+    {
+      "path": "runners/ci-bindings-commit.py",
+      "bytes": 4715,
+      "sha256": "2bf673fe410af473f7a0d03607b96a15faa1d472c936690279dd779d78069b9c"
+    },
+    {
+      "path": "runners/ci-bindings-doc-contract.py",
+      "bytes": 2806,
+      "sha256": "5de21ff3b6bcdfe2ceceef6dc26e61c3b9a98cf3d026d8b3c7d3fc746caf12b1"
+    },
+    {
+      "path": "runners/ci-bindings-docs.py",
+      "bytes": 6972,
+      "sha256": "df782a140c4d8e67bec8112dc8095f037c8ff84439791e5d930cd441d8dbf943"
+    },
+    {
+      "path": "runners/ci-bindings-fixture.py",
+      "bytes": 1084,
+      "sha256": "32bf014ad11477734942d6e59a0a69668756b52d650e47d0d8bbc88571c55cb8"
+    },
+    {
+      "path": "runners/ci-bindings-integrated.py",
+      "bytes": 2186,
+      "sha256": "c3b3cf0851a63e28d740d7bc87db6365d8afabab8f6513e8c907eadcf02135ba"
+    },
+    {
+      "path": "runners/ci-bindings-pr.py",
+      "bytes": 6175,
+      "sha256": "0382af6c15608190718a08a2ed64b009c6c630ca793c157902fb8dd2556b6fb5"
+    },
+    {
+      "path": "runners/ci-bindings-preserve.py",
+      "bytes": 9257,
+      "sha256": "6f2919ca006ef4d2072e22a5d30b2d7990f8c670e1c821079d9debae29d319ce"
+    },
+    {
+      "path": "runners/ci-bindings-setup.py",
+      "bytes": 1018,
+      "sha256": "3c6f8dc2c42a6304fd6bea48e806bc0b12bc2b201bde0915fa96e58692980934"
+    },
+    {
+      "path": "runners/ci-bindings-stage-setup.py",
+      "bytes": 434,
+      "sha256": "57910d5fc728b6464792bd2363bf9e2f11ba09f80c8155b5f0e5988163a9199d"
+    },
+    {
+      "path": "runners/ci-bindings-stage.py",
+      "bytes": 3867,
+      "sha256": "e297c82b53e567d02248d4fc14099a3dd513a0295cac65f171e9648651289c69"
+    },
+    {
+      "path": "source-commit.json",
+      "bytes": 366,
+      "sha256": "43eee69514c577b7411bb37b0bc598b5278247392936646edfc67b05bcb58a18"
+    },
+    {
+      "path": "source-integration.json",
+      "bytes": 1960,
+      "sha256": "a0f00d1e0221f4b9f9e938bf988a5fa4893ddd6107d37b4bde0a5428545c594c"
+    },
+    {
+      "path": "source-materialization.json",
+      "bytes": 210292,
+      "sha256": "a40f23b851716baac751ee29ee5ffdffb0a4114f5206848a3962c65fb9c4d8e2"
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "baseIntegration": "dae57012519f013103541c1ee0ea21bb897a6409",
+  "broaderNativeScopePassed": false,
+  "nativeTotals": {
+    "passed": 93,
+    "failed": 1,
+    "ignored": 0
+  },
+  "nativeGroups": 9,
+  "newCasesPassed": 15,
+  "newCasesFailed": 0,
+  "newCases": [
+    "actual_cli_enforces_permissions_recovers_lost_stdout_and_replays_without_config",
+    "bound_bills_survive_domain_usage_error_exit_and_overrun_rejection",
+    "current_read_caps_refuse_whole_results_without_returning_an_empty_complete_value",
+    "each_explicit_build_gets_a_new_attempt_and_job_pages_check_all_headers",
+    "exact_unicode_crlf_context_preserves_parallel_candidates_and_never_creates_events",
+    "interrupted_process_preserves_the_unknown_attempt_and_never_authorizes_retry",
+    "ledger_and_artifact_registration_tampering_refuses_without_mutating_or_resending",
+    "no_candidates_requires_an_explicit_coverage_response",
+    "original_unknown_receipt_stays_unknown_after_later_ledger_reconciliation",
+    "payload_response_source_header_and_rehashed_result_tampering_refuse_read_and_retention",
+    "publication_failure_keeps_bound_response_for_read_only_recovery_without_resending",
+    "replay_needs_no_provider_and_private_checked_export_survives_store_loss",
+    "reservation_registration_failure_is_atomic_and_unsent_reservation_is_cancelled",
+    "trust_utf8_source_hash_and_all_preflight_budgets_refuse_before_reservation",
+    "unbound_malformed_duplicate_and_incomplete_replies_keep_unknown_reservations"
+  ],
+  "failedTest": "windows_host_aliases_cannot_read_protected_files_or_alternate_streams",
+  "failedAt": "native/tests/feedback_cli.rs:1100:59",
+  "cause": "Windows OS1314 at unchanged symlink_file fixture setup; no application alias read reached.",
+  "originalSecurityTestFileUnchangedExceptCheckoutCRLF": true,
+  "originalSecurityTestWorkingSha256": "7e195c04031a7ea7a754c184256f72ad1f5c3858473a2bb1ba6a42ddbae15ea6",
+  "originalSecurityTestGitBlobSha256": "7c6005fe8014f42b3e2c7d27a513011dc09a2732ab5f4af02eb370bb6a5f1e97",
+  "hostInputReaderFunctionUnchanged": true,
+  "hostInputReaderNormalizedSha256": "17d36b5ebfb2ae87dcc082ab7fd5ae12693cf473b39f7233af6387898c1812e0",
+  "hostPrivileges": "host-privileges.txt",
+  "hostPrerequisites": "host-prerequisites.json",
+  "fixtureOrPermissionGuardWeakened": false,
+  "wholeNativeRerun": false,
+  "fullGoalComplete": false
+}

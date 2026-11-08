@@ -1,0 +1,29 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 57.96s
+     Running tests\meaning_archive_cli.rs (target\debug\deps\meaning_archive_cli-f0638f4e564dad18.exe)
+
+running 1 test
+test published_view_export_preserves_full_typed_archive_without_source_publication ... FAILED
+
+failures:
+
+---- published_view_export_preserves_full_typed_archive_without_source_publication stdout ----
+
+thread 'published_view_export_preserves_full_typed_archive_without_source_publication' (8920) panicked at native\tests\meaning_archive_cli.rs:28:5:
+error: unrecognized subcommand 'meaning-archive'
+
+  tip: some similar subcommands exist: 'maintenance', 'meaning'
+
+Usage: yoke.exe [OPTIONS] <COMMAND>
+
+For more information, try '--help'.
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    published_view_export_preserves_full_typed_archive_without_source_publication
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 8 filtered out; finished in 1.74s
+
+error: test failed, to rerun pass `--test meaning_archive_cli`

@@ -1,0 +1,3376 @@
+[
+  {
+    "crate_types": [
+      "lib"
+    ],
+    "doc": true,
+    "doctest": true,
+    "edition": "2024",
+    "kind": [
+      "lib"
+    ],
+    "name": "yoke",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\src\\lib.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": true,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "bin"
+    ],
+    "name": "yoke",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\src\\main.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "example"
+    ],
+    "name": "benchmark",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\examples\\benchmark.rs",
+    "test": false
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "adversarial",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\adversarial.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "agent_dependency_options",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\agent_dependency_options.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "agent_diagnostic_boundaries",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\agent_diagnostic_boundaries.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "agent_documentation",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\agent_documentation.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "agent_facade_options",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\agent_facade_options.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "agent_facade_semantics",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\agent_facade_semantics.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "agent_file_options",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\agent_file_options.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "agent_memory_namespaces",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\agent_memory_namespaces.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "agent_repl",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\agent_repl.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "agent_repl_lifecycle",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\agent_repl_lifecycle.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "agent_symbol_contracts",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\agent_symbol_contracts.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "analyzer_cli",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\analyzer_cli.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "analyzer_epochs",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\analyzer_epochs.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "artifact_page_review",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\artifact_page_review.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "artifacts",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\artifacts.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "blob_bounds",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\blob_bounds.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "capture_analyzer8_fixture",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\capture_analyzer8_fixture.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "capture_changes",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\capture_changes.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "capture_epoch_selection",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\capture_epoch_selection.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "capture_options",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\capture_options.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "capture_policy",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\capture_policy.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "client_lock",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\client_lock.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "collection_registry_access",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\collection_registry_access.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "collections_cli",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\collections_cli.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "collections_cli_review",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\collections_cli_review.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "compatibility",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\compatibility.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "compatibility_review",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\compatibility_review.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "config_graph",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\config_graph.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "container",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\container.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "contracts",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\contracts.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "core",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\core.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "credentials",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\credentials.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "dataflow",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\dataflow.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "deadline_scope",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\deadline_scope.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "deadlines",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\deadlines.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "debug_adapter",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\debug_adapter.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "decision_cli",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\decision_cli.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "decision_records",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\decision_records.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "decision_records_review",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\decision_records_review.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "decision_retention",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\decision_retention.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "dependency_queries",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\dependency_queries.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "derived_graph_mixed_budget",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\derived_graph_mixed_budget.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "derived_graph_preparation",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\derived_graph_preparation.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "document_cli",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\document_cli.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "document_explorer",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\document_explorer.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "document_graph",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\document_graph.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "document_graph_review",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\document_graph_review.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "editor",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\editor.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "editor_http",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\editor_http.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "engine_epoch_review",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\engine_epoch_review.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "epoch_cache_review",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\epoch_cache_review.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "epoch_producers",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\epoch_producers.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "explorer_export",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\explorer_export.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "explorer_runtime",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\explorer_runtime.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "export",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\export.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "facade_file_delete",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\facade_file_delete.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "facade_file_move",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\facade_file_move.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "facade_file_rename",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\facade_file_rename.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "federated_collections",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\federated_collections.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "federation",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\federation.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "federation_archive",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\federation_archive.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "federation_archive_receipts",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\federation_archive_receipts.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "federation_epoch_review",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\federation_epoch_review.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "federation_epochs",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\federation_epochs.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "federation_http",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\federation_http.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "federation_receipt_bounds",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\federation_receipt_bounds.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "feedback_cli",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\feedback_cli.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "file_api",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\file_api.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "freshness",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\freshness.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "freshness_epoch",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\freshness_epoch.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "git_affected_cli",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\git_affected_cli.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "git_affected_details",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\git_affected_details.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "git_affected_qualification",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\git_affected_qualification.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "git_cli",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\git_cli.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "git_epoch_selection",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\git_epoch_selection.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "git_epochs",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\git_epochs.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "git_impact_details",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\git_impact_details.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "git_impact_details_cli",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\git_impact_details_cli.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "git_impact_details_no_git",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\git_impact_details_no_git.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "git_impact_details_qualification",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\git_impact_details_qualification.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "git_impact_details_sqlite_limits",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\git_impact_details_sqlite_limits.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "git_review",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\git_review.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "git_workflows",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\git_workflows.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "github",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\github.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "github_live",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\github_live.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "graph",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\graph.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "graph_archive_review",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\graph_archive_review.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "graph_collections",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\graph_collections.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "graph_exports",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\graph_exports.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "graph_extensions",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\graph_extensions.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "graph_review_adversarial",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\graph_review_adversarial.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "graph_root_review",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\graph_root_review.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "graph_view",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\graph_view.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "graphify_adapter",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\graphify_adapter.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "graphify_cli",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\graphify_cli.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "graphify_selected_queries",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\graphify_selected_queries.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "historical_publication",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\historical_publication.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "historical_receipt_fixture_qualification",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\historical_receipt_fixture_qualification.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "historical_view_adversarial",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\historical_view_adversarial.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "historical_view_boundaries",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\historical_view_boundaries.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "historical_view_budget_options",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\historical_view_budget_options.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "historical_view_comparison",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\historical_view_comparison.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "historical_view_fixture_qualification",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\historical_view_fixture_qualification.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "historical_view_receipts",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\historical_view_receipts.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "historical_view_semantics",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\historical_view_semantics.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "host_cli",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\host_cli.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "host_config",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\host_config.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "host_credentials",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\host_credentials.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "host_install",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\host_install.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "host_install_cli",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\host_install_cli.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "host_output_disposition",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\host_output_disposition.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "hybrid_retrieval",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\hybrid_retrieval.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "ignored_capture",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\ignored_capture.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "ignored_capture_cli",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\ignored_capture_cli.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "ignored_facades",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\ignored_facades.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "json_output_review",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\json_output_review.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "knowledge",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\knowledge.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "knowledge_cli",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\knowledge_cli.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "language_constructs",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\language_constructs.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "ledger",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\ledger.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "ledger_admission_review",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\ledger_admission_review.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "ledger_batches",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\ledger_batches.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "ledger_batches_review",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\ledger_batches_review.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "legacy_retrieval_oracle",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\legacy_retrieval_oracle.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "live",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\live.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "live_enrichment",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\live_enrichment.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "lsp",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\lsp.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "lsp_action_resolve",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\lsp_action_resolve.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "lsp_dependency_scope",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\lsp_dependency_scope.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "lsp_enrichment",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\lsp_enrichment.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "lsp_lifecycle",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\lsp_lifecycle.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "lsp_source_execution",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\lsp_source_execution.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "maintenance",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\maintenance.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "manifest_graph",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\manifest_graph.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "markdown_graph",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\markdown_graph.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "mcp_collection_grants",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\mcp_collection_grants.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "mcp_collection_grants_review",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\mcp_collection_grants_review.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "mcp_http",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\mcp_http.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "mcp_http_cli",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\mcp_http_cli.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "mcp_http_review",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\mcp_http_review.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "meaning_archive_cli",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\meaning_archive_cli.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "meaning_archive_primitives",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\meaning_archive_primitives.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "meaning_build",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\meaning_build.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "meaning_cli",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\meaning_cli.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "meaning_collection_archives",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\meaning_collection_archives.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "meaning_commit_review",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\meaning_commit_review.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "meaning_graph",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\meaning_graph.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "meaning_graph_views",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\meaning_graph_views.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "meaning_groups_admission",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\meaning_groups_admission.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "meaning_join_cli",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\meaning_join_cli.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "meaning_protocol",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\meaning_protocol.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "meaning_retention_review",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\meaning_retention_review.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "meaning_view",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\meaning_view.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "meaning_view_archives",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\meaning_view_archives.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "media",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\media.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "mixed_pdf_view",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\mixed_pdf_view.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "mixed_view_cli",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\mixed_view_cli.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "model_bedrock",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\model_bedrock.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "model_bedrock_batch_cli_review",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\model_bedrock_batch_cli_review.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "model_bedrock_cli",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\model_bedrock_cli.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "model_bedrock_cli_actual",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\model_bedrock_cli_actual.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "model_bedrock_review",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\model_bedrock_review.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "model_http",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\model_http.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "model_http_cli",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\model_http_cli.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "model_http_review",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\model_http_review.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "model_identity",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\model_identity.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "monorepo_pre_feature_envelope",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\monorepo_pre_feature_envelope.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "monorepo_profiles",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\monorepo_profiles.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "monorepo_retrieval",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\monorepo_retrieval.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "monorepo_scopes",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\monorepo_scopes.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "notes",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\notes.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "office",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\office.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "office_bounds",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\office_bounds.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "ollama",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\ollama.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "operations",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\operations.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "parity_cli",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\parity_cli.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "parity_construct_review",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\parity_construct_review.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "parity_retention",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\parity_retention.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "parity_source_review",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\parity_source_review.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "parity_view_review",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\parity_view_review.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "parser_epoch9",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\parser_epoch9.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "platform_credentials",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\platform_credentials.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "process",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\process.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "project_session",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\project_session.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "projects",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\projects.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "protocol_connection",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\protocol_connection.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "provider_batch_bounds",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\provider_batch_bounds.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "provider_batches",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\provider_batches.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "provider_batches_review",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\provider_batches_review.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "provider_scope_review",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\provider_scope_review.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "providers",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\providers.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "publication",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\publication.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "query_parity",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\query_parity.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "read_only_dependencies",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\read_only_dependencies.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "refactor_intents",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\refactor_intents.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "registry_replay_review",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\registry_replay_review.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "replacement",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\replacement.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "resource_paging",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\resource_paging.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "retention",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\retention.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "retrieval",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\retrieval.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "runtime",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\runtime.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "scoped_parent_performance",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\scoped_parent_performance.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "scoped_resolution",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\scoped_resolution.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "selected_graph_views",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\selected_graph_views.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "selected_view_analysis",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\selected_view_analysis.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "selected_view_analysis_review",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\selected_view_analysis_review.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "selected_view_review",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\selected_view_review.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "semantic_enrichment",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\semantic_enrichment.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "semantic_mcp",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\semantic_mcp.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "semantic_provider_context",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\semantic_provider_context.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "semantic_refactor",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\semantic_refactor.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "server_catalog",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\server_catalog.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "session_collections",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\session_collections.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "session_collections_admission",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\session_collections_admission.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "session_epoch_selection",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\session_epoch_selection.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "session_mcp",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\session_mcp.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "session_review",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\session_review.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "skill_takeaways",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\skill_takeaways.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "skill_takeaways_batch_review",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\skill_takeaways_batch_review.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "skill_takeaways_contract_review",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\skill_takeaways_contract_review.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "skill_takeaways_review",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\skill_takeaways_review.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "skills_cli",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\skills_cli.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "store_cancellation",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\store_cancellation.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "store_identity",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\store_identity.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "store_review",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\store_review.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "symbol_move_declarations",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\symbol_move_declarations.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "symbol_move_effect_admission",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\symbol_move_effect_admission.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "symbol_move_own_v1",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\symbol_move_own_v1.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "test_map",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\test_map.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "trail_adapter",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\trail_adapter.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "trail_bodies",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\trail_bodies.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "trail_review",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\trail_review.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "universal_languages",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\universal_languages.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "vector_admission_review",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\vector_admission_review.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "view_comparison_cli",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\view_comparison_cli.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "workflow_cli",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\workflow_cli.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "workspace",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\workspace.rs",
+    "test": true
+  },
+  {
+    "crate_types": [
+      "bin"
+    ],
+    "doc": false,
+    "doctest": false,
+    "edition": "2024",
+    "kind": [
+      "test"
+    ],
+    "name": "yaml_admission_review",
+    "src_path": "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\native\\tests\\yaml_admission_review.rs",
+    "test": true
+  }
+]

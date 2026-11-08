@@ -1,0 +1,78 @@
+{
+  "baseline": "02f1222afd6f98590f8199801ad729316acac193",
+  "wholePython": {
+    "passed": 103,
+    "failed": 0,
+    "skipped": 0,
+    "warningsAreErrors": true
+  },
+  "changedRustfmtExit": 0,
+  "typecheckExit": 0,
+  "npmExit": 0,
+  "npm": {
+    "passed": 260,
+    "failed": 0,
+    "existingSkipped": 3
+  },
+  "productionPrefixLfNormalizedExactToBaseline": true,
+  "originalTestDeadlineMs": 250,
+  "originalWaitAndElapsedSeconds": 3,
+  "originalSocketBufferBytes": 8192,
+  "originalMaximumFillBytes": 67108864,
+  "newFixtureResponseBytes": 4194304,
+  "originalResponseLimitBytes": 33554432,
+  "newNativeTestCompiledOrExecutedLocally": false,
+  "nativeYokeImageReadOrExecutedLocally": false,
+  "nativeCiAcceptanceVerified": false,
+  "fullStatusComplete": false,
+  "localNativeFullBuildAdmissionBytes": 1200000000,
+  "freeBytesObserved": 1088671744,
+  "sources": [
+    {
+      "path": "native/src/editor_http.rs",
+      "sha256": "9f8e939c301c662f852b519cdace361dd253b253d1a5890683243031112a2de7",
+      "gitBlobSha": "7669bf2a4ed052ddbbabf6da2308e442f7e6374a"
+    },
+    {
+      "path": "docs/validation/integration-2026-10-24/editor-backpressure/inert-socket-probe.py",
+      "sha256": "db3ec08a083c8c57179d7d37129c97bd4073caff5d7f89038f4e3ffab54464a8",
+      "gitBlobSha": "7b00aef15fbb2614073fc1b08f3f97e8221b7064"
+    }
+  ],
+  "logs": [
+    {
+      "path": "python-all.txt",
+      "sha256": "ed679ffbc336b83f44cfe2e560af364f779a4b873a8313d2758fd1ee326e3d76",
+      "originalSha256": "6f97b90fad59b0ed09c23c511b4cdd9ff89aa5ab1ac39af0ae952b81d9891000",
+      "originalEncoding": "utf-16",
+      "displayTransform": "UTF-16 to UTF-8, LF, trim trailing whitespace"
+    },
+    {
+      "path": "rustfmt.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "originalEncoding": "utf-16",
+      "displayTransform": "UTF-16 to UTF-8, LF, trim trailing whitespace"
+    },
+    {
+      "path": "typecheck.txt",
+      "sha256": "4221f1da26004ad47ed1d878f4e4ffe06d8c204f475565b932faca8c3a2603b7",
+      "originalSha256": "f21227c2e35c1a17e13bd910865713562b2d7b2b1e328d3ed8fc9d7c92424fd6",
+      "originalEncoding": "utf-16",
+      "displayTransform": "UTF-16 to UTF-8, LF, trim trailing whitespace"
+    },
+    {
+      "path": "npm-test.txt",
+      "sha256": "0e0fcc88228417b4ddb66d981491dbd00c084026a2be98cc3088451ba77185eb",
+      "originalSha256": "28eac2ff93480c02e68b71ca0b3541284a30f0fe00c4c073955705f054281e00",
+      "originalEncoding": "utf-16",
+      "displayTransform": "UTF-16 to UTF-8, LF, trim trailing whitespace"
+    },
+    {
+      "path": "inert-socket-probe.json",
+      "originalSha256": "ef96f72ee81bdab494c42725bc5efd62dd6ac565488b4e05d7d90cb8e61514f6",
+      "originalEncoding": "utf-16",
+      "sha256": "f2d628f1a33af9a1e3bd13139db84914ef9a33a5d09704d191c5fc67efeaac17"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+    Finished `test` profile [unoptimized] target(s) in 0.54s
+     Running tests\deadlines.rs (target\debug\deps\deadlines-7e944d9e9fcce6f9.exe)
+
+running 1 test
+test snapshot_publication_rolls_back_when_document_indexing_expires ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.08s
+
+     Running tests\debug_adapter.rs (target\debug\deps\debug_adapter-b0106548c278352b.exe)
+
+running 8 tests
+test actual_windows_debugpy_persistent_evaluation_has_exact_captured_source ... ignored, requires host-selected absolute Python and actual isolated debugpy adapter paths
+test invalid_evaluation_input_is_rejected_before_launching_an_authorized_target ... ok
+test persistent_dap_evaluates_only_stopped_source_bound_frames_and_closes_owned_target ... ok
+test active_debugger_evaluation_observes_host_cancellation_before_its_original_deadline ... ok
+test dap_accepts_no_configuration_phase_and_discovers_optional_stopped_thread_ids ... ok
+test runtime_and_evaluation_permissions_are_checked_before_adapter_or_target_start ... ok
+test session_facades_use_only_host_profiles_preserve_namespaces_and_reject_changed_source ... ok
+test reverse_launch_authority_and_foreign_stale_or_unstopped_frames_are_refused ... ok
+
+test result: ok. 7 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 4.70s
+

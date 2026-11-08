@@ -1,0 +1,43 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 37s
+     Running tests\git_conflicts.rs (target\debug\deps\git_conflicts-cced1d9e69069962.exe)
+
+running 9 tests
+test actual_index_stage_matrix_modes_and_unadmitted_shared_objects_preserve_every_position ... ok
+test a_clean_index_is_an_observation_and_never_a_claim_that_branch_merging_is_safe ... ok
+test cli_default_denials_bad_host_paths_and_closed_limits_do_not_initialize_state ... ok
+test cli_uses_existing_readonly_state_preserves_exact_envelope_and_refuses_unused_global_authority ... ok
+test actual_sha1_sha256_conflicts_preserve_index_and_source_spaces_and_replay_epochs8_and9 ... ok
+test exact_source_pages_bind_the_observed_index_and_never_use_changed_working_files ... ok
+test cumulative_blob_quote_scope_and_output_limits_are_independent_and_never_write_state ... FAILED
+test linked_worktrees_are_explicit_independent_index_observations_not_paths_followed_from_git_data ... FAILED
+test permission_root_scope_caller_transaction_deadline_and_sql_policy_fail_closed ... FAILED
+
+failures:
+
+---- cumulative_blob_quote_scope_and_output_limits_are_independent_and_never_write_state stdout ----
+
+thread 'cumulative_blob_quote_scope_and_output_limits_are_independent_and_never_write_state' (18808) panicked at native\tests\git_conflicts.rs:340:9:
+output
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- linked_worktrees_are_explicit_independent_index_observations_not_paths_followed_from_git_data stdout ----
+
+thread 'linked_worktrees_are_explicit_independent_index_observations_not_paths_followed_from_git_data' (7724) panicked at native\tests\git_conflicts.rs:54:9:
+fatal: could not create leading directories of '//?/C:/Users/Lomi/AppData/Local/Temp/.tmpVlrmvR/linked/.git': Invalid argument
+
+
+---- permission_root_scope_caller_transaction_deadline_and_sql_policy_fail_closed stdout ----
+
+thread 'permission_root_scope_caller_transaction_deadline_and_sql_policy_fail_closed' (20860) panicked at native\tests\git_conflicts.rs:399:5:
+assertion failed: f.inspect(&sources()).is_err()
+
+
+failures:
+    cumulative_blob_quote_scope_and_output_limits_are_independent_and_never_write_state
+    linked_worktrees_are_explicit_independent_index_observations_not_paths_followed_from_git_data
+    permission_root_scope_caller_transaction_deadline_and_sql_policy_fail_closed
+
+test result: FAILED. 6 passed; 3 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.01s
+
+error: test failed, to rerun pass `--test git_conflicts`

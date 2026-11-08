@@ -1,0 +1,20 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 46s
+     Running tests\meaning_feedback.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\meaning_feedback-94a55a818c953b0d.exe)
+
+running 12 tests
+test cases::actual_cli_record_rank_and_lost_stdout_retries_use_explicit_writes_and_no_provider ... ok
+test cases::cli_permission_and_closed_input_refusals_precede_missing_workspace_initialization ... ok
+test cases::closed_shapes_subject_uniqueness_limit_counts_and_ordering_do_not_create_an_empty_complete_result ... ok
+test cases::input_source_pair_event_and_output_limits_refuse_before_any_publication ... ok
+test cases::missing_meaning_selection_missing_source_and_corrupt_event_refuse_retention_and_ranking ... ok
+test cases::sql_publication_failure_read_transaction_and_expired_deadline_preserve_state_and_limits ... ok
+test changed_evaluated_crlf_source_retains_historical_events_without_claiming_semantic_identity ... ok
+test exact_unicode_ranges_and_path_admission_cannot_be_forged_by_rehashing_events ... ok
+test independent_label_sessions_latest_sequences_future_events_and_integer_decay_are_visible ... ok
+test origin_support_membership_refuses_other_claim_paths_foreign_kinds_and_unselected_graphs ... ok
+test out_of_order_timestamp_conflicts_and_other_subjects_never_rewrite_original_outcomes ... ok
+test three_typed_targets_preserve_original_packets_parallel_directions_roles_and_receipt_unknowns ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 31.54s
+

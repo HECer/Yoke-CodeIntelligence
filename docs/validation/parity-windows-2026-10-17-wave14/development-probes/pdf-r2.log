@@ -1,0 +1,16 @@
+    Finished `test` profile [unoptimized] target(s) in 0.67s
+     Running tests\mixed_pdf_view.rs (E:\Yoke-Build-Cache\pdf-mixed-view-20261017\debug\deps\mixed_pdf_view-e48e9b65cc6afc18.exe)
+
+running 9 tests
+test caller_read_transaction_sqlite_limits_and_inherited_cancel_are_preserved ... ok
+test exact_combined_reservations_and_output_limits_refuse_whole_results ... ok
+test host_cancellation_after_pdf_spawn_refuses_and_original_process_handle_observes_exit ... ok
+test native_office_and_pdf_search_pages_and_typed_reads_survive_live_deletions ... ok
+test pdf_pin_and_row_capacity_denials_precede_corrupt_native_source_reads ... ok
+test non_bmp_pdf_page_references_use_original_decoded_utf8_not_glyph_or_container_offsets ... ok
+test pdf_read_refs_reject_foreign_pages_hashes_and_split_utf8_boundaries ... ok
+test schema2_cli_permission_and_unknown_worker_authority_refuse_before_missing_store ... ok
+test saved_inspection_text_is_ignored_and_corrupt_original_pdf_is_refused ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.68s
+

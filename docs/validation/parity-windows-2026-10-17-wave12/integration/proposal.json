@@ -1,0 +1,53 @@
+{
+  "afterSourceManifestSha256": "67505463621444b62fdb792fb56cec5ea54f8c3a1bfac51ed84329abe320c81a",
+  "beforeSourceManifestSha256": "12d150e4fae9673b58e0f082f2af6dffacda0e4c9d827c2a8c70c5e98298ab37",
+  "candidateSourceManifestSha256": "1ef41d7564050c370f7db36fd539e0db1fa081248fe282db4997c46572d09e26",
+  "parentIndexSha256": "f147b9e5c590b1b799e20e472358d3a8ab88a6e0480ff16318dbc1060f5f1b15",
+  "parentSourceManifestSha256": "47ecb688e6a3beb16f7a638a93b31f3725b05a948440bbcf44715081b2dee4ec",
+  "paths": {
+    "native/docs/document-graphs.md": {
+      "after": "92d7225239c481b151082c073cca2732fd94063d884c74b5f980f7305d3d055f",
+      "before": "ab234041185279b90edb6ec6017c222abad1bf5388b15da6c7278c21a67653e5"
+    },
+    "native/docs/mixed-views.md": {
+      "after": "623d6bf44dc643029078f0757139d9f7b227041d5b90b12bc8e9eb49cebfd345",
+      "before": null
+    },
+    "native/src/document_graph.rs": {
+      "after": "3b8ba0ee9699b0c4de1e3a0ff996422ba1dd6e4c2ff853f1115d72b17f897072",
+      "before": "946ad868b093d6868e9be70dff6fd0ad58b51a66d525b4df7eefa38f4f25e27d"
+    },
+    "native/src/document_mixed_input.rs": {
+      "after": "ab9e48c8f1e0d19877388cb20687aa18ccaa775a6df0665d1bcc317eef82be8d",
+      "before": null
+    },
+    "native/src/graph_view_comparison_input.rs": {
+      "after": "f9940544515eac383172841ac3ee1f06a224c7149c9ec9ccecd736ef888ddd35",
+      "before": "f75ca3b8910c08a33a57f3927905388f66816abb4b251baf6a0c8b1aa6cc267c"
+    },
+    "native/src/lib.rs": {
+      "after": "c1039618704eda97b418877dc6eee09f195ceb6fbbfe30465efab145ed2bdf3a",
+      "before": "efbacb16c2b6844c95b93d8ccc3be05d208e96acd8f82c7320e1a62f197900e5"
+    },
+    "native/src/main.rs": {
+      "after": "16f59ab7229372a598120f9cabdd8c4cc80bab48ada6f8298f5e0563c5cf803e",
+      "before": "ef9cec8412d0cf6473bb19e657f5b0c1d08029ea125304b119f006470b6a78d0"
+    },
+    "native/src/mixed_view.rs": {
+      "after": "01584c6fa78b5c78dc076a13eb363e08dee24af8f1863cced690b9d46cf6bca8",
+      "before": null
+    },
+    "native/src/mixed_view_cli.rs": {
+      "after": "63830d60e359679d929186b599c0e347d4cc754df37c068f237b6661742de293",
+      "before": null
+    },
+    "native/src/mixed_view_query.rs": {
+      "after": "a9a24435677c329848af0786e15d3506b4ec43eb9506df528f466e85c9fa306d",
+      "before": null
+    },
+    "native/tests/mixed_view_cli.rs": {
+      "after": "10ad9d5fb57714b9d101293a05bc829546eafe6b18c10333ab24c60aa3c1be10",
+      "before": null
+    }
+  }
+}

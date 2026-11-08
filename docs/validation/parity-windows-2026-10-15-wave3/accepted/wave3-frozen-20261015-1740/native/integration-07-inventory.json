@@ -1,0 +1,61 @@
+{
+  "derived_graph_preparation": {
+    "executable": "target\\debug\\deps\\derived_graph_preparation-f4e273a0e37b1f12.exe",
+    "ignored": [],
+    "registered": [
+      "config_preparation_keeps_authentic_v8_v9_released_bytes_without_publication",
+      "conflicting_existing_derived_rows_refuse_before_cas_in_caller_and_standalone_publication",
+      "foreign_connection_is_refused_before_any_cas_or_record_write",
+      "manifest_preparation_keeps_authentic_v8_v9_released_bytes_without_publication",
+      "markdown_preparation_keeps_authentic_v8_v9_released_bytes_without_publication",
+      "rolling_back_caller_transaction_removes_all_three_graph_registrations",
+      "three_prepared_graphs_publish_in_one_caller_transaction_without_nested_transactions"
+    ]
+  },
+  "document_cli": {
+    "executable": "target\\debug\\deps\\document_cli-954103af4cf9dd24.exe",
+    "ignored": [],
+    "registered": [
+      "public_document_cli_builds_searches_reads_and_queries_archive_without_source_store"
+    ]
+  },
+  "document_explorer": {
+    "executable": "target\\debug\\deps\\document_explorer-a7092da022199d9a.exe",
+    "ignored": [],
+    "registered": [
+      "checked_document_explorer_preserves_spaces_inert_text_and_original_canonical_graph"
+    ]
+  },
+  "document_graph": {
+    "executable": "target\\debug\\deps\\document_graph-6c07e61ec8f7294c.exe",
+    "ignored": [],
+    "registered": [
+      "archives_reject_future_schema_corrupt_objects_and_human_destination_overwrite",
+      "document_query_types_utf8_ranges_and_seed_capacity_are_strict",
+      "document_records_and_exact_binary_xml_text_artifacts_are_retention_roots",
+      "docx_search_read_trace_and_archive_preserve_distinct_exact_coordinates",
+      "resealed_registered_graph_cannot_invent_labels_from_the_original_container",
+      "xlsx_shared_strings_bind_both_reference_and_value_xml_with_cached_formula_metadata"
+    ]
+  },
+  "document_graph_review": {
+    "executable": "target\\debug\\deps\\document_graph_review-3a585efaf29f2975.exe",
+    "ignored": [],
+    "registered": [
+      "document_trace_admits_serialized_output_before_large_allocation",
+      "rejected_document_metadata_is_admitted_before_identity_serialization"
+    ]
+  },
+  "editor": {
+    "executable": "target\\debug\\deps\\editor-42dab2ae0cfcc0b0.exe",
+    "ignored": [],
+    "registered": [
+      "ancestor_ignore_policies_also_protect_unsaved_new_files",
+      "editor_buffers_are_versioned_source_bound_and_never_write_saved_files",
+      "editor_cannot_restore_omitted_ignored_protected_or_secret_source",
+      "editor_capture_refuses_foreign_disk_changes_and_accepts_a_real_saved_buffer",
+      "effective_ignore_whitelists_apply_equally_to_saved_and_unsaved_new_paths",
+      "nested_ignore_policies_are_scoped_and_git_excludes_cannot_be_bypassed"
+    ]
+  }
+}

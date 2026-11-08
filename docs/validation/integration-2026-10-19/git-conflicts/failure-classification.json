@@ -1,0 +1,17 @@
+{
+  "failures": [
+    {
+      "gate": "native-selected",
+      "testName": "affected_options_leaf_and_ancestor_reparse_points_refuse_after_real_options_success",
+      "windowsError1314": true,
+      "failure": "thread 'affected_options_leaf_and_ancestor_reparse_points_refuse_after_real_options_success' (20640) panicked at native\\tests\\git_affected_cli.rs:505:10:\nReal Windows file reparse fixture prerequisite: Os { code: 1314, kind: Uncategorized, message: \"Dem Client fehlt ein erforderliches Recht.\" }\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace"
+    },
+    {
+      "gate": "native-selected",
+      "testName": "windows_real_options_file_and_ancestor_reparse_points_refuse_after_genuine_positive",
+      "windowsError1314": true,
+      "failure": "thread 'windows_real_options_file_and_ancestor_reparse_points_refuse_after_genuine_positive' (20808) panicked at native\\tests\\git_impact_details_cli.rs:698:10:\nreal Windows file reparse prerequisite: Os { code: 1314, kind: Uncategorized, message: \"Dem Client fehlt ein erforderliches Recht.\" }\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace"
+    }
+  ],
+  "allObservedFailuresAreFixturePrerequisite1314": true
+}

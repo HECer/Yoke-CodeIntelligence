@@ -1,0 +1,24 @@
+{
+  "legacy_retrieval_oracle": {
+    "executable": "target\\debug\\deps\\legacy_retrieval_oracle-c68f8fd262f61b26.exe",
+    "ignored": [],
+    "registered": [
+      "native_global_complete_json_matches_pre_feature_frozen_oracle"
+    ]
+  },
+  "live": {
+    "executable": "target\\debug\\deps\\live-d84dde654b404e7d.exe",
+    "ignored": [
+      "actual_python_server_cross_file_unicode_historical_navigation_and_rename",
+      "actual_rust_analyzer_definition_references_and_rename",
+      "actual_rust_analyzer_mcp_references_bind_immutable_snapshot",
+      "actual_typescript_server_cross_file_definition_and_rename"
+    ],
+    "registered": [
+      "actual_python_server_cross_file_unicode_historical_navigation_and_rename",
+      "actual_rust_analyzer_definition_references_and_rename",
+      "actual_rust_analyzer_mcp_references_bind_immutable_snapshot",
+      "actual_typescript_server_cross_file_definition_and_rename"
+    ]
+  }
+}

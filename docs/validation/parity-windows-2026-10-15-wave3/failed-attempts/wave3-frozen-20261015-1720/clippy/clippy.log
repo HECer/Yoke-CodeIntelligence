@@ -1,0 +1,67 @@
+    Checking yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+error: this `if` statement can be collapsed
+   --> native\src\host_install_recovery_v2.rs:476:13
+    |
+476 | /             if let Some(output) = run.output.as_mut() {
+477 | |                 if !run.output_at_target {
+478 | |                     output.rename_no_replace(&target(selection, index)?, d)?;
+479 | |                     run.output_at_target = true;
+480 | |                 }
+481 | |             }
+    | |_____________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#collapsible_if
+    = note: `-D clippy::collapsible-if` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::collapsible_if)]`
+help: collapse nested if block
+    |
+476 ~             if let Some(output) = run.output.as_mut()
+477 ~                 && !run.output_at_target {
+478 |                     output.rename_no_replace(&target(selection, index)?, d)?;
+479 |                     run.output_at_target = true;
+480 ~                 }
+    |
+
+error: this `if` statement can be collapsed
+   --> native\src\host_install_recovery_v2.rs:556:9
+    |
+556 | /         if let Some(original) = run.original.as_mut() {
+557 | |             if !run.original_at_target {
+558 | |                 original.rename_no_replace(&target(selection, index)?, d)?;
+559 | |                 run.original_at_target = true;
+...   |
+563 | |         }
+    | |_________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#collapsible_if
+help: collapse nested if block
+    |
+556 ~         if let Some(original) = run.original.as_mut()
+557 ~             && !run.original_at_target {
+558 |                 original.rename_no_replace(&target(selection, index)?, d)?;
+...
+561 |                 journal_v2::append_event(selection, journal, d)?;
+562 ~             }
+    |
+
+error: very complex type used. Consider factoring parts into `type` definitions
+    --> native\src\meaning_build.rs:2785:18
+     |
+2785 |     read_source: &mut dyn FnMut(&Snapshot, &crate::model::SourceFile, &Deadline) -> Result<Vec<u8>>,
+     |                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     |
+     = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#type_complexity
+     = note: `-D clippy::type-complexity` implied by `-D warnings`
+     = help: to override `-D warnings` add `#[allow(clippy::type_complexity)]`
+
+error: very complex type used. Consider factoring parts into `type` definitions
+   --> native\src\meaning_view.rs:255:18
+    |
+255 |     read_source: &mut dyn FnMut(&Snapshot, &SourceFile, &Deadline) -> Result<Vec<u8>>,
+    |                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#type_complexity
+
+error: could not compile `yoke-code-intelligence` (lib) due to 4 previous errors
+warning: build failed, waiting for other jobs to finish...
+error: could not compile `yoke-code-intelligence` (lib test) due to 4 previous errors

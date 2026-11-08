@@ -1,0 +1,84 @@
+{
+  "schema": 2,
+  "diagnosticOnly": true,
+  "nativeAcceptance": false,
+  "diagnosticComplete": true,
+  "diagnosticMode": "fixed-import-original",
+  "nativeYokeImageReadOrExecuted": false,
+  "trialDeadlineSeconds": 20,
+  "memberObservationSeconds": 0.25,
+  "maxObservedMembers": 16,
+  "sourceRevision": null,
+  "sourceSha256": "b677f4a2c46ca264cbb15f6f2710546a881e9e394def33cd830a29e9403e7c6c",
+  "environmentNames": [
+    "CI",
+    "DO_NOT_TRACK",
+    "LANG",
+    "NO_COLOR",
+    "PATH",
+    "SystemDrive",
+    "SystemRoot",
+    "TEMP",
+    "TMP",
+    "USERPROFILE",
+    "WINDIR"
+  ],
+  "trials": [
+    {
+      "name": "nested-snapshot-fixed-import-original",
+      "jobsRequested": 2,
+      "resumeMode": "snapshot",
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "timedOut": false,
+      "nativeAcceptance": false,
+      "membersBeforeCleanup": {
+        "complete": true,
+        "members": [],
+        "unavailable": [],
+        "assignedAtQuery": 0,
+        "returnedAtQuery": 0,
+        "startedElapsedSeconds": 0.24212569999963307,
+        "finishedElapsedSeconds": 0.24215119999917079
+      },
+      "pid": 20404,
+      "snapshotEntriesScanned": 4148,
+      "snapshotEndError": 18,
+      "resumedThreads": [
+        {
+          "primary": true,
+          "previousSuspendCount": 1
+        }
+      ],
+      "primaryObservedResumed": true,
+      "resumeElapsedSeconds": 0.039681099999143044,
+      "exitCode": 0,
+      "activeBeforeCleanup": [
+        0,
+        0
+      ],
+      "treeExitedBeforeCleanup": true,
+      "activeAfterCleanup": [
+        0,
+        0
+      ],
+      "rootExitedAfterCleanup": true,
+      "elapsedSeconds": 0.24221979999947507,
+      "stdout": "owned-windows-runtime\r\n",
+      "stderr": "owned-before-original-import-clock\r\nowned-before-original-module-import-ms:0\r\nowned-after-original-module-import-ms:43\r\nowned-script-entry\r\nowned-host-version:5.1.19041.6456\r\nowned-before-folder\r\nowned-after-folder\r\nowned-before-write-output\r\nowned-after-write-output\r\nowned-script-end\r\n",
+      "streamEOF": [
+        true,
+        true
+      ],
+      "readerError": [
+        false,
+        false
+      ],
+      "outputExceeded": [
+        false,
+        false
+      ],
+      "diagnosticComplete": true
+    }
+  ]
+}

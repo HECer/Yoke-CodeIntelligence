@@ -1,0 +1,50 @@
+{
+  "meaning_archive_primitives": {
+    "executable": "target\\debug\\deps\\meaning_archive_primitives-c5256081a2ec240f.exe",
+    "ignored": [],
+    "registered": [
+      "archived_attempt_byte_budget_and_deadline_fail_without_replaying_live_state",
+      "archived_attempt_keeps_response_usage_distinct_from_later_reconciled_usage",
+      "archived_attempt_preserves_unknown_cost_original_currency_and_response_usage",
+      "archived_attempt_requires_exact_hashed_task_record_key_and_row_pairing",
+      "archived_attempt_reuses_state_event_and_task_total_validation",
+      "archived_capture_deadline_and_lineage_capacity_are_checked_before_replay",
+      "archived_capture_overlay_uses_its_exact_base_scope_and_checked_revision",
+      "archived_capture_recovers_exact_v8_and_v9_default_and_configured_options",
+      "archived_capture_rejects_resealed_protected_paths_unknown_policy_and_noncanonical_envelopes",
+      "archived_capture_scope_only_derived_lineage_returns_acquisition_policy_without_an_epoch_upgrade"
+    ]
+  },
+  "meaning_build": {
+    "executable": "target\\debug\\deps\\meaning_build-5530091b88518422.exe",
+    "ignored": [],
+    "registered": [
+      "accounted_overrun_blocks_later_reserved_send_and_never_publishes",
+      "altered_contract_and_provider_version_do_not_reuse_old_claims",
+      "body_selection_uses_full_body_and_invalidates_unchanged_signature_changes",
+      "cache_reuse_requires_the_original_completed_graph_registration",
+      "currency_scoped_cache_prevents_mixing_old_and_new_monetary_units",
+      "every_selected_source_budget_and_graph_sink_is_admitted_before_first_child",
+      "exact_snapshot_analyzer_epochs_have_separate_cache_namespaces",
+      "failed_status_counts_only_dispatched_attempts_and_reports_missing_unknown_receipts",
+      "fixed_cross_file_packet_preserves_relations_and_hyperedge_roles",
+      "forged_cache_origin_is_rejected_without_starting_worker",
+      "fully_bound_bill_is_accounted_even_when_provider_error_text_is_unsafe",
+      "immutable_response_preserves_provider_local_claim_keys_before_normalization",
+      "in_place_provider_script_change_invalidates_cache_even_when_command_is_unchanged",
+      "later_invalid_claim_accounts_bill_but_publishes_no_partial_graph_or_cache",
+      "malformed_or_unbound_replies_keep_sent_hold_and_cancel_only_unsent",
+      "malformed_provider_schema_does_not_echo_untrusted_field_values",
+      "no_claims_is_explicit_successful_coverage",
+      "oversized_source_is_rejected_as_complete_selection_before_worker",
+      "publication_failure_rolls_back_every_new_cache_pointer",
+      "publishes_source_bound_claims_then_reuses_receipts_with_zero_calls_or_reservations",
+      "query_matches_literal_quotes_and_backslashes_in_displayed_claim_text",
+      "retained_cache_value_must_match_the_validated_immutable_row",
+      "retained_graph_validates_original_receipt_and_rebound_snapshot_dependencies",
+      "unchanged_body_cache_rebinds_new_snapshot_and_changed_body_invalidates_it",
+      "unknown_billing_remains_reserved_after_valid_graph_publication",
+      "valid_bound_bill_is_preserved_when_worker_exits_unsuccessfully"
+    ]
+  }
+}

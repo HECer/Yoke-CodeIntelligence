@@ -1,0 +1,71 @@
+{
+  "accepted": true,
+  "aclTempRoot": null,
+  "artifactSha256": {
+    "python.log": "b5a11f21dcbc21cb248b286fa7abed09f6e882e5a0c022589ec74ab73102bf11",
+    "source-after.json": "3b9fb9474f7c7df29e765aecb7eb47e83c558a441985e7b2f90e708152eccfdd",
+    "source-before.json": "3b9fb9474f7c7df29e765aecb7eb47e83c558a441985e7b2f90e708152eccfdd"
+  },
+  "checkedAtUtc": "2026-10-16T01:08:52.334685+00:00",
+  "failed": 0,
+  "groups": 1,
+  "ignored": 0,
+  "interpretation": "Fresh execution only. Shared freeze required across all five phases; ignored test results are never relabeled as passing.",
+  "matrixCoverage": {},
+  "passed": 11,
+  "phase": "python",
+  "phases": [
+    "format",
+    "clippy",
+    "native",
+    "python",
+    "typescript"
+  ],
+  "results": [
+    {
+      "command": [
+        "python",
+        "-X",
+        "utf8",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "scripts/tests",
+        "-v"
+      ],
+      "exitCode": 0,
+      "failed": 0,
+      "groups": 1,
+      "ignored": 0,
+      "inventoryOnly": false,
+      "label": "python",
+      "logSha256": "b5a11f21dcbc21cb248b286fa7abed09f6e882e5a0c022589ec74ab73102bf11",
+      "origin": "fresh_execution",
+      "passed": 11,
+      "runnerSha256": "b51bbffbddd07be0aa6ef019fc950d772c628d77b3567f646d7a837726aa3d15",
+      "seconds": 0.406,
+      "sourceManifestSha256": "3b9fb9474f7c7df29e765aecb7eb47e83c558a441985e7b2f90e708152eccfdd",
+      "tempRoot": "D:\\Yoke-Test-Scratch\\wave5-frozen-20261016-0110-python",
+      "testNames": [
+        "test_blob_tampering_fails_exact_git_object_identity (test_package_native.LicenseDiscovery.test_blob_tampering_fails_exact_git_object_identity)",
+        "test_nested_license_without_root_license_is_found (test_package_native.LicenseDiscovery.test_nested_license_without_root_license_is_found)",
+        "test_nested_package_notice_and_ancestor_license_exclude_sibling_crates (test_package_native.LicenseDiscovery.test_nested_package_notice_and_ancestor_license_exclude_sibling_crates)",
+        "test_no_license_is_a_revision_specific_failure (test_package_native.LicenseDiscovery.test_no_license_is_a_revision_specific_failure)",
+        "test_truncated_recursive_tree_fails_even_with_root_license (test_package_native.LicenseDiscovery.test_truncated_recursive_tree_fails_even_with_root_license)",
+        "test_external_cargo_target_directory_does_not_package_a_stale_repo_binary (test_package_native.PackagingInputs.test_external_cargo_target_directory_does_not_package_a_stale_repo_binary)",
+        "test_matching_release_keeps_public_security_and_release_guidance (test_package_native.PackagingInputs.test_matching_release_keeps_public_security_and_release_guidance)",
+        "test_stale_release_binary_cannot_be_labeled_with_a_new_manifest_version (test_package_native.PackagingInputs.test_stale_release_binary_cannot_be_labeled_with_a_new_manifest_version)",
+        "test_existing_output_is_preserved (test_package_vscode.NativeVsix.test_existing_output_is_preserved)",
+        "test_host_fixture_and_typescript_are_excluded_from_native_default (test_package_vscode.NativeVsix.test_host_fixture_and_typescript_are_excluded_from_native_default)",
+        "test_native_binary_remains_executable_in_unix_vsix (test_package_vscode.NativeVsix.test_native_binary_remains_executable_in_unix_vsix)"
+      ]
+    }
+  ],
+  "runnerSha256": "b51bbffbddd07be0aa6ef019fc950d772c628d77b3567f646d7a837726aa3d15",
+  "sourceChanges": [],
+  "sourceFiles": 1528,
+  "sourceManifestSha256": "3b9fb9474f7c7df29e765aecb7eb47e83c558a441985e7b2f90e708152eccfdd",
+  "tempRoot": "D:\\Yoke-Test-Scratch\\wave5-frozen-20261016-0110-python",
+  "validationErrors": []
+}

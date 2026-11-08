@@ -1,0 +1,59 @@
+{
+  "actualImageTag": "6.0.2",
+  "manifestDigest": "sha256:288aaa7d0583c7c15fb28509544c0418186ef064f551bfb477f3df26b1a892fb",
+  "ownedQemuPid": 6668,
+  "listenerPidVerified": true,
+  "nativeTransportTested": true,
+  "nativeBinarySha256": "d011fa81ea39fcf7cd8aeefa450abd1075c824242ae1ffb4dba85e6f7bc7600e",
+  "nativeTlsStaticCa": true,
+  "wrongHostnameRefused": true,
+  "wrongStaticRootRefused": true,
+  "privateUnicodePassword": true,
+  "schemaGrantIndependent": true,
+  "bootstrapOperations": 9,
+  "bootstrapJournalEvents": 19,
+  "lostStdoutIdentityRetained": true,
+  "responseLostAfterActualCommit": true,
+  "forcedConcurrentUpdatesExactlyOneCommit": true,
+  "loserCreatedNoRowsOrCounterChanges": true,
+  "historicalReadRecoveryAfterLaterActive": true,
+  "wrongSchemaRefusedWithoutRepair": true,
+  "workflows": [
+    {
+      "tls": false,
+      "planId": "22b0983731d390113f8270bf256d79ce00db953dc883d4ad8107763eb24c1e15",
+      "revisionId": "496ee90a700e92ff79476d753d43ad5927631b1620352c06effe8d4f82bcb7f0",
+      "allOriginalRowsAndEvidenceExact": true,
+      "sameJournalNoResend": true,
+      "sameRevisionReplay": true,
+      "countGuardRolledBackCounter": true,
+      "readOnlyRecoveryRefusedUntilPostconditionRestored": true
+    },
+    {
+      "tls": true,
+      "planId": "09e9d085c62455330dcb9ea46cfe70970c10e68f78ad71bf7559bbc89ad18c61",
+      "revisionId": "d02ffdc98d76023dbe64d55541e6eaac6cb9f8472a7110119c9d1befe963ada4",
+      "allOriginalRowsAndEvidenceExact": true,
+      "sameJournalNoResend": true,
+      "sameRevisionReplay": true,
+      "countGuardRolledBackCounter": true,
+      "readOnlyRecoveryRefusedUntilPostconditionRestored": true
+    },
+    {
+      "tls": false,
+      "planId": "02b42c76ad2abed0c780be59a191dc24dc0a22b69d358692c3acbbbfc60e0031",
+      "revisionId": "ece1411d8864d97ccd64165ac09c58932cf3279ae81458be38a64dba6dd3a018",
+      "allOriginalRowsAndEvidenceExact": true,
+      "sameJournalNoResend": true,
+      "sameRevisionReplay": true,
+      "countGuardRolledBackCounter": true,
+      "readOnlyRecoveryRefusedUntilPostconditionRestored": true
+    }
+  ],
+  "qemuUserNetworkRestricted": true,
+  "hostForwardsLoopbackOnly": true,
+  "projectCodeExecuted": false,
+  "defaultModelOrBrowserStarted": false,
+  "ownedCredentialsRemoved": 5,
+  "ownedQemuStopped": true
+}

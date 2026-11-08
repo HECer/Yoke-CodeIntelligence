@@ -1,0 +1,137 @@
+{
+  "schema": 1,
+  "dateUtc": "2026-10-14",
+  "validationKind": "actual_local_concise_summary_final_retry",
+  "protocolFixture": false,
+  "runtimeVersion": "0.40.3",
+  "model": "smollm2:135m",
+  "manifestDigest": "9077fe9d2ae1a4a41a868836b56b8163731a8fe16621397028c2c76f838c6907",
+  "officialManifestUrl": "https://registry.ollama.ai/v2/library/smollm2/manifests/135m",
+  "independentManifestHashMatchesInstalledDigest": true,
+  "license": "Apache-2.0",
+  "totalModelAndMetadataBytes": 270898672,
+  "weightsReusedFromOwnedTestStore": true,
+  "additionalWeightDownloads": 0,
+  "reportedContextMinimum": 8192,
+  "ownedServer": {
+    "pid": 95076,
+    "endpoint": "http://127.0.0.1:54667",
+    "hiddenWindowsProcess": true,
+    "gpuSelection": "disabled_for_cpu_inference",
+    "credentialEnvironment": "cleared"
+  },
+  "pipeline": "native index/find -> host ProviderSpec -> model-worker -> provider validation -> Store/Ledger -> hash-verified durable meaning-layer artifact",
+  "nativeExecutable": "<owned-temporary-native-copy>/yoke.exe",
+  "nativeExecutableSha256": "0948fab956b5a1c7c2f8a88782945887b45e722e6ad47ff9036b5529fc36bf8c",
+  "source": {
+    "snapshotId": "da2be91d8164ae40616e45a4195032c1942cff2066df3356d8dd6507f808a342",
+    "entityId": "f919375de7c161270648c01d6eac9ab87b2b2a68a52542bd970e2d878dc4693b",
+    "path": "billing.rs",
+    "contentHash": "86bc9cacd1252cb8d4e7d5e6f04ebe8b9a7b32631a94355842da0cef7fb07d64",
+    "fileBytes": 84,
+    "startByte": 0,
+    "endByte": 83,
+    "sourcePreservationChecked": true,
+    "originalUserSourceWritten": false
+  },
+  "providerDeadlineMs": 60000,
+  "actualModelAttempts": 1,
+  "summaryBudget": {
+    "maxStatements": 1,
+    "maxTextBytes": 512,
+    "maxCitations": 1,
+    "coverage": "concise_subset"
+  },
+  "nativeCommands": [
+    "yoke --root <owned-source-fixture> --timeout 60000 index",
+    "yoke --root <owned-source-fixture> --timeout 60000 find invoice",
+    "yoke --root <owned-source-fixture> --timeout 60000 models --config <owned-public-host-profile> --trust-provider summarize --entity f919375de7c161270648c01d6eac9ab87b2b2a68a52542bd970e2d878dc4693b",
+    "yoke --root <owned-source-fixture> --timeout 60000 ledger actual-concise-summary-final"
+  ],
+  "hostProvider": {
+    "command": "<owned-temporary-native-copy>/yoke.exe",
+    "args": [
+      "--timeout",
+      "60000",
+      "model-worker",
+      "--endpoint",
+      "http://127.0.0.1:54667",
+      "--model",
+      "smollm2:135m",
+      "--digest",
+      "9077fe9d2ae1a4a41a868836b56b8163731a8fe16621397028c2c76f838c6907"
+    ],
+    "modelId": "smollm2:135m",
+    "modelVersion": "9077fe9d2ae1a4a41a868836b56b8163731a8fe16621397028c2c76f838c6907",
+    "taskId": "actual-concise-summary-final",
+    "currency": "EUR",
+    "maxCostMicros": 10,
+    "taskLimitMicros": 100,
+    "containsCredentials": false
+  },
+  "result": {
+    "operation": "summarize",
+    "passed": true,
+    "entityId": "f919375de7c161270648c01d6eac9ab87b2b2a68a52542bd970e2d878dc4693b",
+    "contentHash": "86bc9cacd1252cb8d4e7d5e6f04ebe8b9a7b32631a94355842da0cef7fb07d64",
+    "statementCount": 1,
+    "statementUtf8Bytes": [
+      83
+    ],
+    "truth": "model_inference_not_verified_fact",
+    "resolution": "inferred_concept",
+    "sourceBindings": [
+      {
+        "contentHash": "86bc9cacd1252cb8d4e7d5e6f04ebe8b9a7b32631a94355842da0cef7fb07d64",
+        "endByte": 83,
+        "path": "billing.rs",
+        "sourceId": "f919375de7c161270648c01d6eac9ab87b2b2a68a52542bd970e2d878dc4693b",
+        "startByte": 0
+      }
+    ],
+    "summaryCoverage": "concise_subset",
+    "modelCalls": 1,
+    "sourceBindingsExact": true,
+    "providerReportedCostMicros": null,
+    "attemptId": "6cdf3d7175fe65a9370fbbf57ac569233b846fd56bfddaaabb395471239e36b9",
+    "artifactId": "873bbc221e6f9d0902f1a4ec1c1d91d30107f9ab2bf0c80cf43f890e7cbfafab",
+    "durableArtifactHashAndRegistrationVerified": true,
+    "durableAttemptPersisted": true,
+    "statementSha256": "97f312c502f50ca4c91c9ac67d76e2453c558030653c77932b4f2749626404cf",
+    "sourceOmissions": []
+  },
+  "ledger": {
+    "actualMicros": 0,
+    "attempts": 1,
+    "currency": "EUR",
+    "encumberedMicros": 10,
+    "reservationExceeded": false,
+    "reservedMicros": 10,
+    "taskLimitMicros": 100,
+    "unknown": 1
+  },
+  "zeroKnownActualIsNotVerifiedFreeBilling": true,
+  "cleanup": {
+    "ownedServerJobAndDescendantsStopped": true,
+    "endpointClosed": true,
+    "existingIdentityMetadataUnchanged": true,
+    "sharedBuildExecutableNotExecuted": true,
+    "existingUserModelJunctionUntouched": true,
+    "weightsOutsideRepository": true
+  },
+  "coreAdapterStartsOrPullsByDefault": false,
+  "priorFailureEvidence": "native-workflows-ollama-structured-live.json",
+  "targetedRegressionGate": {
+    "command": "cargo test --locked -j2 --test ollama",
+    "passed": 11,
+    "failed": 0,
+    "ignored": 1,
+    "durationSeconds": 0.86,
+    "meaningfulRequestReplyAndUnicodeRedObserved": true
+  },
+  "neuralQualityEvaluated": false,
+  "exhaustiveSummaryCoverageClaimed": false,
+  "actualVisionEvaluated": false,
+  "rawServerLogsIdentityBytesOrCredentialsRecorded": false,
+  "weightsIncludedInReleaseArtifacts": false
+}

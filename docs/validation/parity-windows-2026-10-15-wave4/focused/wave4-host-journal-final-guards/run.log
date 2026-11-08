@@ -1,0 +1,10 @@
+    Finished `test` profile [unoptimized] target(s) in 0.61s
+     Running unittests src\lib.rs (target\debug\deps\yoke-35b101204e4eb110.exe)
+
+running 3 tests
+test host_install::output_recovery_tests::journal_scope_tests::scoped_journal_append_rechecks_an_earlier_event_after_a_successful_load ... ok
+test host_install::output_recovery_tests::journal_scope_tests::scoped_journal_append_discovers_a_late_valid_same_sequence_fork ... ok
+test host_install::output_recovery_tests::journal_scope_tests::scoped_admission_recounts_a_new_oversized_orphan_after_prior_success ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 182 filtered out; finished in 0.19s
+

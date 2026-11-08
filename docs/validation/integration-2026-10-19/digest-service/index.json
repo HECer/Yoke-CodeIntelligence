@@ -1,0 +1,858 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-19T04:57:29.286985+00:00",
+  "parentCommit": "830d222681bad11b83864c41d87fea9006f14b75",
+  "accepted": false,
+  "allLocalChecksPassed": true,
+  "prerequisiteRerunInputsUnchanged": true,
+  "reinstallationFollowupDelta": [
+    {
+      "path": "native/src/github_app_digest_service_state.rs",
+      "beforeSha256": "c55513478f6a7afb9381397fde8b62f3886bf192d4bd684175babc16d23a3331",
+      "afterSha256": "d7272cb6a41fe23e5983e42abdf595e7ad658787ccae1c2cea06e3e4cb2b819a"
+    },
+    {
+      "path": "native/tests/github_app_digest_handoff.rs",
+      "beforeSha256": "c028ee6687ceaec8e6e62ecd55fbd33205aad9d7dc774bb2ad3e0fedddfe2762",
+      "afterSha256": "ea083879d1d670fe3994ff046f5547a2f460677553be6455836dd210c651a362"
+    }
+  ],
+  "frozenInputCount": 629,
+  "nativeTotals": {
+    "passed": 769,
+    "failed": 0,
+    "ignored": 12
+  },
+  "nativeResultGroups": 20,
+  "actualOSCredentialGate": {
+    "gate": "actual-os-credential-cli",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "test",
+      "--locked",
+      "-j2",
+      "--test",
+      "github_app_digest_handoff",
+      "actual_cli_send_status_and_lost_response_recovery_use_os_key_without_retry",
+      "--",
+      "--exact",
+      "--ignored",
+      "--test-threads=1"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 8.073,
+    "recordedAt": "2026-10-19T04:57:15.994455+00:00",
+    "resultGroups": [
+      {
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0
+      }
+    ]
+  },
+  "newSourceFiles": [
+    {
+      "source": "native/src/github_app_digest_service.rs",
+      "artifact": "new-source/native/src/github_app_digest_service.rs",
+      "sha256": "6af7f65e4da3a84c6b3c398b55e51a76e2230a7225021def2d8729bb76dd9d03"
+    },
+    {
+      "source": "native/src/github_app_digest_service_state.rs",
+      "artifact": "new-source/native/src/github_app_digest_service_state.rs",
+      "sha256": "d7272cb6a41fe23e5983e42abdf595e7ad658787ccae1c2cea06e3e4cb2b819a"
+    },
+    {
+      "source": "native/tests/github_app_digest_handoff.rs",
+      "artifact": "new-source/native/tests/github_app_digest_handoff.rs",
+      "sha256": "ea083879d1d670fe3994ff046f5547a2f460677553be6455836dd210c651a362"
+    }
+  ],
+  "summary": {
+    "allChecksPassed": true,
+    "sourceUnchanged": true,
+    "checks": [
+      {
+        "gate": "format",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "fmt",
+          "--all",
+          "--check"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 5.818,
+        "recordedAt": "2026-10-19T04:49:13.178173+00:00",
+        "resultGroups": []
+      },
+      {
+        "gate": "clippy",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "clippy",
+          "--workspace",
+          "--all-targets",
+          "--locked",
+          "--keep-going",
+          "-j2",
+          "--",
+          "-D",
+          "warnings"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 92.266,
+        "recordedAt": "2026-10-19T04:50:45.445294+00:00",
+        "resultGroups": []
+      },
+      {
+        "gate": "native-service-and-regressions",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "test",
+          "--locked",
+          "--no-fail-fast",
+          "-j2",
+          "--lib",
+          "--test",
+          "github",
+          "--test",
+          "github_discussions",
+          "--test",
+          "github_app_digest",
+          "--test",
+          "github_app_digest_cli",
+          "--test",
+          "github_app_digest_mapping",
+          "--test",
+          "github_app_digest_handoff",
+          "--test",
+          "github_app_cli",
+          "--test",
+          "github_app_auth_cli",
+          "--test",
+          "github_app_publication",
+          "--test",
+          "github_app_publication_cli",
+          "--test",
+          "github_app_worker",
+          "--test",
+          "github_app_worker_run",
+          "--test",
+          "retention",
+          "--test",
+          "parity_retention",
+          "--test",
+          "decision_retention",
+          "--test",
+          "meaning_retention_review",
+          "--test",
+          "store_read_only",
+          "--test",
+          "store_open_deadline",
+          "--test",
+          "store_cancellation",
+          "--",
+          "--test-threads=2"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 313.976,
+        "recordedAt": "2026-10-19T04:55:59.422532+00:00",
+        "resultGroups": [
+          {
+            "passed": 404,
+            "failed": 0,
+            "ignored": 7
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 12,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 4,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 35,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 38,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 18,
+            "failed": 0,
+            "ignored": 1
+          },
+          {
+            "passed": 13,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 102,
+            "failed": 0,
+            "ignored": 4
+          },
+          {
+            "passed": 14,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 33,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 28,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 14,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 3,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 8,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 16,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 9,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 7,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 7,
+            "failed": 0,
+            "ignored": 0
+          }
+        ]
+      },
+      {
+        "gate": "python-contracts",
+        "command": [
+          "python",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "scripts/tests",
+          "-v"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 1.549,
+        "recordedAt": "2026-10-19T04:56:00.972557+00:00",
+        "resultGroups": []
+      },
+      {
+        "gate": "typescript-typecheck",
+        "command": [
+          "npm.cmd",
+          "run",
+          "typecheck"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 5.967,
+        "recordedAt": "2026-10-19T04:56:06.940520+00:00",
+        "resultGroups": []
+      },
+      {
+        "gate": "typescript-tests",
+        "command": [
+          "npm.cmd",
+          "test"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 60.979,
+        "recordedAt": "2026-10-19T04:57:07.920455+00:00",
+        "resultGroups": []
+      },
+      {
+        "gate": "actual-os-credential-cli",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "test",
+          "--locked",
+          "-j2",
+          "--test",
+          "github_app_digest_handoff",
+          "actual_cli_send_status_and_lost_response_recovery_use_os_key_without_retry",
+          "--",
+          "--exact",
+          "--ignored",
+          "--test-threads=1"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 8.073,
+        "recordedAt": "2026-10-19T04:57:15.994455+00:00",
+        "resultGroups": [
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          }
+        ]
+      }
+    ],
+    "scope": "Frozen local Windows digest service client/approval/journal/recovery validation using owned socket receivers, actual SQLite and captured source; separate actual Windows Credential Manager CLI gate. Configured production receiver acceptance, proprietary service equivalence and full platform/STATUS acceptance remain open."
+  },
+  "findings": [
+    "Independent receiver-v1 client contract, not a proprietary service adapter. Fresh verified captured Rust headers and imported discussion metadata form a bounded wire body. Exact payload/endpoint/workspace/App bindings precede sending; no imported proposal supplies source authority.",
+    "Host service/network/write and separate numeric-loopback fixture grants default to denied. HTTPS production uses the existing OS service token; fixtures never load a production token. Canonical origin, fixed path, no ambient proxy/redirect/automatic retry and bounded closed receipt checks.",
+    "Domain-separated App-key MACs and a hash-chained inline journal commit intent before a single PUT. SQL transactions do not span HTTP. Pending outcomes block same-request retries, alternate request IDs for the same proposal and new repository submissions. GET-only recovery reconciles exact payload receipts; 404 remains unknown without retry authority.",
+    "Current App/service scopes, exact fresh source approval, caller transaction refusal, WAL/FULL durability, reserved terminal/output capacity and shared SQL/deadline policy are checked. Runtime replay rejects rehashed structurally valid MAC mutations. Typed retention preserves selected captured source without treating arbitrary payload/endpoint/receipt strings as CAS authority.",
+    "Eighteen new default cases cover actual owned sockets, SQLite contention/trigger failures, captured Unicode/CRLF source and corruption, exact output boundary, lost/wrong/unknown-key/oversized/redirect receipts, pending conflicts and endpoint retargeting. Actual CLI offline proposal and stale approval before absent credentials are exercised.",
+    "One separate actual Windows Credential Manager CLI case creates/removes only its unique signing credential. Lost PUT response, read-only status and GET recovery succeed; terminal repeat emits historical status and never resends. This owned receiver fixture is not configured production receiver acceptance.",
+    "All final frozen inputs are unchanged. Full native/platform acceptance, prior OS1314 fixture setup failures, production receiver acceptance, receiver-side processing, automatic historical acquisition, live App deployment and universal upstream/R1-R9 completion remain open."
+  ],
+  "developmentAttempts": {
+    "final-r2": "All629 frozen inputs unchanged and byte-identical to final-r1. Native768/0failed/12ignored across20groups; Python17, TypeScript260/3skip, typecheck, format, Clippy and actual OS CLI gate pass with the isolated pwsh prerequisite. Complete checkpoint archived under development/before-reinstallation-fix before a two-file follow-up makes pending groups installation-independent.",
+    "reinstallation-followup": "Pending groups bind App/repository rather than App/installation/repository. A new real-socket case proves a new installation cannot bypass an unknown write and that a revoked original recovery scope refuses. Final source delta is exactly the state module and integration test.",
+    "final-r1": "All629 frozen inputs unchanged; native646/122fail/12ignored across20groups, all122 failures are existing RSA fixtures unable to locate pwsh.exe (95publication,27worker). Python, TypeScript, typecheck, format, Clippy and actual OS CLI gate pass. Isolated official PowerShell7.6.7 archive and executable checksums are recorded; no source/test expectations changed for the rerun.",
+    "r1": "Compile failed because the development source was edited between library and CLI compilation; no test executed.",
+    "r2": "New fixture rejected the valid empty-query repository URL; panic during cleanup aborted the process. No successful whole target result.",
+    "r3": "Helper used an incorrect Cargo filter position; argument validation failed before tests.",
+    "r4": "Exact nocapture reproduction proves unexpected fixture path /repos/org/repo? and secondary cleanup panic; no completed target result.",
+    "r5": "Windows kept the crashed generated test executable locked. Link LNK1104 prevented tests; stopping the owned crashed process was denied. New untracked test target was renamed to github_app_digest_handoff after fixing fixture routing/cleanup; no cases were removed.",
+    "r6": "15 passed, 2 failed, 1 ignored. Two helper unwraps treated expected constructor permission/transaction refusals as panics; helper now propagates those errors.",
+    "r7": "17 passed, 0 failed, 1 ignored. Separate actual OS CLI and typed MAC tests pass; all-target Clippy passes. Final freeze additionally covers stale CLI approval and isolated endpoint retarget assertions."
+  },
+  "artifacts": [
+    {
+      "path": "development/actual-os-cli-r1-receipt.json",
+      "bytes": 375,
+      "sha256": "bcc068766c6afc9606101ccdc2bd5dd1ef9a142d13888ddbfdb71f4aab48b7aa"
+    },
+    {
+      "path": "development/actual-os-cli-r1.log",
+      "bytes": 376,
+      "sha256": "943904fdce8f2135c0bd39df763fdf2c12df66453c1934475405ff644898c669"
+    },
+    {
+      "path": "development/before-reinstallation-fix/development/actual-os-cli-r1-receipt.json",
+      "bytes": 375,
+      "sha256": "bcc068766c6afc9606101ccdc2bd5dd1ef9a142d13888ddbfdb71f4aab48b7aa"
+    },
+    {
+      "path": "development/before-reinstallation-fix/development/actual-os-cli-r1.log",
+      "bytes": 376,
+      "sha256": "943904fdce8f2135c0bd39df763fdf2c12df66453c1934475405ff644898c669"
+    },
+    {
+      "path": "development/before-reinstallation-fix/development/clippy-r1-receipt.json",
+      "bytes": 276,
+      "sha256": "a73b0627fb3199c268034c3ff68ab7e11db82e786be34a943fd0df02f8e56ad5"
+    },
+    {
+      "path": "development/before-reinstallation-fix/development/clippy-r1.log",
+      "bytes": 172,
+      "sha256": "ffeebf44a9ce6bfb94ffb06a0c71af12953b61ed0265e5c89903930774acdbc6"
+    },
+    {
+      "path": "development/before-reinstallation-fix/development/final-r1/actual-os-credential-cli.log",
+      "bytes": 376,
+      "sha256": "f33a40c0d4217b28a204ec1831c969e5592ac213f0c33afc615e81d77a824972"
+    },
+    {
+      "path": "development/before-reinstallation-fix/development/final-r1/clippy.log",
+      "bytes": 171,
+      "sha256": "0925e8abb6dab026f9e3355a85789804dc63e63d65ac606dab55a249481a1b23"
+    },
+    {
+      "path": "development/before-reinstallation-fix/development/final-r1/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "development/before-reinstallation-fix/development/final-r1/native-service-and-regressions.log",
+      "bytes": 137956,
+      "sha256": "2b7fe4a6afe8301716a1f2f19b02ca2a9c4a94e694f405564266db79a3aa0ce2"
+    },
+    {
+      "path": "development/before-reinstallation-fix/development/final-r1/python-contracts.log",
+      "bytes": 2845,
+      "sha256": "acbbdb7c7d8bff169125d92e2a1a448d2e6e74bc3d0507ca979f91eb7fce850d"
+    },
+    {
+      "path": "development/before-reinstallation-fix/development/final-r1/receipts.json",
+      "bytes": 5099,
+      "sha256": "0fb7467d0a076bcaeefcd39a6b97bb0da98893f08eff19f9d10ae90f2074363b"
+    },
+    {
+      "path": "development/before-reinstallation-fix/development/final-r1/source-after.json",
+      "bytes": 67156,
+      "sha256": "6e6e44cce9c6fff63a11fcc2ef9f06e31bd359c90b61e7ef0c62bd78a0c59b2c"
+    },
+    {
+      "path": "development/before-reinstallation-fix/development/final-r1/source-before.json",
+      "bytes": 67156,
+      "sha256": "6e6e44cce9c6fff63a11fcc2ef9f06e31bd359c90b61e7ef0c62bd78a0c59b2c"
+    },
+    {
+      "path": "development/before-reinstallation-fix/development/final-r1/summary.json",
+      "bytes": 6019,
+      "sha256": "e899c2deadd20c963065274ac185d8ebf52604d363799a700185c2e3c7128687"
+    },
+    {
+      "path": "development/before-reinstallation-fix/development/final-r1/tested-native-binary.json",
+      "bytes": 122,
+      "sha256": "de4e28a07723950984ae9233a2d69b807fa6a447fce35ab2621b70126130ef1f"
+    },
+    {
+      "path": "development/before-reinstallation-fix/development/final-r1/typescript-tests.log",
+      "bytes": 25047,
+      "sha256": "d93be958ffebef725f81420e96f4db770bdf17550e7881ec60c97f350466be07"
+    },
+    {
+      "path": "development/before-reinstallation-fix/development/final-r1/typescript-typecheck.log",
+      "bytes": 101,
+      "sha256": "30ef9ce16cf042ab6f160e0a76c1fbfe22f02a3c3a3659ee62863ffc1efdbfdf"
+    },
+    {
+      "path": "development/before-reinstallation-fix/development/mac-r1-receipt.json",
+      "bytes": 273,
+      "sha256": "8edb3f8561e6b5c5d37d93b3e90fea2579e7e20b9e56b5face7f7ea1de946d35"
+    },
+    {
+      "path": "development/before-reinstallation-fix/development/mac-r1.log",
+      "bytes": 489,
+      "sha256": "e1c5013948879477c571acd1f4c90517a3d732fa7b2618732c1ea3cb9450ef0f"
+    },
+    {
+      "path": "development/before-reinstallation-fix/development/pwsh-prerequisite.json",
+      "bytes": 805,
+      "sha256": "51c62e30dd17f773bf302f5aaa7a56ec99964f3f97302f8cf15efdf0feefed12"
+    },
+    {
+      "path": "development/before-reinstallation-fix/development/r1-receipt.json",
+      "bytes": 259,
+      "sha256": "a25b4fa304cc5f414473640b670f94a1902d15e41eb71fdf78fce471da1bb199"
+    },
+    {
+      "path": "development/before-reinstallation-fix/development/r1.log",
+      "bytes": 697,
+      "sha256": "277a16e0e8e79cb1a92f41d0c7d8104181325b1cc051c79ff5bbcdd4d6882740"
+    },
+    {
+      "path": "development/before-reinstallation-fix/development/r2-receipt.json",
+      "bytes": 266,
+      "sha256": "e2a50382c8980d2534ef7f411e0e9f0100d29baaf0f11786e0c657431a6ef36f"
+    },
+    {
+      "path": "development/before-reinstallation-fix/development/r2.log",
+      "bytes": 902,
+      "sha256": "310dfb023e47333d26e9dac93cc8b505123d4afa7d218bb7e2830731854757ee"
+    },
+    {
+      "path": "development/before-reinstallation-fix/development/r3-receipt.json",
+      "bytes": 398,
+      "sha256": "1303f83522dee1231a3dc582416fc9c70b53339fa63e0618d999c345a3081efe"
+    },
+    {
+      "path": "development/before-reinstallation-fix/development/r3.log",
+      "bytes": 208,
+      "sha256": "6ecda3ca4559d1968462545e227029e5d4ab5cb771980cf4d090f3e1361db1d5"
+    },
+    {
+      "path": "development/before-reinstallation-fix/development/r4-receipt.json",
+      "bytes": 388,
+      "sha256": "fb441e93b19db7155fa249411affe91bfbde0d1ef27cb95115e0c987dde3bc10"
+    },
+    {
+      "path": "development/before-reinstallation-fix/development/r4.log",
+      "bytes": 15945,
+      "sha256": "c9fc1fd8f908b02f7764a3f500a1cdc442559c552bfbeb915079b7e3a94c1879"
+    },
+    {
+      "path": "development/before-reinstallation-fix/development/r5-receipt.json",
+      "bytes": 259,
+      "sha256": "2f400bfd5be319f3e93658314731aa7e3325aca0c1b73e743b10300e730f7fe0"
+    },
+    {
+      "path": "development/before-reinstallation-fix/development/r5.log",
+      "bytes": 15869,
+      "sha256": "50f6648440541d462422b6c3b518b408f1f22bf3f887d653860cf87d81e47900"
+    },
+    {
+      "path": "development/before-reinstallation-fix/development/r6-receipt.json",
+      "bytes": 260,
+      "sha256": "096c2b86f9a71e2f8f66fcc9c736c5464690a4408fafb2880791767d831fdeea"
+    },
+    {
+      "path": "development/before-reinstallation-fix/development/r6.log",
+      "bytes": 2964,
+      "sha256": "62421371766a1c0adf27cfb2d8ca8a088b7a2494ef0cbbd7c62d12185b153d18"
+    },
+    {
+      "path": "development/before-reinstallation-fix/development/r7-receipt.json",
+      "bytes": 258,
+      "sha256": "2f2b66d40a79d975b7f7baffbab6ce0aff10e9c9c3fb385d42570b2f76b2dfb9"
+    },
+    {
+      "path": "development/before-reinstallation-fix/development/r7.log",
+      "bytes": 2009,
+      "sha256": "430af94237582af7ac23f8d45a20c4c8bcd7117948a837742646f6a9ea91405b"
+    },
+    {
+      "path": "development/before-reinstallation-fix/final/actual-os-credential-cli.log",
+      "bytes": 376,
+      "sha256": "3edcea90f6a3ba435b5000c4c5e655da01aba61113d97ad8fa65d7b79bea7446"
+    },
+    {
+      "path": "development/before-reinstallation-fix/final/clippy.log",
+      "bytes": 60,
+      "sha256": "278f8808ed9d03840d313d0e2ce64a7c31762f47928eb8ffc8a417d0063a04c4"
+    },
+    {
+      "path": "development/before-reinstallation-fix/final/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "development/before-reinstallation-fix/final/native-service-and-regressions.log",
+      "bytes": 84225,
+      "sha256": "804633608b3b1ef4d1422db35bfef89521fb5078b38071073af4e3d79656c1ba"
+    },
+    {
+      "path": "development/before-reinstallation-fix/final/python-contracts.log",
+      "bytes": 2845,
+      "sha256": "d1c1d3163dbf2b529a868896e47701e6a14c32c9400eaeb0325e3a383d0c420e"
+    },
+    {
+      "path": "development/before-reinstallation-fix/final/receipts.json",
+      "bytes": 5097,
+      "sha256": "8bc2d0b7e8f25ce36e7ef5ce8e1a541807d2f7a513c09e5de36fc662e23e133f"
+    },
+    {
+      "path": "development/before-reinstallation-fix/final/source-after.json",
+      "bytes": 67156,
+      "sha256": "6e6e44cce9c6fff63a11fcc2ef9f06e31bd359c90b61e7ef0c62bd78a0c59b2c"
+    },
+    {
+      "path": "development/before-reinstallation-fix/final/source-before.json",
+      "bytes": 67156,
+      "sha256": "6e6e44cce9c6fff63a11fcc2ef9f06e31bd359c90b61e7ef0c62bd78a0c59b2c"
+    },
+    {
+      "path": "development/before-reinstallation-fix/final/summary.json",
+      "bytes": 6016,
+      "sha256": "8535923a7986e512f980700baf99b878224fc22aa3eeff841c2b4ba71f6eb373"
+    },
+    {
+      "path": "development/before-reinstallation-fix/final/tested-native-binary.json",
+      "bytes": 122,
+      "sha256": "de4e28a07723950984ae9233a2d69b807fa6a447fce35ab2621b70126130ef1f"
+    },
+    {
+      "path": "development/before-reinstallation-fix/final/typescript-tests.log",
+      "bytes": 25039,
+      "sha256": "d5595e21372fbb97123bd77644f88d98f6f31bb135f6d93ef46e72dd666e9356"
+    },
+    {
+      "path": "development/before-reinstallation-fix/final/typescript-typecheck.log",
+      "bytes": 101,
+      "sha256": "30ef9ce16cf042ab6f160e0a76c1fbfe22f02a3c3a3659ee62863ffc1efdbfdf"
+    },
+    {
+      "path": "development/before-reinstallation-fix/index.json",
+      "bytes": 20769,
+      "sha256": "9652b8afc037fa347a2542ccb78c873366b34e4953238859ab46710932fadf09"
+    },
+    {
+      "path": "development/before-reinstallation-fix/new-source/native/src/github_app_digest_service.rs",
+      "bytes": 19465,
+      "sha256": "6af7f65e4da3a84c6b3c398b55e51a76e2230a7225021def2d8729bb76dd9d03"
+    },
+    {
+      "path": "development/before-reinstallation-fix/new-source/native/src/github_app_digest_service_state.rs",
+      "bytes": 22994,
+      "sha256": "c55513478f6a7afb9381397fde8b62f3886bf192d4bd684175babc16d23a3331"
+    },
+    {
+      "path": "development/before-reinstallation-fix/new-source/native/tests/github_app_digest_handoff.rs",
+      "bytes": 35767,
+      "sha256": "c028ee6687ceaec8e6e62ecd55fbd33205aad9d7dc774bb2ad3e0fedddfe2762"
+    },
+    {
+      "path": "development/before-reinstallation-fix/run-local-validation.py",
+      "bytes": 3692,
+      "sha256": "0586d2bbdd5f46c52f6b5527ea6e7b42c8c152e0afea72dbae76478232403215"
+    },
+    {
+      "path": "development/before-reinstallation-fix/runtime-change.patch",
+      "bytes": 17430,
+      "sha256": "72a4fbbf47f1c2078e0caa18f697e643ba847d248e4fa8f1d49b5aafd387d5e4"
+    },
+    {
+      "path": "development/clippy-r1-receipt.json",
+      "bytes": 276,
+      "sha256": "a73b0627fb3199c268034c3ff68ab7e11db82e786be34a943fd0df02f8e56ad5"
+    },
+    {
+      "path": "development/clippy-r1.log",
+      "bytes": 172,
+      "sha256": "ffeebf44a9ce6bfb94ffb06a0c71af12953b61ed0265e5c89903930774acdbc6"
+    },
+    {
+      "path": "development/final-r1/actual-os-credential-cli.log",
+      "bytes": 376,
+      "sha256": "f33a40c0d4217b28a204ec1831c969e5592ac213f0c33afc615e81d77a824972"
+    },
+    {
+      "path": "development/final-r1/clippy.log",
+      "bytes": 171,
+      "sha256": "0925e8abb6dab026f9e3355a85789804dc63e63d65ac606dab55a249481a1b23"
+    },
+    {
+      "path": "development/final-r1/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "development/final-r1/native-service-and-regressions.log",
+      "bytes": 137956,
+      "sha256": "2b7fe4a6afe8301716a1f2f19b02ca2a9c4a94e694f405564266db79a3aa0ce2"
+    },
+    {
+      "path": "development/final-r1/python-contracts.log",
+      "bytes": 2845,
+      "sha256": "acbbdb7c7d8bff169125d92e2a1a448d2e6e74bc3d0507ca979f91eb7fce850d"
+    },
+    {
+      "path": "development/final-r1/receipts.json",
+      "bytes": 5099,
+      "sha256": "0fb7467d0a076bcaeefcd39a6b97bb0da98893f08eff19f9d10ae90f2074363b"
+    },
+    {
+      "path": "development/final-r1/source-after.json",
+      "bytes": 67156,
+      "sha256": "6e6e44cce9c6fff63a11fcc2ef9f06e31bd359c90b61e7ef0c62bd78a0c59b2c"
+    },
+    {
+      "path": "development/final-r1/source-before.json",
+      "bytes": 67156,
+      "sha256": "6e6e44cce9c6fff63a11fcc2ef9f06e31bd359c90b61e7ef0c62bd78a0c59b2c"
+    },
+    {
+      "path": "development/final-r1/summary.json",
+      "bytes": 6019,
+      "sha256": "e899c2deadd20c963065274ac185d8ebf52604d363799a700185c2e3c7128687"
+    },
+    {
+      "path": "development/final-r1/tested-native-binary.json",
+      "bytes": 122,
+      "sha256": "de4e28a07723950984ae9233a2d69b807fa6a447fce35ab2621b70126130ef1f"
+    },
+    {
+      "path": "development/final-r1/typescript-tests.log",
+      "bytes": 25047,
+      "sha256": "d93be958ffebef725f81420e96f4db770bdf17550e7881ec60c97f350466be07"
+    },
+    {
+      "path": "development/final-r1/typescript-typecheck.log",
+      "bytes": 101,
+      "sha256": "30ef9ce16cf042ab6f160e0a76c1fbfe22f02a3c3a3659ee62863ffc1efdbfdf"
+    },
+    {
+      "path": "development/mac-r1-receipt.json",
+      "bytes": 273,
+      "sha256": "8edb3f8561e6b5c5d37d93b3e90fea2579e7e20b9e56b5face7f7ea1de946d35"
+    },
+    {
+      "path": "development/mac-r1.log",
+      "bytes": 489,
+      "sha256": "e1c5013948879477c571acd1f4c90517a3d732fa7b2618732c1ea3cb9450ef0f"
+    },
+    {
+      "path": "development/pwsh-prerequisite.json",
+      "bytes": 805,
+      "sha256": "51c62e30dd17f773bf302f5aaa7a56ec99964f3f97302f8cf15efdf0feefed12"
+    },
+    {
+      "path": "development/r1-receipt.json",
+      "bytes": 259,
+      "sha256": "a25b4fa304cc5f414473640b670f94a1902d15e41eb71fdf78fce471da1bb199"
+    },
+    {
+      "path": "development/r1.log",
+      "bytes": 697,
+      "sha256": "277a16e0e8e79cb1a92f41d0c7d8104181325b1cc051c79ff5bbcdd4d6882740"
+    },
+    {
+      "path": "development/r2-receipt.json",
+      "bytes": 266,
+      "sha256": "e2a50382c8980d2534ef7f411e0e9f0100d29baaf0f11786e0c657431a6ef36f"
+    },
+    {
+      "path": "development/r2.log",
+      "bytes": 902,
+      "sha256": "310dfb023e47333d26e9dac93cc8b505123d4afa7d218bb7e2830731854757ee"
+    },
+    {
+      "path": "development/r3-receipt.json",
+      "bytes": 398,
+      "sha256": "1303f83522dee1231a3dc582416fc9c70b53339fa63e0618d999c345a3081efe"
+    },
+    {
+      "path": "development/r3.log",
+      "bytes": 208,
+      "sha256": "6ecda3ca4559d1968462545e227029e5d4ab5cb771980cf4d090f3e1361db1d5"
+    },
+    {
+      "path": "development/r4-receipt.json",
+      "bytes": 388,
+      "sha256": "fb441e93b19db7155fa249411affe91bfbde0d1ef27cb95115e0c987dde3bc10"
+    },
+    {
+      "path": "development/r4.log",
+      "bytes": 15945,
+      "sha256": "c9fc1fd8f908b02f7764a3f500a1cdc442559c552bfbeb915079b7e3a94c1879"
+    },
+    {
+      "path": "development/r5-receipt.json",
+      "bytes": 259,
+      "sha256": "2f400bfd5be319f3e93658314731aa7e3325aca0c1b73e743b10300e730f7fe0"
+    },
+    {
+      "path": "development/r5.log",
+      "bytes": 15869,
+      "sha256": "50f6648440541d462422b6c3b518b408f1f22bf3f887d653860cf87d81e47900"
+    },
+    {
+      "path": "development/r6-receipt.json",
+      "bytes": 260,
+      "sha256": "096c2b86f9a71e2f8f66fcc9c736c5464690a4408fafb2880791767d831fdeea"
+    },
+    {
+      "path": "development/r6.log",
+      "bytes": 2964,
+      "sha256": "62421371766a1c0adf27cfb2d8ca8a088b7a2494ef0cbbd7c62d12185b153d18"
+    },
+    {
+      "path": "development/r7-receipt.json",
+      "bytes": 258,
+      "sha256": "2f2b66d40a79d975b7f7baffbab6ce0aff10e9c9c3fb385d42570b2f76b2dfb9"
+    },
+    {
+      "path": "development/r7.log",
+      "bytes": 2009,
+      "sha256": "430af94237582af7ac23f8d45a20c4c8bcd7117948a837742646f6a9ea91405b"
+    },
+    {
+      "path": "final/actual-os-credential-cli.log",
+      "bytes": 376,
+      "sha256": "c38877c48f40098e2c4272d234ea298d4d5c5f69532f44c32764e420493e1632"
+    },
+    {
+      "path": "final/clippy.log",
+      "bytes": 172,
+      "sha256": "85a88a11e7d368f95e63158ee8601e901cad724734ff2f76f62bdae5471c10c9"
+    },
+    {
+      "path": "final/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "final/native-service-and-regressions.log",
+      "bytes": 84432,
+      "sha256": "ddaa5159039b1189039dae05e042aa75b23073c6ae06e68146edb499806b8a40"
+    },
+    {
+      "path": "final/python-contracts.log",
+      "bytes": 2845,
+      "sha256": "56723afa3f4208e5d936c5e14dd667054ba0cd98a65681d4f2e32002da6b56d9"
+    },
+    {
+      "path": "final/receipts.json",
+      "bytes": 5100,
+      "sha256": "5397e83b630783712815cde994149eb718b3a82c0d70786bd7cec12dfbca5c3e"
+    },
+    {
+      "path": "final/source-after.json",
+      "bytes": 67156,
+      "sha256": "a2cada410788a6cd4c6fab8f84efb9b6cef8a880520a89e9f04c3d27c98e5a21"
+    },
+    {
+      "path": "final/source-before.json",
+      "bytes": 67156,
+      "sha256": "a2cada410788a6cd4c6fab8f84efb9b6cef8a880520a89e9f04c3d27c98e5a21"
+    },
+    {
+      "path": "final/summary.json",
+      "bytes": 6019,
+      "sha256": "2a9e86753cc4ed911460c8102f710208a1b8d416b1989154f9351ce65055a1fd"
+    },
+    {
+      "path": "final/tested-native-binary.json",
+      "bytes": 122,
+      "sha256": "54a5505a298f266c68466b6ccdc6610145a81bdb49de74c7b4ec8d0c1a09d73e"
+    },
+    {
+      "path": "final/typescript-tests.log",
+      "bytes": 25031,
+      "sha256": "d905c893f2428aa746c7cc57279e88c1b1f31fddb04d379f18b046de9ff1ae73"
+    },
+    {
+      "path": "final/typescript-typecheck.log",
+      "bytes": 101,
+      "sha256": "30ef9ce16cf042ab6f160e0a76c1fbfe22f02a3c3a3659ee62863ffc1efdbfdf"
+    },
+    {
+      "path": "new-source/native/src/github_app_digest_service.rs",
+      "bytes": 19465,
+      "sha256": "6af7f65e4da3a84c6b3c398b55e51a76e2230a7225021def2d8729bb76dd9d03"
+    },
+    {
+      "path": "new-source/native/src/github_app_digest_service_state.rs",
+      "bytes": 23059,
+      "sha256": "d7272cb6a41fe23e5983e42abdf595e7ad658787ccae1c2cea06e3e4cb2b819a"
+    },
+    {
+      "path": "new-source/native/tests/github_app_digest_handoff.rs",
+      "bytes": 37043,
+      "sha256": "ea083879d1d670fe3994ff046f5547a2f460677553be6455836dd210c651a362"
+    },
+    {
+      "path": "run-local-validation.py",
+      "bytes": 3692,
+      "sha256": "0586d2bbdd5f46c52f6b5527ea6e7b42c8c152e0afea72dbae76478232403215"
+    },
+    {
+      "path": "runtime-change.patch",
+      "bytes": 17430,
+      "sha256": "72a4fbbf47f1c2078e0caa18f697e643ba847d248e4fa8f1d49b5aafd387d5e4"
+    }
+  ]
+}

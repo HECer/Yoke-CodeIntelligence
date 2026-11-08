@@ -1,0 +1,50 @@
+//! Causal-RED promotion stub. Not an implemented saved-Graph reader.
+//! Root alone promotes and releases functional bodies after behavioral RED.
+
+use crate::{
+    capture::Deadline,
+    model::Graph,
+    retrieval_scopes::{RetrievalHardError, RetrievalResult},
+    store::Store,
+};
+use rusqlite::Transaction;
+
+// None means only an absent saved row. Returned model data grants no source
+// authority. The exact Store connection must own the borrowed transaction.
+pub(crate) fn read_graph_in(
+    _store: &Store,
+    _read: &Transaction<'_>,
+    _snapshot_id: &str,
+    _deadline: &Deadline,
+) -> RetrievalResult<Option<Graph>> {
+    Err(RetrievalHardError::Internal("implementation_unavailable"))
+}
+
+// Short read-transaction convenience wrapper for retrieval-only selection.
+pub(crate) fn read_graph(
+    _store: &Store,
+    _snapshot_id: &str,
+    _deadline: &Deadline,
+) -> RetrievalResult<Option<Graph>> {
+    Err(RetrievalHardError::Internal("implementation_unavailable"))
+}
+
+// The expected fingerprint is derived from the admitted supplied Graph stream,
+// never request JSON. Verification constructs no run or source capability.
+pub(crate) fn verify_saved_graph_in(
+    _store: &Store,
+    _read: &Transaction<'_>,
+    _snapshot_id: &str,
+    _expected_graph_fingerprint: &str,
+    _deadline: &Deadline,
+) -> RetrievalResult<()> {
+    Err(RetrievalHardError::Internal("implementation_unavailable"))
+}
+
+#[cfg(test)]
+#[path = "retrieval_saved_graph_tests.rs"]
+mod tests;
+
+#[cfg(test)]
+#[path = "retrieval_saved_graph_schema_tests.rs"]
+mod schema_tests;

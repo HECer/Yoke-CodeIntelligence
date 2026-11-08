@@ -1,0 +1,19 @@
+from pathlib import Path
+import subprocess,tempfile,json,hashlib,shutil,time
+work=Path(r'C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach');root=work.parent/'Yoke-CodeIntelligence';raw=root/'validation/integration-20261018/compiler-move';out=raw/'live-stdlib-cli';out.mkdir(exist_ok=False)
+sha=lambda b:hashlib.sha256(b).hexdigest();frozen=json.loads((raw/'final-r2/source-after.json').read_text());assert all(sha((work/n).read_bytes())==h for n,h in frozen.items())
+fixture=Path(tempfile.mkdtemp(prefix='ci-compiler-move-stdlib-')).resolve();assert fixture.parent==Path(tempfile.gettempdir()).resolve()
+project=fixture/'project';host=fixture/'host';project.mkdir();host.mkdir()
+sources={'source.ts':'export async function helper(xs:number[]):Promise<number[]>{return Array.from(xs).map(n=>n+1);}\nexport const keep=3;\n','target.ts':'export const other=4;\n','consumer.ts':"import {helper} from './source'; export const result=helper([1]);\n",'tsconfig.json':json.dumps({'compilerOptions':{'strict':True,'target':'ES2022','module':'ESNext','moduleResolution':'Bundler','noEmit':True},'files':['source.ts','target.ts','consumer.ts']})+'\n'}
+for n,s in sources.items():(project/n).write_text(s,encoding='utf-8',newline='\n');(out/n).write_text(s,encoding='utf-8',newline='\n')
+node=Path(shutil.which('node')).resolve();compiler=(work/'node_modules/typescript/lib/typescript.js').resolve();binary=root/'target/debug/yoke.exe'
+(host/'host.json').write_text(json.dumps({'moveCompiler':{'node':str(node),'typescript':str(compiler),'trusted':True}}),encoding='utf-8');(host/'requests.json').write_text(json.dumps([{'operation':'refactor.prepare','args':{'operation':'move','arguments':{'relativePath':'source.ts','namePath':'helper','targetRelativePath':'target.ts'}}}]),encoding='utf-8')
+for n in ['host.json','requests.json']:shutil.copyfile(host/n,out/n)
+runs=[]
+def execute(name,command):
+ start=time.monotonic();r=subprocess.run(command,stdout=subprocess.PIPE,stderr=subprocess.PIPE);(out/(name+'.stdout')).write_bytes(r.stdout);(out/(name+'.stderr')).write_bytes(r.stderr);runs.append({'name':name,'command':[str(x) for x in command],'exitCode':r.returncode,'seconds':time.monotonic()-start});assert r.returncode==0,(name,r.stderr[:1000]);return r
+r=execute('prepare',[str(binary),'--root',str(project),'session','--id','stdlib','--host-profile',str(host/'host.json'),'--requests',str(host/'requests.json')]);value=json.loads(r.stdout)['results'][0];assert value['compiler']=='5.8.3' and value['complete']==False and value['sourceExecuted']==False and value['sourceTreeWritten']==False;assert value['bindingCheck']['knownStaticBindingsCompared']>=10
+id=value['plan']['id'];execute('independent-tsc',[str(binary),'--root',str(project),'verify','--plan',id,'--trust-project','--command',str(node),'--arg='+str(compiler.parent/'tsc.js'),'--arg=--noEmit'])
+source_unchanged=all((project/n).read_bytes()==s.encode() for n,s in sources.items());runtime_unchanged=all(sha((work/n).read_bytes())==h for n,h in frozen.items());assert source_unchanged and runtime_unchanged
+result={'allChecksPassed':True,'sourceUnchanged':source_unchanged,'frozenRuntimeInputsUnchanged':runtime_unchanged,'fixtureRoot':str(fixture),'inputSourceHashes':{n:sha(s.encode()) for n,s in sources.items()},'executedBinarySha256':sha(binary.read_bytes()),'compilerSha256':sha(compiler.read_bytes()),'knownStaticBindingsCompared':value['bindingCheck']['knownStaticBindingsCompared'],'standardLibraryHashCount':len(value['standardLibraryHashes']),'resultSnapshotId':value['plan']['resultSnapshotId'],'independentTscPassed':True,'sourceExecuted':False,'projectApplied':False,'isAdditionalCliProbeNotRustTestCount':True,'commands':runs}
+(out/'result.json').write_text(json.dumps(result,indent=2)+'\n',encoding='utf-8');shutil.copyfile(__file__,out/'runner.py');print(json.dumps({k:v for k,v in result.items() if k not in ['commands','inputSourceHashes']}))

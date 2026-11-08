@@ -1,0 +1,114 @@
+diff --git a/native/src/git_history_read.rs b/native/src/git_history_read.rs
+index a711e12..2cbf24b 100644
+--- a/native/src/git_history_read.rs
++++ b/native/src/git_history_read.rs
+@@ -68,6 +68,8 @@ struct Commit {
+     subject: String,
+     body: String,
+ }
++#[path = "git_history_cursor.rs"]
++pub(crate) mod cursor;
+ fn committer_timestamp(value: &str) -> Result<u64> {
+     let (_, metadata) = value.rsplit_once('>').context(UNAVAILABLE)?;
+     let mut fields = metadata.split_ascii_whitespace();
+diff --git a/native/src/github_app_digest.rs b/native/src/github_app_digest.rs
+index d136080..3bae4a6 100644
+--- a/native/src/github_app_digest.rs
++++ b/native/src/github_app_digest.rs
+@@ -13,6 +13,8 @@ pub mod discussions;
+ #[cfg(test)]
+ #[path = "github_app_digest_history_tests.rs"]
+ mod history_boundary_tests;
++#[path = "github_app_digest_history_jobs.rs"]
++pub mod history_jobs;
+ #[path = "github_app_digest_mapping.rs"]
+ mod mapping;
+ #[path = "github_app_digest_rust.rs"]
+diff --git a/native/src/main.rs b/native/src/main.rs
+index 6d63032..4e49f23 100644
+--- a/native/src/main.rs
++++ b/native/src/main.rs
+@@ -9,6 +9,7 @@ use std::{
+ use yoke::{Engine, capture::Deadline};
+ mod bedrock_cli;
+ mod digest_history_capture_cli;
++mod digest_history_job_cli;
+ mod digest_inbox_cli;
+ mod digest_receiver_cli;
+ mod feedback_cli;
+@@ -90,6 +91,7 @@ enum ExtensionOperation {
+     DigestReceiver(Box<digest_receiver_cli::Arguments>),
+     DigestInbox(Box<digest_inbox_cli::Arguments>),
+     DigestHistoryCapture(Box<digest_history_capture_cli::Arguments>),
++    DigestHistoryJob(Box<digest_history_job_cli::Arguments>),
+     ModelsHttp(Box<HttpModelArguments>),
+     ModelHttpWorker(Box<HttpModelWorkerArguments>),
+     ModelsBedrock(Box<bedrock_cli::Arguments>),
+@@ -1949,6 +1951,7 @@ fn run_parity(
+         ExtensionOperation::DigestHistoryCapture(_) => {
+             bail!("Digest history capture host dispatch error")
+         }
++        ExtensionOperation::DigestHistoryJob(_) => bail!("Digest history job host dispatch error"),
+         ExtensionOperation::GithubApp(_) => bail!("GitHub App host dispatch error"),
+         ExtensionOperation::GithubDiscussions(_) => bail!("GitHub discussions host dispatch error"),
+         ExtensionOperation::Decisions(args) => run_decisions(engine, *args, arguments, deadline),
+@@ -3273,6 +3276,20 @@ fn run(cli: Cli) -> Result<bool> {
+         );
+         return args.run(cli.timeout, cli.max_bytes);
+     }
++    if let Operation::Extensions(extension) = &operation
++        && let ExtensionOperation::DigestHistoryJob(args) = extension.as_ref()
++    {
++        ensure!(
++            cli.snapshot.is_none()
++                && cli.capture_config.is_none()
++                && cli.include_ignored_dir.is_empty()
++                && cli.language_server_config.is_none()
++                && !cli.trust_servers
++                && cli.analyzer_epoch.is_none(),
++            "History jobs inherit captured scope; source/provider options are unavailable"
++        );
++        return args.run(&cli.root, cli.allow_writes, cli.timeout, cli.max_bytes);
++    }
+     if let Operation::Extensions(extension) = &operation
+         && let ExtensionOperation::DigestHistoryCapture(args) = extension.as_ref()
+     {
+diff --git a/native/src/retention.rs b/native/src/retention.rs
+index 1e8b613..f1fc32f 100644
+--- a/native/src/retention.rs
++++ b/native/src/retention.rs
+@@ -788,6 +788,7 @@ fn validate_parity_records(store: &Store, deadline: &Deadline) -> Result<ParityD
+             | crate::github_app::publication::RECORD_KIND
+             | crate::github_app::digest::service::RECORD_KIND
+             | crate::github_app::digest::service::receiver::RECORD_KIND
++            | crate::github_app::digest::history_jobs::RECORD_KIND
+             | crate::github_app::pages::RECORD_KIND
+             | crate::github_app::pages::REVISION_KIND => {
+                 // scan validates the complete closed inline history before this pass.
+@@ -1062,6 +1063,10 @@ fn scan(store: &Store, deadline: &Deadline, exclude_intent: Option<&str>) -> Res
+     out.all_references.extend(digest_service_roots);
+     let digest_receiver_ids =
+         crate::github_app::digest::service::receiver::retained_records(store, deadline)?;
++    let (digest_history_ids, digest_history_roots) =
++        crate::github_app::digest::history_jobs::retained_roots(store, deadline)?;
++    out.references.extend(digest_history_roots.iter().cloned());
++    out.all_references.extend(digest_history_roots);
+     out.references
+         .extend(github_worker_roots.snapshot_ids.iter().cloned());
+     out.all_references.extend(github_worker_roots.snapshot_ids);
+@@ -1293,6 +1298,15 @@ fn scan(store: &Store, deadline: &Deadline, exclude_intent: Option<&str>) -> Res
+             // no imported snapshot/hash/body field can retain local CAS state.
+             continue;
+         }
++        if kind == crate::github_app::digest::history_jobs::RECORD_KIND {
++            ensure!(
++                digest_history_ids.contains(&id),
++                "Invalid digest history job"
++            );
++            // Only source selectors validated above retain state; commit text,
++            // imported Git labels and counters never grant retention authority.
++            continue;
++        }
+         if kind == crate::github_app::pages::RECORD_KIND
+             || kind == crate::github_app::pages::REVISION_KIND
+         {

@@ -1,0 +1,303 @@
+{
+  "actual8dot3Aliases": [
+    {
+      "alias": "C:\\Users\\HEC_e\\AppData\\Local\\Programs\\MINICO~1\\python.exe",
+      "path": "C:\\Users\\HEC_e\\AppData\\Local\\Programs\\Miniconda3\\python.exe",
+      "refused": true
+    }
+  ],
+  "actualReparse": "actual_symlink_refused",
+  "alternatingOldNewOrder": true,
+  "cacheOrProcessChanges": false,
+  "candidateSha256": "cf60be4406464649e9bc5175f8c9522d0d7eb57b0420d4dcb05ff6f7e6fd2f15",
+  "checkedAtUtc": "2026-10-16T14:20:33.295251+00:00",
+  "checks": [
+    "existing_regular_file_read",
+    "missing_tail_allowed_with_existing_prefix_strict",
+    "missing_tail_refused_without_missing_flag",
+    "directory_as_file",
+    "file_as_directory",
+    "boundary_self",
+    "outside_boundary",
+    "parent_traversal",
+    "all_core_and_local_io_aliases_injected",
+    "actual_direct_evidence_enumeration",
+    "arbitrary_boundary_self_enumeration",
+    "synthetic_reparse_ancestor",
+    "actual_reparse_ancestor",
+    "actual_8dot3_alias",
+    "opened_identity_mismatch",
+    "missing_tail_existing_prefix_resolve_failure",
+    "all_missing_tail_resolution_remains_strict"
+  ],
+  "directEvidenceEntries": 335,
+  "fixtureRetained": "guard-smoke-1o3fmhtf",
+  "frozenCoreSha256": "35e097ea51dee414c88c68d645ad43ca6bc2d71c6335152f05107e99a22f99f3",
+  "fullPlanOrApply": false,
+  "gatesInvoked": false,
+  "interpretation": "Per-guard timings only; no claim about total preservation duration or the cause of root's earlier slow plan.",
+  "normalWrites": false,
+  "oldTotalMilliseconds": 38.0639,
+  "rounds": 8,
+  "rows": [
+    {
+      "depth": 1,
+      "oldMilliseconds": 0.8704,
+      "path": "acceptance_wave4.py",
+      "repeat": 0,
+      "sha256": "b51bbffbddd07be0aa6ef019fc950d772c628d77b3567f646d7a837726aa3d15",
+      "v2Milliseconds": 0.5285
+    },
+    {
+      "depth": 2,
+      "oldMilliseconds": 0.8564,
+      "path": "r5-final-public-20261016-1212/run.log",
+      "repeat": 0,
+      "sha256": "9725073da5fccfc18777973baafb42251dbb137223e934969ec4c516ece91f80",
+      "v2Milliseconds": 0.7261
+    },
+    {
+      "depth": 4,
+      "oldMilliseconds": 1.7099,
+      "path": "next-git-impact-details/revisions/normal-final-promotion-v3/apply_normal.py",
+      "repeat": 0,
+      "sha256": "64be3d9a6e91808807abaaf28e0e3abdb391e28ece0ee27a5beff94a8a2a71b9",
+      "v2Milliseconds": 0.8138
+    },
+    {
+      "depth": 5,
+      "oldMilliseconds": 1.883,
+      "path": "next-git-impact-details/revisions/combined-context-prep-v1/actual-contexts/combined-r3-r5-20261016-1315.json",
+      "repeat": 0,
+      "sha256": "6475705a81b2dbc053082b17d0a8445617b4a0724c8f565277601b897c17a88b",
+      "v2Milliseconds": 0.822
+    },
+    {
+      "depth": 1,
+      "oldMilliseconds": 0.4761,
+      "path": "acceptance_wave4.py",
+      "repeat": 1,
+      "sha256": "b51bbffbddd07be0aa6ef019fc950d772c628d77b3567f646d7a837726aa3d15",
+      "v2Milliseconds": 0.5426
+    },
+    {
+      "depth": 2,
+      "oldMilliseconds": 0.7904,
+      "path": "r5-final-public-20261016-1212/run.log",
+      "repeat": 1,
+      "sha256": "9725073da5fccfc18777973baafb42251dbb137223e934969ec4c516ece91f80",
+      "v2Milliseconds": 0.6284
+    },
+    {
+      "depth": 4,
+      "oldMilliseconds": 1.222,
+      "path": "next-git-impact-details/revisions/normal-final-promotion-v3/apply_normal.py",
+      "repeat": 1,
+      "sha256": "64be3d9a6e91808807abaaf28e0e3abdb391e28ece0ee27a5beff94a8a2a71b9",
+      "v2Milliseconds": 0.7455
+    },
+    {
+      "depth": 5,
+      "oldMilliseconds": 1.4755,
+      "path": "next-git-impact-details/revisions/combined-context-prep-v1/actual-contexts/combined-r3-r5-20261016-1315.json",
+      "repeat": 1,
+      "sha256": "6475705a81b2dbc053082b17d0a8445617b4a0724c8f565277601b897c17a88b",
+      "v2Milliseconds": 0.8469
+    },
+    {
+      "depth": 1,
+      "oldMilliseconds": 0.4742,
+      "path": "acceptance_wave4.py",
+      "repeat": 2,
+      "sha256": "b51bbffbddd07be0aa6ef019fc950d772c628d77b3567f646d7a837726aa3d15",
+      "v2Milliseconds": 0.5133
+    },
+    {
+      "depth": 2,
+      "oldMilliseconds": 0.8155,
+      "path": "r5-final-public-20261016-1212/run.log",
+      "repeat": 2,
+      "sha256": "9725073da5fccfc18777973baafb42251dbb137223e934969ec4c516ece91f80",
+      "v2Milliseconds": 0.889
+    },
+    {
+      "depth": 4,
+      "oldMilliseconds": 1.7336,
+      "path": "next-git-impact-details/revisions/normal-final-promotion-v3/apply_normal.py",
+      "repeat": 2,
+      "sha256": "64be3d9a6e91808807abaaf28e0e3abdb391e28ece0ee27a5beff94a8a2a71b9",
+      "v2Milliseconds": 0.8259
+    },
+    {
+      "depth": 5,
+      "oldMilliseconds": 1.5228,
+      "path": "next-git-impact-details/revisions/combined-context-prep-v1/actual-contexts/combined-r3-r5-20261016-1315.json",
+      "repeat": 2,
+      "sha256": "6475705a81b2dbc053082b17d0a8445617b4a0724c8f565277601b897c17a88b",
+      "v2Milliseconds": 0.734
+    },
+    {
+      "depth": 1,
+      "oldMilliseconds": 0.5397,
+      "path": "acceptance_wave4.py",
+      "repeat": 3,
+      "sha256": "b51bbffbddd07be0aa6ef019fc950d772c628d77b3567f646d7a837726aa3d15",
+      "v2Milliseconds": 0.4931
+    },
+    {
+      "depth": 2,
+      "oldMilliseconds": 0.7269,
+      "path": "r5-final-public-20261016-1212/run.log",
+      "repeat": 3,
+      "sha256": "9725073da5fccfc18777973baafb42251dbb137223e934969ec4c516ece91f80",
+      "v2Milliseconds": 0.5885
+    },
+    {
+      "depth": 4,
+      "oldMilliseconds": 2.365,
+      "path": "next-git-impact-details/revisions/normal-final-promotion-v3/apply_normal.py",
+      "repeat": 3,
+      "sha256": "64be3d9a6e91808807abaaf28e0e3abdb391e28ece0ee27a5beff94a8a2a71b9",
+      "v2Milliseconds": 1.118
+    },
+    {
+      "depth": 5,
+      "oldMilliseconds": 2.2753,
+      "path": "next-git-impact-details/revisions/combined-context-prep-v1/actual-contexts/combined-r3-r5-20261016-1315.json",
+      "repeat": 3,
+      "sha256": "6475705a81b2dbc053082b17d0a8445617b4a0724c8f565277601b897c17a88b",
+      "v2Milliseconds": 1.0452
+    },
+    {
+      "depth": 1,
+      "oldMilliseconds": 0.5649,
+      "path": "acceptance_wave4.py",
+      "repeat": 4,
+      "sha256": "b51bbffbddd07be0aa6ef019fc950d772c628d77b3567f646d7a837726aa3d15",
+      "v2Milliseconds": 0.5564
+    },
+    {
+      "depth": 2,
+      "oldMilliseconds": 0.8939,
+      "path": "r5-final-public-20261016-1212/run.log",
+      "repeat": 4,
+      "sha256": "9725073da5fccfc18777973baafb42251dbb137223e934969ec4c516ece91f80",
+      "v2Milliseconds": 0.7332
+    },
+    {
+      "depth": 4,
+      "oldMilliseconds": 1.2409,
+      "path": "next-git-impact-details/revisions/normal-final-promotion-v3/apply_normal.py",
+      "repeat": 4,
+      "sha256": "64be3d9a6e91808807abaaf28e0e3abdb391e28ece0ee27a5beff94a8a2a71b9",
+      "v2Milliseconds": 0.7173
+    },
+    {
+      "depth": 5,
+      "oldMilliseconds": 1.7625,
+      "path": "next-git-impact-details/revisions/combined-context-prep-v1/actual-contexts/combined-r3-r5-20261016-1315.json",
+      "repeat": 4,
+      "sha256": "6475705a81b2dbc053082b17d0a8445617b4a0724c8f565277601b897c17a88b",
+      "v2Milliseconds": 0.7861
+    },
+    {
+      "depth": 1,
+      "oldMilliseconds": 0.5147,
+      "path": "acceptance_wave4.py",
+      "repeat": 5,
+      "sha256": "b51bbffbddd07be0aa6ef019fc950d772c628d77b3567f646d7a837726aa3d15",
+      "v2Milliseconds": 0.7835
+    },
+    {
+      "depth": 2,
+      "oldMilliseconds": 0.7148,
+      "path": "r5-final-public-20261016-1212/run.log",
+      "repeat": 5,
+      "sha256": "9725073da5fccfc18777973baafb42251dbb137223e934969ec4c516ece91f80",
+      "v2Milliseconds": 0.6828
+    },
+    {
+      "depth": 4,
+      "oldMilliseconds": 1.4215,
+      "path": "next-git-impact-details/revisions/normal-final-promotion-v3/apply_normal.py",
+      "repeat": 5,
+      "sha256": "64be3d9a6e91808807abaaf28e0e3abdb391e28ece0ee27a5beff94a8a2a71b9",
+      "v2Milliseconds": 0.7327
+    },
+    {
+      "depth": 5,
+      "oldMilliseconds": 1.5091,
+      "path": "next-git-impact-details/revisions/combined-context-prep-v1/actual-contexts/combined-r3-r5-20261016-1315.json",
+      "repeat": 5,
+      "sha256": "6475705a81b2dbc053082b17d0a8445617b4a0724c8f565277601b897c17a88b",
+      "v2Milliseconds": 1.0539
+    },
+    {
+      "depth": 1,
+      "oldMilliseconds": 0.7528,
+      "path": "acceptance_wave4.py",
+      "repeat": 6,
+      "sha256": "b51bbffbddd07be0aa6ef019fc950d772c628d77b3567f646d7a837726aa3d15",
+      "v2Milliseconds": 0.6269
+    },
+    {
+      "depth": 2,
+      "oldMilliseconds": 0.8865,
+      "path": "r5-final-public-20261016-1212/run.log",
+      "repeat": 6,
+      "sha256": "9725073da5fccfc18777973baafb42251dbb137223e934969ec4c516ece91f80",
+      "v2Milliseconds": 0.5547
+    },
+    {
+      "depth": 4,
+      "oldMilliseconds": 1.263,
+      "path": "next-git-impact-details/revisions/normal-final-promotion-v3/apply_normal.py",
+      "repeat": 6,
+      "sha256": "64be3d9a6e91808807abaaf28e0e3abdb391e28ece0ee27a5beff94a8a2a71b9",
+      "v2Milliseconds": 0.7541
+    },
+    {
+      "depth": 5,
+      "oldMilliseconds": 2.0279,
+      "path": "next-git-impact-details/revisions/combined-context-prep-v1/actual-contexts/combined-r3-r5-20261016-1315.json",
+      "repeat": 6,
+      "sha256": "6475705a81b2dbc053082b17d0a8445617b4a0724c8f565277601b897c17a88b",
+      "v2Milliseconds": 0.9526
+    },
+    {
+      "depth": 1,
+      "oldMilliseconds": 0.6317,
+      "path": "acceptance_wave4.py",
+      "repeat": 7,
+      "sha256": "b51bbffbddd07be0aa6ef019fc950d772c628d77b3567f646d7a837726aa3d15",
+      "v2Milliseconds": 0.7232
+    },
+    {
+      "depth": 2,
+      "oldMilliseconds": 0.7882,
+      "path": "r5-final-public-20261016-1212/run.log",
+      "repeat": 7,
+      "sha256": "9725073da5fccfc18777973baafb42251dbb137223e934969ec4c516ece91f80",
+      "v2Milliseconds": 0.8215
+    },
+    {
+      "depth": 4,
+      "oldMilliseconds": 1.5535,
+      "path": "next-git-impact-details/revisions/normal-final-promotion-v3/apply_normal.py",
+      "repeat": 7,
+      "sha256": "64be3d9a6e91808807abaaf28e0e3abdb391e28ece0ee27a5beff94a8a2a71b9",
+      "v2Milliseconds": 0.8069
+    },
+    {
+      "depth": 5,
+      "oldMilliseconds": 1.8013,
+      "path": "next-git-impact-details/revisions/combined-context-prep-v1/actual-contexts/combined-r3-r5-20261016-1315.json",
+      "repeat": 7,
+      "sha256": "6475705a81b2dbc053082b17d0a8445617b4a0724c8f565277601b897c17a88b",
+      "v2Milliseconds": 0.881
+    }
+  ],
+  "scope": "bounded_guard_probe_not_full_preservation_or_runtime_suite",
+  "speedup": 1.5841740331951588,
+  "v2TotalMilliseconds": 24.0276
+}

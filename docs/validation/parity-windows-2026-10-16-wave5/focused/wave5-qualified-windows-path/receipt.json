@@ -1,0 +1,28 @@
+{
+  "checkedAtUtc": "2026-10-16T00:27:38.007897+00:00",
+  "scope": "focused_gate_not_frozen_suite",
+  "command": [
+    "cargo",
+    "test",
+    "-j",
+    "2",
+    "--manifest-path",
+    "native/Cargo.toml",
+    "--lib",
+    "retrieval_scopes::capacity_tests::genuine_4096_utf8_path_is_captured_and_4097_is_refused_by_existing_capture_boundary",
+    "--",
+    "--ignored",
+    "--exact",
+    "--nocapture",
+    "--test-threads=4"
+  ],
+  "exitCode": 101,
+  "seconds": 1.39,
+  "tempRoot": "D:\\Yoke-Test-Scratch\\wave5-qualified-windows-path",
+  "logSha256": "ff6644d8f5fd80a3bc256289a97b4ffdcbd7eefd31d8d0921dbaec6d0d17c04b",
+  "groups": 1,
+  "passed": 0,
+  "failed": 1,
+  "ignored": 0,
+  "sourceChanges": []
+}

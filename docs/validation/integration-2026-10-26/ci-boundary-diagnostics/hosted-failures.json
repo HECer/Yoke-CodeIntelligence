@@ -1,0 +1,408 @@
+{
+  "project": "HECer/Yoke-CodeIntelligence",
+  "version": "0.5.0",
+  "diagnosticSourceCommit": "34068f537295d966997f1747127ce62c396c20bc",
+  "historicalFailureHead": "f8b02d4eb0145de95f108e12df51786d368b6ef3",
+  "prRun": {
+    "id": 40247654159,
+    "checkoutMerge": "fa1fa863e5c6e71b354e907ee5102d9e2f8213e1",
+    "windowsJob": 121332541351,
+    "macJobs": [
+      121332541316,
+      121332541305
+    ]
+  },
+  "windows": {
+    "key": "windows6",
+    "index": 6,
+    "platform": "Windows",
+    "complete": false,
+    "sourceRevision": "fa1fa863e5c6e71b354e907ee5102d9e2f8213e1",
+    "inputCount": 1087,
+    "groups": 47,
+    "verifiedLogs": 94,
+    "artifactId": 12620925393,
+    "zipSha256": "1d57f817fc7c8d88900b8c44c0b570f5e77a107314f5de683c70f41f744cc5a5",
+    "failed": [
+      {
+        "group": "yoke-code-intelligence:test:agent_diagnostic_boundaries:test",
+        "exitCode": 101,
+        "failedTests": [
+          "test independent_inspection_line_ranges_exclude_the_next_line_but_keep_full_file_eof ... FAILED"
+        ],
+        "harnessSummary": [
+          "test result: FAILED. 3 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 35.88s"
+        ],
+        "boundedCauses": [
+          "thread 'independent_inspection_line_ranges_exclude_the_next_line_but_keep_full_file_eof' (1308) panicked at native\\tests\\agent_diagnostic_boundaries.rs:40:76:",
+          "called `Result::unwrap()` on an `Err` value: Request deadline exceeded"
+        ]
+      }
+    ]
+  },
+  "mac": {
+    "aggregateJob": 121340048879,
+    "aggregateRun": 40247647764,
+    "pushEightSameInputsAndInventory": true,
+    "pushEightIncomplete": false,
+    "rows": [
+      {
+        "key": "mac1",
+        "index": 1,
+        "sourceRevision": "fa1fa863e5c6e71b354e907ee5102d9e2f8213e1",
+        "complete": false,
+        "inputCount": 1087,
+        "groups": 46,
+        "verifiedLogs": 92,
+        "artifactId": 12620955101,
+        "zipSha256": "799a4abfba2437759724f673c69e1f059df0a0ca47951b3f380e0b96149a4606",
+        "failed": [
+          {
+            "group": "yoke-code-intelligence:test:mixed_pdf_view:test",
+            "exitCode": 101,
+            "failedTestCount": 8,
+            "summary": [
+              "test result: FAILED. 1 passed; 8 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.72s"
+            ],
+            "addressSpaceDiagnostics": 8,
+            "spawnEINVAL": 0,
+            "directMemoryRefusal": 0,
+            "historyPhase": []
+          }
+        ]
+      },
+      {
+        "key": "mac6",
+        "index": 6,
+        "sourceRevision": "fa1fa863e5c6e71b354e907ee5102d9e2f8213e1",
+        "complete": false,
+        "inputCount": 1087,
+        "groups": 47,
+        "verifiedLogs": 94,
+        "artifactId": 12620945124,
+        "zipSha256": "ce1c901a2eba3d5d555f860c25d0a0a90d3977c0c86ebc8db85cfc6fff389499",
+        "failed": [
+          {
+            "group": "yoke-code-intelligence:test:mixed_meaning_provider:test",
+            "exitCode": 101,
+            "failedTestCount": 11,
+            "summary": [
+              "test result: FAILED. 0 passed; 11 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.47s"
+            ],
+            "addressSpaceDiagnostics": 11,
+            "spawnEINVAL": 0,
+            "directMemoryRefusal": 0,
+            "historyPhase": []
+          },
+          {
+            "group": "yoke-code-intelligence:test:mixed_meaning_queries:test",
+            "exitCode": 101,
+            "failedTestCount": 6,
+            "summary": [
+              "test result: FAILED. 2 passed; 6 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.33s"
+            ],
+            "addressSpaceDiagnostics": 6,
+            "spawnEINVAL": 0,
+            "directMemoryRefusal": 0,
+            "historyPhase": []
+          },
+          {
+            "group": "yoke-code-intelligence:test:session_prompt_memory:test",
+            "exitCode": 101,
+            "failedTestCount": 4,
+            "summary": [
+              "test result: FAILED. 5 passed; 4 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.75s"
+            ],
+            "addressSpaceDiagnostics": 0,
+            "spawnEINVAL": 1,
+            "directMemoryRefusal": 1,
+            "historyPhase": []
+          },
+          {
+            "group": "yoke-code-intelligence:test:source_acquisition_cli:test",
+            "exitCode": 101,
+            "failedTestCount": 1,
+            "summary": [
+              "test result: FAILED. 3 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.30s"
+            ],
+            "addressSpaceDiagnostics": 1,
+            "spawnEINVAL": 0,
+            "directMemoryRefusal": 0,
+            "historyPhase": []
+          }
+        ]
+      },
+      {
+        "key": "pushMac0",
+        "index": 0,
+        "sourceRevision": "f8b02d4eb0145de95f108e12df51786d368b6ef3",
+        "complete": false,
+        "inputCount": 1087,
+        "groups": 43,
+        "verifiedLogs": 86,
+        "artifactId": 12620256231,
+        "zipSha256": "03cb7ad8f7a110b1189df1f3ee31825d3bce2fd264658cdff5c90c8b79a99bdc",
+        "failed": [
+          {
+            "group": "yoke-code-intelligence:test:media:test",
+            "exitCode": 101,
+            "failedTestCount": 5,
+            "summary": [
+              "test result: FAILED. 8 passed; 5 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.68s"
+            ],
+            "addressSpaceDiagnostics": 5,
+            "spawnEINVAL": 0,
+            "directMemoryRefusal": 0,
+            "historyPhase": []
+          },
+          {
+            "group": "yoke-code-intelligence:test:session_config_templates:test",
+            "exitCode": 101,
+            "failedTestCount": 6,
+            "summary": [
+              "test result: FAILED. 7 passed; 6 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.26s"
+            ],
+            "addressSpaceDiagnostics": 0,
+            "spawnEINVAL": 5,
+            "directMemoryRefusal": 1,
+            "historyPhase": []
+          },
+          {
+            "group": "yoke-code-intelligence:test:session_prompt_runtime:test",
+            "exitCode": 101,
+            "failedTestCount": 6,
+            "summary": [
+              "test result: FAILED. 5 passed; 6 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.05s"
+            ],
+            "addressSpaceDiagnostics": 0,
+            "spawnEINVAL": 2,
+            "directMemoryRefusal": 1,
+            "historyPhase": []
+          }
+        ]
+      },
+      {
+        "key": "pushMac1",
+        "index": 1,
+        "sourceRevision": "f8b02d4eb0145de95f108e12df51786d368b6ef3",
+        "complete": false,
+        "inputCount": 1087,
+        "groups": 46,
+        "verifiedLogs": 92,
+        "artifactId": 12619242983,
+        "zipSha256": "797df79c2b0a806d76772fac043a351c56cecf6ab986e07b6ccc1578da2ed727",
+        "failed": [
+          {
+            "group": "yoke-code-intelligence:test:mixed_pdf_view:test",
+            "exitCode": 101,
+            "failedTestCount": 8,
+            "summary": [
+              "test result: FAILED. 1 passed; 8 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.47s"
+            ],
+            "addressSpaceDiagnostics": 8,
+            "spawnEINVAL": 0,
+            "directMemoryRefusal": 0,
+            "historyPhase": []
+          }
+        ]
+      },
+      {
+        "key": "pushMac2",
+        "index": 2,
+        "sourceRevision": "f8b02d4eb0145de95f108e12df51786d368b6ef3",
+        "complete": false,
+        "inputCount": 1087,
+        "groups": 46,
+        "verifiedLogs": 92,
+        "artifactId": 12620076189,
+        "zipSha256": "004ce70a8f1eb8213f8b10dced076c00f1e21be2fc8aac86db9c090f288efeb4",
+        "failed": [
+          {
+            "group": "yoke-code-intelligence:test:session_config_prompt_catalogs:test",
+            "exitCode": 101,
+            "failedTestCount": 9,
+            "summary": [
+              "test result: FAILED. 6 passed; 9 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.34s"
+            ],
+            "addressSpaceDiagnostics": 0,
+            "spawnEINVAL": 8,
+            "directMemoryRefusal": 1,
+            "historyPhase": []
+          }
+        ]
+      },
+      {
+        "key": "pushMac3",
+        "index": 3,
+        "sourceRevision": "f8b02d4eb0145de95f108e12df51786d368b6ef3",
+        "complete": false,
+        "inputCount": 1087,
+        "groups": 46,
+        "verifiedLogs": 92,
+        "artifactId": 12620315700,
+        "zipSha256": "c681c9dfb57fda021b37d21c7a2980e8439f848d2d7ec9757100b00720b2db69",
+        "failed": [
+          {
+            "group": "yoke-code-intelligence:test:mixed_meaning_composition:test",
+            "exitCode": 101,
+            "failedTestCount": 7,
+            "summary": [
+              "test result: FAILED. 1 passed; 7 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.44s"
+            ],
+            "addressSpaceDiagnostics": 7,
+            "spawnEINVAL": 0,
+            "directMemoryRefusal": 0,
+            "historyPhase": []
+          }
+        ]
+      },
+      {
+        "key": "pushMac4",
+        "index": 4,
+        "sourceRevision": "f8b02d4eb0145de95f108e12df51786d368b6ef3",
+        "complete": true,
+        "inputCount": 1087,
+        "groups": 47,
+        "verifiedLogs": 94,
+        "artifactId": 12619652165,
+        "zipSha256": "cc313a915e956d1570538ab31018711ce0e2f0cd934c90c8fb8a8d44a4278faa",
+        "failed": []
+      },
+      {
+        "key": "pushMac5",
+        "index": 5,
+        "sourceRevision": "f8b02d4eb0145de95f108e12df51786d368b6ef3",
+        "complete": false,
+        "inputCount": 1087,
+        "groups": 47,
+        "verifiedLogs": 94,
+        "artifactId": 12619933820,
+        "zipSha256": "5a5d23e4ff4102c1de0d741fa6aa8c19a47b15e3253a362b88fd376d9579ce64",
+        "failed": [
+          {
+            "group": "yoke-code-intelligence:test:github_app_ingress:test",
+            "exitCode": 101,
+            "failedTestCount": 1,
+            "summary": [
+              "test result: FAILED. 19 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.64s"
+            ],
+            "addressSpaceDiagnostics": 0,
+            "spawnEINVAL": 0,
+            "directMemoryRefusal": 0,
+            "historyPhase": []
+          }
+        ]
+      },
+      {
+        "key": "pushMac6",
+        "index": 6,
+        "sourceRevision": "f8b02d4eb0145de95f108e12df51786d368b6ef3",
+        "complete": false,
+        "inputCount": 1087,
+        "groups": 47,
+        "verifiedLogs": 94,
+        "artifactId": 12619527948,
+        "zipSha256": "131fb8ce2ed599404b589b5683786eb2784c04f1472f29ddf7d9d8e45b6d4457",
+        "failed": [
+          {
+            "group": "yoke-code-intelligence:test:mixed_meaning_provider:test",
+            "exitCode": 101,
+            "failedTestCount": 11,
+            "summary": [
+              "test result: FAILED. 0 passed; 11 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.37s"
+            ],
+            "addressSpaceDiagnostics": 11,
+            "spawnEINVAL": 0,
+            "directMemoryRefusal": 0,
+            "historyPhase": []
+          },
+          {
+            "group": "yoke-code-intelligence:test:mixed_meaning_queries:test",
+            "exitCode": 101,
+            "failedTestCount": 6,
+            "summary": [
+              "test result: FAILED. 2 passed; 6 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.27s"
+            ],
+            "addressSpaceDiagnostics": 6,
+            "spawnEINVAL": 0,
+            "directMemoryRefusal": 0,
+            "historyPhase": []
+          },
+          {
+            "group": "yoke-code-intelligence:test:session_prompt_memory:test",
+            "exitCode": 101,
+            "failedTestCount": 4,
+            "summary": [
+              "test result: FAILED. 5 passed; 4 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.65s"
+            ],
+            "addressSpaceDiagnostics": 0,
+            "spawnEINVAL": 1,
+            "directMemoryRefusal": 1,
+            "historyPhase": []
+          },
+          {
+            "group": "yoke-code-intelligence:test:source_acquisition_cli:test",
+            "exitCode": 101,
+            "failedTestCount": 1,
+            "summary": [
+              "test result: FAILED. 3 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.30s"
+            ],
+            "addressSpaceDiagnostics": 1,
+            "spawnEINVAL": 0,
+            "directMemoryRefusal": 0,
+            "historyPhase": []
+          }
+        ]
+      },
+      {
+        "key": "pushMac7",
+        "index": 7,
+        "sourceRevision": "f8b02d4eb0145de95f108e12df51786d368b6ef3",
+        "complete": false,
+        "inputCount": 1087,
+        "groups": 47,
+        "verifiedLogs": 94,
+        "artifactId": 12620042582,
+        "zipSha256": "c47877e5e9c370d8f14f20bcb68e0949865389556d287d056c79fe9d15e60afd",
+        "failed": [
+          {
+            "group": "yoke-code-intelligence:test:mixed_meaning_claims:test",
+            "exitCode": 101,
+            "failedTestCount": 5,
+            "summary": [
+              "test result: FAILED. 0 passed; 5 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.22s"
+            ],
+            "addressSpaceDiagnostics": 5,
+            "spawnEINVAL": 0,
+            "directMemoryRefusal": 0,
+            "historyPhase": []
+          }
+        ]
+      }
+    ]
+  },
+  "focusedLogs": [
+    {
+      "key": "windows6",
+      "group": "yoke-code-intelligence:test:agent_diagnostic_boundaries:test",
+      "exitCode": 101,
+      "streams": {
+        "0001.stdout": "\nrunning 4 tests\ntest independent_inspection_line_ranges_exclude_the_next_line_but_keep_full_file_eof ... FAILED\ntest partial_line_diagnostics_do_not_admit_the_next_line_point ... ok\ntest selecting_lines_before_the_trailing_empty_line_excludes_its_eof_point ... ok\ntest whole_file_diagnostics_keep_valid_zero_width_eof_points_including_empty_source ... ok\n\nfailures:\n\n---- independent_inspection_line_ranges_exclude_the_next_line_but_keep_full_file_eof stdout ----\n\nthread 'independent_inspection_line_ranges_exclude_the_next_line_but_keep_full_file_eof' (1308) panicked at native\\tests\\agent_diagnostic_boundaries.rs:40:76:\ncalled `Result::unwrap()` on an `Err` value: Request deadline exceeded\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\n\n\nfailures:\n    independent_inspection_line_ranges_exclude_the_next_line_but_keep_full_file_eof\n\ntest result: FAILED. 3 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 35.88s\n\n",
+        "0001.stderr": "\u001b[1m\u001b[92m   Compiling\u001b[0m yoke-code-intelligence v0.5.0 (D:\\a\\Yoke-CodeIntelligence\\Yoke-CodeIntelligence\\native)\n\u001b[1m\u001b[92m    Finished\u001b[0m `test` profile [unoptimized] target(s) in 18.85s\n\u001b[1m\u001b[92m     Running\u001b[0m tests\\agent_diagnostic_boundaries.rs (target\\debug\\deps\\agent_diagnostic_boundaries-e74f42ed2d8d6df4.exe)\n\u001b[1m\u001b[91merror\u001b[0m: test failed, to rerun pass `-p yoke-code-intelligence --test agent_diagnostic_boundaries`\n\u001b[1m\u001b[91merror\u001b[0m: 1 target failed:\n    `-p yoke-code-intelligence --test agent_diagnostic_boundaries`\n"
+      }
+    },
+    {
+      "key": "pushMac5",
+      "group": "yoke-code-intelligence:test:github_app_ingress:test",
+      "exitCode": 101,
+      "streams": {
+        "0024.stdout": "\nrunning 20 tests\ntest accepted_response_means_exact_raw_delivery_is_already_durable ... ok\ntest body_budget_refuses_before_durable_admission ... ok\ntest absolute_request_deadline_stops_a_peer_which_keeps_sending_partial_headers ... ok\ntest configured_tls_server_name_and_http_host_are_both_required ... ok\ntest connection_capacity_does_not_queue_unbounded_stalled_workers ... FAILED\ntest declared_service_lifetime_closes_listener_before_explicit_shutdown ... ok\ntest failed_sql_commit_cannot_produce_an_accepted_http_response ... ok\ntest host_selected_tls_accepts_trusted_server_certificate_and_client_refuses_untrusted_certificate ... ok\ntest inherited_host_cancellation_retires_listener_before_explicit_shutdown ... ok\ntest insufficient_positive_wire_budget_prevents_a_valid_delivery_from_mutating_queue ... ok\ntest hostile_http_framing_headers_and_encoding_never_reach_queue ... ok\ntest owned_shutdown_also_interrupts_a_stalled_tls_handshake ... ok\ntest owned_shutdown_interrupts_stalled_body_and_closes_the_actual_listener ... ok\ntest permission_and_zero_service_limits_refuse_before_listener ... ok\ntest plaintext_remote_bind_cannot_be_granted_without_explicit_tls ... ok\ntest owned_shutdown_bounds_a_request_observed_waiting_for_an_external_sqlite_writer ... ok\ntest redelivery_is_idempotent_and_conflicting_body_cannot_overwrite_history ... ok\ntest raw_byte_mutation_and_wrong_repository_refuse_without_state ... ok\ntest signed_ping_is_acknowledged_without_creating_a_review_job ... ok\ntest unsigned_event_label_cannot_turn_pr_body_into_ping_or_ping_into_pr ... ok\n\nfailures:\n\n---- connection_capacity_does_not_queue_unbounded_stalled_workers stdout ----\n\nthread 'connection_capacity_does_not_queue_unbounded_stalled_workers' (181661) panicked at native/tests/github_app_ingress.rs:72:37:\ncalled `Result::unwrap()` on an `Err` value: Os { code: 54, kind: ConnectionReset, message: \"Connection reset by peer\" }\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\n\n\nfailures:\n    connection_capacity_does_not_queue_unbounded_stalled_workers\n\ntest result: FAILED. 19 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.64s\n\n",
+        "0024.stderr": "\u001b[1m\u001b[92m   Compiling\u001b[0m yoke-code-intelligence v0.5.0 (/Users/runner/work/Yoke-CodeIntelligence/Yoke-CodeIntelligence/native)\n\u001b[1m\u001b[92m    Finished\u001b[0m `test` profile [unoptimized] target(s) in 1.77s\n\u001b[1m\u001b[92m     Running\u001b[0m tests/github_app_ingress.rs (target/debug/deps/github_app_ingress-1bf4d1bb2b463d34)\n\u001b[1m\u001b[91merror\u001b[0m: test failed, to rerun pass `-p yoke-code-intelligence --test github_app_ingress`\n\u001b[1m\u001b[91merror\u001b[0m: 1 target failed:\n    `-p yoke-code-intelligence --test github_app_ingress`\n"
+      }
+    }
+  ],
+  "scope": "Verified historical text artifacts and failure receipts; no current-head Rust execution or whole-platform qualification.",
+  "currentNativeAcceptance": false,
+  "releaseQualification": false,
+  "wholeProjectComplete": false
+}

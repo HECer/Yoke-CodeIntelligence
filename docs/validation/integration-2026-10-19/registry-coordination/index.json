@@ -1,0 +1,175 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-18T23:48:32.518210+00:00",
+  "baseCommit": "670951b62a6cc95cc9ccb1a771c6b88e19cc6693",
+  "acceptedWholeNative": false,
+  "kind": "explicit_unix_registry_coordination_development_follow_up",
+  "implementation": {
+    "hostPermission": "allowRegistryCoordination / --allow-registry-coordination",
+    "defaultChanged": false,
+    "windowsSharingGuardPreserved": true,
+    "unixReadOnlyPinnedTransaction": true,
+    "sqliteCoordinationSidecarsPermitted": true,
+    "logicalDatabaseWritesPermitted": false,
+    "actualUnixValidation": "pending_hosted_run",
+    "sourceAcquisitionOrProviderAuthority": false
+  },
+  "checks": {
+    "format": "passed",
+    "allTargetClippyWarningsDenied": "passed",
+    "localSqliteReaderUnit": {
+      "passed": 5,
+      "failed": 0
+    },
+    "registrySessionCli": {
+      "targets": 9,
+      "passed": 55,
+      "failed": 1,
+      "ignored": 0,
+      "failure": "existing_output_file_directory_and_hardlink_are_never_overwritten: Windows symlink fixture setup OS 1314; no suppression"
+    },
+    "portableDebuggerRepl": {
+      "passed": 28,
+      "failed": 0,
+      "ignored": 1,
+      "ignoredReason": "actual host-selected Windows debugpy adapter not configured"
+    },
+    "typescriptTypecheck": "passed",
+    "typescript": {
+      "passed": 254,
+      "failed": 0,
+      "skipped": 3
+    },
+    "sourceUnchangedWithinRuns": true,
+    "finalRuntimeInputsMatchValidatedPortableFixtureManifest": true
+  },
+  "proofs": {
+    "registryRunPhysicalSourceManifest": "registry-coordination-r2/source-freeze.json",
+    "subsequentRuntimeSourceManifest": "portable-fixtures-r1/source-freeze.json",
+    "onlyRuntimeDeltaBetweenRuns": "fixture-source-delta.json",
+    "documentationAndEvidenceWrittenAfterValidation": true
+  },
+  "earlierHostedLinux": {
+    "head": "670951b62a6cc95cc9ccb1a771c6b88e19cc6693",
+    "url": "https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/39176108088/job/117818994268",
+    "groups": 256,
+    "passed": 1903,
+    "failed": 70,
+    "ignored": 23,
+    "accepted": false,
+    "log": "linux-before-follow-up.log"
+  },
+  "boundaries": [
+    "No whole-native acceptance, release, main merge or deployment",
+    "Unix host installation remains Windows-only; full platform and STATUS functionality remain open",
+    "Scoped fixture results and historical baseline totals are not additive",
+    "Existing strict Windows writer/WAL refusal and symlink security tests retained"
+  ],
+  "artifacts": [
+    {
+      "path": "fixture-source-delta.json",
+      "bytes": 418,
+      "sha256": "aadc3ee8fc0b061d899109c9846a8900708477399d11daf14db19a5896ca3236"
+    },
+    {
+      "path": "linux-before-follow-up.log",
+      "bytes": 499717,
+      "sha256": "66ec25939ae561040d06af2fb19f29dd40970cc0ccd61af3e4b6928e0ecca11b"
+    },
+    {
+      "path": "portable-fixtures-r1/clippy.log",
+      "bytes": 172,
+      "sha256": "8e5bff2e613b40c5576ab073d4353c41352b6df1e7689d493bf8be43cfe42a01"
+    },
+    {
+      "path": "portable-fixtures-r1/debugger-repl.log",
+      "bytes": 3215,
+      "sha256": "285abdfa602597aa5fdfc3fde3c8cbd85059025427cae8483918dbd4107eb45d"
+    },
+    {
+      "path": "portable-fixtures-r1/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "portable-fixtures-r1/receipts.json",
+      "bytes": 1492,
+      "sha256": "713462ac1f4e140febbe6c227401d0de4173b1e13b6c816af20ff521f360c7ff"
+    },
+    {
+      "path": "portable-fixtures-r1/source-freeze.json",
+      "bytes": 64122,
+      "sha256": "701a57669cd421b103e7791986c9978679d53f5beeb3b06a7c2851f07b222cd1"
+    },
+    {
+      "path": "portable-fixtures-r1/summary.json",
+      "bytes": 1708,
+      "sha256": "bdb198627b22aab45b2c5de6bc351e752149b9eea1e4d3b877786cd8c8d70960"
+    },
+    {
+      "path": "portable-fixtures-r1/typescript-tests.log",
+      "bytes": 24424,
+      "sha256": "8d1c2bc59662b0ef41226096fda90e913225fd8c0d79ee2f4438900d288eb97b"
+    },
+    {
+      "path": "portable-fixtures-r1/typescript-typecheck.log",
+      "bytes": 101,
+      "sha256": "30ef9ce16cf042ab6f160e0a76c1fbfe22f02a3c3a3659ee62863ffc1efdbfdf"
+    },
+    {
+      "path": "registry-coordination-r1/clippy.log",
+      "bytes": 644,
+      "sha256": "6264f24408515ffc1189c4c32001e558c3f5073ceb39e191bd1e46a01793bc63"
+    },
+    {
+      "path": "registry-coordination-r1/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "registry-coordination-r1/receipts.json",
+      "bytes": 645,
+      "sha256": "53647bfa4506d6e9efd26af57024a8151cd07bc1d4c1f1730d866b4f6ea53e67"
+    },
+    {
+      "path": "registry-coordination-r1/summary.json",
+      "bytes": 782,
+      "sha256": "0a7899e8ab5b53ed5dcbfd3448aad8209a0971740d4043267ad639643dfe8f55"
+    },
+    {
+      "path": "registry-coordination-r2/clippy.log",
+      "bytes": 172,
+      "sha256": "0f5e7ce22ed8419b235ac96127933c98609f837f5c98bae489e8524b211cea9c"
+    },
+    {
+      "path": "registry-coordination-r2/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "registry-coordination-r2/receipts.json",
+      "bytes": 1800,
+      "sha256": "7676f3c9febba5f129ae78ea573c6453a93ba2f27ba57c9029556a01ece39fb5"
+    },
+    {
+      "path": "registry-coordination-r2/registry-reader-unit.log",
+      "bytes": 929,
+      "sha256": "6e8708e53b87ba72f6970f7a76100b63a30d88b470ab9cec4fc8d322866251a3"
+    },
+    {
+      "path": "registry-coordination-r2/registry-session-cli.log",
+      "bytes": 7509,
+      "sha256": "eb6741c69ce74c554dcef833c0a275fb749d6b18ab0f7657057ed894bd5c870d"
+    },
+    {
+      "path": "registry-coordination-r2/source-freeze.json",
+      "bytes": 1359299,
+      "sha256": "c40bc98e3498ee08bf9f2a6dba592bfe1c7e67f9e60b0e3561c552671e934c77"
+    },
+    {
+      "path": "registry-coordination-r2/summary.json",
+      "bytes": 2033,
+      "sha256": "13fc8009bb08b3eea93762ff31f8ca0942ff032b39ad797317a31a4a6a070c23"
+    }
+  ]
+}

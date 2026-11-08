@@ -1,0 +1,10 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+error[E0616]: field `profile` of struct `Host` is private
+   --> native\tests\github_app_history_bridge.rs:315:52
+    |
+315 |     let mut profile = serde_json::to_value(&f.host.profile).unwrap();
+    |                                                    ^^^^^^^ private field
+
+For more information about this error, try `rustc --explain E0616`.
+error: could not compile `yoke-code-intelligence` (test "github_app_history_bridge") due to 1 previous error
+warning: build failed, waiting for other jobs to finish...

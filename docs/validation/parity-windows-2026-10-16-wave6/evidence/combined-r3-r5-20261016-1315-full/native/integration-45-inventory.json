@@ -1,0 +1,23 @@
+{
+  "graphify_cli": {
+    "executable": "target\\debug\\deps\\graphify_cli-2f3cad2bee8ea6cb.exe",
+    "ignored": [],
+    "registered": [
+      "public_graphify_cli_exposes_ten_tools_six_resources_and_real_graph_stats"
+    ]
+  },
+  "graphify_selected_queries": {
+    "executable": "target\\debug\\deps\\graphify_selected_queries-b3254669bd3c17dc.exe",
+    "ignored": [],
+    "registered": [
+      "mismatched_published_view_scope_cannot_fall_back_to_live_capture",
+      "omitted_selector_keeps_the_default_view_after_a_nondefault_view_was_published",
+      "selected_get_node_resolves_only_members_of_the_published_nondefault_view",
+      "selected_neighbors_preserve_parallel_directions_and_exact_utf8_evidence",
+      "selected_queries_replay_historical_views_after_new_index_and_unsaved_host_changes",
+      "selected_query_graph_traverses_the_selected_document_and_induced_parallel_edges",
+      "selected_shortest_path_keeps_stored_direction_and_an_explicit_undirected_option",
+      "unknown_and_malformed_view_ids_refuse_before_first_capture"
+    ]
+  }
+}

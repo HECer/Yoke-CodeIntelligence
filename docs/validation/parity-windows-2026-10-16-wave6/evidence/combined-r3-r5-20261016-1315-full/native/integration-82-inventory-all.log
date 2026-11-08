@@ -1,0 +1,21 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 5.19s
+     Running tests\office_bounds.rs (target\debug\deps\office_bounds-9fc912b3f32f0c6c.exe)
+rejected_office_text_is_admitted_before_dom_and_extraction_copies: test
+
+1 test, 0 benchmarks
+     Running tests\ollama.rs (target\debug\deps\ollama-01f2a21a87bcee8f.exe)
+actual_http_summary_replies_cannot_exceed_concise_generation_bounds: test
+actual_http_summary_request_is_concise_for_single_and_multiple_sources: test
+actual_local_installed_embedding_model_gate: test
+chunked_query_vectors_are_bounded_and_a_stalled_backend_times_out: test
+endpoint_identity_capability_and_http_failures_never_become_successes: test
+invalid_protocol_hashes_and_authority_fields_are_rejected: test
+labeled_http_chat_fixture_maps_source_citations_and_reported_usage: test
+labeled_http_embedding_fixture_maps_exact_native_protocol_binding: test
+labeled_model_reranking_is_exact_and_scores_are_bounded_inferences: test
+labeled_vision_fixture_receives_hash_bound_image_bytes: test
+native_executable_worker_drives_http_adapter_and_durable_unknown_billing: test
+summary_unicode_characters_cannot_exceed_the_utf8_byte_budget: test
+
+12 tests, 0 benchmarks

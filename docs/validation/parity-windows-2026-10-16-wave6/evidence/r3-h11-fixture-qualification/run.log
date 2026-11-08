@@ -1,0 +1,10 @@
+   Compiling yoke-r3-additional-qualification v0.0.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\parity-validation-20261015\next-historical-view-comparison\revisions\qualification-harness-v2)
+    Finished `test` profile [unoptimized] target(s) in 4.23s
+     Running tests\historical_receipt_fixture_qualification.rs (target\debug\deps\historical_receipt_fixture_qualification-bcab888dab662639.exe)
+
+running 2 tests
+test h11_owned_worker_publishes_literal_reports_and_reuses_only_original_receipts ... ok
+test h11_owned_archives_replay_original_reports_after_later_host_accounting_and_store_removal ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 6.15s
+

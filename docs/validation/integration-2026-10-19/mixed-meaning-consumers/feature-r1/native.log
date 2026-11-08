@@ -1,0 +1,47 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 43s
+     Running tests\mixed_meaning_provider.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\mixed_meaning_provider-7761ca0ba0193bdf.exe)
+
+running 11 tests
+test bound_invalid_fragment_error_or_usage_retains_reported_bill_without_graph_or_secret_echo ... ok
+test cli_build_requires_separate_trust_and_reads_replay_without_provider_configuration ... ok
+test explicit_mixed_provider_preserves_original_claims_and_replays_without_provider_or_live_files ... ok
+test jobs_count_budget_precedes_malformed_record_materialization_at_4096_boundary ... ok
+test malformed_host_config_is_private_and_refuses_before_missing_store_initialization ... ok
+test metadata_jobs_recover_identities_without_provider_files_source_replay_or_writes ... ok
+test saved_quote_tampering_refuses_both_source_load_and_retention_before_history_changes ... ok
+test status_preserves_caller_read_transaction_sqlite_limit_and_never_spawns_a_provider ... ok
+test trust_source_permission_and_capacity_refuse_before_accounting_or_process ... ok
+test unbound_reply_keeps_unknown_reservation_and_status_performs_no_retry ... ok
+test unknown_original_cost_is_not_upgraded_by_later_ledger_reconciliation ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 9.82s
+
+     Running tests\mixed_meaning_queries.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\mixed_meaning_queries-709009a750aa3f2d.exe)
+
+running 7 tests
+test checked_graph_remains_frozen_after_metadata_corruption_and_entire_store_loss ... ok
+test cli_query_replays_with_separate_pdf_permission_and_no_provider_configuration ... ok
+test closed_queries_reject_invalid_keys_unknown_fields_duplicate_members_and_out_of_bounds_requests ... ok
+test degrees_preserve_parallel_rows_self_loops_and_ordered_repeated_hyperedge_slots ... ok
+test literal_unicode_search_keeps_ambiguous_labels_separate_and_node_references_graph_qualified ... ok
+test query_output_budget_and_absolute_deadline_fail_without_partial_result_or_writes ... FAILED
+test trace_obeys_direction_depth_and_capacity_without_inventing_hyperedge_flow ... ok
+
+failures:
+
+---- query_output_budget_and_absolute_deadline_fail_without_partial_result_or_writes stdout ----
+
+thread 'query_output_budget_and_absolute_deadline_fail_without_partial_result_or_writes' (11420) panicked at native\tests\support\mixed_pdf_fixture.rs:233:5:
+Expected mixed_view_selection_invalid: mixed_view_input_invalid
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    query_output_budget_and_absolute_deadline_fail_without_partial_result_or_writes
+
+test result: FAILED. 6 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.09s
+
+error: test failed, to rerun pass `--test mixed_meaning_queries`
+error: 1 target failed:
+    `--test mixed_meaning_queries`

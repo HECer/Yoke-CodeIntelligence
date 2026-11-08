@@ -1,0 +1,147 @@
+[
+  {
+    "name": "codex-version",
+    "command": [
+      "C:\\Users\\Lomi\\AppData\\Roaming\\npm\\node_modules\\@openai\\codex\\node_modules\\@openai\\codex-win32-x64\\vendor\\x86_64-pc-windows-msvc\\bin\\codex.exe",
+      "--version"
+    ],
+    "exitCode": 0,
+    "seconds": 0.042771099993842654
+  },
+  {
+    "name": "plan",
+    "command": [
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+      "--timeout",
+      "60000",
+      "--max-bytes",
+      "4000000",
+      "host-install",
+      "plan",
+      "--selection",
+      "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-codex-host-z0wds9a_\\selection.json"
+    ],
+    "exitCode": 0,
+    "seconds": 0.7136628000007477
+  },
+  {
+    "name": "missing-write-grant",
+    "command": [
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+      "host-install",
+      "apply",
+      "--selection",
+      "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-codex-host-z0wds9a_\\selection.json",
+      "--plan",
+      "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-codex-host-z0wds9a_\\approved.json"
+    ],
+    "exitCode": 1,
+    "seconds": 0.028571000002557412
+  },
+  {
+    "name": "apply",
+    "command": [
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+      "--timeout",
+      "60000",
+      "--max-bytes",
+      "4000000",
+      "host-install",
+      "apply",
+      "--selection",
+      "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-codex-host-z0wds9a_\\selection.json",
+      "--plan",
+      "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-codex-host-z0wds9a_\\approved.json",
+      "--allow-host-writes"
+    ],
+    "exitCode": 0,
+    "seconds": 1.1825912999920547
+  },
+  {
+    "name": "codex-get-installed",
+    "command": [
+      "C:\\Users\\Lomi\\AppData\\Roaming\\npm\\node_modules\\@openai\\codex\\node_modules\\@openai\\codex-win32-x64\\vendor\\x86_64-pc-windows-msvc\\bin\\codex.exe",
+      "mcp",
+      "get",
+      "yoke_owned-fixture",
+      "--json"
+    ],
+    "exitCode": 0,
+    "seconds": 0.0748989999992773
+  },
+  {
+    "name": "source-index",
+    "command": [
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+      "--root",
+      "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-codex-host-z0wds9a_\\source \ud83d\udca1",
+      "index"
+    ],
+    "exitCode": 0,
+    "seconds": 0.08187919999181759
+  },
+  {
+    "name": "native-mcp-exact-client-argv",
+    "command": [
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+      "--root",
+      "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-codex-host-z0wds9a_\\source \ud83d\udca1",
+      "serve-session",
+      "--id",
+      "owned-fixture",
+      "--host-profile",
+      "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-codex-host-z0wds9a_\\policy.json",
+      "--profile",
+      "native"
+    ],
+    "exitCode": 0,
+    "seconds": 0.0760597000044072
+  },
+  {
+    "name": "uninstall-plan",
+    "command": [
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+      "--timeout",
+      "60000",
+      "--max-bytes",
+      "4000000",
+      "host-install",
+      "uninstall-plan",
+      "--selection",
+      "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-codex-host-z0wds9a_\\selection.json"
+    ],
+    "exitCode": 0,
+    "seconds": 0.6308509000082267
+  },
+  {
+    "name": "uninstall-apply",
+    "command": [
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+      "--timeout",
+      "60000",
+      "--max-bytes",
+      "4000000",
+      "host-install",
+      "apply",
+      "--selection",
+      "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-codex-host-z0wds9a_\\selection.json",
+      "--plan",
+      "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-codex-host-z0wds9a_\\uninstall.json",
+      "--allow-host-writes"
+    ],
+    "exitCode": 0,
+    "seconds": 1.180005500005791
+  },
+  {
+    "name": "codex-get-after-uninstall",
+    "command": [
+      "C:\\Users\\Lomi\\AppData\\Roaming\\npm\\node_modules\\@openai\\codex\\node_modules\\@openai\\codex-win32-x64\\vendor\\x86_64-pc-windows-msvc\\bin\\codex.exe",
+      "mcp",
+      "get",
+      "yoke_owned-fixture",
+      "--json"
+    ],
+    "exitCode": 1,
+    "seconds": 0.05006860000139568
+  }
+]

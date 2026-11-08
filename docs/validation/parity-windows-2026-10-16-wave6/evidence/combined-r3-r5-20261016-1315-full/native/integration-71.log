@@ -1,0 +1,33 @@
+    Finished `test` profile [unoptimized] target(s) in 0.90s
+     Running tests\meaning_graph.rs (target\debug\deps\meaning_graph-6b84601965ba426b.exe)
+
+running 7 tests
+test empty_extraction_records_no_claims_without_claiming_semantic_completeness ... ok
+test model_concepts_relations_and_ordered_roles_keep_exact_source_and_inference_labels ... ok
+test exact_claim_dedup_remaps_endpoints_but_aliases_do_not_merge_distinct_concepts ... ok
+test nonzero_excerpts_and_identical_quotes_in_distinct_files_keep_their_own_bindings ... ok
+test ambiguous_keys_roles_coverage_and_capacity_are_not_accepted_as_inference ... ok
+test utf8_support_escape_forged_source_identity_and_false_coverage_fail_closed ... ok
+test overlapping_support_cannot_expand_small_inputs_into_unbounded_quotation_artifacts ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests\meaning_graph_views.rs (target\debug\deps\meaning_graph_views-6f736190f27f413b.exe)
+
+running 13 tests
+test conflicting_view_registration_is_refused_before_any_prepared_or_view_cas_write ... ok
+test explicit_meaning_view_finds_alias_candidates_and_source_without_merging_claims ... ok
+test invalid_meaning_selection_is_admitted_before_default_structural_artifact_publication ... ok
+test inferred_support_and_hyperedge_roles_never_become_directed_or_exact_bindings ... ok
+test every_untyped_graphify_tool_and_resource_refuses_a_genuine_meaning_view_without_side_effects ... ok
+test later_semantic_selection_failure_leaves_prepared_defaults_unpublished ... ok
+test meaning_read_and_context_return_historic_quote_citations_without_declaration_anchors ... ok
+test meaning_trace_preserves_direction_and_ordered_hyperedge_incidence_without_a_clique ... ok
+test multi_file_relation_and_hyperedge_reads_preserve_all_citations_and_shared_context_budget ... ok
+test unselected_views_keep_the_released_schema_identity_and_artifact_bytes ... ok
+test published_view_queries_and_archived_meaning_keep_identity_after_later_ledger_changes ... ok
+test source_only_projection_consumers_refuse_meaning_before_report_or_archive_publication ... ok
+test two_published_meaning_graphs_keep_equal_local_claims_in_separate_namespaces ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 11.31s
+

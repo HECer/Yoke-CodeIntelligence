@@ -1,0 +1,33 @@
+    Finished `test` profile [unoptimized] target(s) in 0.54s
+     Running tests\meaning_archive_cli.rs (target\debug\deps\meaning_archive_cli-f0638f4e564dad18.exe)
+
+running 10 tests
+test export_refuses_incomplete_store_without_initializing_any_state ... ok
+test invalid_budgets_and_missing_existing_store_fail_before_filesystem_initialization ... ok
+test permission_and_explicit_cas_precede_any_input_or_registry_creation ... ok
+test existing_output_file_directory_and_hardlink_are_never_overwritten ... ok
+test inspect_supplied_bytes_is_storeless_and_emits_unknown_metadata_without_quotes ... ok
+test source_provider_flags_are_rejected_without_reading_selected_files ... ok
+test duplicate_malformed_and_over_budget_bytes_cannot_initialize_a_registry ... ok
+test published_view_export_preserves_full_typed_archive_without_source_publication ... ok
+test stdout_loss_reports_already_durable_registration_and_output_archive_identities ... ok
+test typed_registration_cas_and_load_keep_exact_bytes_after_all_original_state_is_removed ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 9.60s
+
+     Running tests\meaning_archive_primitives.rs (target\debug\deps\meaning_archive_primitives-c5256081a2ec240f.exe)
+
+running 10 tests
+test archived_attempt_preserves_unknown_cost_original_currency_and_response_usage ... ok
+test archived_attempt_keeps_response_usage_distinct_from_later_reconciled_usage ... ok
+test archived_attempt_requires_exact_hashed_task_record_key_and_row_pairing ... ok
+test archived_attempt_reuses_state_event_and_task_total_validation ... ok
+test archived_capture_deadline_and_lineage_capacity_are_checked_before_replay ... ok
+test archived_capture_overlay_uses_its_exact_base_scope_and_checked_revision ... ok
+test archived_capture_rejects_resealed_protected_paths_unknown_policy_and_noncanonical_envelopes ... ok
+test archived_capture_recovers_exact_v8_and_v9_default_and_configured_options ... ok
+test archived_capture_scope_only_derived_lineage_returns_acquisition_policy_without_an_epoch_upgrade ... ok
+test archived_attempt_byte_budget_and_deadline_fail_without_replaying_live_state ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+

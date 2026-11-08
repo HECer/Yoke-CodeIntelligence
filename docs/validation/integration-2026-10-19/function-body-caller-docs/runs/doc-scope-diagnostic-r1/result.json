@@ -1,0 +1,192 @@
+{
+  "cases": [
+    {
+      "case": 0,
+      "language": "js",
+      "exitCode": 0,
+      "error": "",
+      "before": "4",
+      "after": "4",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "3"
+      ],
+      "afterTypes": [
+        "3"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 1,
+      "language": "js",
+      "exitCode": 0,
+      "error": "",
+      "before": "3",
+      "after": "3",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "number"
+      ],
+      "afterTypes": [
+        "number"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 2,
+      "language": "js",
+      "exitCode": 0,
+      "error": "",
+      "before": "4",
+      "after": "4",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "3"
+      ],
+      "afterTypes": [
+        "3"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 3,
+      "language": "js",
+      "exitCode": 0,
+      "error": "",
+      "before": "4",
+      "after": "4",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "3"
+      ],
+      "afterTypes": [
+        "3"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 4,
+      "language": "js",
+      "exitCode": 0,
+      "error": "",
+      "before": "6",
+      "after": "6",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "3"
+      ],
+      "afterTypes": [
+        "3"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 5,
+      "language": "js",
+      "exitCode": 1,
+      "error": "Body context has errors after expansion: [{\"config\":\"tsconfig.json\",\"code\":7006,\"severity\":\"error\",\"message\":\"Parameter 'n' implicitly has an 'any' type.\",\"path\":\"main.js\",\"startByte\":275,\"endByte\":276,\"text\":\"n\"},{\"config\":\"tsconfig.json\",\"code\":2322,\"severity\":\"error\",\"message\":\"Type 'T' is not assignable to type '3'.\",\"path\":\"main.js\",\"startByte\":596,\"endByte\":602,\"text\":\"result\"}]\nProjected:\n/** @typedef {string} Result */\n/** @template T\n * @param {T} n\n * @returns {T} */\n;\nfunction caller(){\nlet __ci_inline_1;\n{\nconst __ci_inline_3 = (3);\n\nif (void 0 !== void 0) {\nvar __ci_inline_4 = /** @template T\n *  */\n/** @param {T} n\n *  */\n/** @returns {T}  */\nfunction(n){return n;};var __ci_inline_5 = /** @type {const} */ ({[\"value\"]: __ci_inline_4(__ci_inline_3)});void __ci_inline_5;\n}\n{\nlet n = __ci_inline_3;\n__ci_inline_2: {\nif (void 0 === void 0) {{ __ci_inline_1 = ( n);; break __ci_inline_2; }}\n__ci_inline_1 = void 0;\n}\n}\n}\n/** @typedef {3} Result */\n/** @type {Result} */ const result=/** @type {(typeof __ci_inline_5)[\"value\"]} */ (/** @type {unknown} */ (__ci_inline_1));return result;}export const observed=caller()+1;"
+    },
+    {
+      "case": 6,
+      "language": "js",
+      "exitCode": 0,
+      "error": "",
+      "before": "4",
+      "after": "4",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "3"
+      ],
+      "afterTypes": [
+        "3"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 7,
+      "language": "js",
+      "exitCode": 0,
+      "error": "",
+      "before": "4",
+      "after": "4",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "3"
+      ],
+      "afterTypes": [
+        "3"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 8,
+      "language": "js",
+      "exitCode": 0,
+      "error": "",
+      "before": "4",
+      "after": "4",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "3"
+      ],
+      "afterTypes": [
+        "3"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 9,
+      "language": "js",
+      "exitCode": 0,
+      "error": "",
+      "before": "4",
+      "after": "4",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "3"
+      ],
+      "afterTypes": [
+        "3"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 10,
+      "language": "js",
+      "exitCode": 0,
+      "error": "",
+      "before": "7",
+      "after": "7",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "4"
+      ],
+      "afterTypes": [
+        "4"
+      ],
+      "resultTypesExact": true
+    },
+    {
+      "case": 11,
+      "language": "ts",
+      "exitCode": 0,
+      "error": "",
+      "before": "3",
+      "after": "3",
+      "ownedRuntimeSame": true,
+      "beforeTypes": [
+        "number"
+      ],
+      "afterTypes": [
+        "number"
+      ],
+      "resultTypesExact": true
+    }
+  ],
+  "allChecksPassed": false,
+  "nativeAdmission": false,
+  "snapshotIdsSynthetic": true,
+  "analyzedCodeExecuted": false,
+  "ownedLiteralFixturesExecuted": true,
+  "diagnosticOnlyWorkerPatch": true
+}

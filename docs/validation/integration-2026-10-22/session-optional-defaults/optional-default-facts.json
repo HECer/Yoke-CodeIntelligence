@@ -1,0 +1,52 @@
+{
+  "documentation": {
+    "url": "https://oraios.github.io/serena/01-about/035_tools.html",
+    "capturedUnix": 1792625972.74906,
+    "bytes": 52434,
+    "sha256": "8988989c30bf33ecce4bfab1d8e982e8413950428f8af421293624288a558b59",
+    "provenance": "Published primary documentation; current publication, NOT pinned upstream revision; no application implementation retrieved"
+  },
+  "toolNamesMatchAllOriginal53": true,
+  "native50AreExactNamedSubsetOfCurrent64": true,
+  "newCurrentOnlyFacadeGroup": "ide",
+  "optionalTools": [
+    "delete_lines",
+    "get_diagnostics_for_symbol",
+    "insert_at_line",
+    "jet_brains_debug",
+    "jet_brains_find_declaration",
+    "jet_brains_find_implementations",
+    "jet_brains_find_referencing_symbols",
+    "jet_brains_find_symbol",
+    "jet_brains_get_symbols_overview",
+    "jet_brains_inline_symbol",
+    "jet_brains_list_inspections",
+    "jet_brains_move",
+    "jet_brains_rename",
+    "jet_brains_run_inspections",
+    "jet_brains_safe_delete",
+    "jet_brains_type_hierarchy",
+    "list_queryable_projects",
+    "open_dashboard",
+    "query_project",
+    "remove_project",
+    "replace_lines",
+    "restart_language_server",
+    "serena_info",
+    "serena_repl"
+  ],
+  "nativeOptionalMethods": [
+    "edit.delete_lines",
+    "edit.insert_at_line",
+    "edit.replace_lines",
+    "ext.list_projects",
+    "ext.project_context",
+    "ext.read_project_context",
+    "lsp.get_diagnostics_for_symbol",
+    "lsp.restart_language_server"
+  ],
+  "defaultToolCount": 29,
+  "defaultNativeMethodCount": 42,
+  "notPinnedRevisionOptionalMetadata": true,
+  "noEquivalenceCertification": true
+}

@@ -1,0 +1,75 @@
+{
+  "sourceCommit": "a79444e7f2c3a9abefbf8e4d8725ba9109ceb740",
+  "runtimeCommit": "1705a7ea15d2f5c30470e252de2da30ff685ff47",
+  "parentCommit": "4146434bb3fd7fde348d2de2480fddb91ed192aa",
+  "paths": [
+    ".gitattributes",
+    "native/docs/postgres-catalog.md",
+    "native/src/host_credentials.rs",
+    "native/src/lib.rs",
+    "native/src/main.rs",
+    "native/src/meaning_archive_cli.rs",
+    "native/src/platform_credentials.rs",
+    "native/src/postgres_catalog.rs",
+    "native/src/postgres_catalog_cli.rs",
+    "native/src/postgres_catalog_client.rs",
+    "native/src/postgres_catalog_query.sql",
+    "native/tests/fixtures/postgres-catalog-response.jsonl",
+    "native/tests/host_credentials.rs",
+    "native/tests/postgres_catalog.rs",
+    "native/tests/postgres_catalog_cli.rs"
+  ],
+  "nativeGroups": [
+    [
+      433,
+      0,
+      7
+    ],
+    [
+      2,
+      0,
+      2
+    ],
+    [
+      4,
+      0,
+      2
+    ],
+    [
+      9,
+      1,
+      0
+    ],
+    [
+      9,
+      0,
+      0
+    ],
+    [
+      3,
+      0,
+      0
+    ],
+    [
+      8,
+      0,
+      0
+    ],
+    [
+      4,
+      0,
+      0
+    ],
+    [
+      7,
+      0,
+      0
+    ]
+  ],
+  "nativeTotals": {
+    "passed": 479,
+    "failed": 1,
+    "ignored": 11
+  },
+  "wholeNativeRerun": false
+}

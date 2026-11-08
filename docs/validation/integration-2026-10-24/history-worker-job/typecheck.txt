@@ -1,0 +1,8 @@
+npm.cmd : npm notice run @hecer/code-intelligence@0.3.0 typecheck
+In Zeile:2 Zeichen:1
++ npm.cmd run typecheck *> validation\integration-20261018\history-work ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (npm notice run ...0.3.0 typecheck:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+npm notice run tsc -p tsconfig.json --noEmit

@@ -1,0 +1,72 @@
+{
+  "model_http_cli": {
+    "executable": "target\\debug\\deps\\model_http_cli-2f155f4d3d0c5f8b.exe",
+    "ignored": [
+      "actual_cli_http_summary_preserves_source_binding_and_unknown_billing"
+    ],
+    "registered": [
+      "actual_cli_http_summary_preserves_source_binding_and_unknown_billing",
+      "missing_http_authority_fails_before_profile_or_source_state_is_opened",
+      "profile_authority_fields_and_inline_secrets_are_rejected_before_source_state",
+      "worker_rejects_changed_host_profile_before_waiting_for_stdin_or_reading_credentials"
+    ]
+  },
+  "model_http_review": {
+    "executable": "target\\debug\\deps\\model_http_review-cbcd6667172ac33b.exe",
+    "ignored": [],
+    "registered": [
+      "credential_with_quote_and_backslash_is_rejected_after_json_unescaping",
+      "present_malformed_tool_calls_cannot_be_treated_as_absent_tools",
+      "unicode_escaped_credential_echo_is_rejected_after_decoding_model_text"
+    ]
+  },
+  "model_identity": {
+    "executable": "target\\debug\\deps\\model_identity-19f2f210e851753e.exe",
+    "ignored": [],
+    "registered": [
+      "large_identity_preserves_exact_released_json_bytes_without_a_second_corpus_buffer"
+    ]
+  },
+  "notes": {
+    "executable": "target\\debug\\deps\\notes-662e2c807df93ad8.exe",
+    "ignored": [],
+    "registered": [
+      "authored_revision_timestamp_uses_unix_milliseconds",
+      "edited_note_keeps_historical_anchor_and_reports_changed_source",
+      "full_retired_head_quota_rejects_publication_atomically_and_allows_reuse",
+      "global_address_namespace_is_reserved_and_reference_boundaries_are_exact",
+      "global_note_policy_matches_its_canonical_global_namespace",
+      "global_storage_is_host_selected_and_missing_or_ignored_notes_do_not_leak",
+      "hidden_and_read_only_references_do_not_leak_or_block_renames",
+      "host_note_policy_defaults_read_only_and_rejects_unknown_authority_fields",
+      "maximally_encoded_accepted_note_remains_readable_after_commit",
+      "memory_reference_left_boundaries_exclude_larger_uri_schemes_and_identifiers",
+      "named_note_crud_retains_authored_scope_revisions_and_exact_source",
+      "regex_edits_count_guard_and_read_only_policy_do_not_partially_mutate_notes",
+      "regex_gap_growth_fails_before_remaining_budget_underflow_and_keeps_the_revision",
+      "rename_rewrites_exact_mem_references_atomically_except_read_only_notes",
+      "retired_heads_remain_bounded_without_consuming_active_note_content_quota"
+    ]
+  },
+  "office": {
+    "executable": "target\\debug\\deps\\office-dd16d7ee5a8a673a.exe",
+    "ignored": [],
+    "registered": [
+      "forbidden_xml_scalars_cannot_enter_persisted_office_text",
+      "native_docx_inspection_decodes_source_bound_unicode_paragraphs_and_tables",
+      "native_xlsx_keeps_shared_inline_values_and_formula_cache_distinct",
+      "office_refuses_wrong_main_root_instead_of_extracting_fake_document_text",
+      "package_paths_bounds_entities_secrets_and_crc_fail_before_persistence",
+      "public_cli_reads_office_without_starting_office_or_a_worker",
+      "public_office_cli_retains_large_results_as_artifacts_within_its_output_budget",
+      "unicode_zip_extra_fields_cannot_replace_admitted_part_identity"
+    ]
+  },
+  "office_bounds": {
+    "executable": "target\\debug\\deps\\office_bounds-9fc912b3f32f0c6c.exe",
+    "ignored": [],
+    "registered": [
+      "rejected_office_text_is_admitted_before_dom_and_extraction_copies"
+    ]
+  }
+}

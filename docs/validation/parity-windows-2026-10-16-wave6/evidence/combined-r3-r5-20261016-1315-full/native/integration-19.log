@@ -1,0 +1,19 @@
+    Finished `test` profile [unoptimized] target(s) in 0.76s
+     Running tests\decision_records_review.rs (target\debug\deps\decision_records_review-272e23eefba2afee.exe)
+
+running 4 tests
+test changed_value_with_both_literals_in_candidate_does_not_claim_a_transition ... ok
+test cli_budget_artifacts_keep_personal_record_content_in_the_personal_store ... ok
+test personal_record_source_history_cannot_be_retired_from_the_source_store ... ok
+test shared_personal_store_preserves_source_workspace_isolation_for_identical_keys ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.72s
+
+     Running tests\decision_retention.rs (target\debug\deps\decision_retention-27a552f5b67e515c.exe)
+
+running 2 tests
+test widened_authored_revision_cannot_authorize_history_retirement_or_blob_purge ... ok
+test authored_revisions_are_known_roots_and_retain_their_historical_source ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.20s
+

@@ -1,0 +1,24 @@
+✖ LIVE installed graphify pinned structural extraction (901.9381ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1504.3084
+
+✖ failing tests:
+
+test at test\live\upstreams.mjs:10:5
+✖ LIVE installed graphify pinned structural extraction (901.9381ms)
+  Error [CIError]: Dependency path must be inside node_modules
+      at assert (file:///C:/Users/Lomi/AppData/Local/YokeValidation/upstreams-20261019-2hp9hr7r/node/dist/core/util.js:15:15)
+      at dependencyPath (file:///C:/Users/Lomi/AppData/Local/YokeValidation/upstreams-20261019-2hp9hr7r/node/dist/core/dependencies.js:8:5)
+      at runBridge (file:///C:/Users/Lomi/AppData/Local/YokeValidation/upstreams-20261019-2hp9hr7r/node/dist/adapters/bridges.js:33:38)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///C:/Users/Lomi/AppData/Local/YokeValidation/upstreams-20261019-2hp9hr7r/node/test/live/upstreams.mjs:10:233)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    code: 'PATH_DENIED'
+  }

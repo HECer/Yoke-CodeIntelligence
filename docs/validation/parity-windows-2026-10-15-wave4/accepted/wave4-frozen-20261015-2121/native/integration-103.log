@@ -1,0 +1,37 @@
+warning: failed to save last-use data
+This may prevent cargo from accurately tracking what is being used in its global cache. This information is used for automatically removing unused data in the cache.
+
+database or disk is full
+
+Caused by:
+  Error code 13: database or disk is full
+    Finished `test` profile [unoptimized] target(s) in 0.77s
+     Running tests\vector_admission_review.rs (target\debug\deps\vector_admission_review-e93b61cc8239ca76.exe)
+
+running 8 tests
+test corrupt_source_blob_is_size_admitted_before_vector_reader_allocation ... ok
+test oversized_persisted_vector_cell_is_bounded_before_string_copy ... ok
+test oversized_escaped_import_is_counted_before_allocating_encoded_json ... ok
+test explicit_readonly_dependency_vectors_import_and_search_without_write_authority ... ok
+test prepared_collection_preserves_legacy_vector_identity_and_serialized_bytes ... ok
+test prepared_vector_admission_checks_global_capacity_without_publishing_a_record ... ok
+test prepared_vector_admission_rejects_unpublishable_plans_before_vectors_exist ... ok
+test prepared_vectors_reject_changed_source_model_count_dimensions_and_zero_norm ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.14s
+
+     Running tests\workflow_cli.rs (target\debug\deps\workflow_cli-927186d3a166e179.exe)
+
+running 9 tests
+test actual_native_cli_tls_service_and_client_load_os_credentials ... ignored, Actual native CLI TLS service/client and Windows credential store; creates/removes only unique test credentials
+test ambiguous_json_rpc_ids_and_nested_lsp_results_are_refused ... ok
+test host_profiles_reject_duplicate_keys_instead_of_replacing_policy ... ok
+test malformed_host_profile_values_are_not_repeated_in_cli_errors ... ok
+test model_worker_deadline_includes_an_input_pipe_that_never_closes ... ok
+test host_only_execution_and_retention_never_inherit_authority_from_config_json ... ok
+test readonly_mcp_dataflow_and_native_cli_share_exact_snapshot_evidence ... ok
+test runtime_cli_preserves_failed_program_evidence_and_returns_failure ... ok
+test native_runtime_cli_preserves_state_across_authorized_repl_commands ... ok
+
+test result: ok. 8 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 1.69s
+

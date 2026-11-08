@@ -1,0 +1,23 @@
+{
+  "at": "2026-10-19T22:02:41.351865+00:00",
+  "version": "2026.09.0",
+  "edition": "community",
+  "requests": [
+    {
+      "url": "https://dist.neo4j.org/neo4j-community-2026.09.0-windows.zip",
+      "status": 200,
+      "finalUrl": "https://dist.neo4j.org/neo4j-community-2026.09.0-windows.zip",
+      "contentLength": "274827729",
+      "contentType": "application/zip"
+    },
+    {
+      "url": "https://dist.neo4j.org/neo4j-community-2026.09.0-windows.zip.sha256",
+      "status": 200,
+      "finalUrl": "https://dist.neo4j.org/neo4j-community-2026.09.0-windows.zip.sha256",
+      "contentLength": "64",
+      "contentType": "text/plain",
+      "checksumText": "020929aded4ba31a3b111918f4a4c85aa4dfb55a866d4bb8f6e593878335626e"
+    }
+  ],
+  "proxyUsed": false
+}

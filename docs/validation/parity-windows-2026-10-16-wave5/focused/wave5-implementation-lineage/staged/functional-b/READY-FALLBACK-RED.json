@@ -1,0 +1,10 @@
+{
+  "status": "ignored_unexecuted_test_only",
+  "preservedFunctionalManifest": "1f15e5b862412e40810307f1aab506c976832b1545ddb3698226421f162508f7",
+  "testFile": "ready_fallback_regression.rs",
+  "sha256": "2556d4471a94ed18fc866bf86bda61bbb915fd2a51aefed147920d0363bcbac5",
+  "qualifiedSelector": "retrieval::driver_tests::ready_global_filter_fallback_omits_balanced_only_scope_counts_with_exact_total",
+  "promotion": "Append test to native/src/retrieval_driver_tests.rs after approved cancellation cleanup. Keep zero-row production builder until root observes this test fail at scopes equality after both genuine global/auto controls succeed.",
+  "expectedKnownScopeTotal": 3,
+  "noExecutionByOwner": true
+}

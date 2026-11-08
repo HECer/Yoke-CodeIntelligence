@@ -1,0 +1,29 @@
+[
+  {
+    "path": "native/src/changes.rs",
+    "priorFrozenWorktreeSha256": "d27b604efbb562d68d1c5e92ffaefc2041182849705a3c55c196a3d809332363",
+    "priorGitBlobSha256": "f1826e81498a8d47da2992e9af5fc8e612b43fb8507f8b41fdee1227fb2be77f",
+    "priorFrozenEqualsPriorGitWithCrlf": true,
+    "currentTestedBytesSha256": "01d2461fcd871f1f7ff5a17a03f6d72c8b5eb2406f7a9d448d52f05674aab0e2",
+    "currentCrlf": 987,
+    "reason": "Preserve original tested worktree CRLF; commit exact newly tested bytes with autocrlf=false."
+  },
+  {
+    "path": "native/src/changes_plan.rs",
+    "priorFrozenWorktreeSha256": "d7fe328ebd4758726b4da9801763e9d33a7bf2da62e96da9096def8f6e34e534",
+    "priorGitBlobSha256": "bfe907bdc1f90521aa9e3410e531f9af32997eceff4a8d60dfb7d37b2d2dfd54",
+    "priorFrozenEqualsPriorGitWithCrlf": true,
+    "currentTestedBytesSha256": "4325e81918039dc85e16d51b25124d5b2d31d2db7fce7857ea62d8255fdbdac6",
+    "currentCrlf": 404,
+    "reason": "Preserve original tested worktree CRLF; commit exact newly tested bytes with autocrlf=false."
+  },
+  {
+    "path": "native/src/store_read_only.rs",
+    "priorFrozenWorktreeSha256": "927262b9d4702b79ebe060096dbc5eccf20fb58dda50a323747cde351d4b477f",
+    "priorGitBlobSha256": "ffdd96578b22ab8517bf77343d7173ce5cea6e0536cbe6bfa5bdf79c715b4e3b",
+    "priorFrozenEqualsPriorGitWithCrlf": true,
+    "currentTestedBytesSha256": "82c5d1c15200902d76845b0719dc2b79d434ac38db42489c022a3f3d1eec5cba",
+    "currentCrlf": 143,
+    "reason": "Preserve original tested worktree CRLF; commit exact newly tested bytes with autocrlf=false."
+  }
+]

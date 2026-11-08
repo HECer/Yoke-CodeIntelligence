@@ -1,0 +1,15 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 5.05s
+     Running tests\store_cancellation.rs (target\debug\deps\store_cancellation-a0db40c66b27d046.exe)
+active_sql_is_interrupted_by_inherited_host_cancellation: test
+cancelled_store_refuses_new_publication_until_deadline_is_replaced: test
+sqlite_lock_contention_retains_a_finite_timeout_and_atomic_recovery: test
+
+3 tests, 0 benchmarks
+     Running tests\store_identity.rs (target\debug\deps\store_identity-0ab8be677c48a4fa.exe)
+a_corrupted_snapshot_payload_cannot_alias_a_different_lookup_identity: test
+graph_lookup_and_every_evidence_member_keep_the_same_snapshot_identity: test
+snapshot_workspace_mismatch_is_rejected_before_source_retrieval: test
+valid_disk_and_derived_snapshot_identities_remain_readable: test
+
+4 tests, 0 benchmarks

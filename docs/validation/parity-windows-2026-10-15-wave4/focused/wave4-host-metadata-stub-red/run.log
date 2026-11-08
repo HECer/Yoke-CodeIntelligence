@@ -1,0 +1,104 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 58.61s
+     Running unittests src\lib.rs (target\debug\deps\yoke-35b101204e4eb110.exe)
+
+running 18 tests
+test host_install::io::tests::metadata_directory_expired_calls_fail_without_mutation_or_empty_success ... FAILED
+test host_install::io::tests::metadata_directory_entry_info_queries_current_size_on_every_pass ... FAILED
+test host_install::io::tests::metadata_directory_byte_bounds_are_raw_bytes_and_empty_files_can_use_zero ... FAILED
+test host_install::io::tests::metadata_directory_enumeration_preserves_count_bounds_and_direct_names ... FAILED
+test host_install::io::tests::metadata_directory_hardlinked_rows_are_refused_without_changing_either_name ... FAILED
+test host_install::io::tests::metadata_directory_leaf_methods_refuse_noncanonical_or_multiple_components ... FAILED
+test host_install::io::tests::metadata_directory_held_parent_retag_never_reads_a_foreign_row ... FAILED
+test host_install::io::tests::metadata_directory_held_parent_retag_never_stats_a_foreign_leaf ... FAILED
+test host_install::io::tests::metadata_directory_held_parent_retag_never_enumerates_foreign_names ... FAILED
+test host_install::io::tests::metadata_directory_names_reenumerate_added_and_removed_foreign_leaves ... FAILED
+test host_install::io::tests::metadata_directory_names_reject_non_utf8_leaf_names_without_silent_omission ... FAILED
+test host_install::io::tests::metadata_directory_read_bytes_rereads_changed_content_on_the_same_reader ... FAILED
+test host_install::io::tests::metadata_directory_read_bytes_observes_a_new_physical_file_at_the_same_leaf ... FAILED
+test host_install::io::tests::metadata_directory_read_refuses_a_preexisting_foreign_data_writer ... FAILED
+test host_install::io::tests::metadata_directory_rereads_bytes_changed_by_a_preexisting_writable_mapping ... FAILED
+test host_install::io::tests::metadata_directory_read_rechecks_access_after_a_fixture_acl_revocation ... FAILED
+test host_install::io::tests::metadata_directory_reparse_child_is_an_error_not_missing_or_ordinary ... FAILED
+test host_install::io::tests::metadata_directory_stat_remains_compatible_with_a_live_exclusive_state_lock ... FAILED
+
+failures:
+
+---- host_install::io::tests::metadata_directory_expired_calls_fail_without_mutation_or_empty_success stdout ----
+Error: Held host metadata-directory opening is unavailable
+
+---- host_install::io::tests::metadata_directory_entry_info_queries_current_size_on_every_pass stdout ----
+Error: Held host metadata-directory opening is unavailable
+
+---- host_install::io::tests::metadata_directory_byte_bounds_are_raw_bytes_and_empty_files_can_use_zero stdout ----
+Error: Held host metadata-directory opening is unavailable
+
+---- host_install::io::tests::metadata_directory_enumeration_preserves_count_bounds_and_direct_names stdout ----
+Error: Held host metadata-directory opening is unavailable
+
+---- host_install::io::tests::metadata_directory_hardlinked_rows_are_refused_without_changing_either_name stdout ----
+Error: Held host metadata-directory opening is unavailable
+
+---- host_install::io::tests::metadata_directory_leaf_methods_refuse_noncanonical_or_multiple_components stdout ----
+Error: Held host metadata-directory opening is unavailable
+
+---- host_install::io::tests::metadata_directory_held_parent_retag_never_reads_a_foreign_row stdout ----
+Error: Held host metadata-directory opening is unavailable
+
+---- host_install::io::tests::metadata_directory_held_parent_retag_never_stats_a_foreign_leaf stdout ----
+Error: Held host metadata-directory opening is unavailable
+
+---- host_install::io::tests::metadata_directory_held_parent_retag_never_enumerates_foreign_names stdout ----
+Error: Held host metadata-directory opening is unavailable
+
+---- host_install::io::tests::metadata_directory_names_reenumerate_added_and_removed_foreign_leaves stdout ----
+Error: Held host metadata-directory opening is unavailable
+
+---- host_install::io::tests::metadata_directory_names_reject_non_utf8_leaf_names_without_silent_omission stdout ----
+Error: Held host metadata-directory opening is unavailable
+
+---- host_install::io::tests::metadata_directory_read_bytes_rereads_changed_content_on_the_same_reader stdout ----
+Error: Held host metadata-directory opening is unavailable
+
+---- host_install::io::tests::metadata_directory_read_bytes_observes_a_new_physical_file_at_the_same_leaf stdout ----
+Error: Held host metadata-directory opening is unavailable
+
+---- host_install::io::tests::metadata_directory_read_refuses_a_preexisting_foreign_data_writer stdout ----
+Error: Held host metadata-directory opening is unavailable
+
+---- host_install::io::tests::metadata_directory_rereads_bytes_changed_by_a_preexisting_writable_mapping stdout ----
+Error: Held host metadata-directory opening is unavailable
+
+---- host_install::io::tests::metadata_directory_read_rechecks_access_after_a_fixture_acl_revocation stdout ----
+Error: Held host metadata-directory opening is unavailable
+
+---- host_install::io::tests::metadata_directory_reparse_child_is_an_error_not_missing_or_ordinary stdout ----
+Error: Held host metadata-directory opening is unavailable
+
+---- host_install::io::tests::metadata_directory_stat_remains_compatible_with_a_live_exclusive_state_lock stdout ----
+Error: Held host metadata-directory opening is unavailable
+
+
+failures:
+    host_install::io::tests::metadata_directory_byte_bounds_are_raw_bytes_and_empty_files_can_use_zero
+    host_install::io::tests::metadata_directory_entry_info_queries_current_size_on_every_pass
+    host_install::io::tests::metadata_directory_enumeration_preserves_count_bounds_and_direct_names
+    host_install::io::tests::metadata_directory_expired_calls_fail_without_mutation_or_empty_success
+    host_install::io::tests::metadata_directory_hardlinked_rows_are_refused_without_changing_either_name
+    host_install::io::tests::metadata_directory_held_parent_retag_never_enumerates_foreign_names
+    host_install::io::tests::metadata_directory_held_parent_retag_never_reads_a_foreign_row
+    host_install::io::tests::metadata_directory_held_parent_retag_never_stats_a_foreign_leaf
+    host_install::io::tests::metadata_directory_leaf_methods_refuse_noncanonical_or_multiple_components
+    host_install::io::tests::metadata_directory_names_reenumerate_added_and_removed_foreign_leaves
+    host_install::io::tests::metadata_directory_names_reject_non_utf8_leaf_names_without_silent_omission
+    host_install::io::tests::metadata_directory_read_bytes_observes_a_new_physical_file_at_the_same_leaf
+    host_install::io::tests::metadata_directory_read_bytes_rereads_changed_content_on_the_same_reader
+    host_install::io::tests::metadata_directory_read_rechecks_access_after_a_fixture_acl_revocation
+    host_install::io::tests::metadata_directory_read_refuses_a_preexisting_foreign_data_writer
+    host_install::io::tests::metadata_directory_reparse_child_is_an_error_not_missing_or_ordinary
+    host_install::io::tests::metadata_directory_rereads_bytes_changed_by_a_preexisting_writable_mapping
+    host_install::io::tests::metadata_directory_stat_remains_compatible_with_a_live_exclusive_state_lock
+
+test result: FAILED. 0 passed; 18 failed; 0 ignored; 0 measured; 167 filtered out; finished in 0.01s
+
+error: test failed, to rerun pass `--lib`

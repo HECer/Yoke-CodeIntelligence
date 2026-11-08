@@ -1,0 +1,23 @@
+    Finished `test` profile [unoptimized] target(s) in 0.84s
+     Running tests\historical_view_budget_options.rs (target\debug\deps\historical_view_budget_options-0bd7ee08ae66cb3e.exe)
+
+running 2 tests
+test explicit_budgets_above_defaults_are_admitted_and_reported_without_clamping ... ok
+test zero_budgets_refuse_positive_work_instead_of_meaning_unlimited ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.44s
+
+     Running tests\historical_view_comparison.rs (target\debug\deps\historical_view_comparison-9338980b82f50dc0.exe)
+
+running 8 tests
+test error_redaction::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling ... ok
+test directed_parallel_delta_does_not_infer_which_identical_occurrence_survived ... ok
+test identical_bytes_across_paths_do_not_manufacture_rename_lineage ... ok
+test explicit_pair_replays_historical_bytes_and_is_deterministic_without_publication ... ok
+test all_output_or_deadline_failures_publish_nothing ... ok
+test stale_snapshot_artifact_and_graph_pins_refuse_without_mutation ... ok
+test wrong_store_and_cross_workspace_pins_do_not_fall_back_to_equal_paths ... ok
+test checked_archives_compare_after_live_store_and_worker_are_gone_without_quote_leaks ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.11s
+

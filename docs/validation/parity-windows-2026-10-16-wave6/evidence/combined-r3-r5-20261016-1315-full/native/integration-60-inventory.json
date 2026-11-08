@@ -1,0 +1,30 @@
+{
+  "live": {
+    "executable": "target\\debug\\deps\\live-d84dde654b404e7d.exe",
+    "ignored": [
+      "actual_python_server_cross_file_unicode_historical_navigation_and_rename",
+      "actual_rust_analyzer_definition_references_and_rename",
+      "actual_rust_analyzer_mcp_references_bind_immutable_snapshot",
+      "actual_typescript_server_cross_file_definition_and_rename"
+    ],
+    "registered": [
+      "actual_python_server_cross_file_unicode_historical_navigation_and_rename",
+      "actual_rust_analyzer_definition_references_and_rename",
+      "actual_rust_analyzer_mcp_references_bind_immutable_snapshot",
+      "actual_typescript_server_cross_file_definition_and_rename"
+    ]
+  },
+  "live_enrichment": {
+    "executable": "target\\debug\\deps\\live_enrichment-fe0b6210f3ac9031.exe",
+    "ignored": [
+      "actual_python_server_normalized_symbols_and_signature_help",
+      "actual_rust_server_expanded_call_symbols_completion_signature_diagnostics_and_prepare_rename",
+      "actual_typescript_server_expanded_type_call_symbols_signature_and_published_diagnostics"
+    ],
+    "registered": [
+      "actual_python_server_normalized_symbols_and_signature_help",
+      "actual_rust_server_expanded_call_symbols_completion_signature_diagnostics_and_prepare_rename",
+      "actual_typescript_server_expanded_type_call_symbols_signature_and_published_diagnostics"
+    ]
+  }
+}

@@ -1,0 +1,17 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 5.60s
+     Running tests\compatibility_review.rs (target\debug\deps\compatibility_review-9ce121d21093fef0.exe)
+public_reference_kind_filters_cannot_silently_return_unfiltered_results: test
+
+1 test, 0 benchmarks
+     Running tests\config_graph.rs (target\debug\deps\config_graph-fd77e767d27e6ba0.exe)
+config_keys_and_references_parse_json_toml_yaml_and_xml: test
+dotnet_projects_forms_and_byond_assets_keep_authored_dependency_paths: test
+literal_dotted_keys_cannot_collapse_into_nested_key_paths: test
+local_json_references_link_declared_keys_and_duplicate_fields_are_rejected: test
+mcp_config_environment_values_are_never_persisted_or_executed: test
+mcp_launcher_packages_are_described_without_argument_or_environment_values: test
+xml_configuration_repeated_names_keep_distinct_parent_paths: test
+yaml_alias_expansion_budget_fails_without_publishing: test
+
+8 tests, 0 benchmarks

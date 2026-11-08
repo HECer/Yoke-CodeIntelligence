@@ -1,0 +1,151 @@
+{
+  "sourceCommit": "6b957ebcb8c3bcc49aeb06cfe941e6b1f6b63450",
+  "cliSha256": "8d08651b932241e1a45de52ea3d4375ed11b8db2b47a78bac14651302965e49a",
+  "frozenInputs": 1039,
+  "rust": {
+    "targets": {
+      "source-scopes-lib": {
+        "passed": 29,
+        "failed": 0,
+        "ignored": 0
+      },
+      "source_exclusions": {
+        "passed": 7,
+        "failed": 0,
+        "ignored": 0
+      },
+      "capture_options": {
+        "passed": 8,
+        "failed": 0,
+        "ignored": 0
+      },
+      "capture_policy": {
+        "passed": 9,
+        "failed": 0,
+        "ignored": 0
+      },
+      "capture_changes": {
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0
+      },
+      "capture_epoch_selection": {
+        "passed": 3,
+        "failed": 0,
+        "ignored": 0
+      },
+      "capture_analyzer8_fixture": {
+        "passed": 0,
+        "failed": 0,
+        "ignored": 2
+      },
+      "ignored_capture": {
+        "passed": 15,
+        "failed": 0,
+        "ignored": 0
+      },
+      "ignored_capture_cli": {
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0
+      },
+      "ignored_facades": {
+        "passed": 10,
+        "failed": 0,
+        "ignored": 0
+      },
+      "monorepo_scopes": {
+        "passed": 3,
+        "failed": 0,
+        "ignored": 0
+      },
+      "scoped_resolution": {
+        "passed": 23,
+        "failed": 0,
+        "ignored": 0
+      },
+      "deadline_scope": {
+        "passed": 2,
+        "failed": 0,
+        "ignored": 0
+      },
+      "session_config_cli": {
+        "passed": 4,
+        "failed": 0,
+        "ignored": 0
+      },
+      "project_session": {
+        "passed": 6,
+        "failed": 0,
+        "ignored": 0
+      },
+      "session_mcp": {
+        "passed": 3,
+        "failed": 0,
+        "ignored": 0
+      },
+      "session_primary_read_only": {
+        "passed": 8,
+        "failed": 0,
+        "ignored": 0
+      },
+      "session_root_aliases": {
+        "passed": 3,
+        "failed": 0,
+        "ignored": 0
+      },
+      "source_line_endings": {
+        "passed": 10,
+        "failed": 0,
+        "ignored": 0
+      },
+      "plan_integrity": {
+        "passed": 13,
+        "failed": 0,
+        "ignored": 0
+      },
+      "session_refactor": {
+        "passed": 9,
+        "failed": 0,
+        "ignored": 2
+      },
+      "lsp_dependency_scope": {
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0
+      },
+      "facade_directory_move": {
+        "passed": 10,
+        "failed": 0,
+        "ignored": 0
+      },
+      "compatibility": {
+        "passed": 6,
+        "failed": 0,
+        "ignored": 0
+      },
+      "agent_repl": {
+        "passed": 22,
+        "failed": 0,
+        "ignored": 0
+      }
+    },
+    "distinctPassed": 206,
+    "failed": 0,
+    "existingIgnored": 4,
+    "newFunctions": 12
+  },
+  "formatTargetRoots": 338,
+  "cargoFormatAllWindowsOs206": true,
+  "npm": {
+    "passed": 260,
+    "failed": 0,
+    "existingSkipped": 3
+  },
+  "allQualifiedJobsEmpty": true,
+  "fullStatusComplete": false,
+  "fullNativeCurrentHeadCertified": false,
+  "originalInventoryAssessmentsUnchanged": true,
+  "systemSettingsChanged": false,
+  "rawMembers": 365
+}

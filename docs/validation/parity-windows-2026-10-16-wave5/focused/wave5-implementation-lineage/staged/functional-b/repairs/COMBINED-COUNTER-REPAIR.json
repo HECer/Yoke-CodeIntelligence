@@ -1,0 +1,16 @@
+{
+  "status": "authorized_counter_repairs_promoted_unexecuted",
+  "baseHash": "a6d93311b2528032b1699034ac0e0f15bad6bd9c738855a5dc14b3db37baf0ac",
+  "combinedHash": "64fcb5234e3b9dd04ee502dcfe305774b934a6417b19fd2aa193a29bf595605c",
+  "file": "target\\parity-validation-20261015\\next-universal-slice\\functional-b\\repairs\\retrieval-counter-families.rs",
+  "inverseOnlyAuthorizedBlocksExact": true,
+  "legacyTailByteExact": true,
+  "scopeActualDeepRed": "cbc97eaca1f38f7aedf4ce7409221571fe68e8b45ff47a9c974a89936852ae09",
+  "sourceActualDeepRed": "88957e8accb7be0679b1dee65dd903906a92f6117efb503696f85c3ad8a83be0",
+  "changes": [
+    "Global scopes are empty with exact known checked descriptor omitted total; balanced requires actual per-scope counters.",
+    "Source-omission optional counter comes from exact aggregate admission for both modes and is not overwritten with the global empty optional list length."
+  ],
+  "testsChanged": false,
+  "executionByOwner": false
+}

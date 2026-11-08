@@ -1,0 +1,86 @@
+{
+  "cliSha256": "0a4e14f12c66f5961b029a6e95c0824be083adb4649263600d429dbf484ad197",
+  "legacyAndCategoryV1RawStdoutExact": true,
+  "savedRootRetentionPlansPassed": true,
+  "sourceUnchanged": true,
+  "analyzedSourceExecuted": false,
+  "sourceFiles": {
+    "src/core.rs": "bdd5ef73cd021330d6184068ac7ad9d35a21cade37d015fc15892d5d779f9182",
+    "src/consumer.rs": "f3afbf5cdb213c5040d7359735f43af51a5bee78e99b7b5c2907d180cc2e315f",
+    "web/client.ts": "121ba93f828bc4a5fe0dd30671a5baec00bf5ce1607e1e3e08e90648811fb349",
+    "docs/design.md": "b2eee646d8fd28f03af0ca9e01e983aa298dbc8984d55a0238cc5226daf437f3"
+  },
+  "commands": [
+    {
+      "name": "legacy",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-r3-policy-xk79eno_",
+        "--snapshot",
+        "edec03185544ca0339b7a66e237f8aa7bfeee0f470f2027b7e34cdc3aa6fb786",
+        "--timeout",
+        "30000",
+        "--max-bytes",
+        "1000000",
+        "graph",
+        "analyze"
+      ],
+      "exitCode": 0
+    },
+    {
+      "name": "category",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-r3-policy-xk79eno_",
+        "--snapshot",
+        "edec03185544ca0339b7a66e237f8aa7bfeee0f470f2027b7e34cdc3aa6fb786",
+        "--timeout",
+        "30000",
+        "--max-bytes",
+        "1000000",
+        "graph",
+        "analyze",
+        "--options",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\validation\\integration-20261018\\r3-source-categories\\legacy-after-r1\\options.json"
+      ],
+      "exitCode": 0
+    },
+    {
+      "name": "retention-plan",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-r3-policy-xk79eno_",
+        "--timeout",
+        "30000",
+        "--max-bytes",
+        "1000000",
+        "retention",
+        "plan",
+        "--minimum-age-ms",
+        "0"
+      ],
+      "exitCode": 0
+    },
+    {
+      "name": "retention-purge-plan",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-r3-policy-xk79eno_",
+        "--timeout",
+        "30000",
+        "--max-bytes",
+        "1000000",
+        "retention",
+        "purge-plan",
+        "--minimum-age-ms",
+        "0"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "oldProducersAndArtifactsPreserved": true
+}

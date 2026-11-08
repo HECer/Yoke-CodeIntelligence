@@ -1,0 +1,23 @@
+    Finished `test` profile [unoptimized] target(s) in 1.58s
+     Running tests\core.rs (E:\Yoke-Build-Cache\meaning-aliases-20261016\debug\deps\core-7a5fad0c4c025ad0.exe)
+
+running 6 tests
+test directed_graph_preserves_parallel_calls_and_exact_unicode_anchors ... ok
+test context_and_graph_analytics_are_source_bound ... ok
+test bounded_results_keep_artifacts_and_reject_authority_fields ... ok
+test immutable_capture_excludes_secrets_and_reuses_content_cache ... ok
+test prepared_edits_are_isolated_and_reject_stale_hashes ... ok
+test source_paths_and_utf8_boundaries_fail_closed ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.22s
+
+     Running tests\credentials.rs (E:\Yoke-Build-Cache\meaning-aliases-20261016\debug\deps\credentials-e5a8ba326d82852f.exe)
+
+running 4 tests
+test windows_gate::windows_concurrent_generation_keeps_one_key ... ignored, explicit Windows Credential Manager integration gate; tests concurrent creation and removes its random entry
+test windows_gate::windows_credential_roundtrip_refuses_overwrite ... ignored, explicit Windows Credential Manager integration gate; creates and removes one random test entry
+test ordinary_names_resolve_only_to_the_federation_namespace ... ok
+test credential_names_cannot_escape_the_federation_namespace ... ok
+
+test result: ok. 2 passed; 0 failed; 2 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

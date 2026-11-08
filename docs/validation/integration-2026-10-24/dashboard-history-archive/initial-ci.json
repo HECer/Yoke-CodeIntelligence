@@ -1,0 +1,440 @@
+{
+  "commit": "5ccfdffe70d17e3c1623aca86c1c605df8342be5",
+  "runs": {
+    "workflow_runs": [
+      {
+        "id": 40093332995,
+        "name": "CI",
+        "status": "queued",
+        "conclusion": null,
+        "run_number": 349,
+        "jobs_url": "https://api.github.com/repos/HECer/Yoke-CodeIntelligence/actions/runs/40093332995/jobs",
+        "logs_url": "https://api.github.com/repos/HECer/Yoke-CodeIntelligence/actions/runs/40093332995/logs",
+        "workflow_id": 383568273
+      },
+      {
+        "id": 40093333004,
+        "name": "Rust core",
+        "status": "in_progress",
+        "conclusion": null,
+        "run_number": 336,
+        "jobs_url": "https://api.github.com/repos/HECer/Yoke-CodeIntelligence/actions/runs/40093333004/jobs",
+        "logs_url": "https://api.github.com/repos/HECer/Yoke-CodeIntelligence/actions/runs/40093333004/logs",
+        "workflow_id": 388747050
+      }
+    ]
+  },
+  "jobs": {
+    "jobs": [
+      {
+        "id": 120870346681,
+        "name": "native-rust (macos-latest)",
+        "status": "in_progress",
+        "conclusion": null,
+        "run_id": 40093333004,
+        "logs_url": null,
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2
+          },
+          {
+            "name": "Run dtolnay/rust-toolchain@1.94.1",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3
+          },
+          {
+            "name": "Run actions/setup-node@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4
+          },
+          {
+            "name": "Run actions/setup-python@v5",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5
+          },
+          {
+            "name": "Use a canonical macOS temporary root",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6
+          },
+          {
+            "name": "Run Swatinem/rust-cache@v2",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7
+          },
+          {
+            "name": "Run npm ci",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8
+          },
+          {
+            "name": "Run python -m unittest discover -s scripts/tests -v",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 9
+          },
+          {
+            "name": "Check all native format roots on Windows",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 10
+          },
+          {
+            "name": "Check native formatting on Unix",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 11
+          },
+          {
+            "name": "Run cargo clippy --workspace --all-targets --locked --keep-going -j 2 -- -D warnings",
+            "status": "in_progress",
+            "conclusion": null,
+            "number": 12
+          },
+          {
+            "name": "Test native Windows protected namespaces",
+            "status": "pending",
+            "conclusion": null,
+            "number": 13
+          },
+          {
+            "name": "Test native Unix targets",
+            "status": "pending",
+            "conclusion": null,
+            "number": 14
+          },
+          {
+            "name": "Run python scripts/run_native_tests.py --controlled-test-runner --locked --test live actual_rust_analyzer -- --ignored",
+            "status": "pending",
+            "conclusion": null,
+            "number": 15
+          },
+          {
+            "name": "Run cargo build --workspace --release --locked",
+            "status": "pending",
+            "conclusion": null,
+            "number": 16
+          },
+          {
+            "name": "Run actions/upload-artifact@v4",
+            "status": "pending",
+            "conclusion": null,
+            "number": 17
+          },
+          {
+            "name": "Post Run Swatinem/rust-cache@v2",
+            "status": "pending",
+            "conclusion": null,
+            "number": 31
+          },
+          {
+            "name": "Post Run actions/setup-python@v5",
+            "status": "pending",
+            "conclusion": null,
+            "number": 32
+          },
+          {
+            "name": "Post Run actions/setup-node@v4",
+            "status": "pending",
+            "conclusion": null,
+            "number": 33
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "pending",
+            "conclusion": null,
+            "number": 34
+          }
+        ]
+      },
+      {
+        "id": 120870346790,
+        "name": "native-rust (ubuntu-latest)",
+        "status": "in_progress",
+        "conclusion": null,
+        "run_id": 40093333004,
+        "logs_url": null,
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2
+          },
+          {
+            "name": "Run dtolnay/rust-toolchain@1.94.1",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3
+          },
+          {
+            "name": "Run actions/setup-node@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4
+          },
+          {
+            "name": "Run actions/setup-python@v5",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5
+          },
+          {
+            "name": "Use a canonical macOS temporary root",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 6
+          },
+          {
+            "name": "Run Swatinem/rust-cache@v2",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7
+          },
+          {
+            "name": "Run npm ci",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8
+          },
+          {
+            "name": "Run python -m unittest discover -s scripts/tests -v",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 9
+          },
+          {
+            "name": "Check all native format roots on Windows",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 10
+          },
+          {
+            "name": "Check native formatting on Unix",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 11
+          },
+          {
+            "name": "Run cargo clippy --workspace --all-targets --locked --keep-going -j 2 -- -D warnings",
+            "status": "in_progress",
+            "conclusion": null,
+            "number": 12
+          },
+          {
+            "name": "Test native Windows protected namespaces",
+            "status": "pending",
+            "conclusion": null,
+            "number": 13
+          },
+          {
+            "name": "Test native Unix targets",
+            "status": "pending",
+            "conclusion": null,
+            "number": 14
+          },
+          {
+            "name": "Run python scripts/run_native_tests.py --controlled-test-runner --locked --test live actual_rust_analyzer -- --ignored",
+            "status": "pending",
+            "conclusion": null,
+            "number": 15
+          },
+          {
+            "name": "Run cargo build --workspace --release --locked",
+            "status": "pending",
+            "conclusion": null,
+            "number": 16
+          },
+          {
+            "name": "Run actions/upload-artifact@v4",
+            "status": "pending",
+            "conclusion": null,
+            "number": 17
+          },
+          {
+            "name": "Post Run Swatinem/rust-cache@v2",
+            "status": "pending",
+            "conclusion": null,
+            "number": 31
+          },
+          {
+            "name": "Post Run actions/setup-python@v5",
+            "status": "pending",
+            "conclusion": null,
+            "number": 32
+          },
+          {
+            "name": "Post Run actions/setup-node@v4",
+            "status": "pending",
+            "conclusion": null,
+            "number": 33
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "pending",
+            "conclusion": null,
+            "number": 34
+          }
+        ]
+      },
+      {
+        "id": 120870346935,
+        "name": "native-rust (windows-latest)",
+        "status": "in_progress",
+        "conclusion": null,
+        "run_id": 40093333004,
+        "logs_url": null,
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2
+          },
+          {
+            "name": "Run dtolnay/rust-toolchain@1.94.1",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3
+          },
+          {
+            "name": "Run actions/setup-node@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4
+          },
+          {
+            "name": "Run actions/setup-python@v5",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5
+          },
+          {
+            "name": "Use a canonical macOS temporary root",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 6
+          },
+          {
+            "name": "Run Swatinem/rust-cache@v2",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7
+          },
+          {
+            "name": "Run npm ci",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8
+          },
+          {
+            "name": "Run python -m unittest discover -s scripts/tests -v",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 9
+          },
+          {
+            "name": "Check all native format roots on Windows",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 10
+          },
+          {
+            "name": "Check native formatting on Unix",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 11
+          },
+          {
+            "name": "Run cargo clippy --workspace --all-targets --locked --keep-going -j 2 -- -D warnings",
+            "status": "in_progress",
+            "conclusion": null,
+            "number": 12
+          },
+          {
+            "name": "Test native Windows protected namespaces",
+            "status": "pending",
+            "conclusion": null,
+            "number": 13
+          },
+          {
+            "name": "Test native Unix targets",
+            "status": "pending",
+            "conclusion": null,
+            "number": 14
+          },
+          {
+            "name": "Run python scripts/run_native_tests.py --controlled-test-runner --locked --test live actual_rust_analyzer -- --ignored",
+            "status": "pending",
+            "conclusion": null,
+            "number": 15
+          },
+          {
+            "name": "Run cargo build --workspace --release --locked",
+            "status": "pending",
+            "conclusion": null,
+            "number": 16
+          },
+          {
+            "name": "Run actions/upload-artifact@v4",
+            "status": "pending",
+            "conclusion": null,
+            "number": 17
+          },
+          {
+            "name": "Post Run Swatinem/rust-cache@v2",
+            "status": "pending",
+            "conclusion": null,
+            "number": 31
+          },
+          {
+            "name": "Post Run actions/setup-python@v5",
+            "status": "pending",
+            "conclusion": null,
+            "number": 32
+          },
+          {
+            "name": "Post Run actions/setup-node@v4",
+            "status": "pending",
+            "conclusion": null,
+            "number": 33
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "pending",
+            "conclusion": null,
+            "number": 34
+          }
+        ]
+      }
+    ]
+  },
+  "completedCiAcceptance": false
+}

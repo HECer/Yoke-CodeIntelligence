@@ -1,0 +1,587 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+warning: struct `CheckedRetrievalOptions` is never constructed
+   --> native\src\retrieval.rs:118:8
+    |
+118 | struct CheckedRetrievalOptions {
+    |        ^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `checked_retrieval_options` is never used
+   --> native\src\retrieval.rs:121:4
+    |
+121 | fn checked_retrieval_options(
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `rank_balanced` is never used
+   --> native\src\retrieval.rs:127:4
+    |
+127 | fn rank_balanced(
+    |    ^^^^^^^^^^^^^
+
+warning: function `rank_global_after_probe` is never used
+   --> native\src\retrieval.rs:134:4
+    |
+134 | fn rank_global_after_probe(
+    |    ^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: struct `AdmissionUnit` is never constructed
+ --> native\src\retrieval_balanced.rs:6:19
+  |
+6 | pub(super) struct AdmissionUnit {
+  |                   ^^^^^^^^^^^^^
+
+warning: struct `AdmissionPlan` is never constructed
+  --> native\src\retrieval_balanced.rs:15:19
+   |
+15 | pub(super) struct AdmissionPlan {
+   |                   ^^^^^^^^^^^^^
+
+warning: function `schedule_whole_units` is never used
+  --> native\src\retrieval_balanced.rs:22:15
+   |
+22 | pub(super) fn schedule_whole_units(
+   |               ^^^^^^^^^^^^^^^^^^^^
+
+warning: struct `ScoredRow` is never constructed
+  --> native\src\retrieval_balanced.rs:31:19
+   |
+31 | pub(super) struct ScoredRow {
+   |                   ^^^^^^^^^
+
+warning: struct `RankedIndex` is never constructed
+  --> native\src\retrieval_balanced.rs:39:19
+   |
+39 | pub(super) struct RankedIndex {
+   |                   ^^^^^^^^^^^
+
+warning: struct `FusionPlan` is never constructed
+  --> native\src\retrieval_balanced.rs:44:19
+   |
+44 | pub(super) struct FusionPlan {
+   |                   ^^^^^^^^^^
+
+warning: function `fuse_rows` is never used
+  --> native\src\retrieval_balanced.rs:50:15
+   |
+50 | pub(super) fn fuse_rows(
+   |               ^^^^^^^^^
+
+warning: struct `LexicalDocument` is never constructed
+  --> native\src\retrieval_balanced.rs:60:19
+   |
+60 | pub(super) struct LexicalDocument {
+   |                   ^^^^^^^^^^^^^^^
+
+warning: function `scope_bm25` is never used
+  --> native\src\retrieval_balanced.rs:65:15
+   |
+65 | pub(super) fn scope_bm25(
+   |               ^^^^^^^^^^
+
+warning: struct `LexicalMassRow` is never constructed
+  --> native\src\retrieval_balanced.rs:72:19
+   |
+72 | pub(super) struct LexicalMassRow {
+   |                   ^^^^^^^^^^^^^^
+
+warning: function `equal_scope_seeds` is never used
+  --> native\src\retrieval_balanced.rs:77:15
+   |
+77 | pub(super) fn equal_scope_seeds(
+   |               ^^^^^^^^^^^^^^^^^
+
+warning: enum `Orientation` is never used
+  --> native\src\retrieval_balanced.rs:85:17
+   |
+85 | pub(super) enum Orientation {
+   |                 ^^^^^^^^^^^
+
+warning: struct `ResolvedObservation` is never constructed
+  --> native\src\retrieval_balanced.rs:90:19
+   |
+90 | pub(super) struct ResolvedObservation {
+   |                   ^^^^^^^^^^^^^^^^^^^
+
+warning: struct `CanonicalArc` is never constructed
+  --> native\src\retrieval_balanced.rs:96:19
+   |
+96 | pub(super) struct CanonicalArc {
+   |                   ^^^^^^^^^^^^
+
+warning: function `canonical_arcs` is never used
+   --> native\src\retrieval_balanced.rs:102:15
+    |
+102 | pub(super) fn canonical_arcs(
+    |               ^^^^^^^^^^^^^^
+
+warning: struct `GraphRanks` is never constructed
+   --> native\src\retrieval_balanced.rs:110:19
+    |
+110 | pub(super) struct GraphRanks {
+    |                   ^^^^^^^^^^
+
+warning: function `propagate` is never used
+   --> native\src\retrieval_balanced.rs:114:15
+    |
+114 | pub(super) fn propagate(
+    |               ^^^^^^^^^
+
+warning: struct `MetadataCostRows` is never constructed
+   --> native\src\retrieval_balanced.rs:127:19
+    |
+127 | pub(super) struct MetadataCostRows {
+    |                   ^^^^^^^^^^^^^^^^
+
+warning: struct `MetadataPrefixPlan` is never constructed
+   --> native\src\retrieval_balanced.rs:134:19
+    |
+134 | pub(super) struct MetadataPrefixPlan {
+    |                   ^^^^^^^^^^^^^^^^^^
+
+warning: function `plan_optional_metadata` is never used
+   --> native\src\retrieval_balanced.rs:139:15
+    |
+139 | pub(super) fn plan_optional_metadata(
+    |               ^^^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `POLICY` is never used
+  --> native\src\retrieval_scopes.rs:15:18
+   |
+15 | pub(crate) const POLICY: &str = "yoke-retrieval-scopes-1";
+   |                  ^^^^^^
+
+warning: type alias `RetrievalResult` is never used
+  --> native\src\retrieval_scopes.rs:17:17
+   |
+17 | pub(crate) type RetrievalResult<T> = Result<T, RetrievalHardError>;
+   |                 ^^^^^^^^^^^^^^^
+
+warning: multiple variants are never constructed
+  --> native\src\retrieval_scopes.rs:21:5
+   |
+20 | pub(crate) enum RetrievalHardError {
+   |                 ------------------ variants in this enum
+21 |     InvalidRequest(&'static str),
+   |     ^^^^^^^^^^^^^^
+22 |     Authority(&'static str),
+   |     ^^^^^^^^^
+23 |     SourceIntegrity(&'static str),
+   |     ^^^^^^^^^^^^^^^
+24 |     DeniedSource(&'static str),
+   |     ^^^^^^^^^^^^
+25 |     Cancelled(&'static str),
+   |     ^^^^^^^^^
+26 |     Deadline(&'static str),
+   |     ^^^^^^^^
+27 |     Capacity(&'static str),
+   |     ^^^^^^^^
+   |
+   = note: `RetrievalHardError` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+
+warning: function `unavailable` is never used
+  --> native\src\retrieval_scopes.rs:49:4
+   |
+49 | fn unavailable<T>() -> RetrievalResult<T> {
+   |    ^^^^^^^^^^^
+
+warning: struct `CheckedRetrievalRun` is never constructed
+  --> native\src\retrieval_scopes.rs:56:19
+   |
+56 | pub(crate) struct CheckedRetrievalRun<'store, 'input, 'deadline> {
+   |                   ^^^^^^^^^^^^^^^^^^^
+
+warning: struct `CheckedScopePartition` is never constructed
+  --> native\src\retrieval_scopes.rs:70:19
+   |
+70 | pub(crate) struct CheckedScopePartition<'store> {
+   |                   ^^^^^^^^^^^^^^^^^^^^^
+
+warning: struct `ScopeHandle` is never constructed
+  --> native\src\retrieval_scopes.rs:85:19
+   |
+85 | pub(crate) struct ScopeHandle<'partition, 'store> {
+   |                   ^^^^^^^^^^^
+
+warning: enum `ProbeOutcome` is never used
+  --> native\src\retrieval_scopes.rs:90:17
+   |
+90 | pub(crate) enum ProbeOutcome<'store> {
+   |                 ^^^^^^^^^^^^
+
+warning: struct `PolicyFallback` is never constructed
+  --> native\src\retrieval_scopes.rs:96:19
+   |
+96 | pub(crate) struct PolicyFallback {
+   |                   ^^^^^^^^^^^^^^
+
+warning: methods `code`, `physical_package_count`, `diagnostics`, and `omitted_diagnostic_count` are never used
+   --> native\src\retrieval_scopes.rs:103:19
+    |
+102 | impl PolicyFallback {
+    | ------------------- methods in this implementation
+103 |     pub(crate) fn code(&self) -> &'static str {
+    |                   ^^^^
+...
+106 |     pub(crate) fn physical_package_count(&self) -> Option<usize> {
+    |                   ^^^^^^^^^^^^^^^^^^^^^^
+...
+109 |     pub(crate) fn diagnostics(&self) -> impl Iterator<Item = &ScopeDiagnostic> {
+    |                   ^^^^^^^^^^^
+...
+112 |     pub(crate) fn omitted_diagnostic_count(&self) -> usize {
+    |                   ^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: enum `ScopeKind` is never used
+   --> native\src\retrieval_scopes.rs:118:17
+    |
+118 | pub(crate) enum ScopeKind {
+    |                 ^^^^^^^^^
+
+warning: method `as_str` is never used
+   --> native\src\retrieval_scopes.rs:124:19
+    |
+123 | impl ScopeKind {
+    | -------------- method in this implementation
+124 |     pub(crate) fn as_str(self) -> &'static str {
+    |                   ^^^^^^
+
+warning: enum `Ecosystem` is never used
+   --> native\src\retrieval_scopes.rs:134:17
+    |
+134 | pub(crate) enum Ecosystem {
+    |                 ^^^^^^^^^
+
+warning: method `as_str` is never used
+   --> native\src\retrieval_scopes.rs:140:19
+    |
+139 | impl Ecosystem {
+    | -------------- method in this implementation
+140 |     pub(crate) fn as_str(self) -> &'static str {
+    |                   ^^^^^^
+
+warning: enum `MembershipReason` is never used
+   --> native\src\retrieval_scopes.rs:150:17
+    |
+150 | pub(crate) enum MembershipReason {
+    |                 ^^^^^^^^^^^^^^^^
+
+warning: method `as_str` is never used
+   --> native\src\retrieval_scopes.rs:157:19
+    |
+156 | impl MembershipReason {
+    | --------------------- method in this implementation
+157 |     pub(crate) fn as_str(self) -> &'static str {
+    |                   ^^^^^^
+
+warning: struct `PackageLabel` is never constructed
+   --> native\src\retrieval_scopes.rs:167:19
+    |
+167 | pub(crate) struct PackageLabel {
+    |                   ^^^^^^^^^^^^
+
+warning: methods `ecosystem`, `name`, `declaration_path`, and `is_primary` are never used
+   --> native\src\retrieval_scopes.rs:174:19
+    |
+173 | impl PackageLabel {
+    | ----------------- methods in this implementation
+174 |     pub(crate) fn ecosystem(&self) -> Ecosystem {
+    |                   ^^^^^^^^^
+...
+177 |     pub(crate) fn name(&self) -> &str {
+    |                   ^^^^
+...
+180 |     pub(crate) fn declaration_path(&self) -> &str {
+    |                   ^^^^^^^^^^^^^^^^
+...
+183 |     pub(crate) fn is_primary(&self) -> bool {
+    |                   ^^^^^^^^^^
+
+warning: struct `ManifestBinding` is never constructed
+   --> native\src\retrieval_scopes.rs:188:19
+    |
+188 | pub(crate) struct ManifestBinding {
+    |                   ^^^^^^^^^^^^^^^
+
+warning: methods `path` and `content_hash` are never used
+   --> native\src\retrieval_scopes.rs:193:19
+    |
+192 | impl ManifestBinding {
+    | -------------------- methods in this implementation
+193 |     pub(crate) fn path(&self) -> &str {
+    |                   ^^^^
+...
+196 |     pub(crate) fn content_hash(&self) -> &str {
+    |                   ^^^^^^^^^^^^
+
+warning: struct `WorkspaceMembership` is never constructed
+   --> native\src\retrieval_scopes.rs:201:19
+    |
+201 | pub(crate) struct WorkspaceMembership {
+    |                   ^^^^^^^^^^^^^^^^^^^
+
+warning: methods `ecosystem`, `workspace_root`, `declaration_path`, and `reason` are never used
+   --> native\src\retrieval_scopes.rs:208:19
+    |
+207 | impl WorkspaceMembership {
+    | ------------------------ methods in this implementation
+208 |     pub(crate) fn ecosystem(&self) -> Ecosystem {
+    |                   ^^^^^^^^^
+...
+211 |     pub(crate) fn workspace_root(&self) -> Option<&str> {
+    |                   ^^^^^^^^^^^^^^
+...
+214 |     pub(crate) fn declaration_path(&self) -> Option<&str> {
+    |                   ^^^^^^^^^^^^^^^^
+...
+217 |     pub(crate) fn reason(&self) -> MembershipReason {
+    |                   ^^^^^^
+
+warning: struct `ScopeDiagnostic` is never constructed
+   --> native\src\retrieval_scopes.rs:222:19
+    |
+222 | pub(crate) struct ScopeDiagnostic {
+    |                   ^^^^^^^^^^^^^^^
+
+warning: methods `code`, `path`, `content_hash`, `selector`, `line`, and `column` are never used
+   --> native\src\retrieval_scopes.rs:231:19
+    |
+230 | impl ScopeDiagnostic {
+    | -------------------- methods in this implementation
+231 |     pub(crate) fn code(&self) -> &'static str {
+    |                   ^^^^
+...
+234 |     pub(crate) fn path(&self) -> &str {
+    |                   ^^^^
+...
+237 |     pub(crate) fn content_hash(&self) -> Option<&str> {
+    |                   ^^^^^^^^^^^^
+...
+240 |     pub(crate) fn selector(&self) -> Option<&str> {
+    |                   ^^^^^^^^
+...
+243 |     pub(crate) fn line(&self) -> Option<usize> {
+    |                   ^^^^
+...
+246 |     pub(crate) fn column(&self) -> Option<usize> {
+    |                   ^^^^^^
+
+warning: struct `CheckedScope` is never constructed
+   --> native\src\retrieval_scopes.rs:251:19
+    |
+251 | pub(crate) struct CheckedScope {
+    |                   ^^^^^^^^^^^^
+
+warning: methods `id`, `root`, `kind`, `labels`, `declarations`, and `memberships` are never used
+   --> native\src\retrieval_scopes.rs:260:19
+    |
+259 | impl CheckedScope {
+    | ----------------- methods in this implementation
+260 |     pub(crate) fn id(&self) -> &str {
+    |                   ^^
+...
+263 |     pub(crate) fn root(&self) -> &str {
+    |                   ^^^^
+...
+266 |     pub(crate) fn kind(&self) -> ScopeKind {
+    |                   ^^^^
+...
+269 |     pub(crate) fn labels(&self) -> impl Iterator<Item = &PackageLabel> {
+    |                   ^^^^^^
+...
+272 |     pub(crate) fn declarations(&self) -> impl Iterator<Item = &ManifestBinding> {
+    |                   ^^^^^^^^^^^^
+...
+275 |     pub(crate) fn memberships(&self) -> impl Iterator<Item = &WorkspaceMembership> {
+    |                   ^^^^^^^^^^^
+
+warning: struct `SourceCost` is never constructed
+   --> native\src\retrieval_scopes.rs:281:19
+    |
+281 | pub(crate) struct SourceCost {
+    |                   ^^^^^^^^^^
+
+warning: methods `source_bytes`, `incremental_bytes`, and `is_cached` are never used
+   --> native\src\retrieval_scopes.rs:287:19
+    |
+286 | impl SourceCost {
+    | --------------- methods in this implementation
+287 |     pub(crate) fn source_bytes(self) -> usize {
+    |                   ^^^^^^^^^^^^
+...
+290 |     pub(crate) fn incremental_bytes(self) -> usize {
+    |                   ^^^^^^^^^^^^^^^^^
+...
+293 |     pub(crate) fn is_cached(self) -> bool {
+    |                   ^^^^^^^^^
+
+warning: struct `VerifiedSource` is never constructed
+   --> native\src\retrieval_scopes.rs:300:19
+    |
+300 | pub(crate) struct VerifiedSource {
+    |                   ^^^^^^^^^^^^^^
+
+warning: methods `path`, `content_hash`, and `text` are never used
+   --> native\src\retrieval_scopes.rs:306:19
+    |
+305 | impl VerifiedSource {
+    | ------------------- methods in this implementation
+306 |     pub(crate) fn path(&self) -> &str {
+    |                   ^^^^
+...
+309 |     pub(crate) fn content_hash(&self) -> &str {
+    |                   ^^^^^^^^^^^^
+...
+312 |     pub(crate) fn text(&self) -> &str {
+    |                   ^^^^
+
+warning: struct `VerifiedDocument` is never constructed
+   --> native\src\retrieval_scopes.rs:316:19
+    |
+316 | pub(crate) struct VerifiedDocument<'input> {
+    |                   ^^^^^^^^^^^^^^^^
+
+warning: methods `entity`, `source`, and `text` are never used
+   --> native\src\retrieval_scopes.rs:323:19
+    |
+322 | impl VerifiedDocument<'_> {
+    | ------------------------- methods in this implementation
+323 |     pub(crate) fn entity(&self) -> &Entity {
+    |                   ^^^^^^
+...
+326 |     pub(crate) fn source(&self) -> &VerifiedSource {
+    |                   ^^^^^^
+...
+329 |     pub(crate) fn text(&self) -> &str {
+    |                   ^^^^
+
+warning: struct `RunUsage` is never constructed
+   --> native\src\retrieval_scopes.rs:335:19
+    |
+335 | pub(crate) struct RunUsage {
+    |                   ^^^^^^^^
+
+warning: multiple methods are never used
+   --> native\src\retrieval_scopes.rs:346:19
+    |
+345 | impl RunUsage {
+    | ------------- methods in this implementation
+346 |     pub(crate) fn marker_files_checked(self) -> usize {
+    |                   ^^^^^^^^^^^^^^^^^^^^
+...
+349 |     pub(crate) fn marker_bytes_charged(self) -> usize {
+    |                   ^^^^^^^^^^^^^^^^^^^^
+...
+352 |     pub(crate) fn body_input_bytes_charged(self) -> usize {
+    |                   ^^^^^^^^^^^^^^^^^^^^^^^^
+...
+355 |     pub(crate) fn input_bytes_charged(self) -> usize {
+    |                   ^^^^^^^^^^^^^^^^^^^
+...
+358 |     pub(crate) fn document_bytes_charged(self) -> usize {
+    |                   ^^^^^^^^^^^^^^^^^^^^^^
+...
+361 |     pub(crate) fn selector_work(self) -> usize {
+    |                   ^^^^^^^^^^^^^
+...
+364 |     pub(crate) fn ownership_bytes(self) -> usize {
+    |                   ^^^^^^^^^^^^^^^
+...
+367 |     pub(crate) fn verified_path_count(self) -> usize {
+    |                   ^^^^^^^^^^^^^^^^^^^
+
+warning: function `begin` is never used
+   --> native\src\retrieval_scopes.rs:372:15
+    |
+372 | pub(crate) fn begin<'store: 'input, 'input, 'deadline>(
+    |               ^^^^^
+
+warning: function `probe` is never used
+   --> native\src\retrieval_scopes.rs:382:15
+    |
+382 | pub(crate) fn probe<'store>(
+    |               ^^^^^
+
+warning: multiple methods are never used
+   --> native\src\retrieval_scopes.rs:389:19
+    |
+388 | impl<'store, 'input, 'deadline> CheckedRetrievalRun<'store, 'input, 'deadline> {
+    | ------------------------------------------------------------------------------ methods in this implementation
+389 |     pub(crate) fn snapshot(&self) -> &'input Snapshot {
+    |                   ^^^^^^^^
+...
+392 |     pub(crate) fn graph(&self) -> &'input Graph {
+    |                   ^^^^^
+...
+395 |     pub(crate) fn deadline(&self) -> &'deadline Deadline {
+    |                   ^^^^^^^^
+...
+398 |     pub(crate) fn output_limit(&self) -> usize {
+    |                   ^^^^^^^^^^^^
+...
+401 |     pub(crate) fn usage(&self) -> RunUsage {
+    |                   ^^^^^
+...
+404 |     pub(crate) fn source_cost(&self, _path: &str) -> RetrievalResult<SourceCost> {
+    |                   ^^^^^^^^^^^
+...
+407 |     pub(crate) fn read_source(&mut self, _path: &str) -> RetrievalResult<VerifiedSource> {
+    |                   ^^^^^^^^^^^
+...
+410 |     pub(crate) fn document_cost(&self, _entity: &Entity) -> RetrievalResult<usize> {
+    |                   ^^^^^^^^^^^^^
+...
+413 |     pub(crate) fn admit_document(
+    |                   ^^^^^^^^^^^^^^
+
+warning: multiple methods are never used
+   --> native\src\retrieval_scopes.rs:421:19
+    |
+420 | impl<'store> CheckedScopePartition<'store> {
+    | ------------------------------------------ methods in this implementation
+421 |     pub(crate) fn validate_for(
+    |                   ^^^^^^^^^^^^
+...
+427 |     pub(crate) fn id(&self) -> &str {
+    |                   ^^
+...
+430 |     pub(crate) fn physical_package_count(&self) -> usize {
+    |                   ^^^^^^^^^^^^^^^^^^^^^^
+...
+433 |     pub(crate) fn scopes(&self) -> impl Iterator<Item = &CheckedScope> {
+    |                   ^^^^^^
+...
+436 |     pub(crate) fn declarations(&self) -> impl Iterator<Item = &ManifestBinding> {
+    |                   ^^^^^^^^^^^^
+...
+439 |     pub(crate) fn diagnostics(&self) -> impl Iterator<Item = &ScopeDiagnostic> {
+    |                   ^^^^^^^^^^^
+...
+442 |     pub(crate) fn omitted_diagnostic_count(&self) -> usize {
+    |                   ^^^^^^^^^^^^^^^^^^^^^^^^
+...
+445 |     pub(crate) fn owner(&self, _path: &str) -> RetrievalResult<ScopeHandle<'_, 'store>> {
+    |                   ^^^^^
+...
+448 |     pub(crate) fn scope(&self, _handle: &ScopeHandle<'_, '_>) -> RetrievalResult<&CheckedScope> {
+    |                   ^^^^^
+
+warning: `yoke-code-intelligence` (lib) generated 62 warnings
+    Finished `test` profile [unoptimized] target(s) in 2m 01s
+     Running tests\monorepo_retrieval.rs (target\debug\deps\monorepo_retrieval-1854e2c8b48665bf.exe)
+
+running 1 test
+
+thread 'same_31_source_corpus_has_literal_global_control_and_one_head_per_package' (49584) panicked at native\tests\monorepo_retrieval.rs:17:10:
+Explicit manifest-balanced retrieval must be implemented: Manifest-balanced retrieval implementation_unavailable
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test same_31_source_corpus_has_literal_global_control_and_one_head_per_package ... FAILED
+
+failures:
+
+failures:
+    same_31_source_corpus_has_literal_global_control_and_one_head_per_package
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 6 filtered out; finished in 0.65s
+
+error: test failed, to rerun pass `--test monorepo_retrieval`

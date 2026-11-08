@@ -1,0 +1,91 @@
+{
+  "sourceUnchanged": true,
+  "inputs": 764,
+  "commands": [
+    {
+      "name": "native",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--no-fail-fast",
+        "--test",
+        "digest_receiver",
+        "--test",
+        "meaning_view",
+        "--test",
+        "meaning_build",
+        "--test",
+        "meaning_cli",
+        "--test",
+        "retention",
+        "--",
+        "--test-threads=1",
+        "--nocapture"
+      ],
+      "exitCode": 0,
+      "seconds": 79.31233179999981,
+      "totals": {
+        "passed": 114,
+        "failed": 0,
+        "ignored": 1
+      },
+      "groups": 5,
+      "failures": []
+    },
+    {
+      "name": "format",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "fmt",
+        "--all",
+        "--check"
+      ],
+      "exitCode": 0,
+      "seconds": 5.5032556999940425
+    },
+    {
+      "name": "build",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "build",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--bin",
+        "yoke"
+      ],
+      "exitCode": 0,
+      "seconds": 0.6010161000012886
+    },
+    {
+      "name": "clippy",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "clippy",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exitCode": 0,
+      "seconds": 17.494616899988614
+    }
+  ],
+  "allChecksPassed": true,
+  "wholeNativeRerun": false
+}

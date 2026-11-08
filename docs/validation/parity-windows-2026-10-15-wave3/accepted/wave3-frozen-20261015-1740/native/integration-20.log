@@ -1,0 +1,87 @@
+    Finished `test` profile [unoptimized] target(s) in 0.55s
+     Running tests\mcp_http_cli.rs (target\debug\deps\mcp_http_cli-3fc9d13404c28561.exe)
+
+running 4 tests
+test actual_public_http_cli_resolves_credential_reference_and_authenticates ... ignored, Actual Windows Credential Manager and own bounded loopback MCP CLI service
+test public_http_cli_requires_host_trust_before_opening_source_state ... ok
+test public_http_host_configuration_rejects_inline_tokens_before_credential_access ... ok
+test optional_http_python_requires_independent_host_authority_before_credentials_or_state ... ok
+
+test result: ok. 3 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.08s
+
+     Running tests\mcp_http_review.rs (target\debug\deps\mcp_http_review-4f4cb8a0aa875058.exe)
+
+running 1 test
+test single_worker_session_expiry_cancels_an_already_running_provider ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.30s
+
+     Running tests\meaning_archive_primitives.rs (target\debug\deps\meaning_archive_primitives-c5256081a2ec240f.exe)
+
+running 10 tests
+test archived_attempt_preserves_unknown_cost_original_currency_and_response_usage ... ok
+test archived_attempt_keeps_response_usage_distinct_from_later_reconciled_usage ... ok
+test archived_attempt_requires_exact_hashed_task_record_key_and_row_pairing ... ok
+test archived_attempt_reuses_state_event_and_task_total_validation ... ok
+test archived_capture_deadline_and_lineage_capacity_are_checked_before_replay ... ok
+test archived_capture_overlay_uses_its_exact_base_scope_and_checked_revision ... ok
+test archived_capture_rejects_resealed_protected_paths_unknown_policy_and_noncanonical_envelopes ... ok
+test archived_capture_recovers_exact_v8_and_v9_default_and_configured_options ... ok
+test archived_capture_scope_only_derived_lineage_returns_acquisition_policy_without_an_epoch_upgrade ... ok
+test archived_attempt_byte_budget_and_deadline_fail_without_replaying_live_state ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests\meaning_build.rs (target\debug\deps\meaning_build-5530091b88518422.exe)
+
+running 26 tests
+test accounted_overrun_blocks_later_reserved_send_and_never_publishes ... ok
+test body_selection_uses_full_body_and_invalidates_unchanged_signature_changes ... ok
+test cache_reuse_requires_the_original_completed_graph_registration ... ok
+test every_selected_source_budget_and_graph_sink_is_admitted_before_first_child ... ok
+test failed_status_counts_only_dispatched_attempts_and_reports_missing_unknown_receipts ... ok
+test altered_contract_and_provider_version_do_not_reuse_old_claims ... ok
+test currency_scoped_cache_prevents_mixing_old_and_new_monetary_units ... ok
+test exact_snapshot_analyzer_epochs_have_separate_cache_namespaces ... ok
+test fully_bound_bill_is_accounted_even_when_provider_error_text_is_unsafe ... ok
+test forged_cache_origin_is_rejected_without_starting_worker ... ok
+test fixed_cross_file_packet_preserves_relations_and_hyperedge_roles ... ok
+test immutable_response_preserves_provider_local_claim_keys_before_normalization ... ok
+test later_invalid_claim_accounts_bill_but_publishes_no_partial_graph_or_cache ... ok
+test malformed_provider_schema_does_not_echo_untrusted_field_values ... ok
+test oversized_source_is_rejected_as_complete_selection_before_worker ... ok
+test malformed_or_unbound_replies_keep_sent_hold_and_cancel_only_unsent ... ok
+test in_place_provider_script_change_invalidates_cache_even_when_command_is_unchanged ... ok
+test no_claims_is_explicit_successful_coverage ... ok
+test publication_failure_rolls_back_every_new_cache_pointer ... ok
+test publishes_source_bound_claims_then_reuses_receipts_with_zero_calls_or_reservations ... ok
+test query_matches_literal_quotes_and_backslashes_in_displayed_claim_text ... ok
+test retained_cache_value_must_match_the_validated_immutable_row ... ok
+test retained_graph_validates_original_receipt_and_rebound_snapshot_dependencies ... ok
+test valid_bound_bill_is_preserved_when_worker_exits_unsuccessfully ... ok
+test unknown_billing_remains_reserved_after_valid_graph_publication ... ok
+test unchanged_body_cache_rebinds_new_snapshot_and_changed_body_invalidates_it ... ok
+
+test result: ok. 26 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 15.11s
+
+     Running tests\meaning_cli.rs (target\debug\deps\meaning_cli-6092092382a6115f.exe)
+
+running 8 tests
+test meaning_cli_admits_the_entire_selection_and_cost_before_first_worker ... ok
+test meaning_cli_failed_later_claim_keeps_billing_and_no_partial_publication ... ok
+test meaning_cli_build_reference_is_bounded_and_graph_reads_never_create_overflow_artifacts ... ok
+test meaning_cli_rejects_ambiguous_host_json_and_invalid_output_budget_before_state ... ok
+test meaning_cli_requires_explicit_provider_permission_before_opening_source_state ... ok
+test meaning_cli_read_commands_require_existing_store_and_reject_execution_configuration ... ok
+test meaning_cli_builds_queries_and_reuses_immutable_receipts_without_read_time_execution ... ok
+test meaning_cli_output_pipe_loss_reports_the_already_durable_job_and_graph ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.00s
+
+     Running tests\meaning_commit_review.rs (target\debug\deps\meaning_commit_review-13cd89b423bf2ad5.exe)
+
+running 1 test
+test a_failed_status_after_commit_reports_both_durable_identities_without_claiming_incomplete_work ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.43s
+

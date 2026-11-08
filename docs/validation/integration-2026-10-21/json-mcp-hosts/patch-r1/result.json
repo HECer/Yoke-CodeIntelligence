@@ -1,0 +1,30 @@
+{
+  "checks": [
+    {
+      "name": "host_mcp_config",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--test",
+        "host_mcp_config",
+        "--",
+        "--test-threads=1"
+      ],
+      "exitCode": 101,
+      "seconds": 39.59436429999187,
+      "sourceUnchanged": true,
+      "totals": [],
+      "deletedNewArtifacts": []
+    }
+  ],
+  "sourceUnchanged": true,
+  "allChecksPassed": false,
+  "scope": "pure JSON MCP ownership patch and legacy host configuration tests",
+  "clientProfilesImplemented": false
+}

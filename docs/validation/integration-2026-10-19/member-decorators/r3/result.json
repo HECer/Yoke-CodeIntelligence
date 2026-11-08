@@ -1,0 +1,41 @@
+{
+  "sourceUnchanged": true,
+  "inputs": 736,
+  "commands": [
+    {
+      "name": "native",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--no-fail-fast",
+        "--test",
+        "member_decorators",
+        "--test",
+        "symbol_delete_ranges",
+        "--test",
+        "sibling_declarators",
+        "--test",
+        "python_empty_suite",
+        "--",
+        "--test-threads=1"
+      ],
+      "exitCode": 0,
+      "seconds": 121.50505039999553,
+      "totals": {
+        "passed": 29,
+        "failed": 0,
+        "ignored": 4
+      },
+      "groups": 4,
+      "failures": []
+    }
+  ],
+  "allChecksPassed": true,
+  "wholeNativeRerun": false
+}

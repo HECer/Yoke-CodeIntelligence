@@ -1,0 +1,31 @@
+{
+  "complete": true,
+  "product": "Code Intelligence",
+  "version": "0.5.0",
+  "freshHostProfileUsesNewGlobalBinding": true,
+  "originalGlobalWriterRetainsExactBytes": true,
+  "sourceWritten": false,
+  "beforeSha256": "8d69969bb68eb0bf46916fd683754b8923c82382982631aad1b94488807d8d52",
+  "afterSha256": "71720e6a52964c1e4ceb186717597e8d2f9e6139439524e9efc65338a30a6984",
+  "nativeExitedBeforeStdinEof": true,
+  "events": [
+    {
+      "kind": "document",
+      "status": 200
+    },
+    {
+      "kind": "document",
+      "status": 200
+    },
+    {
+      "kind": "document",
+      "status": 200
+    },
+    {
+      "kind": "shutdown",
+      "status": 200
+    }
+  ],
+  "modelCalls": 0,
+  "analyzedSourceExecuted": false
+}

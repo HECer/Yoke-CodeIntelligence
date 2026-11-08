@@ -1,0 +1,22 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 3.63s
+     Running tests\git_conflicts.rs (target\debug\deps\git_conflicts-cced1d9e69069962.exe)
+
+running 1 test
+test foreign_or_unproved_scope_metadata_never_authorizes_current_local_git_sources ... FAILED
+
+failures:
+
+---- foreign_or_unproved_scope_metadata_never_authorizes_current_local_git_sources stdout ----
+
+thread 'foreign_or_unproved_scope_metadata_never_authorizes_current_local_git_sources' (18784) panicked at native\tests\git_conflicts.rs:811:5:
+Imported snapshot labels cannot grant reading current local Git blobs
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    foreign_or_unproved_scope_metadata_never_authorizes_current_local_git_sources
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 9 filtered out; finished in 1.50s
+
+error: test failed, to rerun pass `--test git_conflicts`

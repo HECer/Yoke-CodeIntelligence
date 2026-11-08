@@ -1,0 +1,25 @@
+    Finished `test` profile [unoptimized] target(s) in 0.59s
+     Running tests\analyzer_epochs.rs (target\debug\deps\analyzer_epochs-c361693f00f37901.exe)
+
+running 10 tests
+test authentic_v8_extractions_and_entire_graphs_replay_byte_identically ... ok
+test explicit_v9_policy_reaches_embedded_symbols_scoped_bindings_and_evidence ... ok
+test extraction_cache_keys_are_separated_by_epoch ... ok
+test frozen_v8_classifier_matches_every_extension_captured_by_the_original_executable ... ok
+test explicit_editor9_constructor_reuses_its_exact_graph_without_relabelling_active8 ... ok
+test authentic_v8_view_archives_stay_self_contained_without_original_store ... ok
+test v8_cache_cannot_be_relabelled_as_a_v9_assembly ... ok
+test identical_patch_gets_a_new_v9_identity_without_republishing_v8_graph_bytes ... ok
+test unknown_or_resealed_capture_ids_never_select_the_current_analyzer_as_a_fallback ... ok
+test analyzer_selection_follows_exact_native_and_derived_ids_instead_of_the_active_epoch ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.58s
+
+     Running tests\artifact_page_review.rs (target\debug\deps\artifact_page_review-c2c02323c8a46e29.exe)
+
+running 2 tests
+test a_small_artifact_page_does_not_allocate_the_entire_valid_artifact ... ok
+test oversized_resource_rejection_happens_before_allocating_the_artifact_body ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.13s
+

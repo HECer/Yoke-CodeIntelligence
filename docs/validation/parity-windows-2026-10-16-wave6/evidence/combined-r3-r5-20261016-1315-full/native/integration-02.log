@@ -1,0 +1,20 @@
+    Finished `test` profile [unoptimized] target(s) in 0.71s
+     Running tests\agent_facade_options.rs (target\debug\deps\agent_facade_options-5a09746c8ee4b228.exe)
+
+running 3 tests
+test positive_answer_bounds_count_unicode_serialized_characters_and_preserve_full_small_answers ... ok
+test numeric_symbol_kinds_filter_referencing_containers_and_never_the_referenced_target ... ok
+test include_info_uses_actual_hover_at_the_same_captured_symbol_and_file_documentation_has_exact_anchors ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.72s
+
+     Running tests\agent_facade_semantics.rs (target\debug\deps\agent_facade_semantics-4a93af0caa85d920.exe)
+
+running 4 tests
+test boolean_facade_options_reject_wrong_types_before_querying ... ok
+test reference_diagnostics_include_the_whole_referencing_symbol_as_the_public_contract_requests ... ok
+test implementation_kinds_and_info_use_the_implemented_source_symbol ... ok
+test diagnostic_line_ranges_and_reference_scope_are_real_source_filters ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.74s
+

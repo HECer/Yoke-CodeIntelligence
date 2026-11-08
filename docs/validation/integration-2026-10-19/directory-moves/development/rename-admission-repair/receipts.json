@@ -1,0 +1,132 @@
+[
+  {
+    "gate": "format",
+    "exitCode": 0,
+    "elapsedSeconds": 4.776,
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "fmt",
+      "--all",
+      "--check"
+    ],
+    "groups": []
+  },
+  {
+    "gate": "clippy",
+    "exitCode": 0,
+    "elapsedSeconds": 169.274,
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "clippy",
+      "--locked",
+      "--all-targets",
+      "--keep-going",
+      "-j1",
+      "--target-dir",
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "groups": []
+  },
+  {
+    "gate": "scoped-native",
+    "exitCode": 101,
+    "elapsedSeconds": 371.58,
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "test",
+      "--locked",
+      "--no-fail-fast",
+      "-j1",
+      "--target-dir",
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+      "--lib",
+      "--test",
+      "facade_directory_move",
+      "--test",
+      "facade_file_move",
+      "--test",
+      "facade_file_rename",
+      "--test",
+      "facade_file_delete",
+      "--test",
+      "plan_integrity",
+      "--test",
+      "semantic_refactor",
+      "--test",
+      "refactor_intents",
+      "--",
+      "--test-threads=1"
+    ],
+    "groups": [
+      {
+        "passed": 425,
+        "failed": 0,
+        "ignored": 7
+      },
+      {
+        "passed": 10,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 9,
+        "failed": 1,
+        "ignored": 0
+      },
+      {
+        "passed": 8,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 9,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 13,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 15,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 7,
+        "failed": 0,
+        "ignored": 0
+      }
+    ]
+  },
+  {
+    "gate": "actual-directory-provider",
+    "exitCode": 0,
+    "elapsedSeconds": 9.449,
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "test",
+      "--locked",
+      "-j1",
+      "--target-dir",
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+      "--test",
+      "directory_move_live",
+      "--",
+      "--ignored",
+      "--nocapture",
+      "--test-threads=1"
+    ],
+    "groups": [
+      {
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0
+      }
+    ]
+  }
+]

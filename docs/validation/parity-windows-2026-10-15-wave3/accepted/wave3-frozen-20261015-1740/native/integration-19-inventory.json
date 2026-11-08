@@ -1,0 +1,83 @@
+{
+  "maintenance": {
+    "executable": "target\\debug\\deps\\maintenance-112cf785bcf63746.exe",
+    "ignored": [],
+    "registered": [
+      "all_generic_records_and_history_preserve_workflow_editor_vector_and_media_roots",
+      "blob_links_are_refused_and_external_targets_are_preserved",
+      "corrupt_unknown_record_refuses_collection_before_any_blob_moves",
+      "dry_run_counts_orphans_without_mutating_source_or_state_files",
+      "dry_run_distinguishes_unreferenced_blobs_from_age_eligible_candidates",
+      "expired_deadlines_and_irreversible_purge_requests_leave_orphans_intact",
+      "foreign_store_client_blocks_mutation_until_its_lifecycle_lease_closes",
+      "interrupted_quarantine_restores_originals_before_a_new_mark",
+      "later_blob_hash_failure_restores_earlier_moves_and_rolls_back_metadata",
+      "malformed_snapshot_shape_is_refused_before_an_orphan_is_moved",
+      "opaque_record_ids_and_map_keys_are_conservative_blob_roots",
+      "raw_sqlite_writer_contention_does_not_extend_failed_maintenance_cleanup"
+    ]
+  },
+  "manifest_graph": {
+    "executable": "target\\debug\\deps\\manifest_graph-51f2ce9c74f5c644.exe",
+    "ignored": [],
+    "registered": [
+      "apm_yaml_manifest_dependencies_are_not_treated_as_npm",
+      "cargo_inheritance_uses_the_nearest_declared_workspace",
+      "cargo_path_link_must_match_declared_package_identity",
+      "cargo_workspace_inherits_renamed_path_dependencies_without_merging_packages",
+      "derived_publication_refuses_an_existing_record_with_different_scope",
+      "invalid_xml_or_expired_capture_cannot_publish_derived_graph",
+      "package_json_graph_preserves_aliases_and_never_stores_credentials",
+      "pyproject_go_and_pom_declarations_have_distinct_ecosystems"
+    ]
+  },
+  "markdown_graph": {
+    "executable": "target\\debug\\deps\\markdown_graph-773ed0b86310e621.exe",
+    "ignored": [],
+    "registered": [
+      "commonmark_nested_labels_multiline_definitions_and_indented_code_have_correct_links",
+      "markdown_wiki_reference_frontmatter_and_symbol_citations_are_source_bound"
+    ]
+  },
+  "mcp_collection_grants": {
+    "executable": "target\\debug\\deps\\mcp_collection_grants-9bfb327d46861f6e.exe",
+    "ignored": [],
+    "registered": [
+      "current_principal_grants_are_injected_per_http_call_and_removed_on_upsert",
+      "native_archive_does_not_open_a_configured_but_unused_federation_receiver"
+    ]
+  },
+  "mcp_collection_grants_review": {
+    "executable": "target\\debug\\deps\\mcp_collection_grants_review-75ef68191c99f6f8.exe",
+    "ignored": [],
+    "registered": [
+      "collection_grants_are_borrowed_per_dispatch_and_sources_remain_noncanonical",
+      "non_session_profile_rejects_host_collection_grants_before_opening_source_state",
+      "replacing_principal_policy_cancels_running_session_before_waiting_for_read_lease"
+    ]
+  },
+  "mcp_http": {
+    "executable": "target\\debug\\deps\\mcp_http-e26509408743c132.exe",
+    "ignored": [],
+    "registered": [
+      "admission_caps_reject_declared_bodies_headers_deep_json_and_session_version_changes",
+      "already_started_runtime_initialization_expires_at_the_admitted_session_ttl",
+      "connection_close_reaches_eof_while_initialized_python_runtime_is_still_live",
+      "delete_rotation_revocation_and_shutdown_prove_each_owned_python_exit",
+      "explicit_browser_origin_preflight_and_auth_errors_preserve_exact_cors_scope",
+      "explicit_http_serena_runtime_persists_per_sid_and_rejects_foreign_session_labels",
+      "hostile_http_framing_origin_host_versions_and_json_are_rejected_before_sessions",
+      "http_python_cancellation_invalidates_lost_namespace_and_proves_process_exit",
+      "live_principal_rotation_and_host_profile_changes_invalidate_old_sessions",
+      "network_cancellation_interrupts_running_provider_and_shutdown_cleans_workers",
+      "queued_request_is_rechecked_after_current_principal_revocation",
+      "real_tcp_session_preserves_profile_initialization_and_closes_without_sse",
+      "real_tls_requires_pinned_trust_and_remote_binding_requires_explicit_tls",
+      "revoke_and_stop_cancel_runtime_during_initial_handshake",
+      "running_query_obeys_host_deadline_despite_client_timeout_and_returns_http_error",
+      "runtime_host_preflight_never_executes_and_other_profiles_cannot_attach_python",
+      "session_capacity_expiry_and_slow_connection_shutdown_are_bounded",
+      "stalled_runtime_initialization_obeys_ttl_and_shutdown_cancellation"
+    ]
+  }
+}

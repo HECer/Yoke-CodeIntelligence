@@ -1,0 +1,29 @@
+{
+  "knowledge": {
+    "executable": "target\\debug\\deps\\knowledge-cbfc45c540800951.exe",
+    "ignored": [],
+    "registered": [
+      "corrupt_local_corpus_counts_and_nonunit_coordinates_are_rejected",
+      "expanded_memory_size_is_rejected_without_poisoning_recall_or_supersession",
+      "forged_snapshot_and_corrupt_persisted_vectors_fail_closed",
+      "knowledge_refuses_unanchored_paths_secrets_and_scope_escalation",
+      "lcov_import_binds_line_hits_and_rejects_incomplete_or_forged_records",
+      "overflowing_persisted_idf_cannot_be_misreported_as_no_lexical_matches",
+      "rejected_supersession_preserves_original_and_expired_deadlines_do_not_write",
+      "remembered_source_hashes_report_changed_deleted_and_superseded_knowledge",
+      "runtime_import_preserves_one_execution_and_refuses_parent_cycles",
+      "sarif_import_maps_utf16_unicode_regions_to_source_bytes_and_refuses_escape",
+      "source_bound_external_vectors_normalize_and_reject_forged_or_invalid_vectors",
+      "sparse_tfidf_retrieval_matches_unicode_and_camelcase_without_model_execution",
+      "vector_import_rejects_mixed_dimensions_duplicates_and_partial_persistence"
+    ]
+  },
+  "knowledge_cli": {
+    "executable": "target\\debug\\deps\\knowledge_cli-cd250fcd9ca5d2aa.exe",
+    "ignored": [],
+    "registered": [
+      "cli_builds_vectors_and_mcp_queries_them_without_a_model_or_source_writes",
+      "native_context_includes_labeled_source_knowledge_only_when_requested"
+    ]
+  }
+}

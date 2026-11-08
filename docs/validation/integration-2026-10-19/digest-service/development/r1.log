@@ -1,0 +1,10 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\native)
+error[E0425]: cannot find function `admit_status_request` in module `digest::service`
+   --> native\src\github_app_digest_cli.rs:212:67
+    |
+212 |         if let Some((request,_))=&service_query {digest::service::admit_status_request(request)?;}
+    |                                                                   ^^^^^^^^^^^^^^^^^^^^ not found in `digest::service`
+
+For more information about this error, try `rustc --explain E0425`.
+error: could not compile `yoke-code-intelligence` (bin "yoke") due to 1 previous error
+warning: build failed, waiting for other jobs to finish...

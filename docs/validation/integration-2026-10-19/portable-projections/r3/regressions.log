@@ -1,0 +1,31 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+    Finished `test` profile [unoptimized] target(s) in 21.37s
+     Running tests\meaning_archive_cli.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\meaning_archive_cli-6b0740a70c15a6fa.exe)
+
+running 10 tests
+test duplicate_malformed_and_over_budget_bytes_cannot_initialize_a_registry ... ok
+test existing_output_file_directory_and_hardlink_are_never_overwritten ... FAILED
+test export_refuses_incomplete_store_without_initializing_any_state ... ok
+test inspect_supplied_bytes_is_storeless_and_emits_unknown_metadata_without_quotes ... ok
+test invalid_budgets_and_missing_existing_store_fail_before_filesystem_initialization ... ok
+test permission_and_explicit_cas_precede_any_input_or_registry_creation ... ok
+test published_view_export_preserves_full_typed_archive_without_source_publication ... ok
+test source_provider_flags_are_rejected_without_reading_selected_files ... ok
+test stdout_loss_reports_already_durable_registration_and_output_archive_identities ... ok
+test typed_registration_cas_and_load_keep_exact_bytes_after_all_original_state_is_removed ... ok
+
+failures:
+
+---- existing_output_file_directory_and_hardlink_are_never_overwritten stdout ----
+
+thread 'existing_output_file_directory_and_hardlink_are_never_overwritten' (17852) panicked at native\tests\meaning_archive_cli.rs:381:60:
+called `Result::unwrap()` on an `Err` value: Os { code: 1314, kind: Uncategorized, message: "Dem Client fehlt ein erforderliches Recht." }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    existing_output_file_directory_and_hardlink_are_never_overwritten
+
+test result: FAILED. 9 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.47s
+
+error: test failed, to rerun pass `--test meaning_archive_cli`

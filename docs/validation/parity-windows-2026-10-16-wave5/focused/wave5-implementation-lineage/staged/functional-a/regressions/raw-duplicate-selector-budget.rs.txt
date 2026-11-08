@@ -1,0 +1,24 @@
+// Raw duplicate keys remain malformed source; their observed entries still consume the hard budget.
+#[test]
+fn duplicate_workspace_fields_cannot_hide_over_limit_raw_selector_arrays() {
+    let control_marker = r#"{"workspaces":["p/*"],"workspaces":[]}"#;
+    let control = fixture(&[("package.json", control_marker)]);
+    captured(&control, "package.json", control_marker);
+    unsupported(&control, "source_schema");
+    for (first, second) in [(2_049usize, 0usize), (1_025, 1_024)] {
+        let marker = format!(
+            "{{\"workspaces\":{},\"workspaces\":{}}}",
+            serde_json::to_string(&vec!["p/*"; first]).unwrap(),
+            serde_json::to_string(&vec!["p/*"; second]).unwrap()
+        );
+        assert!(marker.len() < 1_000_000);
+        let f = fixture(&[("package.json", &marker)]);
+        captured(&f, "package.json", &marker);
+        let d = Deadline::new(20_000);
+        let mut run = begin(&f.engine.store, &f.snapshot, &f.graph, &d, 4_000_000).unwrap();
+        assert!(
+            matches!(hard(probe(&mut run)), RetrievalHardError::Capacity(_)),
+            "raw selector arrays {first}+{second} must not become policy fallback"
+        );
+    }
+}

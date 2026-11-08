@@ -1,0 +1,453 @@
+{
+  "schema": 1,
+  "revision": "worktree",
+  "workerHash": "7198a9d2db82d22bcd0fc17e8397710ecdeeec81073a35ab7862b0f85f1ba58b",
+  "pieces": [
+    {
+      "name": "compiler_worker.cjs",
+      "hash": "1e9d9430ef11349beb9355d929c09e909e0e8dc280ac51759464043de0f0a32f"
+    },
+    {
+      "name": "compiler_inline_worker.cjs",
+      "hash": "8109940b3bfb288c3b970cacf114543f45b036ab66de8db976c69d5aec3171da"
+    },
+    {
+      "name": "compiler_inline_body_worker.cjs",
+      "hash": "ab7a6d3b64653bdc9797bdf13bdabdd872b49fc46470648da9a8a33c1252064e"
+    },
+    {
+      "name": "compiler_inline_body_arguments_worker.cjs",
+      "hash": "3b7299a8d8338d87f00ef373d9a6f9def164fed80a85690c646d630ffe331d9f"
+    },
+    {
+      "name": "compiler_inline_body_vars_worker.cjs",
+      "hash": "a8ea0f4639b310fd81f434ccb7deb35f78a07c960e8e478e9f05210177b3e424"
+    },
+    {
+      "name": "compiler_inline_body_types_worker.cjs",
+      "hash": "f04ca7a8c2d6959021a6b7ceec8560c022eda595f3964c2220404459090d83b1"
+    },
+    {
+      "name": "compiler_move_worker.cjs",
+      "hash": "54342e465a382aab011ce9ecbf3dd113c0b849b14677277405806e7b2d94f813"
+    },
+    {
+      "name": "compiler_move_repairs_worker.cjs",
+      "hash": "a46cdd6dd404ec96c7cb03d7f46eee992de4a1690c61a682453171d23328b051"
+    },
+    {
+      "name": "compiler_hierarchy_worker.cjs",
+      "hash": "0a4eef184c36c0bb4853ad0f0cf5d7bfa224705b6f17fa086cf992da9c2a343f"
+    },
+    {
+      "name": "compiler_properties_worker.cjs",
+      "hash": "fa82e87df7d356d356869b239b189b1ec95830761f7f5934c01b805c1c77da4f"
+    }
+  ],
+  "compiler": "5.8.3",
+  "compilerHash": "dd17428736a07e1db1a138d8a14295ddb2699ba780ee15038acdd2c6da5373a0",
+  "node": "v24.21.0",
+  "results": [
+    {
+      "name": "return-type-under-value",
+      "keepDefinition": false,
+      "expected": "accepted",
+      "exit": 0,
+      "stderr": "",
+      "elapsedMs": 2042,
+      "sourceHash": "cc37023009d8577b9641f2e2248694536c51717182e28214ad46fa0646f0e33b",
+      "inputHash": "24022021fb372710f31c5c36ee19a6bd32c9edb2dfb780265c034a4305b2cf67",
+      "accepted": true,
+      "copiedBindings": 2,
+      "resultTypes": [
+        "Result"
+      ],
+      "observed": "5",
+      "resultHash": "406f793918e2e00ea4fea63ce3f7714b955915fe448f8a219bee7645c45cb8e6",
+      "identityChecked": true,
+      "byteEditsChecked": true,
+      "bindingsChecked": true,
+      "typesChecked": true,
+      "ownedRuntimeCompared": true,
+      "matchesExpected": true
+    },
+    {
+      "name": "return-type-under-value",
+      "keepDefinition": true,
+      "expected": "accepted",
+      "exit": 0,
+      "stderr": "",
+      "elapsedMs": 1720,
+      "sourceHash": "cc37023009d8577b9641f2e2248694536c51717182e28214ad46fa0646f0e33b",
+      "inputHash": "c117204efc7df67466e4d031968a8da77ea222538ea24a045a5bb0b54983277b",
+      "accepted": true,
+      "copiedBindings": 2,
+      "resultTypes": [
+        "Result"
+      ],
+      "observed": "5",
+      "resultHash": "c9f3d81a02a66d9b82dfefb7d584e3831268ecba136a3ae9f3cab20e2367ff8a",
+      "identityChecked": true,
+      "byteEditsChecked": true,
+      "bindingsChecked": true,
+      "typesChecked": true,
+      "ownedRuntimeCompared": true,
+      "matchesExpected": true
+    },
+    {
+      "name": "value-under-type",
+      "keepDefinition": false,
+      "expected": "accepted",
+      "exit": 0,
+      "stderr": "",
+      "elapsedMs": 1748,
+      "sourceHash": "dd09871bf649e1c4059439455a13a2d4389c4e2e381013776e4023d19784ecfe",
+      "inputHash": "54363ea7ffa2b577be4ba063f998be3d4dbd7b282660e36a1400402e5505567e",
+      "accepted": true,
+      "copiedBindings": 1,
+      "resultTypes": [
+        "number"
+      ],
+      "observed": "[5,true]",
+      "resultHash": "9d991c3e9d56a949ae3ebed9e5950fb88c014cda5841589ab20917a48fa32898",
+      "identityChecked": true,
+      "byteEditsChecked": true,
+      "bindingsChecked": true,
+      "typesChecked": true,
+      "ownedRuntimeCompared": true,
+      "matchesExpected": true
+    },
+    {
+      "name": "value-under-type",
+      "keepDefinition": true,
+      "expected": "accepted",
+      "exit": 0,
+      "stderr": "",
+      "elapsedMs": 1728,
+      "sourceHash": "dd09871bf649e1c4059439455a13a2d4389c4e2e381013776e4023d19784ecfe",
+      "inputHash": "8039ed69524be6572a0890c3bae86a76c0f9ec7f6f56b6a7e692c1f254cba481",
+      "accepted": true,
+      "copiedBindings": 1,
+      "resultTypes": [
+        "number"
+      ],
+      "observed": "[5,true]",
+      "resultHash": "94ccaa8389667690998a28962ee77b98ce79ba8f3efdaf6a41d6157388a79d15",
+      "identityChecked": true,
+      "byteEditsChecked": true,
+      "bindingsChecked": true,
+      "typesChecked": true,
+      "ownedRuntimeCompared": true,
+      "matchesExpected": true
+    },
+    {
+      "name": "qualified-type-under-value",
+      "keepDefinition": false,
+      "expected": "accepted",
+      "exit": 0,
+      "stderr": "",
+      "elapsedMs": 1765,
+      "sourceHash": "ef51408a2981cc6b352544e06bda708a0d658b34ae4ba19ca692a7a8c890ee30",
+      "inputHash": "928e1581b1fb0a0dae10709a2213b14cb8d7f7ef61ea08be97b409b26e2500f6",
+      "accepted": true,
+      "copiedBindings": 2,
+      "resultTypes": [
+        "Types.Result"
+      ],
+      "observed": "5",
+      "resultHash": "70b1924a28315d50e935985174fa69a1f302401992039e76b9fe4170fbdd3033",
+      "identityChecked": true,
+      "byteEditsChecked": true,
+      "bindingsChecked": true,
+      "typesChecked": true,
+      "ownedRuntimeCompared": true,
+      "matchesExpected": true
+    },
+    {
+      "name": "qualified-type-under-value",
+      "keepDefinition": true,
+      "expected": "accepted",
+      "exit": 0,
+      "stderr": "",
+      "elapsedMs": 1774,
+      "sourceHash": "ef51408a2981cc6b352544e06bda708a0d658b34ae4ba19ca692a7a8c890ee30",
+      "inputHash": "835637351fc86252b7c4f90ef4a0fd1aed6566a42d9a9105f01f85c7b28d0e23",
+      "accepted": true,
+      "copiedBindings": 2,
+      "resultTypes": [
+        "Types.Result"
+      ],
+      "observed": "5",
+      "resultHash": "9fcac1d1d7a20604dede7c3a333113692abfbbcd9ee405b91134f3d424208bea",
+      "identityChecked": true,
+      "byteEditsChecked": true,
+      "bindingsChecked": true,
+      "typesChecked": true,
+      "ownedRuntimeCompared": true,
+      "matchesExpected": true
+    },
+    {
+      "name": "typeof-value-under-type",
+      "keepDefinition": false,
+      "expected": "accepted",
+      "exit": 0,
+      "stderr": "",
+      "elapsedMs": 1646,
+      "sourceHash": "081feb4a719ca2bb017501a9c9addfc9c87fe9fde55a8960a2af977aa46d3c74",
+      "inputHash": "b15862bec258963674cac00498811e61d2c0740f8ca876b0abb81424c02884d9",
+      "accepted": true,
+      "copiedBindings": 3,
+      "resultTypes": [
+        "number"
+      ],
+      "observed": "[3,true]",
+      "resultHash": "9c3bb0248c37f178801a6f7ee064e980e6e156c95d449380e0f6d820327d63f0",
+      "identityChecked": true,
+      "byteEditsChecked": true,
+      "bindingsChecked": true,
+      "typesChecked": true,
+      "ownedRuntimeCompared": true,
+      "matchesExpected": true
+    },
+    {
+      "name": "typeof-value-under-type",
+      "keepDefinition": true,
+      "expected": "accepted",
+      "exit": 0,
+      "stderr": "",
+      "elapsedMs": 1590,
+      "sourceHash": "081feb4a719ca2bb017501a9c9addfc9c87fe9fde55a8960a2af977aa46d3c74",
+      "inputHash": "0d5c39b1cdbbfb45f4b621154ab0e748634663d7cc145e99e123bae43ba895a8",
+      "accepted": true,
+      "copiedBindings": 3,
+      "resultTypes": [
+        "number"
+      ],
+      "observed": "[3,true]",
+      "resultHash": "460913962760a4d9405507363b8791ea68f39f2e0cc5a4609a119bea1e3cf637",
+      "identityChecked": true,
+      "byteEditsChecked": true,
+      "bindingsChecked": true,
+      "typesChecked": true,
+      "ownedRuntimeCompared": true,
+      "matchesExpected": true
+    },
+    {
+      "name": "shorthand-value-under-type",
+      "keepDefinition": false,
+      "expected": "accepted",
+      "exit": 0,
+      "stderr": "",
+      "elapsedMs": 1617,
+      "sourceHash": "fd804087ae2ac5b4ec18263625f00a56c2ff4853199e52e593e4d75286fbcc59",
+      "inputHash": "4ee7b5a9f3fd6ca78cf9d251ad2cfc43c22d1215ce42c3a6b0277e4ba6e02d35",
+      "accepted": true,
+      "copiedBindings": 1,
+      "resultTypes": [
+        "{ BASE: number; }"
+      ],
+      "observed": "[2,true]",
+      "resultHash": "32bceffa5eb8e7fb0c441180ed80d8c3c0a454e621ced4493e86779342157b3a",
+      "identityChecked": true,
+      "byteEditsChecked": true,
+      "bindingsChecked": true,
+      "typesChecked": true,
+      "ownedRuntimeCompared": true,
+      "matchesExpected": true
+    },
+    {
+      "name": "shorthand-value-under-type",
+      "keepDefinition": true,
+      "expected": "accepted",
+      "exit": 0,
+      "stderr": "",
+      "elapsedMs": 1681,
+      "sourceHash": "fd804087ae2ac5b4ec18263625f00a56c2ff4853199e52e593e4d75286fbcc59",
+      "inputHash": "6a34a969a7d24ac6573b2ea1eb72bb8f5640d5bbc5d5f8d327ebcf183e62c606",
+      "accepted": true,
+      "copiedBindings": 1,
+      "resultTypes": [
+        "{ BASE: number; }"
+      ],
+      "observed": "[2,true]",
+      "resultHash": "c59705607be1d0a1664a1bbeea31f5fbd2569b6be1d68fdb609a9db9050a1f85",
+      "identityChecked": true,
+      "byteEditsChecked": true,
+      "bindingsChecked": true,
+      "typesChecked": true,
+      "ownedRuntimeCompared": true,
+      "matchesExpected": true
+    },
+    {
+      "name": "unicode-crlf-type-under-value",
+      "keepDefinition": false,
+      "expected": "accepted",
+      "exit": 0,
+      "stderr": "",
+      "elapsedMs": 1678,
+      "sourceHash": "674949d1cd4e4f6328c910885190e91767f19c2117103761b6de2c794953369e",
+      "inputHash": "03ea64a8aa12f9eb0498bfc9f99441191c55f682a4610a8dcb23dd9941765326",
+      "accepted": true,
+      "copiedBindings": 2,
+      "resultTypes": [
+        "Résultat"
+      ],
+      "observed": "5",
+      "resultHash": "05ba8ae7eba3ce087427ebeea59e55ebca6e8336185c0548aa0243f6fdb3e435",
+      "identityChecked": true,
+      "byteEditsChecked": true,
+      "bindingsChecked": true,
+      "typesChecked": true,
+      "ownedRuntimeCompared": true,
+      "matchesExpected": true
+    },
+    {
+      "name": "unicode-crlf-type-under-value",
+      "keepDefinition": true,
+      "expected": "accepted",
+      "exit": 0,
+      "stderr": "",
+      "elapsedMs": 1583,
+      "sourceHash": "674949d1cd4e4f6328c910885190e91767f19c2117103761b6de2c794953369e",
+      "inputHash": "ebae414fadcd18d2299f7e4b661c21b8a89eb8e005ba8d11666295e7166e477b",
+      "accepted": true,
+      "copiedBindings": 2,
+      "resultTypes": [
+        "Résultat"
+      ],
+      "observed": "5",
+      "resultHash": "8603c318cd04b1a689a6d438bd63355d651658dbfc6e4646b787e63ed91b5558",
+      "identityChecked": true,
+      "byteEditsChecked": true,
+      "bindingsChecked": true,
+      "typesChecked": true,
+      "ownedRuntimeCompared": true,
+      "matchesExpected": true
+    },
+    {
+      "name": "true-type-shadow",
+      "keepDefinition": false,
+      "expected": "refused",
+      "exit": 1,
+      "stderr": "Body free binding would change at consumer",
+      "elapsedMs": 997,
+      "sourceHash": "beedf067e2a1088ba31daccd59e5cceb079f70f7a9856058b74ff1bbcea91dfe",
+      "inputHash": "d2d289d2a10581a4bb5988e3b242166c19aff4c2ca5de6737cc04408ba26a8d1",
+      "accepted": false,
+      "matchesExpected": true
+    },
+    {
+      "name": "true-type-shadow",
+      "keepDefinition": true,
+      "expected": "refused",
+      "exit": 1,
+      "stderr": "Body free binding would change at consumer",
+      "elapsedMs": 987,
+      "sourceHash": "beedf067e2a1088ba31daccd59e5cceb079f70f7a9856058b74ff1bbcea91dfe",
+      "inputHash": "ab1f1eac4b04419c3e29d13d34d86f920c81c270b2b3736c7446eb012878adce",
+      "accepted": false,
+      "matchesExpected": true
+    },
+    {
+      "name": "true-value-shadow",
+      "keepDefinition": false,
+      "expected": "refused",
+      "exit": 1,
+      "stderr": "Body free binding would change at consumer",
+      "elapsedMs": 985,
+      "sourceHash": "a0471c02438eb31d1783a05547d9ab56ec7005e53c05b6dd0502688cc944bfb2",
+      "inputHash": "a53d2039e5aac11f1a9594557d491b43988419ce66115b282c0e334c832783bf",
+      "accepted": false,
+      "matchesExpected": true
+    },
+    {
+      "name": "true-value-shadow",
+      "keepDefinition": true,
+      "expected": "refused",
+      "exit": 1,
+      "stderr": "Body free binding would change at consumer",
+      "elapsedMs": 977,
+      "sourceHash": "a0471c02438eb31d1783a05547d9ab56ec7005e53c05b6dd0502688cc944bfb2",
+      "inputHash": "31b3c556b255fee7fc5b36ec85029a98e86766663007f4a2a4b919a8bc543a05",
+      "accepted": false,
+      "matchesExpected": true
+    },
+    {
+      "name": "typeof-value-shadow",
+      "keepDefinition": false,
+      "expected": "refused",
+      "exit": 1,
+      "stderr": "Body free binding would change at consumer",
+      "elapsedMs": 991,
+      "sourceHash": "532b5bcd3725587cc5ef235a76a17344548284748d80c728f1da987246124564",
+      "inputHash": "04e2b7733da7024f9219ea6896a9c0b4dcc9df5c6d5c924b8ef79395e432b97c",
+      "accepted": false,
+      "matchesExpected": true
+    },
+    {
+      "name": "typeof-value-shadow",
+      "keepDefinition": true,
+      "expected": "refused",
+      "exit": 1,
+      "stderr": "Body free binding would change at consumer",
+      "elapsedMs": 1060,
+      "sourceHash": "532b5bcd3725587cc5ef235a76a17344548284748d80c728f1da987246124564",
+      "inputHash": "82866b5646436d33a3da7483b958bd38a2fa785606058fc66b2a7b4ca76327ab",
+      "accepted": false,
+      "matchesExpected": true
+    },
+    {
+      "name": "qualified-namespace-shadow",
+      "keepDefinition": false,
+      "expected": "refused",
+      "exit": 1,
+      "stderr": "Body free binding would change at consumer",
+      "elapsedMs": 1083,
+      "sourceHash": "9587d127797cb413ee0d5bc0f21a199d3965353a6d82b6837c2195e9817e439c",
+      "inputHash": "f5fbdf866f9df149e8df21baedbddaf01aac734ae9b764efd54876914e3372c7",
+      "accepted": false,
+      "matchesExpected": true
+    },
+    {
+      "name": "qualified-namespace-shadow",
+      "keepDefinition": true,
+      "expected": "refused",
+      "exit": 1,
+      "stderr": "Body free binding would change at consumer",
+      "elapsedMs": 984,
+      "sourceHash": "9587d127797cb413ee0d5bc0f21a199d3965353a6d82b6837c2195e9817e439c",
+      "inputHash": "1d1823eb38a93436e6c021041e73eacd79bf959ef2fcf92bdaedcb093bc1bd75",
+      "accepted": false,
+      "matchesExpected": true
+    },
+    {
+      "name": "shorthand-value-shadow",
+      "keepDefinition": false,
+      "expected": "refused",
+      "exit": 1,
+      "stderr": "Body free binding would change at consumer",
+      "elapsedMs": 993,
+      "sourceHash": "8500115ab4fb9bf9418ccf89ef93effe7e422a0fa2fc117347d185edeca5785f",
+      "inputHash": "db88561da090580aee12c2df8d67c9914212f27c0318823d5fc8d414e0151bf3",
+      "accepted": false,
+      "matchesExpected": true
+    },
+    {
+      "name": "shorthand-value-shadow",
+      "keepDefinition": true,
+      "expected": "refused",
+      "exit": 1,
+      "stderr": "Body free binding would change at consumer",
+      "elapsedMs": 995,
+      "sourceHash": "8500115ab4fb9bf9418ccf89ef93effe7e422a0fa2fc117347d185edeca5785f",
+      "inputHash": "40421b413366d0d0f4eff18ffb420f66834085859642b0d9a7669388f862780d",
+      "accepted": false,
+      "matchesExpected": true
+    }
+  ],
+  "matchesExpected": true,
+  "nativeAdmission": false,
+  "ownedLiteralFixturesExecuted": true,
+  "analyzedRepositoryCodeExecuted": false,
+  "independentRustReconstruction": "not run"
+}

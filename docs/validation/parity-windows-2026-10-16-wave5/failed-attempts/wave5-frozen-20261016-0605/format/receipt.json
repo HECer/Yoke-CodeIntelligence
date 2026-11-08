@@ -1,0 +1,54 @@
+{
+  "accepted": true,
+  "aclTempRoot": null,
+  "artifactSha256": {
+    "format.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source-after.json": "3b9fb9474f7c7df29e765aecb7eb47e83c558a441985e7b2f90e708152eccfdd",
+    "source-before.json": "3b9fb9474f7c7df29e765aecb7eb47e83c558a441985e7b2f90e708152eccfdd"
+  },
+  "checkedAtUtc": "2026-10-16T06:03:20.732884+00:00",
+  "failed": 0,
+  "groups": 0,
+  "ignored": 0,
+  "interpretation": "Fresh execution only. Shared freeze required across all five phases; ignored test results are never relabeled as passing.",
+  "matrixCoverage": {},
+  "passed": 0,
+  "phase": "format",
+  "phases": [
+    "format",
+    "clippy",
+    "native",
+    "python",
+    "typescript"
+  ],
+  "results": [
+    {
+      "command": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "exitCode": 0,
+      "failed": 0,
+      "groups": 0,
+      "ignored": 0,
+      "inventoryOnly": false,
+      "label": "format",
+      "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "fresh_execution",
+      "passed": 0,
+      "runnerSha256": "b51bbffbddd07be0aa6ef019fc950d772c628d77b3567f646d7a837726aa3d15",
+      "seconds": 6.485,
+      "sourceManifestSha256": "3b9fb9474f7c7df29e765aecb7eb47e83c558a441985e7b2f90e708152eccfdd",
+      "tempRoot": "D:\\Yoke-Test-Scratch\\wave5-frozen-20261016-0605-format"
+    }
+  ],
+  "runnerSha256": "b51bbffbddd07be0aa6ef019fc950d772c628d77b3567f646d7a837726aa3d15",
+  "sourceChanges": [],
+  "sourceFiles": 1528,
+  "sourceManifestSha256": "3b9fb9474f7c7df29e765aecb7eb47e83c558a441985e7b2f90e708152eccfdd",
+  "tempRoot": "D:\\Yoke-Test-Scratch\\wave5-frozen-20261016-0605-format",
+  "validationErrors": []
+}

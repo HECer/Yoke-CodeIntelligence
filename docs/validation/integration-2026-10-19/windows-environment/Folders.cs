@@ -1,0 +1,2 @@
+using System; using System.IO;
+class Folders { static void Main() { foreach (Environment.SpecialFolder slot in Enum.GetValues(typeof(Environment.SpecialFolder))) { try { string path=Environment.GetFolderPath(slot,Environment.SpecialFolderOption.DoNotVerify); Console.WriteLine(slot+"|"+(String.IsNullOrEmpty(path)?"empty":Path.IsPathRooted(path)?"absolute":"relative")); } catch(Exception e) { Console.WriteLine(slot+"|"+e.GetType().Name); } } } }

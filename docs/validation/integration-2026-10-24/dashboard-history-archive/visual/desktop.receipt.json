@@ -1,0 +1,10 @@
+{
+  "syntheticOnly": true,
+  "nativeBackendClaimed": false,
+  "nativeScreenshot": false,
+  "inspected": true,
+  "observations": "Current client handler keeps draft read-only, shows explicit history blocker, has no write/archive actions and no horizontal overflow.",
+  "toolMetadata": [
+    "{\"width\":1280,\"contentHeight\":1375,\"capturedHeight\":1375,\"consoleMessages\":[{\"level\":\"log\",\"text\":\"{\\\"syntheticOnly\\\":true,\\\"stage\\\":\\\"blocked\\\",\\\"draftCopyableReadOnly\\\":true,\\\"noWriteOrArchiveAction\\\":true,\\\"explicitIncompleteBlocker\\\":true,\\\"writes\\\":0,\\\"overflow\\\":false}\"}],\"screenshot\":{\"mimeType\":\"image/png\",\"width\":1280,\"height\":1375}}"
+  ]
+}

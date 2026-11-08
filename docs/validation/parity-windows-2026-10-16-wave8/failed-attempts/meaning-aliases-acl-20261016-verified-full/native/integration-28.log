@@ -1,0 +1,29 @@
+    Finished `test` profile [unoptimized] target(s) in 1.28s
+     Running tests\facade_file_move.rs (E:\Yoke-Build-Cache\meaning-aliases-20261016\debug\deps\facade_file_move-6144897cf260e5ee.exe)
+
+running 7 tests
+test move_permissions_and_external_project_refusal_precede_provider_start ... ok
+test move_target_parent_must_be_explicit_and_must_not_be_an_existing_file ... ok
+test occupied_final_child_and_same_parent_moves_refuse_without_change_objects ... ok
+test omitted_binary_host_destination_is_still_occupied_before_provider_and_plan ... ok
+test directory_symbol_parent_and_malformed_file_selectors_are_explicit_refusals ... ok
+test unsafe_target_parents_and_captured_readonly_or_excluded_scopes_never_prepare_plans ... ok
+test file_move_omitted_null_and_empty_selectors_preserve_basename_in_the_target_parent_for_v8_v9 ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.23s
+
+     Running tests\facade_file_rename.rs (E:\Yoke-Build-Cache\meaning-aliases-20261016\debug\deps\facade_file_rename-26aacd7ab6c8a3a1.exe)
+
+running 9 tests
+test file_rename_permissions_and_external_context_refusal_precede_provider_start ... ok
+test directory_missing_excluded_and_readonly_sources_have_no_file_rename_authority ... ok
+test empty_selectors_and_true_or_malformed_file_occurrence_options_refuse_before_provider ... ok
+test file_rename_new_name_is_a_portable_single_basename_and_never_a_destination_path ... ok
+test occupied_file_directory_uncaptured_binary_and_source_alias_refuse_before_provider ... ok
+test root_file_rename_uses_the_supplied_unicode_basename_without_creating_a_parent ... ok
+test guarded_file_rename_plan_refuses_stale_source_before_any_workspace_write ... ok
+test nullable_file_rename_omitted_and_null_selectors_preserve_parent_for_v8_v9 ... ok
+test public_file_rename_accepts_generated_false_defaults_and_explicit_false_options ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.97s
+

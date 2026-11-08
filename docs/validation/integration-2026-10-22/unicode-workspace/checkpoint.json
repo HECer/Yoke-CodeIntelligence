@@ -1,0 +1,114 @@
+{
+  "sourceCommit": "383e3defa1a1a432b136d1b944b119e12590eca5",
+  "cliSha256": "b202347b8397226f4a1d7194d5d5c33baf5483963c63bd53aa529a9bc07b5604",
+  "frozenInputs": 1061,
+  "rust": {
+    "cargoTargets": {
+      "semantic_workspace": {
+        "passed": 10,
+        "failed": 0,
+        "ignored": 0
+      },
+      "symbol_workspace": {
+        "passed": 9,
+        "failed": 0,
+        "ignored": 0
+      },
+      "native-lib": {
+        "passed": 569,
+        "failed": 0,
+        "ignored": 7
+      },
+      "lsp": {
+        "passed": 10,
+        "failed": 0,
+        "ignored": 0
+      },
+      "lsp_dependency_scope": {
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0
+      },
+      "lsp_lifecycle": {
+        "passed": 2,
+        "failed": 0,
+        "ignored": 0
+      },
+      "lsp_action_resolve": {
+        "passed": 5,
+        "failed": 0,
+        "ignored": 1
+      },
+      "semantic_refactor": {
+        "passed": 7,
+        "failed": 0,
+        "ignored": 0
+      },
+      "refactor_intents": {
+        "passed": 15,
+        "failed": 0,
+        "ignored": 0
+      },
+      "symbol_move_own_v1": {
+        "passed": 18,
+        "failed": 0,
+        "ignored": 0
+      },
+      "semantic_mcp": {
+        "passed": 7,
+        "failed": 0,
+        "ignored": 0
+      },
+      "symbol_workspace_routes": {
+        "passed": 4,
+        "failed": 0,
+        "ignored": 0
+      },
+      "agent_repl": {
+        "passed": 22,
+        "failed": 0,
+        "ignored": 0
+      },
+      "agent_repl_lifecycle": {
+        "passed": 3,
+        "failed": 0,
+        "ignored": 0
+      },
+      "agent_facade_semantics": {
+        "passed": 4,
+        "failed": 0,
+        "ignored": 0
+      },
+      "session_mcp": {
+        "passed": 3,
+        "failed": 0,
+        "ignored": 0
+      },
+      "server_selection": {
+        "passed": 8,
+        "failed": 0,
+        "ignored": 0
+      }
+    },
+    "distinctPassed": 697,
+    "failed": 0,
+    "existingIgnored": 8,
+    "newFunctions": 2
+  },
+  "npm": {
+    "passed": 260,
+    "failed": 0,
+    "existingSkipped": 3
+  },
+  "formatTargetRoots": 345,
+  "cargoFormatAllWindowsOs206": true,
+  "allQualifiedJobsEmpty": true,
+  "originalTenSymlinkFixtureGitAndFrozenWorkingBytesUnchanged": true,
+  "fullStatusComplete": false,
+  "fullNativeCurrentHeadCertified": false,
+  "systemSettingsChanged": false,
+  "originalInventoryAssessmentsUnchanged": true,
+  "rawMembers": 176,
+  "installedRustAnalyzer": "rust-analyzer 1.94.1 (e408947b 2026-03-25)",
+  "actualCrossUnicodeRootReferenceSourceBound": true
+}

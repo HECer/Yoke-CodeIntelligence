@@ -24,16 +24,17 @@ export function runProcess(command: string, args: string[], options: {
         const child = spawn(command, args, { cwd: options.cwd, shell: false, detached: process.platform !== 'win32', env: { PATH: process.env.PATH ?? '', SystemRoot: process.env.SystemRoot ?? '', PYTHONIOENCODING: 'utf-8', PYTHONDONTWRITEBYTECODE: '1', PYTHONNOUSERSITE: '1', CI: '1', NO_COLOR: '1', ...options.env }, stdio: ['pipe', 'pipe', 'pipe'] });
         const outputs = { stdout: [] as Buffer[], stderr: [] as Buffer[] };
         let bytes = 0, truncated = false, done = false;
+        let stdinClosed = false;
         let failure: Error | undefined;
+        let timer: ReturnType<typeof setTimeout> | undefined;
         const stop = (error: Error) => {
-            if (done)
+            if (done || failure)
                 return;
             failure = error;
+            child.stdin.destroy();
             killTree(child);
         };
-        const timer = setTimeout(() => stop(new CIError('DEADLINE_EXCEEDED', 'Process exceeded shared deadline')), deadline.remaining);
         const abort = () => stop(new CIError('CANCELLED', 'Process cancelled'));
-        deadline.signal?.addEventListener('abort', abort, { once: true });
         const cleanup = () => { clearTimeout(timer); deadline.signal?.removeEventListener('abort', abort); };
         for (const stream of ['stdout', 'stderr'] as const)
             child[stream].on('data', (data: Buffer) => {
@@ -48,24 +49,33 @@ export function runProcess(command: string, args: string[], options: {
                     truncated = true;
             });
         child.on('error', error => {
-            if (!done) {
-                done = true;
-                cleanup();
-                reject(new CIError('PROCESS_UNAVAILABLE', error.message));
-            }
+            stop(new CIError('PROCESS_UNAVAILABLE', error.message));
         });
         child.on('close', code => {
             if (done)
                 return;
             done = true;
             cleanup();
-            if (failure)
-                reject(failure);
+            if (failure) {
+                if (stdinClosed)
+                    reject(failure);
+                else
+                    child.stdin.once('close', () => reject(failure));
+            }
             else
                 resolve({ exitCode: code, stdout: Buffer.concat(outputs.stdout).toString('utf8'), stderr: Buffer.concat(outputs.stderr).toString('utf8'), truncated, durationMs: Date.now() - start });
         });
         child.stdin.on('error', () => { });
-        child.stdin.end(options.input ?? '');
+        child.stdin.once('close', () => { stdinClosed = true; });
+        try {
+            deadline.signal?.addEventListener('abort', abort, { once: true });
+            timer = setTimeout(() => stop(new CIError('DEADLINE_EXCEEDED', 'Process exceeded shared deadline')), deadline.remaining);
+            if (!failure)
+                child.stdin.end(options.input ?? '');
+        }
+        catch (error) {
+            stop(error instanceof Error ? error : new Error(String(error)));
+        }
     });
 }
 export function killTree(child: Pick<ChildProcessWithoutNullStreams, 'pid' | 'kill'>): void {
@@ -73,7 +83,18 @@ export function killTree(child: Pick<ChildProcessWithoutNullStreams, 'pid' | 'ki
         return;
     if (process.platform === 'win32') {
         const killer = spawn('taskkill', ['/PID', String(child.pid), '/T', '/F'], { stdio: 'ignore', windowsHide: true });
-        killer.on('error', () => child.kill('SIGKILL'));
+        let fallbackStarted = false;
+        const fallback = () => {
+            if (!fallbackStarted) {
+                fallbackStarted = true;
+                child.kill('SIGKILL');
+            }
+        };
+        killer.once('error', fallback);
+        killer.once('exit', code => {
+            if (code !== 0)
+                fallback();
+        });
     }
     else {
         try {

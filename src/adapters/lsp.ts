@@ -257,6 +257,9 @@ export class LspAdapter {
         finally {
             this.close();
         }
+        // Windows tree termination is asynchronous. Do not verify or remove the
+        // materialized source until the provider's own handles have closed.
+        await this.peer.waitForExit(deadline);
     }
     close(): void { this.peer.close(); }
 }

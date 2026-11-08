@@ -1,0 +1,57 @@
+{
+  "accepted": true,
+  "checkedAtUtc": "2026-10-17T00:18:48.894258+00:00",
+  "freezeArtifactSha256": {
+    "freeze.json": "1cfe37c942c3a31b94df9061d0b7ff8f5f25699cd72b8b9a72df83eacbcdf61c",
+    "runner.py": "412b796dff54e94a5ba1076204c28646f85dc1a769a4e7afa0428416b07f6a6b",
+    "source-freeze.json": "ee3aa27d31684acd0c16e14af519929e603a187bf5a23d17ef977af2956d5934"
+  },
+  "interpretation": "All five phases freshly executed on identical frozen source and runner; ignored tests remain ignored. Three disjoint ACL fixtures and the complete ignored_capture target execute on C. query_parity executes serially on E with unchanged deadlines; all other tests execute on E with four threads.",
+  "phaseReceipts": {
+    "clippy": {
+      "failed": 0,
+      "groups": 0,
+      "ignored": 0,
+      "passed": 0,
+      "receiptSha256": "056d1545ab494385347f92053a3047cdaf45ff1352e1716c0ba049c20f59a7c2"
+    },
+    "format": {
+      "failed": 0,
+      "groups": 0,
+      "ignored": 0,
+      "passed": 0,
+      "receiptSha256": "49adcc610965bf2c1227f9693ad1b01a0bbcacb7156d0497707b0d3c5ead25eb"
+    },
+    "native": {
+      "failed": 0,
+      "groups": 238,
+      "ignored": 33,
+      "passed": 1814,
+      "receiptSha256": "ec81cb6e5f317cdf3912e142ba8059b8814c5b4461db3e51021ee6696517ba26"
+    },
+    "python": {
+      "failed": 0,
+      "groups": 1,
+      "ignored": 0,
+      "passed": 11,
+      "receiptSha256": "3a9ffaa1b97f5f677dcc7108176772a5e8dc84af6db504b9a7491e5c0ae36600"
+    },
+    "typescript": {
+      "failed": 0,
+      "groups": 1,
+      "ignored": 3,
+      "passed": 254,
+      "receiptSha256": "5a435e7e7b140c79f698f1b7cebb28d2c0f4295b38bb7998c8f3c34c27457e2b"
+    }
+  },
+  "phases": [
+    "format",
+    "clippy",
+    "native",
+    "python",
+    "typescript"
+  ],
+  "runnerSha256": "412b796dff54e94a5ba1076204c28646f85dc1a769a4e7afa0428416b07f6a6b",
+  "sourceFiles": 3254,
+  "sourceManifestSha256": "ee3aa27d31684acd0c16e14af519929e603a187bf5a23d17ef977af2956d5934"
+}

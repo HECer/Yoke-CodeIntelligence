@@ -1,0 +1,29 @@
+    Finished `test` profile [unoptimized] target(s) in 0.57s
+     Running tests\adversarial.rs (target\debug\deps\adversarial-49f0ae53200d545a.exe)
+
+running 14 tests
+test derived_source_cannot_introduce_obvious_credentials_into_state ... ok
+test conservative_token_budget_bounds_the_serialized_result ... ok
+test cli_trace_honors_a_requested_snapshot_after_disk_changes ... ok
+test bare_package_imports_do_not_become_syntactic_sibling_file_bindings ... ok
+test huge_unicode_argument_errors_cannot_abort_the_mcp_session ... ok
+test insufficient_workspace_response_budget_is_rejected_before_a_write ... ok
+test sqlite_sidecar_links_cannot_rewrite_files_outside_state ... ok
+test missing_anonymous_tokens_are_reported_as_syntax_diagnostics ... ok
+test private_ec_keys_and_credential_file_variants_are_excluded ... ok
+test protected_package_credentials_and_obvious_tokens_never_enter_snapshots ... ok
+test windows_device_names_and_path_aliases_are_never_edit_targets ... ok
+test sqlite_writer_contention_respects_the_cli_deadline ... ok
+test unchanged_index_republishes_the_disk_snapshot_after_patch_preparation ... ok
+test syntax_delta_is_multiplicity_aware_and_test_paths_are_case_insensitive ... ok
+
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.97s
+
+     Running tests\agent_dependency_options.rs (target\debug\deps\agent_dependency_options-e75d75411186bf90.exe)
+
+running 2 tests
+test requesting_dependencies_never_captures_ungranted_paths_or_protected_files ... ok
+test dependency_search_is_host_captured_read_only_scope_and_filters_before_the_match_threshold ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.53s
+

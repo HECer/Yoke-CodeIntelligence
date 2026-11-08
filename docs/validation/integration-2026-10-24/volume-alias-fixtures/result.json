@@ -1,0 +1,44 @@
+{
+  "baseline": "2154c13d5449f31f198e5dc0ae2fba01579cd5ee",
+  "nativeProductionWorkflowProfilesScriptsTypescriptVsixExactToBaseline": true,
+  "changedNativeTestFiles": 2,
+  "wholeTestFunctionCountsUnchanged": {
+    "native/tests/repository_discovery.rs": 9,
+    "native/tests/semantic_workspace.rs": 10
+  },
+  "testsIgnoredOrFilteredByThisChange": false,
+  "actualWindowsFilesystemProbePassed": true,
+  "nativeFmt": {
+    "roots": 368,
+    "failed": 0
+  },
+  "finalChangedRustFileFormatCheckExit": 0,
+  "nativeCompilationOrExecutionAttemptedLocally": false,
+  "macosOrHostedNewBranchesQualified": false,
+  "aliasBranchCertifiesTwoDistinctRoots": false,
+  "fullNativeBuildAdmissionBytes": 1200000000,
+  "freeBytesObserved": 1110355968,
+  "typescriptChecks": {
+    "rerunForTestOnlyChange": false,
+    "scope": "Exact production bytes retain preceding2154c13d Python87/npm260/0/3/typecheck evidence"
+  },
+  "fullStatusComplete": false,
+  "products": [
+    {
+      "path": "native/tests/repository_discovery.rs",
+      "sha256": "1e53bd84cd247a1320c5fcfbac11f8f9745bee09bc831078caffd73056aa7261",
+      "gitBlobSha": "3fe8c4723bc1b1ba889c6ed3bab39978b1b39557"
+    },
+    {
+      "path": "native/tests/semantic_workspace.rs",
+      "sha256": "889ee46592c30a59775b59f56da70005fdf19ce9d8c2829faf977a0a9f778831",
+      "gitBlobSha": "623c8f0b1d95a397c9aabb49303c227b197171cc"
+    }
+  ],
+  "formatLog": {
+    "path": "native-fmt.txt",
+    "sha256": "49f385c37548415c5c3e7171ad0500e48bf2a935e8dc6414fc3556b9a673a0a0",
+    "originalSha256": "72783b69578f249abfe1450531bf6eb8c0beed2af00510f6fae7e2b34524326a"
+  },
+  "filesystemProbeSha256": "268f5205e9af967d33c84364f99e7c6ba5ba60393fbef50dad3d435fa6b67331"
+}

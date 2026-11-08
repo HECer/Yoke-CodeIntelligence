@@ -1,0 +1,24 @@
+    Finished `test` profile [unoptimized] target(s) in 0.85s
+     Running tests\process.rs (target\debug\deps\process-c08c3527bf584b4b.exe)
+
+running 5 tests
+test source_selected_defaults_and_oversized_stdin_are_rejected_before_spawn ... ok
+test capture_transfers_exact_unicode_bytes_and_independent_streams ... ok
+test output_overflow_is_a_failure_with_bounded_retained_bytes ... ok
+test windows_host_fixture_does_not_allocate_a_console_window ... ok
+test descendant_held_stdio_cannot_extend_the_shared_deadline ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.52s
+
+     Running tests\project_session.rs (target\debug\deps\project_session-a0bbbade20e03be1.exe)
+
+running 6 tests
+test external_queries_cannot_publish_semantic_plans_through_find ... ok
+test modes_onboarding_and_named_notes_are_persistent_without_granting_execution ... ok
+test external_project_queries_cannot_mutate_or_activate_query_only_roots ... ok
+test global_note_host_identity_is_bound_to_canonical_directory ... ok
+test registered_projects_inherit_explicit_host_capture_and_provider_defaults ... ok
+test session_activation_and_resume_use_only_host_registered_projects ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.77s
+

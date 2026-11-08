@@ -1,0 +1,73 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 3m 20s
+     Running tests\symbol_move_declarations.rs (E:/Yoke-Build-Cache/meaning-aliases-20261016\debug\deps\symbol_move_declarations-a99000b0174e1718.exe)
+
+running 10 tests
+test attached_and_nonfree_declarations_refuse_before_provider_work ... ok
+test const_moves_preserve_initializer ... ok
+test enum_moves_preserve_variants ... ok
+test same_file_and_inline_source_moves_use_original_coordinates ... ok
+test struct_moves_preserve_generic_fields ... ok
+test nonfunction_moves_cannot_leave_or_add_a_comment_wrapped_ast_copy ... ok
+test trait_moves_preserve_associated_signatures ... ok
+test type_alias_moves_preserve_generic_target ... ok
+test unrelated_identical_declarations_keep_their_original_provenance ... ok
+test declaration_moves_still_require_an_exact_cut_and_unchanged_insert_at_the_selected_parent ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 16.30s
+
+     Running tests\symbol_move_effect_admission.rs (E:/Yoke-Build-Cache/meaning-aliases-20261016\debug\deps\symbol_move_effect_admission-2df8dec33a99276f.exe)
+
+running 36 tests
+test already_parented_same_file_function_refuses_before_provider ... ok
+test applied_resource_operation_is_refused ... ok
+test added_comment_and_raw_string_declaration_text_is_not_a_function_copy ... ok
+test attributed_use_reference_path_can_change_without_replacing_its_owner ... ok
+test block_docs_multiline_attributes_and_intervening_trivia_refuse_before_provider ... ok
+test broad_destination_rewrite_is_not_one_pure_insertion ... ok
+test broad_source_rewrite_is_not_one_isolated_cut ... ok
+test attributed_const_and_static_initializers_can_change_reference_paths ... ok
+test changed_body_is_not_a_preserved_declaration ... ok
+test direct_native_file_move_refuses_every_explicit_symbol_parent_form_before_provider ... ok
+test copy_only_is_not_a_move ... ok
+test deletion_alone_has_no_preserved_insertion ... ok
+test duplicate_identical_insertions_are_refused ... ok
+test invalid_third_rust_file_is_rejected_before_change_publication ... ok
+test nested_child_is_not_the_requested_direct_parent ... ok
+test exact_original_cut_and_inline_insertion_prepare_one_real_plan_for_each_epoch ... ok
+test original_preceding_edit_maps_the_selected_module_without_replacing_it ... ok
+test outside_parent_insertion_is_not_requested_placement ... ok
+test original_identical_declarations_keep_their_distinct_canonical_identity ... ok
+test provider_cannot_add_a_comment_wrapped_function_copy_before_the_target_module ... ok
+test provider_cannot_delete_existing_outer_documentation_or_attributes ... ok
+test provider_cannot_delete_the_original_module_inner_preamble ... ok
+test provider_cannot_delete_the_original_root_inner_preamble ... ok
+test provider_cannot_recreate_the_original_function_in_a_comment_wrapped_insertion ... ok
+test provider_cannot_delete_source_root_or_module_inner_preambles ... ok
+test provider_cannot_transfer_a_remaining_source_items_outer_attachments ... ok
+test provider_cannot_transfer_existing_outer_attachments_to_a_new_item ... ok
+test source_methods_locals_trait_and_foreign_functions_refuse_before_provider ... FAILED
+test provider_cannot_transfer_the_selected_parent_modules_own_attachments ... ok
+test same_named_parent_with_changed_header_is_refused ... ok
+test repeated_null_version_document_is_not_one_original_input ... ok
+test split_deletion_is_not_one_original_cut ... ok
+test unapplied_resource_noop_is_also_refused ... ok
+test unrelated_comment_is_not_a_source_cut ... ok
+test unchanged_source_preambles_and_remaining_attachments_are_valid_counterparts ... ok
+test unmodified_preambles_and_existing_attachments_remain_valid_counterparts ... ok
+
+failures:
+
+---- source_methods_locals_trait_and_foreign_functions_refuse_before_provider stdout ----
+
+thread 'source_methods_locals_trait_and_foreign_functions_refuse_before_provider' (62452) panicked at native\tests\symbol_move_effect_admission.rs:283:9:
+Source-parent refusal stopped at another rule: Symbol move requires a supported named Rust declaration
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    source_methods_locals_trait_and_foreign_functions_refuse_before_provider
+
+test result: FAILED. 35 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 13.12s
+
+error: test failed, to rerun pass `--test symbol_move_effect_admission`

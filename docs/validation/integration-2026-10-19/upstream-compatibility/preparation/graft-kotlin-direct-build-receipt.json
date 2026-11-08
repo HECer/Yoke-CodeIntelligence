@@ -1,0 +1,85 @@
+{
+  "commands": [
+    {
+      "command": [
+        "C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\VC\\Tools\\MSVC\\14.51.36231\\bin\\HostX64\\x64\\cl.exe",
+        "/nologo",
+        "/c",
+        "/MD",
+        "/O2",
+        "/utf-8",
+        "/IC:\\Users\\Lomi\\AppData\\Local\\node-gyp\\Cache\\24.21.0\\include\\node",
+        "/IC:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\upstreams-20261019-2hp9hr7r\\node\\node_modules\\@nanonets\\graft\\node_modules\\tree-sitter-kotlin\\node_modules\\node-addon-api",
+        "/IC:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\upstreams-20261019-2hp9hr7r\\node\\node_modules\\@nanonets\\graft\\node_modules\\tree-sitter-kotlin\\src",
+        "/EHsc",
+        "/std:c++17",
+        "/FoC:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\upstreams-20261019-2hp9hr7r\\node\\node_modules\\@nanonets\\graft\\node_modules\\tree-sitter-kotlin\\build\\Release\\owned-binding.obj",
+        "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\upstreams-20261019-2hp9hr7r\\node\\node_modules\\@nanonets\\graft\\node_modules\\tree-sitter-kotlin\\bindings\\node\\binding.cc"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 0.707
+    },
+    {
+      "command": [
+        "C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\VC\\Tools\\MSVC\\14.51.36231\\bin\\HostX64\\x64\\cl.exe",
+        "/nologo",
+        "/c",
+        "/MD",
+        "/O2",
+        "/utf-8",
+        "/IC:\\Users\\Lomi\\AppData\\Local\\node-gyp\\Cache\\24.21.0\\include\\node",
+        "/IC:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\upstreams-20261019-2hp9hr7r\\node\\node_modules\\@nanonets\\graft\\node_modules\\tree-sitter-kotlin\\node_modules\\node-addon-api",
+        "/IC:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\upstreams-20261019-2hp9hr7r\\node\\node_modules\\@nanonets\\graft\\node_modules\\tree-sitter-kotlin\\src",
+        "/std:c11",
+        "/FoC:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\upstreams-20261019-2hp9hr7r\\node\\node_modules\\@nanonets\\graft\\node_modules\\tree-sitter-kotlin\\build\\Release\\owned-parser.obj",
+        "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\upstreams-20261019-2hp9hr7r\\node\\node_modules\\@nanonets\\graft\\node_modules\\tree-sitter-kotlin\\src\\parser.c"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 2.042
+    },
+    {
+      "command": [
+        "C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\VC\\Tools\\MSVC\\14.51.36231\\bin\\HostX64\\x64\\cl.exe",
+        "/nologo",
+        "/c",
+        "/MD",
+        "/O2",
+        "/utf-8",
+        "/IC:\\Users\\Lomi\\AppData\\Local\\node-gyp\\Cache\\24.21.0\\include\\node",
+        "/IC:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\upstreams-20261019-2hp9hr7r\\node\\node_modules\\@nanonets\\graft\\node_modules\\tree-sitter-kotlin\\node_modules\\node-addon-api",
+        "/IC:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\upstreams-20261019-2hp9hr7r\\node\\node_modules\\@nanonets\\graft\\node_modules\\tree-sitter-kotlin\\src",
+        "/std:c11",
+        "/FoC:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\upstreams-20261019-2hp9hr7r\\node\\node_modules\\@nanonets\\graft\\node_modules\\tree-sitter-kotlin\\build\\Release\\owned-scanner.obj",
+        "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\upstreams-20261019-2hp9hr7r\\node\\node_modules\\@nanonets\\graft\\node_modules\\tree-sitter-kotlin\\src\\scanner.c"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 0.1
+    },
+    {
+      "command": [
+        "C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\VC\\Tools\\MSVC\\14.51.36231\\bin\\HostX64\\x64\\link.exe",
+        "/nologo",
+        "/DLL",
+        "/MACHINE:X64",
+        "/OUT:C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\upstreams-20261019-2hp9hr7r\\node\\node_modules\\@nanonets\\graft\\node_modules\\tree-sitter-kotlin\\build\\Release\\tree_sitter_kotlin_binding.node",
+        "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\upstreams-20261019-2hp9hr7r\\node\\node_modules\\@nanonets\\graft\\node_modules\\tree-sitter-kotlin\\build\\Release\\owned-binding.obj",
+        "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\upstreams-20261019-2hp9hr7r\\node\\node_modules\\@nanonets\\graft\\node_modules\\tree-sitter-kotlin\\build\\Release\\owned-parser.obj",
+        "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\upstreams-20261019-2hp9hr7r\\node\\node_modules\\@nanonets\\graft\\node_modules\\tree-sitter-kotlin\\build\\Release\\owned-scanner.obj",
+        "C:\\Users\\Lomi\\AppData\\Local\\node-gyp\\Cache\\24.21.0\\x64\\node.lib"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 0.064
+    }
+  ],
+  "nodeVersion": "24.21.0",
+  "allCommandsPassed": true,
+  "sourceVersion": "tree-sitter-kotlin@0.3.8",
+  "sourceInputs": {
+    "bindings/node/binding.cc": "bddc51b05896228d888e8c36075c375b509482dc6ce8b9df0a1a61fe0e948457",
+    "src/parser.c": "54104a7ef1555c265b746c790e0f8bb953cc17806e9df0c3af82f7f62c06a70a",
+    "src/scanner.c": "27f73337ec357fc341fa57538f34c14277b0346980c3405dc30beab6202ec6d0"
+  },
+  "sourceChanged": false,
+  "method": "Installed MSVC C/C++/link for the same three binding.gyp inputs; no FileTracker/permission setting disabled",
+  "bindingSha256": "c377797ea8ce6cfa9d280e9cf92da150f8831284d6a7ae59bcf40e7f6a1b750c"
+}

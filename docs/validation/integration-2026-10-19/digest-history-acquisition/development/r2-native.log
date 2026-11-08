@@ -1,0 +1,57 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\native)
+warning: field `head` is never read
+  --> native\tests\digest_history_acquisition.rs:52:5
+   |
+47 | struct Fixture {
+   |        ------- field in this struct
+...
+52 |     head: Snapshot,
+   |     ^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `yoke-code-intelligence` (test "digest_history_acquisition") generated 1 warning
+    Finished `test` profile [unoptimized] target(s) in 1m 12s
+     Running tests\capture_policy.rs (target\debug\deps\capture_policy-cc51f7a3c548b392.exe)
+
+running 9 tests
+test arbitrary_derived_id_preserves_proven_v9_capture_policy_without_claiming_extraction ... ok
+test canonical_derived_v9_from_disk_v8_retains_v8_source_acquisition_policy ... ok
+test capture_policy_traversal_is_bounded_and_honors_the_callers_expired_deadline ... ok
+test foreign_scope_receipts_and_their_native_children_do_not_grant_disk_acquisition ... ok
+test ignored_capture_v9_lineage_preserves_members_and_rejects_resealed_member_changes ... ok
+test overlay_v9_from_disk_v8_retains_the_base_capture_policy ... ok
+test resealed_scope_proof_cannot_widen_only_dirs_before_following_its_valid_origin ... ok
+test unproven_or_tampered_capture_lineage_cannot_authorize_disk_recapture ... ok
+test exact_git_capture_receipts_select_their_own_policy_and_never_fall_back_on_corruption ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.65s
+
+     Running tests\digest_history_acquisition.rs (target\debug\deps\digest_history_acquisition-aa659bff3127de20.exe)
+
+running 9 tests
+test acquisition_default_permissions_scope_and_disk_heads_do_not_publish_partial_history ... ok
+test actual_cli_acquires_history_without_app_keys_or_checkout_writes ... ok
+test caller_transaction_expiry_durability_and_sql_policy_are_preserved ... ok
+test cli_denials_precede_host_files_and_store_initialization ... ok
+test exact_output_capacity_is_admitted_before_commit_and_corrupt_existing_graph_is_never_replaced ... ok
+test late_output_or_sql_failure_rolls_back_every_snapshot_graph_fts_scope_and_receipt ... FAILED
+test public_single_commit_capture_also_rolls_back_late_proof_failure ... ok
+test aggregate_snapshot_file_source_tree_and_proof_budgets_never_reset_per_commit ... ok
+test real_sha1_and_sha256_history_is_captured_mapped_and_idempotent_with_dirty_checkout_and_epoch_inheritance ... ok
+
+failures:
+
+---- late_output_or_sql_failure_rolls_back_every_snapshot_graph_fts_scope_and_receipt stdout ----
+
+thread 'late_output_or_sql_failure_rolls_back_every_snapshot_graph_fts_scope_and_receipt' (13604) panicked at native\tests\digest_history_acquisition.rs:301:167:
+called `Result::unwrap()` on an `Err` value: SqliteFailure(Error { code: Unknown, extended_code: 1 }, Some("cannot create triggers on virtual tables"))
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    late_output_or_sql_failure_rolls_back_every_snapshot_graph_fts_scope_and_receipt
+
+test result: FAILED. 8 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 17.28s
+
+error: test failed, to rerun pass `--test digest_history_acquisition`

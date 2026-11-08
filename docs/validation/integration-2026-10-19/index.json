@@ -1,0 +1,317 @@
+{
+  "recordedAt": "2026-10-18T22:27:46.724743+00:00",
+  "kind": "owned_integration_development_evidence",
+  "releaseCertified": false,
+  "universalParityCertified": false,
+  "wholeNativeAccepted": false,
+  "baselineCommit": "6dea39199eba6ea950d3ceccba3ab4a4feab23b8",
+  "mergedParents": [
+    "c5178b2050cb47a803ba742254b9b89927e04a42",
+    "7b8eabb5a26611a56eb2527896aa64637bb20212"
+  ],
+  "pullRequest": "https://github.com/HECer/Yoke-CodeIntelligence/pull/7",
+  "environment": {
+    "host": "EVY",
+    "os": "Windows 10 Home 10.0.19045",
+    "rust": "1.94.1",
+    "node": "24.21.0",
+    "python": "3.14.7",
+    "typescript": "5.8.3",
+    "typescriptLanguageServer": "5.1.3",
+    "jediLanguageServer": "0.47.0",
+    "jedi": "0.20.1"
+  },
+  "baselineWholeNative": {
+    "accepted": false,
+    "doctestExitCode": 0,
+    "failed": 11,
+    "ignored": 37,
+    "kind": "owned_full_native_target_run",
+    "passed": 2272,
+    "recordedAt": "2026-10-18T22:20:20.692791+00:00",
+    "sourceUnchanged": true,
+    "targetsExecuted": 255,
+    "targetsInventoried": 255,
+    "trustedPwsh": "C:\\Users\\Lomi\\AppData\\Local\\Programs\\PowerShell\\7.6.7-portable\\pwsh.exe"
+  },
+  "baselineFailureClassification": [
+    {
+      "group": "002-test-adversarial",
+      "failed": 1,
+      "symlinkPrivilege1314": true,
+      "tcpReset": false
+    },
+    {
+      "group": "057-test-facade_file_delete",
+      "failed": 1,
+      "symlinkPrivilege1314": true,
+      "tcpReset": false
+    },
+    {
+      "group": "061-test-federation",
+      "failed": 1,
+      "symlinkPrivilege1314": true,
+      "tcpReset": false
+    },
+    {
+      "group": "068-test-feedback_cli",
+      "failed": 1,
+      "symlinkPrivilege1314": true,
+      "tcpReset": false
+    },
+    {
+      "group": "072-test-git_affected_cli",
+      "failed": 1,
+      "symlinkPrivilege1314": true,
+      "tcpReset": false
+    },
+    {
+      "group": "079-test-git_impact_details_cli",
+      "failed": 1,
+      "symlinkPrivilege1314": true,
+      "tcpReset": false
+    },
+    {
+      "group": "099-test-github_app_worker_run",
+      "failed": 1,
+      "symlinkPrivilege1314": false,
+      "tcpReset": true
+    },
+    {
+      "group": "103-test-graph_collections",
+      "failed": 1,
+      "symlinkPrivilege1314": true,
+      "tcpReset": false
+    },
+    {
+      "group": "148-test-maintenance",
+      "failed": 1,
+      "symlinkPrivilege1314": true,
+      "tcpReset": false
+    },
+    {
+      "group": "156-test-meaning_archive_cli",
+      "failed": 1,
+      "symlinkPrivilege1314": true,
+      "tcpReset": false
+    },
+    {
+      "group": "170-test-media",
+      "failed": 1,
+      "symlinkPrivilege1314": true,
+      "tcpReset": false
+    }
+  ],
+  "repairChecks": [
+    {
+      "gate": "format",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "fmt",
+        "--all",
+        "--check"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 4.399,
+      "recordedAt": "2026-10-18T22:23:39.782599+00:00"
+    },
+    {
+      "gate": "clippy",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "clippy",
+        "--workspace",
+        "--all-targets",
+        "--locked",
+        "-j2",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 1.595,
+      "recordedAt": "2026-10-18T22:23:41.378206+00:00"
+    },
+    {
+      "gate": "regressions",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j2",
+        "--lib",
+        "--test",
+        "github_app_worker_run",
+        "--",
+        "--test-threads=2"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 157.281,
+      "recordedAt": "2026-10-18T22:26:18.680223+00:00"
+    },
+    {
+      "gate": "actual-live-navigation",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j2",
+        "--test",
+        "live",
+        "--",
+        "--ignored",
+        "--test-threads=1"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 38.365,
+      "recordedAt": "2026-10-18T22:26:57.049609+00:00"
+    }
+  ],
+  "repairSourceUnchanged": true,
+  "nonadditiveActualGates": {
+    "windowsCredentialsAndTls": 5,
+    "expandedLanguageServers": 3,
+    "sourceExecutionPermission": 2,
+    "nativeBrowser": 1,
+    "repairedLiveNavigation": 4
+  },
+  "retainedTypescript": {
+    "passed": 254,
+    "failed": 0,
+    "skipped": 3,
+    "testLogTransform": "Original UTF-16 BOM log decoded to UTF-8, preserving messages; original remains locally under TEMP.",
+    "originalLogSha256": "9eba14ccacd97a254e55a030a4b8d46045acc50ef58faf21b7373330658a9755",
+    "benchmarkKind": "synthetic local fixture; not whole-agent or upstream comparison"
+  },
+  "limitations": [
+    "Ten Windows symlink fixture setups require privileges unavailable on EVY; they remain failures, not skips or passes.",
+    "The prior cancellation fixture was corrected to accept TCP connection reset/abort as proof of closure; data, timeout and other errors still fail.",
+    "Initial hosted Rust jobs failed before tests due to unpinned compiler drift and non-Windows conditional-code warnings. Updated hosted checks are pending and no platform certification is inferred.",
+    "Full functionality, 73 unreconciled inventory rows, 77 provider-runtime unknowns and release gates remain open.",
+    "Browser and HTTP publication gates use an owned native fixture; no live GitHub App installation, public comment or deployment is validated.",
+    "Scoped and actual-host counts overlap/default ignored gates and are not added to whole-native totals.",
+    "Original red/intermediate logs, two interrupted preparation runs and all complete raw target logs/build receipts remain under ignored validation/integration-20261018; only selected raw logs and complete target receipts are committed here."
+  ],
+  "artifacts": {
+    ".gitattributes": {
+      "sha256": "428593d75905b63761f0aef173b83dfdfe16e86e1693ba4d02ed3126b991eb9e",
+      "bytes": 94
+    },
+    "baseline/clippy.txt": {
+      "sha256": "9002f2ada868e79def6096d4509b9a182702ca8279594b1aff96d2e80d8e760d",
+      "bytes": 172
+    },
+    "baseline/native-failures.txt": {
+      "sha256": "02ac8c273c57b917b5d0bdf4d1db4293a64cdd8ff7ad02c5185a86c64f78d26f",
+      "bytes": 21084
+    },
+    "baseline/native-summary.json": {
+      "sha256": "dc789189c2ce1a4c437360be9ba4ee4bf9c3165a372aedf5218ff526c818580e",
+      "bytes": 375
+    },
+    "baseline/native-target-receipts.json": {
+      "sha256": "eb7a5676dfb92334cefafc5d538daf8564035b444b25f1e4662d2869e3997e57",
+      "bytes": 370946
+    },
+    "baseline/scoped-digest-cli.txt": {
+      "sha256": "e038be6ce286b4b9ad69b1980b1edf806b9324f93c6209b1b40f2927ca1d81c9",
+      "bytes": 3925
+    },
+    "baseline/scoped-digest-library.txt": {
+      "sha256": "908b1ca709e8970c759a946a7e6790ba5bd300d515c29a17778a10924132d359",
+      "bytes": 3489
+    },
+    "baseline/scoped-library.txt": {
+      "sha256": "fc485deb146e0e9f22d75dde752d2c3eeaab367d317a7b31028a201717791d91",
+      "bytes": 45286
+    },
+    "baseline/source-freeze.json": {
+      "sha256": "c4869b15ffc82b688f5d37697ed965bf10e0d5b1b5d613b6df4e97be24b52e15",
+      "bytes": 1345181
+    },
+    "browser/desktop.png": {
+      "sha256": "cc40e27ac4cd77040c5853ee921e457c0166480619cf9b385ea8734434cf26ec",
+      "bytes": 41445
+    },
+    "browser/inspection.json": {
+      "sha256": "e699361da4e25e3c1ee66d5fe02f3f020591f77cc18328776cc7b17cda31b760",
+      "bytes": 1326
+    },
+    "browser/mobile.png": {
+      "sha256": "9c3dffc069a9f2c60c430180239d657a93ceca8a3c0c5423698b526a537296fb",
+      "bytes": 67475
+    },
+    "browser/native-listener.txt": {
+      "sha256": "d4561bc8f3e534effb9deb7bc661097241e72097e813bb9ad8c6b0052bec91b0",
+      "bytes": 672
+    },
+    "host-gates/jedi-source-passivity.txt": {
+      "sha256": "f62517c0df30b24ca8d01e730b1d59a02daa19021edf59894628602462cba6f1",
+      "bytes": 479
+    },
+    "host-gates/python-expanded.txt": {
+      "sha256": "783103190eb519348f04f79c5de456102e4778248bc97673af8ddba1950a00c2",
+      "bytes": 396
+    },
+    "host-gates/rust-expanded.txt": {
+      "sha256": "cf108f50c1f14fd040ddc9bc8f03f4e35bb8a8528d3a71b6452d189311e9ffc1",
+      "bytes": 537
+    },
+    "host-gates/rust-source-passivity.txt": {
+      "sha256": "27bc2a917a31a735d797e9254cd4f66396523e12944ca9ab98740de5bb7d5062",
+      "bytes": 424
+    },
+    "host-gates/rustc-probe-source.txt": {
+      "sha256": "c3bac32e323333eedbc02c23b822db46b7136084bf06bb1fd0b62a3bb2ea7ee5",
+      "bytes": 558
+    },
+    "host-gates/typescript-expanded.txt": {
+      "sha256": "ae5888c37f4743352080668f78f7d3fbeb4d522736d9d99bcb116f622a2f6325",
+      "bytes": 368
+    },
+    "host-gates/windows-credentials.txt": {
+      "sha256": "3da00e98bcee20660bf05c810ec72b14f895b28fb2b88ec370a0b8f47afab5fe",
+      "bytes": 1188
+    },
+    "README.md": {
+      "sha256": "1b41f249403e2dae8fd2f0f1b66fc43536e686765ad5a197513202e269abb0ee",
+      "bytes": 2089
+    },
+    "repair/actual-live-navigation.txt": {
+      "sha256": "ddc15231d5103d55448752f6334795dd320b2f3619973b9bfd9b4bf7911d68f6",
+      "bytes": 652
+    },
+    "repair/clippy.txt": {
+      "sha256": "0c41c93192a4e578969311c9605e83abfaca77bb619301dbf19144a678dcd4a8",
+      "bytes": 171
+    },
+    "repair/format.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "repair/receipts.json": {
+      "sha256": "b9698b8cffefe330aad78319df1948065652074616ab2267b245adb6e7205f73",
+      "bytes": 1363
+    },
+    "repair/regressions.txt": {
+      "sha256": "7bc762ee18c281e320474d99cfc0f93f049e67ce60e8d990da536fdbceb6ace2",
+      "bytes": 47826
+    },
+    "repair/source-delta.json": {
+      "sha256": "0f26214777005c2ca827894d3af23194ba2e095b43defe82d8567b102ae350da",
+      "bytes": 928
+    },
+    "repair/source-unchanged.json": {
+      "sha256": "076b310d51de7bf9dc535a35a95a0d62a64ca3a97c6c556a4d2dfeffb4bac5c8",
+      "bytes": 390
+    },
+    "retained-typescript/benchmark.txt": {
+      "sha256": "711848953592b2a1289d26e5b1d87a57e122b51590c90debae5035d28858c10a",
+      "bytes": 1134
+    },
+    "retained-typescript/tests.txt": {
+      "sha256": "68d9b60f45a8f04c3e7f9c44fdbd51975f60ff67f345d39109ead34b74eb4a57",
+      "bytes": 25058
+    }
+  }
+}

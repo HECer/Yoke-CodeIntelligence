@@ -1,0 +1,91 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 19.79s
+     Running tests\query_parity.rs (target\debug\deps\query_parity-fd60f1161151b971.exe)
+
+running 12 tests
+test body_retrieval_in_file_mode_never_returns_symbol_rows ... ok
+test bulk_edit_selection_is_atomic_and_conflicting_modes_are_rejected ... ok
+test clipped_single_line_context_keeps_the_match_and_exact_unicode_bytes ... ok
+test exact_name_path_symbol_query_has_source_bound_body_and_depth ... ok
+test multiline_case_insensitive_search_exposes_exact_occurrences_and_symbol_owners ... ok
+test relative_directory_scope_is_segment_aware_and_globs_are_explicit ... ok
+test selected_occurrences_and_count_guards_prepare_an_atomic_reviewable_bulk_plan ... ok
+test task_words_inside_multiline_bodies_are_searchable_without_becoming_fact ... ok
+test text_search_pages_past_the_first_ten_thousand_occurrences ... ok
+test advertised_native_protocol_reaches_advanced_semantic_operations ... ok
+test public_engine_semantics_preserve_host_configuration_callbacks ... ok
+test text_search_streams_the_captured_corpus_beyond_the_symbol_body_cache_budget ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.26s
+
+     Running tests\read_only_dependencies.rs (target\debug\deps\read_only_dependencies-652ca9b7d8ea27bc.exe)
+
+running 11 tests
+test dependency_sources_retain_file_size_binary_and_secret_content_omissions ... ok
+test an_unknown_capture_epoch_cannot_grant_dependency_source_authority ... ok
+test empty_dependency_option_preserves_version_one_identity_and_rejects_other_protected_scopes ... ok
+test authentic_legacy_overlay_receipt_proves_readonly_source_without_a_live_session ... ok
+test derived_dependency_members_require_exact_origin_proof_and_remain_virtual ... ok
+test explicit_readonly_dependency_capture_keeps_secret_state_and_size_protections ... ok
+test materialized_language_server_tree_reads_proven_dependency_members_only ... ok
+test passive_provider_materialization_can_omit_exact_source_selectors_without_changing_capture ... ok
+test editor_overlay_inherits_native_capture_scope_without_dependency_write_access ... ok
+test prospective_read_admission_is_scoped_metadata_and_cannot_read_uncaptured_bytes ... ok
+test real_git_ignored_dependencies_stay_ignored_under_the_readonly_host_scope ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.64s
+
+     Running tests\registry_replay_review.rs (target\debug\deps\registry_replay_review-8390e9e4e28b3782.exe)
+
+running 8 tests
+test native9_archive_selects_proven_epoch_without_global_activation ... ok
+test historical4_keeps_its_identity_and_reports_unreplayed_claims ... ok
+test native8_retarget_is_rejected_after_origin_deleted ... ok
+test native8_relabel_is_rejected_after_origin_deleted ... ok
+test view8_relabel_is_rejected_after_origin_deleted ... ok
+test view8_retarget_is_rejected_after_origin_deleted ... ok
+test producer_labels_cannot_change_a_proven_capture_epoch ... ok
+test unchanged_native8_and_view8_remain_standalone ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.86s
+
+     Running tests\replacement.rs (target\debug\deps\replacement-4678ddb3fc91b625.exe)
+
+running 2 tests
+test capture_templates_preserve_numeric_named_unicode_escaped_and_missing_references ... ok
+test multiplicative_templates_are_rejected_with_bounded_memory_and_shared_deadline ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests\resource_paging.rs (target\debug\deps\resource_paging-a420510022e74047.exe)
+
+running 4 tests
+test streaming_pages_verify_bytes_outside_the_page_and_preserve_unicode_boundaries ... ok
+test generic_resource_pages_reach_large_artifacts_under_the_original_eight_tool_profile ... ok
+test project_resource_pages_use_only_registered_roots_without_activation ... ok
+test large_graphify_resources_preserve_the_complete_original_body_in_paged_storage ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.07s
+
+     Running tests\retention.rs (target\debug\deps\retention-c9716eb52673495e.exe)
+
+running 16 tests
+test future_opaque_json_artifact_schema_is_not_inferred_to_be_dependency_free ... ok
+test labeled_uncommitted_history_journal_restores_only_hash_bound_rows ... ok
+test labeled_uncommitted_history_journal_restores_missing_rows_without_changing_current_source ... ok
+test committed_retirement_can_feed_conservative_cas_quarantine_and_purge_without_losing_receipts ... ok
+test missing_history_age_and_corrupt_metadata_never_become_retirement_permission ... ok
+test multiply_linked_quarantine_content_is_unknown_physical_reclamation_and_is_preserved ... ok
+test newly_rooted_quarantine_and_tampered_plan_refuse_purge_without_deleting_bytes ... ok
+test opaque_published_artifacts_defer_history ... ok
+test purge_reclaims_only_exact_committed_unreachable_quarantine_bytes_after_confirmation ... ok
+test partial_purge_reports_actual_removed_bytes_and_can_resume_only_its_exact_intent ... ok
+test reviewed_history_retirement_removes_only_unrooted_rows_and_preserves_original_source ... ok
+test source_bindings_inside_published_json_artifacts_protect_history ... ok
+test stale_plan_and_concurrent_client_leave_history_intact ... ok
+test unknown_nested_snapshot_fields_defer_history ... ok
+test unknown_record_blocks_retirement_even_without_explicit_hash_fields ... ok
+test pin_and_every_source_bound_workflow_record_protect_history ... ok
+
+test result: ok. 16 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.74s
+

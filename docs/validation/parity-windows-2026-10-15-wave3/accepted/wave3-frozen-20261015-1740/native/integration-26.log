@@ -1,0 +1,82 @@
+    Finished `test` profile [unoptimized] target(s) in 0.58s
+     Running tests\protocol_connection.rs (target\debug\deps\protocol_connection-6f45346f06f41a07.exe)
+
+running 5 tests
+test owned_transport_state_retains_initialization_and_refuses_profile_switches ... ok
+test host_selected_profiles_keep_their_public_surface_across_messages ... ok
+test separate_transport_messages_preserve_initialization_and_profile_state ... ok
+test incomplete_stdio_frames_are_rejected_before_dispatch_or_publication ... ok
+test legal_request_ids_and_escaped_source_fit_the_complete_response_envelope ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.84s
+
+     Running tests\provider_batch_bounds.rs (target\debug\deps\provider_batch_bounds-7b96361b355c1588.exe)
+
+running 1 test
+test entity_limit_rejects_before_copying_entire_unverified_graph_selection ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.24s
+
+     Running tests\provider_batches.rs (target\debug\deps\provider_batches-fe61bea4ba2699b8.exe)
+
+running 14 tests
+test budget_call_limits_source_limits_and_existing_namespace_reject_before_first_child ... ok
+test deadline_preserves_dispatched_unknown_and_reports_unreleased_unsent_without_retry ... ok
+test another_state_client_blocks_batch_before_spending_and_restores_original_client ... ok
+test bound_unknown_cost_can_later_reconcile_without_invalidating_original_response_artifact ... ok
+test first_cost_overrun_blocks_remaining_reserved_chunk_and_releases_only_unsent ... ok
+test initial_batch_registration_failure_rolls_back_all_reservations_before_launch ... ok
+test id_addressed_reversed_cohere_response_is_reordered_before_atomic_publication ... ok
+test completed_and_failed_batches_are_typed_retention_roots_not_unknown_records ... ok
+test initially_unknown_usage_can_receive_its_first_response_report_later ... ok
+test two_titan_chunks_have_separate_attempts_and_one_complete_legacy_vector_collection ... ok
+test unknown_costs_remain_null_and_retain_both_reservations ... ok
+test partial_failure_preserves_each_reported_cost_and_never_publishes_partial_corpus ... ok
+test vector_and_complete_batch_publication_roll_back_together_after_billed_chunks ... ok
+test valid_large_per_attempt_usage_never_overflows_or_invalidates_completed_corpus ... ok
+
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 6.90s
+
+     Running tests\provider_batches_review.rs (target\debug\deps\provider_batches_review-fb8e8e5278794de4.exe)
+
+running 10 tests
+test every_source_is_verified_before_first_chunk_reservation_or_launch ... ok
+test complete_bound_reply_with_nonzero_exit_still_preserves_cost_and_usage ... ok
+test failed_new_batch_leaves_existing_other_model_corpus_byte_identical ... ok
+test each_chunk_keeps_native_protocol_one_and_legacy_attempt_bound_request_identity ... ok
+test legal_reversed_cohere_items_are_reassembled_by_id_before_publication ... ok
+test unbound_reported_cost_remains_unknown_and_only_never_sent_attempt_is_released ... ok
+test model_child_can_acquire_sqlite_write_transaction_while_parent_holds_only_client_lease ... ok
+test full_vector_store_capacity_is_rejected_before_any_reservation_or_child ... ok
+test worst_finite_float_serialization_rejects_entire_batch_before_billing ... ok
+test retained_batch_rejects_unknown_nested_fields_and_rebound_request_identity ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.82s
+
+     Running tests\provider_scope_review.rs (target\debug\deps\provider_scope_review-efdd81e89803991c.exe)
+
+running 4 tests
+test corrupt_cas_size_is_refused_before_source_allocation_or_provider_launch ... ok
+test escaped_request_is_admitted_before_serialization_allocation_and_billing ... ok
+test explicitly_captured_readonly_dependencies_keep_exact_model_source_binding ... ok
+test persisted_unknown_native_identity_does_not_grant_model_source_authority ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.51s
+
+     Running tests\providers.rs (target\debug\deps\providers-4a75185b5a986379.exe)
+
+running 11 tests
+test corpus_excerpts_stop_at_exact_utf8_boundaries_and_report_omissions ... ok
+test invalid_requests_and_missing_capabilities_fail_before_model_attempts ... ok
+test embeddings_and_query_search_use_versioned_source_bound_collections ... ok
+test media_descriptions_bind_captured_bytes_without_source_writes ... ok
+test complete_bound_failed_replies_still_account_for_reported_costs ... ok
+test query_vector_dimension_must_match_indexed_corpus_before_settlement ... ok
+test summaries_use_immutable_utf8_source_and_remain_inferences ... ok
+test successful_unknown_billing_and_known_overrun_keep_budget_conservative ... ok
+test reranking_and_vectors_reject_invalid_exact_candidates ... ok
+test unavailable_timeout_and_output_cap_keep_unknown_reservations ... ok
+test host_trust_and_exact_reply_binding_fail_closed ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 7.38s
+

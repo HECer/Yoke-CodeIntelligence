@@ -1,0 +1,25 @@
+{
+  "checks": [
+    {
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--lib",
+        "history_owned_process_tests",
+        "--",
+        "--test-threads=1"
+      ],
+      "exitCode": 101,
+      "seconds": 117.24115300178528
+    }
+  ],
+  "inputs": 694,
+  "sourceUnchanged": true,
+  "allChecksPassed": false
+}

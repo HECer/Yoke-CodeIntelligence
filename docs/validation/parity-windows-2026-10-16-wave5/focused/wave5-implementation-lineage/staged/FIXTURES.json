@@ -1,0 +1,1009 @@
+{
+  "schemaVersion": 1,
+  "status": "ignored_contract_fixture_matrix_not_executed",
+  "policy": "manifest_balanced_v1",
+  "oracleRule": "Literal expected values below are independent of production helpers. Pure unit/cost rows grant no source authority. Source integration must generate actual UTF-8 files and verify declared sizes/hashes.",
+  "sourceAdmission": {
+    "id": "S1_actual_32m_protected_then_redistributed",
+    "level": "pure production scheduler plus actual-source integration",
+    "markerBytesCharged": 4000000,
+    "totalSourceInputLimit": 32000000,
+    "availableBodyInput": 28000000,
+    "query": {
+      "pathGlob": "**/*.rs"
+    },
+    "orderedScopes": [
+      "a",
+      "b",
+      "c",
+      "d",
+      "e",
+      "f",
+      "g",
+      "h"
+    ],
+    "protectedAllowances": {
+      "a": 3500000,
+      "b": 3500000,
+      "c": 3500000,
+      "d": 3500000,
+      "e": 3500000,
+      "f": 3500000,
+      "g": 3500000,
+      "h": 3500000
+    },
+    "units": [
+      {
+        "path": "a/00-large.rs",
+        "scope": "a",
+        "bytes": 4000000
+      },
+      {
+        "path": "a/01-small.rs",
+        "scope": "a",
+        "bytes": 500000
+      },
+      {
+        "path": "b/00.rs",
+        "scope": "b",
+        "bytes": 3000000
+      },
+      {
+        "path": "b/01.rs",
+        "scope": "b",
+        "bytes": 500000
+      },
+      {
+        "path": "b/02.rs",
+        "scope": "b",
+        "bytes": 1000000
+      },
+      {
+        "path": "c/00.rs",
+        "scope": "c",
+        "bytes": 1000000
+      },
+      {
+        "path": "c/01.rs",
+        "scope": "c",
+        "bytes": 3000000
+      },
+      {
+        "path": "d/00.rs",
+        "scope": "d",
+        "bytes": 3500000
+      },
+      {
+        "path": "e/00.rs",
+        "scope": "e",
+        "bytes": 3500000
+      },
+      {
+        "path": "f/00.rs",
+        "scope": "f",
+        "bytes": 3500000
+      },
+      {
+        "path": "g/00.rs",
+        "scope": "g",
+        "bytes": 3500000
+      },
+      {
+        "path": "h/00.rs",
+        "scope": "h",
+        "bytes": 3500000
+      }
+    ],
+    "expected": {
+      "phase1": [
+        "a/01-small.rs",
+        "b/00.rs",
+        "c/00.rs",
+        "d/00.rs",
+        "e/00.rs",
+        "f/00.rs",
+        "g/00.rs",
+        "h/00.rs",
+        "b/01.rs"
+      ],
+      "phase1BodyBytes": 22500000,
+      "redistributedPool": 5500000,
+      "phase2": [
+        "a/00-large.rs",
+        "b/02.rs"
+      ],
+      "omitted": [
+        {
+          "path": "c/01.rs",
+          "reason": "source_budget",
+          "bytes": 3000000
+        }
+      ],
+      "bodyBytesCharged": 27500000,
+      "inputBytesCharged": 31500000,
+      "remainingInputBytes": 500000,
+      "admittedSourcePathCount": 11,
+      "omittedSourcePathCount": 1
+    },
+    "narrowedExplicitBalanced": {
+      "relativePath": "a",
+      "queryEligibleScopeCount": 1,
+      "protectedAllowance": 28000000,
+      "expectedPhase1": [
+        "a/00-large.rs",
+        "a/01-small.rs"
+      ],
+      "expectedPhase2": [],
+      "bodyBytesCharged": 4500000,
+      "inputBytesCharged": 8500000,
+      "omitted": []
+    },
+    "generationNote": "Eight package manifests plus a virtual root declaration are valid padded source totaling exactly4,000,000 bytes, each<=1,000,000. Each source file<=4,000,000. Query excludes marker docs. Parse real files in integration; never forge SourceFile.size."
+  },
+  "documentAdmission": {
+    "id": "D1_overlapping_nested_bodies_charge_again",
+    "level": "pure scheduler plus real nested declaration integration",
+    "markerBytesCharged": 4000000,
+    "admittedSourceBytes": 25000000,
+    "inputBytesCharged": 29000000,
+    "orderedScopes": [
+      "a",
+      "b",
+      "c",
+      "d",
+      "e",
+      "f",
+      "g",
+      "h"
+    ],
+    "protectedAllowanceEach": 4000000,
+    "documentLimit": 32000000,
+    "units": [
+      {
+        "id": "a-parent",
+        "scope": "a",
+        "path": "a/main.rs",
+        "startByte": 0,
+        "endByte": 4000000,
+        "bytes": 4000000
+      },
+      {
+        "id": "a-child",
+        "scope": "a",
+        "path": "a/main.rs",
+        "startByte": 100,
+        "endByte": 1000100,
+        "bytes": 1000000
+      },
+      {
+        "id": "b-parent",
+        "scope": "b",
+        "path": "b/main.rs",
+        "startByte": 0,
+        "endByte": 3000000,
+        "bytes": 3000000
+      },
+      {
+        "id": "b-child",
+        "scope": "b",
+        "path": "b/main.rs",
+        "startByte": 100,
+        "endByte": 1000100,
+        "bytes": 1000000
+      },
+      {
+        "id": "c-parent",
+        "scope": "c",
+        "path": "c/main.rs",
+        "startByte": 0,
+        "endByte": 3000000,
+        "bytes": 3000000
+      },
+      {
+        "id": "c-child",
+        "scope": "c",
+        "path": "c/main.rs",
+        "startByte": 100,
+        "endByte": 1000100,
+        "bytes": 1000000
+      },
+      {
+        "id": "d-parent",
+        "scope": "d",
+        "path": "d/main.rs",
+        "startByte": 0,
+        "endByte": 3000000,
+        "bytes": 3000000
+      },
+      {
+        "id": "d-child",
+        "scope": "d",
+        "path": "d/main.rs",
+        "startByte": 100,
+        "endByte": 1000100,
+        "bytes": 1000000
+      },
+      {
+        "id": "e-parent",
+        "scope": "e",
+        "path": "e/main.rs",
+        "startByte": 0,
+        "endByte": 3000000,
+        "bytes": 3000000
+      },
+      {
+        "id": "e-child",
+        "scope": "e",
+        "path": "e/main.rs",
+        "startByte": 100,
+        "endByte": 1000100,
+        "bytes": 1000000
+      },
+      {
+        "id": "f-parent",
+        "scope": "f",
+        "path": "f/main.rs",
+        "startByte": 0,
+        "endByte": 3000000,
+        "bytes": 3000000
+      },
+      {
+        "id": "f-child",
+        "scope": "f",
+        "path": "f/main.rs",
+        "startByte": 100,
+        "endByte": 1000100,
+        "bytes": 1000000
+      },
+      {
+        "id": "g-parent",
+        "scope": "g",
+        "path": "g/main.rs",
+        "startByte": 0,
+        "endByte": 3000000,
+        "bytes": 3000000
+      },
+      {
+        "id": "g-child",
+        "scope": "g",
+        "path": "g/main.rs",
+        "startByte": 100,
+        "endByte": 1000100,
+        "bytes": 1000000
+      },
+      {
+        "id": "h-parent",
+        "scope": "h",
+        "path": "h/main.rs",
+        "startByte": 0,
+        "endByte": 3000000,
+        "bytes": 3000000
+      },
+      {
+        "id": "h-child",
+        "scope": "h",
+        "path": "h/main.rs",
+        "startByte": 100,
+        "endByte": 1000100,
+        "bytes": 1000000
+      }
+    ],
+    "expected": {
+      "phase1": [
+        "a-parent",
+        "b-parent",
+        "c-parent",
+        "d-parent",
+        "e-parent",
+        "f-parent",
+        "g-parent",
+        "h-parent",
+        "b-child",
+        "c-child",
+        "d-child",
+        "e-child",
+        "f-child",
+        "g-child",
+        "h-child"
+      ],
+      "phase2": [],
+      "admittedDocumentCount": 15,
+      "documentBytes": 32000000,
+      "omitted": [
+        {
+          "id": "a-child",
+          "reason": "document_budget",
+          "bytes": 1000000
+        }
+      ]
+    }
+  },
+  "rounding": {
+    "id": "S2_remainder_and_deferred_head",
+    "level": "pure scheduler",
+    "budget": 7,
+    "scopes": [
+      "a",
+      "b",
+      "c"
+    ],
+    "units": [
+      {
+        "id": "a",
+        "scope": "a",
+        "bytes": 3
+      },
+      {
+        "id": "b",
+        "scope": "b",
+        "bytes": 3
+      },
+      {
+        "id": "c",
+        "scope": "c",
+        "bytes": 1
+      }
+    ],
+    "expected": {
+      "allowances": {
+        "a": 3,
+        "b": 2,
+        "c": 2
+      },
+      "phase1": [
+        "a",
+        "c"
+      ],
+      "phase2": [
+        "b"
+      ],
+      "used": 7,
+      "omitted": []
+    }
+  },
+  "twoScopeRanking": {
+    "id": "R1_same_frozen_corpus_global_control_and_balanced",
+    "query": {
+      "query": "payment",
+      "limit": 2,
+      "perFileLimit": 200,
+      "graphWeight": 0,
+      "relativePath": "packages",
+      "pathGlob": "**/*.rs"
+    },
+    "markers": {
+      "package.json": "{\"workspaces\":[\"packages/*\"]}",
+      "packages/large/package.json": "{\"name\":\"large\"}",
+      "packages/small/package.json": "{\"name\":\"small\"}"
+    },
+    "sourceRules": [
+      {
+        "path": "packages/large/one.rs",
+        "text": "fn big_first(){ payment(); payment(); payment(); }\n",
+        "entity": "big_first",
+        "weightedLength": 26,
+        "tf": 3
+      },
+      {
+        "path": "packages/large/two.rs",
+        "text": "fn big_second(){ payment(); payment(); }\n",
+        "entity": "big_second",
+        "weightedLength": 25,
+        "tf": 2
+      },
+      {
+        "paths": "packages/large/n03.rs through n30.rs",
+        "textRule": "fn noise_NN(){ payment(); }\\n",
+        "entities": "noise_03 through noise_30",
+        "count": 28,
+        "weightedLengthEach": 24,
+        "tfEach": 1
+      },
+      {
+        "path": "packages/small/one.rs",
+        "textRule": "fn small_only(){ payment(); /* followed by exactly100 repetitions of 'padding ' then */ }\\n",
+        "entity": "small_only",
+        "weightedLength": 124,
+        "tf": 1
+      }
+    ],
+    "independentGlobalMath": {
+      "N": 31,
+      "df": 31,
+      "averageWeightedLength": 27.322580645161292,
+      "idf": 0.015748356968139112,
+      "scores": {
+        "big_first": 0.025006807306715315,
+        "big_second": 0.0221843728261494,
+        "noise_each": 0.016572817741249465,
+        "small_only": 0.006434426376308555
+      },
+      "tolerance": 1e-12,
+      "method": "Hand-counted weighted lengths; independent Python math evaluation of the documented BM25 formula, not production code."
+    },
+    "expected": {
+      "absentGlobalNames": [
+        "big_first",
+        "big_second"
+      ],
+      "explicitGlobalNames": [
+        "big_first",
+        "big_second"
+      ],
+      "absentEqualsExplicitGlobalBytes": true,
+      "balancedNames": [
+        "big_first",
+        "small_only"
+      ],
+      "balancedLocalRanks": [
+        1,
+        1
+      ],
+      "balancedCoverage": [
+        1,
+        1
+      ],
+      "balancedNormalizedScores": [
+        1,
+        1
+      ],
+      "actualPackageRoots": 2,
+      "globalControlMustOmitSmall": true
+    },
+    "literalSources": {
+      "packages/large/one.rs": "fn big_first(){ payment(); payment(); payment(); }\n",
+      "packages/large/two.rs": "fn big_second(){ payment(); payment(); }\n",
+      "packages/large/n03.rs": "fn noise_03(){ payment(); }\n",
+      "packages/large/n04.rs": "fn noise_04(){ payment(); }\n",
+      "packages/large/n05.rs": "fn noise_05(){ payment(); }\n",
+      "packages/large/n06.rs": "fn noise_06(){ payment(); }\n",
+      "packages/large/n07.rs": "fn noise_07(){ payment(); }\n",
+      "packages/large/n08.rs": "fn noise_08(){ payment(); }\n",
+      "packages/large/n09.rs": "fn noise_09(){ payment(); }\n",
+      "packages/large/n10.rs": "fn noise_10(){ payment(); }\n",
+      "packages/large/n11.rs": "fn noise_11(){ payment(); }\n",
+      "packages/large/n12.rs": "fn noise_12(){ payment(); }\n",
+      "packages/large/n13.rs": "fn noise_13(){ payment(); }\n",
+      "packages/large/n14.rs": "fn noise_14(){ payment(); }\n",
+      "packages/large/n15.rs": "fn noise_15(){ payment(); }\n",
+      "packages/large/n16.rs": "fn noise_16(){ payment(); }\n",
+      "packages/large/n17.rs": "fn noise_17(){ payment(); }\n",
+      "packages/large/n18.rs": "fn noise_18(){ payment(); }\n",
+      "packages/large/n19.rs": "fn noise_19(){ payment(); }\n",
+      "packages/large/n20.rs": "fn noise_20(){ payment(); }\n",
+      "packages/large/n21.rs": "fn noise_21(){ payment(); }\n",
+      "packages/large/n22.rs": "fn noise_22(){ payment(); }\n",
+      "packages/large/n23.rs": "fn noise_23(){ payment(); }\n",
+      "packages/large/n24.rs": "fn noise_24(){ payment(); }\n",
+      "packages/large/n25.rs": "fn noise_25(){ payment(); }\n",
+      "packages/large/n26.rs": "fn noise_26(){ payment(); }\n",
+      "packages/large/n27.rs": "fn noise_27(){ payment(); }\n",
+      "packages/large/n28.rs": "fn noise_28(){ payment(); }\n",
+      "packages/large/n29.rs": "fn noise_29(){ payment(); }\n",
+      "packages/large/n30.rs": "fn noise_30(){ payment(); }\n",
+      "packages/small/one.rs": "fn small_only(){ payment(); /* padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding padding */ }\n"
+    }
+  },
+  "fusion": {
+    "id": "R2_rank_layer_then_document_coverage_then_local_score",
+    "level": "pure actual fusion function",
+    "limit": 4,
+    "retainedRows": [
+      {
+        "id": "a-head",
+        "scope": "a",
+        "localRank": 1,
+        "coverage": 1,
+        "score": 1
+      },
+      {
+        "id": "a-tail",
+        "scope": "a",
+        "localRank": 2,
+        "coverage": 2,
+        "score": 0.9
+      },
+      {
+        "id": "b-head",
+        "scope": "b",
+        "localRank": 1,
+        "coverage": 2,
+        "score": 0.8
+      },
+      {
+        "id": "c-head",
+        "scope": "c",
+        "localRank": 1,
+        "coverage": 2,
+        "score": 0.7
+      }
+    ],
+    "expectedOrder": [
+      "b-head",
+      "c-head",
+      "a-head",
+      "a-tail"
+    ]
+  },
+  "graph": {
+    "id": "R3_parallel_arcs_and_graph_only_scopes",
+    "level": "pure graph kernel plus real source-bound neighbor integration",
+    "vertices": [
+      "a",
+      "b",
+      "c"
+    ],
+    "seeds": [
+      1,
+      0,
+      0
+    ],
+    "resolvedObservations": [
+      {
+        "id": "o1",
+        "source": "a",
+        "target": "b"
+      },
+      {
+        "id": "o2",
+        "source": "a",
+        "target": "b"
+      },
+      {
+        "id": "o3",
+        "source": "a",
+        "target": "c"
+      }
+    ],
+    "expectedSortedArcs": [
+      [
+        "a",
+        "b",
+        "o1",
+        "forward"
+      ],
+      [
+        "a",
+        "b",
+        "o2",
+        "forward"
+      ],
+      [
+        "a",
+        "c",
+        "o3",
+        "forward"
+      ],
+      [
+        "b",
+        "a",
+        "o1",
+        "reverse"
+      ],
+      [
+        "b",
+        "a",
+        "o2",
+        "reverse"
+      ],
+      [
+        "c",
+        "a",
+        "o3",
+        "reverse"
+      ]
+    ],
+    "expectedAfter24": {
+      "a": 0.5498366539741663,
+      "b": 0.30010889735055557,
+      "c": 0.15005444867527779
+    },
+    "tolerance": 1e-12,
+    "graphWeightZeroExpectedPositive": [
+      "a"
+    ],
+    "graphWeightHalfSingletonScopesExpectedOrder": [
+      "a",
+      "b",
+      "c"
+    ],
+    "zeroLexicalMassExpected": {
+      "iterations": 0,
+      "items": []
+    },
+    "selfLoopRule": {
+      "inputObservation": {
+        "id": "o4",
+        "source": "a",
+        "target": "a"
+      },
+      "additionalArcs": 2,
+      "retainedInOriginalGraph": true
+    }
+  },
+  "ownership": {
+    "id": "P1_deepest_root_nested_virtual_barrier_duplicate_names_and_exclusion",
+    "markerTexts": {
+      "package.json": "{\"private\":true}",
+      "pnpm-workspace.yaml": "packages:\n  - 'packages/*'\n  - '!packages/excluded'\n",
+      "packages/a/package.json": "{\"name\":\"same\"}",
+      "packages/a/Cargo.toml": "[package]\nname='mixed'\n",
+      "packages/b/package.json": "{\"name\":\"same\"}",
+      "packages/excluded/package.json": "{\"name\":\"excluded\"}",
+      "packages/a/nested/pnpm-workspace.yaml": "packages:\n  - 'mods/*'\n",
+      "packages/a/nested/mods/c/package.json": "{\"name\":\"c\"}",
+      "standalone/package.json": "{\"name\":\"same\"}"
+    },
+    "expectedOwners": {
+      "src/root.rs": ".",
+      "packages/a/src/a.rs": "packages/a",
+      "packages/a/nested/README.md": "packages/a/nested",
+      "packages/a/nested/mods/c/src/c.rs": "packages/a/nested/mods/c",
+      "packages/b/src/b.rs": "packages/b",
+      "packages/excluded/src/x.rs": "packages/excluded",
+      "standalone/src/s.rs": "standalone"
+    },
+    "expectedActualPackageRootCount": 5,
+    "expectedScopeCount": 7,
+    "expectedKinds": {
+      ".": "workspace_unassigned",
+      "packages/a": "package",
+      "packages/a/nested": "workspace_unassigned"
+    },
+    "expectedMembership": {
+      "packages/a": "pnpm root workspace",
+      "packages/a/nested/mods/c": "nested pnpm workspace only",
+      "packages/excluded": "excluded from root workspace but independently balanced",
+      "standalone": "unselected by nearest workspace but independently balanced"
+    },
+    "distinctIdsForSameNames": [
+      "packages/a",
+      "packages/b",
+      "standalone"
+    ],
+    "colocatedEcosystemsAtAHaveOneShare": true
+  },
+  "modeCases": [
+    {
+      "id": "M1_no_markers",
+      "native": "explicit balanced policy error",
+      "auto": {
+        "effective": "global",
+        "reason": "no_supported_package_roots"
+      },
+      "probeBytes": 0
+    },
+    {
+      "id": "M2_single_package",
+      "native": "explicit balanced policy error",
+      "auto": {
+        "effective": "global",
+        "reason": "single_actual_package_root"
+      }
+    },
+    {
+      "id": "M3_ready_filter_one_scope",
+      "native": {
+        "effective": "manifest_balanced_v1",
+        "eligible": 1
+      },
+      "auto": {
+        "effective": "global",
+        "reason": "query_single_eligible_scope",
+        "partitionIdPresent": true
+      }
+    },
+    {
+      "id": "M4_ready_filter_zero_scopes",
+      "native": {
+        "effective": "manifest_balanced_v1",
+        "items": []
+      },
+      "auto": {
+        "effective": "global",
+        "reason": "query_zero_eligible_scopes",
+        "partitionIdPresent": true
+      }
+    },
+    {
+      "id": "M5_invalid_native_modes",
+      "inputs": [
+        null,
+        true,
+        1,
+        {},
+        "auto",
+        "unknown"
+      ],
+      "expected": "hard InvalidRequest before select/index/probe"
+    },
+    {
+      "id": "M6_auto_additive_metadata",
+      "expected": "all auto results expose requested/effective/policy/reason/probe counters; single-package items/body conversion remain legacy"
+    },
+    {
+      "id": "M7_absent_global_legacy_golden",
+      "expected": "same frozen snapshot and ordinary args have byte-identical pre-feature, absent and explicit-global native results; no probe"
+    }
+  ],
+  "policyCases": [
+    {
+      "id": "F1_malformed_captured_json",
+      "text": "{\"name\":",
+      "expected": "UnsupportedPolicy/source_syntax; auto global fallback, native explicit policy error"
+    },
+    {
+      "id": "F2_duplicate_manifest_keys",
+      "text": "{\"name\":\"a\",\"name\":\"b\"}",
+      "expected": "UnsupportedPolicy/source_schema; no raw source diagnostic"
+    },
+    {
+      "id": "F3_wrong_workspace_schema",
+      "text": "{\"workspaces\":true}",
+      "expected": "UnsupportedPolicy/source_schema"
+    },
+    {
+      "id": "F4_richer_selectors",
+      "selectors": [
+        "packages/{a,b}",
+        "packages/[ab]",
+        "packages/a?",
+        "packages/**/src",
+        "packages/foo*",
+        "!!packages/a",
+        "../outside",
+        "C:/outside",
+        "//host/share",
+        "packages\\\\a"
+      ],
+      "expected": "UnsupportedPolicy/unsupported_selector"
+    },
+    {
+      "id": "F5_same_npm_pnpm",
+      "npm": [
+        "packages/*"
+      ],
+      "pnpm": [
+        "packages/*"
+      ],
+      "expected": "Ready; pnpm primary, both bindings retained"
+    },
+    {
+      "id": "F6_conflicting_npm_pnpm",
+      "npm": [
+        "packages/*"
+      ],
+      "pnpm": [
+        "apps/*"
+      ],
+      "expected": "UnsupportedPolicy/conflicting_npm_pnpm_membership"
+    },
+    {
+      "id": "F7_pnpm_negative_is_final",
+      "selectors": [
+        "packages/*",
+        "!packages/excluded",
+        "packages/excluded"
+      ],
+      "expected": "excluded stays out of membership, retains physical scope"
+    },
+    {
+      "id": "F8_cargo_root_and_exclude",
+      "members": [
+        "crates/*"
+      ],
+      "exclude": [
+        "crates/private"
+      ],
+      "rootPackage": true,
+      "expected": "root package member; private retained standalone scope"
+    },
+    {
+      "id": "F9_cargo_root_excluded",
+      "exclude": [
+        "."
+      ],
+      "rootPackage": true,
+      "expected": "UnsupportedPolicy/workspace_root_excluded"
+    },
+    {
+      "id": "F10_cargo_explicit_workspace_pointer",
+      "packageWorkspace": "../..",
+      "expected": "UnsupportedPolicy/explicit_package_workspace"
+    },
+    {
+      "id": "F11_missing_member",
+      "selectors": [
+        "missing"
+      ],
+      "expected": "Ready when two other actual packages exist; bounded missing-member diagnostic, no prospective read"
+    },
+    {
+      "id": "F12_unsupported_repository_only",
+      "marker": "go.mod",
+      "expected": "UnsupportedPolicy/unsupported_repository_format"
+    },
+    {
+      "id": "F13_alias_or_tag_yaml_under_raw_limits",
+      "expected": "UnsupportedPolicy/unsupported_yaml_feature without alias expansion"
+    },
+    {
+      "id": "F14_no_catchall_fallback",
+      "expected": "an observed hard error from any recognized marker/proof wins over a previously collected UnsupportedPolicy"
+    }
+  ],
+  "sharedFallbackBudget": {
+    "id": "F15_fallback_cannot_restart_source_allowance",
+    "manifestBytes": 4000000,
+    "manifestPolicy": "malformed captured JSON, valid source hashes; outside relativePath code",
+    "requested": "compatibility auto",
+    "query": {
+      "relativePath": "code",
+      "pathGlob": "**/*.rs"
+    },
+    "sourceUnits": [
+      {
+        "path": "code/00.rs",
+        "bytes": 4000000
+      },
+      {
+        "path": "code/01.rs",
+        "bytes": 4000000
+      },
+      {
+        "path": "code/02.rs",
+        "bytes": 4000000
+      },
+      {
+        "path": "code/03.rs",
+        "bytes": 4000000
+      },
+      {
+        "path": "code/04.rs",
+        "bytes": 4000000
+      },
+      {
+        "path": "code/05.rs",
+        "bytes": 4000000
+      },
+      {
+        "path": "code/06.rs",
+        "bytes": 4000000
+      },
+      {
+        "path": "code/07.rs",
+        "bytes": 1000000
+      }
+    ],
+    "expectedAuto": {
+      "effective": "global",
+      "probeBytes": 4000000,
+      "bodyBytes": 28000000,
+      "inputBytes": 32000000,
+      "omitted": [
+        "code/07.rs"
+      ]
+    },
+    "independentNativeGlobalControl": {
+      "probeBytes": 0,
+      "bodyBytes": 29000000,
+      "omitted": []
+    },
+    "expectedRawReadMultiplicityPerManifestPath": 1,
+    "deadlineAfterProbeExpected": "hard Deadline/Cancelled; never a new deadline"
+  },
+  "hardFailureCases": [
+    {
+      "id": "H1_foreign_store_same_workspace_id",
+      "expected": "Authority, before consumption"
+    },
+    {
+      "id": "H2_tampered_snapshot_or_graph_binding",
+      "expected": "Authority/SourceIntegrity, no fallback"
+    },
+    {
+      "id": "H3_manifest_blob_hash_or_size_mismatch",
+      "expected": "SourceIntegrity before syntax classification"
+    },
+    {
+      "id": "H4_denied_captured_path_or_forged_proof",
+      "expected": "DeniedSource/Authority"
+    },
+    {
+      "id": "H5_marker_count_1025",
+      "expected": "Capacity before marker/body reads"
+    },
+    {
+      "id": "H6_one_marker_1000001_bytes",
+      "expected": "Capacity before decode"
+    },
+    {
+      "id": "H7_aggregate_markers_4000001_bytes",
+      "expected": "Capacity before body read; no global restart"
+    },
+    {
+      "id": "H8_scopes_257_or_selectors_2049",
+      "expected": "Capacity, not UnsupportedPolicy"
+    },
+    {
+      "id": "H9_depth65_or_nodes20001",
+      "expected": "Capacity even if source syntax is also unsupported"
+    },
+    {
+      "id": "H10_work_or_map_limit_plus_one",
+      "expected": "Capacity before extra comparison/insertion"
+    },
+    {
+      "id": "H11_cancelled_or_expired_shared_run",
+      "expected": "Cancelled/Deadline through probe/scorer/fallback"
+    },
+    {
+      "id": "H12_actual_output_limit_too_small",
+      "expected": "OutputCapacity; no scorer/partition publication or artifact fallback"
+    },
+    {
+      "id": "H13_invalid_source_range_or_nonfinite_score",
+      "expected": "SourceIntegrity/Internal; no omission-as-success"
+    },
+    {
+      "id": "H14_live_tree_changed_after_capture",
+      "expected": "old checked snapshot/manifest bytes determine partition and body; no live ancestor/marker reads"
+    },
+    {
+      "id": "H15_foreign_partition_handle",
+      "expected": "Authority/Internal before indexing a scope; never panic or accept a foreign ordinal"
+    }
+  ],
+  "compatibilityAcceptance": {
+    "windowsFirst": true,
+    "actualProvidersStarted": 0,
+    "ordinaryNativeToolCount": 8,
+    "trailToolCount": 6,
+    "graftToolCount": 6,
+    "scorerPartitionWrites": 0,
+    "adapterIndexSelectPublicationPromise": "existing behavior retained, not zero",
+    "coverageClaim": "owned finite policy, not exact upstream ordering/performance/full-contract certification"
+  },
+  "selectorMatching": [
+    {
+      "selector": "packages/*",
+      "relativeRoot": "packages/a",
+      "matches": true
+    },
+    {
+      "selector": "packages/*",
+      "relativeRoot": "packages/a/nested",
+      "matches": false
+    },
+    {
+      "selector": "packages/**",
+      "relativeRoot": "packages",
+      "matches": true
+    },
+    {
+      "selector": "packages/**",
+      "relativeRoot": "packages/a/nested",
+      "matches": true
+    },
+    {
+      "selector": ".",
+      "relativeRoot": ".",
+      "matches": true
+    },
+    {
+      "selector": ".",
+      "relativeRoot": "packages/a",
+      "matches": false
+    },
+    {
+      "selector": "Packages/*",
+      "relativeRoot": "packages/a",
+      "matches": false
+    },
+    {
+      "selector": "packages/*",
+      "relativeRoot": "packages-extra/a",
+      "matches": false
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+warning: unused import: `PathBuf`
+  --> native\src\federation_http.rs:16:18
+   |
+16 |     path::{Path, PathBuf},
+   |                  ^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `yoke-code-intelligence` (lib) generated 1 warning (run `cargo fix --lib -p yoke-code-intelligence` to apply 1 suggestion)
+    Finished `test` profile [unoptimized] target(s) in 48.08s
+     Running tests\live.rs (target\debug\deps\live-e794c2b81df93c6f.exe)
+
+running 4 tests
+test actual_python_server_cross_file_unicode_historical_navigation_and_rename ... ok
+test actual_rust_analyzer_definition_references_and_rename ... ok
+test actual_rust_analyzer_mcp_references_bind_immutable_snapshot ... ok
+test actual_typescript_server_cross_file_definition_and_rename ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 69.21s
+

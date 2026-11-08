@@ -1,0 +1,31 @@
+Job 120879209374
+2026-10-24T13:04:03.5840370Z error: function `d` is never used
+2026-10-24T13:04:03.5949970Z    --> native/src/host_documents.rs:534:8
+2026-10-24T13:04:03.6052120Z     |
+2026-10-24T13:04:03.6185600Z 534 |     fn d() -> Deadline {
+2026-10-24T13:04:03.6306830Z     |        ^
+2026-10-24T13:04:03.6410410Z     |
+2026-10-24T13:04:03.6513350Z     = note: `-D dead-code` implied by `-D warnings`
+2026-10-24T13:04:03.6617950Z     = help: to override `-D warnings` add `#[expect(dead_code)]` or `#[allow(dead_code)]`
+2026-10-24T13:04:03.6961040Z
+2026-10-24T13:04:26.5253770Z error: could not compile `yoke-code-intelligence` (lib test) due to 1 previous error
+2026-10-24T13:04:26.5256240Z warning: build failed, waiting for other jobs to finish...
+2026-10-24T13:05:12.4787370Z ##[error]Process completed with exit code 101.
+2026-10-24T13:05:12.5289580Z Post job cleanup.
+2026-10-24T13:05:13.1110100Z [command]/opt/homebrew/bin/git version
+
+Job 120879209584
+2026-10-24T13:02:32.9741865Z error: function `d` is never used
+2026-10-24T13:02:32.9742598Z    --> native/src/host_documents.rs:534:8
+2026-10-24T13:02:32.9743044Z     |
+2026-10-24T13:02:32.9743557Z 534 |     fn d() -> Deadline {
+2026-10-24T13:02:32.9744102Z     |        ^
+2026-10-24T13:02:32.9744488Z     |
+2026-10-24T13:02:32.9744964Z     = note: `-D dead-code` implied by `-D warnings`
+2026-10-24T13:02:32.9745761Z     = help: to override `-D warnings` add `#[expect(dead_code)]` or `#[allow(dead_code)]`
+2026-10-24T13:02:32.9746252Z
+2026-10-24T13:02:47.1084554Z error: could not compile `yoke-code-intelligence` (lib test) due to 1 previous error
+2026-10-24T13:02:47.1085862Z warning: build failed, waiting for other jobs to finish...
+2026-10-24T13:03:16.5376826Z ##[error]Process completed with exit code 101.
+2026-10-24T13:03:16.5508405Z Post job cleanup.
+2026-10-24T13:03:16.6235573Z [command]/usr/bin/git version

@@ -1,0 +1,18 @@
+    Finished `test` profile [unoptimized] target(s) in 1.09s
+     Running tests\mcp_http_cli.rs (target\debug\deps\mcp_http_cli-3fc9d13404c28561.exe)
+
+running 4 tests
+test actual_public_http_cli_resolves_credential_reference_and_authenticates ... ignored, Actual Windows Credential Manager and own bounded loopback MCP CLI service
+test public_http_cli_requires_host_trust_before_opening_source_state ... ok
+test public_http_host_configuration_rejects_inline_tokens_before_credential_access ... ok
+test optional_http_python_requires_independent_host_authority_before_credentials_or_state ... ok
+
+test result: ok. 3 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.16s
+
+     Running tests\mcp_http_review.rs (target\debug\deps\mcp_http_review-4f4cb8a0aa875058.exe)
+
+running 1 test
+test single_worker_session_expiry_cancels_an_already_running_provider ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.35s
+

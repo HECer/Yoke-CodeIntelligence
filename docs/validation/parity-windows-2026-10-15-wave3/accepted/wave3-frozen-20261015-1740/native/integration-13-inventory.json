@@ -1,0 +1,87 @@
+{
+  "graph_collections": {
+    "executable": "target\\debug\\deps\\graph_collections-07ab8869252f0b4a.exe",
+    "ignored": [],
+    "registered": [
+      "archived_capture_scope_keeps_configured_readonly_dependencies_and_rejects_missing_proof",
+      "canonical_collection_also_rejects_resealed_protected_source_after_registration",
+      "collection_historical_source_survives_original_history_retirement_and_blob_purge",
+      "collection_queries_use_namespaced_entities_and_exact_original_call_anchors",
+      "collection_sqlite_sidecars_cannot_write_through_links",
+      "legacy_default_native_archive_without_scope_sidecar_retains_original_identity",
+      "registered_collection_namespaces_equal_symbols_and_preserves_parallel_edges",
+      "registration_is_immutable_and_rejects_forged_graph_or_unregistered_scope",
+      "registry_payload_capacity_is_checked_before_decoding_corrupt_registration",
+      "registry_payload_sqlite_cell_is_capped_before_length_admission",
+      "selected_view_collection_preserves_origins_namespaces_and_source_after_retirement",
+      "view_archive_rejects_resealed_invented_rows_corrupt_inputs_and_foreign_view"
+    ]
+  },
+  "graph_exports": {
+    "executable": "target\\debug\\deps\\graph_exports-bf0f997dadd52384.exe",
+    "ignored": [],
+    "registered": [
+      "bounded_projection_reports_omissions_and_publishes_exact_bundle",
+      "canvas_is_parseable_directional_and_source_bound",
+      "cypher_is_escaped_and_keeps_each_directed_parallel_observation",
+      "export_rejects_forged_graph_invalid_limits_and_expired_deadline",
+      "markdown_cards_have_collision_safe_names_and_preserve_human_notes",
+      "standalone_exports_include_verified_hashes_and_neutralize_canvas_markdown",
+      "svg_and_html_exports_never_execute_hostile_source_markup",
+      "svg_replaces_xml_forbidden_display_controls_but_keeps_source_hash",
+      "tampered_export_bundle_cannot_write_any_destination_bytes",
+      "wiki_contains_actual_community_articles_and_escaped_source_links"
+    ]
+  },
+  "graph_extensions": {
+    "executable": "target\\debug\\deps\\graph_extensions-5cf6101264dc4545.exe",
+    "ignored": [],
+    "registered": [
+      "ambiguous_members_cannot_collide_community_identities",
+      "duplicate_structural_identities_are_reported_ambiguous",
+      "empty_graph_and_hub_exclusion_remain_explicit",
+      "expired_and_rebound_or_corrupt_source_reports_are_rejected",
+      "invalid_analysis_options_fail_without_persisting",
+      "persisted_wrong_line_anchors_are_not_certified_as_exact",
+      "report_is_reproducible_with_actual_leiden_and_source_bound_labels",
+      "report_keeps_parallel_arcs_exact_anchors_and_uncertainty",
+      "snapshot_diff_ignores_offset_and_id_churn_but_detects_body_change"
+    ]
+  },
+  "graph_review_adversarial": {
+    "executable": "target\\debug\\deps\\graph_review_adversarial-69abd8cc0880666f.exe",
+    "ignored": [],
+    "registered": [
+      "review_cargo_ordinary_ancestor_does_not_shadow_workspace",
+      "review_json_pointer_can_address_array_child_keys",
+      "review_launcher_option_values_are_not_persisted_as_packages",
+      "review_tree_export_script_is_valid_javascript",
+      "review_yaml_mcp_config_preserves_server_contract"
+    ]
+  },
+  "graph_root_review": {
+    "executable": "target\\debug\\deps\\graph_root_review-63fbcb7ba6cc9403.exe",
+    "ignored": [],
+    "registered": [
+      "artifact_resource_page_respects_byte_budget_after_json_control_escaping",
+      "trail_exact_file_selector_can_trace_more_than_two_hundred_declarations"
+    ]
+  },
+  "graph_view": {
+    "executable": "target\\debug\\deps\\graph_view-97c800a70b6f82cc.exe",
+    "ignored": [],
+    "registered": [
+      "captured_readonly_dependency_proof_allows_view_and_collection_reads",
+      "context_omits_environment_values_and_clips_unicode_at_byte_budget",
+      "default_view_exposes_structural_relationships_without_replacing_canonical_graph",
+      "newly_derived_view_omits_legacy_config_file_signature_values_without_rewriting_history",
+      "registered_view_rejects_corrupt_cas_and_foreign_overlay_scope",
+      "selected_overlay_inputs_have_an_aggregate_byte_budget",
+      "selected_structural_artifacts_reject_forged_node_scope_lines_and_schema",
+      "semantic_and_structural_overlays_have_distinct_namespaces_and_provider_trust",
+      "source_bound_view_exports_all_seven_formats",
+      "source_view_remains_historical_and_rejects_forged_scope_options_and_deadlines",
+      "view_find_trace_context_and_export_preserve_source_and_parallel_calls"
+    ]
+  }
+}

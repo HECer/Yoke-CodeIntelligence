@@ -1,0 +1,51 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+    Finished `test` profile [unoptimized] target(s) in 3.63s
+     Running tests\declaration_attachment_ranges.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\declaration_attachment_ranges-339b02ef1d679e49.exe)
+
+running 6 tests
+test python_empty_required_bodies_and_malformed_rust_attachments_refuse_without_publication ... ok
+test python_nested_declarations_leave_existing_body_statements_and_parent_decorators ... ok
+test python_stacked_decorators_function_class_bom_and_crlf_have_exact_ownership ... ok
+test rust_declaration_kinds_reuse_the_owned_attachment_boundary ... ok
+test rust_nested_items_and_trait_or_impl_methods_preserve_the_parent_and_siblings ... ok
+test rust_outer_attributes_docs_and_intervening_comments_keep_their_own_declaration ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.92s
+
+     Running tests\protocol_connection.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\protocol_connection-6ea4be39476f2f7c.exe)
+
+running 5 tests
+test host_selected_profiles_keep_their_public_surface_across_messages ... ok
+test incomplete_stdio_frames_are_rejected_before_dispatch_or_publication ... ok
+test legal_request_ids_and_escaped_source_fit_the_complete_response_envelope ... ok
+test owned_transport_state_retains_initialization_and_refuses_profile_switches ... ok
+test separate_transport_messages_preserve_initialization_and_profile_state ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.84s
+
+     Running tests\python_empty_suite.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\python_empty_suite-44c8ad02260bca75.exe)
+
+running 9 tests
+test absence_and_explicit_reject_retain_the_released_empty_suite_refusal ... ok
+test actual_python_ast_and_guarded_apply_recovery_validate_the_planned_pass ... ignored, requires YOKE_PYTHON selecting actual Python for stdlib AST-only verification
+test closed_protocol_and_mixed_intents_refuse_before_new_capture_or_plan_publication ... ok
+test comments_remain_owned_and_existing_statements_or_module_need_no_pass ... ok
+test explicit_policy_still_checks_forged_bindings_paths_and_the_shared_deadline ... ok
+test native_mcp_prepares_the_exact_opt_in_edit_without_apply_or_execution_authority ... ok
+test nested_function_class_and_control_flow_suites_receive_exactly_one_pass ... ok
+test only_class_method_owns_decorators_without_changing_bom_unicode_or_crlf ... ok
+test policy_cannot_be_applied_to_another_language_or_grant_write_authority ... ok
+
+test result: ok. 8 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 2.31s
+
+     Running tests\symbol_delete_ranges.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\symbol_delete_ranges-9ba3dc16892cbe8c.exe)
+
+running 5 tests
+test declaration_ownership_handles_generators_classes_types_and_single_function_variables ... ok
+test deletion_spans_do_not_change_insert_or_replace_entity_coordinates ... ok
+test exported_functions_and_default_functions_preserve_unicode_crlf_and_neighbor_bytes ... ok
+test multi_declarators_named_expressions_object_methods_and_loop_bindings_refuse_before_plan ... ok
+test nested_declarations_do_not_consume_their_parent_or_adjacent_comments ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.15s
+

@@ -1,0 +1,25 @@
+    Finished `test` profile [unoptimized] target(s) in 18.88s
+     Running tests\arxiv_source.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\arxiv_source-6ba7d8be364be02a.exe)
+
+running 5 tests
+test comment_crossing_head_scan_budget_returns_error_without_panicking ... FAILED
+test inert_and_raw_content_cannot_create_metadata_occurrences ... ok
+test malformed_ambiguous_or_over_budget_metadata_is_refused ... ok
+test received_arxiv_metadata_keeps_parallel_author_labels_and_exact_original_tag_bytes ... ok
+test selector_labels_and_version_claims_remain_separate_from_received_metadata ... ok
+
+failures:
+
+---- comment_crossing_head_scan_budget_returns_error_without_panicking stdout ----
+
+thread 'comment_crossing_head_scan_budget_returns_error_without_panicking' (13788) panicked at native\src\arxiv_source.rs:336:28:
+slice index starts at 1000002 but ends at 1000000
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    comment_crossing_head_scan_budget_returns_error_without_panicking
+
+test result: FAILED. 4 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+error: test failed, to rerun pass `--test arxiv_source`

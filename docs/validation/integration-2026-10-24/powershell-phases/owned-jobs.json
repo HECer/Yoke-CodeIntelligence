@@ -1,0 +1,207 @@
+{
+  "schema": 1,
+  "diagnosticOnly": true,
+  "nativeAcceptance": false,
+  "diagnosticComplete": true,
+  "nativeYokeImageReadOrExecuted": false,
+  "trialDeadlineSeconds": 20,
+  "sourceRevision": null,
+  "sourceSha256": "c21f0ce96b03e040e8edef12f870e207b00fcb3ce9b7894205603f2339949a48",
+  "environmentNames": [
+    "CI",
+    "DO_NOT_TRACK",
+    "LANG",
+    "NO_COLOR",
+    "PATH",
+    "SystemDrive",
+    "SystemRoot",
+    "TEMP",
+    "TMP",
+    "USERPROFILE",
+    "WINDIR"
+  ],
+  "trials": [
+    {
+      "name": "single-primary",
+      "jobsRequested": 1,
+      "resumeMode": "primary",
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "timedOut": false,
+      "nativeAcceptance": false,
+      "pid": 54948,
+      "resumedThreads": [
+        {
+          "primary": true,
+          "previousSuspendCount": 1
+        }
+      ],
+      "primaryObservedResumed": true,
+      "resumeElapsedSeconds": 0.010750700021162629,
+      "exitCode": 0,
+      "activeBeforeCleanup": [
+        0
+      ],
+      "treeExitedBeforeCleanup": true,
+      "activeAfterCleanup": [
+        0
+      ],
+      "rootExitedAfterCleanup": true,
+      "elapsedSeconds": 0.21926689997781068,
+      "stdout": "owned-shell-test\r\n",
+      "stderr": "owned-script-entry\r\nowned-host-version:5.1.19041.6456\r\nowned-script-end\r\n",
+      "streamEOF": [
+        true,
+        true
+      ],
+      "readerError": [
+        false,
+        false
+      ],
+      "outputExceeded": [
+        false,
+        false
+      ],
+      "diagnosticComplete": true
+    },
+    {
+      "name": "nested-primary-folder",
+      "jobsRequested": 2,
+      "resumeMode": "primary",
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "timedOut": false,
+      "nativeAcceptance": false,
+      "pid": 64080,
+      "resumedThreads": [
+        {
+          "primary": true,
+          "previousSuspendCount": 1
+        }
+      ],
+      "primaryObservedResumed": true,
+      "resumeElapsedSeconds": 0.010518099996261299,
+      "exitCode": 0,
+      "activeBeforeCleanup": [
+        0,
+        0
+      ],
+      "treeExitedBeforeCleanup": true,
+      "activeAfterCleanup": [
+        0,
+        0
+      ],
+      "rootExitedAfterCleanup": true,
+      "elapsedSeconds": 0.21231360000092536,
+      "stdout": "owned-windows-runtime\r\n",
+      "stderr": "owned-script-entry\r\nowned-host-version:5.1.19041.6456\r\nowned-before-folder\r\nowned-after-folder\r\nowned-script-end\r\n",
+      "streamEOF": [
+        true,
+        true
+      ],
+      "readerError": [
+        false,
+        false
+      ],
+      "outputExceeded": [
+        false,
+        false
+      ],
+      "diagnosticComplete": true
+    },
+    {
+      "name": "nested-snapshot",
+      "jobsRequested": 2,
+      "resumeMode": "snapshot",
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "timedOut": false,
+      "nativeAcceptance": false,
+      "pid": 57872,
+      "snapshotEntriesScanned": 3483,
+      "snapshotEndError": 18,
+      "resumedThreads": [
+        {
+          "primary": true,
+          "previousSuspendCount": 1
+        }
+      ],
+      "primaryObservedResumed": true,
+      "resumeElapsedSeconds": 0.03786989999935031,
+      "exitCode": 0,
+      "activeBeforeCleanup": [
+        0,
+        0
+      ],
+      "treeExitedBeforeCleanup": true,
+      "activeAfterCleanup": [
+        0,
+        0
+      ],
+      "rootExitedAfterCleanup": true,
+      "elapsedSeconds": 0.23380859999451786,
+      "stdout": "owned-shell-test\r\n",
+      "stderr": "owned-script-entry\r\nowned-host-version:5.1.19041.6456\r\nowned-script-end\r\n",
+      "streamEOF": [
+        true,
+        true
+      ],
+      "readerError": [
+        false,
+        false
+      ],
+      "outputExceeded": [
+        false,
+        false
+      ],
+      "diagnosticComplete": true
+    },
+    {
+      "name": "nested-snapshot-folder",
+      "jobsRequested": 2,
+      "resumeMode": "snapshot",
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "timedOut": false,
+      "nativeAcceptance": false,
+      "pid": 62148,
+      "snapshotEntriesScanned": 3482,
+      "snapshotEndError": 18,
+      "resumedThreads": [
+        {
+          "primary": true,
+          "previousSuspendCount": 1
+        }
+      ],
+      "primaryObservedResumed": true,
+      "resumeElapsedSeconds": 0.03762810002081096,
+      "exitCode": 0,
+      "activeBeforeCleanup": [
+        0,
+        0
+      ],
+      "treeExitedBeforeCleanup": true,
+      "activeAfterCleanup": [
+        0,
+        0
+      ],
+      "rootExitedAfterCleanup": true,
+      "elapsedSeconds": 0.22810319997370243,
+      "stdout": "owned-windows-runtime\r\n",
+      "stderr": "owned-script-entry\r\nowned-host-version:5.1.19041.6456\r\nowned-before-folder\r\nowned-after-folder\r\nowned-script-end\r\n",
+      "streamEOF": [
+        true,
+        true
+      ],
+      "readerError": [
+        false,
+        false
+      ],
+      "outputExceeded": [
+        false,
+        false
+      ],
+      "diagnosticComplete": true
+    }
+  ]
+}

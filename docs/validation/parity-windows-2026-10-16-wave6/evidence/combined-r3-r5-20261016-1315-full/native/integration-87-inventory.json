@@ -1,0 +1,25 @@
+{
+  "process": {
+    "executable": "target\\debug\\deps\\process-c08c3527bf584b4b.exe",
+    "ignored": [],
+    "registered": [
+      "capture_transfers_exact_unicode_bytes_and_independent_streams",
+      "descendant_held_stdio_cannot_extend_the_shared_deadline",
+      "output_overflow_is_a_failure_with_bounded_retained_bytes",
+      "source_selected_defaults_and_oversized_stdin_are_rejected_before_spawn",
+      "windows_host_fixture_does_not_allocate_a_console_window"
+    ]
+  },
+  "project_session": {
+    "executable": "target\\debug\\deps\\project_session-a0bbbade20e03be1.exe",
+    "ignored": [],
+    "registered": [
+      "external_project_queries_cannot_mutate_or_activate_query_only_roots",
+      "external_queries_cannot_publish_semantic_plans_through_find",
+      "global_note_host_identity_is_bound_to_canonical_directory",
+      "modes_onboarding_and_named_notes_are_persistent_without_granting_execution",
+      "registered_projects_inherit_explicit_host_capture_and_provider_defaults",
+      "session_activation_and_resume_use_only_host_registered_projects"
+    ]
+  }
+}

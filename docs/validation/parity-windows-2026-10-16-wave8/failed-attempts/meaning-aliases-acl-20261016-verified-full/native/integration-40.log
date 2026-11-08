@@ -1,0 +1,36 @@
+    Finished `test` profile [unoptimized] target(s) in 1.45s
+     Running tests\git_review.rs (E:\Yoke-Build-Cache\meaning-aliases-20261016\debug\deps\git_review-08fe162b4872c36e.exe)
+
+running 6 tests
+test branch_overlap_includes_dependencies_authorized_by_the_captured_readonly_scope ... ok
+test committed_ignore_policy_is_applied_even_when_policy_files_are_outside_only_dirs ... ok
+test historical_author_metadata_cannot_publish_obvious_secret_values ... ok
+test ignored_parent_directories_cannot_be_reopened_by_their_unvisited_nested_policy ... ok
+test parent_cache_length_admission_does_not_materialize_oversized_sqlite_values ... ok
+test valid_committed_source_batches_are_partitioned_by_bytes_within_the_total_budget ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 48.16s
+
+     Running tests\git_workflows.rs (E:\Yoke-Build-Cache\meaning-aliases-20261016\debug\deps\git_workflows-ae976841b230b5c4.exe)
+
+running 17 tests
+test historical_git_refuses_disk_ignored_capture_options_before_publication ... ok
+test historical_git_source_proof_rejects_missing_tree_membership ... ok
+test immutable_git_report_renderings_and_digests_remain_bound_after_live_changes ... ok
+test git_history_dependencies_require_captured_readonly_scope_proof ... ok
+test deleted_and_renamed_commit_sources_keep_base_symbols_and_exact_original_paths ... ok
+test missing_promisor_object_never_executes_remote_helper ... ok
+test local_branch_overlap_and_history_owners_are_actual_metadata_candidates ... ok
+test resealed_git_report_cannot_invent_impact_distance_or_omit_changes ... ok
+test oversized_git_source_receipt_is_rejected_before_sqlite_cell_allocation ... ok
+test impact_keeps_parallel_call_occurrences_and_absent_file_has_no_false_anchor ... ok
+test resealed_git_report_rejects_unknown_historical_metadata_fields ... ok
+test unicode_refs_resolve_to_exact_commit_without_argument_interpretation ... ok
+test typed_git_records_and_exact_commit_artifacts_are_known_retention_roots ... ok
+test worktree_cache_seed_copies_verified_parser_entries_without_parent_state ... ok
+test unrelated_local_branch_is_reported_without_aborting_other_results ... ok
+test workflow_never_runs_repo_filters_fsmonitor_hooks_or_ref_options ... ok
+test working_diff_binds_git_base_and_native_source_and_incoming_impact ... ok
+
+test result: ok. 17 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 35.42s
+

@@ -1,0 +1,10 @@
+{
+  "failures": [
+    {
+      "testName": "source_symlink_cannot_redirect_a_forced_file_deletion",
+      "windowsError1314": true,
+      "output": "thread 'source_symlink_cannot_redirect_a_forced_file_deletion' (22660) panicked at native\\tests\\facade_file_delete.rs:487:81:\ncalled `Result::unwrap()` on an `Err` value: Os { code: 1314, kind: Uncategorized, message: \"Dem Client fehlt ein erforderliches Recht.\" }\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace"
+    }
+  ],
+  "allFinalScopedFailuresAreFixturePrerequisite1314": true
+}

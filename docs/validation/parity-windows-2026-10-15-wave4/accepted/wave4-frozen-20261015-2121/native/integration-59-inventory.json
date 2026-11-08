@@ -1,0 +1,35 @@
+{
+  "mcp_collection_grants_review": {
+    "executable": "target\\debug\\deps\\mcp_collection_grants_review-75ef68191c99f6f8.exe",
+    "ignored": [],
+    "registered": [
+      "collection_grants_are_borrowed_per_dispatch_and_sources_remain_noncanonical",
+      "non_session_profile_rejects_host_collection_grants_before_opening_source_state",
+      "replacing_principal_policy_cancels_running_session_before_waiting_for_read_lease"
+    ]
+  },
+  "mcp_http": {
+    "executable": "target\\debug\\deps\\mcp_http-e26509408743c132.exe",
+    "ignored": [],
+    "registered": [
+      "admission_caps_reject_declared_bodies_headers_deep_json_and_session_version_changes",
+      "already_started_runtime_initialization_expires_at_the_admitted_session_ttl",
+      "connection_close_reaches_eof_while_initialized_python_runtime_is_still_live",
+      "delete_rotation_revocation_and_shutdown_prove_each_owned_python_exit",
+      "explicit_browser_origin_preflight_and_auth_errors_preserve_exact_cors_scope",
+      "explicit_http_serena_runtime_persists_per_sid_and_rejects_foreign_session_labels",
+      "hostile_http_framing_origin_host_versions_and_json_are_rejected_before_sessions",
+      "http_python_cancellation_invalidates_lost_namespace_and_proves_process_exit",
+      "live_principal_rotation_and_host_profile_changes_invalidate_old_sessions",
+      "network_cancellation_interrupts_running_provider_and_shutdown_cleans_workers",
+      "queued_request_is_rechecked_after_current_principal_revocation",
+      "real_tcp_session_preserves_profile_initialization_and_closes_without_sse",
+      "real_tls_requires_pinned_trust_and_remote_binding_requires_explicit_tls",
+      "revoke_and_stop_cancel_runtime_during_initial_handshake",
+      "running_query_obeys_host_deadline_despite_client_timeout_and_returns_http_error",
+      "runtime_host_preflight_never_executes_and_other_profiles_cannot_attach_python",
+      "session_capacity_expiry_and_slow_connection_shutdown_are_bounded",
+      "stalled_runtime_initialization_obeys_ttl_and_shutdown_cancellation"
+    ]
+  }
+}

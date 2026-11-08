@@ -1,0 +1,565 @@
+   Compiling yoke v0.8.3
+   Compiling zerovec v0.11.8
+   Compiling zerotrie v0.2.5
+   Compiling tinystr v0.8.4
+   Compiling potential_utf v0.1.6
+   Compiling icu_locale_core v2.3.0
+   Compiling icu_collections v2.3.0
+   Compiling icu_provider v2.3.1
+   Compiling icu_normalizer v2.3.0
+   Compiling icu_properties v2.3.0
+   Compiling idna_adapter v1.2.2
+   Compiling idna v1.1.0
+   Compiling url v2.5.8
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 2m 33s
+     Running unittests src\lib.rs (target\debug\deps\yoke-de187ec3209f5a42.exe)
+
+running 14 tests
+test editor_http::tests::an_expired_response_never_claims_the_operation_succeeded ... ok
+test changes::recovery_tests::expired_emergency_write_preserves_the_durable_recovery_identifier ... ok
+test lsp::uri_tests::an_outside_uri_is_rejected_lexically_before_a_filesystem_lookup ... ok
+test editor_http::tests::backpressured_socket_writes_cannot_extend_the_response_deadline ... ok
+test lsp::uri_tests::grown_provider_copy_is_rejected_without_reading_unbounded_source ... ok
+test lsp::uri_tests::nonlocal_file_authorities_are_refused_without_target_lookup ... ok
+test lsp::uri_tests::blocked_pipe_write_uses_300ms_deadline_after_confirmed_server_pause ... ok
+test lsp::uri_tests::react_documents_and_siblings_keep_their_ids_with_base_language_providers ... ok
+test maintenance::tests::expired_rollback_budget_preserves_quarantine_for_later_recovery ... ok
+test ollama::endpoint_tests::explicit_default_http_port_remains_host_selected ... ok
+test platform_credentials::creation_lock::tests::contaminated_and_nonfile_locks_are_refused_without_repair ... ok
+test platform_credentials::creation_lock::tests::creation_locks_serialize_and_time_out_without_secret_contents ... ok
+test verify::integrity_tests::oversized_copied_source_is_rejected_within_the_hash_budget ... ok
+test lsp::uri_tests::slow_shutdown_uses_800ms_deadline_after_completed_protocol_response ... ok
+
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.84s
+
+     Running unittests src\main.rs (target\debug\deps\yoke-e239e7cca9967dd7.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\adversarial.rs (target\debug\deps\adversarial-9aee7a9fb101d464.exe)
+
+running 14 tests
+test bare_package_imports_do_not_become_syntactic_sibling_file_bindings ... ok
+test conservative_token_budget_bounds_the_serialized_result ... ok
+test cli_trace_honors_a_requested_snapshot_after_disk_changes ... ok
+test derived_source_cannot_introduce_obvious_credentials_into_state ... ok
+test insufficient_workspace_response_budget_is_rejected_before_a_write ... ok
+test huge_unicode_argument_errors_cannot_abort_the_mcp_session ... ok
+test missing_anonymous_tokens_are_reported_as_syntax_diagnostics ... ok
+test private_ec_keys_and_credential_file_variants_are_excluded ... ok
+test sqlite_sidecar_links_cannot_rewrite_files_outside_state ... ok
+test protected_package_credentials_and_obvious_tokens_never_enter_snapshots ... ok
+test syntax_delta_is_multiplicity_aware_and_test_paths_are_case_insensitive ... ok
+test unchanged_index_republishes_the_disk_snapshot_after_patch_preparation ... ok
+test windows_device_names_and_path_aliases_are_never_edit_targets ... ok
+test sqlite_writer_contention_respects_the_cli_deadline ... ok
+
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.44s
+
+     Running tests\artifacts.rs (target\debug\deps\artifacts-6b28989525a374b6.exe)
+
+running 4 tests
+test cas_artifact_pages_cannot_claim_an_unrelated_snapshot ... ok
+test binary_artifacts_page_with_explicit_base64_without_loss_or_budget_overflow ... ok
+test published_response_artifacts_remain_roots_during_explicit_maintenance ... ok
+test foreign_source_and_unpublished_blobs_cannot_bypass_explicit_read_grants ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.46s
+
+     Running tests\client_lock.rs (target\debug\deps\client_lock-3ed756b4697b486f.exe)
+
+running 2 tests
+test maintenance_cannot_run_while_another_client_holds_state_open ... ok
+test exclusive_maintenance_denies_new_clients_and_restores_its_lease_after_error ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.12s
+
+     Running tests\container.rs (target\debug\deps\container-4a70619a3574679a.exe)
+
+running 7 tests
+test labeled_cli_creation_failure_preserves_daemon_diagnostics_without_a_passing_receipt ... ok
+test labeled_cli_fixture_requires_isolation_and_owned_cleanup_before_passing_receipt ... ok
+test labeled_cli_timeout_still_removes_exact_owned_container_and_never_passes ... ok
+test missing_trust_mutable_images_root_users_and_unavailable_docker_never_create_approval ... ok
+test real_daemon_digest_pinned_offline_container_verification ... ignored, Requires an explicitly supplied locally installed digest-pinned Linux image and live Docker daemon
+test labeled_cli_zero_tests_integrity_failure_and_cleanup_failure_are_failed_receipts ... ok
+test remote_daemon_or_conflicting_host_prefix_is_refused_before_any_cli_execution ... ok
+
+test result: ok. 6 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 27.84s
+
+     Running tests\contracts.rs (target\debug\deps\contracts-604a21a8be6bc74d.exe)
+
+running 12 tests
+test duplicate_and_cross_service_contract_names_remain_unresolved ... ok
+test a_root_manifest_does_not_merge_independent_service_scopes ... ok
+test graphql_and_protobuf_ignore_comment_and_description_headers ... ok
+test literal_ast_contracts_ignore_comments_strings_and_dynamic_arguments ... ok
+test malformed_contract_documents_produce_diagnostics_instead_of_empty_success ... ok
+test openapi_operations_use_the_actual_nested_operation_key_after_unicode ... ok
+test prisma_fields_and_mapped_models_link_to_migrations_as_candidates ... ok
+test python_routes_and_rust_environment_calls_are_source_bound_without_execution ... ok
+test quoted_sql_identifiers_are_not_keywords_and_json_duplicates_are_rejected ... ok
+test schema_body_braces_may_follow_the_name_on_another_line ... ok
+test sql_comments_and_string_data_cannot_fabricate_migrations_or_accesses ... ok
+test typescript_jsonc_config_is_valid_but_openapi_json_remains_strict ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.09s
+
+     Running tests\core.rs (target\debug\deps\core-d7976205db497715.exe)
+
+running 6 tests
+test context_and_graph_analytics_are_source_bound ... ok
+test bounded_results_keep_artifacts_and_reject_authority_fields ... ok
+test directed_graph_preserves_parallel_calls_and_exact_unicode_anchors ... ok
+test immutable_capture_excludes_secrets_and_reuses_content_cache ... ok
+test prepared_edits_are_isolated_and_reject_stale_hashes ... ok
+test source_paths_and_utf8_boundaries_fail_closed ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.63s
+
+     Running tests\credentials.rs (target\debug\deps\credentials-1d32840b6c6b85b8.exe)
+
+running 4 tests
+test ordinary_names_resolve_only_to_the_federation_namespace ... ok
+test windows_gate::windows_concurrent_generation_keeps_one_key ... ignored, explicit Windows Credential Manager integration gate; tests concurrent creation and removes its random entry
+test windows_gate::windows_credential_roundtrip_refuses_overwrite ... ignored, explicit Windows Credential Manager integration gate; creates and removes one random test entry
+test credential_names_cannot_escape_the_federation_namespace ... ok
+
+test result: ok. 2 passed; 0 failed; 2 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\dataflow.rs (target\debug\deps\dataflow-f79283f0b6a190a9.exe)
+
+running 7 tests
+test loop_fixpoint_bound_and_unsupported_constructs_are_reported ... ok
+test lexical_declaration_hoisting_and_function_parameters_do_not_leak_outer_taint ... ok
+test record_budget_is_visible_and_never_returns_a_complete_empty_result ... ok
+test node_budget_and_foreign_graph_are_rejected_or_disclosed ... ok
+test sanitizer_and_unknown_calls_are_explicit_host_assumptions ... ok
+test scope_shadowing_overwrite_and_branch_join_preserve_candidate_anchors ... ok
+test var_redeclaration_without_initializer_does_not_kill_existing_flow ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.56s
+
+     Running tests\deadlines.rs (target\debug\deps\deadlines-be975d03b5d05a34.exe)
+
+running 1 test
+test snapshot_publication_rolls_back_when_document_indexing_expires ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.15s
+
+     Running tests\editor.rs (target\debug\deps\editor-f83bd8357e871161.exe)
+
+running 6 tests
+test editor_buffers_are_versioned_source_bound_and_never_write_saved_files ... ok
+test ancestor_ignore_policies_also_protect_unsaved_new_files ... ok
+test editor_cannot_restore_omitted_ignored_protected_or_secret_source ... ok
+test editor_capture_refuses_foreign_disk_changes_and_accepts_a_real_saved_buffer ... ok
+test effective_ignore_whitelists_apply_equally_to_saved_and_unsaved_new_paths ... ok
+test nested_ignore_policies_are_scoped_and_git_excludes_cannot_be_bypassed ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.77s
+
+     Running tests\editor_http.rs (target\debug\deps\editor_http-5c074e371111bd9a.exe)
+
+running 10 tests
+test framing_rejects_duplicate_lengths_transfer_encoding_and_invalid_payloads ... ok
+test excessive_headers_and_unknown_operation_fields_are_rejected ... ok
+test host_origin_and_auth_are_checked_before_waiting_for_declared_body ... ok
+test maximally_escaped_valid_buffer_fits_the_transport_without_relaxing_source_limit ... ok
+test pipelining_and_duplicate_authorization_cannot_dispatch_editor_operations ... ok
+test real_editor_requests_read_unsaved_source_without_workspace_write_authority ... ok
+test nonreading_client_does_not_block_the_next_authenticated_request ... ok
+test slow_header_bytes_cannot_reset_the_connection_deadline ... ok
+test slow_body_chunks_share_the_header_deadline ... ok
+test stale_buffer_and_close_versions_cannot_replace_newer_editor_source ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.45s
+
+     Running tests\export.rs (target\debug\deps\export-e988cba3936c6ce0.exe)
+
+running 1 test
+test canonical_export_preserves_directed_parallel_evidence ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.18s
+
+     Running tests\federation.rs (target\debug\deps\federation-821d674fd8649124.exe)
+
+running 12 tests
+test correctly_signed_malicious_sources_still_fail_receiver_safety_policy ... ok
+test canonical_editor_overlays_round_trip_without_saved_source_or_reexport_authority ... ok
+test corrupt_remote_graph_cannot_be_returned_as_a_successful_empty_index ... ok
+test host_exclude_patterns_cannot_be_bypassed_with_path_case_aliases ... ok
+test nonce_reuse_expired_import_and_current_grant_revocation_are_distinct ... ok
+test receiver_effective_ignore_precedence_handles_virtual_paths_and_whitelists ... ok
+test receiver_ignore_excludes_links_and_remote_policy_text_cannot_change_host_authority ... ok
+test signed_sources_are_separate_immutable_and_locally_reindexed_without_source_writes ... ok
+test source_namespace_capacity_accounts_for_every_file_in_prior_receipts ... ok
+test tampered_bytes_signatures_scope_and_workspace_are_rejected_before_persistence ... ok
+test valid_signature_does_not_authorize_protected_secret_binary_or_colliding_source ... ok
+test sqlite_writer_contention_consumes_only_the_remaining_import_deadline ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.77s
+
+     Running tests\federation_http.rs (target\debug\deps\federation_http-278db4d4ecbace38.exe)
+
+running 16 tests
+test actual_tls_client_requires_explicit_ca_name_and_loopback_plaintext_permission ... ok
+test actual_tls_export_keeps_existing_signed_envelope_contract ... ok
+test actual_tls_import_and_scoped_read_preserve_source_and_foreign_namespace ... ok
+test actual_tls_rejects_browser_origin_wrong_host_and_ambiguous_http_framing ... ok
+test actual_tls_source_listing_does_not_disclose_other_tenants ... ok
+test actual_tls_role_scope_token_and_revocation_gates_cannot_be_granted_by_payload ... ok
+test client_binds_http_authority_to_the_verified_tls_server_name ... ok
+test authentication_role_and_host_denials_do_not_wait_for_untrusted_body_bytes ... ok
+test explicit_remote_tls_permission_and_fixed_host_grants_are_required_before_bind ... ok
+test client_refuses_truncated_ambiguous_overbudget_redirect_and_late_responses ... ok
+test http_body_and_response_budget_failures_never_become_complete_source_responses ... ok
+test partial_tls_records_cannot_extend_the_public_client_deadline ... ok
+test scoped_listing_does_not_disguise_invalid_retained_source_as_a_complete_empty_result ... ok
+test partial_tls_records_cannot_extend_the_server_deadline_or_block_the_next_client ... ok
+test shutdown_cancels_idle_tls_handshake_without_waiting_for_request_deadline ... ok
+test shutdown_bounds_a_core_import_waiting_on_a_state_writer ... ok
+
+test result: ok. 16 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 6.84s
+
+     Running tests\graph.rs (target\debug\deps\graph-74bf42957dcf7939.exe)
+
+running 1 test
+test community_partition_separates_dense_call_groups_despite_a_bridge ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.13s
+
+     Running tests\host_cli.rs (target\debug\deps\host_cli-186b7d983d6df465.exe)
+
+running 2 tests
+test explicit_maintenance_cli_preserves_issued_artifacts_and_changes_no_source ... ok
+test signed_source_cli_requires_a_host_grant_and_queries_a_separate_namespace ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.82s
+
+     Running tests\host_credentials.rs (target\debug\deps\host_credentials-ff4e9dd030d7026b.exe)
+
+running 2 tests
+test actual_tls_and_service_token_never_export_private_material_or_overwrite_entries ... ignored, Requires the actual Windows per-user Credential Manager; creates and removes only unique Yoke test entries
+test host_credential_names_cannot_access_unrelated_accounts ... ok
+
+test result: ok. 1 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\knowledge.rs (target\debug\deps\knowledge-b9792a0b3b2ca864.exe)
+
+running 13 tests
+test corrupt_local_corpus_counts_and_nonunit_coordinates_are_rejected ... ok
+test forged_snapshot_and_corrupt_persisted_vectors_fail_closed ... ok
+test knowledge_refuses_unanchored_paths_secrets_and_scope_escalation ... ok
+test lcov_import_binds_line_hits_and_rejects_incomplete_or_forged_records ... ok
+test expanded_memory_size_is_rejected_without_poisoning_recall_or_supersession ... ok
+test overflowing_persisted_idf_cannot_be_misreported_as_no_lexical_matches ... ok
+test rejected_supersession_preserves_original_and_expired_deadlines_do_not_write ... ok
+test remembered_source_hashes_report_changed_deleted_and_superseded_knowledge ... ok
+test runtime_import_preserves_one_execution_and_refuses_parent_cycles ... ok
+test sarif_import_maps_utf16_unicode_regions_to_source_bytes_and_refuses_escape ... ok
+test source_bound_external_vectors_normalize_and_reject_forged_or_invalid_vectors ... ok
+test sparse_tfidf_retrieval_matches_unicode_and_camelcase_without_model_execution ... ok
+test vector_import_rejects_mixed_dimensions_duplicates_and_partial_persistence ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.42s
+
+     Running tests\knowledge_cli.rs (target\debug\deps\knowledge_cli-a55e50d522ef9615.exe)
+
+running 2 tests
+test native_context_includes_labeled_source_knowledge_only_when_requested ... ok
+test cli_builds_vectors_and_mcp_queries_them_without_a_model_or_source_writes ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.27s
+
+     Running tests\ledger.rs (target\debug\deps\ledger-a6fe7cfa97a09176.exe)
+
+running 5 tests
+test reported_cost_above_reservation_stays_charged_and_blocks_task ... ok
+test reservations_survive_reopen_and_refuse_overspend ... ok
+test concurrent_reservations_cannot_overspend ... ok
+test unknown_billing_retains_reservation_and_only_unsent_attempts_cancel ... ok
+test usage_is_monotone_deduplicated_and_policy_is_immutable ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.45s
+
+     Running tests\live.rs (target\debug\deps\live-e794c2b81df93c6f.exe)
+
+running 4 tests
+test actual_python_server_cross_file_unicode_historical_navigation_and_rename ... ignored, requires YOKE_PYTHON_LSP pointing to an actual installed jedi-language-server executable
+test actual_rust_analyzer_definition_references_and_rename ... ignored, requires an actual installed rust-analyzer
+test actual_rust_analyzer_mcp_references_bind_immutable_snapshot ... ignored, requires an actual installed rust-analyzer
+test actual_typescript_server_cross_file_definition_and_rename ... ignored, requires YOKE_TS_LSP pointing to the real typescript-language-server CLI
+
+test result: ok. 0 passed; 0 failed; 4 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\lsp.rs (target\debug\deps\lsp-0c346c58f496dd41.exe)
+
+running 10 tests
+test host_registered_semantic_rename_uses_the_requested_mcp_snapshot ... ok
+test lsp_deadline_includes_a_server_that_refuses_to_read_didopen ... ok
+test lsp_shutdown_grace_uses_the_remaining_request_deadline ... ok
+test protocol_fixture_locations_bind_to_exact_immutable_source ... ok
+test protocol_fixture_rename_prepares_a_plan_without_touching_source ... ok
+test protocol_fixture_unsafe_workspace_edits_fail_closed ... ok
+test repeated_large_lsp_locations_remain_exact_anchors_with_bounded_body_bytes ... ok
+test semantic_calls_refuse_rebound_source_under_a_published_snapshot_id ... ok
+test semantic_positions_preserve_cr_crlf_lf_and_unicode_boundaries ... ok
+test semantic_location_link_selection_must_be_inside_its_target_range ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 7.60s
+
+     Running tests\maintenance.rs (target\debug\deps\maintenance-13906460177f6bcb.exe)
+
+running 12 tests
+test blob_links_are_refused_and_external_targets_are_preserved ... ok
+test corrupt_unknown_record_refuses_collection_before_any_blob_moves ... ok
+test all_generic_records_and_history_preserve_workflow_editor_vector_and_media_roots ... ok
+test dry_run_counts_orphans_without_mutating_source_or_state_files ... ok
+test dry_run_distinguishes_unreferenced_blobs_from_age_eligible_candidates ... ok
+test expired_deadlines_and_irreversible_purge_requests_leave_orphans_intact ... ok
+test foreign_store_client_blocks_mutation_until_its_lifecycle_lease_closes ... ok
+test interrupted_quarantine_restores_originals_before_a_new_mark ... ok
+test later_blob_hash_failure_restores_earlier_moves_and_rolls_back_metadata ... ok
+test malformed_snapshot_shape_is_refused_before_an_orphan_is_moved ... ok
+test opaque_record_ids_and_map_keys_are_conservative_blob_roots ... ok
+test raw_sqlite_writer_contention_does_not_extend_failed_maintenance_cleanup ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.29s
+
+     Running tests\media.rs (target\debug\deps\media-d5295aaa747ff2f7.exe)
+
+running 13 tests
+test explicitly_captured_binary_assets_are_published_with_exact_ids_and_paged_bytes ... ok
+test malformed_and_truncated_containers_fail_without_fabricated_metadata ... ok
+test media_cannot_bypass_source_scope_links_ignore_or_protected_paths ... ok
+test native_media_metadata_is_technical_and_binary_capture_is_explicit ... ok
+test native_pdf_worker_extracts_actual_text_without_opening_a_source_index ... ok
+test pdf_worker_deadline_and_malformed_input_fail_closed ... ok
+test media_persistence_refreshes_the_remaining_deadline_after_asset_capture ... ok
+test strict_pdf_visitor_decodes_nonbmp_tounicode_and_text_array_line_operators ... ok
+test strict_pdf_visitor_discloses_form_text_exclusion_and_enforces_page_text_cap ... ok
+test strict_pdf_visitor_refuses_unknown_fonts_malformed_encodings_and_content ... ok
+test strict_pdf_visitor_respects_code_spaces_and_rejects_ambiguous_or_invalid_unicode ... ok
+test supplied_unicode_transcript_binds_asset_digest_and_discloses_unverified_authorship ... ok
+test strict_pdf_visitor_validates_every_page_tree_child_count_and_parent ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.61s
+
+     Running tests\ollama.rs (target\debug\deps\ollama-3d9e2c2d954b1e44.exe)
+
+running 12 tests
+test actual_http_summary_request_is_concise_for_single_and_multiple_sources ... ok
+test actual_local_installed_embedding_model_gate ... ignored, Actual running local Ollama endpoint and explicitly selected installed embedding model digest required; never auto-start or pull
+test actual_http_summary_replies_cannot_exceed_concise_generation_bounds ... ok
+test endpoint_identity_capability_and_http_failures_never_become_successes ... ok
+test invalid_protocol_hashes_and_authority_fields_are_rejected ... ok
+test labeled_http_chat_fixture_maps_source_citations_and_reported_usage ... ok
+test labeled_http_embedding_fixture_maps_exact_native_protocol_binding ... ok
+test labeled_model_reranking_is_exact_and_scores_are_bounded_inferences ... ok
+test labeled_vision_fixture_receives_hash_bound_image_bytes ... ok
+test chunked_query_vectors_are_bounded_and_a_stalled_backend_times_out ... ok
+test summary_unicode_characters_cannot_exceed_the_utf8_byte_budget ... ok
+test native_executable_worker_drives_http_adapter_and_durable_unknown_billing ... ok
+
+test result: ok. 11 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.80s
+
+     Running tests\operations.rs (target\debug\deps\operations-a75a6ec5d966103e.exe)
+
+running 8 tests
+test additional_real_grammars_extract_symbols_without_running_source ... ok
+test additional_grammar_call_sites_have_exact_evidence_and_labeled_candidates ... ok
+test binary_resource_reads_cannot_abort_the_next_mcp_request ... ok
+test cross_file_imports_are_recomputed_after_dependency_changes ... ok
+test lsp_unicode_position_roundtrip_rejects_split_surrogates ... ok
+test mcp_stdio_initialization_lists_exactly_eight_tools_and_rejects_host_authority ... ok
+test symbol_insertions_and_overlaps_use_immutable_exact_ranges ... ok
+test real_grammars_extract_multilingual_symbols_and_diagnostics ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.85s
+
+     Running tests\platform_credentials.rs (target\debug\deps\platform_credentials-c74453468278a276.exe)
+
+running 3 tests
+test rejects_foreign_ambiguous_and_traversing_targets_before_backend_access ... ok
+test rejects_empty_and_oversized_binary_secrets_before_backend_access ... ok
+test valid_native_targets_do_not_use_mock_or_windows_fallback ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\process.rs (target\debug\deps\process-73db3b392f7fcb25.exe)
+
+running 5 tests
+test capture_transfers_exact_unicode_bytes_and_independent_streams ... ok
+test output_overflow_is_a_failure_with_bounded_retained_bytes ... ok
+test source_selected_defaults_and_oversized_stdin_are_rejected_before_spawn ... ok
+test descendant_held_stdio_cannot_extend_the_shared_deadline ... ok
+test windows_host_fixture_does_not_allocate_a_console_window ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.31s
+
+     Running tests\projects.rs (target\debug\deps\projects-d0ee8aeb30f2b2ba.exe)
+
+running 7 tests
+test compiler_output_outside_snapshot_and_overwriting_inputs_are_denied ... ok
+test changed_trusted_standard_library_changes_context_identity_for_unchanged_source ... ok
+test compiler_requires_host_trust_and_captured_config_cannot_enable_plugins ... ok
+test configured_compiler_uses_historical_sources_extends_and_exact_unicode_bindings ... ok
+test missing_references_cycles_and_empty_solution_never_become_successful_builds ... ok
+test overlapping_projects_keep_distinct_compiler_contexts_and_report_binding_conflicts ... ok
+test solution_build_consumes_referenced_declarations_without_source_tree_writes ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 33.29s
+
+     Running tests\providers.rs (target\debug\deps\providers-fb5269dbd739580d.exe)
+
+running 11 tests
+test corpus_excerpts_stop_at_exact_utf8_boundaries_and_report_omissions ... ok
+test embeddings_and_query_search_use_versioned_source_bound_collections ... ok
+test complete_bound_failed_replies_still_account_for_reported_costs ... ok
+test invalid_requests_and_missing_capabilities_fail_before_model_attempts ... ok
+test media_descriptions_bind_captured_bytes_without_source_writes ... ok
+test query_vector_dimension_must_match_indexed_corpus_before_settlement ... ok
+test reranking_and_vectors_reject_invalid_exact_candidates ... ok
+test successful_unknown_billing_and_known_overrun_keep_budget_conservative ... ok
+test summaries_use_immutable_utf8_source_and_remain_inferences ... ok
+test unavailable_timeout_and_output_cap_keep_unknown_reservations ... ok
+test host_trust_and_exact_reply_binding_fail_closed ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 16.74s
+
+     Running tests\publication.rs (target\debug\deps\publication-979012b574eccea2.exe)
+
+running 1 test
+test first_publication_time_is_durable_and_never_refreshed_by_republication ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.13s
+
+     Running tests\retention.rs (target\debug\deps\retention-2a367189ded8a7ef.exe)
+
+running 16 tests
+test future_opaque_json_artifact_schema_is_not_inferred_to_be_dependency_free ... ok
+test committed_retirement_can_feed_conservative_cas_quarantine_and_purge_without_losing_receipts ... ok
+test labeled_uncommitted_history_journal_restores_missing_rows_without_changing_current_source ... ok
+test labeled_uncommitted_history_journal_restores_only_hash_bound_rows ... ok
+test missing_history_age_and_corrupt_metadata_never_become_retirement_permission ... ok
+test multiply_linked_quarantine_content_is_unknown_physical_reclamation_and_is_preserved ... ok
+test newly_rooted_quarantine_and_tampered_plan_refuse_purge_without_deleting_bytes ... ok
+test opaque_published_artifacts_defer_history ... ok
+test partial_purge_reports_actual_removed_bytes_and_can_resume_only_its_exact_intent ... ok
+test purge_reclaims_only_exact_committed_unreachable_quarantine_bytes_after_confirmation ... ok
+test reviewed_history_retirement_removes_only_unrooted_rows_and_preserves_original_source ... ok
+test source_bindings_inside_published_json_artifacts_protect_history ... ok
+test stale_plan_and_concurrent_client_leave_history_intact ... ok
+test pin_and_every_source_bound_workflow_record_protect_history ... ok
+test unknown_nested_snapshot_fields_defer_history ... ok
+test unknown_record_blocks_retirement_even_without_explicit_hash_fields ... ok
+
+test result: ok. 16 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.20s
+
+     Running tests\retrieval.rs (target\debug\deps\retrieval-089d78d32d12e114.exe)
+
+running 5 tests
+test context_plan_find_references_read_select_preserves_exact_old_source ... ok
+test context_plan_rejects_execution_unknown_fields_and_over_budget_steps ... ok
+test common_document_terms_cannot_amplify_unbounded_highlight_work ... ok
+test document_fts_normalization_keeps_exact_diacritic_and_punctuation_evidence ... ok
+test identifier_components_and_document_body_are_retrievable_from_the_snapshot ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.70s
+
+     Running tests\runtime.rs (target\debug\deps\runtime-bd27391c6ac434a9.exe)
+
+running 14 tests
+test actual_debugger_pauses_steps_and_hits_hash_bound_unicode_breakpoints ... ok
+test explicit_eval_and_repl_have_actual_module_global_semantics ... ok
+test inspecting_a_metaclass_does_not_call_its_equality_hook ... ok
+test modifying_copied_source_invalidates_runtime_evidence ... ok
+test ordinary_function_locals_use_intrinsic_frame_storage ... ok
+test program_exceptions_remain_program_outcomes_and_never_protocol_success ... ok
+test runtime_and_evaluation_authority_are_distinct_and_source_cannot_grant_them ... ok
+test stack_metadata_does_not_execute_string_subclass_hooks ... ok
+test deadline_and_output_bounds_terminate_sessions_without_source_writes ... ok
+test stale_breakpoints_forged_snapshots_and_relative_interpreters_are_denied ... ok
+test unsupported_custom_locals_are_explicit_failed_operations_without_hooks ... ok
+test variable_inspection_bypasses_custom_dictionary_accessors ... ok
+test variable_inspection_does_not_execute_custom_repr ... ok
+test variable_inspection_does_not_execute_equality_of_non_string_global_keys ... ok
+
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 7.84s
+
+     Running tests\semantic_mcp.rs (target\debug\deps\semantic_mcp-d48cb6dbd1cd4aad.exe)
+
+running 7 tests
+test ci_find_requires_one_search_mode_and_keeps_eight_advertised_tools ... ok
+test explicit_vector_search_without_a_query_keeps_its_existing_local_mode ... ok
+test captured_path_language_and_utf8_offset_are_checked_before_execution ... ok
+test mutating_authority_mixed_and_malformed_requests_never_start_a_provider ... ok
+test registered_stdio_navigation_binds_old_requested_snapshot_after_disk_changes ... ok
+test unconfigured_semantic_navigation_fails_explicitly_without_execution ... ok
+test tsx_navigation_can_use_an_explicitly_registered_typescript_provider ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.21s
+
+     Running tests\store_identity.rs (target\debug\deps\store_identity-d1b83aeee1ddbb31.exe)
+
+running 4 tests
+test graph_lookup_and_every_evidence_member_keep_the_same_snapshot_identity ... ok
+test a_corrupted_snapshot_payload_cannot_alias_a_different_lookup_identity ... ok
+test snapshot_workspace_mismatch_is_rejected_before_source_retrieval ... ok
+test valid_disk_and_derived_snapshot_identities_remain_readable ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.33s
+
+     Running tests\test_map.rs (target\debug\deps\test_map-acea2e7d03edcb30.exe)
+
+running 12 tests
+test a_covered_configuration_change_still_widens_to_every_known_test ... ok
+test collector_requires_host_trust_and_a_real_available_command ... ok
+test failed_tests_remain_selected_even_when_source_is_unchanged ... ok
+test import_binds_hashes_rejects_malformed_and_retains_failed_tests ... ok
+test node_source_stdout_cannot_forge_test_results_and_changed_copy_invalidates_hash_binding ... ok
+test actual_node_collection_separates_stdout_and_rejects_skipped_only_pass ... ok
+test selection_widens_unknown_config_and_new_tests ... ok
+test overflowing_node_reporter_output_never_publishes_a_pass ... ok
+test source_stdout_cannot_fake_a_skipped_only_pass ... ok
+test v8_utf16_ranges_respect_crlf_and_narrower_zero_hit_ranges ... ok
+test widening_with_an_empty_or_partial_caller_list_includes_all_recorded_tests ... ok
+test timed_out_node_collection_retains_the_previous_map ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 7.21s
+
+     Running tests\workflow_cli.rs (target\debug\deps\workflow_cli-df3e580128d03842.exe)
+
+running 9 tests
+test actual_native_cli_tls_service_and_client_load_os_credentials ... ignored, Actual native CLI TLS service/client and Windows credential store; creates/removes only unique test credentials
+test ambiguous_json_rpc_ids_and_nested_lsp_results_are_refused ... ok
+test host_profiles_reject_duplicate_keys_instead_of_replacing_policy ... ok
+test host_only_execution_and_retention_never_inherit_authority_from_config_json ... ok
+test malformed_host_profile_values_are_not_repeated_in_cli_errors ... ok
+test model_worker_deadline_includes_an_input_pipe_that_never_closes ... ok
+test readonly_mcp_dataflow_and_native_cli_share_exact_snapshot_evidence ... ok
+test runtime_cli_preserves_failed_program_evidence_and_returns_failure ... ok
+test native_runtime_cli_preserves_state_across_authorized_repl_commands ... ok
+
+test result: ok. 8 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 2.02s
+
+     Running tests\workspace.rs (target\debug\deps\workspace-b54a6e08cfedc2ee.exe)
+
+running 4 tests
+test executed_verification_deadline_includes_descendants_holding_output_pipes ... ok
+test real_rustc_verification_approval_apply_and_rollback_preserve_original ... ok
+test rollback_restores_deleted_sources_and_keeps_foreign_writes ... ok
+test syntax_only_verification_does_not_authorize_workspace_writes ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.17s
+
+   Doc-tests yoke
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

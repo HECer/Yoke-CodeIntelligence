@@ -1,0 +1,20 @@
+{
+  "complete": true,
+  "product": "Code Intelligence",
+  "version": "0.5.0",
+  "nativeBrowserFunctionalChecks": true,
+  "onlyRollback": true,
+  "beforeAfterReadOnly": true,
+  "cancelRetainsExactAppliedBytes": true,
+  "confirmedRollbackRestoresExactOriginalCrlf": true,
+  "terminalJournalOffersNoRecoveryAction": true,
+  "draftRetainedUntilExplicitReload": true,
+  "explicitReloadObservesOriginal": true,
+  "laterDraftRetainedAfterOwnedShutdown": true,
+  "nativeExitBeforeStdinEofAndRuntimeExitBeforeJobCleanup": true,
+  "actual390x844NoHorizontalOverflow": true,
+  "nativeScreenshotsClaimed": false,
+  "capturedNativeDomRerendersInspected": true,
+  "snapshotFailuresPreserved": 2,
+  "ownedBrowserTabClosed": true
+}

@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 1,
+  "sourceRevision": "43fc1b7366441f7a6afea73918b3be853d43a12e",
+  "runId": 40948004368,
+  "jobId": 123708351123,
+  "sourceAudit": {
+    "selectedSources": 1099,
+    "rawGitMatches": 45,
+    "newlineOnlyMatches": 1054,
+    "validatorAndDriverMatchSelectedCommit": true
+  },
+  "githubArtifact": {
+    "id": 12931217033,
+    "name": "diagnostic-host-document-history-browser-windows",
+    "digest": "sha256:9787a92abfbe789ecdd596b29c90e7a227ce655c82078c8be8c54d64bd373f27",
+    "size_in_bytes": 51479
+  },
+  "observed": {
+    "releaseBuildAndOriginalHistorySteps": "success",
+    "browserAutomationComplete": false,
+    "privateLinkArea": "home",
+    "privateLinkEntry": "other",
+    "privateLinkKind": "junction",
+    "workerSuccessReceiptPresent": false,
+    "activeAfterCleanup": 0,
+    "screenshots": 0,
+    "rootCauseEstablished": false
+  },
+  "archive": {
+    "name": "browser-link-43fc1b73.zip",
+    "bytes": 52162,
+    "sha256": "8d51979aa8000a9275b7b7c6088931b85d871ef1420611f24d4fae5baa74e99b",
+    "members": [
+      {
+        "name": "closed-link.stderr",
+        "bytes": 171,
+        "sha256": "a3f5ce336df39b56e179e5ad7676d7d374b75bb8555e0952ebe0b8259646031a"
+      },
+      {
+        "name": "job.json",
+        "bytes": 126,
+        "sha256": "02dca7391abf3afb96acea331962ea00c6cb898c05e4000bdb5742621628f783"
+      },
+      {
+        "name": "parent-job.json",
+        "bytes": 5257,
+        "sha256": "fd049124dfb1d35152df22a4ea9cb12d070cfb933b7e932ce312f517d766a3fc"
+      },
+      {
+        "name": "result.json",
+        "bytes": 708,
+        "sha256": "329ad4cb99c22d33daa07b11863692a62839b1e1e0bd521368dfaadc52b338da"
+      },
+      {
+        "name": "source-inputs.json",
+        "bytes": 120649,
+        "sha256": "2c9318fc8445f5fadde25eea5caf60c0319559fee23a6956684e80e514035cea"
+      },
+      {
+        "name": "worker.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "name": "worker.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ]
+  },
+  "nativeExecutedDuringAudit": false,
+  "nativeImagePayloadReadDuringAudit": false
+}

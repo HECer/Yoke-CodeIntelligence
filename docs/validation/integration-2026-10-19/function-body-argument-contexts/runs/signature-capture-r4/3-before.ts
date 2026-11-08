@@ -1,0 +1,1 @@
+const events:string[]=[];const previous=Array.prototype[Symbol.iterator];Array.prototype[Symbol.iterator]=(function*(){events.push("iterator");yield ()=>99;}) as unknown as typeof previous;function helper(fn:()=>number):number{return fn();}const result=helper(()=>3);export const observed={result,events};

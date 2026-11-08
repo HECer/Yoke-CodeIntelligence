@@ -1,0 +1,146 @@
+{
+  "sourceCommit": "5c6812b6aeef8a6de6559c0536f19a994c6c0007",
+  "cliSha256": "8e1740012db05af26cb9709d5ecc04ec8a748c5bba0b154d501626f66953c162",
+  "frozenInputs": 1047,
+  "rust": {
+    "targets": {
+      "workspace-lib": {
+        "passed": 16,
+        "failed": 0,
+        "ignored": 0
+      },
+      "symbol_workspace": {
+        "passed": 9,
+        "failed": 0,
+        "ignored": 0
+      },
+      "agent_symbol_contracts": {
+        "passed": 8,
+        "failed": 0,
+        "ignored": 0
+      },
+      "agent_facade_semantics": {
+        "passed": 4,
+        "failed": 0,
+        "ignored": 0
+      },
+      "agent_facade_options": {
+        "passed": 3,
+        "failed": 0,
+        "ignored": 0
+      },
+      "agent_repl_api_selection": {
+        "passed": 8,
+        "failed": 0,
+        "ignored": 0
+      },
+      "agent_repl_lifecycle": {
+        "passed": 3,
+        "failed": 0,
+        "ignored": 0
+      },
+      "agent_repl": {
+        "passed": 22,
+        "failed": 0,
+        "ignored": 0
+      },
+      "session_config_cli": {
+        "passed": 4,
+        "failed": 0,
+        "ignored": 0
+      },
+      "session_steering": {
+        "passed": 12,
+        "failed": 0,
+        "ignored": 0
+      },
+      "session_agent_interface": {
+        "passed": 8,
+        "failed": 0,
+        "ignored": 0
+      },
+      "session_optional_defaults": {
+        "passed": 8,
+        "failed": 0,
+        "ignored": 0
+      },
+      "project_session": {
+        "passed": 6,
+        "failed": 0,
+        "ignored": 0
+      },
+      "session_mcp": {
+        "passed": 3,
+        "failed": 0,
+        "ignored": 0
+      },
+      "deadline_scope": {
+        "passed": 2,
+        "failed": 0,
+        "ignored": 0
+      },
+      "protocol_connection": {
+        "passed": 5,
+        "failed": 0,
+        "ignored": 0
+      },
+      "lsp": {
+        "passed": 10,
+        "failed": 0,
+        "ignored": 0
+      },
+      "lsp_source_execution": {
+        "passed": 5,
+        "failed": 0,
+        "ignored": 2
+      },
+      "lsp_dependency_scope": {
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0
+      },
+      "session_epoch_selection": {
+        "passed": 6,
+        "failed": 0,
+        "ignored": 0
+      },
+      "query_parity": {
+        "passed": 12,
+        "failed": 0,
+        "ignored": 0
+      },
+      "symbol_info_budget": {
+        "passed": 7,
+        "failed": 0,
+        "ignored": 0
+      },
+      "source_exclusions": {
+        "passed": 7,
+        "failed": 0,
+        "ignored": 0
+      },
+      "lsp_lifecycle": {
+        "passed": 2,
+        "failed": 0,
+        "ignored": 0
+      }
+    },
+    "distinctPassed": 171,
+    "failed": 0,
+    "existingIgnored": 2,
+    "newFunctions": 11
+  },
+  "npm": {
+    "passed": 260,
+    "failed": 0,
+    "existingSkipped": 3
+  },
+  "formatTargetRoots": 340,
+  "cargoFormatAllWindowsOs206": true,
+  "allQualifiedJobsEmpty": true,
+  "fullStatusComplete": false,
+  "fullNativeCurrentHeadCertified": false,
+  "systemSettingsChanged": false,
+  "originalInventoryAssessmentsUnchanged": true,
+  "rawMembers": 302
+}

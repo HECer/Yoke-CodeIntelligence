@@ -1,0 +1,131 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+warning: unused imports: `BTreeMap` and `BTreeSet`
+ --> native\src\meaning_groups.rs:6:24
+  |
+6 | use std::collections::{BTreeMap, BTreeSet};
+  |                        ^^^^^^^^  ^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `yoke-code-intelligence` (lib) generated 1 warning (run `cargo fix --lib -p yoke-code-intelligence` to apply 1 suggestion)
+    Finished `test` profile [unoptimized] target(s) in 5m 02s
+     Running unittests src\lib.rs (E:/Yoke-Build-Cache/meaning-aliases-20261016\debug\deps\yoke-35b101204e4eb110.exe)
+
+running 10 tests
+test meaning_groups::tests::grouping_canonicalizes_review_order_and_separates_policy_from_capacity ... FAILED
+test meaning_groups::tests::grouping_counts_original_records_and_slots_before_any_collapse ... FAILED
+test meaning_groups::tests::grouping_expired_deadline_refuses_before_projection ... FAILED
+test meaning_groups::tests::grouping_keeps_every_hyperedge_slot_role_position_and_original_reference ... FAILED
+test meaning_groups::tests::grouping_keeps_parallel_directed_relations_as_original_observations_and_selfloops ... FAILED
+test meaning_groups::tests::grouping_packet_qualifies_colliding_concepts_relations_hyperedges_and_evidence ... FAILED
+test meaning_groups::tests::grouping_partitions_every_original_concept_without_changing_claims_or_evidence ... FAILED
+test meaning_groups::tests::grouping_refuses_duplicate_overlap_absent_refs_and_nonmember_representatives ... FAILED
+test meaning_groups::tests::grouping_refuses_invalid_version_graph_binding_and_rationale_without_echoing_values ... FAILED
+test meaning_groups::tests::grouping_zero_limits_admit_a_truly_empty_graph_and_review_only ... FAILED
+
+failures:
+
+---- meaning_groups::tests::grouping_canonicalizes_review_order_and_separates_policy_from_capacity stdout ----
+
+thread 'meaning_groups::tests::grouping_canonicalizes_review_order_and_separates_policy_from_capacity' (68884) panicked at native\src\meaning_groups_tests.rs:36:87:
+called `Result::unwrap()` on an `Err` value: Meaning source-set hash mismatch
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- meaning_groups::tests::grouping_counts_original_records_and_slots_before_any_collapse stdout ----
+
+thread 'meaning_groups::tests::grouping_counts_original_records_and_slots_before_any_collapse' (99524) panicked at native\src\meaning_groups_tests.rs:36:87:
+called `Result::unwrap()` on an `Err` value: Meaning source-set hash mismatch
+
+---- meaning_groups::tests::grouping_expired_deadline_refuses_before_projection stdout ----
+
+thread 'meaning_groups::tests::grouping_expired_deadline_refuses_before_projection' (55452) panicked at native\src\meaning_groups_tests.rs:36:87:
+called `Result::unwrap()` on an `Err` value: Meaning source-set hash mismatch
+
+---- meaning_groups::tests::grouping_keeps_every_hyperedge_slot_role_position_and_original_reference stdout ----
+
+thread 'meaning_groups::tests::grouping_keeps_every_hyperedge_slot_role_position_and_original_reference' (95808) panicked at native\src\meaning_groups_tests.rs:36:87:
+called `Result::unwrap()` on an `Err` value: Meaning source-set hash mismatch
+
+---- meaning_groups::tests::grouping_keeps_parallel_directed_relations_as_original_observations_and_selfloops stdout ----
+
+thread 'meaning_groups::tests::grouping_keeps_parallel_directed_relations_as_original_observations_and_selfloops' (60712) panicked at native\src\meaning_groups_tests.rs:36:87:
+called `Result::unwrap()` on an `Err` value: Meaning source-set hash mismatch
+
+---- meaning_groups::tests::grouping_packet_qualifies_colliding_concepts_relations_hyperedges_and_evidence stdout ----
+
+thread 'meaning_groups::tests::grouping_packet_qualifies_colliding_concepts_relations_hyperedges_and_evidence' (108588) panicked at native\src\meaning_groups_tests.rs:36:87:
+called `Result::unwrap()` on an `Err` value: Meaning source-set hash mismatch
+
+---- meaning_groups::tests::grouping_partitions_every_original_concept_without_changing_claims_or_evidence stdout ----
+
+thread 'meaning_groups::tests::grouping_partitions_every_original_concept_without_changing_claims_or_evidence' (43944) panicked at native\src\meaning_groups_tests.rs:36:87:
+called `Result::unwrap()` on an `Err` value: Meaning source-set hash mismatch
+
+---- meaning_groups::tests::grouping_refuses_duplicate_overlap_absent_refs_and_nonmember_representatives stdout ----
+
+thread 'meaning_groups::tests::grouping_refuses_duplicate_overlap_absent_refs_and_nonmember_representatives' (38720) panicked at native\src\meaning_groups_tests.rs:36:87:
+called `Result::unwrap()` on an `Err` value: Meaning source-set hash mismatch
+
+---- meaning_groups::tests::grouping_refuses_invalid_version_graph_binding_and_rationale_without_echoing_values stdout ----
+
+thread 'meaning_groups::tests::grouping_refuses_invalid_version_graph_binding_and_rationale_without_echoing_values' (111044) panicked at native\src\meaning_groups_tests.rs:36:87:
+called `Result::unwrap()` on an `Err` value: Meaning source-set hash mismatch
+
+---- meaning_groups::tests::grouping_zero_limits_admit_a_truly_empty_graph_and_review_only stdout ----
+
+thread 'meaning_groups::tests::grouping_zero_limits_admit_a_truly_empty_graph_and_review_only' (110052) panicked at native\src\meaning_groups_tests.rs:36:87:
+called `Result::unwrap()` on an `Err` value: Meaning source-set hash mismatch
+
+
+failures:
+    meaning_groups::tests::grouping_canonicalizes_review_order_and_separates_policy_from_capacity
+    meaning_groups::tests::grouping_counts_original_records_and_slots_before_any_collapse
+    meaning_groups::tests::grouping_expired_deadline_refuses_before_projection
+    meaning_groups::tests::grouping_keeps_every_hyperedge_slot_role_position_and_original_reference
+    meaning_groups::tests::grouping_keeps_parallel_directed_relations_as_original_observations_and_selfloops
+    meaning_groups::tests::grouping_packet_qualifies_colliding_concepts_relations_hyperedges_and_evidence
+    meaning_groups::tests::grouping_partitions_every_original_concept_without_changing_claims_or_evidence
+    meaning_groups::tests::grouping_refuses_duplicate_overlap_absent_refs_and_nonmember_representatives
+    meaning_groups::tests::grouping_refuses_invalid_version_graph_binding_and_rationale_without_echoing_values
+    meaning_groups::tests::grouping_zero_limits_admit_a_truly_empty_graph_and_review_only
+
+test result: FAILED. 0 passed; 10 failed; 0 ignored; 0 measured; 356 filtered out; finished in 0.02s
+
+error: test failed, to rerun pass `--lib`
+     Running tests\meaning_cli.rs (E:/Yoke-Build-Cache/meaning-aliases-20261016\debug\deps\meaning_cli-6092092382a6115f.exe)
+
+running 3 tests
+test meaning_group_cli_rejects_ambiguous_host_review_and_limits_before_store_creation ... ok
+test meaning_group_cli_replays_parent_and_preserves_all_sql_cas_and_original_claims ... FAILED
+test meaning_group_cli_requires_existing_store_and_refuses_capture_or_execution_flags ... FAILED
+
+failures:
+
+---- meaning_group_cli_replays_parent_and_preserves_all_sql_cas_and_original_claims stdout ----
+
+thread 'meaning_group_cli_replays_parent_and_preserves_all_sql_cas_and_original_claims' (43076) panicked at native\tests\meaning_cli.rs:81:5:
+stderr: error: unrecognized subcommand 'group'
+
+Usage: yoke.exe meaning [OPTIONS] <COMMAND>
+
+For more information, try '--help'.
+
+stdout: 
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- meaning_group_cli_requires_existing_store_and_refuses_capture_or_execution_flags stdout ----
+
+thread 'meaning_group_cli_requires_existing_store_and_refuses_capture_or_execution_flags' (19472) panicked at native\tests\meaning_cli.rs:540:5:
+assertion failed: String::from_utf8_lossy(&output.stderr).contains("existing")
+
+
+failures:
+    meaning_group_cli_replays_parent_and_preserves_all_sql_cas_and_original_claims
+    meaning_group_cli_requires_existing_store_and_refuses_capture_or_execution_flags
+
+test result: FAILED. 1 passed; 2 failed; 0 ignored; 0 measured; 10 filtered out; finished in 2.01s
+
+error: test failed, to rerun pass `--test meaning_cli`
+error: 2 targets failed:
+    `--lib`
+    `--test meaning_cli`

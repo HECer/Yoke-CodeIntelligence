@@ -1,0 +1,209 @@
+{
+  "project": "HECer/Yoke-CodeIntelligence",
+  "product": "Code Intelligence",
+  "version": "0.5.0",
+  "productCommit": "191c06b7c9f5baa3149f3f773a8278d082dfe22a",
+  "productRemoteBlobsVerified": 12,
+  "sourceInputs": 1149,
+  "native": {
+    "totals": {
+      "passed": 788,
+      "failed": 0,
+      "ignored": 7,
+      "measured": 0,
+      "filtered": 0
+    },
+    "groups": [
+      {
+        "target": "library",
+        "counts": {
+          "passed": 657,
+          "failed": 0,
+          "ignored": 7,
+          "measured": 0,
+          "filtered": 0
+        },
+        "log": "whole-library.stdout",
+        "sha256": "a50da714b3bd6fd1300292201f8314f9bfaca2eabce64a5ddbb83f86f452fcb6"
+      },
+      {
+        "target": "session_dashboard_management",
+        "counts": {
+          "passed": 22,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0
+        },
+        "log": "whole-session_dashboard_management.stdout",
+        "sha256": "04d0ee014587ad81232b3bb09e1bd4ad5f56cdf5c95ef673f19079e7a79db148"
+      },
+      {
+        "target": "session_dashboard",
+        "counts": {
+          "passed": 13,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0
+        },
+        "log": "whole-session_dashboard.stdout",
+        "sha256": "8cd6bbc53b5300cff2c1be04cee3fe1ff81b63435ed48f03a82703da5108e9bb"
+      },
+      {
+        "target": "notes",
+        "counts": {
+          "passed": 15,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0
+        },
+        "log": "whole-notes.stdout",
+        "sha256": "898be953a28efcff11b29ec90a47da5851e8885190fc85954a556f1bd1be3662"
+      },
+      {
+        "target": "mcp_http",
+        "counts": {
+          "passed": 18,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0
+        },
+        "log": "whole-mcp_http.stdout",
+        "sha256": "b2ee9245d51e7be88483a2c32ddf085c03d39097c3296ad97851a5789e2b2907"
+      },
+      {
+        "target": "protocol_connection",
+        "counts": {
+          "passed": 5,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0
+        },
+        "log": "whole-protocol_connection.stdout",
+        "sha256": "bf4e318516548263e63cc2fc230a6888d311e4689d2fcc01c7ec4cfc8c254e4c"
+      },
+      {
+        "target": "session_steering",
+        "counts": {
+          "passed": 12,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0
+        },
+        "log": "whole-session_steering.stdout",
+        "sha256": "750943c41c22e9b85ff91bbfd9ab244b46f095c4e9eeb3031a83ffb3f910ae1b"
+      },
+      {
+        "target": "server_selection",
+        "counts": {
+          "passed": 8,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0
+        },
+        "log": "whole-server_selection.stdout",
+        "sha256": "149a301976f717e23b3c41bea2a9591bcad056717995b7bee49e38dc0e3c2e30"
+      },
+      {
+        "target": "server_settings",
+        "counts": {
+          "passed": 8,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0
+        },
+        "log": "whole-server_settings.stdout",
+        "sha256": "f0e8b465376795e2456261b6b0388fb925c24c378eaaa9d00b41009d44e18a62"
+      },
+      {
+        "target": "project_session",
+        "counts": {
+          "passed": 6,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0
+        },
+        "log": "whole-project_session.stdout",
+        "sha256": "aceb2bf0ee094ddcc0b24add1a15769fbedd7f16435cbeb3d668ad5ead895bb2"
+      },
+      {
+        "target": "retention",
+        "counts": {
+          "passed": 17,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0
+        },
+        "log": "whole-retention.stdout",
+        "sha256": "45abf550c3adb7038f64614f8b40dfdc032769a92efc5f8e75639f2a43895141"
+      },
+      {
+        "target": "capture_changes",
+        "counts": {
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0
+        },
+        "log": "whole-capture_changes.stdout",
+        "sha256": "8672ff6b1079f8c0c1abfe0c7b7a23794ca3dc332de4a7991bd2097b21b96d5b"
+      },
+      {
+        "target": "main",
+        "counts": {
+          "passed": 6,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0
+        },
+        "log": "whole-main.stdout",
+        "sha256": "2ff64c7fb9706c91c3556077df08e12813977d12a289943d9c920e3935153969"
+      }
+    ],
+    "reusedGroupCount": 0
+  },
+  "cliSha256": "0ded3e33a52c750ce7b43ab54392ec234c72a1c7fe889f205ab970697f51f7f9",
+  "originalNativeJournalAndWriterLock": true,
+  "reviewedSelectionBoundProjectRollback": true,
+  "resumeSynthesized": false,
+  "olderUnboundNativeJournalsUseHostWorkflow": true,
+  "optionalProvenanceGrantsWritesOrRetention": false,
+  "nativeReceiptApiUnchanged": true,
+  "allJobsEmpty": true,
+  "browserAcceptance": {
+    "complete": true,
+    "product": "Code Intelligence",
+    "version": "0.5.0",
+    "nativeBrowserFunctionalChecks": true,
+    "onlyRollback": true,
+    "beforeAfterReadOnly": true,
+    "cancelRetainsExactAppliedBytes": true,
+    "confirmedRollbackRestoresExactOriginalCrlf": true,
+    "terminalJournalOffersNoRecoveryAction": true,
+    "draftRetainedUntilExplicitReload": true,
+    "explicitReloadObservesOriginal": true,
+    "laterDraftRetainedAfterOwnedShutdown": true,
+    "nativeExitBeforeStdinEofAndRuntimeExitBeforeJobCleanup": true,
+    "actual390x844NoHorizontalOverflow": true,
+    "nativeScreenshotsClaimed": false,
+    "capturedNativeDomRerendersInspected": true,
+    "snapshotFailuresPreserved": 2,
+    "ownedBrowserTabClosed": true
+  },
+  "precedingFailuresPreserved": true,
+  "focused7Plus11NotAddedToWhole788": true,
+  "fullStatusComplete": false,
+  "mainMerged": false,
+  "released": false
+}

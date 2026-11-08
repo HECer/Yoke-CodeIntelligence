@@ -1,0 +1,39 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 5.70s
+     Running tests\refactor_intents.rs (target\debug\deps\refactor_intents-e45b8130e18e3e90.exe)
+
+running 4 tests
+test flagged_refactoring_obeys_session_plan_permissions_before_querying_a_provider ... ok
+test inline_keep_definition_preserves_exact_declaration_bytes_while_replacing_a_call ... FAILED
+test invalid_later_inline_candidate_cannot_leave_an_earlier_hidden_plan_or_derivative ... FAILED
+test requested_comment_and_text_rename_options_change_only_their_own_occurrence_classes ... FAILED
+
+failures:
+
+---- inline_keep_definition_preserves_exact_declaration_bytes_while_replacing_a_call stdout ----
+
+thread 'inline_keep_definition_preserves_exact_declaration_bytes_while_replacing_a_call' (85916) panicked at native\tests\refactor_intents.rs:173:6:
+called `Result::unwrap()` on an `Err` value: Keeping the definition requires a provider action that explicitly advertises that intent
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- invalid_later_inline_candidate_cannot_leave_an_earlier_hidden_plan_or_derivative stdout ----
+
+thread 'invalid_later_inline_candidate_cannot_leave_an_earlier_hidden_plan_or_derivative' (40156) panicked at native\tests\refactor_intents.rs:100:5:
+assertion `left == right` failed: a rejected action batch published a hidden plan
+  left: 1
+ right: 0
+
+---- requested_comment_and_text_rename_options_change_only_their_own_occurrence_classes stdout ----
+
+thread 'requested_comment_and_text_rename_options_change_only_their_own_occurrence_classes' (90040) panicked at native\tests\refactor_intents.rs:135:10:
+called `Result::unwrap()` on an `Err` value: Comment/text propagation requires an explicit provider refactoring capability
+
+
+failures:
+    inline_keep_definition_preserves_exact_declaration_bytes_while_replacing_a_call
+    invalid_later_inline_candidate_cannot_leave_an_earlier_hidden_plan_or_derivative
+    requested_comment_and_text_rename_options_change_only_their_own_occurrence_classes
+
+test result: FAILED. 1 passed; 3 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.17s
+
+error: test failed, to rerun pass `--test refactor_intents`

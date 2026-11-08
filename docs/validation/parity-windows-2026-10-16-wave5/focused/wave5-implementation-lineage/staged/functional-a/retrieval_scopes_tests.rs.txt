@@ -1,0 +1,1148 @@
+//! Draft private-module tests, not compiled or run. Root controls promotion/RED.
+//! Real capture supplies authority; no forged checked structs or snapshot sizes.
+
+use super::*;
+use crate::{
+    Engine,
+    capture::CaptureOptions,
+    model::{hash, identity},
+};
+use serde_json::{Value, json};
+use std::{
+    fs,
+    path::Path,
+    sync::{
+        Arc,
+        atomic::{AtomicBool, Ordering},
+    },
+};
+use tempfile::TempDir;
+
+struct Fixture {
+    engine: Engine,
+    snapshot: Snapshot,
+    graph: Graph,
+    root: TempDir,
+}
+fn write(root: &Path, path: &str, text: &str) {
+    let file = root.join(path);
+    fs::create_dir_all(file.parent().unwrap()).unwrap();
+    fs::write(file, text).unwrap();
+}
+fn owned(files: Vec<(String, String)>, options: CaptureOptions) -> Fixture {
+    let root = TempDir::new().unwrap();
+    for (path, text) in files {
+        write(root.path(), &path, &text);
+    }
+    let mut engine = Engine::open(root.path()).unwrap();
+    if !options.include_ignored_dirs.is_empty() {
+        engine.capture_epoch = crate::analysis::AnalyzerEpoch::V9;
+    }
+    engine.capture_options = options;
+    let (snapshot, graph, _, _) = engine.index(&Deadline::new(120_000)).unwrap();
+    Fixture {
+        engine,
+        snapshot,
+        graph,
+        root,
+    }
+}
+fn fixture(files: &[(&str, &str)]) -> Fixture {
+    owned(
+        files
+            .iter()
+            .map(|(p, t)| (p.to_string(), t.to_string()))
+            .collect(),
+        CaptureOptions::default(),
+    )
+}
+fn two() -> Fixture {
+    fixture(&[
+        ("package.json", r#"{"workspaces":["packages/*"]}"#),
+        ("packages/a/package.json", r#"{"name":"same"}"#),
+        ("packages/b/package.json", r#"{"name":"same"}"#),
+        ("packages/a/main.rs", "fn alpha(){ payment(); }\n"),
+        ("packages/b/main.rs", "fn beta(){ payment(); }\n"),
+    ])
+}
+fn checked<'f, 'd>(
+    f: &'f Fixture,
+    d: &'d Deadline,
+) -> (CheckedRetrievalRun<'f, 'f, 'd>, CheckedScopePartition<'f>) {
+    let mut run = begin(&f.engine.store, &f.snapshot, &f.graph, d, 4_000_000).unwrap();
+    let partition = match probe(&mut run).unwrap() {
+        ProbeOutcome::Ready(p) => p,
+        ProbeOutcome::NotApplicable(p) => panic!("expected partition, got {}", p.code()),
+        ProbeOutcome::UnsupportedPolicy(p) => panic!("supported fixture, got {}", p.code()),
+    };
+    (run, partition)
+}
+fn hard<T>(value: RetrievalResult<T>) -> RetrievalHardError {
+    match value {
+        Err(e) => e,
+        Ok(_) => panic!("expected specific hard error, got success"),
+    }
+}
+fn scope<'p>(p: &'p CheckedScopePartition<'_>, root: &str) -> &'p CheckedScope {
+    p.scopes()
+        .find(|s| s.root() == root)
+        .unwrap_or_else(|| panic!("missing scope {root}"))
+}
+fn owner(p: &CheckedScopePartition<'_>, path: &str) -> String {
+    p.scope(&p.owner(path).unwrap()).unwrap().root().to_string()
+}
+fn membership(s: &CheckedScope, ecosystem: Ecosystem) -> &WorkspaceMembership {
+    s.memberships()
+        .find(|m| m.ecosystem() == ecosystem)
+        .unwrap()
+}
+fn unsupported(f: &Fixture, code: &str) {
+    let d = Deadline::new(120_000);
+    let mut run = begin(&f.engine.store, &f.snapshot, &f.graph, &d, 4_000_000).unwrap();
+    let p = match probe(&mut run).unwrap() {
+        ProbeOutcome::UnsupportedPolicy(p) => p,
+        ProbeOutcome::Ready(_) => panic!("unsupported source admitted"),
+        ProbeOutcome::NotApplicable(p) => panic!("unsupported source hidden as {}", p.code()),
+    };
+    assert_eq!(p.code(), code);
+    assert_eq!(p.physical_package_count(), None);
+    assert!(p.diagnostics().any(|d| d.code() == code));
+}
+fn captured(f: &Fixture, path: &str, text: &str) {
+    let file = f
+        .snapshot
+        .files
+        .iter()
+        .find(|row| row.path == path)
+        .unwrap();
+    assert_eq!(file.size, text.len());
+    assert_eq!(file.hash, hash(text.as_bytes()));
+}
+fn logical_state(f: &Fixture) -> Vec<(String, Vec<String>)> {
+    let mut q = f
+        .engine
+        .store
+        .db
+        .prepare("SELECT name FROM sqlite_master WHERE type='table' ORDER BY name")
+        .unwrap();
+    let names: Vec<String> = q
+        .query_map([], |r| r.get(0))
+        .unwrap()
+        .collect::<rusqlite::Result<_>>()
+        .unwrap();
+    names
+        .into_iter()
+        .map(|name| {
+            let sql = format!("SELECT * FROM \"{}\"", name.replace('"', "\"\""));
+            let mut q = f.engine.store.db.prepare(&sql).unwrap();
+            let count = q.column_count();
+            let mut rows: Vec<String> = q
+                .query_map([], |r| {
+                    let values: Vec<rusqlite::types::Value> = (0..count)
+                        .map(|i| r.get(i))
+                        .collect::<rusqlite::Result<_>>()?;
+                    Ok(format!("{values:?}"))
+                })
+                .unwrap()
+                .collect::<rusqlite::Result<_>>()
+                .unwrap();
+            rows.sort();
+            (name, rows)
+        })
+        .collect()
+}
+
+#[test]
+fn captured_npm_packages_have_distinct_path_ids_and_deepest_owners() {
+    let f = two();
+    captured(&f, "packages/a/package.json", r#"{"name":"same"}"#);
+    let d = Deadline::new(20_000);
+    let (run, p) = checked(&f, &d);
+    p.validate_for(&run).unwrap();
+    assert!(std::ptr::eq(run.deadline(), &d));
+    assert!(std::ptr::eq(run.snapshot(), &f.snapshot));
+    assert!(std::ptr::eq(run.graph(), &f.graph));
+    assert_eq!(p.physical_package_count(), 2);
+    assert_eq!(
+        p.scopes().map(|s| s.root()).collect::<Vec<_>>(),
+        [".", "packages/a", "packages/b"]
+    );
+    assert_eq!(scope(&p, ".").kind(), ScopeKind::WorkspaceUnassigned);
+    assert_eq!(owner(&p, "packages/a/main.rs"), "packages/a");
+    assert_eq!(owner(&p, "package.json"), ".");
+    assert_ne!(scope(&p, "packages/a").id(), scope(&p, "packages/b").id());
+    assert_eq!(
+        scope(&p, "packages/a").id(),
+        identity(&(
+            "yoke-retrieval-scope-1",
+            &f.snapshot.workspace_id,
+            identity(&f.snapshot),
+            "packages/a"
+        ))
+    );
+}
+
+#[test]
+fn p1_mixed_ecosystems_and_nested_virtual_barrier_have_seven_scopes() {
+    let f = fixture(&[
+        ("package.json", r#"{"private":true}"#),
+        (
+            "pnpm-workspace.yaml",
+            "packages:\n  - 'packages/*'\n  - '!packages/excluded'\n",
+        ),
+        ("packages/a/package.json", r#"{"name":"same"}"#),
+        ("packages/a/Cargo.toml", "[package]\nname='mixed'\n"),
+        ("packages/b/package.json", r#"{"name":"same"}"#),
+        ("packages/excluded/package.json", r#"{"name":"excluded"}"#),
+        (
+            "packages/a/nested/pnpm-workspace.yaml",
+            "packages:\n  - 'mods/*'\n",
+        ),
+        ("packages/a/nested/mods/c/package.json", r#"{"name":"c"}"#),
+        ("standalone/package.json", r#"{"name":"same"}"#),
+        ("src/root.rs", "fn root(){}\n"),
+        ("packages/a/src/a.rs", "fn a(){}\n"),
+        ("packages/a/nested/README.md", "# Nested workspace\n"),
+        ("packages/a/nested/mods/c/src/c.rs", "fn c(){}\n"),
+        ("packages/b/src/b.rs", "fn b(){}\n"),
+        ("packages/excluded/src/x.rs", "fn x(){}\n"),
+        ("standalone/src/s.rs", "fn s(){}\n"),
+    ]);
+    let d = Deadline::new(20_000);
+    let (_, p) = checked(&f, &d);
+    assert_eq!(p.physical_package_count(), 5);
+    assert_eq!(p.scopes().count(), 7);
+    for (path, expected) in [
+        ("src/root.rs", "."),
+        ("packages/a/src/a.rs", "packages/a"),
+        ("packages/a/nested/README.md", "packages/a/nested"),
+        (
+            "packages/a/nested/mods/c/src/c.rs",
+            "packages/a/nested/mods/c",
+        ),
+        ("packages/b/src/b.rs", "packages/b"),
+        ("packages/excluded/src/x.rs", "packages/excluded"),
+        ("standalone/src/s.rs", "standalone"),
+    ] {
+        assert_eq!(owner(&p, path), expected);
+    }
+    assert_eq!(
+        scope(&p, "packages/a/nested").kind(),
+        ScopeKind::WorkspaceUnassigned
+    );
+    assert_eq!(
+        scope(&p, "packages/a").labels().count(),
+        2,
+        "one physical share"
+    );
+    let c = membership(scope(&p, "packages/a/nested/mods/c"), Ecosystem::Pnpm);
+    assert_eq!(c.workspace_root(), Some("packages/a/nested"));
+    assert_eq!(c.reason(), MembershipReason::Member);
+    assert_eq!(
+        membership(scope(&p, "packages/excluded"), Ecosystem::Pnpm).reason(),
+        MembershipReason::Excluded
+    );
+    assert_eq!(
+        membership(scope(&p, "standalone"), Ecosystem::Pnpm).reason(),
+        MembershipReason::Unmatched
+    );
+}
+
+#[test]
+fn cargo_root_exclude_default_members_and_path_dependencies_do_not_delete_scopes() {
+    let f = fixture(&[
+        (
+            "Cargo.toml",
+            "[package]\nname='root'\n[workspace]\nmembers=['crates/*']\nexclude=['crates/private']\ndefault-members=['crates/a']\n[dependencies]\nremote={path='not-captured'}\n",
+        ),
+        ("crates/a/Cargo.toml", "[package]\nname='same'\n"),
+        ("crates/private/Cargo.toml", "[package]\nname='same'\n"),
+        ("src/lib.rs", "pub fn root(){}\n"),
+        ("crates/private/src/lib.rs", "pub fn private(){}\n"),
+    ]);
+    let d = Deadline::new(20_000);
+    let (_, p) = checked(&f, &d);
+    assert_eq!(p.physical_package_count(), 3);
+    assert_eq!(scope(&p, ".").kind(), ScopeKind::Package);
+    assert_eq!(
+        membership(scope(&p, "."), Ecosystem::Cargo).reason(),
+        MembershipReason::Member
+    );
+    assert_eq!(
+        membership(scope(&p, "crates/private"), Ecosystem::Cargo).reason(),
+        MembershipReason::Excluded
+    );
+    assert_eq!(owner(&p, "crates/private/src/lib.rs"), "crates/private");
+    assert!(p.scopes().all(|s| s.root() != "not-captured"));
+}
+
+#[test]
+fn nearest_workspace_does_not_try_outer_membership() {
+    let f = fixture(&[
+        ("package.json", r#"{"workspaces":["packages/**"]}"#),
+        ("packages/a/package.json", r#"{"name":"a"}"#),
+        (
+            "packages/a/nested/package.json",
+            r#"{"workspaces":["mods/*"]}"#,
+        ),
+        (
+            "packages/a/nested/outside/package.json",
+            r#"{"name":"outside"}"#,
+        ),
+    ]);
+    let d = Deadline::new(20_000);
+    let (_, p) = checked(&f, &d);
+    let m = membership(scope(&p, "packages/a/nested/outside"), Ecosystem::Npm);
+    assert_eq!(m.workspace_root(), Some("packages/a/nested"));
+    assert_eq!(m.reason(), MembershipReason::Unmatched);
+}
+
+#[test]
+fn selectors_are_component_exact_final_double_star_and_case_sensitive() {
+    for (selector, expected) in [
+        ("packages/*", [true, false]),
+        ("packages/**", [true, true]),
+        ("Packages/*", [false, false]),
+        ("packages-extra/*", [false, false]),
+    ] {
+        let f = fixture(&[
+            (
+                "package.json",
+                &json!({"workspaces":[selector]}).to_string(),
+            ),
+            ("packages/a/package.json", r#"{"name":"a"}"#),
+            ("packages/a/deep/package.json", r#"{"name":"deep"}"#),
+        ]);
+        let d = Deadline::new(20_000);
+        let (_, p) = checked(&f, &d);
+        for (root, yes) in ["packages/a", "packages/a/deep"].into_iter().zip(expected) {
+            assert_eq!(
+                membership(scope(&p, root), Ecosystem::Npm).reason() == MembershipReason::Member,
+                yes,
+                "{selector} versus {root}"
+            );
+        }
+    }
+}
+
+#[test]
+fn pnpm_negation_is_final_and_normalized_npm_duplicates_keep_both_bindings() {
+    for selectors in [
+        "packages:\n - 'packages/*'\n - '!packages/excluded'\n - 'packages/excluded'\n",
+        "packages:\n - 'packages/excluded'\n - '!packages/excluded'\n - 'packages/*'\n",
+    ] {
+        let f = fixture(&[
+            ("pnpm-workspace.yaml", selectors),
+            ("packages/a/package.json", r#"{"name":"a"}"#),
+            ("packages/excluded/package.json", r#"{"name":"excluded"}"#),
+        ]);
+        let d = Deadline::new(20_000);
+        let (_, p) = checked(&f, &d);
+        assert_eq!(
+            membership(scope(&p, "packages/excluded"), Ecosystem::Pnpm).reason(),
+            MembershipReason::Excluded
+        );
+        assert_eq!(p.physical_package_count(), 2);
+    }
+    let f = fixture(&[
+        (
+            "package.json",
+            r#"{"workspaces":{"packages":["packages/*","packages/*"]}}"#,
+        ),
+        ("pnpm-workspace.yaml", "packages:\n - 'packages/*'\n"),
+        ("packages/a/package.json", r#"{"name":"a"}"#),
+        ("packages/b/package.json", r#"{"name":"b"}"#),
+    ]);
+    let d = Deadline::new(20_000);
+    let (_, p) = checked(&f, &d);
+    assert!(p.declarations().any(|d| d.path() == "package.json"));
+    assert!(p.declarations().any(|d| d.path() == "pnpm-workspace.yaml"));
+    assert_eq!(
+        membership(scope(&p, "packages/a"), Ecosystem::Pnpm).reason(),
+        MembershipReason::Member
+    );
+}
+
+#[test]
+fn no_or_single_package_is_not_applicable_even_with_virtual_boundaries() {
+    for (files, code, count) in [
+        (
+            vec![("main.rs", "fn only(){}\n")],
+            "no_supported_package_roots",
+            0,
+        ),
+        (
+            vec![
+                ("pnpm-workspace.yaml", "packages: []\n"),
+                ("a/package.json", r#"{"name":"a"}"#),
+            ],
+            "single_actual_package_root",
+            1,
+        ),
+    ] {
+        let f = fixture(&files);
+        let d = Deadline::new(20_000);
+        let mut run = begin(&f.engine.store, &f.snapshot, &f.graph, &d, 4_000_000).unwrap();
+        match probe(&mut run).unwrap() {
+            ProbeOutcome::NotApplicable(p) => {
+                assert_eq!(p.code(), code);
+                assert_eq!(p.physical_package_count(), Some(count));
+            }
+            _ => panic!("virtual boundaries must not make a monorepo"),
+        }
+    }
+}
+
+#[test]
+fn manifest_source_syntax_duplicate_keys_and_schema_are_policy_outcomes() {
+    for (path, text, code) in [
+        (
+            "package.json",
+            r#"{"name":"SOURCE_SECRET_DO_NOT_ECHO","broken":"#,
+            "source_syntax",
+        ),
+        (
+            "package.json",
+            r#"{"name":"a","name":"b"}"#,
+            "source_schema",
+        ),
+        ("package.json", r#"{"workspaces":true}"#, "source_schema"),
+        (
+            "package.json",
+            r#"{"workspaces":{"packages":[],"extra":true}}"#,
+            "source_schema",
+        ),
+        ("package.json", r#"{"name":7}"#, "source_schema"),
+        ("package.json", r#"{"name":""}"#, "source_schema"),
+        ("package.json", r#"{"name":"a\u0000b"}"#, "source_schema"),
+        ("pnpm-workspace.yaml", "packages: [\n", "source_syntax"),
+        (
+            "pnpm-workspace.yaml",
+            "packages: []\npackages: []\n",
+            "source_schema",
+        ),
+        (
+            "pnpm-workspace.yaml",
+            "packages: []\nother: []\n",
+            "source_schema",
+        ),
+        ("Cargo.toml", "[package\nname='secret'\n", "source_syntax"),
+        (
+            "Cargo.toml",
+            "[package]\nname='a'\nname='b'\n",
+            "source_syntax",
+        ),
+        ("Cargo.toml", "[workspace]\nmembers=true\n", "source_schema"),
+    ] {
+        let f = fixture(&[(path, text)]);
+        captured(&f, path, text);
+        unsupported(&f, code);
+    }
+}
+
+#[test]
+fn richer_selectors_yaml_features_and_unsupported_declarations_are_not_guessed() {
+    for selector in [
+        "packages/{a,b}",
+        "packages/[ab]",
+        "packages/a?",
+        "packages/**/src",
+        "packages/foo*",
+        "../outside",
+        "C:/outside",
+        "//host/share",
+        "packages\\a",
+        "packages/./a",
+        "packages//a",
+        "packages/a.",
+        "packages/ a",
+        "~home",
+    ] {
+        unsupported(
+            &fixture(&[(
+                "package.json",
+                &json!({"workspaces":[selector]}).to_string(),
+            )]),
+            "unsupported_selector",
+        );
+    }
+    for yaml in [
+        "packages: &p []\n",
+        "packages: [*p]\n",
+        "packages: !!seq []\n",
+        "packages: []\n<<: {}\n",
+        "packages: ['!!packages/a']\n",
+    ] {
+        let expected = if yaml.contains("'!!") {
+            "unsupported_selector"
+        } else {
+            "unsupported_yaml_feature"
+        };
+        unsupported(&fixture(&[("pnpm-workspace.yaml", yaml)]), expected);
+    }
+    for (path, text, code) in [
+        (
+            "Cargo.toml",
+            "[package]\nname='a'\nworkspace='.'\n",
+            "explicit_package_workspace",
+        ),
+        (
+            "Cargo.toml",
+            "[package]\nname='a'\n[workspace]\nexclude=['.']\n",
+            "workspace_root_excluded",
+        ),
+        (
+            "Cargo.toml",
+            "[profile.release]\nopt-level=3\n",
+            "unsupported_marker_role",
+        ),
+    ] {
+        unsupported(&fixture(&[(path, text)]), code);
+    }
+    unsupported(
+        &fixture(&[
+            ("package.json", r#"{"workspaces":["packages/*"]}"#),
+            ("pnpm-workspace.yaml", "packages: ['apps/*']\n"),
+        ]),
+        "conflicting_npm_pnpm_membership",
+    );
+}
+
+#[test]
+fn missing_members_do_not_create_or_read_prospective_roots() {
+    let f = fixture(&[
+        ("package.json", r#"{"workspaces":["missing"]}"#),
+        ("a/package.json", r#"{"name":"a"}"#),
+        ("b/package.json", r#"{"name":"b"}"#),
+    ]);
+    let d = Deadline::new(20_000);
+    let (mut run, p) = checked(&f, &d);
+    assert!(
+        p.diagnostics()
+            .any(|row| row.code() == "missing_member" && row.selector() == Some("missing"))
+    );
+    assert!(p.scopes().all(|s| s.root() != "missing"));
+    assert!(matches!(
+        hard(run.read_source("missing/package.json")),
+        RetrievalHardError::DeniedSource(_)
+    ));
+}
+
+#[test]
+fn unsupported_format_hints_are_distinct_from_supported_mixed_coverage() {
+    for hint in [
+        "go.mod",
+        "pyproject.toml",
+        "pom.xml",
+        "a.csproj",
+        "lerna.json",
+        "pnpm-workspace.yml",
+    ] {
+        unsupported(
+            &fixture(&[(hint, "other format")]),
+            "unsupported_repository_format",
+        );
+    }
+    let f = fixture(&[
+        ("a/package.json", r#"{"name":"a"}"#),
+        ("b/Cargo.toml", "[package]\nname='b'\n"),
+        ("go.mod", "module example.invalid/project\n"),
+    ]);
+    let d = Deadline::new(20_000);
+    let (_, p) = checked(&f, &d);
+    assert_eq!(p.physical_package_count(), 2);
+    unsupported(
+        &fixture(&[
+            ("a/package.json", r#"{"name":"a"}"#),
+            ("b/package.json", r#"{"name":"b"}"#),
+            ("pnpm-workspace.yml", "packages: ['*']\n"),
+        ]),
+        "unsupported_repository_format",
+    );
+}
+
+#[test]
+fn later_marker_integrity_error_beats_earlier_unsupported_source() {
+    let f = fixture(&[
+        ("a/package.json", r#"{"name":"#),
+        ("z/package.json", r#"{"name":"z"}"#),
+    ]);
+    let d = Deadline::new(20_000);
+    let mut run = begin(&f.engine.store, &f.snapshot, &f.graph, &d, 4_000_000).unwrap();
+    let z = f
+        .snapshot
+        .files
+        .iter()
+        .find(|f| f.path == "z/package.json")
+        .unwrap();
+    fs::write(
+        f.engine.store.dir.join("blobs").join(&z.hash),
+        "x".repeat(z.size),
+    )
+    .unwrap();
+    assert!(matches!(
+        hard(probe(&mut run)),
+        RetrievalHardError::SourceIntegrity(_)
+    ));
+}
+
+#[test]
+fn malformed_source_cannot_hide_oversized_marker_preflight() {
+    let f = fixture(&[
+        ("a/package.json", "{"),
+        ("z/package.json", &"x".repeat(1_000_001)),
+    ]);
+    let d = Deadline::new(20_000);
+    let mut run = begin(&f.engine.store, &f.snapshot, &f.graph, &d, 4_000_000).unwrap();
+    assert!(matches!(
+        hard(probe(&mut run)),
+        RetrievalHardError::Capacity(_)
+    ));
+    assert_eq!(run.usage().marker_files_checked(), 0);
+    assert_eq!(run.usage().input_bytes_charged(), 0);
+}
+
+#[test]
+fn another_store_same_workspace_and_another_partition_handle_are_rejected() {
+    let f = two();
+    let d = Deadline::new(20_000);
+    let (_, p) = checked(&f, &d);
+    let other = Store::open(f.root.path()).unwrap();
+    assert_eq!(other.workspace_id, f.engine.store.workspace_id);
+    let other_run = begin(&other, &f.snapshot, &f.graph, &d, 4_000_000).unwrap();
+    assert!(matches!(
+        hard(p.validate_for(&other_run)),
+        RetrievalHardError::Authority(_)
+    ));
+    let (_, p2) = checked(&f, &d);
+    assert_eq!(p.id(), p2.id());
+    let handle = p2.owner("packages/a/main.rs").unwrap();
+    assert!(matches!(
+        hard(p.scope(&handle)),
+        RetrievalHardError::Authority(_)
+    ));
+}
+
+#[test]
+fn full_snapshot_graph_and_persisted_scope_proof_are_bound() {
+    let f = two();
+    let d = Deadline::new(20_000);
+    let mut snapshot = f.snapshot.clone();
+    snapshot.capture_consistency.push_str("tampered");
+    assert!(matches!(
+        hard(begin(&f.engine.store, &snapshot, &f.graph, &d, 4_000_000)),
+        RetrievalHardError::Authority(_)
+    ));
+    let mut graph = f.graph.clone();
+    graph
+        .coverage
+        .limitations
+        .push("tampered-with-same-IDs".into());
+    assert!(matches!(
+        hard(begin(&f.engine.store, &f.snapshot, &graph, &d, 4_000_000)),
+        RetrievalHardError::Authority(_)
+    ));
+    let mut proof: Value = f
+        .engine
+        .store
+        .get_record(crate::capture::OPTIONS_RECORD_KIND, &f.snapshot.id)
+        .unwrap();
+    proof["workspaceId"] = json!("f".repeat(64));
+    f.engine
+        .store
+        .record(crate::capture::OPTIONS_RECORD_KIND, &f.snapshot.id, &proof)
+        .unwrap();
+    assert!(matches!(
+        hard(begin(&f.engine.store, &f.snapshot, &f.graph, &d, 4_000_000)),
+        RetrievalHardError::Authority(_)
+    ));
+}
+
+#[test]
+fn partition_cannot_bind_to_new_capture_and_live_changes_do_not_change_old_sources() {
+    let f = two();
+    let d = Deadline::new(20_000);
+    let (mut old_run, p) = checked(&f, &d);
+    let old_id = p.id().to_string();
+    write(f.root.path(), "packages/a/package.json", "{");
+    write(f.root.path(), "packages/a/main.rs", "fn replaced(){}\n");
+    assert_eq!(
+        old_run.read_source("packages/a/main.rs").unwrap().text(),
+        "fn alpha(){ payment(); }\n"
+    );
+    assert_eq!(p.id(), old_id);
+    drop(old_run); // End the retained read transaction before another run.
+    let mut next = Engine::open(f.root.path()).unwrap();
+    let (s2, g2, _, _) = next.index(&d).unwrap();
+    // Use the ORIGINAL Store instance for the new valid capture. Otherwise a
+    // Store-pointer rejection could hide missing snapshot/graph binding.
+    let next_run = begin(&f.engine.store, &s2, &g2, &d, 4_000_000).unwrap();
+    assert!(matches!(
+        hard(p.validate_for(&next_run)),
+        RetrievalHardError::Authority(_)
+    ));
+}
+
+#[test]
+fn captured_only_dirs_and_dependency_grants_are_not_expanded_by_markers() {
+    let f = owned(
+        vec![
+            (
+                "package.json".into(),
+                r#"{"workspaces":["outside/*"]}"#.into(),
+            ),
+            ("packages/a/package.json".into(), r#"{"name":"a"}"#.into()),
+            ("packages/b/package.json".into(), r#"{"name":"b"}"#.into()),
+            ("outside/c/package.json".into(), r#"{"name":"c"}"#.into()),
+        ],
+        CaptureOptions {
+            only_dirs: vec!["packages".into()],
+            ..Default::default()
+        },
+    );
+    assert!(
+        f.snapshot
+            .files
+            .iter()
+            .all(|row| row.path.starts_with("packages/"))
+    );
+    let d = Deadline::new(20_000);
+    let (mut run, p) = checked(&f, &d);
+    assert_eq!(p.physical_package_count(), 2);
+    assert!(matches!(
+        hard(run.read_source("outside/c/package.json")),
+        RetrievalHardError::DeniedSource(_)
+    ));
+    assert!(matches!(
+        hard(p.owner("packages/a/../b/package.json")),
+        RetrievalHardError::DeniedSource(_)
+    ));
+    let dep = owned(
+        vec![
+            (
+                "node_modules/a/package.json".into(),
+                r#"{"name":"dependency"}"#.into(),
+            ),
+            ("app/package.json".into(), r#"{"name":"app"}"#.into()),
+        ],
+        CaptureOptions {
+            read_only_dependency_dirs: vec!["node_modules".into()],
+            ..Default::default()
+        },
+    );
+    let (mut dep_run, p) = checked(&dep, &d);
+    assert_eq!(p.physical_package_count(), 2);
+    dep_run.read_source("node_modules/a/package.json").unwrap();
+    assert!(
+        crate::capture::source_scope_policy(&dep.engine.store, &dep.snapshot)
+            .unwrap()
+            .path_policy("node_modules/a/package.json")
+            .unwrap()
+            .read_only
+    );
+}
+
+#[test]
+fn identical_cas_paths_charge_separately_and_cached_markers_are_not_double_charged() {
+    let f = fixture(&[
+        ("a/package.json", r#"{"name":"same"}"#),
+        ("b/package.json", r#"{"name":"same"}"#),
+        ("a/one.rs", "fn same(){}\n"),
+        ("b/one.rs", "fn same(){}\n"),
+    ]);
+    let d = Deadline::new(20_000);
+    let (mut run, _) = checked(&f, &d);
+    let markers = 2 * r#"{"name":"same"}"#.len();
+    assert_eq!(run.usage().marker_bytes_charged(), markers);
+    assert_eq!(run.usage().verified_path_count(), 2);
+    let cost = run.source_cost("a/package.json").unwrap();
+    assert_eq!(cost.source_bytes(), r#"{"name":"same"}"#.len());
+    assert_eq!(cost.incremental_bytes(), 0);
+    assert!(cost.is_cached());
+    run.read_source("a/package.json").unwrap();
+    run.read_source("a/one.rs").unwrap();
+    run.read_source("a/one.rs").unwrap();
+    run.read_source("b/one.rs").unwrap();
+    assert_eq!(
+        run.usage().body_input_bytes_charged(),
+        2 * "fn same(){}\n".len()
+    );
+    assert_eq!(
+        run.usage().input_bytes_charged(),
+        markers + 2 * "fn same(){}\n".len()
+    );
+    assert_eq!(run.usage().verified_path_count(), 4);
+}
+
+#[test]
+fn documents_keep_original_entity_ranges_and_overlaps_charge_again() {
+    let source = "mod parent { pub fn child(){ payment(); } }\n";
+    let f = fixture(&[
+        ("a/package.json", r#"{"name":"a"}"#),
+        ("b/package.json", r#"{"name":"b"}"#),
+        ("a/lib.rs", source),
+    ]);
+    let d = Deadline::new(20_000);
+    let (mut run, _) = checked(&f, &d);
+    run.read_source("a/lib.rs").unwrap();
+    let parent = f
+        .graph
+        .entities
+        .iter()
+        .find(|e| e.path == "a/lib.rs" && e.name == "parent")
+        .unwrap();
+    let child = f
+        .graph
+        .entities
+        .iter()
+        .find(|e| e.path == "a/lib.rs" && e.name == "child")
+        .unwrap();
+    for e in [parent, child] {
+        assert_eq!(run.document_cost(e).unwrap(), e.end_byte - e.start_byte);
+        let doc = run.admit_document(e).unwrap();
+        assert!(std::ptr::eq(doc.entity(), e));
+        assert_eq!(doc.text(), &source[e.start_byte..e.end_byte]);
+        assert_eq!(doc.source().content_hash(), hash(source.as_bytes()));
+    }
+    let used = parent.end_byte - parent.start_byte + child.end_byte - child.start_byte;
+    assert_eq!(run.usage().document_bytes_charged(), used);
+    run.admit_document(child).unwrap();
+    assert_eq!(run.usage().document_bytes_charged(), used);
+    let mut forged = child.clone();
+    forged.end_byte = source.len() + 1;
+    assert!(matches!(
+        hard(run.admit_document(&forged)),
+        RetrievalHardError::SourceIntegrity(_)
+    ));
+}
+
+fn padded_json(size: usize) -> String {
+    let prefix = r#"{"name":"p","padding":""#;
+    let suffix = "\"}";
+    let result = format!(
+        "{prefix}{}{suffix}",
+        "x".repeat(size - prefix.len() - suffix.len())
+    );
+    assert_eq!(result.len(), size);
+    result
+}
+
+#[test]
+fn exact_marker_and_aggregate_limits_pass_before_plus_one_refuses_predecode() {
+    let f = owned(
+        (0..4)
+            .map(|i| (format!("p{i}/package.json"), padded_json(1_000_000)))
+            .collect(),
+        CaptureOptions::default(),
+    );
+    let d = Deadline::new(120_000);
+    let (run, p) = checked(&f, &d);
+    assert_eq!(p.physical_package_count(), 4);
+    assert_eq!(run.usage().marker_bytes_charged(), 4_000_000);
+    for (files, expected_bytes) in [
+        (
+            vec![("p/package.json".into(), padded_json(1_000_001))],
+            1_000_001,
+        ),
+        (
+            (0..5)
+                .map(|i| {
+                    (
+                        format!("p{i}/package.json"),
+                        if i < 3 {
+                            padded_json(1_000_000)
+                        } else if i == 3 {
+                            padded_json(999_999)
+                        } else {
+                            "{}".into()
+                        },
+                    )
+                })
+                .collect(),
+            4_000_001,
+        ),
+    ] {
+        assert_eq!(
+            files.iter().map(|(_, t)| t.len()).sum::<usize>(),
+            expected_bytes
+        );
+        let f = owned(files, CaptureOptions::default());
+        let d = Deadline::new(120_000);
+        let mut run = begin(&f.engine.store, &f.snapshot, &f.graph, &d, 4_000_000).unwrap();
+        assert!(matches!(
+            hard(probe(&mut run)),
+            RetrievalHardError::Capacity(_)
+        ));
+        assert_eq!(run.usage().marker_files_checked(), 0);
+    }
+}
+
+#[test]
+fn raw_marker_1024_is_not_cas_deduplicated_and_1025_preflights() {
+    for n in [1_024, 1_025] {
+        let f = owned(
+            (0..n)
+                .map(|i| {
+                    (
+                        format!("p{i:04}/Cargo.toml"),
+                        "[profile.release]\nopt-level=3\n".into(),
+                    )
+                })
+                .collect(),
+            CaptureOptions::default(),
+        );
+        let d = Deadline::new(120_000);
+        let mut run = begin(&f.engine.store, &f.snapshot, &f.graph, &d, 4_000_000).unwrap();
+        if n == 1_024 {
+            match probe(&mut run).unwrap() {
+                ProbeOutcome::UnsupportedPolicy(p) => {
+                    assert_eq!(p.code(), "unsupported_marker_role")
+                }
+                _ => panic!("unsupported marker role"),
+            }
+            assert_eq!(run.usage().marker_files_checked(), 1_024);
+        } else {
+            assert!(matches!(
+                hard(probe(&mut run)),
+                RetrievalHardError::Capacity(_)
+            ));
+            assert_eq!(run.usage().marker_files_checked(), 0);
+        }
+    }
+}
+
+#[test]
+fn scopes_and_raw_duplicate_selectors_have_hard_capacity_ceilings() {
+    for packages in [255, 256] {
+        let mut files = vec![("package.json".into(), r#"{"workspaces":["p/*"]}"#.into())];
+        files.extend(
+            (0..packages).map(|i| (format!("p/{i:03}/package.json"), r#"{"name":"p"}"#.into())),
+        );
+        let f = owned(files, CaptureOptions::default());
+        let d = Deadline::new(120_000);
+        let mut run = begin(&f.engine.store, &f.snapshot, &f.graph, &d, 4_000_000).unwrap();
+        if packages == 255 {
+            match probe(&mut run).unwrap() {
+                ProbeOutcome::Ready(p) => assert_eq!(p.scopes().count(), 256),
+                _ => panic!("256 scopes allowed"),
+            }
+        } else {
+            assert!(matches!(
+                hard(probe(&mut run)),
+                RetrievalHardError::Capacity(_)
+            ));
+        }
+    }
+    for raw in [2_048, 2_049] {
+        let marker = json!({"workspaces":vec!["p/*";raw]}).to_string();
+        let f = fixture(&[
+            ("package.json", &marker),
+            ("p/a/package.json", r#"{"name":"a"}"#),
+            ("p/b/package.json", r#"{"name":"b"}"#),
+        ]);
+        let d = Deadline::new(20_000);
+        let mut run = begin(&f.engine.store, &f.snapshot, &f.graph, &d, 4_000_000).unwrap();
+        if raw == 2_048 {
+            assert!(matches!(probe(&mut run).unwrap(), ProbeOutcome::Ready(_)));
+        } else {
+            assert!(matches!(
+                hard(probe(&mut run)),
+                RetrievalHardError::Capacity(_)
+            ));
+        }
+    }
+}
+
+#[test]
+fn selector_name_depth_and_node_byte_boundaries_are_explicit() {
+    let selector = format!("{}ab", "a/".repeat(255));
+    assert_eq!(selector.len(), 512);
+    // Node: one scalar/container value, including root; key spelling is bytes.
+    for (label, marker, allowed) in [
+        ("selector512", json!({"workspaces":[selector.clone()]}).to_string(), true),
+        ("selector513", json!({"workspaces":[format!("{selector}x")]}).to_string(), false),
+        ("aggregate256000", json!({"workspaces":vec![selector.clone();500]}).to_string(), true),
+        ("aggregate256001", json!({"workspaces":vec![selector;500].into_iter().chain([".".into()]).collect::<Vec<_>>()} ).to_string(), false),
+        ("name256", json!({"name":"é".repeat(128)}).to_string(), true),
+        ("name257", json!({"name":format!("{}x", "é".repeat(128))}).to_string(), false),
+        ("depth64", format!("{{\"padding\":{}0{}}}", "[".repeat(63), "]".repeat(63)), true),
+        ("depth65", format!("{{\"padding\":{}0{}}}", "[".repeat(64), "]".repeat(64)), false),
+        ("nodes20000", json!({"name":"root","padding":vec![0;19_997]}).to_string(), true),
+        ("nodes20001", json!({"name":"root","padding":vec![0;19_998]}).to_string(), false),
+    ] {
+        let f = fixture(&[("package.json", &marker), ("a/package.json", r#"{"name":"a"}"#), ("b/package.json", r#"{"name":"b"}"#)]);
+        let d = Deadline::new(120_000);
+        let mut run = begin(&f.engine.store, &f.snapshot, &f.graph, &d, 4_000_000).unwrap();
+        if allowed { assert!(matches!(probe(&mut run).unwrap(), ProbeOutcome::Ready(_)), "{label}"); }
+        else { assert!(matches!(hard(probe(&mut run)), RetrievalHardError::Capacity(_)), "{label}"); }
+    }
+}
+
+#[test]
+fn unsupported_probe_spends_the_same_32m_ledger_as_fallback_source_reads() {
+    let mut files: Vec<_> = (0..4)
+        .map(|i| {
+            (
+                format!("markers/{i}/package.json"),
+                "{".to_string() + &" ".repeat(999_999),
+            )
+        })
+        .collect();
+    for i in 0..8 {
+        let bytes = if i < 7 { 4_000_000 } else { 1_000_000 };
+        files.push((
+            format!("code/{i:02}.rs"),
+            "//".to_string() + &"x".repeat(bytes - 3) + "\n",
+        ));
+    }
+    let f = owned(files, CaptureOptions::default());
+    let d = Deadline::new(120_000);
+    let mut run = begin(&f.engine.store, &f.snapshot, &f.graph, &d, 4_000_000).unwrap();
+    assert!(matches!(
+        probe(&mut run).unwrap(),
+        ProbeOutcome::UnsupportedPolicy(_)
+    ));
+    assert_eq!(run.usage().marker_bytes_charged(), 4_000_000);
+    for i in 0..7 {
+        run.read_source(&format!("code/{i:02}.rs")).unwrap();
+    }
+    assert_eq!(run.usage().body_input_bytes_charged(), 28_000_000);
+    assert_eq!(run.usage().input_bytes_charged(), 32_000_000);
+    assert!(matches!(
+        hard(run.read_source("code/07.rs")),
+        RetrievalHardError::Capacity(_)
+    ));
+    assert_eq!(run.usage().input_bytes_charged(), 32_000_000);
+}
+
+#[test]
+fn expired_and_cancelled_runs_keep_typed_errors_without_new_deadline() {
+    let f = two();
+    let expired = Deadline::new(0);
+    assert!(matches!(
+        hard(begin(
+            &f.engine.store,
+            &f.snapshot,
+            &f.graph,
+            &expired,
+            4_000_000
+        )),
+        RetrievalHardError::Deadline(_)
+    ));
+    let parent = Deadline::new(20_000);
+    let cancelled = Arc::new(AtomicBool::new(false));
+    Deadline::run_bounded(&parent, cancelled.clone(), || {
+        let d = Deadline::new(20_000);
+        let mut run = begin(&f.engine.store, &f.snapshot, &f.graph, &d, 4_000_000).unwrap();
+        assert!(matches!(probe(&mut run).unwrap(), ProbeOutcome::Ready(_)));
+        let before = run.usage();
+        cancelled.store(true, Ordering::SeqCst);
+        assert!(matches!(
+            hard(run.read_source("packages/a/main.rs")),
+            RetrievalHardError::Cancelled(_)
+        ));
+        assert!(matches!(
+            hard(run.admit_document(&f.graph.entities[0])),
+            RetrievalHardError::Cancelled(_)
+        ));
+        assert_eq!(run.usage(), before);
+        assert!(std::ptr::eq(run.deadline(), &d));
+        cancelled.store(false, Ordering::SeqCst); // Only after the cancellation oracles.
+        Ok(())
+    })
+    .unwrap();
+}
+
+#[test]
+fn partition_identity_is_budget_independent_and_probe_publishes_nothing() {
+    let f = two();
+    let before = logical_state(&f);
+    let d = Deadline::new(20_000);
+    let (_, p1) = checked(&f, &d);
+    let mut run = begin(&f.engine.store, &f.snapshot, &f.graph, &d, 1_000_000).unwrap();
+    let p2 = match probe(&mut run).unwrap() {
+        ProbeOutcome::Ready(p) => p,
+        _ => panic!("two packages"),
+    };
+    assert_eq!(p1.id(), p2.id());
+    assert_eq!(logical_state(&f), before);
+}
+
+#[test]
+fn marker_selectors_cannot_include_ignored_sources_without_captured_host_grant() {
+    let files = vec![
+        (".gitignore".into(), "ignored/\n".into()),
+        (
+            "package.json".into(),
+            r#"{"workspaces":["*","ignored/*"]}"#.into(),
+        ),
+        ("a/package.json".into(), r#"{"name":"a"}"#.into()),
+        ("b/package.json".into(), r#"{"name":"b"}"#.into()),
+        ("ignored/c/package.json".into(), r#"{"name":"c"}"#.into()),
+    ];
+    let f = owned(files.clone(), CaptureOptions::default());
+    assert!(
+        !f.snapshot
+            .files
+            .iter()
+            .any(|r| r.path.starts_with("ignored/"))
+    );
+    let d = Deadline::new(20_000);
+    let (mut run, p) = checked(&f, &d);
+    assert_eq!(p.physical_package_count(), 2);
+    assert!(matches!(
+        hard(run.read_source("ignored/c/package.json")),
+        RetrievalHardError::DeniedSource(_)
+    ));
+    let admitted = owned(
+        files,
+        CaptureOptions {
+            include_ignored_dirs: vec!["ignored".into()],
+            ..Default::default()
+        },
+    );
+    let (mut run, p) = checked(&admitted, &d);
+    assert_eq!(p.physical_package_count(), 3);
+    run.read_source("ignored/c/package.json").unwrap();
+    let scope =
+        crate::capture::source_scope_policy(&admitted.engine.store, &admitted.snapshot).unwrap();
+    assert!(scope.ignored_at_capture("ignored/c/package.json").unwrap());
+    assert!(
+        scope
+            .path_policy("ignored/c/package.json")
+            .unwrap()
+            .read_only
+    );
+}
+
+#[test]
+fn selector_work_exhaustion_is_capacity_while_the_same_smaller_policy_is_ready() {
+    for selectors in [64, 128] {
+        let members: Vec<_> = (0..selectors)
+            .map(|i| format!("{}leaf{i:03}", "long/".repeat(98)))
+            .collect();
+        assert!(members.iter().all(|s| s.len() <= 512));
+        let mut files = vec![(
+            "package.json".into(),
+            json!({"workspaces":members}).to_string(),
+        )];
+        files
+            .extend((0..255).map(|i| (format!("p/{i:03}/package.json"), r#"{"name":"p"}"#.into())));
+        let f = owned(files, CaptureOptions::default());
+        let d = Deadline::new(120_000);
+        let mut run = begin(&f.engine.store, &f.snapshot, &f.graph, &d, 4_000_000).unwrap();
+        if selectors == 64 {
+            assert!(matches!(probe(&mut run).unwrap(), ProbeOutcome::Ready(_)));
+            assert!(run.usage().selector_work() > 0 && run.usage().selector_work() <= 16_000_000);
+        } else {
+            assert!(matches!(
+                hard(probe(&mut run)),
+                RetrievalHardError::Capacity(_)
+            ));
+            assert!(
+                run.usage().selector_work() <= 16_000_000,
+                "reject before extra comparison"
+            );
+        }
+    }
+}

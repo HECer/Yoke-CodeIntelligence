@@ -1,0 +1,1295 @@
+{
+  "schemaVersion": 1,
+  "kind": "native_explicit_wrapped_call_propagation_v2",
+  "asOf": "2026-10-20T04:12:25.896133+00:00",
+  "sourceCommit": "ee4cbf15cb934dd3f288b55aa81aa3f391848df1",
+  "runtimeCommit": "9f9366790a4111f1c73702ab0300257f81665dcc",
+  "parentCommit": "9ce6654e9beedb03c7d197c4c1d7e87bc383bd82",
+  "paths": [
+    "native/README.md",
+    "native/docs/propagated-delete.md",
+    "native/docs/semantic-refactor-intents.md",
+    "native/src/semantic_propagated_delete.rs",
+    "native/src/semantic_propagated_delete_ast.rs",
+    "native/src/semantic_refactor.rs",
+    "native/tests/propagated_delete_contract.rs",
+    "native/tests/propagated_delete_live.rs"
+  ],
+  "newCases": {
+    "unitAdmission": 1,
+    "defaultIntegration": 9,
+    "actualCompilerAndLanguageServer": 1
+  },
+  "nativeGroups": 13,
+  "nativeTotals": {
+    "passed": 587,
+    "failed": 0,
+    "ignored": 13
+  },
+  "nativeInputsMatched": 737,
+  "nativeBinarySha256": "e240ba4b709b3e00281185a1ef313628aa9b70df0cb6b6dae1bcda681483610a",
+  "nativeBinaryBytes": 159182336,
+  "binaryHashObservedAfterFinalBuildAt": "2026-10-20T04:10:59.551243+00:00",
+  "actualTools": {
+    "node": "C:\\Program Files\\nodejs\\node.exe",
+    "nodeSha256": "ba4e6d110e8c1592a1ecd390f6b05f3da124b13871a5be62b341a07a853c6c32",
+    "nodeVersion": "v24.21.0",
+    "compiler": "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\typescript-5.8.3-lsp-5.1.3\\node_modules\\typescript\\lib\\tsc.js",
+    "compilerSha256": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983",
+    "compilerVersion": "Version 5.8.3",
+    "server": "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\typescript-5.8.3-lsp-5.1.3\\node_modules\\typescript-language-server\\lib\\cli.mjs",
+    "serverSha256": "3c2a7818315bd8399e56f461fe7da01c0f8f67a9c66108af0b655605b088dd77",
+    "serverVersion": "5.1.3",
+    "compilerLibrary": "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\typescript-5.8.3-lsp-5.1.3\\node_modules\\typescript\\lib\\typescript.js",
+    "compilerLibrarySha256": "dd17428736a07e1db1a138d8a14295ddb2699ba780ee15038acdd2c6da5373a0"
+  },
+  "wholeNativeRerun": false,
+  "platform": "Windows",
+  "nativeInputs": 737,
+  "integratedInputs": 743,
+  "finalNative": {
+    "sourceUnchanged": true,
+    "inputs": 737,
+    "commands": [
+      {
+        "name": "native",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "test",
+          "--workspace",
+          "--locked",
+          "-j",
+          "2",
+          "--target-dir",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+          "--no-fail-fast",
+          "--lib",
+          "--test",
+          "member_decorators",
+          "--test",
+          "sibling_declarators",
+          "--test",
+          "python_empty_suite",
+          "--test",
+          "symbol_delete_ranges",
+          "--test",
+          "declaration_attachment_ranges",
+          "--test",
+          "protocol_connection",
+          "--test",
+          "plan_integrity",
+          "--test",
+          "plan_feedback",
+          "--test",
+          "semantic_refactor",
+          "--test",
+          "refactor_intents",
+          "--test",
+          "propagated_delete_contract",
+          "--test",
+          "propagated_delete_live",
+          "--",
+          "--test-threads=1"
+        ],
+        "exitCode": 0,
+        "seconds": 417.9583434999804,
+        "totals": {
+          "passed": 587,
+          "failed": 0,
+          "ignored": 13
+        },
+        "groups": 13,
+        "failures": []
+      },
+      {
+        "name": "format",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "fmt",
+          "--all",
+          "--check"
+        ],
+        "exitCode": 0,
+        "seconds": 11.7050581999938
+      },
+      {
+        "name": "build",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "build",
+          "--workspace",
+          "--locked",
+          "-j",
+          "2",
+          "--target-dir",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+          "--bin",
+          "yoke"
+        ],
+        "exitCode": 0,
+        "seconds": 7.6441324000188615
+      },
+      {
+        "name": "clippy",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "clippy",
+          "--workspace",
+          "--locked",
+          "-j",
+          "2",
+          "--target-dir",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+          "--all-targets",
+          "--",
+          "-D",
+          "warnings"
+        ],
+        "exitCode": 0,
+        "seconds": 98.769916499994
+      }
+    ],
+    "allChecksPassed": true,
+    "wholeNativeRerun": false
+  },
+  "actualCompilerAndLanguageServer": {
+    "sourceUnchanged": true,
+    "inputs": 737,
+    "commands": [
+      {
+        "name": "native",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "test",
+          "--workspace",
+          "--locked",
+          "-j",
+          "2",
+          "--target-dir",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+          "--no-fail-fast",
+          "--test",
+          "propagated_delete_live",
+          "--",
+          "--test-threads=1",
+          "--ignored",
+          "--nocapture"
+        ],
+        "exitCode": 0,
+        "seconds": 26.768864599987864,
+        "totals": {
+          "passed": 2,
+          "failed": 0,
+          "ignored": 0
+        },
+        "groups": 1,
+        "failures": []
+      }
+    ],
+    "allChecksPassed": true,
+    "wholeNativeRerun": false
+  },
+  "integrated": {
+    "sourceUnchanged": true,
+    "frozenInputs": 743,
+    "commands": [
+      {
+        "name": "format",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "fmt",
+          "--all",
+          "--check"
+        ],
+        "exitCode": 0,
+        "seconds": 5.31
+      },
+      {
+        "name": "python-contracts",
+        "command": [
+          "C:\\Python314\\python.exe",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "scripts/tests",
+          "-v"
+        ],
+        "exitCode": 0,
+        "seconds": 1.08
+      },
+      {
+        "name": "typecheck",
+        "command": [
+          "npm.cmd",
+          "run",
+          "typecheck"
+        ],
+        "exitCode": 0,
+        "seconds": 4.34
+      },
+      {
+        "name": "tests",
+        "command": [
+          "npm.cmd",
+          "test"
+        ],
+        "exitCode": 0,
+        "seconds": 55.53
+      }
+    ],
+    "allChecksPassed": true,
+    "wholeNativeRerun": false
+  },
+  "priorEvidenceReadme": {
+    "bytes": 31159,
+    "sha256": "8dba7a3515e293bc7f6a147f31d9125bf3929f28e99bc490b543403dea7928f6"
+  },
+  "defaultPolicyChanged": false,
+  "publicFacadeSchemasChanged": false,
+  "legacyPlanShapeOrIdentityFormulaChanged": false,
+  "survivingSyntaxChecked": true,
+  "analyzedModuleExecuted": false,
+  "nonWindowsRuntimeValidated": false,
+  "fullUpstreamContractCertified": false,
+  "mainOrReleaseVerified": false,
+  "notes": [
+    "Own MIT explicit native safeDelete.propagationPolicy=captured_es_function_propagation_v2; requires propagate:true and nonempty symbolname. Absent or explicitv1 retains released effects and identity formula. Published facade schemas and permission/source/provider boundaries are unchanged. Unknown/null/nontext policies or incompatible selections refuse before indexing/provider startup.",
+    "One bounded captured TS/JS ES named-function module retains every exact provider definition/reference, AST/entity/name/range/source binding, context, conservative captured candidate and dependency/cycle/export safeguard. Up to32 combined parenthesized/await/void wrappers around a plain identifier call may form a complete statement directly in program/statement_block. Optional/type/assertion/non-null/parenthesized-callee/value/unclassified forms, wrapper comments and lone control-flow slots refuse. One deduplicated original-coordinate plan retains complete:false/exhaustiveCompilerProof:false/remainingUsagesMayBreak:true.",
+    "The proposed source is reparsed with the original deadline and256000byte bound. A private surviving-syntax comparison omits only fully removed original subtrees and compares every retained named/anonymous node kind, preorder and offset after mapped removals against the result. A shared200000visited-node bound, sorted nonoverlapping spans and prefix-offset lookup bound traversal/work. This rejects unrelated statement merging at automatic-semicolon boundaries without adding punctuation or changing immutable entity/evidence coordinates. Syntax correspondence is not semantic/runtime/dispatch/consumer completeness.",
+    "Eleven new distinct cases:1unit+9default integration+1explicit actual gate. Tables cover both analyzer epochs, BOM/nonBMP/CRLF, original byte spans/comments, dependency retention/nested-call deduplication, explicit/defaultv1 effects, unknown policy/selection rejection before provider start, missing/malformed/omitted/truncated/foreign/source-tampered proofs, wrapper32/33 admission, unsupported expression/control slots, automatic-semicolon boundary refusal and all-declarations-removed empty output. Earlier tests and actualv1 gate remain.",
+    "Initial baseline0/1/0 reproduces unknown native policy with unchanged sources. R1selected26/1/0 has only a new test comparing independently created Plan IDs/createdAt/expiresAt. It is corrected to compare source/result/workspace bindings, exact files/diff/warnings and shape; no Plan implementation/formula is changed. First actual2/0/0 and intermediate13groups584/0/13 predate the additional syntax guard. A fresh asi-baseline0/1/0 reproduces accepted unrelated expression merging before the guard; all failed/intermediate logs/manifests are retained and nonadditive.",
+    "Initial guard-green6/2/0 correctly rejects statement merging but also refuses two permitted leading-declaration removals. An isolated unit ast-probe0/1/0 diagnoses only the program-container start: mapped original0 versus parsed surviving-token1, with equal end38. The correction normalizes this undelimited container start to physical0; all surviving child kinds/nesting/field roles/order/mapped ranges remain exact. The unit guards retained leading whitespace. An added default case admits20000 and refuses40000 otherwise valid statements within the256000byte source bound, exercising the combined200000-node traversal limit before plan publication.",
+    "Final-r2 native13groups587/0/13, format and build pass, but alltargetClippy denies two single_range_in_vec_init warnings in the new cfg(test) fixture. Replacing only those one-element Range arrays with an explicit once-collected Vec preserves production bytes and the unit intent without lint suppression. The exact one-file test-only delta and source manifests are retained; final-r3 repeats the full selected validation on final sources.",
+    "Final13selectedgroups587/0/13 include469/0/7 library and29/0/0 propagated-delete contract. Explicit actual2/0/0 overlaps the two ignored live cases: existingv1 plus one newv2, each TS/JS. Actual Node24.21.0/TypeScript5.8.3/language-server5.1.3 references feed original source-bound plans; trusted tsc --noEmit verifies copied results only. Execution-permission/approval/write/recovery denials and exact approved application/recovery are exercised. No analyzed source module executes; this is not a compiler-reference completeness or runtime equivalence attestation.",
+    "Format/build/alltargetClippy-Dwarnings pass with737native inputs unchanged across final and actual phases. The production binary hash is observed after final build, without inventing a pre-test hash or equating in-process library tests with production executable execution. All737inputs have exact or CRLF-only integration materialization proof. The PG JSONL stays2779bytes/f67a05349a6cedf55222afd3bb3231c169d382dd4b078d76544daac517530b47 raw-equal. Integrated format/Python17/typecheck/TS260+3skip pass with743inputs unchanged.",
+    "Original353inventory/73unreconciled/77backendunknown, falsefullContractCertified flags, prior evidence README bytes and old OS1314 fixture prerequisites remain. Other expression/declaration/file/language/provider forms, semantics/dispatch/exhaustiveconsumers, full upstream/IDE/nonWindows/whole-native/platform/main/release acceptance and broaderR1-R9 remain open. Full user task and AgentMemory actions remain active."
+  ],
+  "artifacts": [
+    {
+      "path": "asi-baseline/native.log",
+      "bytes": 1173,
+      "sha256": "178fef22a1a0281a963aea9e44a4de063132d91415cd87547d6be1fe1edbbe40"
+    },
+    {
+      "path": "asi-baseline/result.json",
+      "bytes": 924,
+      "sha256": "5df16abf8a1adf787e2bdb74961af5d4c20149f525b6227511c46b8e52744991"
+    },
+    {
+      "path": "asi-baseline/runner.py",
+      "bytes": 4795,
+      "sha256": "c43d454a65ea41d6149cf822abbde19b4e1ff2c9e44c2b889489e91875e6c016"
+    },
+    {
+      "path": "asi-baseline/source/native/docs/propagated-delete.md",
+      "bytes": 5753,
+      "sha256": "c3cd69dc8dd4b0d77a4830dd6bf9ff1d839f8c9c498fa683cb6fb7d49eef6b3c"
+    },
+    {
+      "path": "asi-baseline/source/native/docs/semantic-refactor-intents.md",
+      "bytes": 20134,
+      "sha256": "863de09fa4c519c8f2501ee3805d0634272ec00ed24f51dc2f17154165490149"
+    },
+    {
+      "path": "asi-baseline/source/native/README.md",
+      "bytes": 25158,
+      "sha256": "848308bfe3398530bec1a479d738cceaa2ac89a2cf11000a0b2cb6e2315f9790"
+    },
+    {
+      "path": "asi-baseline/source/native/src/semantic_propagated_delete.rs",
+      "bytes": 30014,
+      "sha256": "c47ec9b70c58ea6fd575c5e4fcc5244acf064e554bff139565001085611d5aab"
+    },
+    {
+      "path": "asi-baseline/source/native/src/semantic_refactor.rs",
+      "bytes": 31293,
+      "sha256": "b508782248be05cba3b97ad42c41acde5fe2accb134fd6a6c6f63f61aebf88d9"
+    },
+    {
+      "path": "asi-baseline/source/native/tests/fixtures/propagated-delete-lsp.mjs",
+      "bytes": 3553,
+      "sha256": "c0ca6470084786067070d3b90b158c2277e037e5b33668c927b2f4e7db0ae6c2"
+    },
+    {
+      "path": "asi-baseline/source/native/tests/propagated_delete_contract.rs",
+      "bytes": 30953,
+      "sha256": "abc91d7e56e924f9bd454cf03414360cee8d9444ae767c9c031e4103fe6a6e55"
+    },
+    {
+      "path": "asi-baseline/source/native/tests/propagated_delete_live.rs",
+      "bytes": 9566,
+      "sha256": "fdf3852e001e07bd80d53956473fc808abd80cfe474b213d5e371037f32eb7c4"
+    },
+    {
+      "path": "asi-baseline/source/native/tests/semantic_refactor.rs",
+      "bytes": 9777,
+      "sha256": "599224cda633164eeaeb4a15c1a90be90d0ce82d2ef56af9aa760e502de4d5f4"
+    },
+    {
+      "path": "asi-baseline/source-after.json",
+      "bytes": 79568,
+      "sha256": "433ec907327224711d77a8f6caf5484c6990613b511db5016756ba17217d618d"
+    },
+    {
+      "path": "asi-baseline/source-before.json",
+      "bytes": 79568,
+      "sha256": "433ec907327224711d77a8f6caf5484c6990613b511db5016756ba17217d618d"
+    },
+    {
+      "path": "ast-probe/native.log",
+      "bytes": 1414,
+      "sha256": "ef2f6adc5b384b6f46b3d466235d0b1225be1dbb160e78ed9da3733a04205033"
+    },
+    {
+      "path": "ast-probe/result.json",
+      "bytes": 949,
+      "sha256": "3543c0f18711bfeb14d4b78f3e3bab38592806dba71f9c72a8ae9ddd0e200744"
+    },
+    {
+      "path": "ast-probe/runner.py",
+      "bytes": 4996,
+      "sha256": "23a4b61aefcea289315106a0a5d46ce7f39d230bf369362a196419fbfd37aab5"
+    },
+    {
+      "path": "ast-probe/source/native/docs/propagated-delete.md",
+      "bytes": 6191,
+      "sha256": "c6ee4fb89a99d88644948c5d0da89b4b3653df8057b9a8f85483703d3721d763"
+    },
+    {
+      "path": "ast-probe/source/native/docs/semantic-refactor-intents.md",
+      "bytes": 20134,
+      "sha256": "863de09fa4c519c8f2501ee3805d0634272ec00ed24f51dc2f17154165490149"
+    },
+    {
+      "path": "ast-probe/source/native/README.md",
+      "bytes": 25158,
+      "sha256": "848308bfe3398530bec1a479d738cceaa2ac89a2cf11000a0b2cb6e2315f9790"
+    },
+    {
+      "path": "ast-probe/source/native/src/semantic_propagated_delete.rs",
+      "bytes": 30192,
+      "sha256": "4b763b29981283d4acf6b24bc95e2803c31d14895f49b5d397a76612e883553c"
+    },
+    {
+      "path": "ast-probe/source/native/src/semantic_propagated_delete_ast.rs",
+      "bytes": 4585,
+      "sha256": "826005319c5a6f158f8aca411ff1f2312b3ab8443dc2979a7fe7f99d77761d02"
+    },
+    {
+      "path": "ast-probe/source/native/src/semantic_refactor.rs",
+      "bytes": 31293,
+      "sha256": "b508782248be05cba3b97ad42c41acde5fe2accb134fd6a6c6f63f61aebf88d9"
+    },
+    {
+      "path": "ast-probe/source/native/tests/fixtures/propagated-delete-lsp.mjs",
+      "bytes": 3553,
+      "sha256": "c0ca6470084786067070d3b90b158c2277e037e5b33668c927b2f4e7db0ae6c2"
+    },
+    {
+      "path": "ast-probe/source/native/tests/propagated_delete_contract.rs",
+      "bytes": 31900,
+      "sha256": "5de25483a857120a1b8b2fc1ee946b4fa875725d617ac850589f864c6e1f0b28"
+    },
+    {
+      "path": "ast-probe/source/native/tests/propagated_delete_live.rs",
+      "bytes": 9566,
+      "sha256": "fdf3852e001e07bd80d53956473fc808abd80cfe474b213d5e371037f32eb7c4"
+    },
+    {
+      "path": "ast-probe/source/native/tests/semantic_refactor.rs",
+      "bytes": 9777,
+      "sha256": "599224cda633164eeaeb4a15c1a90be90d0ce82d2ef56af9aa760e502de4d5f4"
+    },
+    {
+      "path": "ast-probe/source-after.json",
+      "bytes": 79687,
+      "sha256": "452bd6a33035fa98c8c9ee3d3911e2016d19cca109d76ac18d505f035adc6692"
+    },
+    {
+      "path": "ast-probe/source-before.json",
+      "bytes": 79687,
+      "sha256": "452bd6a33035fa98c8c9ee3d3911e2016d19cca109d76ac18d505f035adc6692"
+    },
+    {
+      "path": "baseline/native.log",
+      "bytes": 1207,
+      "sha256": "3f0943f6182a1abe8ff6247bef6ab50425c48ea7bc9bcd59b577158cbbedfced"
+    },
+    {
+      "path": "baseline/result.json",
+      "bytes": 965,
+      "sha256": "25a828e6f445211de4f60f0ddb1e48b36e5fa77e86ada3336033084a5b02952c"
+    },
+    {
+      "path": "baseline/runner.py",
+      "bytes": 4664,
+      "sha256": "47e38b5129c332ae70ec1800fe69081c5f9bc57505ca6e8a2518fdc079f6d997"
+    },
+    {
+      "path": "baseline/source/native/docs/propagated-delete.md",
+      "bytes": 3894,
+      "sha256": "1470cae95f099645db30abfa783c62f2e20d562290fe8727915f7115a33f906c"
+    },
+    {
+      "path": "baseline/source/native/docs/semantic-refactor-intents.md",
+      "bytes": 19765,
+      "sha256": "706fa42453324bf3c548a484b0edfafe50b586fc01f75b313862cd94957ed161"
+    },
+    {
+      "path": "baseline/source/native/README.md",
+      "bytes": 25005,
+      "sha256": "e4a3a0f0c1968e09e539dc9910aa96f267c952d72d72853a9fd1b3c4d2a943af"
+    },
+    {
+      "path": "baseline/source/native/src/semantic_propagated_delete.rs",
+      "bytes": 26139,
+      "sha256": "bfeeb366bb8732e372ce0e478110c1b0566bbb429cefabdfffdbdccc7e493c6c"
+    },
+    {
+      "path": "baseline/source/native/src/semantic_refactor.rs",
+      "bytes": 31164,
+      "sha256": "0f5c6a1c40259b4c32a346e8b2d28f15aacad723f868e505713d8e8b298f9a2b"
+    },
+    {
+      "path": "baseline/source/native/tests/fixtures/propagated-delete-lsp.mjs",
+      "bytes": 3553,
+      "sha256": "c0ca6470084786067070d3b90b158c2277e037e5b33668c927b2f4e7db0ae6c2"
+    },
+    {
+      "path": "baseline/source/native/tests/propagated_delete_contract.rs",
+      "bytes": 21828,
+      "sha256": "e10ed62dd752d4791c00f101b94aec7490fabbf5abbc7e019b75dd39c50055ec"
+    },
+    {
+      "path": "baseline/source/native/tests/propagated_delete_live.rs",
+      "bytes": 4472,
+      "sha256": "f0d25dc20ed6ff2d12214cdb74913932a8d2eb2029f3ad4579723329e40c95d4"
+    },
+    {
+      "path": "baseline/source/native/tests/semantic_refactor.rs",
+      "bytes": 9777,
+      "sha256": "599224cda633164eeaeb4a15c1a90be90d0ce82d2ef56af9aa760e502de4d5f4"
+    },
+    {
+      "path": "baseline/source-after.json",
+      "bytes": 79568,
+      "sha256": "2d2c0d11a9898783a3eed9247e5f97e96ee67bcf891a6152884b7377f5d73bf5"
+    },
+    {
+      "path": "baseline/source-before.json",
+      "bytes": 79568,
+      "sha256": "2d2c0d11a9898783a3eed9247e5f97e96ee67bcf891a6152884b7377f5d73bf5"
+    },
+    {
+      "path": "clippy-test-style-delta.json",
+      "bytes": 363,
+      "sha256": "70c39d0683f57cfc9c10a9133b39a420c67b95de4f76ae8b28fb9b5ee2b154e6"
+    },
+    {
+      "path": "clippy-test-style-delta.patch",
+      "bytes": 818,
+      "sha256": "986739441d6ba3cea98d8c7acb0cfdd417e1a99674bbb5df9b65d4faa5818a0b"
+    },
+    {
+      "path": "final/build.log",
+      "bytes": 61,
+      "sha256": "8e5b0ddf643d57bc5f0a035f533a25bf96dafa1b9b53091afdc66563cb011dab"
+    },
+    {
+      "path": "final/clippy.log",
+      "bytes": 168,
+      "sha256": "65561db7ba02f48fd8cad64fad158092f3635a40aef98b4b19eef4595cb7aea3"
+    },
+    {
+      "path": "final/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "final/native.log",
+      "bytes": 68940,
+      "sha256": "d164666b617517e6aa71871f065f188893156cf00ef13a41cb860fc5cd813719"
+    },
+    {
+      "path": "final/result.json",
+      "bytes": 2463,
+      "sha256": "431cb04e81a289e3a3a51a703ba1e8687a6cbadae86662ac9b6413dd581076ef"
+    },
+    {
+      "path": "final/runner.py",
+      "bytes": 4664,
+      "sha256": "47e38b5129c332ae70ec1800fe69081c5f9bc57505ca6e8a2518fdc079f6d997"
+    },
+    {
+      "path": "final/source/native/docs/propagated-delete.md",
+      "bytes": 5753,
+      "sha256": "c3cd69dc8dd4b0d77a4830dd6bf9ff1d839f8c9c498fa683cb6fb7d49eef6b3c"
+    },
+    {
+      "path": "final/source/native/docs/semantic-refactor-intents.md",
+      "bytes": 20134,
+      "sha256": "863de09fa4c519c8f2501ee3805d0634272ec00ed24f51dc2f17154165490149"
+    },
+    {
+      "path": "final/source/native/README.md",
+      "bytes": 25158,
+      "sha256": "848308bfe3398530bec1a479d738cceaa2ac89a2cf11000a0b2cb6e2315f9790"
+    },
+    {
+      "path": "final/source/native/src/semantic_propagated_delete.rs",
+      "bytes": 30014,
+      "sha256": "c47ec9b70c58ea6fd575c5e4fcc5244acf064e554bff139565001085611d5aab"
+    },
+    {
+      "path": "final/source/native/src/semantic_refactor.rs",
+      "bytes": 31293,
+      "sha256": "b508782248be05cba3b97ad42c41acde5fe2accb134fd6a6c6f63f61aebf88d9"
+    },
+    {
+      "path": "final/source/native/tests/fixtures/propagated-delete-lsp.mjs",
+      "bytes": 3553,
+      "sha256": "c0ca6470084786067070d3b90b158c2277e037e5b33668c927b2f4e7db0ae6c2"
+    },
+    {
+      "path": "final/source/native/tests/propagated_delete_contract.rs",
+      "bytes": 28948,
+      "sha256": "8dc185c03c705046aefaa8175d033afd03e1ef13c8e6945aa96660a96151eaa4"
+    },
+    {
+      "path": "final/source/native/tests/propagated_delete_live.rs",
+      "bytes": 9566,
+      "sha256": "fdf3852e001e07bd80d53956473fc808abd80cfe474b213d5e371037f32eb7c4"
+    },
+    {
+      "path": "final/source/native/tests/semantic_refactor.rs",
+      "bytes": 9777,
+      "sha256": "599224cda633164eeaeb4a15c1a90be90d0ce82d2ef56af9aa760e502de4d5f4"
+    },
+    {
+      "path": "final/source-after.json",
+      "bytes": 79568,
+      "sha256": "d5d2526eb56008290ccbb59297887f56c4475f60cf1cee5422964451acf231af"
+    },
+    {
+      "path": "final/source-before.json",
+      "bytes": 79568,
+      "sha256": "d5d2526eb56008290ccbb59297887f56c4475f60cf1cee5422964451acf231af"
+    },
+    {
+      "path": "final-r2/build.log",
+      "bytes": 61,
+      "sha256": "9bdba2a8b752c9e4a14bad9d06b9fc1bc1ddfb0b73d2388f78b3fa1dbd88cd44"
+    },
+    {
+      "path": "final-r2/clippy.log",
+      "bytes": 1649,
+      "sha256": "4e9ecee41a7db645358a3b33e33cc2aa3d47a825e432b0fcff08c92175207049"
+    },
+    {
+      "path": "final-r2/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "final-r2/native.log",
+      "bytes": 69224,
+      "sha256": "4522b177bf732aa7665bf92a1ced33bb971e2b968ba8b59f6234ea20a2dd46a1"
+    },
+    {
+      "path": "final-r2/result.json",
+      "bytes": 2463,
+      "sha256": "11dc76997f57169941dcadea5d9dd43bc6d29d7b13a71d5a63aa87b5efad20dc"
+    },
+    {
+      "path": "final-r2/runner.py",
+      "bytes": 4996,
+      "sha256": "23a4b61aefcea289315106a0a5d46ce7f39d230bf369362a196419fbfd37aab5"
+    },
+    {
+      "path": "final-r2/source/native/docs/propagated-delete.md",
+      "bytes": 6458,
+      "sha256": "41b29fb7ccdab9290bab251c01f9ab70f578dea4f05b2ef7ea35888e3dbdfe4d"
+    },
+    {
+      "path": "final-r2/source/native/docs/semantic-refactor-intents.md",
+      "bytes": 20134,
+      "sha256": "863de09fa4c519c8f2501ee3805d0634272ec00ed24f51dc2f17154165490149"
+    },
+    {
+      "path": "final-r2/source/native/README.md",
+      "bytes": 25158,
+      "sha256": "848308bfe3398530bec1a479d738cceaa2ac89a2cf11000a0b2cb6e2315f9790"
+    },
+    {
+      "path": "final-r2/source/native/src/semantic_propagated_delete.rs",
+      "bytes": 30192,
+      "sha256": "4b763b29981283d4acf6b24bc95e2803c31d14895f49b5d397a76612e883553c"
+    },
+    {
+      "path": "final-r2/source/native/src/semantic_propagated_delete_ast.rs",
+      "bytes": 4922,
+      "sha256": "eb2777166a3c6d38953fa056d48726c4cb53d30904a75b8803260ec59b44d7df"
+    },
+    {
+      "path": "final-r2/source/native/src/semantic_refactor.rs",
+      "bytes": 31293,
+      "sha256": "b508782248be05cba3b97ad42c41acde5fe2accb134fd6a6c6f63f61aebf88d9"
+    },
+    {
+      "path": "final-r2/source/native/tests/fixtures/propagated-delete-lsp.mjs",
+      "bytes": 3553,
+      "sha256": "c0ca6470084786067070d3b90b158c2277e037e5b33668c927b2f4e7db0ae6c2"
+    },
+    {
+      "path": "final-r2/source/native/tests/propagated_delete_contract.rs",
+      "bytes": 31900,
+      "sha256": "5de25483a857120a1b8b2fc1ee946b4fa875725d617ac850589f864c6e1f0b28"
+    },
+    {
+      "path": "final-r2/source/native/tests/propagated_delete_live.rs",
+      "bytes": 9566,
+      "sha256": "fdf3852e001e07bd80d53956473fc808abd80cfe474b213d5e371037f32eb7c4"
+    },
+    {
+      "path": "final-r2/source/native/tests/semantic_refactor.rs",
+      "bytes": 9777,
+      "sha256": "599224cda633164eeaeb4a15c1a90be90d0ce82d2ef56af9aa760e502de4d5f4"
+    },
+    {
+      "path": "final-r2/source-after.json",
+      "bytes": 79687,
+      "sha256": "4b5785439c275b52e0eb812cb35ac538ffed5df3dff1264ed3b51b9dbf890ce2"
+    },
+    {
+      "path": "final-r2/source-before.json",
+      "bytes": 79687,
+      "sha256": "4b5785439c275b52e0eb812cb35ac538ffed5df3dff1264ed3b51b9dbf890ce2"
+    },
+    {
+      "path": "final-r3/build.log",
+      "bytes": 60,
+      "sha256": "cff4e16bd4811fe3558f610c15808f9388db98df1db9457ac087aae33c24fc3c"
+    },
+    {
+      "path": "final-r3/clippy.log",
+      "bytes": 168,
+      "sha256": "7a0bfdbca6ac732cc99b90c4c1bcb4e6473ee373055ce191ff0c82c1b406d987"
+    },
+    {
+      "path": "final-r3/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "final-r3/native.log",
+      "bytes": 69223,
+      "sha256": "99519a8bebb4d17eecc80a5ede1012b31dc7fbcd3885aabc058947f8d00364f9"
+    },
+    {
+      "path": "final-r3/result.json",
+      "bytes": 2458,
+      "sha256": "a5adcac24a4027fcf451aed7a4dee140383481537cfc68004d3b5b9182c492a4"
+    },
+    {
+      "path": "final-r3/runner.py",
+      "bytes": 4996,
+      "sha256": "23a4b61aefcea289315106a0a5d46ce7f39d230bf369362a196419fbfd37aab5"
+    },
+    {
+      "path": "final-r3/source/native/docs/propagated-delete.md",
+      "bytes": 6458,
+      "sha256": "41b29fb7ccdab9290bab251c01f9ab70f578dea4f05b2ef7ea35888e3dbdfe4d"
+    },
+    {
+      "path": "final-r3/source/native/docs/semantic-refactor-intents.md",
+      "bytes": 20134,
+      "sha256": "863de09fa4c519c8f2501ee3805d0634272ec00ed24f51dc2f17154165490149"
+    },
+    {
+      "path": "final-r3/source/native/README.md",
+      "bytes": 25158,
+      "sha256": "848308bfe3398530bec1a479d738cceaa2ac89a2cf11000a0b2cb6e2315f9790"
+    },
+    {
+      "path": "final-r3/source/native/src/semantic_propagated_delete.rs",
+      "bytes": 30192,
+      "sha256": "4b763b29981283d4acf6b24bc95e2803c31d14895f49b5d397a76612e883553c"
+    },
+    {
+      "path": "final-r3/source/native/src/semantic_propagated_delete_ast.rs",
+      "bytes": 4979,
+      "sha256": "801d709a447e86de66c2d9883ce3f3de323776a87e5566e4d53fa0f41a8e93ff"
+    },
+    {
+      "path": "final-r3/source/native/src/semantic_refactor.rs",
+      "bytes": 31293,
+      "sha256": "b508782248be05cba3b97ad42c41acde5fe2accb134fd6a6c6f63f61aebf88d9"
+    },
+    {
+      "path": "final-r3/source/native/tests/fixtures/propagated-delete-lsp.mjs",
+      "bytes": 3553,
+      "sha256": "c0ca6470084786067070d3b90b158c2277e037e5b33668c927b2f4e7db0ae6c2"
+    },
+    {
+      "path": "final-r3/source/native/tests/propagated_delete_contract.rs",
+      "bytes": 31900,
+      "sha256": "5de25483a857120a1b8b2fc1ee946b4fa875725d617ac850589f864c6e1f0b28"
+    },
+    {
+      "path": "final-r3/source/native/tests/propagated_delete_live.rs",
+      "bytes": 9566,
+      "sha256": "fdf3852e001e07bd80d53956473fc808abd80cfe474b213d5e371037f32eb7c4"
+    },
+    {
+      "path": "final-r3/source/native/tests/semantic_refactor.rs",
+      "bytes": 9777,
+      "sha256": "599224cda633164eeaeb4a15c1a90be90d0ce82d2ef56af9aa760e502de4d5f4"
+    },
+    {
+      "path": "final-r3/source-after.json",
+      "bytes": 79687,
+      "sha256": "6e4589d2df04d322fd148b439d8bb754df63db7c8269328a2843f2f263c5c000"
+    },
+    {
+      "path": "final-r3/source-before.json",
+      "bytes": 79687,
+      "sha256": "6e4589d2df04d322fd148b439d8bb754df63db7c8269328a2843f2f263c5c000"
+    },
+    {
+      "path": "frozen-tracker.json",
+      "bytes": 558610,
+      "sha256": "42ac74b36a3865806ddae124c5503e24ec3723df315fe7120a11741179c583bd"
+    },
+    {
+      "path": "guard-green/native.log",
+      "bytes": 2190,
+      "sha256": "11dc1e7dc02dd6d69b0046f994f962cebc6aed1d3de3682ec8abe243d6ebfd7f"
+    },
+    {
+      "path": "guard-green/result.json",
+      "bytes": 981,
+      "sha256": "9447db8b3614ab87b31c152cbf2c6ce0a4310bcf5c76badbe6f2ad6d10c7f58f"
+    },
+    {
+      "path": "guard-green/runner.py",
+      "bytes": 4848,
+      "sha256": "0b1cfa0950cae9ad6b5e5c5e2967c74e832d202d60e000577a40e925d8473b20"
+    },
+    {
+      "path": "guard-green/source/native/docs/propagated-delete.md",
+      "bytes": 6191,
+      "sha256": "c6ee4fb89a99d88644948c5d0da89b4b3653df8057b9a8f85483703d3721d763"
+    },
+    {
+      "path": "guard-green/source/native/docs/semantic-refactor-intents.md",
+      "bytes": 20134,
+      "sha256": "863de09fa4c519c8f2501ee3805d0634272ec00ed24f51dc2f17154165490149"
+    },
+    {
+      "path": "guard-green/source/native/README.md",
+      "bytes": 25158,
+      "sha256": "848308bfe3398530bec1a479d738cceaa2ac89a2cf11000a0b2cb6e2315f9790"
+    },
+    {
+      "path": "guard-green/source/native/src/semantic_propagated_delete.rs",
+      "bytes": 30192,
+      "sha256": "4b763b29981283d4acf6b24bc95e2803c31d14895f49b5d397a76612e883553c"
+    },
+    {
+      "path": "guard-green/source/native/src/semantic_propagated_delete_ast.rs",
+      "bytes": 3351,
+      "sha256": "e364640e45d000fe610cfec070b46545c702d406f4402631ac0918bb7ed3a203"
+    },
+    {
+      "path": "guard-green/source/native/src/semantic_refactor.rs",
+      "bytes": 31293,
+      "sha256": "b508782248be05cba3b97ad42c41acde5fe2accb134fd6a6c6f63f61aebf88d9"
+    },
+    {
+      "path": "guard-green/source/native/tests/fixtures/propagated-delete-lsp.mjs",
+      "bytes": 3553,
+      "sha256": "c0ca6470084786067070d3b90b158c2277e037e5b33668c927b2f4e7db0ae6c2"
+    },
+    {
+      "path": "guard-green/source/native/tests/propagated_delete_contract.rs",
+      "bytes": 30953,
+      "sha256": "abc91d7e56e924f9bd454cf03414360cee8d9444ae767c9c031e4103fe6a6e55"
+    },
+    {
+      "path": "guard-green/source/native/tests/propagated_delete_live.rs",
+      "bytes": 9566,
+      "sha256": "fdf3852e001e07bd80d53956473fc808abd80cfe474b213d5e371037f32eb7c4"
+    },
+    {
+      "path": "guard-green/source/native/tests/semantic_refactor.rs",
+      "bytes": 9777,
+      "sha256": "599224cda633164eeaeb4a15c1a90be90d0ce82d2ef56af9aa760e502de4d5f4"
+    },
+    {
+      "path": "guard-green/source-after.json",
+      "bytes": 79687,
+      "sha256": "673189f41a9556dd7367cd47583e6ca06189a32d33be5ce955863a046d62ef9d"
+    },
+    {
+      "path": "guard-green/source-before.json",
+      "bytes": 79687,
+      "sha256": "673189f41a9556dd7367cd47583e6ca06189a32d33be5ce955863a046d62ef9d"
+    },
+    {
+      "path": "guard-green-r2/native.log",
+      "bytes": 1201,
+      "sha256": "84ab9c9814576100c1a88da9082befed45b4842c8d33f5b8c31ec90739c992eb"
+    },
+    {
+      "path": "guard-green-r2/result.json",
+      "bytes": 804,
+      "sha256": "a3d3f95c9d5f5d0f7156f6addc25959c13b24cfcfc83a1a2ed845786d92402b6"
+    },
+    {
+      "path": "guard-green-r2/runner.py",
+      "bytes": 4996,
+      "sha256": "23a4b61aefcea289315106a0a5d46ce7f39d230bf369362a196419fbfd37aab5"
+    },
+    {
+      "path": "guard-green-r2/source/native/docs/propagated-delete.md",
+      "bytes": 6458,
+      "sha256": "41b29fb7ccdab9290bab251c01f9ab70f578dea4f05b2ef7ea35888e3dbdfe4d"
+    },
+    {
+      "path": "guard-green-r2/source/native/docs/semantic-refactor-intents.md",
+      "bytes": 20134,
+      "sha256": "863de09fa4c519c8f2501ee3805d0634272ec00ed24f51dc2f17154165490149"
+    },
+    {
+      "path": "guard-green-r2/source/native/README.md",
+      "bytes": 25158,
+      "sha256": "848308bfe3398530bec1a479d738cceaa2ac89a2cf11000a0b2cb6e2315f9790"
+    },
+    {
+      "path": "guard-green-r2/source/native/src/semantic_propagated_delete.rs",
+      "bytes": 30192,
+      "sha256": "4b763b29981283d4acf6b24bc95e2803c31d14895f49b5d397a76612e883553c"
+    },
+    {
+      "path": "guard-green-r2/source/native/src/semantic_propagated_delete_ast.rs",
+      "bytes": 4922,
+      "sha256": "eb2777166a3c6d38953fa056d48726c4cb53d30904a75b8803260ec59b44d7df"
+    },
+    {
+      "path": "guard-green-r2/source/native/src/semantic_refactor.rs",
+      "bytes": 31293,
+      "sha256": "b508782248be05cba3b97ad42c41acde5fe2accb134fd6a6c6f63f61aebf88d9"
+    },
+    {
+      "path": "guard-green-r2/source/native/tests/fixtures/propagated-delete-lsp.mjs",
+      "bytes": 3553,
+      "sha256": "c0ca6470084786067070d3b90b158c2277e037e5b33668c927b2f4e7db0ae6c2"
+    },
+    {
+      "path": "guard-green-r2/source/native/tests/propagated_delete_contract.rs",
+      "bytes": 31900,
+      "sha256": "5de25483a857120a1b8b2fc1ee946b4fa875725d617ac850589f864c6e1f0b28"
+    },
+    {
+      "path": "guard-green-r2/source/native/tests/propagated_delete_live.rs",
+      "bytes": 9566,
+      "sha256": "fdf3852e001e07bd80d53956473fc808abd80cfe474b213d5e371037f32eb7c4"
+    },
+    {
+      "path": "guard-green-r2/source/native/tests/semantic_refactor.rs",
+      "bytes": 9777,
+      "sha256": "599224cda633164eeaeb4a15c1a90be90d0ce82d2ef56af9aa760e502de4d5f4"
+    },
+    {
+      "path": "guard-green-r2/source-after.json",
+      "bytes": 79687,
+      "sha256": "4b5785439c275b52e0eb812cb35ac538ffed5df3dff1264ed3b51b9dbf890ce2"
+    },
+    {
+      "path": "guard-green-r2/source-before.json",
+      "bytes": 79687,
+      "sha256": "4b5785439c275b52e0eb812cb35ac538ffed5df3dff1264ed3b51b9dbf890ce2"
+    },
+    {
+      "path": "integrated/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "integrated/python-contracts.log",
+      "bytes": 2845,
+      "sha256": "707fc20954b90f23b65f3cdaa2450aec64b6e771c246e67f5a6daeb11f0977fb"
+    },
+    {
+      "path": "integrated/result.json",
+      "bytes": 958,
+      "sha256": "749501f343ea2b004a3b79d9f2899eff3953a5090013d9d149744e3720192f8c"
+    },
+    {
+      "path": "integrated/source-after.json",
+      "bytes": 79646,
+      "sha256": "2ee3a18261eb044e13a4a915e0aef3c621d0878c82a40a64d359f077c49beef9"
+    },
+    {
+      "path": "integrated/source-before.json",
+      "bytes": 79646,
+      "sha256": "2ee3a18261eb044e13a4a915e0aef3c621d0878c82a40a64d359f077c49beef9"
+    },
+    {
+      "path": "integrated/tests.log",
+      "bytes": 25039,
+      "sha256": "ff2d39023a91cbdca1f932bca807b9132510c87bcff7b73004539dbe24f23025"
+    },
+    {
+      "path": "integrated/typecheck.log",
+      "bytes": 101,
+      "sha256": "30ef9ce16cf042ab6f160e0a76c1fbfe22f02a3c3a3659ee62863ffc1efdbfdf"
+    },
+    {
+      "path": "live-final-r3/native.log",
+      "bytes": 16047,
+      "sha256": "2fc636601b44a0bb7218bd026d3faebfb233aea8be805004d057e9b2dcd2c889"
+    },
+    {
+      "path": "live-final-r3/result.json",
+      "bytes": 820,
+      "sha256": "c7d0591c700cab2b4933304018d535f7cdf476cd4e44d5c2108afbeb7e81899c"
+    },
+    {
+      "path": "live-final-r3/runner.py",
+      "bytes": 4996,
+      "sha256": "23a4b61aefcea289315106a0a5d46ce7f39d230bf369362a196419fbfd37aab5"
+    },
+    {
+      "path": "live-final-r3/source/native/docs/propagated-delete.md",
+      "bytes": 6458,
+      "sha256": "41b29fb7ccdab9290bab251c01f9ab70f578dea4f05b2ef7ea35888e3dbdfe4d"
+    },
+    {
+      "path": "live-final-r3/source/native/docs/semantic-refactor-intents.md",
+      "bytes": 20134,
+      "sha256": "863de09fa4c519c8f2501ee3805d0634272ec00ed24f51dc2f17154165490149"
+    },
+    {
+      "path": "live-final-r3/source/native/README.md",
+      "bytes": 25158,
+      "sha256": "848308bfe3398530bec1a479d738cceaa2ac89a2cf11000a0b2cb6e2315f9790"
+    },
+    {
+      "path": "live-final-r3/source/native/src/semantic_propagated_delete.rs",
+      "bytes": 30192,
+      "sha256": "4b763b29981283d4acf6b24bc95e2803c31d14895f49b5d397a76612e883553c"
+    },
+    {
+      "path": "live-final-r3/source/native/src/semantic_propagated_delete_ast.rs",
+      "bytes": 4979,
+      "sha256": "801d709a447e86de66c2d9883ce3f3de323776a87e5566e4d53fa0f41a8e93ff"
+    },
+    {
+      "path": "live-final-r3/source/native/src/semantic_refactor.rs",
+      "bytes": 31293,
+      "sha256": "b508782248be05cba3b97ad42c41acde5fe2accb134fd6a6c6f63f61aebf88d9"
+    },
+    {
+      "path": "live-final-r3/source/native/tests/fixtures/propagated-delete-lsp.mjs",
+      "bytes": 3553,
+      "sha256": "c0ca6470084786067070d3b90b158c2277e037e5b33668c927b2f4e7db0ae6c2"
+    },
+    {
+      "path": "live-final-r3/source/native/tests/propagated_delete_contract.rs",
+      "bytes": 31900,
+      "sha256": "5de25483a857120a1b8b2fc1ee946b4fa875725d617ac850589f864c6e1f0b28"
+    },
+    {
+      "path": "live-final-r3/source/native/tests/propagated_delete_live.rs",
+      "bytes": 9566,
+      "sha256": "fdf3852e001e07bd80d53956473fc808abd80cfe474b213d5e371037f32eb7c4"
+    },
+    {
+      "path": "live-final-r3/source/native/tests/semantic_refactor.rs",
+      "bytes": 9777,
+      "sha256": "599224cda633164eeaeb4a15c1a90be90d0ce82d2ef56af9aa760e502de4d5f4"
+    },
+    {
+      "path": "live-final-r3/source-after.json",
+      "bytes": 79687,
+      "sha256": "6e4589d2df04d322fd148b439d8bb754df63db7c8269328a2843f2f263c5c000"
+    },
+    {
+      "path": "live-final-r3/source-before.json",
+      "bytes": 79687,
+      "sha256": "6e4589d2df04d322fd148b439d8bb754df63db7c8269328a2843f2f263c5c000"
+    },
+    {
+      "path": "live-final-r3/tool-runtimes.json",
+      "bytes": 938,
+      "sha256": "e8680ee51c5161b5725d52108ca0c2aeea7bec589c7ff208a19ad8dc850d010a"
+    },
+    {
+      "path": "live-r1/native.log",
+      "bytes": 16154,
+      "sha256": "da7fcc2abb95e012fa82a0e372286b999ecf770767856dbc8c41341e4d91e25c"
+    },
+    {
+      "path": "live-r1/result.json",
+      "bytes": 820,
+      "sha256": "073538256fe6a3708bc976b10b62b6f0c3249dc9e2937187efa491e64af4bdc2"
+    },
+    {
+      "path": "live-r1/runner.py",
+      "bytes": 4664,
+      "sha256": "47e38b5129c332ae70ec1800fe69081c5f9bc57505ca6e8a2518fdc079f6d997"
+    },
+    {
+      "path": "live-r1/source/native/docs/propagated-delete.md",
+      "bytes": 5753,
+      "sha256": "c3cd69dc8dd4b0d77a4830dd6bf9ff1d839f8c9c498fa683cb6fb7d49eef6b3c"
+    },
+    {
+      "path": "live-r1/source/native/docs/semantic-refactor-intents.md",
+      "bytes": 20134,
+      "sha256": "863de09fa4c519c8f2501ee3805d0634272ec00ed24f51dc2f17154165490149"
+    },
+    {
+      "path": "live-r1/source/native/README.md",
+      "bytes": 25158,
+      "sha256": "848308bfe3398530bec1a479d738cceaa2ac89a2cf11000a0b2cb6e2315f9790"
+    },
+    {
+      "path": "live-r1/source/native/src/semantic_propagated_delete.rs",
+      "bytes": 30014,
+      "sha256": "c47ec9b70c58ea6fd575c5e4fcc5244acf064e554bff139565001085611d5aab"
+    },
+    {
+      "path": "live-r1/source/native/src/semantic_refactor.rs",
+      "bytes": 31293,
+      "sha256": "b508782248be05cba3b97ad42c41acde5fe2accb134fd6a6c6f63f61aebf88d9"
+    },
+    {
+      "path": "live-r1/source/native/tests/fixtures/propagated-delete-lsp.mjs",
+      "bytes": 3553,
+      "sha256": "c0ca6470084786067070d3b90b158c2277e037e5b33668c927b2f4e7db0ae6c2"
+    },
+    {
+      "path": "live-r1/source/native/tests/propagated_delete_contract.rs",
+      "bytes": 28948,
+      "sha256": "8dc185c03c705046aefaa8175d033afd03e1ef13c8e6945aa96660a96151eaa4"
+    },
+    {
+      "path": "live-r1/source/native/tests/propagated_delete_live.rs",
+      "bytes": 9566,
+      "sha256": "fdf3852e001e07bd80d53956473fc808abd80cfe474b213d5e371037f32eb7c4"
+    },
+    {
+      "path": "live-r1/source/native/tests/semantic_refactor.rs",
+      "bytes": 9777,
+      "sha256": "599224cda633164eeaeb4a15c1a90be90d0ce82d2ef56af9aa760e502de4d5f4"
+    },
+    {
+      "path": "live-r1/source-after.json",
+      "bytes": 79568,
+      "sha256": "d5d2526eb56008290ccbb59297887f56c4475f60cf1cee5422964451acf231af"
+    },
+    {
+      "path": "live-r1/source-before.json",
+      "bytes": 79568,
+      "sha256": "d5d2526eb56008290ccbb59297887f56c4475f60cf1cee5422964451acf231af"
+    },
+    {
+      "path": "live-r1/tool-runtimes.json",
+      "bytes": 938,
+      "sha256": "e8680ee51c5161b5725d52108ca0c2aeea7bec589c7ff208a19ad8dc850d010a"
+    },
+    {
+      "path": "r1/native.log",
+      "bytes": 5482,
+      "sha256": "f4962136025ca4ba4d25d8712559be7c45fb4c3ed7cbf043ee7e174fb9fa3201"
+    },
+    {
+      "path": "r1/result.json",
+      "bytes": 865,
+      "sha256": "bb94127d69d9255a779c8c2f843992f1205c03261fc539d04ee9e0cfe1ed0c35"
+    },
+    {
+      "path": "r1/runner.py",
+      "bytes": 4664,
+      "sha256": "47e38b5129c332ae70ec1800fe69081c5f9bc57505ca6e8a2518fdc079f6d997"
+    },
+    {
+      "path": "r1/source/native/docs/propagated-delete.md",
+      "bytes": 3894,
+      "sha256": "1470cae95f099645db30abfa783c62f2e20d562290fe8727915f7115a33f906c"
+    },
+    {
+      "path": "r1/source/native/docs/semantic-refactor-intents.md",
+      "bytes": 19765,
+      "sha256": "706fa42453324bf3c548a484b0edfafe50b586fc01f75b313862cd94957ed161"
+    },
+    {
+      "path": "r1/source/native/README.md",
+      "bytes": 25005,
+      "sha256": "e4a3a0f0c1968e09e539dc9910aa96f267c952d72d72853a9fd1b3c4d2a943af"
+    },
+    {
+      "path": "r1/source/native/src/semantic_propagated_delete.rs",
+      "bytes": 30014,
+      "sha256": "c47ec9b70c58ea6fd575c5e4fcc5244acf064e554bff139565001085611d5aab"
+    },
+    {
+      "path": "r1/source/native/src/semantic_refactor.rs",
+      "bytes": 31293,
+      "sha256": "b508782248be05cba3b97ad42c41acde5fe2accb134fd6a6c6f63f61aebf88d9"
+    },
+    {
+      "path": "r1/source/native/tests/fixtures/propagated-delete-lsp.mjs",
+      "bytes": 3553,
+      "sha256": "c0ca6470084786067070d3b90b158c2277e037e5b33668c927b2f4e7db0ae6c2"
+    },
+    {
+      "path": "r1/source/native/tests/propagated_delete_contract.rs",
+      "bytes": 28487,
+      "sha256": "a85ad0d3ef65568fb48d15da66d397cd38705277ca41aa13f91715db816bd398"
+    },
+    {
+      "path": "r1/source/native/tests/propagated_delete_live.rs",
+      "bytes": 4472,
+      "sha256": "f0d25dc20ed6ff2d12214cdb74913932a8d2eb2029f3ad4579723329e40c95d4"
+    },
+    {
+      "path": "r1/source/native/tests/semantic_refactor.rs",
+      "bytes": 9777,
+      "sha256": "599224cda633164eeaeb4a15c1a90be90d0ce82d2ef56af9aa760e502de4d5f4"
+    },
+    {
+      "path": "r1/source-after.json",
+      "bytes": 79568,
+      "sha256": "b81ea32fb6a19660cca9c2245de13d56a2659eeeda5097c1234958b54ec2229b"
+    },
+    {
+      "path": "r1/source-before.json",
+      "bytes": 79568,
+      "sha256": "b81ea32fb6a19660cca9c2245de13d56a2659eeeda5097c1234958b54ec2229b"
+    },
+    {
+      "path": "runners/ci-wrapped-ast-copy.py",
+      "bytes": 230,
+      "sha256": "e4046d8a30e8dc3940f2fa7c4c8ece634930178f60f0be7897e544a53040406d"
+    },
+    {
+      "path": "runners/ci-wrapped-ast.rs",
+      "bytes": 2999,
+      "sha256": "4dfacca339121c0eea6693e787b716d0bed1afa97067a29029cabf40dcc6c07c"
+    },
+    {
+      "path": "runners/ci-wrapped-binary.py",
+      "bytes": 896,
+      "sha256": "bea11fce375671fce0c3e83e50b52cd8341e00674516ea1c0e69fb9c3bab0c52"
+    },
+    {
+      "path": "runners/ci-wrapped-boundary-append.py",
+      "bytes": 364,
+      "sha256": "a8223562456ad38a295c7b481cbe0688d9c7c30a196f148f9a8f2b85ed875a39"
+    },
+    {
+      "path": "runners/ci-wrapped-boundary-test.rs",
+      "bytes": 1749,
+      "sha256": "7aa545845e79770715535d34429904aae3579864c3c2b434b7923652d05c2573"
+    },
+    {
+      "path": "runners/ci-wrapped-check-v2.py",
+      "bytes": 4996,
+      "sha256": "23a4b61aefcea289315106a0a5d46ce7f39d230bf369362a196419fbfd37aab5"
+    },
+    {
+      "path": "runners/ci-wrapped-check.py",
+      "bytes": 4664,
+      "sha256": "47e38b5129c332ae70ec1800fe69081c5f9bc57505ca6e8a2518fdc079f6d997"
+    },
+    {
+      "path": "runners/ci-wrapped-commit.py",
+      "bytes": 4644,
+      "sha256": "46b5ae4c0e4ff387f975aed5c693da323aef466e6a991e8401b9d3c6e77ffa38"
+    },
+    {
+      "path": "runners/ci-wrapped-counts.py",
+      "bytes": 1350,
+      "sha256": "fb99776fa96a8d4094c6a15ff975a750761cc716e8bd288e33ae55b9fc83609c"
+    },
+    {
+      "path": "runners/ci-wrapped-docs.py",
+      "bytes": 6782,
+      "sha256": "6d6f2e1cf7ddb9b3c0b552a19bda69ca1dbefe392bab0edd8c28dc96a9d328e0"
+    },
+    {
+      "path": "runners/ci-wrapped-final-r3-setup.py",
+      "bytes": 2069,
+      "sha256": "af15e0e0be016023c56af9efe9556f6b78169e4bd4373da9ddedb2075917b6e2"
+    },
+    {
+      "path": "runners/ci-wrapped-integrated.py",
+      "bytes": 2190,
+      "sha256": "4c7ddf06cbfcb94750b3680dc9906d945178b036a15f78855e1bff1185afd5cd"
+    },
+    {
+      "path": "runners/ci-wrapped-live-append.py",
+      "bytes": 355,
+      "sha256": "e02c271196728529ca8ef1141c0e08d5fdb6fc204a5a4daf21d32ce05b02eb14"
+    },
+    {
+      "path": "runners/ci-wrapped-live-test.rs",
+      "bytes": 4082,
+      "sha256": "e69a83257924bec226ab7ad89c2469667159550d21263c7b816922ab4f4a60df"
+    },
+    {
+      "path": "runners/ci-wrapped-pr.py",
+      "bytes": 4887,
+      "sha256": "dfc4f887ea17386a9ccf39591a1dba1e088030a35196af324fdda99e36baa830"
+    },
+    {
+      "path": "runners/ci-wrapped-preserve.py",
+      "bytes": 10329,
+      "sha256": "774ab2f227cd48f3b08105e6f5e1d348ec9829ef312c16747db8966f83fea745"
+    },
+    {
+      "path": "runners/ci-wrapped-proof.py",
+      "bytes": 352,
+      "sha256": "cb85cdcb4052f40f20dca314b1d9feeb71e6f3994e58a5f33605cefcd4b75c14"
+    },
+    {
+      "path": "runners/ci-wrapped-setup.py",
+      "bytes": 1395,
+      "sha256": "66b6040cf2ef4f595562dd299dfb836f3dfdad739a155ab656831174d100dea0"
+    },
+    {
+      "path": "runners/ci-wrapped-stage-setup.py",
+      "bytes": 446,
+      "sha256": "5d581735f6e96e5f5f3156fc6dc01f5b8247d544e7e1007fe8f79143c02be61a"
+    },
+    {
+      "path": "runners/ci-wrapped-stage.py",
+      "bytes": 3862,
+      "sha256": "b93a0f6001c9839ae17282b7d9c3d627d67cd200f001b6449b44cbcf6f9e4083"
+    },
+    {
+      "path": "runners/ci-wrapped-v2-setup.py",
+      "bytes": 568,
+      "sha256": "e16baaa5407b26e095c0b7f5542376f2a50c1ffeee9d3da6838803cd8eac0352"
+    },
+    {
+      "path": "source-commit.json",
+      "bytes": 448,
+      "sha256": "4da0842914f334279604543653eae8f9a483ba42aea67bf0805b7c025d2e3e89"
+    },
+    {
+      "path": "source-integration.json",
+      "bytes": 2043,
+      "sha256": "724fb27ce84e9e37efa2d19ac9c973cb61f69ccee7294da1fbe26587feb20cba"
+    },
+    {
+      "path": "source-materialization.json",
+      "bytes": 210014,
+      "sha256": "1b1712ff1da3cbaf84233486474421e79466e7ba452b99199bb32c01b269b259"
+    }
+  ]
+}

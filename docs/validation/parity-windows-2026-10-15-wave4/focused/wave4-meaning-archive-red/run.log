@@ -1,0 +1,37 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+warning: function `registry_state` is never used
+   --> native\tests\support\meaning_archive_fixture.rs:189:8
+    |
+189 | pub fn registry_state(directory: &std::path::Path) -> Value {
+    |        ^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `foreign_only_source` is never used
+   --> native\tests\support\meaning_archive_fixture.rs:233:8
+    |
+233 | pub fn foreign_only_source(text: &str) -> (TempDir, Engine, Snapshot) {
+    |        ^^^^^^^^^^^^^^^^^^^
+
+warning: `yoke-code-intelligence` (test "meaning_view_archives") generated 2 warnings
+    Finished `test` profile [unoptimized] target(s) in 2.68s
+     Running tests\meaning_view_archives.rs (target\debug\deps\meaning_view_archives-51ea5f08bcf57128.exe)
+
+running 1 test
+test portable_archive_replays_both_epochs_without_a_store_live_tree_or_worker ... FAILED
+
+failures:
+
+---- portable_archive_replays_both_epochs_without_a_store_live_tree_or_worker stdout ----
+
+thread 'portable_archive_replays_both_epochs_without_a_store_live_tree_or_worker' (44304) panicked at native\tests\meaning_view_archives.rs:17:10:
+A genuine published typed View needs an explicit portable archive: Typed portable Meaning-View archive preparation is not implemented
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    portable_archive_replays_both_epochs_without_a_store_live_tree_or_worker
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 7 filtered out; finished in 1.51s
+
+error: test failed, to rerun pass `--test meaning_view_archives`

@@ -1,0 +1,69 @@
+{
+  "ledger": {
+    "executable": "target\\debug\\deps\\ledger-dcddb849694983a4.exe",
+    "ignored": [],
+    "registered": [
+      "concurrent_reservations_cannot_overspend",
+      "reported_cost_above_reservation_stays_charged_and_blocks_task",
+      "reservations_survive_reopen_and_refuse_overspend",
+      "unknown_billing_retains_reservation_and_only_unsent_attempts_cancel",
+      "usage_is_monotone_deduplicated_and_policy_is_immutable"
+    ]
+  },
+  "ledger_admission_review": {
+    "executable": "target\\debug\\deps\\ledger_admission_review-8a6bcc31976b0106.exe",
+    "ignored": [],
+    "registered": [
+      "oversized_accounting_cells_are_rejected_before_rust_materialization_and_restore_sql_limit"
+    ]
+  },
+  "ledger_batches": {
+    "executable": "target\\debug\\deps\\ledger_batches-f3f296587db86e74.exe",
+    "ignored": [],
+    "registered": [
+      "a_late_sqlite_insert_failure_rolls_back_every_batch_reservation_and_task",
+      "batch_admission_is_atomic_and_preserves_individual_unknown_billing",
+      "batch_status_can_be_validated_inside_the_existing_retention_transaction",
+      "competing_whole_batches_cannot_spend_partial_or_overlapping_budgets",
+      "first_overrun_blocks_a_previously_reserved_later_send_without_releasing_sent_cost",
+      "reservation_tokens_are_workspace_bound_and_cannot_send_an_already_sent_attempt"
+    ]
+  },
+  "ledger_batches_review": {
+    "executable": "target\\debug\\deps\\ledger_batches_review-e3f6d3e72c9aa0b7.exe",
+    "ignored": [],
+    "registered": [
+      "late_batch_insert_failure_preserves_an_existing_task_and_all_old_reservations",
+      "original_response_usage_stays_distinct_from_later_maxima_and_reconciled_cost",
+      "sealed_reservation_rejects_changed_durable_bindings_without_ledger_side_effects"
+    ]
+  },
+  "live": {
+    "executable": "target\\debug\\deps\\live-d84dde654b404e7d.exe",
+    "ignored": [
+      "actual_python_server_cross_file_unicode_historical_navigation_and_rename",
+      "actual_rust_analyzer_definition_references_and_rename",
+      "actual_rust_analyzer_mcp_references_bind_immutable_snapshot",
+      "actual_typescript_server_cross_file_definition_and_rename"
+    ],
+    "registered": [
+      "actual_python_server_cross_file_unicode_historical_navigation_and_rename",
+      "actual_rust_analyzer_definition_references_and_rename",
+      "actual_rust_analyzer_mcp_references_bind_immutable_snapshot",
+      "actual_typescript_server_cross_file_definition_and_rename"
+    ]
+  },
+  "live_enrichment": {
+    "executable": "target\\debug\\deps\\live_enrichment-fe0b6210f3ac9031.exe",
+    "ignored": [
+      "actual_python_server_normalized_symbols_and_signature_help",
+      "actual_rust_server_expanded_call_symbols_completion_signature_diagnostics_and_prepare_rename",
+      "actual_typescript_server_expanded_type_call_symbols_signature_and_published_diagnostics"
+    ],
+    "registered": [
+      "actual_python_server_normalized_symbols_and_signature_help",
+      "actual_rust_server_expanded_call_symbols_completion_signature_diagnostics_and_prepare_rename",
+      "actual_typescript_server_expanded_type_call_symbols_signature_and_published_diagnostics"
+    ]
+  }
+}

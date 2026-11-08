@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "scope": "Cargo exit0 is insufficient; both rejected before first native image read",
+  "files": [
+    {
+      "path": "release-cli-compiler-transaction-e89-r1/request.json",
+      "bytes": 1480,
+      "sha256": "90b9b98a9c40812f05d9828ad9655021f051e27774eefcac2290e33967c60d92"
+    },
+    {
+      "path": "release-cli-compiler-transaction-e89-r1/result.json",
+      "bytes": 628,
+      "sha256": "dd80dfd0ec97eb69bc574dc97eff4efa4f20b2783d4ccf923881335891c5493b"
+    },
+    {
+      "path": "release-cli-compiler-transaction-e89-r1/inner.job.json",
+      "bytes": 1799,
+      "sha256": "b0cffcfd9f9cabbc06e6f8bb63b82b3d5a115b2b1920e8a3e5278beb6bc9ad7b"
+    },
+    {
+      "path": "release-cli-compiler-transaction-e89-r1/outer.job.json",
+      "bytes": 2319,
+      "sha256": "10c0a56f06f1f0b04c6c05b688cf9493dda3a2a83d0570eed84c469f214f96e7"
+    },
+    {
+      "path": "release-cli-compiler-transaction-e89-r2/request.json",
+      "bytes": 1480,
+      "sha256": "9634fe664c5cc87420e5d1af2256031382bcb6d8d8eb0a9d03129ddc3456da1e"
+    },
+    {
+      "path": "release-cli-compiler-transaction-e89-r2/result.json",
+      "bytes": 628,
+      "sha256": "6b089249fe6054217f8ca98f89ccb31740df3ceeb5a6d06dd12ea1c3279e83e8"
+    },
+    {
+      "path": "release-cli-compiler-transaction-e89-r2/inner.job.json",
+      "bytes": 1799,
+      "sha256": "441472783d35296d148a878984e9efa0b6af9ce9e4ece161dfd4865a0d9f8412"
+    },
+    {
+      "path": "release-cli-compiler-transaction-e89-r2/outer.job.json",
+      "bytes": 2316,
+      "sha256": "844513c6b180b6823a4aed387aea918f98fd054bce2cdda766ab3318905bebbe"
+    }
+  ]
+}

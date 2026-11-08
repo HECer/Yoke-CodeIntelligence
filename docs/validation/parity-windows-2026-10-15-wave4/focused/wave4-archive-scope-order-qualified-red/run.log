@@ -1,0 +1,252 @@
+warning: unused import: `refactor_intents::stage_move_intent_at`
+  --> native\src\lsp.rs:27:16
+   |
+27 | pub(crate) use refactor_intents::stage_move_intent_at;
+   |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `canonical_source_symbol_path` is never used
+    --> native\src\agent_repl.rs:2330:15
+     |
+2330 | pub(crate) fn canonical_source_symbol_path(
+     |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     |
+     = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: method `source_scopes` is never used
+  --> native\src\graph_view.rs:90:19
+   |
+88 | impl ArchiveProof {
+   | ----------------- method in this implementation
+89 |     /// Candidate source manifests only; this iterator grants no source access.
+90 |     pub(crate) fn source_scopes(&self) -> impl Iterator<Item = &Snapshot> {
+   |                   ^^^^^^^^^^^^^
+
+warning: struct `VerifiedArchivedMeaningView` is never constructed
+  --> native\src\graph_view.rs:97:19
+   |
+97 | pub(crate) struct VerifiedArchivedMeaningView {
+   |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: multiple methods are never used
+   --> native\src\graph_view.rs:106:19
+    |
+105 | impl VerifiedArchivedMeaningView {
+    | -------------------------------- methods in this implementation
+106 |     pub(crate) fn snapshot(&self) -> &Snapshot {
+    |                   ^^^^^^^^
+...
+109 |     pub(crate) fn canonical_graph(&self) -> &Graph {
+    |                   ^^^^^^^^^^^^^^^
+...
+112 |     pub(crate) fn source_projection(&self) -> &Graph {
+    |                   ^^^^^^^^^^^^^^^^^
+...
+115 |     pub(crate) fn view(&self) -> &View {
+    |                   ^^^^
+...
+118 |     pub(crate) fn proof(&self) -> &ArchiveProof {
+    |                   ^^^^^
+...
+121 |     pub(crate) fn analyzer_epoch(&self) -> crate::analysis::AnalyzerEpoch {
+    |                   ^^^^^^^^^^^^^^
+...
+124 |     pub(crate) fn source_scopes(&self) -> impl Iterator<Item = &Snapshot> {
+    |                   ^^^^^^^^^^^^^
+
+warning: function `archive_meaning_view` is never used
+   --> native\src\graph_view.rs:128:15
+    |
+128 | pub(crate) fn archive_meaning_view(
+    |               ^^^^^^^^^^^^^^^^^^^^
+
+warning: function `replay_meaning_view_archive` is never used
+   --> native\src\graph_view.rs:137:15
+    |
+137 | pub(crate) fn replay_meaning_view_archive(
+    |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `checked_capability` is never used
+ --> native\src\lsp_refactor_intents.rs:6:4
+  |
+6 | fn checked_capability(capabilities: &Value, destination: &str, deadline: &Deadline) -> Result<()> {
+  |    ^^^^^^^^^^^^^^^^^^
+
+warning: function `checked_response` is never used
+  --> native\src\lsp_refactor_intents.rs:54:4
+   |
+54 | fn checked_response<'a>(
+   |    ^^^^^^^^^^^^^^^^
+
+warning: function `stage_move_intent_at` is never used
+   --> native\src\lsp_refactor_intents.rs:103:15
+    |
+103 | pub(crate) fn stage_move_intent_at(
+    |               ^^^^^^^^^^^^^^^^^^^^
+
+warning: struct `CheckedFileBinding` is never constructed
+  --> native\src\refactor_contract.rs:13:19
+   |
+13 | pub(crate) struct CheckedFileBinding {
+   |                   ^^^^^^^^^^^^^^^^^^
+
+warning: methods `path`, `content_hash`, and `wire` are never used
+  --> native\src\refactor_contract.rs:19:19
+   |
+18 | impl CheckedFileBinding {
+   | ----------------------- methods in this implementation
+19 |     pub(crate) fn path(&self) -> &str {
+   |                   ^^^^
+...
+22 |     pub(crate) fn content_hash(&self) -> &str {
+   |                   ^^^^^^^^^^^^
+...
+25 |     fn wire(&self) -> Value {
+   |        ^^^^
+
+warning: struct `CheckedSymbolBinding` is never constructed
+  --> native\src\refactor_contract.rs:31:19
+   |
+31 | pub(crate) struct CheckedSymbolBinding {
+   |                   ^^^^^^^^^^^^^^^^^^^^
+
+warning: methods `file`, `range`, `name_range`, and `wire` are never used
+  --> native\src\refactor_contract.rs:41:19
+   |
+40 | impl CheckedSymbolBinding {
+   | ------------------------- methods in this implementation
+41 |     pub(crate) fn file(&self) -> &CheckedFileBinding {
+   |                   ^^^^
+...
+44 |     pub(crate) fn range(&self) -> Range<usize> {
+   |                   ^^^^^
+...
+47 |     pub(crate) fn name_range(&self) -> Range<usize> {
+   |                   ^^^^^^^^^^
+...
+50 |     fn wire(&self) -> Value {
+   |        ^^^^
+
+warning: enum `CheckedMoveDestination` is never used
+  --> native\src\refactor_contract.rs:59:17
+   |
+59 | pub(crate) enum CheckedMoveDestination {
+   |                 ^^^^^^^^^^^^^^^^^^^^^^
+
+warning: methods `file`, `insertion_byte`, and `wire` are never used
+  --> native\src\refactor_contract.rs:71:19
+   |
+70 | impl CheckedMoveDestination {
+   | --------------------------- methods in this implementation
+71 |     pub(crate) fn file(&self) -> &CheckedFileBinding {
+   |                   ^^^^
+...
+77 |     pub(crate) fn insertion_byte(&self) -> usize {
+   |                   ^^^^^^^^^^^^^^
+...
+83 |     fn wire(&self) -> Value {
+   |        ^^^^
+
+warning: struct `CheckedMoveIntent` is never constructed
+  --> native\src\refactor_contract.rs:98:19
+   |
+98 | pub(crate) struct CheckedMoveIntent {
+   |                   ^^^^^^^^^^^^^^^^^
+
+warning: multiple associated items are never used
+   --> native\src\refactor_contract.rs:108:19
+    |
+106 | impl CheckedMoveIntent {
+    | ---------------------- associated items in this implementation
+107 |     #[allow(clippy::too_many_arguments)] // Explicit source and destination selectors share one immutable scope.
+108 |     pub(crate) fn resolve(
+    |                   ^^^^^^^
+...
+262 |     pub(crate) fn source_path(&self) -> &str {
+    |                   ^^^^^^^^^^^
+...
+265 |     pub(crate) fn destination_path(&self) -> &str {
+    |                   ^^^^^^^^^^^^^^^^
+...
+268 |     pub(crate) fn destination_kind(&self) -> &'static str {
+    |                   ^^^^^^^^^^^^^^^^
+...
+274 |     pub(crate) fn source(&self) -> &CheckedSymbolBinding {
+    |                   ^^^^^^
+...
+277 |     pub(crate) fn destination(&self) -> &CheckedMoveDestination {
+    |                   ^^^^^^^^^^^
+...
+280 |     pub(crate) fn wire_intent(&self, deadline: &Deadline) -> Result<Value> {
+    |                   ^^^^^^^^^^^
+...
+286 |     pub(crate) fn validate_binding(
+    |                   ^^^^^^^^^^^^^^^^
+
+warning: function `symbol_binding` is never used
+   --> native\src\refactor_contract.rs:306:4
+    |
+306 | fn symbol_binding(
+    |    ^^^^^^^^^^^^^^
+
+warning: struct `RustSyntax` is never constructed
+   --> native\src\refactor_contract.rs:343:19
+    |
+343 | pub(crate) struct RustSyntax {
+    |                   ^^^^^^^^^^
+
+warning: methods `root`, `range`, and `find` are never used
+   --> native\src\refactor_contract.rs:348:19
+    |
+347 | impl RustSyntax {
+    | --------------- methods in this implementation
+348 |     pub(crate) fn root(&self) -> Node<'_> {
+    |                   ^^^^
+...
+351 |     pub(crate) fn range(&self, node: Node<'_>) -> Range<usize> {
+    |                   ^^^^^
+...
+354 |     fn find(&self, entity: &Entity, kind: &str, deadline: &Deadline) -> Result<Node<'_>> {
+    |        ^^^^
+
+warning: function `parse_rust` is never used
+   --> native\src\refactor_contract.rs:372:15
+    |
+372 | pub(crate) fn parse_rust(text: &str, deadline: &Deadline) -> Result<RustSyntax> {
+    |               ^^^^^^^^^^
+
+warning: function `is_item_container` is never used
+   --> native\src\refactor_contract.rs:412:4
+    |
+412 | fn is_item_container(node: Node<'_>) -> bool {
+    |    ^^^^^^^^^^^^^^^^^
+
+warning: function `check_container` is never used
+   --> native\src\refactor_contract.rs:419:4
+    |
+419 | fn check_container(
+    |    ^^^^^^^^^^^^^^^
+
+warning: `yoke-code-intelligence` (lib test) generated 24 warnings (run `cargo fix --lib -p yoke-code-intelligence --tests` to apply 1 suggestion)
+    Finished `test` profile [unoptimized] target(s) in 0.59s
+     Running unittests src\lib.rs (target\debug\deps\yoke-35b101204e4eb110.exe)
+
+running 1 test
+test meaning_build::archive_preparation_order_tests::archive_scope_preflight_covers_every_manifest_before_any_cas_read ... FAILED
+
+failures:
+
+---- meaning_build::archive_preparation_order_tests::archive_scope_preflight_covers_every_manifest_before_any_cas_read stdout ----
+
+thread 'meaning_build::archive_preparation_order_tests::archive_scope_preflight_covers_every_manifest_before_any_cas_read' (48056) panicked at native\src\meaning_archive_order_tests.rs:139:5:
+A CAS read preceded complete source-policy preflight: Der Prozess kann nicht auf die Datei zugreifen, da sie von einem anderen Prozess verwendet wird. (os error 32)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    meaning_build::archive_preparation_order_tests::archive_scope_preflight_covers_every_manifest_before_any_cas_read
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 149 filtered out; finished in 0.60s
+
+error: test failed, to rerun pass `--lib`

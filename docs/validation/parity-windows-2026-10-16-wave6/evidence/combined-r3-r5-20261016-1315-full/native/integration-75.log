@@ -1,0 +1,23 @@
+    Finished `test` profile [unoptimized] target(s) in 0.90s
+     Running tests\model_bedrock_batch_cli_review.rs (target\debug\deps\model_bedrock_batch_cli_review-83f2c165a7f1f553.exe)
+
+running 6 tests
+test invalid_batch_output_budget_rejects_before_creating_source_state ... ok
+test batch_status_unknown_root_or_invalid_identity_does_not_create_state ... ok
+test batch_status_does_not_initialize_an_empty_database_placeholder ... ok
+test host_batch_authority_fields_and_aggregate_overbudget_reject_without_workers ... ok
+test small_cli_status_is_a_recoverable_typed_reference_without_new_artifacts_or_execution ... ok
+test valid_batch_retention_is_typed_and_future_fields_or_response_rebinding_fail_closed ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.89s
+
+     Running tests\model_bedrock_cli.rs (target\debug\deps\model_bedrock_cli-2a5523af827e1e38.exe)
+
+running 4 tests
+test bedrock_parent_requires_network_trust_before_profile_or_source_state ... ok
+test changed_bedrock_worker_profile_fails_before_stdin_credentials_or_source_state ... ok
+test incompatible_bedrock_operation_is_denied_before_opening_source_or_reserving_cost ... ok
+test embedding_batch_host_limits_are_validated_before_source_or_credential_access ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+

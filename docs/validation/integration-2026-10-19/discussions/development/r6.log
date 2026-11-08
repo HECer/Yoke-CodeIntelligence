@@ -1,0 +1,198 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\native)
+warning: unused variable: `head`
+  --> native\tests\github_discussions.rs:30:30
+   |
+30 |     fn with_head(mode: &str, head: String) -> Self {
+   |                              ^^^^ help: if this is intentional, prefix it with an underscore: `_head`
+   |
+   = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+warning: `yoke-code-intelligence` (test "github_discussions") generated 1 warning (run `cargo fix --test "github_discussions" -p yoke-code-intelligence` to apply 1 suggestion)
+    Finished `test` profile [unoptimized] target(s) in 1m 09s
+     Running tests\github_app_digest.rs (target\debug\deps\github_app_digest-af81450ee32fffc9.exe)
+
+running 35 tests
+test cancelled_digest_preserves_source_and_restores_the_store_deadline ... ok
+test captured_git::captured_git_preview_refuses_forged_commit_tree_blob_and_analyzer_facts ... ok
+test blocked_first_sql_read_obeys_deadline_and_restores_the_original_busy_timeout ... ok
+test captured_git::captured_git_source_budget_precedes_commit_blob_validation_without_repair ... ok
+test captured_git::captured_git_preview_verifies_commit_without_live_checkout_or_git_metadata ... ok
+test captured_git::git_disk_origin_refuses_hidden_selector_rows_without_decoding_them ... ok
+test captured_git::git_lineage_aggregate_exact_boundary_includes_every_proof_row ... ok
+test captured_git::git_lineage_metadata_has_an_independent_host_budget_before_commit_reads ... ok
+test captured_git::git_preview_refuses_unbounded_derived_origin_chains_before_scope_replay ... ok
+test captured_git::lowered_metadata_budgets_preserve_the_separate_commit_registration_row_allowance ... ok
+test captured_git::selected_metadata_budget_does_not_reduce_the_independent_lineage_row_allowance ... ok
+test configured_disk_proof_bytes_have_an_independent_budget ... ok
+test declaration_projection_does_not_require_unused_rationale_graph_rows ... ok
+test digest_refuses_corrupt_captured_bytes_without_repairing_or_writing_them ... ok
+test digest_refuses_grant_mismatch_and_caller_owned_transaction ... ok
+test digest_replays_native_source_and_refuses_changed_graph_names_spans_or_producers ... ok
+test digest_request_rejects_duplicate_keys_urls_bodies_and_invalid_native_identities ... ok
+test digest_symbol_limit_reports_omissions_and_complete_stdout_budget_precedes_mutations ... ok
+test captured_git::small_git_selection_refuses_oversized_origin_metadata_before_commit_reads ... ok
+test digest_uses_immutable_captured_bytes_after_current_source_changes ... ok
+test digest_work_caps_apply_even_when_no_symbols_are_requested ... ok
+test disk_preview_refuses_shadow_inheritance_and_overlay_selector_records ... ok
+test executable_array_type_expressions_are_omitted_from_body_free_headers ... ok
+test header_literals_and_generic_defaults_are_unresolved_but_known_abi_headers_survive ... ok
+test language_override_cannot_route_document_formats_through_rust_replay ... ok
+test malformed_saved_graph_cannot_echo_source_bearing_values_through_errors ... ok
+test native_digest_projects_only_public_headers_and_exact_captured_symbol_fingerprints ... ok
+test native_replay_names_have_an_aggregate_budget_independent_of_emitted_symbols ... ok
+test private_ast_nesting_is_bounded_before_native_replay_even_with_zero_output_rows ... ok
+test public_constant_initializers_and_private_module_children_are_not_exported_as_source ... ok
+test public_reexports_remain_explicitly_unresolved_without_exposing_private_targets ... ok
+test repeated_call_receiver_text_is_bounded_before_native_replay ... ok
+test unsupported_language_exports_are_reported_as_unknown_instead_of_empty_complete ... ok
+test valid_closed_digest_request_is_admitted_without_provider_or_body_fields ... ok
+test replay_preserves_native_method_identity_and_long_unicode_signature_finalization ... ok
+
+test result: ok. 35 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.58s
+
+     Running tests\github_app_digest_cli.rs (target\debug\deps\github_app_digest_cli-696b02f48ff9d18f.exe)
+
+running 38 tests
+test captured_history::a_parent_with_a_non_commit_object_type_is_unavailable ... ok
+test captured_history::asymmetric_parent_walk_matches_git_date_priority_and_reverse_output ... ok
+test captured_history::committer_date_order::clock_skew_preserves_git_discovery_order_instead_of_globally_sorting_dates ... ok
+test captured_history::committer_date_order::commit_date_priority_matches_git_and_ignores_reversed_author_dates ... ok
+test captured_history::committer_date_order::equal_commit_dates_preserve_git_parent_insertion_order ... ok
+test captured_history::disk_source_cannot_masquerade_as_an_empty_complete_git_history ... ok
+test captured_history::committer_date_order::negative_stored_commit_time_uses_gits_unsigned_timestamp_order ... ok
+test captured_history::frontier_budget_counts_the_queue_across_multiple_visited_commits ... ok
+test captured_history::history_consent_and_git_trust_precede_host_inputs_and_store_creation ... ok
+test captured_history::history_aggregate_raw_commit_bytes_have_an_exact_runtime_boundary ... ok
+test captured_history::history_first_sql_wait_uses_the_cli_deadline_without_store_repair ... ok
+test captured_history::history_hard_caps_precede_missing_host_inputs ... ok
+test captured_history::history_grant_denial_precedes_absent_store_and_git_execution ... ok
+test captured_history::history_refuses_network_webhook_and_write_authority_before_host_inputs ... ok
+test captured_history::history_selection_and_visit_limits_report_the_unvisited_frontier ... ok
+test captured_history::history_reverifies_the_captured_receipt_and_commit_artifact_before_git_reads ... ok
+test captured_history::in_budget_substituted_ancestor_bytes_cannot_bypass_object_identity ... ok
+test captured_history::history_uses_the_verified_captured_head_and_preserves_message_delimiters_and_output_boundary ... ok
+test captured_history::invalid_utf8_ancestor_messages_are_not_lossily_decoded_or_echoed ... ok
+test captured_history::misplaced_canonical_parent_header_refuses_without_partial_output_or_store_repair ... ok
+test captured_history::missing_ancestor_refuses_without_a_successful_empty_history_or_store_repair ... ok
+test captured_history::oversized_ancestor_is_refused_before_its_corrupt_object_hash_is_read ... ok
+test captured_history::parent_like_message_lines_never_become_header_parent_links ... ok
+test captured_history::per_commit_size_has_an_exact_lowered_runtime_boundary ... ok
+test captured_history::skipped_merge_payloads_consume_the_aggregate_commit_byte_budget ... ok
+test captured_history::skipped_merge_objects_still_consume_visit_and_frontier_budgets ... ok
+test digest_cli_hard_budgets_are_checked_before_missing_inputs_or_store ... ok
+test digest_cli_refuses_source_bearing_and_duplicate_request_fields_without_echo ... ok
+test digest_existing_store_access_refuses_missing_lease_files_without_recreating_them ... ok
+test digest_profile_grant_is_checked_before_opening_an_absent_workspace ... ok
+test digest_read_consent_precedes_inputs_credentials_and_workspace_creation ... ok
+test digest_refuses_network_webhook_and_write_authority_before_host_inputs ... ok
+test git_digest_cli_uses_verified_captured_objects_after_git_metadata_and_worktree_change ... ok
+test local_digest_cli_needs_no_signing_key_and_preserves_an_existing_delete_mode_store ... ok
+test local_digest_reads_the_committed_live_wal_without_checkpointing_or_ignoring_it ... ok
+test local_digest_requires_absolute_host_input_paths_before_workspace_discovery ... ok
+test locked_existing_store_obeys_the_cli_deadline_before_native_projection ... ok
+test captured_history::unsupported_encoding_and_malformed_parent_headers_have_static_errors ... ok
+
+test result: ok. 38 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 14.85s
+
+     Running tests\github_app_digest_mapping.rs (target\debug\deps\github_app_digest_mapping-b7be9e3358d19ca1.exe)
+
+running 13 tests
+test a_path_still_present_in_git_but_outside_the_new_capture_is_unavailable_not_deleted ... ok
+test actual_cli_maps_only_explicit_selectors_and_honors_exact_output_capacity ... ok
+test caller_transactions_are_refused_without_commit_or_rollback ... ok
+test corrupt_additional_proofs_and_cancelled_work_restore_the_callers_sql_policy ... ok
+test aggregate_source_metadata_ast_and_export_budgets_cannot_reset_per_snapshot ... ok
+test duplicate_declarations_preserve_every_original_candidate_without_a_forced_identity ... ok
+test mapped_cli_never_turns_its_selection_flag_into_digest_history_or_git_permission ... ok
+test exact_git_file_relations_and_qualified_symbol_candidates_keep_original_anchors ... ok
+test missing_captures_are_explicit_and_legacy_history_does_not_infer_them ... ok
+test revoked_grants_invalid_duplicate_and_head_selectors_are_rejected_before_git_execution ... ok
+test relation_work_and_commit_proof_limits_refuse_without_partial_results ... ok
+test sha256_git_objects_and_mixed_supported_capture_epochs_retain_their_provenance ... ok
+test unrelated_commits_disk_sources_and_ambiguous_captures_never_enter_the_history ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 13.65s
+
+     Running tests\github_discussions.rs (target\debug\deps\github_discussions-ecd057bb99c496f2.exe)
+
+running 14 tests
+test captures_all_channels_exact_unicode_reply_edges_and_rechecks_the_closed_head ... FAILED
+test changed_head_and_cross_pull_comment_never_become_a_capture ... ok
+test cli_offline_digest_and_header_handoff_use_explicit_capture_and_fixture_grants ... FAILED
+test closed_listing_cannot_lose_its_state_filter_in_pagination ... ok
+test digest_replays_captured_source_and_keeps_discussion_claims_separate ... FAILED
+test exact_output_capacity_never_silently_clips_discussion_observations ... FAILED
+test cli_permission_denials_do_not_create_source_state_or_read_missing_host_files ... ok
+test missing_text_grant_and_zero_budget_refuse_before_network ... ok
+test partial_discovery_keeps_unacquired_pull_numbers_explicit ... ok
+test obvious_credential_text_and_unknown_schema_keys_never_echo_remote_values ... FAILED
+test provider_null_description_is_known_absence_not_missing_page_coverage ... FAILED
+test replay_rejects_rehashed_coverage_and_text_claims ... FAILED
+test replay_rejects_rehashed_foreign_receipts_and_omitted_requested_pulls ... FAILED
+test source_associations_distinguish_verified_history_from_selected_immutable_captures ... FAILED
+
+failures:
+
+---- captures_all_channels_exact_unicode_reply_edges_and_rechecks_the_closed_head stdout ----
+
+thread 'captures_all_channels_exact_unicode_reply_edges_and_rechecks_the_closed_head' (4448) panicked at native\tests\github_discussions.rs:168:86:
+called `Result::unwrap()` on an `Err` value: github_discussions_input_invalid
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- cli_offline_digest_and_header_handoff_use_explicit_capture_and_fixture_grants stdout ----
+
+thread 'cli_offline_digest_and_header_handoff_use_explicit_capture_and_fixture_grants' (19776) panicked at native\tests\github_discussions.rs:168:86:
+called `Result::unwrap()` on an `Err` value: github_discussions_input_invalid
+
+---- digest_replays_captured_source_and_keeps_discussion_claims_separate stdout ----
+
+thread 'digest_replays_captured_source_and_keeps_discussion_claims_separate' (12080) panicked at native\tests\github_discussions.rs:168:86:
+called `Result::unwrap()` on an `Err` value: github_discussions_input_invalid
+
+---- exact_output_capacity_never_silently_clips_discussion_observations stdout ----
+
+thread 'exact_output_capacity_never_silently_clips_discussion_observations' (12136) panicked at native\tests\github_discussions.rs:168:86:
+called `Result::unwrap()` on an `Err` value: github_discussions_input_invalid
+
+---- obvious_credential_text_and_unknown_schema_keys_never_echo_remote_values stdout ----
+
+thread 'obvious_credential_text_and_unknown_schema_keys_never_echo_remote_values' (20172) panicked at native\tests\github_discussions.rs:168:86:
+called `Result::unwrap()` on an `Err` value: github_discussions_input_invalid
+
+---- provider_null_description_is_known_absence_not_missing_page_coverage stdout ----
+
+thread 'provider_null_description_is_known_absence_not_missing_page_coverage' (5204) panicked at native\tests\github_discussions.rs:168:86:
+called `Result::unwrap()` on an `Err` value: github_discussions_input_invalid
+
+---- replay_rejects_rehashed_coverage_and_text_claims stdout ----
+
+thread 'replay_rejects_rehashed_coverage_and_text_claims' (11944) panicked at native\tests\github_discussions.rs:168:86:
+called `Result::unwrap()` on an `Err` value: github_discussions_input_invalid
+
+---- replay_rejects_rehashed_foreign_receipts_and_omitted_requested_pulls stdout ----
+
+thread 'replay_rejects_rehashed_foreign_receipts_and_omitted_requested_pulls' (11804) panicked at native\tests\github_discussions.rs:168:86:
+called `Result::unwrap()` on an `Err` value: github_discussions_input_invalid
+
+---- source_associations_distinguish_verified_history_from_selected_immutable_captures stdout ----
+
+thread 'source_associations_distinguish_verified_history_from_selected_immutable_captures' (16412) panicked at native\tests\github_discussions.rs:168:86:
+called `Result::unwrap()` on an `Err` value: github_discussions_input_invalid
+
+
+failures:
+    captures_all_channels_exact_unicode_reply_edges_and_rechecks_the_closed_head
+    cli_offline_digest_and_header_handoff_use_explicit_capture_and_fixture_grants
+    digest_replays_captured_source_and_keeps_discussion_claims_separate
+    exact_output_capacity_never_silently_clips_discussion_observations
+    obvious_credential_text_and_unknown_schema_keys_never_echo_remote_values
+    provider_null_description_is_known_absence_not_missing_page_coverage
+    replay_rejects_rehashed_coverage_and_text_claims
+    replay_rejects_rehashed_foreign_receipts_and_omitted_requested_pulls
+    source_associations_distinguish_verified_history_from_selected_immutable_captures
+
+test result: FAILED. 5 passed; 9 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.03s
+
+error: test failed, to rerun pass `--test github_discussions`
+error: 1 target failed:
+    `--test github_discussions`

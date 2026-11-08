@@ -1,0 +1,387 @@
+{
+  "recordedAt": "2026-10-19T10:00:46.601641+00:00",
+  "nativeBinary": "target/debug/yoke.exe",
+  "nativeBinarySha256": "3aecbcc5083fffe80b89e2196f9805484592defbdeb40d67c4ea38737103c6a5",
+  "casesPassed": 18,
+  "allCasesPassed": true,
+  "scope": "Actual CLI admission with current valid index/Git/source host flags and exclusively owned files. Positive limits/page controls reach missing-existing-Store refusal; malformed, authority-bearing, over-limit and guarded path inputs refuse earlier. Real unprivileged Windows junction; no settings/privilege changes, source Store, credentials, network/model or project execution. Separate from Cargo totals.",
+  "cases": [
+    {
+      "case": "host-limits-positive-control",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-conflicts-host-oc3b10_l\\source",
+        "git",
+        "conflicts",
+        "--allow-index-read",
+        "--trust-git",
+        "--limits",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-conflicts-host-oc3b10_l\\host\\limits.json"
+      ],
+      "exitCode": 1,
+      "expectedError": "store_unavailable",
+      "stdoutEmpty": true,
+      "missingStoreNotInitialized": true,
+      "hostSentinelUnchanged": true
+    },
+    {
+      "case": "host-page-positive-control",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-conflicts-host-oc3b10_l\\source",
+        "git",
+        "conflicts",
+        "--allow-index-read",
+        "--trust-git",
+        "--limits",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-conflicts-host-oc3b10_l\\host\\limits.json",
+        "--allow-git-sources",
+        "--scope-snapshot",
+        "3333333333333333333333333333333333333333333333333333333333333333",
+        "--read-source",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-conflicts-host-oc3b10_l\\host\\page.json"
+      ],
+      "exitCode": 1,
+      "expectedError": "store_unavailable",
+      "stdoutEmpty": true,
+      "missingStoreNotInitialized": true,
+      "hostSentinelUnchanged": true
+    },
+    {
+      "case": "host-limits-relative",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-conflicts-host-oc3b10_l\\source",
+        "git",
+        "conflicts",
+        "--allow-index-read",
+        "--trust-git",
+        "--limits",
+        "relative.json"
+      ],
+      "exitCode": 1,
+      "expectedError": "input_invalid",
+      "stdoutEmpty": true,
+      "missingStoreNotInitialized": true,
+      "hostSentinelUnchanged": true
+    },
+    {
+      "case": "host-page-relative",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-conflicts-host-oc3b10_l\\source",
+        "git",
+        "conflicts",
+        "--allow-index-read",
+        "--trust-git",
+        "--limits",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-conflicts-host-oc3b10_l\\host\\limits.json",
+        "--allow-git-sources",
+        "--scope-snapshot",
+        "3333333333333333333333333333333333333333333333333333333333333333",
+        "--read-source",
+        "relative.json"
+      ],
+      "exitCode": 1,
+      "expectedError": "input_invalid",
+      "stdoutEmpty": true,
+      "missingStoreNotInitialized": true,
+      "hostSentinelUnchanged": true
+    },
+    {
+      "case": "host-limits-parent",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-conflicts-host-oc3b10_l\\source",
+        "git",
+        "conflicts",
+        "--allow-index-read",
+        "--trust-git",
+        "--limits",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-conflicts-host-oc3b10_l\\host\\..\\host\\limits.json"
+      ],
+      "exitCode": 1,
+      "expectedError": "input_invalid",
+      "stdoutEmpty": true,
+      "missingStoreNotInitialized": true,
+      "hostSentinelUnchanged": true
+    },
+    {
+      "case": "host-limits-device-prefix",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-conflicts-host-oc3b10_l\\source",
+        "git",
+        "conflicts",
+        "--allow-index-read",
+        "--trust-git",
+        "--limits",
+        "\\\\?\\C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-conflicts-host-oc3b10_l\\host\\limits.json"
+      ],
+      "exitCode": 1,
+      "expectedError": "input_invalid",
+      "stdoutEmpty": true,
+      "missingStoreNotInitialized": true,
+      "hostSentinelUnchanged": true
+    },
+    {
+      "case": "host-limits-ads",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-conflicts-host-oc3b10_l\\source",
+        "git",
+        "conflicts",
+        "--allow-index-read",
+        "--trust-git",
+        "--limits",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-conflicts-host-oc3b10_l\\host\\limits.json:fixture_private_marker"
+      ],
+      "exitCode": 1,
+      "expectedError": "input_invalid",
+      "stdoutEmpty": true,
+      "missingStoreNotInitialized": true,
+      "hostSentinelUnchanged": true
+    },
+    {
+      "case": "host-limits-real-junction-ancestor",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-conflicts-host-oc3b10_l\\source",
+        "git",
+        "conflicts",
+        "--allow-index-read",
+        "--trust-git",
+        "--limits",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-conflicts-host-oc3b10_l\\host-junction\\limits.json"
+      ],
+      "exitCode": 1,
+      "expectedError": "input_invalid",
+      "stdoutEmpty": true,
+      "missingStoreNotInitialized": true,
+      "hostSentinelUnchanged": true
+    },
+    {
+      "case": "host-page-real-junction-ancestor",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-conflicts-host-oc3b10_l\\source",
+        "git",
+        "conflicts",
+        "--allow-index-read",
+        "--trust-git",
+        "--limits",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-conflicts-host-oc3b10_l\\host\\limits.json",
+        "--allow-git-sources",
+        "--scope-snapshot",
+        "3333333333333333333333333333333333333333333333333333333333333333",
+        "--read-source",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-conflicts-host-oc3b10_l\\host-junction\\page.json"
+      ],
+      "exitCode": 1,
+      "expectedError": "input_invalid",
+      "stdoutEmpty": true,
+      "missingStoreNotInitialized": true,
+      "hostSentinelUnchanged": true
+    },
+    {
+      "case": "host-limits-authority",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-conflicts-host-oc3b10_l\\source",
+        "git",
+        "conflicts",
+        "--allow-index-read",
+        "--trust-git",
+        "--limits",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-conflicts-host-oc3b10_l\\host\\bad.json"
+      ],
+      "exitCode": 1,
+      "expectedError": "input_invalid",
+      "stdoutEmpty": true,
+      "missingStoreNotInitialized": true,
+      "hostSentinelUnchanged": true
+    },
+    {
+      "case": "host-limits-missing-field",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-conflicts-host-oc3b10_l\\source",
+        "git",
+        "conflicts",
+        "--allow-index-read",
+        "--trust-git",
+        "--limits",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-conflicts-host-oc3b10_l\\host\\bad.json"
+      ],
+      "exitCode": 1,
+      "expectedError": "input_invalid",
+      "stdoutEmpty": true,
+      "missingStoreNotInitialized": true,
+      "hostSentinelUnchanged": true
+    },
+    {
+      "case": "host-limits-above-hard-max",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-conflicts-host-oc3b10_l\\source",
+        "git",
+        "conflicts",
+        "--allow-index-read",
+        "--trust-git",
+        "--limits",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-conflicts-host-oc3b10_l\\host\\bad.json"
+      ],
+      "exitCode": 1,
+      "expectedError": "capacity_exceeded",
+      "stdoutEmpty": true,
+      "missingStoreNotInitialized": true,
+      "hostSentinelUnchanged": true
+    },
+    {
+      "case": "host-limits-duplicate-key",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-conflicts-host-oc3b10_l\\source",
+        "git",
+        "conflicts",
+        "--allow-index-read",
+        "--trust-git",
+        "--limits",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-conflicts-host-oc3b10_l\\host\\bad.json"
+      ],
+      "exitCode": 1,
+      "expectedError": "input_invalid",
+      "stdoutEmpty": true,
+      "missingStoreNotInitialized": true,
+      "hostSentinelUnchanged": true
+    },
+    {
+      "case": "host-limits-oversized",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-conflicts-host-oc3b10_l\\source",
+        "git",
+        "conflicts",
+        "--allow-index-read",
+        "--trust-git",
+        "--limits",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-conflicts-host-oc3b10_l\\host\\bad.json"
+      ],
+      "exitCode": 1,
+      "expectedError": "input_invalid",
+      "stdoutEmpty": true,
+      "missingStoreNotInitialized": true,
+      "hostSentinelUnchanged": true
+    },
+    {
+      "case": "host-page-authority",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-conflicts-host-oc3b10_l\\source",
+        "git",
+        "conflicts",
+        "--allow-index-read",
+        "--trust-git",
+        "--limits",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-conflicts-host-oc3b10_l\\host\\limits.json",
+        "--allow-git-sources",
+        "--scope-snapshot",
+        "3333333333333333333333333333333333333333333333333333333333333333",
+        "--read-source",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-conflicts-host-oc3b10_l\\host\\bad.json"
+      ],
+      "exitCode": 1,
+      "expectedError": "input_invalid",
+      "stdoutEmpty": true,
+      "missingStoreNotInitialized": true,
+      "hostSentinelUnchanged": true
+    },
+    {
+      "case": "host-page-unknown-value-not-echoed",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-conflicts-host-oc3b10_l\\source",
+        "git",
+        "conflicts",
+        "--allow-index-read",
+        "--trust-git",
+        "--limits",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-conflicts-host-oc3b10_l\\host\\limits.json",
+        "--allow-git-sources",
+        "--scope-snapshot",
+        "3333333333333333333333333333333333333333333333333333333333333333",
+        "--read-source",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-conflicts-host-oc3b10_l\\host\\bad.json"
+      ],
+      "exitCode": 1,
+      "expectedError": "input_invalid",
+      "stdoutEmpty": true,
+      "missingStoreNotInitialized": true,
+      "hostSentinelUnchanged": true
+    },
+    {
+      "case": "host-page-utf8-byte-budget-hard-max",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-conflicts-host-oc3b10_l\\source",
+        "git",
+        "conflicts",
+        "--allow-index-read",
+        "--trust-git",
+        "--limits",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-conflicts-host-oc3b10_l\\host\\limits.json",
+        "--allow-git-sources",
+        "--scope-snapshot",
+        "3333333333333333333333333333333333333333333333333333333333333333",
+        "--read-source",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-conflicts-host-oc3b10_l\\host\\bad.json"
+      ],
+      "exitCode": 1,
+      "expectedError": "input_invalid",
+      "stdoutEmpty": true,
+      "missingStoreNotInitialized": true,
+      "hostSentinelUnchanged": true
+    },
+    {
+      "case": "host-page-duplicate-key",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-conflicts-host-oc3b10_l\\source",
+        "git",
+        "conflicts",
+        "--allow-index-read",
+        "--trust-git",
+        "--limits",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-conflicts-host-oc3b10_l\\host\\limits.json",
+        "--allow-git-sources",
+        "--scope-snapshot",
+        "3333333333333333333333333333333333333333333333333333333333333333",
+        "--read-source",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-conflicts-host-oc3b10_l\\host\\bad.json"
+      ],
+      "exitCode": 1,
+      "expectedError": "input_invalid",
+      "stdoutEmpty": true,
+      "missingStoreNotInitialized": true,
+      "hostSentinelUnchanged": true
+    }
+  ]
+}

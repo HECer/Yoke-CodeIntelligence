@@ -1,0 +1,133 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-19T01:37:22.606974+00:00",
+  "baseCommit": "328ea51729a8ffa7c310c092535b159f3c56b5e7",
+  "kind": "platform_root_spelling_and_real_first_sql_contention",
+  "acceptedWholeNative": false,
+  "actualUnixFilesystemRun": false,
+  "checks": {
+    "broadNativeRun": {
+      "groups": 10,
+      "passed": 483,
+      "failed": 0,
+      "ignored": 7
+    },
+    "firstFormat": "passed",
+    "firstAllTargetClippy": "failed_items_after_test_module",
+    "typescriptTypecheck": "passed_in_r1",
+    "typescript": {
+      "passed": 254,
+      "failed": 0,
+      "skipped": 3,
+      "run": "r1"
+    },
+    "finalFormat": "passed",
+    "finalAllTargetClippyWarningsDenied": "passed",
+    "finalRootSpellingTests": 2,
+    "interRunProductionAndTestContentUnchanged": "exact test-module relocation proved against prior source hash",
+    "sourceUnchangedWithinBothRuns": true,
+    "runtimeInputsVerified": 604
+  },
+  "findings": [
+    "POSIX selectors preserve literal backslashes, prefix text and case; Windows-only normalization remains confined to Windows. Portable tests exercise both spelling policies on this Windows host.",
+    "A separate Unix filesystem regression rejects a slash-rewritten selector for a registered literal-backslash directory; it awaits actual Unix execution.",
+    "Actual SQLite WAL admits the existing read-only Store under BEGIN EXCLUSIVE, while rollback-journal mode blocks its first SQL read. The same regression verifies shared deadline expiry, host cancellation, released leases and a successful subsequent read without journal repair.",
+    "The Git digest CLI contention fixture now selects DELETE journal mode before calibrating startup and acquiring BEGIN EXCLUSIVE. It retains its 25ms CLI budget, output refusal, unchanged complete fixture hash and journal-mode assertion; a WAL writer had not established the intended blocked-read precondition.",
+    "The R8 thematic tracker now reflects integrated App admission/authorization/queue/worker/publication/page and captured-history functionality. Original inventory-wide statuses are unchanged; closed-PR discussions, digest handoff and live service acceptance remain open."
+  ],
+  "boundaries": [
+    "Broad validation is scoped to ten selected Cargo groups, not all targets. The final two root-spelling tests overlap the broad library run.",
+    "R1 all-target Clippy failed only because a test module preceded later production items. R2 relocates that identical module to the end; exact prior-byte reconstruction proves the sole source delta.",
+    "No change to production SQLite wait policy, application permissions, source writes or default network/model/project execution.",
+    "Actual Unix path and hosted CI acceptance, macOS PDF/process/write contention issues and full STATUS/R1-R9 work remain open.",
+    "Optional Graft/Graphify installation/live diagnostics are separate, unaccepted work and are not included in these counts.",
+    "No release, main merge, deployment or live GitHub App installation."
+  ],
+  "proofs": {
+    "sourceDelta": "source-delta.json",
+    "moduleRelocation": "module-relocation.json",
+    "metadataWrittenDuringOrAfterRuntimeValidation": true
+  },
+  "artifacts": [
+    {
+      "path": "module-relocation.json",
+      "bytes": 544,
+      "sha256": "4f6d01cd39a2113b0a2200ffe7fe04b3257741ecc78192bbaf2d243e2e4c052b"
+    },
+    {
+      "path": "r1/clippy.log",
+      "bytes": 1112,
+      "sha256": "47bea72cb27a1e8a380e2c201a0c29d42f2c2b8c76b6dc0b8b847a85011574cd"
+    },
+    {
+      "path": "r1/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "r1/receipts.json",
+      "bytes": 2831,
+      "sha256": "10f5b1d435f65e375f235a6b226f3c1edb60e011102ac851c14f5f20c655ce3e"
+    },
+    {
+      "path": "r1/root-sql-and-consumers.log",
+      "bytes": 55945,
+      "sha256": "f30ec120a85b82ba65708e02681a7bf18dc15dd5c20f51003fa08366a87089d7"
+    },
+    {
+      "path": "r1/source-freeze.json",
+      "bytes": 64576,
+      "sha256": "929bb4c1413efde5969cbacc801732300c6e7dfe1d324df35e26ff0098459bf5"
+    },
+    {
+      "path": "r1/summary.json",
+      "bytes": 3190,
+      "sha256": "280b4e45b2ba93dcca125eaa4c10e05e4d18643c8894c91688044e6f2bfa70ac"
+    },
+    {
+      "path": "r1/typescript-tests.log",
+      "bytes": 24402,
+      "sha256": "4895f2f2a52828df169fc3d0abbe1ab3a1586ef8b34306699a4fc60ede9d5ee9"
+    },
+    {
+      "path": "r1/typescript-typecheck.log",
+      "bytes": 101,
+      "sha256": "30ef9ce16cf042ab6f160e0a76c1fbfe22f02a3c3a3659ee62863ffc1efdbfdf"
+    },
+    {
+      "path": "r2/clippy.log",
+      "bytes": 172,
+      "sha256": "da70a0219c05c21c72aba20e508cbe222af9a18667fc2bf13a9ae877574c8c4a"
+    },
+    {
+      "path": "r2/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "r2/receipts.json",
+      "bytes": 1165,
+      "sha256": "2597e46721cfd5d111750f9cce3959a0c8c07fe4893f5f53cc17ad1430201019"
+    },
+    {
+      "path": "r2/root-spellings.log",
+      "bytes": 602,
+      "sha256": "8a57eaf67983da24f5bda86fa4a61932fb9b050a732407f8ca5b0f19d02d3ca3"
+    },
+    {
+      "path": "r2/source-freeze.json",
+      "bytes": 64576,
+      "sha256": "6aad5766ee297d8012ed55fdccef3602177f3a4cf31d9fd7c2eb4feb8aa5e28d"
+    },
+    {
+      "path": "r2/summary.json",
+      "bytes": 1351,
+      "sha256": "0b6d1ebdd87271f71f1889bf142d5b8f3f092864aa6c822b438c09228a27d427"
+    },
+    {
+      "path": "source-delta.json",
+      "bytes": 213,
+      "sha256": "b9d4e92ad1fcc09a8ec825110ac35e8f1ecfd3e33fcd3698a93edd87bccb5197"
+    }
+  ]
+}

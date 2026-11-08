@@ -1,0 +1,23 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 3.67s
+     Running tests\runtime.rs (target\debug\deps\runtime-78dd1c087d67934d.exe)
+actual_debugger_pauses_steps_and_hits_hash_bound_unicode_breakpoints: test
+deadline_and_output_bounds_terminate_sessions_without_source_writes: test
+explicit_eval_and_repl_have_actual_module_global_semantics: test
+inspecting_a_metaclass_does_not_call_its_equality_hook: test
+modifying_copied_source_invalidates_runtime_evidence: test
+ordinary_function_locals_use_intrinsic_frame_storage: test
+program_exceptions_remain_program_outcomes_and_never_protocol_success: test
+runtime_and_evaluation_authority_are_distinct_and_source_cannot_grant_them: test
+stack_metadata_does_not_execute_string_subclass_hooks: test
+stale_breakpoints_forged_snapshots_and_relative_interpreters_are_denied: test
+unsupported_custom_locals_are_explicit_failed_operations_without_hooks: test
+variable_inspection_bypasses_custom_dictionary_accessors: test
+variable_inspection_does_not_execute_custom_repr: test
+variable_inspection_does_not_execute_equality_of_non_string_global_keys: test
+
+14 tests, 0 benchmarks
+     Running tests\scoped_parent_performance.rs (target\debug\deps\scoped_parent_performance-d7d573f20e7ab13e.exe)
+wide_comment_siblings_preserve_source_facts_within_the_request_deadline: test
+
+1 test, 0 benchmarks

@@ -1,0 +1,33 @@
+{
+  "sourceCommit": "6951ff94aee42e867329a2a042204c13c670b788",
+  "sourceUnchanged": true,
+  "commands": [
+    {
+      "name": "compile",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "rustc",
+        "--profile",
+        "test",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--test",
+        "digest_history_jobs",
+        "--",
+        "-C",
+        "extra-filename=-full-native-20261021"
+      ],
+      "cwd": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CI-r1-attach",
+      "exitCode": 101,
+      "seconds": 0.04867170000215992,
+      "totals": []
+    }
+  ],
+  "standardCargoTest": false,
+  "difference": "Only test artifact output suffix; same test profile, frozen sources, lock, test harness, assertions and package cwd. Held original output/processes untouched.",
+  "allChecksPassed": false,
+  "fullWindowsCertified": false
+}

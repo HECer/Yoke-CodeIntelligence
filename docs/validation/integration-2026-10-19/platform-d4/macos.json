@@ -1,0 +1,291 @@
+{
+  "jobId": 117824956257,
+  "url": "https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/39178127938/job/117824956257",
+  "groups": 256,
+  "passed": 1912,
+  "failed": 70,
+  "ignored": 23,
+  "accepted": false,
+  "failures": [
+    {
+      "test": "editor_http::tests::backpressured_socket_writes_cannot_extend_the_response_deadline",
+      "detail": "Running tests/adversarial.rs (target/debug/deps/adversarial-c93e08dd3d709373)\nthread 'editor_http::tests::backpressured_socket_writes_cannot_extend_the_response_deadline' (77763) panicked at native/src/editor_http.rs:596:9:\nFixture must reach genuinely backpressured response writing\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace"
+    },
+    {
+      "test": "git_workflows::history_read::tests::object_information_and_contents_share_the_original_deadline",
+      "detail": "thread 'git_workflows::history_read::tests::object_information_and_contents_share_the_original_deadline' (77798) panicked at native/src/git_history_read_tests.rs:186:5:\nassertion `left == right` failed\nleft: (1, 0)\nright: (1, 1)"
+    },
+    {
+      "test": "host_install::tests::committed_cleanup_refuses_a_rehashed_noncanonical_foreign_backup",
+      "detail": "thread 'host_install::tests::committed_cleanup_refuses_a_rehashed_noncanonical_foreign_backup' (79326) panicked at native/src/host_install.rs:1946:89:\ncalled `Result::unwrap()` on an `Err` value: Host-install guarded filesystem backend is Windows-only"
+    },
+    {
+      "test": "host_install::tests::constructed_backup_deletion_before_event_resumes_and_apply_replays",
+      "detail": "thread 'host_install::tests::constructed_backup_deletion_before_event_resumes_and_apply_replays' (79327) panicked at native/src/host_install.rs:2287:85:\ncalled `Result::unwrap()` on an `Err` value: Host-install guarded filesystem backend is Windows-only"
+    },
+    {
+      "test": "host_install::tests::constructed_mixed_prefix_foreign_suffix_refuses_all_recovery_before_writes",
+      "detail": "thread 'host_install::tests::constructed_mixed_prefix_foreign_suffix_refuses_all_recovery_before_writes' (79328) panicked at native/src/host_install.rs:2557:82:\ncalled `Result::unwrap()` on an `Err` value: Host-install guarded filesystem backend is Windows-only"
+    },
+    {
+      "test": "host_install::tests::constructed_mixed_three_root_prefix_resumes_every_original_and_output",
+      "detail": "thread 'host_install::tests::constructed_mixed_three_root_prefix_resumes_every_original_and_output' (79329) panicked at native/src/host_install.rs:2557:82:\ncalled `Result::unwrap()` on an `Err` value: Host-install guarded filesystem backend is Windows-only"
+    },
+    {
+      "test": "host_install::tests::constructed_output_rename_before_event_resumes_and_replays_without_writes",
+      "detail": "thread 'host_install::tests::constructed_output_rename_before_event_resumes_and_replays_without_writes' (79330) panicked at native/src/host_install.rs:2287:85:\ncalled `Result::unwrap()` on an `Err` value: Host-install guarded filesystem backend is Windows-only"
+    },
+    {
+      "test": "host_install::tests::constructed_receipt_before_cleanup_event_blocks_rollback_and_resumes",
+      "detail": "thread 'host_install::tests::constructed_receipt_before_cleanup_event_blocks_rollback_and_resumes' (79331) panicked at native/src/host_install.rs:2287:85:\ncalled `Result::unwrap()` on an `Err` value: Host-install guarded filesystem backend is Windows-only"
+    },
+    {
+      "test": "host_install::tests::constructed_rollback_direction_replays_then_allows_a_new_install_history",
+      "detail": "thread 'host_install::tests::constructed_rollback_direction_replays_then_allows_a_new_install_history' (79332) panicked at native/src/host_install.rs:2287:85:\ncalled `Result::unwrap()` on an `Err` value: Host-install guarded filesystem backend is Windows-only"
+    },
+    {
+      "test": "host_install::tests::constructed_unjournaled_output_identity_is_preserved_and_refused",
+      "detail": "thread 'host_install::tests::constructed_unjournaled_output_identity_is_preserved_and_refused' (79333) panicked at native/src/host_install.rs:1946:89:\ncalled `Result::unwrap()` on an `Err` value: Host-install guarded filesystem backend is Windows-only"
+    },
+    {
+      "test": "host_install::tests::explicit_initialization_recovery_repairs_only_an_empty_scaffold_and_replays",
+      "detail": "thread 'host_install::tests::explicit_initialization_recovery_repairs_only_an_empty_scaffold_and_replays' (79334) panicked at native/src/host_install.rs:1946:89:\ncalled `Result::unwrap()` on an `Err` value: Host-install guarded filesystem backend is Windows-only"
+    },
+    {
+      "test": "host_install::tests::foreign_occupant_blocks_resume_and_rollback_without_changing_original_backup",
+      "detail": "thread 'host_install::tests::foreign_occupant_blocks_resume_and_rollback_without_changing_original_backup' (79335) panicked at native/src/host_install.rs:2287:85:\ncalled `Result::unwrap()` on an `Err` value: Host-install guarded filesystem backend is Windows-only"
+    },
+    {
+      "test": "host_install::tests::initialization_recovery_preserves_and_refuses_foreign_contents",
+      "detail": "thread 'host_install::tests::initialization_recovery_preserves_and_refuses_foreign_contents' (79337) panicked at native/src/host_install.rs:1946:89:\ncalled `Result::unwrap()` on an `Err` value: Host-install guarded filesystem backend is Windows-only"
+    },
+    {
+      "test": "host_install::tests::initialization_recovery_rejects_wrong_token_plan_and_authority_without_writes",
+      "detail": "thread 'host_install::tests::initialization_recovery_rejects_wrong_token_plan_and_authority_without_writes' (79338) panicked at native/src/host_install.rs:1946:89:\ncalled `Result::unwrap()` on an `Err` value: Host-install guarded filesystem backend is Windows-only"
+    },
+    {
+      "test": "host_install::tests::journal_progress_cannot_widen_beyond_the_authorized_target_set",
+      "detail": "thread 'host_install::tests::journal_progress_cannot_widen_beyond_the_authorized_target_set' (79340) panicked at native/src/host_install.rs:2287:85:\ncalled `Result::unwrap()` on an `Err` value: Host-install guarded filesystem backend is Windows-only"
+    },
+    {
+      "test": "host_install::tests::receipt_commit_does_not_disguise_pending_cleanup_as_successful_replay",
+      "detail": "thread 'host_install::tests::receipt_commit_does_not_disguise_pending_cleanup_as_successful_replay' (79341) panicked at native/src/host_install.rs:2287:85:\ncalled `Result::unwrap()` on an `Err` value: Host-install guarded filesystem backend is Windows-only"
+    },
+    {
+      "test": "host_install::tests::resume_after_original_rename_publishes_owned_output_and_finishes_cleanup",
+      "detail": "thread 'host_install::tests::resume_after_original_rename_publishes_owned_output_and_finishes_cleanup' (79342) panicked at native/src/host_install.rs:2287:85:\ncalled `Result::unwrap()` on an `Err` value: Host-install guarded filesystem backend is Windows-only"
+    },
+    {
+      "test": "host_install::tests::rollback_after_original_rename_restores_same_original_and_releases_ownership",
+      "detail": "thread 'host_install::tests::rollback_after_original_rename_restores_same_original_and_releases_ownership' (79343) panicked at native/src/host_install.rs:2287:85:\ncalled `Result::unwrap()` on an `Err` value: Host-install guarded filesystem backend is Windows-only"
+    },
+    {
+      "test": "host_install::tests::rollback_refuses_a_rehashed_noncanonical_foreign_output_before_any_write",
+      "detail": "thread 'host_install::tests::rollback_refuses_a_rehashed_noncanonical_foreign_output_before_any_write' (79344) panicked at native/src/host_install.rs:1946:89:\ncalled `Result::unwrap()` on an `Err` value: Host-install guarded filesystem backend is Windows-only"
+    },
+    {
+      "test": "host_install::tests::state_capacity_reserves_the_next_receipt_and_journal_before_touching_targets",
+      "detail": "thread 'host_install::tests::state_capacity_reserves_the_next_receipt_and_journal_before_touching_targets' (79345) panicked at native/src/host_install.rs:2287:85:\ncalled `Result::unwrap()` on an `Err` value: Host-install guarded filesystem backend is Windows-only"
+    },
+    {
+      "test": "host_install::tests::successful_receipt_replay_rejects_foreign_target_edits",
+      "detail": "thread 'host_install::tests::successful_receipt_replay_rejects_foreign_target_edits' (79346) panicked at native/src/host_install.rs:2287:85:\ncalled `Result::unwrap()` on an `Err` value: Host-install guarded filesystem backend is Windows-only"
+    },
+    {
+      "test": "host_install::tests::unknown_journal_phase_is_refused_before_it_can_accumulate_in_pending_results",
+      "detail": "thread 'host_install::tests::unknown_journal_phase_is_refused_before_it_can_accumulate_in_pending_results' (79347) panicked at native/src/host_install.rs:2287:85:\ncalled `Result::unwrap()` on an `Err` value: Host-install guarded filesystem backend is Windows-only"
+    },
+    {
+      "test": "native_archived_source_reads_use_native_proof_without_foreign_authority",
+      "detail": "thread 'native_archived_source_reads_use_native_proof_without_foreign_authority' (82858) panicked at native/tests/collections_cli_review.rs:39:5:"
+    },
+    {
+      "test": "sqlite_writer_contention_consumes_only_the_remaining_import_deadline",
+      "detail": "thread 'sqlite_writer_contention_consumes_only_the_remaining_import_deadline' (93703) panicked at native/tests/federation.rs:604:5:\nImport reused the initial busy timeout after preprocessing: budget=522ms elapsed=1.13370875s preparation=174.390708ms error=database is locked\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace"
+    },
+    {
+      "test": "shutdown_bounds_a_core_import_waiting_on_a_state_writer",
+      "detail": "thread 'shutdown_bounds_a_core_import_waiting_on_a_state_writer' (94098) panicked at native/tests/federation_http.rs:888:5:\nThe core operation budget must allow joining the owned worker: Err(Federation worker shutdown requires recovery; owned stop flag remains set)\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace"
+    },
+    {
+      "test": "captured_history::history_first_sql_wait_uses_the_cli_deadline_without_store_repair",
+      "detail": "thread 'captured_history::history_first_sql_wait_uses_the_cli_deadline_without_store_repair' (104435) panicked at native/tests/support/github_app_digest_history_cli.rs:753:5:\nassertion failed: String::from_utf8_lossy(&output.stderr).to_ascii_lowercase().contains(\"deadline\")\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace"
+    },
+    {
+      "test": "dry_run_is_deterministic_and_creates_no_source_engine_or_host_state",
+      "detail": "thread 'dry_run_is_deterministic_and_creates_no_source_engine_or_host_state' (110777) panicked at native/tests/host_install.rs:49:10:\ncalled `Result::unwrap()` on an `Err` value: Host-install guarded filesystem backend is Windows-only"
+    },
+    {
+      "test": "every_target_and_host_binding_is_checked_before_first_write",
+      "detail": "thread 'every_target_and_host_binding_is_checked_before_first_write' (110778) panicked at native/tests/host_install.rs:49:10:\ncalled `Result::unwrap()` on an `Err` value: Host-install guarded filesystem backend is Windows-only\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace"
+    },
+    {
+      "test": "install_and_uninstall_preserve_human_bom_crlf_and_original_empty_presence",
+      "detail": "thread 'install_and_uninstall_preserve_human_bom_crlf_and_original_empty_presence' (110779) panicked at native/tests/host_install.rs:49:10:\ncalled `Result::unwrap()` on an `Err` value: Host-install guarded filesystem backend is Windows-only"
+    },
+    {
+      "test": "private_state_never_contains_unrelated_human_config_or_policy_contents",
+      "detail": "thread 'private_state_never_contains_unrelated_human_config_or_policy_contents' (110780) panicked at native/tests/host_install.rs:49:10:\ncalled `Result::unwrap()` on an `Err` value: Host-install guarded filesystem backend is Windows-only"
+    },
+    {
+      "test": "receipt_ownership_is_required_and_serialized_plans_cannot_widen_paths",
+      "detail": "thread 'receipt_ownership_is_required_and_serialized_plans_cannot_widen_paths' (110781) panicked at native/tests/host_install.rs:49:10:\ncalled `Result::unwrap()` on an `Err` value: Host-install guarded filesystem backend is Windows-only"
+    },
+    {
+      "test": "state_and_target_aliases_bounds_invalid_utf8_and_deadlines_fail_closed",
+      "detail": "thread 'state_and_target_aliases_bounds_invalid_utf8_and_deadlines_fail_closed' (110782) panicked at native/tests/host_install.rs:49:10:\ncalled `Result::unwrap()` on an `Err` value: Host-install guarded filesystem backend is Windows-only"
+    },
+    {
+      "test": "uninstall_preserves_foreign_appends_and_refuses_changes_inside_owned_block",
+      "detail": "thread 'uninstall_preserves_foreign_appends_and_refuses_changes_inside_owned_block' (110783) panicked at native/tests/host_install.rs:49:10:\ncalled `Result::unwrap()` on an `Err` value: Host-install guarded filesystem backend is Windows-only"
+    },
+    {
+      "test": "host_install_cli_initialization_admits_a_valid_output_budget_before_writing_state",
+      "detail": "thread 'host_install_cli_initialization_admits_a_valid_output_budget_before_writing_state' (110786) panicked at native/tests/host_install_cli.rs:491:32:\ncalled `Result::unwrap()` on an `Err` value: Os { code: 63, kind: InvalidFilename, message: \"File name too long\" }\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace"
+    },
+    {
+      "test": "host_install_cli_initialization_output_failure_identifies_its_durable_result",
+      "detail": "thread 'host_install_cli_initialization_output_failure_identifies_its_durable_result' (110787) panicked at native/tests/host_install_cli.rs:75:5:\nyoke: Host-install guarded filesystem backend is Windows-only"
+    },
+    {
+      "test": "host_install_cli_initialization_repairs_an_owned_scaffold_and_replays_without_source_changes",
+      "detail": "thread 'host_install_cli_initialization_repairs_an_owned_scaffold_and_replays_without_source_changes' (110793) panicked at native/tests/host_install_cli.rs:75:5:\nyoke: Host-install guarded filesystem backend is Windows-only"
+    },
+    {
+      "test": "host_install_cli_initialization_refuses_foreign_scaffold_bytes_without_disclosing_them",
+      "detail": "thread 'host_install_cli_initialization_refuses_foreign_scaffold_bytes_without_disclosing_them' (110791) panicked at native/tests/host_install_cli.rs:75:5:\nyoke: Host-install guarded filesystem backend is Windows-only"
+    },
+    {
+      "test": "host_install_cli_installs_and_uninstalls_only_its_owned_fragment",
+      "detail": "thread 'host_install_cli_installs_and_uninstalls_only_its_owned_fragment' (110795) panicked at native/tests/host_install_cli.rs:75:5:\nyoke: Host-install guarded filesystem backend is Windows-only"
+    },
+    {
+      "test": "host_install_cli_output_failure_identifies_the_committed_result_and_can_be_retried",
+      "detail": "thread 'host_install_cli_output_failure_identifies_the_committed_result_and_can_be_retried' (110796) panicked at native/tests/host_install_cli.rs:75:5:\nyoke: Host-install guarded filesystem backend is Windows-only"
+    },
+    {
+      "test": "host_install_cli_planning_and_status_are_pure_and_keep_human_text_private",
+      "detail": "thread 'host_install_cli_planning_and_status_are_pure_and_keep_human_text_private' (110799) panicked at native/tests/host_install_cli.rs:75:5:\nyoke: Host-install guarded filesystem backend is Windows-only"
+    },
+    {
+      "test": "host_install_cli_rejects_ambiguous_selection_and_small_write_output_before_mutation",
+      "detail": "thread 'host_install_cli_rejects_ambiguous_selection_and_small_write_output_before_mutation' (110800) panicked at native/tests/host_install_cli.rs:75:5:\nyoke: Host-install guarded filesystem backend is Windows-only"
+    },
+    {
+      "test": "host_install_cli_valid_output_budget_is_admitted_before_any_host_state_or_file_write",
+      "detail": "thread 'host_install_cli_valid_output_budget_is_admitted_before_any_host_state_or_file_write' (110804) panicked at native/tests/host_install_cli.rs:75:5:\nyoke: Host-install guarded filesystem backend is Windows-only"
+    },
+    {
+      "test": "raw_sqlite_writer_contention_does_not_extend_failed_maintenance_cleanup",
+      "detail": "thread 'raw_sqlite_writer_contention_does_not_extend_failed_maintenance_cleanup' (113699) panicked at native/tests/maintenance.rs:268:5:\nCleanup repeated the busy wait: 646.206083ms\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace"
+    },
+    {
+      "test": "native_pdf_worker_extracts_actual_text_without_opening_a_source_index",
+      "detail": "thread 'native_pdf_worker_extracts_actual_text_without_opening_a_source_index' (121509) panicked at native/tests/media.rs:380:14:\ncalled `Result::unwrap()` on an `Err` value: Native PDF worker failed; malformed, encrypted or resource-limited PDF\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace"
+    },
+    {
+      "test": "strict_pdf_visitor_decodes_nonbmp_tounicode_and_text_array_line_operators",
+      "detail": "thread 'strict_pdf_visitor_decodes_nonbmp_tounicode_and_text_array_line_operators' (121539) panicked at native/tests/media.rs:453:91:\ncalled `Result::unwrap()` on an `Err` value: Native PDF worker failed; malformed, encrypted or resource-limited PDF"
+    },
+    {
+      "test": "strict_pdf_visitor_discloses_form_text_exclusion_and_enforces_page_text_cap",
+      "detail": "thread 'strict_pdf_visitor_discloses_form_text_exclusion_and_enforces_page_text_cap' (121551) panicked at native/tests/media.rs:534:14:\ncalled `Result::unwrap()` on an `Err` value: Native PDF worker failed; malformed, encrypted or resource-limited PDF"
+    },
+    {
+      "test": "strict_pdf_visitor_respects_code_spaces_and_rejects_ambiguous_or_invalid_unicode",
+      "detail": "thread 'strict_pdf_visitor_respects_code_spaces_and_rejects_ambiguous_or_invalid_unicode' (121619) panicked at native/tests/media.rs:573:6:\ncalled `Result::unwrap()` on an `Err` value: Native PDF worker failed; malformed, encrypted or resource-limited PDF"
+    },
+    {
+      "test": "strict_pdf_visitor_validates_every_page_tree_child_count_and_parent",
+      "detail": "thread 'strict_pdf_visitor_validates_every_page_tree_child_count_and_parent' (121633) panicked at native/tests/media.rs:629:6:\ncalled `Result::unwrap()` on an `Err` value: Native PDF worker failed; malformed, encrypted or resource-limited PDF"
+    },
+    {
+      "test": "media_persistence_refreshes_the_remaining_deadline_after_asset_capture",
+      "detail": "thread 'media_persistence_refreshes_the_remaining_deadline_after_asset_capture' (121480) panicked at native/tests/media.rs:230:5:\nMedia persistence reused the initial timeout after asset capture: budget=500ms elapsed=1.550974s baseline=67.14275ms error=database is locked"
+    },
+    {
+      "test": "exact_combined_reservations_and_output_limits_refuse_whole_results",
+      "detail": "thread 'exact_combined_reservations_and_output_limits_refuse_whole_results' (121881) panicked at native/tests/support/mixed_pdf_fixture.rs:155:6:\ncalled `Result::unwrap()` on an `Err` value: Native PDF worker failed; malformed, encrypted or resource-limited PDF"
+    },
+    {
+      "test": "caller_read_transaction_sqlite_limits_and_inherited_cancel_are_preserved",
+      "detail": "thread 'caller_read_transaction_sqlite_limits_and_inherited_cancel_are_preserved' (121880) panicked at native/tests/support/mixed_pdf_fixture.rs:155:6:\ncalled `Result::unwrap()` on an `Err` value: Native PDF worker failed; malformed, encrypted or resource-limited PDF\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace"
+    },
+    {
+      "test": "native_office_and_pdf_search_pages_and_typed_reads_survive_live_deletions",
+      "detail": "thread 'native_office_and_pdf_search_pages_and_typed_reads_survive_live_deletions' (121892) panicked at native/tests/support/mixed_pdf_fixture.rs:155:6:\ncalled `Result::unwrap()` on an `Err` value: Native PDF worker failed; malformed, encrypted or resource-limited PDF"
+    },
+    {
+      "test": "non_bmp_pdf_page_references_use_original_decoded_utf8_not_glyph_or_container_offsets",
+      "detail": "thread 'non_bmp_pdf_page_references_use_original_decoded_utf8_not_glyph_or_container_offsets' (121893) panicked at native/tests/support/mixed_pdf_fixture.rs:155:6:\ncalled `Result::unwrap()` on an `Err` value: Native PDF worker failed; malformed, encrypted or resource-limited PDF"
+    },
+    {
+      "test": "pdf_read_refs_reject_foreign_pages_hashes_and_split_utf8_boundaries",
+      "detail": "thread 'pdf_read_refs_reject_foreign_pages_hashes_and_split_utf8_boundaries' (121901) panicked at native/tests/support/mixed_pdf_fixture.rs:155:6:\ncalled `Result::unwrap()` on an `Err` value: Native PDF worker failed; malformed, encrypted or resource-limited PDF"
+    },
+    {
+      "test": "pdf_pin_and_row_capacity_denials_precede_corrupt_native_source_reads",
+      "detail": "thread 'pdf_pin_and_row_capacity_denials_precede_corrupt_native_source_reads' (121900) panicked at native/tests/support/mixed_pdf_fixture.rs:155:6:\ncalled `Result::unwrap()` on an `Err` value: Native PDF worker failed; malformed, encrypted or resource-limited PDF"
+    },
+    {
+      "test": "saved_inspection_text_is_ignored_and_corrupt_original_pdf_is_refused",
+      "detail": "thread 'saved_inspection_text_is_ignored_and_corrupt_original_pdf_is_refused' (121915) panicked at native/tests/support/mixed_pdf_fixture.rs:155:6:\ncalled `Result::unwrap()` on an `Err` value: Native PDF worker failed; malformed, encrypted or resource-limited PDF"
+    },
+    {
+      "test": "actual_debugger_pauses_steps_and_hits_hash_bound_unicode_breakpoints",
+      "detail": "thread 'actual_debugger_pauses_steps_and_hits_hash_bound_unicode_breakpoints' (127965) panicked at native/tests/runtime.rs:74:51:\ncalled `Result::unwrap()` on an `Err` value: Runtime process group cleanup was not confirmed\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace"
+    },
+    {
+      "test": "explicit_eval_and_repl_have_actual_module_global_semantics",
+      "detail": "thread 'explicit_eval_and_repl_have_actual_module_global_semantics' (127983) panicked at native/tests/runtime.rs:148:37:\ncalled `Result::unwrap()` on an `Err` value: Runtime process group cleanup was not confirmed"
+    },
+    {
+      "test": "inspecting_a_metaclass_does_not_call_its_equality_hook",
+      "detail": "thread 'inspecting_a_metaclass_does_not_call_its_equality_hook' (127990) panicked at native/tests/runtime.rs:272:37:\ncalled `Result::unwrap()` on an `Err` value: Runtime process group cleanup was not confirmed"
+    },
+    {
+      "test": "ordinary_function_locals_use_intrinsic_frame_storage",
+      "detail": "thread 'ordinary_function_locals_use_intrinsic_frame_storage' (128010) panicked at native/tests/runtime.rs:407:37:\ncalled `Result::unwrap()` on an `Err` value: Runtime process group cleanup was not confirmed"
+    },
+    {
+      "test": "program_exceptions_remain_program_outcomes_and_never_protocol_success",
+      "detail": "thread 'program_exceptions_remain_program_outcomes_and_never_protocol_success' (128018) panicked at native/tests/runtime.rs:280:53:\ncalled `Result::unwrap()` on an `Err` value: Runtime process group cleanup was not confirmed"
+    },
+    {
+      "test": "runtime_and_evaluation_authority_are_distinct_and_source_cannot_grant_them",
+      "detail": "thread 'runtime_and_evaluation_authority_are_distinct_and_source_cannot_grant_them' (128076) panicked at native/tests/runtime.rs:114:37:\ncalled `Result::unwrap()` on an `Err` value: Runtime process group cleanup was not confirmed"
+    },
+    {
+      "test": "stack_metadata_does_not_execute_string_subclass_hooks",
+      "detail": "thread 'stack_metadata_does_not_execute_string_subclass_hooks' (128186) panicked at native/tests/runtime.rs:338:37:\ncalled `Result::unwrap()` on an `Err` value: Runtime process group cleanup was not confirmed"
+    },
+    {
+      "test": "stale_breakpoints_forged_snapshots_and_relative_interpreters_are_denied",
+      "detail": "thread 'stale_breakpoints_forged_snapshots_and_relative_interpreters_are_denied' (128233) panicked at native/tests/runtime.rs:185:37:\ncalled `Result::unwrap()` on an `Err` value: Runtime process group cleanup was not confirmed"
+    },
+    {
+      "test": "variable_inspection_bypasses_custom_dictionary_accessors",
+      "detail": "thread 'variable_inspection_bypasses_custom_dictionary_accessors' (128337) panicked at native/tests/runtime.rs:374:37:\ncalled `Result::unwrap()` on an `Err` value: Runtime process group cleanup was not confirmed"
+    },
+    {
+      "test": "variable_inspection_does_not_execute_custom_repr",
+      "detail": "thread 'variable_inspection_does_not_execute_custom_repr' (128399) panicked at native/tests/runtime.rs:212:37:\ncalled `Result::unwrap()` on an `Err` value: Runtime process group cleanup was not confirmed"
+    },
+    {
+      "test": "variable_inspection_does_not_execute_equality_of_non_string_global_keys",
+      "detail": "thread 'variable_inspection_does_not_execute_equality_of_non_string_global_keys' (128482) panicked at native/tests/runtime.rs:311:37:\ncalled `Result::unwrap()` on an `Err` value: Runtime process group cleanup was not confirmed"
+    },
+    {
+      "test": "sqlite_lock_contention_retains_a_finite_timeout_and_atomic_recovery",
+      "detail": "SQLite busy-wait elapsed after cancellation-at60ms: 1.025082042s\nthread 'sqlite_lock_contention_retains_a_finite_timeout_and_atomic_recovery' (133308) panicked at native/tests/store_cancellation.rs:111:5:\nassertion failed: started.elapsed() < Duration::from_secs(1)\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace"
+    },
+    {
+      "test": "native_runtime_cli_preserves_state_across_authorized_repl_commands",
+      "detail": "thread 'native_runtime_cli_preserves_state_across_authorized_repl_commands' (140758) panicked at native/tests/workflow_cli.rs:256:5:\nyoke: Runtime process group cleanup was not confirmed\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace"
+    },
+    {
+      "test": "runtime_cli_preserves_failed_program_evidence_and_returns_failure",
+      "detail": "thread 'runtime_cli_preserves_failed_program_evidence_and_returns_failure' (140781) panicked at native/tests/workflow_cli.rs:58:64:\ncalled `Result::unwrap()` on an `Err` value: Error(\"EOF while parsing a value\", line: 1, column: 0)"
+    }
+  ]
+}

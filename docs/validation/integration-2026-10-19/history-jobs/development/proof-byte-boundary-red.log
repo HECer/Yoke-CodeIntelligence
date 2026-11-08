@@ -1,0 +1,22 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 3.47s
+     Running tests\digest_history_jobs.rs (target\debug\deps\digest_history_jobs-4a33bf6c2ed92c87.exe)
+
+running 1 test
+test branched_clock_skew_and_equal_dates_checkpoint_partial_frontiers_before_selecting ... FAILED
+
+failures:
+
+---- branched_clock_skew_and_equal_dates_checkpoint_partial_frontiers_before_selecting stdout ----
+
+thread 'branched_clock_skew_and_equal_dates_checkpoint_partial_frontiers_before_selecting' (10640) panicked at native\tests\digest_history_jobs.rs:553:47:
+called `Result::unwrap()` on an `Err` value: github_app_digest_history_job_unavailable
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    branched_clock_skew_and_equal_dates_checkpoint_partial_frontiers_before_selecting
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 12 filtered out; finished in 0.84s
+
+error: test failed, to rerun pass `--test digest_history_jobs`

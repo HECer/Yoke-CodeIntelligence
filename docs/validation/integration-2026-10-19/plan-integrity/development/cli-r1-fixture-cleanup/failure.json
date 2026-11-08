@@ -1,0 +1,5 @@
+{
+  "stage": "owned Python CLI harness TemporaryDirectory cleanup",
+  "observedFailure": "PermissionError WinError32 on owned .yoke/index.sqlite: Python connection context managers commit/rollback but do not close retained SQLite connections. No native assertion failed before cleanup. Original script and per-command stdout/stderr retained; no completed aggregate run claimed.",
+  "nativeRuntimeChanged": false
+}

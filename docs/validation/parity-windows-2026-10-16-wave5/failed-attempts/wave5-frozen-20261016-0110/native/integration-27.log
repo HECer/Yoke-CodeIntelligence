@@ -1,0 +1,24 @@
+    Finished `test` profile [unoptimized] target(s) in 0.53s
+     Running tests\export.rs (target\debug\deps\export-892d9be829d70668.exe)
+
+running 1 test
+test canonical_export_preserves_directed_parallel_evidence ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.17s
+
+     Running tests\facade_file_delete.rs (target\debug\deps\facade_file_delete-10f76ec2ac5264c5.exe)
+
+running 10 tests
+test forced_file_delete_materializes_the_plan_without_removing_the_original_or_its_callers ... ok
+test forced_file_delete_permission_and_external_context_denials_have_zero_change_effects ... ok
+test forced_file_delete_omitted_and_null_selectors_create_one_exact_delete_for_v8_v9 ... ok
+test forced_file_delete_stale_workspace_preflight_preserves_changed_sources_for_v8_v9 ... ok
+test default_safe_mode_and_propagation_are_distinct_unsupported_file_intents ... ok
+test forced_file_delete_workspace_apply_keeps_host_approval_and_verification_gates ... ok
+test public_forced_file_delete_accepts_generated_null_and_false_defaults ... ok
+test source_symlink_cannot_redirect_a_forced_file_deletion ... ok
+test readonly_ignored_excluded_and_uncaptured_binary_sources_cannot_be_force_deleted ... ok
+test empty_malformed_directory_missing_and_unsafe_file_selectors_never_prepare_deletions ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 13.15s
+

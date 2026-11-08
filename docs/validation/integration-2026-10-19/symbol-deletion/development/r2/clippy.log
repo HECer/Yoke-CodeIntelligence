@@ -1,0 +1,12 @@
+    Checking yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence-r1-symbol-delete\native)
+error: this boolean expression can be simplified
+   --> native\src\changes_symbol_delete.rs:132:13
+    |
+132 |             !previous.is_some_and(|node| node.kind() == "decorator"),
+    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: try: `previous.is_none_or(|node| node.kind() != "decorator")`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#nonminimal_bool
+    = note: `-D clippy::nonminimal-bool` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::nonminimal_bool)]`
+
+error: could not compile `yoke-code-intelligence` (lib) due to 1 previous error

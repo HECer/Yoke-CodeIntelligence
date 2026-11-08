@@ -1,0 +1,76 @@
+{
+  "zipSha256": "00e1f73490b39dd3964ecb25f6c312b0a2801c7d79a5736e083e398fd1d3755d",
+  "members": [
+    {
+      "path": "actual-owned-nested-job-git-probe.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "actual-owned-nested-job-git-probe.stdout",
+      "bytes": 600,
+      "sha256": "2854e5e53d006331d293c7d071e31ecb14498039dd9cdd252b7dfd1132a358bf"
+    },
+    {
+      "path": "controller.py",
+      "bytes": 6179,
+      "sha256": "f2dd4f5d0e34244a30dc4fa78cdad9af3386868b7c7c5c3daa0798fd377d8b61"
+    },
+    {
+      "path": "owned-probe.py",
+      "bytes": 4990,
+      "sha256": "ef6b4d7796435326584bbf4d1869faf71515f4be4d9d8a815c536992b6689722"
+    },
+    {
+      "path": "progress.json",
+      "bytes": 578,
+      "sha256": "fc866d086500d51010ea603dd0cac820ef8c8bb5272faf963513008fde21c3fc"
+    },
+    {
+      "path": "result.json",
+      "bytes": 1058,
+      "sha256": "ef4b5e6c80d074329cfe9795839d3c0ea1cf5806a04e621e3718ceb5bc0de6ce"
+    },
+    {
+      "path": "source-before.json",
+      "bytes": 114382,
+      "sha256": "8fa0f2d154a9c6ae511019c10246c5b465b5244b6798dc2c4dd747c97becc3c4"
+    }
+  ],
+  "completeResult": {
+    "complete": true,
+    "sourceInputsUnchanged": true,
+    "allOuterJobsEmpty": true,
+    "gitSha256": "78211c7ed73988da93a6d8a33d47ec6187f464d7ea2a9a00c182bbd7a1ecf30f",
+    "frozenInputs": 1065,
+    "observation": {
+      "attempts": 300,
+      "snapshots": 2406,
+      "mismatchSamples": [
+        {
+          "iteration": 87,
+          "phase": "root-running-outer",
+          "assigned": 2,
+          "listed": 1,
+          "capacity": 4096,
+          "rootSignaledAfterSnapshot": true,
+          "accountingAfterSnapshot": {
+            "total": 3,
+            "active": 1
+          },
+          "returnedBytes": null
+        }
+      ],
+      "queryErrors": [],
+      "peakAssigned": 3,
+      "peakListed": 3,
+      "allKnownRootsSignaled": true,
+      "allNestedJobAccountingEmpty": true,
+      "seconds": 10.285,
+      "scope": "Bounded benign git --version nested-job sampling; accounting samples are non-atomic. No claim of reproducing the analyzed Git fixture or proving every descendant object signaled."
+    },
+    "productionChanges": false,
+    "systemChanges": false
+  },
+  "interpretation": "Live benign nested-Job snapshot produced assigned2/listed1 with capacity4096; supports a possible membership race but does not prove the exact earlier analyzed-fixture cause. Non-atomic accounting and known-root handles do not prove every descendant object signaled. Production cleanup is unchanged."
+}

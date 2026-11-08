@@ -1,0 +1,34 @@
+{
+  "diagnosticOnly": true,
+  "nativeAcceptance": false,
+  "nativeYokeImageReadOrExecuted": false,
+  "library": "C:\\Python314\\DLLs\\sqlite3.dll",
+  "sqliteVersion": "3.50.4",
+  "sqliteSourceId": "2025-07-30 19:33:53 4d8adfb30e03f9cf27f800a2c1ba3c48fb4ca1b08b0f5ed59a4d5ecbf45e20a3",
+  "scope": "Actual installed Python SQLite C API, not bundled native Rust SQLite",
+  "allOwnedConnectionsClosed": true,
+  "trials": [
+    {
+      "reinstalledAfterBuiltinTimeout": false,
+      "callerBusyMs": 777,
+      "requestedDeadlineMs": 60,
+      "insideBuiltinBusyMs": 777,
+      "callbackCalls": 0,
+      "sqliteResult": 5,
+      "elapsedSeconds": 0.9478115999372676,
+      "restoredBusyMs": 777,
+      "nativeAcceptance": false
+    },
+    {
+      "reinstalledAfterBuiltinTimeout": true,
+      "callerBusyMs": 777,
+      "requestedDeadlineMs": 60,
+      "insideBuiltinBusyMs": 0,
+      "callbackCalls": 22,
+      "sqliteResult": 5,
+      "elapsedSeconds": 0.060700600035488605,
+      "restoredBusyMs": 777,
+      "nativeAcceptance": false
+    }
+  ]
+}

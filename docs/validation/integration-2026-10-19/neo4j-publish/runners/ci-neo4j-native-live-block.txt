@@ -1,0 +1,78 @@
+   import threading
+   from http.server import BaseHTTPRequestHandler,ThreadingHTTPServer
+   native=primary/'target/debug/yoke.exe';owned_source=root/'owned-source';owned_source.mkdir()
+   (owned_source/'owned.rs').write_bytes(('// owned '+chr(0x1f4a1)+'\r\nfn alpha(){beta();beta();missing();}\r\nfn beta(){alpha();}\r\n').encode())
+   commands=[];created_credentials=[];proxy=None;proxy_thread=None;proxy_events=[];drop_next={'armed':False}
+   def cli(name,args,secret_input=None,lost_stdout=False,success=True):
+    command=[str(native),'--timeout','60000','--max-bytes','200000']+[str(a) for a in args]
+    start=time.monotonic()
+    if lost_stdout:
+     p=subprocess.Popen(command,stdin=subprocess.DEVNULL,stdout=subprocess.PIPE,stderr=subprocess.PIPE,env=env,creationflags=hidden)
+     p.stdout.close();p.stdout=None;_,stderr=p.communicate(timeout=75);stdout=b'';code=p.returncode
+    else:
+     p=subprocess.run(command,input=secret_input,stdout=subprocess.PIPE,stderr=subprocess.PIPE,env=env,timeout=75,creationflags=hidden);stdout=p.stdout;stderr=p.stderr;code=p.returncode
+    assert password.encode() not in stdout+stderr and auth.encode() not in stdout+stderr
+    (out/(name+'.stdout')).write_bytes(stdout);(out/(name+'.stderr')).write_bytes(stderr)
+    commands.append({'name':name,'command':command,'exitCode':code,'seconds':time.monotonic()-start,'privateStdinUsed':secret_input is not None,'stdoutDiscarded':lost_stdout})
+    assert (code==0)==success,(name,code,'see bounded local stderr')
+    return json.loads(stdout) if code==0 else stderr.decode(errors='replace')
+   class Proxy(BaseHTTPRequestHandler):
+    def log_message(self,*args):pass
+    def do_POST(self):
+     length=int(self.headers.get('Content-Length','0'));assert 0<length<=32_000_000
+     body=self.rfile.read(length);request=json.loads(body);statement=request['statement']
+     forwarded=urllib.request.Request(endpoint,data=body,headers={'Authorization':self.headers['Authorization'],'Content-Type':'application/json','Accept':'application/json'},method='POST')
+     try:
+      with opener.open(forwarded,timeout=30) as upstream:status=upstream.status;data=upstream.read(32_000_001)
+     except urllib.error.HTTPError as error:status=error.code;data=error.read(32_000_001)
+     assert len(data)<=32_000_000 and password.encode() not in data and auth.encode() not in data
+     is_publication=statement.startswith('CYPHER 5 MATCH (scope:YokeNativeScope')
+     dropped=is_publication and drop_next['armed'];proxy_events.append({'publication':is_publication,'status':status,'responseHash':hashlib.sha256(data).hexdigest(),'droppedAfterUpstreamResponse':dropped})
+     if dropped:
+      drop_next['armed']=False;assert status==202 and not json.loads(data).get('errors')
+      try:self.connection.shutdown(socket.SHUT_RDWR)
+      except OSError:pass
+      self.connection.close();self.close_connection=True;return
+     self.send_response(status);self.send_header('Content-Type','application/json');self.send_header('Content-Length',str(len(data)));self.send_header('Connection','close');self.end_headers();self.wfile.write(data)
+   def workflow(prefix,selected_port,lose_response=False):
+    folder=out/prefix;folder.mkdir();target={'baseUrl':f'http://127.0.0.1:{selected_port}/','address':f'127.0.0.1:{selected_port}','database':'neo4j','namespace':'native owned '+chr(0x1f4a1),'user':'neo4j','useSystemRoots':False};config=folder/'target.json';config.write_text(json.dumps(target),encoding='utf-8')
+    bootstrap_path=folder/'bootstrap.json';cli(prefix+'-bootstrap-plan',['neo4j-publish','bootstrap-plan','--config',config,'--output',bootstrap_path,'--allow-output']);bootstrap=json.loads(bootstrap_path.read_bytes())
+    inspection=cli(prefix+'-offline-inspect',['neo4j-publish','inspect','--plan',bootstrap_path]);binding=inspection['target']['credentialBinding']
+    cli(prefix+'-credential-import',['neo4j-publish','import-password','--config',config,'--allow-credential-create'],password.encode());created_credentials.append('yoke-code-intelligence/service/neo4j/'+binding)
+    connect=['--allow-network','--allow-credential-lookup','--allow-loopback-http']
+    bj=folder/('neo4j-'+bootstrap['planId']+'.jsonl')
+    cli(prefix+'-bootstrap-approve',['neo4j-publish','approve','--plan',bootstrap_path,'--expected-plan-id',bootstrap['planId'],'--journal',bj,'--allow-approval','--allow-journal'])
+    denied=cli(prefix+'-schema-gate',['neo4j-publish','apply','--plan',bootstrap_path,'--expected-plan-id',bootstrap['planId'],'--journal',bj,'--allow-write','--allow-journal']+connect,success=False);assert 'schema_permission_required' in denied;assert len(bj.read_text().splitlines())==1
+    cli(prefix+'-bootstrap-apply',['neo4j-publish','apply','--plan',bootstrap_path,'--expected-plan-id',bootstrap['planId'],'--journal',bj,'--allow-write','--allow-schema','--allow-journal']+connect)
+    query(prefix+'-await-indexes','CALL db.awaitIndexes(30)')
+    probe=cli(prefix+'-probe',['neo4j-publish','probe','--plan',bootstrap_path]+connect);assert probe['schema']['allRequiredPresent'] and probe['schema']['allObservedIndexesOnline']
+    publication_path=folder/'publication.json';cli(prefix+'-prepare',['neo4j-publish','prepare','--config',config,'--source-root',owned_source,'--snapshot-id',snapshot_id,'--expected-revision','absent','--output',publication_path,'--allow-output','--allow-source-coordination']);publication=json.loads(publication_path.read_bytes());pj=folder/('neo4j-'+publication['planId']+'.jsonl')
+    cli(prefix+'-publish-approve',['neo4j-publish','approve','--plan',publication_path,'--expected-plan-id',publication['planId'],'--journal',pj,'--allow-approval','--allow-journal'])
+    apply_args=['neo4j-publish','apply','--plan',publication_path,'--expected-plan-id',publication['planId'],'--journal',pj,'--allow-write','--allow-journal']+connect
+    if lose_response:
+     before=len(proxy_events);drop_next['armed']=True;failure=cli(prefix+'-commit-response-lost',apply_args,success=False);assert 'transport_failed' in failure and publication['planId'] in failure
+     assert sum(e['publication'] for e in proxy_events[before:])==1 and sum(e['droppedAfterUpstreamResponse'] for e in proxy_events)==1
+     journal=cli(prefix+'-pending-journal',['neo4j-publish','journal','--plan',publication_path,'--journal',pj,'--allow-journal']);assert journal['pendingOperation']=='publish' and journal['completedOperations']==0
+     count=len(proxy_events);blocked=cli(prefix+'-pending-resend-blocked',apply_args,success=False);assert 'previous_result_unknown_recovery_required' in blocked and len(proxy_events)==count
+     count=len(proxy_events);cli(prefix+'-recover',['neo4j-publish','recover','--plan',publication_path,'--expected-plan-id',publication['planId'],'--journal',pj,'--allow-recovery','--allow-journal']+connect);assert not any(e['publication'] for e in proxy_events[count:])
+    else:cli(prefix+'-publish-apply',apply_args)
+    count=len(proxy_events);cli(prefix+'-already-confirmed-no-resend',apply_args);assert len(proxy_events)==count
+    journal=cli(prefix+'-confirmed-journal',['neo4j-publish','journal','--plan',publication_path,'--journal',pj,'--allow-journal']);assert journal['pendingOperation'] is None and journal['completedOperations']==1
+    scope=publication['scopeKey'];state=query(prefix+'-verified-current','MATCH (s:YokeNativeScope {key:$key}) RETURN s.activeRevision,s.lockCounter,COUNT { MATCH (n:YokeNativeElement {scopeKey:$key}) },COUNT { MATCH ()-[r:YOKE_NATIVE_OBSERVATION {scopeKey:$key}]->() }',{'key':scope});assert state['data']['values'][0][0]==publication['revisionId'] and state['data']['values'][0][1]==1
+    if not lose_response:
+     lost=folder/'lost-stdout';lost.mkdir();lj=lost/('neo4j-'+publication['planId']+'.jsonl');cli(prefix+'-lost-stdout-approve',['neo4j-publish','approve','--plan',publication_path,'--expected-plan-id',publication['planId'],'--journal',lj,'--allow-approval','--allow-journal']);lostargs=['neo4j-publish','apply','--plan',publication_path,'--expected-plan-id',publication['planId'],'--journal',lj,'--allow-write','--allow-journal']+connect
+     failure=cli(prefix+'-lost-stdout-apply',lostargs,lost_stdout=True,success=False);assert 'delivery_failed_after_effect' in failure and publication['planId'] in failure
+     done=cli(prefix+'-lost-stdout-journal',['neo4j-publish','journal','--plan',publication_path,'--journal',lj,'--allow-journal']);assert done['completedOperations']==1 and done['pendingOperation'] is None
+    return {'scopeKey':scope,'planId':publication['planId'],'revisionId':publication['revisionId'],'completedOperations':journal['completedOperations']}
+   try:
+    indexed=cli('native-index-owned-fixture',['--root',owned_source,'index']);snapshot_id=indexed['snapshotId']
+    direct=workflow('direct-native',http)
+    proxy=ThreadingHTTPServer(('127.0.0.1',0),Proxy);proxy.daemon_threads=True;proxy_thread=threading.Thread(target=proxy.serve_forever,daemon=True);proxy_thread.start()
+    recovered=workflow('response-loss-native',proxy.server_address[1],True)
+    result={'actualServer':'Neo4j Community2026.09.0','nativeCliTransport':True,'fixedSchemaAndNamespaceBootstrap':True,'separateSchemaPermissionEnforced':True,'existingSnapshotUsed':True,'osCredentialBindingUsed':True,'sameJournalConfirmedOperationNotResent':True,'lostStdoutConfirmedJournalRetained':True,'responseLostAfterActualCommitLeavesPending':True,'pendingApplyBlockedWithoutRequest':True,'recoveryOnlyReadsAndNoWriteReplay':True,'direct':direct,'recovered':recovered,'nativeBinarySha256':hashlib.sha256(native.read_bytes()).hexdigest(),'fleetDiscoveryConfiguredDisabled':True,'ownedPid':child.pid,'listenerPidVerified':True,'java':'JBR25.0.3','vendorJvmQualificationClaimed':False,'nativeTlsTested':False}
+   finally:
+    if proxy is not None:proxy.shutdown();proxy.server_close();proxy_thread.join(timeout=3)
+    removed=0;advapi=ctypes.WinDLL('Advapi32',use_last_error=True);advapi.CredDeleteW.argtypes=[ctypes.c_wchar_p,ctypes.c_uint32,ctypes.c_uint32];advapi.CredDeleteW.restype=ctypes.c_int
+    for name in created_credentials:assert advapi.CredDeleteW(name,1,0),'Owned fixture credential removal failed';removed+=1
+    (out/'commands.json').write_text(json.dumps(commands,indent=2)+'\n',encoding='utf-8');(out/'proxy-events.json').write_text(json.dumps(proxy_events,indent=2)+'\n',encoding='utf-8');(out/'credential-cleanup.json').write_text(json.dumps({'created':len(created_credentials),'removed':removed})+'\n')
+   result['ownedCredentialsRemoved']=removed

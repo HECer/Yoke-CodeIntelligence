@@ -1,0 +1,34 @@
+{
+  "resource_paging": {
+    "executable": "target\\debug\\deps\\resource_paging-a420510022e74047.exe",
+    "ignored": [],
+    "registered": [
+      "generic_resource_pages_reach_large_artifacts_under_the_original_eight_tool_profile",
+      "large_graphify_resources_preserve_the_complete_original_body_in_paged_storage",
+      "project_resource_pages_use_only_registered_roots_without_activation",
+      "streaming_pages_verify_bytes_outside_the_page_and_preserve_unicode_boundaries"
+    ]
+  },
+  "retention": {
+    "executable": "target\\debug\\deps\\retention-c9716eb52673495e.exe",
+    "ignored": [],
+    "registered": [
+      "committed_retirement_can_feed_conservative_cas_quarantine_and_purge_without_losing_receipts",
+      "future_opaque_json_artifact_schema_is_not_inferred_to_be_dependency_free",
+      "labeled_uncommitted_history_journal_restores_missing_rows_without_changing_current_source",
+      "labeled_uncommitted_history_journal_restores_only_hash_bound_rows",
+      "missing_history_age_and_corrupt_metadata_never_become_retirement_permission",
+      "multiply_linked_quarantine_content_is_unknown_physical_reclamation_and_is_preserved",
+      "newly_rooted_quarantine_and_tampered_plan_refuse_purge_without_deleting_bytes",
+      "opaque_published_artifacts_defer_history",
+      "partial_purge_reports_actual_removed_bytes_and_can_resume_only_its_exact_intent",
+      "pin_and_every_source_bound_workflow_record_protect_history",
+      "purge_reclaims_only_exact_committed_unreachable_quarantine_bytes_after_confirmation",
+      "reviewed_history_retirement_removes_only_unrooted_rows_and_preserves_original_source",
+      "source_bindings_inside_published_json_artifacts_protect_history",
+      "stale_plan_and_concurrent_client_leave_history_intact",
+      "unknown_nested_snapshot_fields_defer_history",
+      "unknown_record_blocks_retirement_even_without_explicit_hash_fields"
+    ]
+  }
+}

@@ -1,0 +1,192 @@
+[
+  {
+    "gate": "format",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "fmt",
+      "--all",
+      "--check"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 4.443,
+    "recordedAt": "2026-10-19T02:52:30.827805+00:00",
+    "resultGroups": []
+  },
+  {
+    "gate": "native-store-and-publication",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "test",
+      "--locked",
+      "--no-fail-fast",
+      "-j2",
+      "--lib",
+      "--test",
+      "store_cancellation",
+      "--test",
+      "store_read_only",
+      "--test",
+      "store_identity",
+      "--test",
+      "store_review",
+      "--test",
+      "ledger",
+      "--test",
+      "ledger_admission_review",
+      "--test",
+      "ledger_batches",
+      "--test",
+      "ledger_batches_review",
+      "--test",
+      "federation",
+      "--test",
+      "federation_http",
+      "--test",
+      "federation_receipt_bounds",
+      "--test",
+      "federation_epochs",
+      "--test",
+      "maintenance",
+      "--test",
+      "github_app_digest",
+      "--test",
+      "github_app_digest_cli",
+      "--test",
+      "github_app_digest_mapping",
+      "--",
+      "--test-threads=2"
+    ],
+    "exitCode": 101,
+    "elapsedSeconds": 227.323,
+    "recordedAt": "2026-10-19T02:56:18.150895+00:00",
+    "resultGroups": [
+      {
+        "passed": 403,
+        "failed": 0,
+        "ignored": 7
+      },
+      {
+        "passed": 12,
+        "failed": 1,
+        "ignored": 0
+      },
+      {
+        "passed": 7,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 16,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 2,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 35,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 38,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 13,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 5,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 6,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 3,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 11,
+        "failed": 1,
+        "ignored": 0
+      },
+      {
+        "passed": 9,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 4,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 7,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0
+      }
+    ]
+  },
+  {
+    "gate": "clippy",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "clippy",
+      "--workspace",
+      "--all-targets",
+      "--locked",
+      "--keep-going",
+      "-j2",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 79.068,
+    "recordedAt": "2026-10-19T02:57:37.219777+00:00",
+    "resultGroups": []
+  },
+  {
+    "gate": "typescript-typecheck",
+    "command": [
+      "npm.cmd",
+      "run",
+      "typecheck"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 4.519,
+    "recordedAt": "2026-10-19T02:57:41.739690+00:00",
+    "resultGroups": []
+  },
+  {
+    "gate": "typescript-tests",
+    "command": [
+      "npm.cmd",
+      "test"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 58.035,
+    "recordedAt": "2026-10-19T02:58:39.775414+00:00",
+    "resultGroups": []
+  }
+]

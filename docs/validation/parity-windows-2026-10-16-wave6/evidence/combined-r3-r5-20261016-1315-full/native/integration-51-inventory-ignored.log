@@ -1,0 +1,8 @@
+    Finished `test` profile [unoptimized] target(s) in 0.67s
+     Running tests\host_config.rs (target\debug\deps\host_config-7659402ec860ad5b.exe)
+0 tests, 0 benchmarks
+     Running tests\host_credentials.rs (target\debug\deps\host_credentials-d3ecb384a1a8a4e4.exe)
+actual_github_credential_round_trip_is_create_only_and_keeps_secrets_out_of_metadata: test
+actual_tls_and_service_token_never_export_private_material_or_overwrite_entries: test
+
+2 tests, 0 benchmarks

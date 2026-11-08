@@ -1,0 +1,25 @@
+{
+  "checkedAtUtc": "2026-10-15T19:30:46.884370+00:00",
+  "scope": "focused_gate_not_frozen_suite",
+  "command": [
+    "cargo",
+    "test",
+    "--workspace",
+    "--locked",
+    "-j",
+    "2",
+    "--lib",
+    "archive_",
+    "--",
+    "--test-threads=4"
+  ],
+  "exitCode": 101,
+  "seconds": 59.078,
+  "tempRoot": "D:\\Yoke-Test-Scratch\\wave4-archive-index-and-order-red",
+  "logSha256": "0828bd7265c88d5bd7b7f9b2c661479e2d8c34398d4196965e81a94d09f5172a",
+  "groups": 1,
+  "passed": 6,
+  "failed": 7,
+  "ignored": 0,
+  "sourceChanges": []
+}

@@ -1,0 +1,33 @@
+TAP version 13
+# Subtest: pending phase verifies real-input focus after the request reply even when the click immediately blurs
+not ok 1 - pending phase verifies real-input focus after the request reply even when the click immediately blurs
+  ---
+  duration_ms: 6.4718
+  type: 'test'
+  location: 'C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\scripts\\tests\\host_history_browser_protocol.test.cjs:180:1'
+  failureType: 'testCodeFailure'
+  error: 'dom-deadline-double'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    until (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\scripts\tests\host_history_browser_protocol.test.cjs:138:54)
+    click (evalmachine.<anonymous>:8:22)
+    async Object.run (evalmachine.<anonymous>:37:7)
+    async TestContext.<anonymous> (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\scripts\tests\host_history_browser_protocol.test.cjs:183:20)
+    async Test.run (node:internal/test_runner/test:1409:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+  ...
+# Subtest: pending phase still refuses missing targets, replies, blocking state and usable keyboard focus
+ok 2 - pending phase still refuses missing targets, replies, blocking state and usable keyboard focus
+  ---
+  duration_ms: 15.307
+  type: 'test'
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 1
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 120.7807

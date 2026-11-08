@@ -1,0 +1,50 @@
+[
+  {
+    "phase": "feature-red-r1",
+    "path": "native/src/main.rs",
+    "bytes": 178091,
+    "sha256": "df07e6d304a7eb924300787d5c44c5ffe27e6d2e1f20ca1a2a9b3fb7ea45304f",
+    "beforeAndAfterMatched": true,
+    "origin": "parent git blob exact"
+  },
+  {
+    "phase": "green-r1",
+    "path": "native/src/main.rs",
+    "bytes": 179329,
+    "sha256": "05a104205a2eb65cdaade2814c2cad5ab428b84283ee5fdd4e26c7dca4bf9b51",
+    "beforeAndAfterMatched": true,
+    "origin": "current raw source"
+  },
+  {
+    "phase": "green-r1",
+    "path": "native/src/mixed_meaning_cli.rs",
+    "bytes": 8007,
+    "sha256": "603d4dab88ce91280f8f287d243b823c615b20dc5ac430ba36f42cbace61c647",
+    "beforeAndAfterMatched": true,
+    "origin": "current raw source"
+  },
+  {
+    "phase": "green-r2",
+    "path": "native/src/main.rs",
+    "bytes": 179329,
+    "sha256": "05a104205a2eb65cdaade2814c2cad5ab428b84283ee5fdd4e26c7dca4bf9b51",
+    "beforeAndAfterMatched": true,
+    "origin": "current raw source"
+  },
+  {
+    "phase": "green-r2",
+    "path": "native/src/mixed_meaning_cli.rs",
+    "bytes": 8007,
+    "sha256": "603d4dab88ce91280f8f287d243b823c615b20dc5ac430ba36f42cbace61c647",
+    "beforeAndAfterMatched": true,
+    "origin": "current raw source"
+  },
+  {
+    "phase": "prerequisites-r1",
+    "path": "native/src/main.rs",
+    "bytes": 178091,
+    "sha256": "df07e6d304a7eb924300787d5c44c5ffe27e6d2e1f20ca1a2a9b3fb7ea45304f",
+    "beforeAndAfterMatched": true,
+    "origin": "parent git blob exact"
+  }
+]

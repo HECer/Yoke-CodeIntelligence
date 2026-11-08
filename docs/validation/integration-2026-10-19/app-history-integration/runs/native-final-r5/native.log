@@ -1,0 +1,372 @@
+    Finished `test` profile [unoptimized] target(s) in 0.57s
+     Running tests\decision_retention.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\decision_retention-6cbc493797e966ef.exe)
+
+running 2 tests
+test authored_revisions_are_known_roots_and_retain_their_historical_source ... ok
+test widened_authored_revision_cannot_authorize_history_retirement_or_blob_purge ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.09s
+
+     Running tests\digest_history_acquisition.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\digest_history_acquisition-41a70b0a961dc167.exe)
+
+running 10 tests
+test acquisition_default_permissions_scope_and_disk_heads_do_not_publish_partial_history ... ok
+test actual_cli_acquires_history_without_app_keys_or_checkout_writes ... ok
+test aggregate_snapshot_file_source_tree_and_proof_budgets_never_reset_per_commit ... ok
+test caller_transaction_expiry_durability_and_sql_policy_are_preserved ... ok
+test cli_denials_precede_host_files_and_store_initialization ... ok
+test exact_output_capacity_is_admitted_before_commit_and_corrupt_existing_graph_is_never_replaced ... ok
+test late_output_or_sql_failure_rolls_back_every_snapshot_graph_fts_scope_and_receipt ... ok
+test public_single_commit_capture_also_rolls_back_late_proof_failure ... ok
+test real_sha1_and_sha256_history_is_captured_mapped_and_idempotent_with_dirty_checkout_and_epoch_inheritance ... ok
+test zero_selected_history_reports_its_frontier_without_publishing_or_claiming_complete ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 25.33s
+
+     Running tests\github_app_digest.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\github_app_digest-606ca9b6c902d048.exe)
+
+running 35 tests
+test blocked_first_sql_read_obeys_deadline_and_restores_the_original_busy_timeout ... ok
+test cancelled_digest_preserves_source_and_restores_the_store_deadline ... ok
+test captured_git::captured_git_preview_refuses_forged_commit_tree_blob_and_analyzer_facts ... ok
+test captured_git::captured_git_preview_verifies_commit_without_live_checkout_or_git_metadata ... ok
+test captured_git::captured_git_source_budget_precedes_commit_blob_validation_without_repair ... ok
+test captured_git::git_disk_origin_refuses_hidden_selector_rows_without_decoding_them ... ok
+test captured_git::git_lineage_aggregate_exact_boundary_includes_every_proof_row ... ok
+test captured_git::git_lineage_metadata_has_an_independent_host_budget_before_commit_reads ... ok
+test captured_git::git_preview_refuses_unbounded_derived_origin_chains_before_scope_replay ... ok
+test captured_git::lowered_metadata_budgets_preserve_the_separate_commit_registration_row_allowance ... ok
+test captured_git::selected_metadata_budget_does_not_reduce_the_independent_lineage_row_allowance ... ok
+test captured_git::small_git_selection_refuses_oversized_origin_metadata_before_commit_reads ... ok
+test configured_disk_proof_bytes_have_an_independent_budget ... ok
+test declaration_projection_does_not_require_unused_rationale_graph_rows ... ok
+test digest_refuses_corrupt_captured_bytes_without_repairing_or_writing_them ... ok
+test digest_refuses_grant_mismatch_and_caller_owned_transaction ... ok
+test digest_replays_native_source_and_refuses_changed_graph_names_spans_or_producers ... ok
+test digest_request_rejects_duplicate_keys_urls_bodies_and_invalid_native_identities ... ok
+test digest_symbol_limit_reports_omissions_and_complete_stdout_budget_precedes_mutations ... ok
+test digest_uses_immutable_captured_bytes_after_current_source_changes ... ok
+test digest_work_caps_apply_even_when_no_symbols_are_requested ... ok
+test disk_preview_refuses_shadow_inheritance_and_overlay_selector_records ... ok
+test executable_array_type_expressions_are_omitted_from_body_free_headers ... ok
+test header_literals_and_generic_defaults_are_unresolved_but_known_abi_headers_survive ... ok
+test language_override_cannot_route_document_formats_through_rust_replay ... ok
+test malformed_saved_graph_cannot_echo_source_bearing_values_through_errors ... ok
+test native_digest_projects_only_public_headers_and_exact_captured_symbol_fingerprints ... ok
+test native_replay_names_have_an_aggregate_budget_independent_of_emitted_symbols ... ok
+test private_ast_nesting_is_bounded_before_native_replay_even_with_zero_output_rows ... ok
+test public_constant_initializers_and_private_module_children_are_not_exported_as_source ... ok
+test public_reexports_remain_explicitly_unresolved_without_exposing_private_targets ... ok
+test repeated_call_receiver_text_is_bounded_before_native_replay ... ok
+test replay_preserves_native_method_identity_and_long_unicode_signature_finalization ... ok
+test unsupported_language_exports_are_reported_as_unknown_instead_of_empty_complete ... ok
+test valid_closed_digest_request_is_admitted_without_provider_or_body_fields ... ok
+
+test result: ok. 35 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 6.03s
+
+     Running tests\github_app_digest_handoff.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\github_app_digest_handoff-6c0b47fe2a7263c6.exe)
+
+running 19 tests
+test actual_cli_proposal_is_offline_and_denials_precede_host_files_and_state_creation ... ok
+test actual_cli_send_status_and_lost_response_recovery_use_os_key_without_retry ... ignored, Requires actual Windows per-user Credential Manager; creates and removes one unique signing credential
+test caller_transaction_and_weak_sql_durability_never_create_an_intent ... ok
+test corrupt_captured_source_never_uses_approved_preview_as_source_authority ... ok
+test exact_approved_bytes_use_one_put_and_keep_captured_headers_and_receipt_scope ... ok
+test exact_output_boundary_is_admitted_before_the_first_put ... ok
+test held_journal_lock_obeys_original_deadline_without_writing_an_intent ... ok
+test host_authority_fixture_scope_and_stale_approval_refuse_before_intent_or_http ... ok
+test lost_response_stays_unknown_blocks_retries_and_recovers_with_get_only ... ok
+test malformed_wrong_oversized_and_redirect_receipts_leave_durable_unknown ... ok
+test mutated_or_rekeyed_journal_is_refused_before_remote_recovery ... ok
+test output_and_payload_and_journal_reservation_refuse_before_send ... ok
+test pending_repository_blocks_a_different_payload_and_retargeted_approval_refuses ... ok
+test receiver_success_followed_by_sql_failure_remains_recoverable_without_resend ... ok
+test reinstallation_cannot_bypass_an_unknown_repository_write_or_revoked_recovery_scope ... ok
+test remote_absence_does_not_erase_intent_or_authorize_another_send ... ok
+test sql_contention_preserves_policy_and_deadline_without_network_or_late_intent ... ok
+test strict_profiles_and_approval_do_not_echo_unknown_keys_or_accept_ambient_urls ... ok
+test unknown_intent_retains_its_source_but_does_not_turn_payload_hashes_into_roots ... ok
+
+test result: ok. 18 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 2.85s
+
+     Running tests\github_app_digest_mapping.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\github_app_digest_mapping-c6a18e66baeb0dad.exe)
+
+running 13 tests
+test a_path_still_present_in_git_but_outside_the_new_capture_is_unavailable_not_deleted ... ok
+test actual_cli_maps_only_explicit_selectors_and_honors_exact_output_capacity ... ok
+test aggregate_source_metadata_ast_and_export_budgets_cannot_reset_per_snapshot ... ok
+test caller_transactions_are_refused_without_commit_or_rollback ... ok
+test corrupt_additional_proofs_and_cancelled_work_restore_the_callers_sql_policy ... ok
+test duplicate_declarations_preserve_every_original_candidate_without_a_forced_identity ... ok
+test exact_git_file_relations_and_qualified_symbol_candidates_keep_original_anchors ... ok
+test mapped_cli_never_turns_its_selection_flag_into_digest_history_or_git_permission ... ok
+test missing_captures_are_explicit_and_legacy_history_does_not_infer_them ... ok
+test relation_work_and_commit_proof_limits_refuse_without_partial_results ... ok
+test revoked_grants_invalid_duplicate_and_head_selectors_are_rejected_before_git_execution ... ok
+test sha256_git_objects_and_mixed_supported_capture_epochs_retain_their_provenance ... ok
+test unrelated_commits_disk_sources_and_ambiguous_captures_never_enter_the_history ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 19.45s
+
+     Running tests\github_app_history_bridge.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\github_app_history_bridge-8ed3bfb891b4baaa.exe)
+
+running 14 tests
+test a_disk_snapshot_or_an_unrelated_worker_record_cannot_become_history_authority ... ok
+test a_future_initial_history_revision_cannot_create_a_binding_or_native_job ... ok
+test actual_cli_lost_stdout_status_pause_resume_and_run_use_the_owned_os_key ... ignored, Requires an outer controller owning one temporary Windows signing credential
+test authenticated_original_plan_and_native_job_must_survive_every_retry ... ok
+test changed_queue_blocks_acquisition_but_allows_historical_pause_and_status ... ok
+test checked_completion_creates_one_signed_job_and_offline_status_uses_read_only_store ... ok
+test closed_selection_rejects_duplicate_fields_unknown_flags_and_unbounded_ids ... ok
+test deleting_the_signed_binding_never_adopts_a_preexisting_generic_job ... ok
+test driver_denials_precede_http_and_cannot_create_worker_completions_or_history ... ok
+test permissions_output_and_sql_failure_cannot_leave_half_an_app_job ... ok
+test resumable_batches_use_exact_revisions_and_never_update_checkout_or_latest ... ok
+test retention_validates_typed_bindings_and_rejects_foreign_source_substitution ... ok
+test signing_key_rotation_preserves_original_binding_and_current_grants_still_apply ... ok
+test worker_execution_drives_resumable_history_without_repeating_http_or_adopting_revision ... ok
+
+test result: ok. 13 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 7.67s
+
+     Running tests\github_app_history_cli.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\github_app_history_cli-0443c4f0aced00c6.exe)
+
+running 4 tests
+test budgets_and_read_only_scope_refuse_before_profiles_keys_or_store ... ok
+test closed_selection_and_plan_errors_precede_credential_resolution_and_missing_source ... ok
+test every_operation_requires_explicit_app_and_job_permission_before_host_files ... ok
+test worker_history_switches_require_their_separate_grants_before_files_or_credentials ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.57s
+
+     Running tests\github_app_publication.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\github_app_publication-dbc8160cae7bc31b.exe)
+
+running 106 tests
+test app_reinstallation_updates_the_same_owned_comment_without_another_post ... ok
+test approved_publication_commits_intent_before_one_post_and_exact_retry_is_historical ... ok
+test authenticated_impossible_intent_at_unselected_checkpoint_is_rejected_by_queue_factory ... ok
+test cancellation_at_publication_terminal_commit_is_reported_with_durable_historical_success ... ok
+test cancellation_at_recovery_commit_is_reported_and_status_exposes_durable_reconciliation ... ok
+test cancellation_at_unchanged_commit_reports_cancellation_after_atomic_observation ... ok
+test exact_published_retry_after_reinstallation_uses_current_repository_grant_without_http ... ok
+test exact_unknown_retry_after_reinstallation_uses_current_repository_grant_without_http ... ok
+test first_publication_refuses_a_host_clock_older_than_its_signed_completion_before_auth ... ok
+test identical_body_is_observed_without_a_redundant_remote_patch ... ok
+test invalid_post_responses_preserve_one_unknown_intent_without_resending ... ok
+test lost_changed_body_patch_is_never_resent_and_recovery_confirms_the_same_owned_id ... ok
+test lost_post_response_leaves_one_unknown_intent_and_never_blindly_resends ... ok
+test numeric_comment_url_for_another_repository_is_refused_without_a_patch ... ok
+test official_numeric_repository_comment_url_is_accepted_after_create ... ok
+test official_numeric_repository_comment_url_is_accepted_for_owned_get_and_patch ... ok
+test page_lifecycle::adding_an_app_revision_respects_the_global_hard_bound_before_committing ... ok
+test page_lifecycle::expiry_and_clock_regression_during_source_replay_are_checked_before_html_release ... ok
+test page_lifecycle::expiry_is_read_only_and_removal_invalidates_old_approval_until_a_fresh_preview ... ok
+test page_lifecycle::http::native_get_serves_exact_approved_html_with_complete_headers_and_no_queue_write_consent ... ok
+test page_lifecycle::http::native_healthz_reports_only_listener_liveness_without_page_or_source_details ... ok
+test page_lifecycle::http::native_html_wire_budget_refuses_without_partial_html_or_state_changes ... ok
+test page_lifecycle::http::native_key_rotation_revokes_old_url_while_prior_key_only_authenticates_history ... ok
+test page_lifecycle::http::native_listener_for_owned_browser_oracle ... ignored, Explicit owned native listener for the T3 browser oracle; bounded by a stop marker and lifetime
+test page_lifecycle::http::native_missing_wrong_bearer_and_expired_pages_have_identical_404_packets ... ok
+test page_lifecycle::http::native_page_listener_shutdown_joins_a_stalled_owned_connection ... ok
+test page_lifecycle::http::native_page_route_refuses_wrong_authority_encoded_paths_extra_queries_and_methods ... ok
+test page_lifecycle::http::native_page_serving_requires_its_own_consent_and_page_read_permission ... ok
+test page_lifecycle::http::native_page_tls_checks_sni_and_host_before_releasing_approved_html ... ok
+test page_lifecycle::http::native_read_rechecks_repository_grant_and_cannot_release_stored_html_after_revocation ... ok
+test page_lifecycle::invalid_page_mac_is_rejected_but_an_invalid_bearer_never_reads_the_corrupt_row ... ok
+test page_lifecycle::links::page_link_factory_authenticates_the_mac_even_when_all_page_fields_are_intact ... ok
+test page_lifecycle::links::page_link_factory_binds_the_actual_stored_page_and_original_source_without_writes ... ok
+test page_lifecycle::links::page_link_factory_derives_current_key_url_without_changing_historical_page ... ok
+test page_lifecycle::links::page_link_factory_rechecks_current_grant_and_original_cas_bytes ... ok
+test page_lifecycle::links::page_link_factory_rechecks_expiry_and_clock_regression_after_real_source_replay ... ok
+test page_lifecycle::links::page_link_factory_refuses_caller_transaction_and_obeys_output_budget_without_mutation ... ok
+test page_lifecycle::links::page_link_factory_refuses_missing_consent_wrong_version_and_expiry ... ok
+test page_lifecycle::links::page_link_factory_refuses_removal_of_an_unexpired_previously_readable_page ... ok
+test page_lifecycle::oracle::owned_cli_preview_store_retry_remove_and_readonly_service ... ignored, Run with the outer Windows credential controller so guard termination cannot leak its owned key
+test page_lifecycle::page_clocks_reject_in_process_regression_and_a_fresh_clock_below_the_persisted_floor ... ok
+test page_lifecycle::page_writes_require_separate_permissions_and_exact_approval_without_mutation ... ok
+test page_lifecycle::preview_names_the_conditional_bearer_read_capability_without_granting_a_write ... ok
+test page_lifecycle::publication_links::approved_linked_post_is_exact_and_history_survives_page_removal_and_key_rotation ... ok
+test page_lifecycle::publication_links::authenticated_link_cannot_claim_a_genuine_checkpoint_before_its_job_was_selected ... ok
+test page_lifecycle::publication_links::authenticated_linked_intent_must_be_inside_the_captured_page_lifetime ... ok
+test page_lifecycle::publication_links::linked_and_plain_contracts_for_one_completion_have_independent_historical_render_bindings ... ok
+test page_lifecycle::publication_links::linked_preview_rejects_a_genuine_stored_page_from_another_completed_pr ... ok
+test page_lifecycle::publication_links::linked_preview_requires_distinct_consent_exact_version_and_an_unexpired_page ... ok
+test page_lifecycle::publication_links::linked_preview_uses_the_exact_native_page_and_preserves_plain_v1_contract ... ok
+test page_lifecycle::publication_links::linked_requests_are_closed_and_absent_links_preserve_exact_v1_request_bytes ... ok
+test page_lifecycle::publication_links::lost_linked_post_is_recovered_without_a_live_page_or_page_link_authority ... ok
+test page_lifecycle::publication_links::page_expiry_during_owned_preflight_prevents_any_comment_send_or_journal_intent ... ok
+test page_lifecycle::publication_links::successful_post_reply_closes_from_captured_link_when_the_page_disappears_during_send ... ok
+test page_lifecycle::publication_links::unrelated_pr_arrival_before_preview_keeps_a_genuine_page_for_the_same_selected_completion ... ok
+test page_lifecycle::publication_links::unrelated_pr_arrival_during_post_keeps_the_captured_link_and_closes_the_selected_job ... ok
+test page_lifecycle::reads_authenticate_before_replay_and_recheck_current_grant_and_captured_bytes ... ok
+test page_lifecycle::replacement_refreshes_only_after_fresh_approval_and_eviction_keeps_stale_plans_dead ... ok
+test page_lifecycle::request_parsers_reject_duplicate_unknown_and_oversized_input_before_storage ... ok
+test page_lifecycle::retention_recognizes_pages_and_keeps_only_the_original_completed_source_roots ... ok
+test page_lifecycle::retention_rejects_resealed_orphan_completion_and_safe_html_with_a_forged_graph_label ... ok
+test page_lifecycle::storage_preserves_caller_transactions_sql_policy_and_refuses_weak_durability ... ok
+test page_lifecycle::stored_exact_page_survives_reopen_and_exact_retry_does_not_refresh_expiry ... ok
+test page_lifecycle::unchanged_foreign_revision_whitespace_counts_toward_exact_store_byte_admission ... ok
+test preview_body_and_complete_stdout_limits_refuse_without_artifacts ... ok
+test preview_displays_hostile_filename_as_inert_code_without_source_quotes ... ok
+test preview_exact_body_and_stdout_budgets_include_the_final_newline ... ok
+test preview_rechecks_current_grant_and_authenticated_completion_body ... ok
+test preview_rechecks_selected_source_bytes_and_restores_sql_policy ... ok
+test preview_refuses_caller_write_transaction_and_preserves_its_ownership ... ok
+test preview_refuses_claim_id_and_current_revision_mismatch ... ok
+test preview_replays_completed_source_without_network_or_logical_writes ... ok
+test preview_request_refuses_duplicates_unknowns_and_invalid_identities ... ok
+test preview_requires_selected_job_but_can_bind_explicit_reselection_at_new_revision ... ok
+test proposal_identity_independently_binds_source_job_scope_revision_and_exact_body ... ok
+test protected_pages::preview_admits_exact_html_and_stdout_limits_and_refuses_graph_truncation ... ok
+test protected_pages::preview_cannot_promote_a_claim_stale_selection_or_a_reinstalled_old_job ... ok
+test protected_pages::preview_exports_owned_native_html_for_browser_oracle ... ignored, Exports one owned native HTML fixture for the explicitly selected browser oracle
+test protected_pages::preview_rechecks_captured_bytes_and_preserves_a_refused_caller_transaction ... ok
+test protected_pages::preview_replays_exact_source_into_an_inert_graph_without_persistence_or_http ... ok
+test protected_pages::request_rejects_duplicates_unknown_fields_and_non_origin_public_urls ... ok
+test publication_cli_reads_completed_preview_and_historical_status_with_an_owned_os_key ... ignored, Run through the outer owned credential controller, outside the guarded native job
+test publication_create_target_rejects_raw_extra_fields_even_with_original_id_and_mac ... ok
+test publication_exact_approval_and_budgets_precede_authentication_or_journal_writes ... ok
+test publication_journal_owner_prevents_windows_lock_file_rename_during_send ... ok
+test publication_journal_zero_limits_are_refused ... ok
+test publication_permissions_precede_history_and_any_authorization_request ... ok
+test publication_refuses_disabled_sqlite_journal_before_authorization_or_intent ... ok
+test publication_refuses_disabled_sqlite_sync_before_authorization_or_intent ... ok
+test publication_request_requires_closed_explicit_exact_approval ... ok
+test publication_reserves_terminal_capacity_for_prior_unknown_prs ... ok
+test publication_status_and_recovery_inputs_are_strict_and_duplicate_safe ... ok
+test publication_status_and_recovery_preserve_a_refused_caller_transaction ... ok
+test publication_status_observes_unknown_without_write_or_network_authority ... ok
+test publication_waits_for_owned_lock_contention_until_the_inherited_deadline ... ok
+test reconciled_recovery_refuses_a_changed_comment_id_before_http ... ok
+test recovery_cannot_clear_an_intent_while_its_live_publisher_still_owns_the_send ... ok
+test recovery_confirms_old_unknown_after_new_selection_then_new_head_patches_same_comment ... ok
+test recovery_journal_and_network_permissions_precede_history_or_http ... ok
+test recovery_refuses_another_apps_comment_and_preserves_unknown_intent ... ok
+test recovery_uses_current_repository_grant_after_app_reinstallation ... ok
+test recovery_works_with_pull_request_read_only_and_no_publication_consent ... ok
+test retention_recognizes_publication_history_and_keeps_only_typed_source_roots ... ok
+test retention_refuses_resealed_orphan_completion_and_body_not_derived_from_the_report ... ok
+test source_lost_during_provider_preflight_refuses_before_intent_or_post ... ok
+test unchanged_observation_uses_only_its_five_scoped_get_requests ... ok
+
+test result: ok. 102 passed; 0 failed; 4 ignored; 0 measured; 0 filtered out; finished in 21.21s
+
+     Running tests\github_app_worker.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\github_app_worker-f5646923486bd852.exe)
+
+running 33 tests
+test a_caller_transaction_is_preserved_and_cannot_be_committed_by_claim ... ok
+test a_new_claim_for_an_unrelated_pull_request_does_not_stale_the_original_queue_revision ... ok
+test a_reopened_store_reconstructs_the_active_claim_from_durable_history ... ok
+test a_request_uuid_cannot_be_rebound_to_another_worker_or_lease ... ok
+test cancellation_triggered_by_an_observed_sql_begin_rolls_back_without_a_work_record ... ok
+test clock_regression_refuses_a_new_transition_without_extending_existing_lease ... ok
+test competing_claim_refuses_until_expiry_then_takeover_fences_the_old_owner ... ok
+test empty_work_status_is_read_only_and_has_explicit_coverage ... ok
+test exact_claim_retry_keeps_original_lease_instead_of_extending_it ... ok
+test exact_output_and_history_byte_boundaries_succeed_and_one_byte_less_refuses ... ok
+test historical_claim_remains_readable_after_queue_selection_advances_and_is_marked_stale ... ok
+test host_repository_grants_are_required_even_with_a_valid_queue_signature ... ok
+test independent_sqlite_writer_contention_is_observed_bounded_and_restores_transaction_state ... ok
+test independently_opened_store_connections_cannot_both_claim_the_same_job ... ok
+test insufficient_positive_output_or_history_capacity_never_appends_a_claim ... ok
+test malformed_and_ambiguous_claim_requests_refuse_instead_of_normalizing_authority ... ok
+test malformed_worker_history_blocks_retention_instead_of_becoming_a_generic_record ... ok
+test multiple_apps_share_structural_history_without_sharing_signing_authority ... ok
+test new_queue_membership_invalidates_an_old_observed_selection_revision ... ok
+test observed_expiry_cannot_be_reversed_by_rewinding_the_same_host_clock ... ok
+test operation_restores_the_prior_store_deadline_and_busy_policy_on_success_and_refusal ... ok
+test permission_and_zero_work_limits_precede_any_database_operation ... ok
+test read_only_status_preserves_an_existing_caller_transaction ... ok
+test recovering_an_expired_superseded_claim_does_not_restore_its_authority ... ok
+test recovery_is_read_only_and_checks_input_and_zero_capacity_before_sql ... ok
+test recovery_refuses_invalid_unknown_nonclaim_and_ungranted_record_ids ... ok
+test release_is_idempotent_and_cannot_release_a_later_claim ... ok
+test reopened_store_recovers_the_exact_claim_identity_and_can_release_it ... ok
+test rotation_verifies_prior_work_macs_and_new_records_require_the_new_key ... ok
+test selected_claim_is_durable_fenced_and_preserves_source_bytes ... ok
+test unselected_suppressed_and_closed_discussion_jobs_cannot_be_claimed_for_review ... ok
+test work_record_tampering_cannot_be_hidden_by_recomputing_its_content_id ... ok
+test worker_history_is_recognized_by_retention_without_promoting_arbitrary_text_to_cas_roots ... ok
+
+test result: ok. 33 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.64s
+
+     Running tests\github_app_worker_cli.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\github_app_worker_cli-81c8c16e00e25432.exe)
+
+running 5 tests
+test read_only_worker_commands_refuse_network_and_write_authority ... ok
+test worker_inherited_zero_queue_limits_precede_missing_host_files_and_keys ... ok
+test worker_mutation_permissions_precede_missing_request_profiles_and_source ... ok
+test worker_zero_history_and_output_limits_precede_all_host_files ... ok
+test worker_zero_remote_limits_precede_auth_files_credentials_and_source ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.44s
+
+     Running tests\github_app_worker_run.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\github_app_worker_run-774c7d1031a3038c.exe)
+
+running 28 tests
+test a_client_created_outside_tokio_cannot_run_a_worker_inside_it ... ok
+test a_deleted_source_blob_at_final_observation_is_named_unavailable ... ok
+test closed_completion_binding_corruption_refuses_retention_even_with_valid_fixture_mac ... ok
+test completed_job_is_terminal_and_a_fresh_claim_cannot_erase_its_completion ... ok
+test completed_request_retry_is_historical_after_expiry_and_changed_source_cannot_rebind_it ... ok
+test exact_historical_report_obeys_the_current_report_byte_budget_without_http ... ok
+test execution_permissions_and_zero_budgets_precede_sql_and_http ... ok
+test execution_request_is_closed_duplicate_safe_and_has_no_endpoint_or_clock_selector ... ok
+test execution_restores_the_callers_actual_limits_and_deadline_handler ... ok
+test final_completion_writer_conflict_is_causal_bounded_and_restores_sql_policy ... ok
+test final_source_seals_detect_changes_to_graph_and_absent_scope_rows ... ok
+test historical_result_checks_source_again_but_status_remains_historical ... ok
+test lease_expiry_and_new_queue_revision_during_http_prevent_completion ... ok
+test lease_expiry_observed_during_source_preparation_refuses_before_token_minting ... ok
+test local_source_binding_on_a_blob_mismatch_is_not_a_checked_remote_blob_match ... ok
+test mid_body_file_cancellation_preserves_the_cause_closes_http_and_leaves_no_completion ... ok
+test native_run_binds_exact_crlf_utf8_source_and_finishes_without_intermediate_artifacts ... ok
+test provider_count_fork_draft_coverage_links_and_token_reflections_refuse ... ok
+test provider_head_change_at_the_final_metadata_read_cannot_complete_work ... ok
+test pull_request_read_permission_alone_can_finish_existing_source_analysis ... ok
+test racing_identical_run_keeps_one_completion_and_reports_the_attempts_real_requests ... ok
+test removed_files_use_only_an_explicit_base_and_label_the_base_commit ... ok
+test report_and_output_refusals_leave_no_completion ... ok
+test retention_preserves_typed_completion_roots_without_walking_inert_report_ids ... ok
+test run_refuses_a_caller_transaction_before_any_http_and_preserves_it ... ok
+test source_seals_allow_graph_rows_larger_than_the_worker_record_limit ... ok
+test typed_pagination_covers_all_files_and_reserves_the_final_observation ... ok
+test unknown_explicit_snapshot_refuses_without_capture_or_http ... ok
+
+test result: ok. 28 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 6.20s
+
+     Running tests\parity_retention.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\parity_retention-dbb9192f108b8fc9.exe)
+
+running 8 tests
+test development_six_cache_missing_only_embedded_language_keeps_exact_old_schema ... ok
+test duplicate_provenance_fields_are_refused_before_dependency_interpretation ... ok
+test parity_record_future_fields_and_corrupt_bindings_never_grant_purge ... ok
+test rehashed_report_with_unknown_nested_schema_is_refused ... ok
+test released_analyzer_four_extraction_cache_is_readable_without_rewriting_old_payloads ... ok
+test source_bound_reports_exports_and_markdown_artifacts_are_known_retention_dependencies ... ok
+test structural_semantic_and_view_artifacts_preserve_exact_source_roots ... ok
+test valid_capture_notes_session_and_unpublished_capture_do_not_disable_retention ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.63s
+
+     Running tests\retention.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\retention-2ad77774f6345e40.exe)
+
+running 16 tests
+test committed_retirement_can_feed_conservative_cas_quarantine_and_purge_without_losing_receipts ... ok
+test future_opaque_json_artifact_schema_is_not_inferred_to_be_dependency_free ... ok
+test labeled_uncommitted_history_journal_restores_missing_rows_without_changing_current_source ... ok
+test labeled_uncommitted_history_journal_restores_only_hash_bound_rows ... ok
+test missing_history_age_and_corrupt_metadata_never_become_retirement_permission ... ok
+test multiply_linked_quarantine_content_is_unknown_physical_reclamation_and_is_preserved ... ok
+test newly_rooted_quarantine_and_tampered_plan_refuse_purge_without_deleting_bytes ... ok
+test opaque_published_artifacts_defer_history ... ok
+test partial_purge_reports_actual_removed_bytes_and_can_resume_only_its_exact_intent ... ok
+test pin_and_every_source_bound_workflow_record_protect_history ... ok
+test purge_reclaims_only_exact_committed_unreachable_quarantine_bytes_after_confirmation ... ok
+test reviewed_history_retirement_removes_only_unrooted_rows_and_preserves_original_source ... ok
+test source_bindings_inside_published_json_artifacts_protect_history ... ok
+test stale_plan_and_concurrent_client_leave_history_intact ... ok
+test unknown_nested_snapshot_fields_defer_history ... ok
+test unknown_record_blocks_retirement_even_without_explicit_hash_fields ... ok
+
+test result: ok. 16 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.60s
+

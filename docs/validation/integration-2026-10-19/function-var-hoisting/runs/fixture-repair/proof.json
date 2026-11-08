@@ -1,0 +1,17 @@
+{
+  "guardPhase": "guard-r3",
+  "guardNativeInputs": 807,
+  "changedFile": "native/src/compiler_inline_body.rs",
+  "changedRegion": "cfg(test) only: two original UTF-8 comment literals and exact original comment-array formatting (including optional trailing comma)",
+  "restoredLiteral": "/* caf\u00e9 */",
+  "restoredOccurrences": 2,
+  "exactExpectedTextChecked": true,
+  "productionPrefixUnchanged": true,
+  "productionPrefixSha256": "e48888d8e6838beb7908679e3efcff0915cd1a73efccf2b33fdf89955893e91b",
+  "allOtherGuardInputsUnchanged": true,
+  "otherGuardInputs": 806,
+  "beforeSha256": "7106fcf706b35262197addce3743bd459f1ba2cb37a02cd6470cef0d6a1c2b3c",
+  "afterSha256": "795b3791b730e5a8b311568ebc56abd51ba290fbc7002f9a5237964b53ed3493",
+  "mainBinaryBeforeReviewSha256": "f8a89052a7f80e59ae12895f05ff29a1f8d7f1b6d0999e3ced856478e39526f1",
+  "initialProofFailure": "The initial whitespace-only comparison rejected rustfmt removing the optional trailing comma; final proof checks exact expected text using the original Git comment-array spelling."
+}

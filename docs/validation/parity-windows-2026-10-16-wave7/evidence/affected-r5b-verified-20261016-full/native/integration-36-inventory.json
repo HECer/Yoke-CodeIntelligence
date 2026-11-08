@@ -1,0 +1,17 @@
+{
+  "git_cli": {
+    "executable": "target\\debug\\deps\\git_cli-e30b12c3158d0146.exe",
+    "ignored": [],
+    "registered": [
+      "public_git_cli_analyzes_and_reloads_immutable_reports_with_explicit_host_execution"
+    ]
+  },
+  "git_epoch_selection": {
+    "executable": "target\\debug\\deps\\git_epoch_selection-f81aa6a9b3a3098a.exe",
+    "ignored": [],
+    "registered": [
+      "selected_epoch_is_shared_by_working_and_committed_git_report_sides",
+      "worktree_cache_seed_uses_selected_epoch_without_copying_other_epoch_entries"
+    ]
+  }
+}

@@ -1,0 +1,262 @@
+//! Replay the original native plan identity and complete captured byte delta.
+//! A saved review or approval ID must not authorize a different stored effect.
+use super::{Plan, PlannedFile};
+use crate::{
+    capture::{self, Deadline},
+    model::{Snapshot, SourceFile, identity, valid_id},
+    store::Store,
+};
+use anyhow::{Context, Result, ensure};
+use rusqlite::{Transaction, TransactionBehavior, limits::Limit};
+use serde_json::Value;
+use similar::TextDiff;
+use std::{
+    collections::{BTreeMap, BTreeSet},
+    sync::Arc,
+};
+
+const INVALID: &str = "changes_plan_invalid";
+const CAPACITY: &str = "changes_plan_capacity_exceeded";
+const MAX_PLAN_BYTES: usize = 64_000_000;
+const MAX_SNAPSHOT_BYTES: usize = 32_000_000;
+const MAX_SOURCE_BYTES: usize = 128_000_000;
+
+fn raw(store: &Store, snapshot: bool, id: &str, maximum: usize, d: &Deadline) -> Result<Value> {
+    d.check()?;
+    ensure!(valid_id(id), INVALID);
+    let bytes: Vec<u8> = if snapshot {
+        store.db.query_row(
+            "SELECT substr(CAST(value AS BLOB),1,?2) FROM snapshots WHERE id=?1",
+            rusqlite::params![id, maximum + 1],
+            |r| r.get(0),
+        )?
+    } else {
+        store.db.query_row(
+            "SELECT substr(CAST(value AS BLOB),1,?2) FROM records WHERE kind='plan' AND id=?1",
+            rusqlite::params![id, maximum + 1],
+            |r| r.get(0),
+        )?
+    };
+    ensure!(bytes.len() <= maximum, CAPACITY);
+    crate::json::parse(&bytes, maximum)
+}
+fn files<'a>(snapshot: &'a Snapshot, d: &Deadline) -> Result<BTreeMap<&'a str, &'a SourceFile>> {
+    ensure!(snapshot.files.len() <= 20_000, CAPACITY);
+    let mut result = BTreeMap::new();
+    let mut prior = None;
+    for file in &snapshot.files {
+        d.check()?;
+        ensure!(
+            crate::paths::normalized_syntax(&file.path)? == file.path
+                && valid_id(&file.hash)
+                && file.size <= 4_000_000
+                && prior.is_none_or(|p: &str| p < file.path.as_str()),
+            INVALID
+        );
+        prior = Some(file.path.as_str());
+        result.insert(file.path.as_str(), file);
+    }
+    Ok(result)
+}
+fn binding(
+    plan: &Plan,
+    base: &Snapshot,
+    result: &Snapshot,
+    store: &Store,
+    d: &Deadline,
+) -> Result<()> {
+    ensure!(
+        plan.workspace_id == store.workspace_id
+            && base.workspace_id == store.workspace_id
+            && result.workspace_id == store.workspace_id
+            && plan.base_snapshot_id == base.id
+            && plan.result_snapshot_id == result.id
+            && result.kind == "derived"
+            && result.capture_consistency == "derived-from-immutable"
+            && serde_json::to_value(&result.omissions)? == serde_json::to_value(&base.omissions)?,
+        INVALID
+    );
+    let epoch = capture::analyzer_epoch_for_snapshot_with_deadline(store, base, d)?;
+    ensure!(
+        epoch.derived_snapshot_id(base, &result.files) == result.id,
+        INVALID
+    );
+    let before = files(base, d)?;
+    let after = files(result, d)?;
+    let paths: BTreeSet<_> = before.keys().chain(after.keys()).copied().collect();
+    let mut expected = vec![];
+    for path in paths {
+        d.check()?;
+        let b = before.get(path).copied();
+        let a = after.get(path).copied();
+        if b.map(|f| &f.hash) == a.map(|f| &f.hash) {
+            if let (Some(b), Some(a)) = (b, a) {
+                ensure!(b == a, INVALID);
+            }
+            continue;
+        }
+        expected.push(PlannedFile {
+            path: path.into(),
+            before_hash: b.map(|f| f.hash.clone()),
+            after_hash: a.map(|f| f.hash.clone()),
+            mode: b.map_or(0o644, |f| f.mode),
+        });
+        if let Some(a) = a {
+            ensure!(a.mode == b.map_or(0o644, |f| f.mode), INVALID);
+        }
+    }
+    ensure!(
+        !expected.is_empty()
+            && expected.len() <= 2000
+            && serde_json::to_value(&plan.files)? == serde_json::to_value(&expected)?,
+        INVALID
+    );
+    Ok(())
+}
+fn review(
+    plan: &Plan,
+    base: &Snapshot,
+    result: &Snapshot,
+    store: &Store,
+    d: &Deadline,
+) -> Result<()> {
+    let before = capture::source_scope_policy(store, base)?;
+    let after = capture::source_scope_policy(store, result)?;
+    let mut objects = BTreeMap::<String, usize>::new();
+    let mut admitted = 0usize;
+    // Admit all selected byte counts and both path policies before body reads.
+    for file in &plan.files {
+        d.check()?;
+        before.check_host_write_scope(&file.path)?;
+        for (scope, id) in [(&before, &file.before_hash), (&after, &file.after_hash)] {
+            if let Some(id) = id {
+                let member = scope.file(&file.path)?;
+                ensure!(member.hash == *id, INVALID);
+                if let Some(size) = objects.get(id) {
+                    ensure!(*size == member.size, INVALID);
+                } else {
+                    admitted = admitted.checked_add(member.size).context(CAPACITY)?;
+                    ensure!(admitted <= MAX_SOURCE_BYTES, CAPACITY);
+                    objects.insert(id.clone(), member.size);
+                }
+            }
+        }
+    }
+    let mut texts = BTreeMap::<String, Arc<str>>::new();
+    let mut diff = String::new();
+    let mut warnings = vec![];
+    for file in &plan.files {
+        d.check()?;
+        let mut pair = [Arc::<str>::from(""), Arc::<str>::from("")];
+        for (i, scope, id) in [
+            (0, &before, &file.before_hash),
+            (1, &after, &file.after_hash),
+        ] {
+            if let Some(id) = id {
+                let text = if let Some(text) = texts.get(id) {
+                    Arc::clone(text)
+                } else {
+                    let bytes = scope.read_source(&file.path)?;
+                    ensure!(objects[id] == bytes.len(), INVALID);
+                    let text: Arc<str> = Arc::from(String::from_utf8(bytes)?);
+                    texts.insert(id.clone(), Arc::clone(&text));
+                    text
+                };
+                pair[i] = text;
+            }
+        }
+        let addition = TextDiff::from_lines(pair[0].as_ref(), pair[1].as_ref())
+            .unified_diff()
+            .context_radius(3)
+            .header(
+                if file.before_hash.is_some() {
+                    &file.path
+                } else {
+                    "/dev/null"
+                },
+                if file.after_hash.is_some() {
+                    &file.path
+                } else {
+                    "/dev/null"
+                },
+            )
+            .to_string();
+        ensure!(
+            addition.len() <= 16_000_000usize.saturating_sub(diff.len()),
+            CAPACITY
+        );
+        diff.push_str(&addition);
+        let folded = file.path.to_ascii_lowercase();
+        if folded.contains("test") || folded.contains("spec") {
+            warnings.push(format!(
+                "Test-like file modified: {}; host approval must include test changes",
+                file.path
+            ));
+        }
+    }
+    ensure!(plan.diff == diff && plan.warnings == warnings, INVALID);
+    d.check()
+}
+pub(super) fn load(store: &Store, id: &str, d: &Deadline) -> Result<Plan> {
+    let d = store.inherited_deadline(d)?;
+    let run = || -> Result<Plan> {
+        crate::github_app::worker::publication_policy(store, &d, || {
+            let prior = store.db.limit(Limit::SQLITE_LIMIT_LENGTH)?;
+            store
+                .db
+                .set_limit(Limit::SQLITE_LIMIT_LENGTH, prior.min(64_004_096))?;
+            let tx = if store.db.is_autocommit() {
+                Some(Transaction::new_unchecked(
+                    &store.db,
+                    TransactionBehavior::Deferred,
+                )?)
+            } else {
+                None
+            };
+            let plan: Plan = crate::json::decode(raw(store, false, id, MAX_PLAN_BYTES, &d)?)?;
+            ensure!(
+                plan.id == id
+                    && valid_id(id)
+                    && plan.workspace_id == store.workspace_id
+                    && plan.created_at.checked_add(86400) == Some(plan.expires_at)
+                    && plan.id
+                        == identity(&(
+                            &plan.base_snapshot_id,
+                            &plan.result_snapshot_id,
+                            &plan.files,
+                            plan.created_at
+                        )),
+                INVALID
+            );
+            let base: Snapshot = crate::json::decode(raw(
+                store,
+                true,
+                &plan.base_snapshot_id,
+                MAX_SNAPSHOT_BYTES,
+                &d,
+            )?)?;
+            let result: Snapshot = crate::json::decode(raw(
+                store,
+                true,
+                &plan.result_snapshot_id,
+                MAX_SNAPSHOT_BYTES,
+                &d,
+            )?)?;
+            binding(&plan, &base, &result, store, &d)?;
+            review(&plan, &base, &result, store, &d)?;
+            d.check()?;
+            if let Some(tx) = tx {
+                tx.commit()?;
+            }
+            Ok(plan)
+        })
+    };
+    run().map_err(|error|{
+        if d.check().is_err(){anyhow::anyhow!("changes_plan_deadline_or_cancelled")}
+        else if error.to_string()==CAPACITY
+            ||error.chain().any(|e|matches!(e.downcast_ref::<rusqlite::Error>(),
+                Some(rusqlite::Error::SqliteFailure(code,_)) if code.extended_code==rusqlite::ffi::SQLITE_TOOBIG)){
+            anyhow::anyhow!(CAPACITY)
+        }else{anyhow::anyhow!(INVALID)}
+    })
+}

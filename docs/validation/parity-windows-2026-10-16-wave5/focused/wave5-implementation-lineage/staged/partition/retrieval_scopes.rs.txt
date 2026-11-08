@@ -1,0 +1,455 @@
+//! Ignored next-wave type/stub draft. NOT an implemented source capability.
+//! Promotion and every functional body require root's causal RED release.
+
+use crate::{
+    capture::{CapturedSourceScope, Deadline},
+    model::{Entity, Graph, Snapshot},
+    store::Store,
+};
+use std::{
+    collections::{BTreeMap, BTreeSet},
+    fmt,
+    sync::Arc,
+};
+
+pub(crate) const POLICY: &str = "yoke-retrieval-scopes-1";
+
+pub(crate) type RetrievalResult<T> = Result<T, RetrievalHardError>;
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub(crate) enum RetrievalHardError {
+    InvalidRequest(&'static str),
+    Authority(&'static str),
+    SourceIntegrity(&'static str),
+    DeniedSource(&'static str),
+    Cancelled(&'static str),
+    Deadline(&'static str),
+    Capacity(&'static str),
+    OutputCapacity(&'static str),
+    Internal(&'static str),
+}
+impl fmt::Display for RetrievalHardError {
+    fn fmt(&self, out: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let (kind, code) = match self {
+            Self::InvalidRequest(code) => ("invalid_request", code),
+            Self::Authority(code) => ("authority", code),
+            Self::SourceIntegrity(code) => ("source_integrity", code),
+            Self::DeniedSource(code) => ("denied_source", code),
+            Self::Cancelled(code) => ("cancelled", code),
+            Self::Deadline(code) => ("deadline", code),
+            Self::Capacity(code) => ("capacity", code),
+            Self::OutputCapacity(code) => ("output_capacity", code),
+            Self::Internal(code) => ("internal", code),
+        };
+        write!(out, "Manifest-balanced retrieval {kind}: {code}")
+    }
+}
+impl std::error::Error for RetrievalHardError {}
+
+fn unavailable<T>() -> RetrievalResult<T> {
+    Err(RetrievalHardError::Internal("implementation_unavailable"))
+}
+
+// No public constructors, Deserialize, mutable getters, reset or refund API.
+// CapturedSourceScope borrows the same immutable snapshot and a shorter borrow
+// of the exact Store; begin therefore requires 'store: 'input.
+pub(crate) struct CheckedRetrievalRun<'store, 'input, 'deadline> {
+    store: &'store Store,
+    snapshot: &'input Snapshot,
+    graph: &'input Graph,
+    source_scope: CapturedSourceScope<'input>,
+    deadline: &'deadline Deadline,
+    output_limit: usize,
+    snapshot_hash: String,
+    graph_hash: String,
+    verified: BTreeMap<String, VerifiedSource>,
+    admitted_documents: BTreeSet<String>,
+    usage: RunUsage,
+}
+
+pub(crate) struct CheckedScopePartition<'store> {
+    store: &'store Store,
+    snapshot_id: String,
+    snapshot_hash: String,
+    graph_hash: String,
+    source_scope_binding: String,
+    id: String,
+    physical_package_count: usize,
+    declarations: Vec<ManifestBinding>,
+    scopes: Vec<CheckedScope>,
+    ownership: BTreeMap<String, usize>,
+    diagnostics: Vec<ScopeDiagnostic>,
+    omitted_diagnostic_count: usize,
+}
+
+pub(crate) struct ScopeHandle<'partition, 'store> {
+    owner: &'partition CheckedScopePartition<'store>,
+    ordinal: usize,
+}
+
+pub(crate) enum ProbeOutcome<'store> {
+    Ready(CheckedScopePartition<'store>),
+    NotApplicable(PolicyFallback),
+    UnsupportedPolicy(PolicyFallback),
+}
+
+pub(crate) struct PolicyFallback {
+    code: &'static str,
+    physical_package_count: Option<usize>,
+    diagnostics: Vec<ScopeDiagnostic>,
+    omitted_diagnostic_count: usize,
+}
+impl PolicyFallback {
+    pub(crate) fn code(&self) -> &'static str {
+        self.code
+    }
+    pub(crate) fn physical_package_count(&self) -> Option<usize> {
+        self.physical_package_count
+    }
+    pub(crate) fn diagnostics(&self) -> impl Iterator<Item = &ScopeDiagnostic> {
+        self.diagnostics.iter()
+    }
+    pub(crate) fn omitted_diagnostic_count(&self) -> usize {
+        self.omitted_diagnostic_count
+    }
+}
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub(crate) enum ScopeKind {
+    Package,
+    WorkspaceUnassigned,
+    RootUnassigned,
+}
+impl ScopeKind {
+    pub(crate) fn as_str(self) -> &'static str {
+        match self {
+            Self::Package => "package",
+            Self::WorkspaceUnassigned => "workspace_unassigned",
+            Self::RootUnassigned => "root_unassigned",
+        }
+    }
+}
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord)]
+pub(crate) enum Ecosystem {
+    Cargo,
+    Npm,
+    Pnpm,
+}
+impl Ecosystem {
+    pub(crate) fn as_str(self) -> &'static str {
+        match self {
+            Self::Cargo => "cargo",
+            Self::Npm => "npm",
+            Self::Pnpm => "pnpm",
+        }
+    }
+}
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub(crate) enum MembershipReason {
+    Member,
+    Excluded,
+    Unmatched,
+    Standalone,
+}
+impl MembershipReason {
+    pub(crate) fn as_str(self) -> &'static str {
+        match self {
+            Self::Member => "member",
+            Self::Excluded => "excluded",
+            Self::Unmatched => "unmatched",
+            Self::Standalone => "standalone",
+        }
+    }
+}
+
+pub(crate) struct PackageLabel {
+    ecosystem: Ecosystem,
+    name: String,
+    declaration_path: String,
+    primary: bool,
+}
+impl PackageLabel {
+    pub(crate) fn ecosystem(&self) -> Ecosystem {
+        self.ecosystem
+    }
+    pub(crate) fn name(&self) -> &str {
+        &self.name
+    }
+    pub(crate) fn declaration_path(&self) -> &str {
+        &self.declaration_path
+    }
+    pub(crate) fn is_primary(&self) -> bool {
+        self.primary
+    }
+}
+
+pub(crate) struct ManifestBinding {
+    path: String,
+    content_hash: String,
+}
+impl ManifestBinding {
+    pub(crate) fn path(&self) -> &str {
+        &self.path
+    }
+    pub(crate) fn content_hash(&self) -> &str {
+        &self.content_hash
+    }
+}
+
+pub(crate) struct WorkspaceMembership {
+    ecosystem: Ecosystem,
+    workspace_root: Option<String>,
+    declaration_path: Option<String>,
+    reason: MembershipReason,
+}
+impl WorkspaceMembership {
+    pub(crate) fn ecosystem(&self) -> Ecosystem {
+        self.ecosystem
+    }
+    pub(crate) fn workspace_root(&self) -> Option<&str> {
+        self.workspace_root.as_deref()
+    }
+    pub(crate) fn declaration_path(&self) -> Option<&str> {
+        self.declaration_path.as_deref()
+    }
+    pub(crate) fn reason(&self) -> MembershipReason {
+        self.reason
+    }
+}
+
+pub(crate) struct ScopeDiagnostic {
+    code: &'static str,
+    path: String,
+    content_hash: Option<String>,
+    selector: Option<String>,
+    line: Option<usize>,
+    column: Option<usize>,
+}
+impl ScopeDiagnostic {
+    pub(crate) fn code(&self) -> &'static str {
+        self.code
+    }
+    pub(crate) fn path(&self) -> &str {
+        &self.path
+    }
+    pub(crate) fn content_hash(&self) -> Option<&str> {
+        self.content_hash.as_deref()
+    }
+    pub(crate) fn selector(&self) -> Option<&str> {
+        self.selector.as_deref()
+    }
+    pub(crate) fn line(&self) -> Option<usize> {
+        self.line
+    }
+    pub(crate) fn column(&self) -> Option<usize> {
+        self.column
+    }
+}
+
+pub(crate) struct CheckedScope {
+    id: String,
+    root: String,
+    kind: ScopeKind,
+    labels: Vec<PackageLabel>,
+    declarations: Vec<ManifestBinding>,
+    memberships: Vec<WorkspaceMembership>,
+}
+impl CheckedScope {
+    pub(crate) fn id(&self) -> &str {
+        &self.id
+    }
+    pub(crate) fn root(&self) -> &str {
+        &self.root
+    }
+    pub(crate) fn kind(&self) -> ScopeKind {
+        self.kind
+    }
+    pub(crate) fn labels(&self) -> impl Iterator<Item = &PackageLabel> {
+        self.labels.iter()
+    }
+    pub(crate) fn declarations(&self) -> impl Iterator<Item = &ManifestBinding> {
+        self.declarations.iter()
+    }
+    pub(crate) fn memberships(&self) -> impl Iterator<Item = &WorkspaceMembership> {
+        self.memberships.iter()
+    }
+}
+
+#[derive(Clone, Copy)]
+pub(crate) struct SourceCost {
+    source_bytes: usize,
+    incremental_bytes: usize,
+    cached: bool,
+}
+impl SourceCost {
+    pub(crate) fn source_bytes(self) -> usize {
+        self.source_bytes
+    }
+    pub(crate) fn incremental_bytes(self) -> usize {
+        self.incremental_bytes
+    }
+    pub(crate) fn is_cached(self) -> bool {
+        self.cached
+    }
+}
+
+// Cloning immutable verified data is not a source-scope or debit capability.
+#[derive(Clone)]
+pub(crate) struct VerifiedSource {
+    path: String,
+    content_hash: String,
+    text: Arc<str>,
+}
+impl VerifiedSource {
+    pub(crate) fn path(&self) -> &str {
+        &self.path
+    }
+    pub(crate) fn content_hash(&self) -> &str {
+        &self.content_hash
+    }
+    pub(crate) fn text(&self) -> &str {
+        &self.text
+    }
+}
+pub(crate) struct VerifiedDocument<'input> {
+    entity: &'input Entity,
+    source: VerifiedSource,
+    start: usize,
+    end: usize,
+}
+impl VerifiedDocument<'_> {
+    pub(crate) fn entity(&self) -> &Entity {
+        self.entity
+    }
+    pub(crate) fn source(&self) -> &VerifiedSource {
+        &self.source
+    }
+    pub(crate) fn text(&self) -> &str {
+        &self.source.text()[self.start..self.end]
+    }
+}
+
+#[derive(Clone, Copy, Default, Debug, PartialEq, Eq)]
+pub(crate) struct RunUsage {
+    marker_files_checked: usize,
+    marker_bytes_charged: usize,
+    body_input_bytes_charged: usize,
+    input_bytes_charged: usize,
+    document_bytes_charged: usize,
+    selector_work: usize,
+    ownership_bytes: usize,
+    verified_path_count: usize,
+}
+impl RunUsage {
+    pub(crate) fn marker_files_checked(self) -> usize {
+        self.marker_files_checked
+    }
+    pub(crate) fn marker_bytes_charged(self) -> usize {
+        self.marker_bytes_charged
+    }
+    pub(crate) fn body_input_bytes_charged(self) -> usize {
+        self.body_input_bytes_charged
+    }
+    pub(crate) fn input_bytes_charged(self) -> usize {
+        self.input_bytes_charged
+    }
+    pub(crate) fn document_bytes_charged(self) -> usize {
+        self.document_bytes_charged
+    }
+    pub(crate) fn selector_work(self) -> usize {
+        self.selector_work
+    }
+    pub(crate) fn ownership_bytes(self) -> usize {
+        self.ownership_bytes
+    }
+    pub(crate) fn verified_path_count(self) -> usize {
+        self.verified_path_count
+    }
+}
+
+pub(crate) fn begin<'store: 'input, 'input, 'deadline>(
+    _store: &'store Store,
+    _snapshot: &'input Snapshot,
+    _graph: &'input Graph,
+    _deadline: &'deadline Deadline,
+    _output_limit: usize,
+) -> RetrievalResult<CheckedRetrievalRun<'store, 'input, 'deadline>> {
+    unavailable()
+}
+
+pub(crate) fn probe<'store>(
+    _run: &mut CheckedRetrievalRun<'store, '_, '_>,
+) -> RetrievalResult<ProbeOutcome<'store>> {
+    unavailable()
+}
+
+impl<'store, 'input, 'deadline> CheckedRetrievalRun<'store, 'input, 'deadline> {
+    pub(crate) fn snapshot(&self) -> &'input Snapshot {
+        self.snapshot
+    }
+    pub(crate) fn graph(&self) -> &'input Graph {
+        self.graph
+    }
+    pub(crate) fn deadline(&self) -> &'deadline Deadline {
+        self.deadline
+    }
+    pub(crate) fn output_limit(&self) -> usize {
+        self.output_limit
+    }
+    pub(crate) fn usage(&self) -> RunUsage {
+        self.usage
+    }
+    pub(crate) fn source_cost(&self, _path: &str) -> RetrievalResult<SourceCost> {
+        unavailable()
+    }
+    pub(crate) fn read_source(&mut self, _path: &str) -> RetrievalResult<VerifiedSource> {
+        unavailable()
+    }
+    pub(crate) fn document_cost(&self, _entity: &Entity) -> RetrievalResult<usize> {
+        unavailable()
+    }
+    pub(crate) fn admit_document(
+        &mut self,
+        _entity: &Entity,
+    ) -> RetrievalResult<VerifiedDocument<'input>> {
+        unavailable()
+    }
+}
+impl<'store> CheckedScopePartition<'store> {
+    pub(crate) fn validate_for(
+        &self,
+        _run: &CheckedRetrievalRun<'_, '_, '_>,
+    ) -> RetrievalResult<()> {
+        unavailable()
+    }
+    pub(crate) fn id(&self) -> &str {
+        &self.id
+    }
+    pub(crate) fn physical_package_count(&self) -> usize {
+        self.physical_package_count
+    }
+    pub(crate) fn scopes(&self) -> impl Iterator<Item = &CheckedScope> {
+        self.scopes.iter()
+    }
+    pub(crate) fn declarations(&self) -> impl Iterator<Item = &ManifestBinding> {
+        self.declarations.iter()
+    }
+    pub(crate) fn diagnostics(&self) -> impl Iterator<Item = &ScopeDiagnostic> {
+        self.diagnostics.iter()
+    }
+    pub(crate) fn omitted_diagnostic_count(&self) -> usize {
+        self.omitted_diagnostic_count
+    }
+    pub(crate) fn owner(&self, _path: &str) -> RetrievalResult<ScopeHandle<'_, 'store>> {
+        unavailable()
+    }
+    pub(crate) fn scope(&self, _handle: &ScopeHandle<'_, '_>) -> RetrievalResult<&CheckedScope> {
+        unavailable()
+    }
+}
+
+#[cfg(test)]
+#[path = "retrieval_scopes_tests.rs"]
+mod tests;

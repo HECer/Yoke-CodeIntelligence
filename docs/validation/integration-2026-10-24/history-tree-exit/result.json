@@ -1,0 +1,163 @@
+{
+  "baseline": "c11511ee821d16741b4082e59ecd2bf671462270",
+  "wholePython": {
+    "passed": 103,
+    "failed": 0,
+    "skipped": 0,
+    "warningsAreErrors": true
+  },
+  "focusedHistoryNonadditive": {
+    "passed": 18,
+    "failed": 0,
+    "skipped": 0
+  },
+  "newActualWindowsTestsIncluded": 2,
+  "typecheckExit": 0,
+  "npmExit": 0,
+  "npm": {
+    "passed": 260,
+    "failed": 0,
+    "existingSkipped": 3
+  },
+  "nativeYokeImageReadOrExecutedLocally": false,
+  "nativeRustAndWorkflowExactToBaseline": true,
+  "archiveLiveAcceptanceVerified": false,
+  "nativeMatrixAccepted": false,
+  "fullStatusComplete": false,
+  "nativeFullBuildAdmissionBytes": 1200000000,
+  "freeBytesObserved": 1084489728,
+  "logs": [
+    {
+      "path": "red.txt",
+      "sha256": "91ebcf4dffbe74b83cbeaedb606128ebf333a5aaa319601b4de2816b87ce5130",
+      "bytes": 1914,
+      "originalSha256": "cd36f3ce62b14e898978ac6d155176f1b9fef8bd2dc045571abc53ec0c026076",
+      "originalEncoding": "utf-16",
+      "displayTransform": "UTF-16 to UTF-8, LF, trim trailing whitespace"
+    },
+    {
+      "path": "positive-before.txt",
+      "sha256": "e0ae9a8cd57d320c56515097ea5799dea875ae4748e0f42b78c80060837adf46",
+      "bytes": 1808,
+      "originalSha256": "48200402e0aa20ffb8bf6ab0220e9bca438ad2b7517fb39d3e9bddf2b2019ee2",
+      "originalEncoding": "utf-16",
+      "displayTransform": "UTF-16 to UTF-8, LF, trim trailing whitespace"
+    },
+    {
+      "path": "python-focused.txt",
+      "sha256": "c4ee3241e0e3b657169348e45153cdb654ad8d73c60cd253f1a7daeb2753f7ee",
+      "bytes": 4426,
+      "originalSha256": "cbf080ea1f3b897675007aac8ab65bd0694549a131970628d1e3345f20af30f0",
+      "originalEncoding": "utf-16",
+      "displayTransform": "UTF-16 to UTF-8, LF, trim trailing whitespace"
+    },
+    {
+      "path": "python-all.txt",
+      "sha256": "d3587ba27fb374ec1ada5398e25219b4355bb65d8ca9792f6fbdd70e8e2dee42",
+      "bytes": 20538,
+      "originalSha256": "85de04dac8b7751e90914934beb274ce35251c7a80b3742c6736639c5f9989d8",
+      "originalEncoding": "utf-16",
+      "displayTransform": "UTF-16 to UTF-8, LF, trim trailing whitespace"
+    },
+    {
+      "path": "typecheck.txt",
+      "sha256": "43fb34cbc78845fb12d44c727847e22871c865aca693763aae0642d560d5a23e",
+      "bytes": 437,
+      "originalSha256": "b887be366b43f334641848cb278f73381ee018dcd4d5e56cbb98f14f29445e80",
+      "originalEncoding": "utf-16",
+      "displayTransform": "UTF-16 to UTF-8, LF, trim trailing whitespace"
+    },
+    {
+      "path": "npm-test.txt",
+      "sha256": "6a2d14a4be8d8c6401d88f6ffbf7a641a723dc8448c6eb04549bdd70bdd08dad",
+      "bytes": 25367,
+      "originalSha256": "9de6a7f2becdcbb7f5356e36b9af8880af33b974688a9c5029956ad89bd98c6c",
+      "originalEncoding": "utf-16",
+      "displayTransform": "UTF-16 to UTF-8, LF, trim trailing whitespace"
+    }
+  ],
+  "jobObservations": {
+    "red.txt": [
+      {
+        "activeAfterCleanup": 0,
+        "activeAtParentExit": 3,
+        "assignedBeforeResume": true,
+        "complete": true,
+        "exitCode": 0,
+        "pid": 36340,
+        "startedSuspended": true
+      }
+    ],
+    "positive-before.txt": [
+      {
+        "activeAfterCleanup": 0,
+        "activeAtParentExit": 1,
+        "assignedBeforeResume": true,
+        "complete": true,
+        "exitCode": 0,
+        "pid": 44288,
+        "startedSuspended": true
+      }
+    ],
+    "python-focused.txt": [
+      {
+        "activeAfterCleanup": 0,
+        "activeAtParentExit": 1,
+        "activeBeforeCleanup": 0,
+        "assignedBeforeResume": true,
+        "complete": true,
+        "exitCode": 0,
+        "pid": 62112,
+        "startedSuspended": true,
+        "treeExitedBeforeCleanup": true
+      },
+      {
+        "activeAfterCleanup": 0,
+        "activeAtParentExit": 3,
+        "activeBeforeCleanup": 2,
+        "assignedBeforeResume": true,
+        "complete": false,
+        "exitCode": 0,
+        "pid": 53692,
+        "startedSuspended": true,
+        "treeExitedBeforeCleanup": false
+      }
+    ],
+    "python-all.txt": [
+      {
+        "activeAfterCleanup": 0,
+        "activeAtParentExit": 1,
+        "activeBeforeCleanup": 0,
+        "assignedBeforeResume": true,
+        "complete": true,
+        "exitCode": 0,
+        "pid": 53440,
+        "startedSuspended": true,
+        "treeExitedBeforeCleanup": true
+      },
+      {
+        "activeAfterCleanup": 0,
+        "activeAtParentExit": 3,
+        "activeBeforeCleanup": 2,
+        "assignedBeforeResume": true,
+        "complete": false,
+        "exitCode": 0,
+        "pid": 61580,
+        "startedSuspended": true,
+        "treeExitedBeforeCleanup": false
+      }
+    ]
+  },
+  "sources": [
+    {
+      "path": "scripts/host_history_live.py",
+      "sha256": "3a3f5de28756ddcc383c3c92821f15fd5db24a72c324ef6a20d1ed6a24f819b2",
+      "gitBlobSha": "ada9dc7e9d042d8965c0f1907e7e8f642cbea82c"
+    },
+    {
+      "path": "scripts/tests/test_host_history_live.py",
+      "sha256": "f37e7b419be242337d066678c3a8454156f3062bbb7578b33d14d001500b73db",
+      "gitBlobSha": "0649699f09d4e2781cb21bd21f63aacd45f6c1b6"
+    }
+  ]
+}

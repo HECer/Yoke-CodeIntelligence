@@ -1,0 +1,57 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 15.88s
+     Running tests\graphify_adapter.rs (target\debug\deps\graphify_adapter-e1d8de0958eea3b6.exe)
+
+running 7 tests
+test foreign_roots_unknown_arguments_and_ambiguous_names_fail_closed ... ok
+test filters_depth_and_conservative_token_byte_budget_are_real ... ok
+test parallel_neighbors_exact_evidence_and_directed_shortest_path_are_preserved ... ok
+test shortest_path_bounds_are_consistent_for_missing_and_ambiguous_endpoints ... ok
+test question_context_inference_is_labeled_and_explicit_filter_takes_precedence ... ok
+test ten_pinned_schemas_six_resources_and_pr_unavailability_are_explicit ... ok
+test community_and_ambiguous_neighbor_responses_honor_the_requested_budget ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.69s
+
+     Running tests\graphify_cli.rs (target\debug\deps\graphify_cli-2f3cad2bee8ea6cb.exe)
+
+running 1 test
+test public_graphify_cli_exposes_ten_tools_six_resources_and_real_graph_stats ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.21s
+
+     Running tests\historical_publication.rs (target\debug\deps\historical_publication-45cd239aba97d211.exe)
+
+running 1 test
+test historical_publication_is_atomic_without_repointing_latest_or_disk_checkpoint ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.10s
+
+     Running tests\host_cli.rs (target\debug\deps\host_cli-571e33e0142ac8d1.exe)
+
+running 2 tests
+test explicit_maintenance_cli_preserves_issued_artifacts_and_changes_no_source ... ok
+test signed_source_cli_requires_a_host_grant_and_queries_a_separate_namespace ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.64s
+
+     Running tests\host_credentials.rs (target\debug\deps\host_credentials-d3ecb384a1a8a4e4.exe)
+
+running 5 tests
+test actual_github_credential_round_trip_is_create_only_and_keeps_secrets_out_of_metadata ... ignored, Actual Windows Credential Manager; creates and removes only one unique Yoke GitHub fixture entry
+test actual_tls_and_service_token_never_export_private_material_or_overwrite_entries ... ignored, Requires the actual Windows per-user Credential Manager; creates and removes only unique Yoke test entries
+test host_credential_names_cannot_access_unrelated_accounts ... ok
+test model_token_admission_rejects_header_injection_and_oversize_without_exposure ... ok
+test github_token_admission_rejects_invalid_bytes_without_exposing_them ... ok
+
+test result: ok. 3 passed; 0 failed; 2 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\hybrid_retrieval.rs (target\debug\deps\hybrid_retrieval-965a15cea6c717ed.exe)
+
+running 3 tests
+test retrieval_rejects_foreign_graphs_and_unbounded_or_unknown_options ... ok
+test graph_ranking_retrieves_a_source_connected_neighbor_without_lexical_match ... ok
+test task_retrieval_ranks_source_bodies_and_balances_files_with_exact_anchors ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.18s
+

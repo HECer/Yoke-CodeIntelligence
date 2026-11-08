@@ -1,0 +1,58 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 6.43s
+     Running tests\epoch_cache_review.rs (target\debug\deps\epoch_cache_review-f4b7b79687aefe85.exe)
+
+running 1 test
+test cached_extraction_cannot_publish_past_the_exact_declared_source_size ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.09s
+
+     Running tests\epoch_producers.rs (target\debug\deps\epoch_producers-42d26cbc6208d4bd.exe)
+
+running 3 tests
+test ordinary_guarded_prepare_preserves_the_proven_base_epoch ... ok
+test ordinary_editor_capture_uses_the_explicit_host_epoch ... ok
+test mcp_prepare_uses_historical_source_policy_instead_of_new_capture_policy ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.18s
+
+     Running tests\explorer_export.rs (target\debug\deps\explorer_export-c9a7185de16e2409.exe)
+
+running 6 tests
+test graphml_dynamic_attributes_are_xml_values_not_markup ... ok
+test offline_html_preserves_canonical_graph_and_inert_hostile_labels ... ok
+test template_markers_inside_source_metadata_are_preserved_verbatim ... ok
+test native_markdown_metadata_unrepresentable_in_xml_is_refused_without_changing_graph ... ok
+test community_metadata_requires_exact_canonical_source_and_preserves_graph ... ok
+test source_bound_html_writer_is_create_only_and_idempotent ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.17s
+
+     Running tests\explorer_runtime.rs (target\debug\deps\explorer_runtime-5350e133bfddf44b.exe)
+
+running 2 tests
+test frame_scheduler_completes_once_when_animation_frames_starve_or_race ... ok
+test first_throttled_timer_finishes_bounded_layout_and_preserves_all_observations ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.15s
+
+     Running tests\export.rs (target\debug\deps\export-892d9be829d70668.exe)
+
+running 1 test
+test canonical_export_preserves_directed_parallel_evidence ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.14s
+
+     Running tests\facade_file_move.rs (target\debug\deps\facade_file_move-6144897cf260e5ee.exe)
+
+running 7 tests
+test move_permissions_and_external_project_refusal_precede_provider_start ... ok
+test move_target_parent_must_be_explicit_and_must_not_be_an_existing_file ... ok
+test occupied_final_child_and_same_parent_moves_refuse_without_change_objects ... ok
+test omitted_binary_host_destination_is_still_occupied_before_provider_and_plan ... ok
+test directory_symbol_parent_and_malformed_file_selectors_are_explicit_refusals ... ok
+test unsafe_target_parents_and_captured_readonly_or_excluded_scopes_never_prepare_plans ... ok
+test file_move_omitted_null_and_empty_selectors_preserve_basename_in_the_target_parent_for_v8_v9 ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.97s
+

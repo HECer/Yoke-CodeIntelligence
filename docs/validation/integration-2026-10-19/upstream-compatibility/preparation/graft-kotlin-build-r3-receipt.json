@@ -1,0 +1,15 @@
+{
+  "command": [
+    "npm.cmd",
+    "rebuild",
+    "tree-sitter-kotlin",
+    "--foreground-scripts",
+    "--registry=https://registry.npmjs.org",
+    "--userconfig=C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\upstreams-20261019-2hp9hr7r\\user.npmrc",
+    "--globalconfig=C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\upstreams-20261019-2hp9hr7r\\global.npmrc",
+    "--cache=C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\upstreams-20261019-2hp9hr7r\\npm-cache"
+  ],
+  "exitCode": 1,
+  "elapsedSeconds": 14.489,
+  "scope": "Only reviewed tree-sitter-kotlin@0.3.8 allowed through npm install-scripts approve; all other lifecycle scripts remain unapproved"
+}

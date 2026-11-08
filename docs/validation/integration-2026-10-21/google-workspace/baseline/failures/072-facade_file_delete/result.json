@@ -1,0 +1,79 @@
+{
+  "group": "facade_file_delete",
+  "index": 72,
+  "freeBytesBefore": 3550961664,
+  "commands": [
+    {
+      "name": "compile",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--test",
+        "facade_file_delete",
+        "--no-run",
+        "--message-format=json-render-diagnostics"
+      ],
+      "exitCode": 0,
+      "seconds": 3.699570400000084
+    },
+    {
+      "name": "test",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--test",
+        "facade_file_delete",
+        "--no-fail-fast",
+        "--",
+        "--test-threads=1"
+      ],
+      "exitCode": 101,
+      "seconds": 3.125592600001255
+    }
+  ],
+  "deletedNewTestArtifacts": [
+    {
+      "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\facade_file_delete-38ac8a88c0b59e31.exe",
+      "bytes": 116214784,
+      "sha256": "aaeebcc8e6d39cdbe649291947ea067bbda8abe45d345ba451dd28b6096f1123",
+      "deleted": true
+    },
+    {
+      "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\facade_file_delete-38ac8a88c0b59e31.pdb",
+      "bytes": 19197952,
+      "sha256": "a65e85c21b82386bed582973711edacb4cf1a4d356a1ee6724bf494ea2157266",
+      "deleted": true
+    }
+  ],
+  "testExecutables": [
+    {
+      "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\facade_file_delete-38ac8a88c0b59e31.exe",
+      "sha256": "aaeebcc8e6d39cdbe649291947ea067bbda8abe45d345ba451dd28b6096f1123",
+      "existedBefore": false
+    }
+  ],
+  "totals": {
+    "passed": 9,
+    "failed": 1,
+    "ignored": 0
+  },
+  "resultGroups": 1,
+  "failures": [
+    "source_symlink_cannot_redirect_a_forced_file_deletion"
+  ],
+  "allChecksPassed": false,
+  "sourceUnchanged": true,
+  "freeBytesAfter": 3546107904
+}

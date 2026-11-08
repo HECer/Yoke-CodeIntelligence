@@ -1,0 +1,26 @@
+{
+  "sourceCommit": "037f082a2290d484ae544bad35733c1e776aa9e8",
+  "productionFilesUnchangedAfterQualification": true,
+  "changedFrozenInputs": {
+    "docs/REMAINING_WORK.md": {
+      "before": "11dbe8334de104d636a3d1e82a7798100477023ff2bcf9f327f8a25d4e72f1ee",
+      "after": "df12db93e030b622e2bd142ddaa3eb133d8bf2cc1d0da7b476bb69a4f2f8a38d"
+    },
+    "docs/STATUS.md": {
+      "before": "c51ceaaaf588db9cf20f274966f4be07df5d728395bbac067c64dd3fc66b3c41",
+      "after": "9f25392f22bd467aebc004f3ce8e0b6f270b943659278e44db1514219cd9f692"
+    },
+    "docs/parity/native-reconciliation-2026-10-15.json": {
+      "before": "6d18fa2316bd0e5eb607461aa17144f8fa0901ecda35f6ef13edc7e10b591b38",
+      "after": "7bd9a0fb7bcf838faff5cccad8c03704dcf70664656fd5df58718de7ec17250f"
+    }
+  },
+  "separatelyUpdatedExistingContract": {
+    "path": "native/docs/git-repository-host.md",
+    "before": "5e6b7931bf4eeb8d55cef0524af680dafb06ac09cd6508707778b7d8182bf9fb",
+    "after": "598ae14c0cdac3acdb59dbc75328666604367d4a8c56088eca3017e1b5aa63ff"
+  },
+  "newContract": "native/docs/git-repository-profiles.md",
+  "newProductTestsClaimedAfterDocumentation": false,
+  "originalInventoryLedgerAndSummaryUnchanged": true
+}

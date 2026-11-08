@@ -1,0 +1,84 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 28s
+     Running tests\digest_receiver.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\digest_receiver-18cf400d5be2a42d.exe)
+
+running 35 tests
+test actual_cli_default_denial_creates_no_state_or_listener ... ok
+test actual_tls_receiver_and_sender_cli_recover_using_os_credentials_and_selected_ca ... ignored, Requires actual Windows Credential Manager; creates/removes three unique TLS/token/signing credentials and starts only owned loopback CLI processes
+test ambiguous_framing_foreign_hosts_and_bearerless_puts_refuse_before_body_or_state ... ok
+test authentication_scope_revocation_and_absent_receipts_do_not_publish_or_disclose ... ok
+test caller_sql_durability_and_corrupted_accepted_bytes_refuse_before_binding ... ok
+test changed_wire_binding_and_rehashed_text_fields_cannot_enter_the_closed_handoff ... ok
+test detached_host_cancellation_remains_binding_after_start_returns ... ok
+test payload_capacity_and_expired_partial_body_do_not_commit_late_bytes ... ok
+test queries_preserve_duplicate_ordinals_parallel_directions_and_unverified_claims ... ok
+test query_all_selections_are_scoped_before_any_row_and_unknown_protocol_is_refused ... ok
+test query_cli_default_denial_and_invalid_host_paths_never_initialize_state ... ok
+test query_corrupt_storage_expiry_and_unknown_remote_permissions_never_become_empty_complete_results ... ok
+test query_exact_work_search_and_output_budgets_refuse_whole_results_and_preserve_sql_policy ... ok
+test query_host_and_grant_permissions_default_deny_authentication_and_revocation_are_current ... ok
+test query_local_cli_matches_library_and_never_adds_source_or_processing_records ... ok
+test query_native_client_filters_unicode_pages_and_replays_local_read_only_without_new_records ... ok
+test query_revocation_during_body_and_disabled_query_authentication_refuse_without_waiting_for_complete_body ... ok
+test real_native_client_and_receiver_commit_one_intake_and_reconcile_local_failure ... ok
+test real_tls_accepts_selected_ca_and_refuses_wrong_trust_or_name_before_intake ... ok
+test receipt_is_immutable_for_exact_repeats_and_survives_receiver_restart ... ok
+test received_snapshot_ids_never_pin_matching_local_capture_history ... ok
+test receiver_capacity_and_sql_failure_never_return_a_false_acceptance ... ok
+test revocation_during_body_acquisition_precedes_any_record_commit ... ok
+test slow_partial_request_shutdown_and_initial_permissions_remain_bounded ... ok
+test source_verification::actual_local_cli_replays_both_existing_roots_without_keys_or_state_creation ... ok
+test source_verification::frozen_literal_queries_survive_store_loss_and_remain_bounded ... ok
+test source_verification::grants_permissions_receipt_pin_and_output_budget_refuse_without_mutating_intake ... ok
+test source_verification::matching_captured_git_identity_is_checked_without_attesting_sender_or_remote_origin ... ok
+test source_verification::optional_whole_file_hash_checks_more_than_the_advertised_declaration_projection ... ok
+test source_verification::projection_order_and_work_budgets_cannot_be_hidden_by_a_smaller_page ... ok
+test source_verification::real_source_change_or_graph_tamper_invalidates_the_comparison ... ok
+test source_verification::rehashed_sender_declarations_counters_and_duplicate_rows_cannot_pass_source_verification ... ok
+test source_verification::separate_workspace_source_replay_qualifies_each_ordinal_without_promoting_packet_claims ... ok
+test source_verification::unknown_request_fields_duplicate_keys_and_foreign_ids_never_grant_source_access ... ok
+test source_verification::verification_cli_permissions_and_budgets_precede_missing_host_inputs ... ok
+
+test result: ok. 34 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 8.21s
+
+     Running tests\github_app_digest.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\github_app_digest-606ca9b6c902d048.exe)
+
+running 35 tests
+test blocked_first_sql_read_obeys_deadline_and_restores_the_original_busy_timeout ... ok
+test cancelled_digest_preserves_source_and_restores_the_store_deadline ... ok
+test captured_git::captured_git_preview_refuses_forged_commit_tree_blob_and_analyzer_facts ... ok
+test captured_git::captured_git_preview_verifies_commit_without_live_checkout_or_git_metadata ... ok
+test captured_git::captured_git_source_budget_precedes_commit_blob_validation_without_repair ... ok
+test captured_git::git_disk_origin_refuses_hidden_selector_rows_without_decoding_them ... ok
+test captured_git::git_lineage_aggregate_exact_boundary_includes_every_proof_row ... ok
+test captured_git::git_lineage_metadata_has_an_independent_host_budget_before_commit_reads ... ok
+test captured_git::git_preview_refuses_unbounded_derived_origin_chains_before_scope_replay ... ok
+test captured_git::lowered_metadata_budgets_preserve_the_separate_commit_registration_row_allowance ... ok
+test captured_git::selected_metadata_budget_does_not_reduce_the_independent_lineage_row_allowance ... ok
+test captured_git::small_git_selection_refuses_oversized_origin_metadata_before_commit_reads ... ok
+test configured_disk_proof_bytes_have_an_independent_budget ... ok
+test declaration_projection_does_not_require_unused_rationale_graph_rows ... ok
+test digest_refuses_corrupt_captured_bytes_without_repairing_or_writing_them ... ok
+test digest_refuses_grant_mismatch_and_caller_owned_transaction ... ok
+test digest_replays_native_source_and_refuses_changed_graph_names_spans_or_producers ... ok
+test digest_request_rejects_duplicate_keys_urls_bodies_and_invalid_native_identities ... ok
+test digest_symbol_limit_reports_omissions_and_complete_stdout_budget_precedes_mutations ... ok
+test digest_uses_immutable_captured_bytes_after_current_source_changes ... ok
+test digest_work_caps_apply_even_when_no_symbols_are_requested ... ok
+test disk_preview_refuses_shadow_inheritance_and_overlay_selector_records ... ok
+test executable_array_type_expressions_are_omitted_from_body_free_headers ... ok
+test header_literals_and_generic_defaults_are_unresolved_but_known_abi_headers_survive ... ok
+test language_override_cannot_route_document_formats_through_rust_replay ... ok
+test malformed_saved_graph_cannot_echo_source_bearing_values_through_errors ... ok
+test native_digest_projects_only_public_headers_and_exact_captured_symbol_fingerprints ... ok
+test native_replay_names_have_an_aggregate_budget_independent_of_emitted_symbols ... ok
+test private_ast_nesting_is_bounded_before_native_replay_even_with_zero_output_rows ... ok
+test public_constant_initializers_and_private_module_children_are_not_exported_as_source ... ok
+test public_reexports_remain_explicitly_unresolved_without_exposing_private_targets ... ok
+test repeated_call_receiver_text_is_bounded_before_native_replay ... ok
+test replay_preserves_native_method_identity_and_long_unicode_signature_finalization ... ok
+test unsupported_language_exports_are_reported_as_unknown_instead_of_empty_complete ... ok
+test valid_closed_digest_request_is_admitted_without_provider_or_body_fields ... ok
+
+test result: ok. 35 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 6.51s
+

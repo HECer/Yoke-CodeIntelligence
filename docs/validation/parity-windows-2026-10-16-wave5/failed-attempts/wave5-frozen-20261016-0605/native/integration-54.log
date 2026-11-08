@@ -1,0 +1,26 @@
+    Finished `test` profile [unoptimized] target(s) in 1.04s
+     Running tests\live_enrichment.rs (target\debug\deps\live_enrichment-fe0b6210f3ac9031.exe)
+
+running 3 tests
+test actual_python_server_normalized_symbols_and_signature_help ... ignored, requires YOKE_PYTHON_LSP identifying the actual installed Jedi language-server
+test actual_rust_server_expanded_call_symbols_completion_signature_diagnostics_and_prepare_rename ... ignored, requires an actual installed rust-analyzer
+test actual_typescript_server_expanded_type_call_symbols_signature_and_published_diagnostics ... ignored, requires YOKE_TS_LSP identifying the actual installed TypeScript language-server CLI
+
+test result: ok. 0 passed; 0 failed; 3 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\lsp.rs (target\debug\deps\lsp-ad376eb03f90ca87.exe)
+
+running 10 tests
+test host_registered_semantic_rename_uses_the_requested_mcp_snapshot ... ok
+test lsp_shutdown_grace_uses_the_remaining_request_deadline ... ok
+test lsp_deadline_includes_a_server_that_refuses_to_read_didopen ... ok
+test protocol_fixture_locations_bind_to_exact_immutable_source ... ok
+test protocol_fixture_rename_prepares_a_plan_without_touching_source ... ok
+test protocol_fixture_unsafe_workspace_edits_fail_closed ... ok
+test semantic_positions_preserve_cr_crlf_lf_and_unicode_boundaries ... ok
+test repeated_large_lsp_locations_remain_exact_anchors_with_bounded_body_bytes ... ok
+test semantic_calls_refuse_rebound_source_under_a_published_snapshot_id ... ok
+test semantic_location_link_selection_must_be_inside_its_target_range ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.75s
+

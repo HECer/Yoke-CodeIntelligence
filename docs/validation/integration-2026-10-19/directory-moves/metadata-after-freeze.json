@@ -1,0 +1,13 @@
+{
+  "trackerBeforeSha256": "b1e5a9015fd57c725bc958e51f54a8a42865e815205c72e912402f675482c5a4",
+  "trackerAfterSha256": "f8b21a17f57a5811a7438b47b696ca7cb659703ea3ff38d46236864b9cc2e5b5",
+  "runtimeChangedByThisMetadataUpdate": false,
+  "postFreezeRuntimeRepairs": [
+    "native/src/agent_repl.rs",
+    "native/tests/facade_directory_move.rs"
+  ],
+  "inventoryLedgerPreserved": true,
+  "historicalInventoryPreserved": true,
+  "ledgerSummaryPreserved": true,
+  "scope": "This step updates thematic R1 capability/evidence and remaining-boundary documentation only; the separate two-input runtime repair retains its own source/validation. All original inventory identities/statuses/certifications remain unchanged."
+}

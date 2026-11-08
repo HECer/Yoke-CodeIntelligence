@@ -1,0 +1,25 @@
+{
+  "runs": [
+    {
+      "name": "unit",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--lib",
+        "falkor",
+        "--",
+        "--test-threads=1"
+      ],
+      "exitCode": 101,
+      "seconds": 46.56400012969971
+    }
+  ],
+  "sourceUnchanged": true,
+  "inputs": 724
+}

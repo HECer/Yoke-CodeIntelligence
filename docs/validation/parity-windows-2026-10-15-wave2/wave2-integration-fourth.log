@@ -1,0 +1,434 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+warning: field `byte_length` is never read
+  --> native\src\host_install_io.rs:20:16
+   |
+15 | pub(super) struct HeldFile {
+   |                   -------- field in this struct
+...
+20 |     pub(super) byte_length: usize,
+   |                ^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `read_executable_binding` is never used
+  --> native\src\host_install_io.rs:67:15
+   |
+67 | pub(super) fn read_executable_binding(
+   |               ^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `GetSecurityDescriptorSacl` is never used
+   --> native\src\host_install_io.rs:219:12
+    |
+219 |         fn GetSecurityDescriptorSacl(
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `GetSecurityDescriptorSacl` is never used
+   --> native\src\host_install_io.rs:219:12
+    |
+219 |         fn GetSecurityDescriptorSacl(
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `yoke-code-intelligence` (lib test) generated 1 warning
+warning: `yoke-code-intelligence` (lib) generated 3 warnings
+    Finished `test` profile [unoptimized] target(s) in 2m 39s
+     Running unittests src\lib.rs (target\debug\deps\yoke-35b101204e4eb110.exe)
+
+running 61 tests
+test capture::analyzer_migration_tests::authentic_analyzer_six_languages_survive_seven_with_exact_scope_proof ... ok
+test capture::analyzer_migration_tests::authentic_analyzer_seven_scope_survives_eight_without_relabeling ... ok
+test capture::analyzer_migration_tests::released_analyzer_four_archives_preserve_unknown_vue_and_powershell_languages ... ok
+test capture::archive_scope_tests::exact_native_archive_identity_denies_resealed_protected_members_and_future_fields ... ok
+test capture::archive_scope_tests::released_capture_and_overlay_receipts_remain_exact_offline_after_workspace_closes ... ok
+test capture::archive_scope_tests::offline_dependency_and_derived_scope_proofs_require_exact_options_and_origin_chain ... ok
+test capture::epoch_migration_tests::authentic_archived8_scope_proofs_remain_valid_for_a9_reader ... ok
+test changes::recovery_tests::expired_emergency_write_preserves_the_durable_recovery_identifier ... ok
+test capture::epoch_migration_tests::authentic_native8_scope_proofs_remain_valid_for_a9_reader ... ok
+test agent_repl::cleanup_proof_tests::lost_process_cleanup_proof_stays_typed_across_repeated_close ... ok
+test editor_http::tests::an_expired_response_never_claims_the_operation_succeeded ... ok
+test agent_repl::source_binding_tests::provider_queries_keep_the_symbol_snapshot_after_original_source_changes ... ok
+test decision_records::tests::authored_decision_creates_a_source_bound_immutable_revision ... ok
+test host_credentials::aws_session::tests::aws_manifest_failure_leaves_only_unpublished_chunks_and_expired_deadline_writes_nothing ... ok
+test host_credentials::aws_session::tests::aws_chunks_roundtrip_larger_than_single_blob_and_are_create_only ... ok
+test host_credentials::aws_session::tests::aws_private_json_parser_accepts_exact_dto_and_refuses_ambiguity ... ok
+test host_credentials::aws_session::tests::interrupted_publication_and_changed_chunks_never_yield_session ... ok
+test host_credentials::aws_session::tests::aws_manifest_rejects_missing_mixed_corrupt_and_expired_generation ... ok
+test host_install::io::tests::bounded_reads_reject_oversize_without_mutation ... ok
+test host_install::io::tests::directory_guard_pins_each_existing_ancestor ... ok
+test host_install::io::tests::executable_binding_streams_hardlinked_bytes_and_denies_alias_writers ... FAILED
+test host_install::io::tests::held_target_denies_external_writes_and_deletion ... ok
+test host_install::io::tests::multiply_linked_files_are_refused_and_prepare_never_overwrites ... ok
+test host_install::io::tests::explicit_low_integrity_label_is_preserved_or_refused_before_human_bytes ... FAILED
+test host_install::io::tests::own_handle_rename_retains_identity_and_write_guard ... FAILED
+test host_install::io::tests::no_replace_preserves_foreign_occupant_and_original_backup ... FAILED
+test host_install::io::tests::prepared_output_keeps_guard_through_promotion_and_owned_delete ... FAILED
+test host_install::io::tests::prepared_output_preserves_dacl_entries_and_inheritance_control ... ok
+test host_install::io::tests::readonly_existing_target_is_refused_before_any_mutation ... FAILED
+test host_install::io::tests::prepared_output_preserves_owner_and_nondefault_group_before_human_bytes ... FAILED
+test host_install::tests::foreign_occupant_blocks_resume_and_rollback_without_changing_original_backup ... FAILED
+test host_install::tests::journal_progress_cannot_widen_beyond_the_authorized_target_set ... FAILED
+test host_install::tests::receipt_commit_does_not_disguise_pending_cleanup_as_successful_replay ... FAILED
+test host_install::tests::resume_after_original_rename_publishes_owned_output_and_finishes_cleanup ... FAILED
+test editor_http::tests::backpressured_socket_writes_cannot_extend_the_response_deadline ... ok
+test host_install::tests::rollback_after_original_rename_restores_same_original_and_releases_ownership ... FAILED
+test host_install::tests::state_capacity_reserves_the_next_receipt_and_journal_before_touching_targets ... FAILED
+test host_install::tests::unknown_journal_phase_is_refused_before_it_can_accumulate_in_pending_results ... FAILED
+test host_install::tests::successful_receipt_replay_rejects_foreign_target_edits ... FAILED
+test lsp::uri_tests::an_outside_uri_is_rejected_lexically_before_a_filesystem_lookup ... ok
+test lsp::uri_tests::grown_provider_copy_is_rejected_without_reading_unbounded_source ... ok
+test lsp::uri_tests::nonlocal_file_authorities_are_refused_without_target_lookup ... ok
+test host_install::io::tests::readonly_guard_can_pin_running_executable ... ok
+test lsp::uri_tests::blocked_pipe_write_uses_300ms_deadline_after_confirmed_server_pause ... ok
+test maintenance::tests::expired_rollback_budget_preserves_quarantine_for_later_recovery ... ok
+test model_protocol::meaning_extract_tests::meaning_extract_accepts_no_claims_but_requires_exact_honest_unit_coverage ... ok
+test model_protocol::meaning_extract_tests::meaning_extract_admits_schema_one_operation_without_changing_envelope ... ok
+test model_protocol::meaning_extract_tests::meaning_extract_prepares_exact_sources_and_bounded_strict_output_schema ... ok
+test model_protocol::meaning_extract_tests::meaning_extract_rejects_forged_units_omissions_and_arbitrary_instructions ... ok
+test model_protocol::meaning_extract_tests::meaning_extract_rejects_unknown_anchor_fields_and_duplicate_result_fields ... ok
+test model_protocol::meaning_extract_tests::meaning_extract_validates_local_claims_and_own_support_on_every_edge ... ok
+test ollama::endpoint_tests::explicit_default_http_port_remains_host_selected ... ok
+test platform_credentials::creation_lock::tests::contaminated_and_nonfile_locks_are_refused_without_repair ... ok
+test platform_credentials::creation_lock::tests::creation_locks_serialize_and_time_out_without_secret_contents ... ok
+test skill_takeaways::tests::a_large_applied_receipt_prefix_cannot_hide_pending_journals ... ok
+test skill_takeaways::tests::expanded_yaml_frontmatter_is_rejected_before_alias_materialization ... ok
+test skill_takeaways::tests::manual_edit_after_observation_is_never_adopted_as_a_write_precondition ... ok
+test verify::integrity_tests::oversized_copied_source_is_rejected_within_the_hash_budget ... ok
+test debug_adapter::cleanup_tests::unjoined_worker_cleanup_failure_remains_sticky_after_worker_eventually_exits ... ok
+test lsp::uri_tests::react_documents_and_siblings_keep_their_ids_with_base_language_providers ... ok
+test lsp::uri_tests::slow_shutdown_uses_800ms_deadline_after_completed_protocol_response ... ok
+
+failures:
+
+---- host_install::io::tests::executable_binding_streams_hardlinked_bytes_and_denies_alias_writers stdout ----
+Error: Streamed executable binding is not implemented
+
+---- host_install::io::tests::explicit_low_integrity_label_is_preserved_or_refused_before_human_bytes stdout ----
+
+thread 'host_install::io::tests::explicit_low_integrity_label_is_preserved_or_refused_before_human_bytes' (85420) panicked at native\src\host_install_io.rs:1168:17:
+assertion `left == right` failed
+  left: (0, None)
+ right: (16, Some([2, 0, 28, 0, 1, 0, 0, 0, 17, 0, 20, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 16, 0, 16, 0, 0]))
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- host_install::io::tests::own_handle_rename_retains_identity_and_write_guard stdout ----
+Error: Host no-replace rename failed: Falscher Parameter. (os error 87)
+
+---- host_install::io::tests::no_replace_preserves_foreign_occupant_and_original_backup stdout ----
+Error: Host no-replace rename failed: Falscher Parameter. (os error 87)
+
+---- host_install::io::tests::prepared_output_keeps_guard_through_promotion_and_owned_delete stdout ----
+Error: Host no-replace rename failed: Falscher Parameter. (os error 87)
+
+---- host_install::io::tests::readonly_existing_target_is_refused_before_any_mutation stdout ----
+
+thread 'host_install::io::tests::readonly_existing_target_is_refused_before_any_mutation' (66532) panicked at native\src\host_install_io.rs:1198:9:
+assertion failed: write_refused
+
+---- host_install::io::tests::prepared_output_preserves_owner_and_nondefault_group_before_human_bytes stdout ----
+
+thread 'host_install::io::tests::prepared_output_preserves_owner_and_nondefault_group_before_human_bytes' (83584) panicked at native\src\host_install_io.rs:1120:9:
+assertion `left == right` failed
+  left: ([1, 5, 0, 0, 0, 0, 0, 5, 21, 0, 0, 0, 137, 227, 144, 155, 163, 122, 222, 110, 219, 22, 208, 15, 235, 3, 0, 0], [1, 5, 0, 0, 0, 0, 0, 5, 21, 0, 0, 0, 137, 227, 144, 155, 163, 122, 222, 110, 219, 22, 208, 15, 235, 3, 0, 0])
+ right: ([1, 5, 0, 0, 0, 0, 0, 5, 21, 0, 0, 0, 137, 227, 144, 155, 163, 122, 222, 110, 219, 22, 208, 15, 235, 3, 0, 0], [1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0])
+
+---- host_install::tests::foreign_occupant_blocks_resume_and_rollback_without_changing_original_backup stdout ----
+
+thread 'host_install::tests::foreign_occupant_blocks_resume_and_rollback_without_changing_original_backup' (50528) panicked at native\src\host_install.rs:1122:48:
+called `Result::unwrap()` on an `Err` value: Host no-replace rename failed: Falscher Parameter. (os error 87)
+
+---- host_install::tests::journal_progress_cannot_widen_beyond_the_authorized_target_set stdout ----
+
+thread 'host_install::tests::journal_progress_cannot_widen_beyond_the_authorized_target_set' (13216) panicked at native\src\host_install.rs:1122:48:
+called `Result::unwrap()` on an `Err` value: Host no-replace rename failed: Falscher Parameter. (os error 87)
+
+---- host_install::tests::receipt_commit_does_not_disguise_pending_cleanup_as_successful_replay stdout ----
+
+thread 'host_install::tests::receipt_commit_does_not_disguise_pending_cleanup_as_successful_replay' (90192) panicked at native\src\host_install.rs:1122:48:
+called `Result::unwrap()` on an `Err` value: Host no-replace rename failed: Falscher Parameter. (os error 87)
+
+---- host_install::tests::resume_after_original_rename_publishes_owned_output_and_finishes_cleanup stdout ----
+
+thread 'host_install::tests::resume_after_original_rename_publishes_owned_output_and_finishes_cleanup' (90040) panicked at native\src\host_install.rs:1122:48:
+called `Result::unwrap()` on an `Err` value: Host no-replace rename failed: Falscher Parameter. (os error 87)
+
+---- host_install::tests::rollback_after_original_rename_restores_same_original_and_releases_ownership stdout ----
+
+thread 'host_install::tests::rollback_after_original_rename_restores_same_original_and_releases_ownership' (40744) panicked at native\src\host_install.rs:1122:48:
+called `Result::unwrap()` on an `Err` value: Host no-replace rename failed: Falscher Parameter. (os error 87)
+
+---- host_install::tests::state_capacity_reserves_the_next_receipt_and_journal_before_touching_targets stdout ----
+
+thread 'host_install::tests::state_capacity_reserves_the_next_receipt_and_journal_before_touching_targets' (92432) panicked at native\src\host_install.rs:1122:48:
+called `Result::unwrap()` on an `Err` value: Host no-replace rename failed: Falscher Parameter. (os error 87)
+
+---- host_install::tests::unknown_journal_phase_is_refused_before_it_can_accumulate_in_pending_results stdout ----
+
+thread 'host_install::tests::unknown_journal_phase_is_refused_before_it_can_accumulate_in_pending_results' (92940) panicked at native\src\host_install.rs:1122:48:
+called `Result::unwrap()` on an `Err` value: Host no-replace rename failed: Falscher Parameter. (os error 87)
+
+---- host_install::tests::successful_receipt_replay_rejects_foreign_target_edits stdout ----
+
+thread 'host_install::tests::successful_receipt_replay_rejects_foreign_target_edits' (91396) panicked at native\src\host_install.rs:1122:48:
+called `Result::unwrap()` on an `Err` value: Host no-replace rename failed: Falscher Parameter. (os error 87)
+
+
+failures:
+    host_install::io::tests::executable_binding_streams_hardlinked_bytes_and_denies_alias_writers
+    host_install::io::tests::explicit_low_integrity_label_is_preserved_or_refused_before_human_bytes
+    host_install::io::tests::no_replace_preserves_foreign_occupant_and_original_backup
+    host_install::io::tests::own_handle_rename_retains_identity_and_write_guard
+    host_install::io::tests::prepared_output_keeps_guard_through_promotion_and_owned_delete
+    host_install::io::tests::prepared_output_preserves_owner_and_nondefault_group_before_human_bytes
+    host_install::io::tests::readonly_existing_target_is_refused_before_any_mutation
+    host_install::tests::foreign_occupant_blocks_resume_and_rollback_without_changing_original_backup
+    host_install::tests::journal_progress_cannot_widen_beyond_the_authorized_target_set
+    host_install::tests::receipt_commit_does_not_disguise_pending_cleanup_as_successful_replay
+    host_install::tests::resume_after_original_rename_publishes_owned_output_and_finishes_cleanup
+    host_install::tests::rollback_after_original_rename_restores_same_original_and_releases_ownership
+    host_install::tests::state_capacity_reserves_the_next_receipt_and_journal_before_touching_targets
+    host_install::tests::successful_receipt_replay_rejects_foreign_target_edits
+    host_install::tests::unknown_journal_phase_is_refused_before_it_can_accumulate_in_pending_results
+
+test result: FAILED. 46 passed; 15 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.91s
+
+error: test failed, to rerun pass `--lib`
+     Running tests\graph_extensions.rs (target\debug\deps\graph_extensions-5cf6101264dc4545.exe)
+
+running 9 tests
+test ambiguous_members_cannot_collide_community_identities ... ok
+test expired_and_rebound_or_corrupt_source_reports_are_rejected ... ok
+test duplicate_structural_identities_are_reported_ambiguous ... ok
+test empty_graph_and_hub_exclusion_remain_explicit ... ok
+test invalid_analysis_options_fail_without_persisting ... ok
+test persisted_wrong_line_anchors_are_not_certified_as_exact ... ok
+test report_is_reproducible_with_actual_leiden_and_source_bound_labels ... ok
+test report_keeps_parallel_arcs_exact_anchors_and_uncertainty ... ok
+test snapshot_diff_ignores_offset_and_id_churn_but_detects_body_change ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.66s
+
+     Running tests\graphify_adapter.rs (target\debug\deps\graphify_adapter-e1d8de0958eea3b6.exe)
+
+running 7 tests
+test foreign_roots_unknown_arguments_and_ambiguous_names_fail_closed ... ok
+test filters_depth_and_conservative_token_byte_budget_are_real ... ok
+test parallel_neighbors_exact_evidence_and_directed_shortest_path_are_preserved ... ok
+test shortest_path_bounds_are_consistent_for_missing_and_ambiguous_endpoints ... ok
+test question_context_inference_is_labeled_and_explicit_filter_takes_precedence ... ok
+test ten_pinned_schemas_six_resources_and_pr_unavailability_are_explicit ... ok
+test community_and_ambiguous_neighbor_responses_honor_the_requested_budget ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.21s
+
+     Running tests\host_config.rs (target\debug\deps\host_config-7659402ec860ad5b.exe)
+
+running 20 tests
+test agents_marker_presence_never_grants_ownership ... ok
+test agents_install_update_remove_preserve_bom_unicode_and_crlf_bytes ... ok
+test agents_and_patch_work_are_bounded_before_output ... ok
+test agents_empty_existing_file_round_trips_without_phantom_bytes ... ok
+test agents_reject_changed_receipts_owned_bytes_duplicate_and_nested_markers ... ok
+test agents_removal_preserves_later_human_prefix_and_append ... ok
+test jsonc_accepts_only_json_whitespace_outside_comments_and_strings ... ok
+test jsonc_decoded_duplicate_keys_unowned_entries_and_ambiguous_parents_fail ... ok
+test jsonc_empty_and_trailing_comma_parents_restore_original_punctuation ... ok
+test jsonc_human_append_is_preserved_or_rejected_when_unrecorded_punctuation_would_be_removed ... ok
+test patch_application_checks_entire_input_fragments_ranges_and_output_hash ... ok
+test jsonc_named_entry_preserves_comments_bom_crlf_and_literal_unowned_bytes ... ok
+test jsonc_oversized_receipt_selector_is_rejected_before_unbounded_decoding ... ok
+test serialized_empty_owned_fragment_returns_error_instead_of_panicking ... ok
+test receipts_are_strict_serialized_data_and_do_not_include_human_prefix ... ok
+test structured_formats_reject_stale_selectors_body_capacity_and_deadlines ... ok
+test toml_managed_table_preserves_human_comments_and_round_trips_crlf ... ok
+test toml_inverse_refuses_to_join_an_unterminated_human_comment_with_a_later_table_header ... FAILED
+test toml_table_removal_never_reparents_later_human_keys ... ok
+test toml_quoted_aliases_dotted_conflicts_and_body_headers_fail_without_claiming_ownership ... ok
+
+failures:
+
+---- toml_inverse_refuses_to_join_an_unterminated_human_comment_with_a_later_table_header stdout ----
+
+thread 'toml_inverse_refuses_to_join_an_unterminated_human_comment_with_a_later_table_header' (20972) panicked at native\tests\host_config.rs:368:5:
+assertion failed: host_config::toml_patch(&changed, &path, None, create.owned_fragment.as_ref(),
+        &d()).is_err()
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    toml_inverse_refuses_to_join_an_unterminated_human_comment_with_a_later_table_header
+
+test result: FAILED. 19 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+error: test failed, to rerun pass `--test host_config`
+     Running tests\host_install.rs (target\debug\deps\host_install-ecb3efabd0fd83d7.exe)
+
+running 8 tests
+test dry_run_is_deterministic_and_creates_no_source_engine_or_host_state ... ok
+test private_state_never_contains_unrelated_human_config_or_policy_contents ... FAILED
+test install_and_uninstall_preserve_human_bom_crlf_and_original_empty_presence ... FAILED
+test state_and_target_aliases_bounds_invalid_utf8_and_deadlines_fail_closed ... ok
+test receipt_ownership_is_required_and_serialized_plans_cannot_widen_paths ... ok
+test uninstall_preserves_foreign_appends_and_refuses_changes_inside_owned_block ... FAILED
+test windows_existing_writer_and_hardlink_alias_are_refused_before_other_targets_change ... ok
+test every_target_and_host_binding_is_checked_before_first_write ... ok
+
+failures:
+
+---- private_state_never_contains_unrelated_human_config_or_policy_contents stdout ----
+
+thread 'private_state_never_contains_unrelated_human_config_or_policy_contents' (64968) panicked at native\tests\host_install.rs:62:6:
+called `Result::unwrap()` on an `Err` value: Host no-replace rename failed: Falscher Parameter. (os error 87)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- install_and_uninstall_preserve_human_bom_crlf_and_original_empty_presence stdout ----
+
+thread 'install_and_uninstall_preserve_human_bom_crlf_and_original_empty_presence' (87148) panicked at native\tests\host_install.rs:62:6:
+called `Result::unwrap()` on an `Err` value: Host no-replace rename failed: Falscher Parameter. (os error 87)
+
+---- uninstall_preserves_foreign_appends_and_refuses_changes_inside_owned_block stdout ----
+
+thread 'uninstall_preserves_foreign_appends_and_refuses_changes_inside_owned_block' (60764) panicked at native\tests\host_install.rs:62:6:
+called `Result::unwrap()` on an `Err` value: Host no-replace rename failed: Falscher Parameter. (os error 87)
+
+
+failures:
+    install_and_uninstall_preserve_human_bom_crlf_and_original_empty_presence
+    private_state_never_contains_unrelated_human_config_or_policy_contents
+    uninstall_preserves_foreign_appends_and_refuses_changes_inside_owned_block
+
+test result: FAILED. 5 passed; 3 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.27s
+
+error: test failed, to rerun pass `--test host_install`
+     Running tests\host_install_cli.rs (target\debug\deps\host_install_cli-580c103695fa8de9.exe)
+
+running 6 tests
+test host_install_cli_planning_and_status_are_pure_and_keep_human_text_private ... ok
+test host_install_cli_installs_and_uninstalls_only_its_owned_fragment ... FAILED
+test host_install_cli_output_failure_identifies_the_committed_result_and_can_be_retried ... FAILED
+test host_install_cli_rejects_ambiguous_selection_and_small_write_output_before_mutation ... ok
+test host_install_cli_write_permission_precedes_selection_or_plan_reads ... ok
+test host_install_cli_valid_output_budget_is_admitted_before_any_host_state_or_file_write ... ok
+
+failures:
+
+---- host_install_cli_installs_and_uninstalls_only_its_owned_fragment stdout ----
+
+thread 'host_install_cli_installs_and_uninstalls_only_its_owned_fragment' (53040) panicked at native\tests\host_install_cli.rs:74:5:
+yoke: Host no-replace rename failed: Falscher Parameter. (os error 87)
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- host_install_cli_output_failure_identifies_the_committed_result_and_can_be_retried stdout ----
+
+thread 'host_install_cli_output_failure_identifies_the_committed_result_and_can_be_retried' (88364) panicked at native\tests\host_install_cli.rs:74:5:
+yoke: Host protocol metadata missing
+
+
+
+failures:
+    host_install_cli_installs_and_uninstalls_only_its_owned_fragment
+    host_install_cli_output_failure_identifies_the_committed_result_and_can_be_retried
+
+test result: FAILED. 4 passed; 2 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.96s
+
+error: test failed, to rerun pass `--test host_install_cli`
+     Running tests\meaning_build.rs (target\debug\deps\meaning_build-5530091b88518422.exe)
+
+running 26 tests
+test accounted_overrun_blocks_later_reserved_send_and_never_publishes ... ok
+test body_selection_uses_full_body_and_invalidates_unchanged_signature_changes ... ok
+test cache_reuse_requires_the_original_completed_graph_registration ... ok
+test every_selected_source_budget_and_graph_sink_is_admitted_before_first_child ... ok
+test failed_status_counts_only_dispatched_attempts_and_reports_missing_unknown_receipts ... ok
+test currency_scoped_cache_prevents_mixing_old_and_new_monetary_units ... ok
+test altered_contract_and_provider_version_do_not_reuse_old_claims ... ok
+test fixed_cross_file_packet_preserves_relations_and_hyperedge_roles ... ok
+test forged_cache_origin_is_rejected_without_starting_worker ... ok
+test fully_bound_bill_is_accounted_even_when_provider_error_text_is_unsafe ... ok
+test later_invalid_claim_accounts_bill_but_publishes_no_partial_graph_or_cache ... ok
+test exact_snapshot_analyzer_epochs_have_separate_cache_namespaces ... ok
+test immutable_response_preserves_provider_local_claim_keys_before_normalization ... ok
+test in_place_provider_script_change_invalidates_cache_even_when_command_is_unchanged ... ok
+test oversized_source_is_rejected_as_complete_selection_before_worker ... ok
+test malformed_provider_schema_does_not_echo_untrusted_field_values ... ok
+test no_claims_is_explicit_successful_coverage ... ok
+test malformed_or_unbound_replies_keep_sent_hold_and_cancel_only_unsent ... ok
+test publication_failure_rolls_back_every_new_cache_pointer ... ok
+test publishes_source_bound_claims_then_reuses_receipts_with_zero_calls_or_reservations ... ok
+test query_matches_literal_quotes_and_backslashes_in_displayed_claim_text ... ok
+test retained_cache_value_must_match_the_validated_immutable_row ... ok
+test retained_graph_validates_original_receipt_and_rebound_snapshot_dependencies ... ok
+test valid_bound_bill_is_preserved_when_worker_exits_unsuccessfully ... ok
+test unknown_billing_remains_reserved_after_valid_graph_publication ... ok
+test unchanged_body_cache_rebinds_new_snapshot_and_changed_body_invalidates_it ... ok
+
+test result: ok. 26 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 22.20s
+
+     Running tests\meaning_cli.rs (target\debug\deps\meaning_cli-6092092382a6115f.exe)
+
+running 8 tests
+test meaning_cli_admits_the_entire_selection_and_cost_before_first_worker ... ok
+test meaning_cli_failed_later_claim_keeps_billing_and_no_partial_publication ... ok
+test meaning_cli_read_commands_require_existing_store_and_reject_execution_configuration ... FAILED
+test meaning_cli_rejects_ambiguous_host_json_and_invalid_output_budget_before_state ... ok
+test meaning_cli_requires_explicit_provider_permission_before_opening_source_state ... ok
+test meaning_cli_build_reference_is_bounded_and_graph_reads_never_create_overflow_artifacts ... ok
+test meaning_cli_output_pipe_loss_reports_the_already_durable_job_and_graph ... ok
+test meaning_cli_builds_queries_and_reuses_immutable_receipts_without_read_time_execution ... ok
+
+failures:
+
+---- meaning_cli_read_commands_require_existing_store_and_reject_execution_configuration stdout ----
+
+thread 'meaning_cli_read_commands_require_existing_store_and_reject_execution_configuration' (39288) panicked at native\tests\meaning_cli.rs:204:9:
+assertion failed: String::from_utf8_lossy(&output.stderr).contains("existing")
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    meaning_cli_read_commands_require_existing_store_and_reject_execution_configuration
+
+test result: FAILED. 7 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.99s
+
+error: test failed, to rerun pass `--test meaning_cli`
+     Running tests\meaning_retention_review.rs (target\debug\deps\meaning_retention_review-22514ce83193a930.exe)
+
+running 3 tests
+test corrupted_job_cache_and_graph_rows_refuse_retirement_and_purge_before_deleting_history ... ok
+test supplied_job_cache_and_graph_metadata_cannot_override_the_persisted_retention_proof ... ok
+test original_and_rebound_meaning_roots_survive_retirement_quarantine_and_purge_with_controls ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.46s
+
+     Running tests\selected_view_analysis.rs (target\debug\deps\selected_view_analysis-4bdd1f0c8eb0e5b6.exe)
+
+running 11 tests
+test canonical_report_bytes_and_registration_match_frozen_golden ... ok
+test existing_graphify_hubs_include_parallel_citations_and_count_self_loops_twice ... ok
+test existing_graphify_hubs_preserve_file_level_manifest_source_precision ... ok
+test selected_report_keeps_multiple_source_bindings_without_choosing_a_fabricated_exact_anchor ... ok
+test selected_report_preparation_validation_and_admission_have_no_publication_side_effects ... ok
+test selected_report_publication_rechecks_cas_after_preparation ... ok
+test selected_report_preserves_provider_claims_and_every_original_anchor_family ... ok
+test explicit_selected_analysis_and_resources_replay_historic_views_and_reject_unsupported_scope ... ok
+test existing_graphify_community_tools_assign_default_view_overlay_nodes ... ok
+test selected_report_retention_replays_exact_bytes_and_rejects_scope_and_cas_tampering ... ok
+test selected_report_resource_admission_precedes_publication_of_a_large_formatted_body ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 22.07s
+
+     Running tests\selected_view_analysis_review.rs (target\debug\deps\selected_view_analysis_review-ad14a7cd287a04cc.exe)
+
+running 2 tests
+test retention_plan_recognizes_selected_report_and_preserves_exact_history_and_cas_roots ... ok
+test retention_plan_refuses_forged_selected_report_scope_before_retiring_any_history ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.01s
+
+error: 5 targets failed:
+    `--lib`
+    `--test host_config`
+    `--test host_install`
+    `--test host_install_cli`
+    `--test meaning_cli`

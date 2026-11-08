@@ -1,0 +1,26 @@
+    Finished `test` profile [unoptimized] target(s) in 0.79s
+     Running tests\workflow_cli.rs (target\debug\deps\workflow_cli-927186d3a166e179.exe)
+
+running 9 tests
+test actual_native_cli_tls_service_and_client_load_os_credentials ... ignored, Actual native CLI TLS service/client and Windows credential store; creates/removes only unique test credentials
+test ambiguous_json_rpc_ids_and_nested_lsp_results_are_refused ... ok
+test host_profiles_reject_duplicate_keys_instead_of_replacing_policy ... ok
+test malformed_host_profile_values_are_not_repeated_in_cli_errors ... ok
+test model_worker_deadline_includes_an_input_pipe_that_never_closes ... ok
+test host_only_execution_and_retention_never_inherit_authority_from_config_json ... ok
+test readonly_mcp_dataflow_and_native_cli_share_exact_snapshot_evidence ... ok
+test runtime_cli_preserves_failed_program_evidence_and_returns_failure ... ok
+test native_runtime_cli_preserves_state_across_authorized_repl_commands ... ok
+
+test result: ok. 8 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 1.38s
+
+     Running tests\workspace.rs (target\debug\deps\workspace-c7e87e907ce0c02f.exe)
+
+running 4 tests
+test syntax_only_verification_does_not_authorize_workspace_writes ... ok
+test rollback_restores_deleted_sources_and_keeps_foreign_writes ... ok
+test executed_verification_deadline_includes_descendants_holding_output_pipes ... ok
+test real_rustc_verification_approval_apply_and_rollback_preserve_original ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.67s
+

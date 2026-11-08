@@ -1,0 +1,18 @@
+   Compiling yoke-r3-additional-qualification v0.0.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\parity-validation-20261015\next-historical-view-comparison\revisions\qualification-harness-v2)
+warning: function `calibrate_foreign_connection_mutation_oracle` is never used
+  --> tests\support\historical_fixture_state.rs:52:8
+   |
+52 | pub fn calibrate_foreign_connection_mutation_oracle(engine: &Engine) {
+   |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `yoke-r3-additional-qualification` (test "historical_view_semantics") generated 1 warning
+    Finished `test` profile [unoptimized] target(s) in 5.13s
+     Running tests\historical_view_semantics.rs (target\debug\deps\historical_view_semantics-c4d0158cc3a68840.exe)
+
+running 1 test
+test h12_owned_fixture_qualifies_two_legal_independent_generations_before_comparison ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 5 filtered out; finished in 1.89s
+

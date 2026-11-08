@@ -1,0 +1,127 @@
+[
+  {
+    "language": "ts",
+    "source": "function helper(): {run:(n:number)=>number} {return {run:n=>n+1};}const result=helper();export const observed=result.run(3);"
+  },
+  {
+    "language": "ts",
+    "source": "function helper(): (n:number)=>number {return n=>n+1;}const result=helper();export const observed=[result(3),result.name];"
+  },
+  {
+    "language": "ts",
+    "source": "function helper(): {run(n:number):number} {return {run(n){return n+2;}};}const result=helper();export const observed=result.run(3);"
+  },
+  {
+    "language": "ts",
+    "source": "function helper(): [(n:number)=>number,string] {return [n=>n+1,\"owned\"];}const result=helper();export const observed=[result[0](3),result[1]];"
+  },
+  {
+    "language": "ts",
+    "source": "type Result={kind:\"owned\",run:(n:number)=>number};function helper():Result {return {kind:\"owned\",run:n=>n+1};}const result=helper();export const observed=result.run(3);"
+  },
+  {
+    "language": "ts",
+    "source": "function helper(){return function(){};}const result=helper();export const observed=result.name;"
+  },
+  {
+    "language": "ts",
+    "source": "function helper(){return ()=>3;}const result=helper();export const observed=[result.name,result()];"
+  },
+  {
+    "language": "ts",
+    "source": "function helper(){return class{};}const result=helper();export const observed=result.name;"
+  },
+  {
+    "language": "js",
+    "source": "function helper(){return function(){};}const result=helper();export const observed=result.name;"
+  },
+  {
+    "language": "js",
+    "source": "function helper(){return ()=>3;}const result=helper();export const observed=[result.name,result()];"
+  },
+  {
+    "language": "js",
+    "source": "function helper(){return class{};}const result=helper();export const observed=result.name;"
+  },
+  {
+    "language": "ts",
+    "source": "function helper(): (n:number)=>number {try{return n=>n+1;}finally{return n=>n+2;}}const result=helper();export const observed=[result.name,result(3)];"
+  },
+  {
+    "language": "ts",
+    "source": "function helper():()=>void{return ()=>3;}const result=helper();export const observed=[result.name,result()];"
+  },
+  {
+    "language": "ts",
+    "source": "function helper():{value:number}|undefined {exit:while(true){try{return {value:3};}finally{break exit;}}}const result=helper();export const observed=result===undefined;"
+  },
+  {
+    "language": "ts",
+    "source": "function helper():((n:number)=>number)|undefined {exit:while(true){try{return n=>n+1;}finally{break exit;}}}const result=helper();export const observed=result===undefined;"
+  },
+  {
+    "language": "ts",
+    "source": "function helper(): (n:number)=>number {return function owned(n){return n+1;};}const result=helper();export const observed=[result.name,result(3)];"
+  },
+  {
+    "language": "ts",
+    "source": "// 🌍\r\nfunction helper(): readonly [(n:number)=>number,\"é\"] {return [n=>n+1,\"é\"];}\r\nconst result=helper();export const observed=[result[0](3),result[1]];\r\n"
+  },
+  {
+    "language": "ts",
+    "source": "export function helper(): {run:(n:number)=>number} {return {run:n=>n+1};}const result=helper();export const observed=result.run(3);",
+    "keep": true
+  },
+  {
+    "language": "ts",
+    "source": "const result=helper();function helper(): {run:(n:number)=>number} {return {run:n=>n+1};}export const observed=result.run(3);"
+  },
+  {
+    "language": "ts",
+    "source": "function helper(flag:boolean):(n:number)=>number {if(flag)return n=>n+1;return function(n){return n+2;};}const a=helper(true);const b=helper(false);export const observed=[a.name,b.name,a(3),b(3)];"
+  },
+  {
+    "language": "ts",
+    "source": "const opaque=(()=>{return 4;}) as unknown as ()=>never;function helper():number{return opaque();}const result=helper();export const observed=result;"
+  },
+  {
+    "language": "ts",
+    "source": "const opaque=(()=>{return 4;}) as unknown as ()=>never;function helper():never{return opaque();}const result=helper();export const observed=result;"
+  },
+  {
+    "language": "ts",
+    "source": "const opaque=(()=>{return 4;}) as unknown as ()=>never;function helper():void{return opaque();}const result=helper();export const observed=result;"
+  },
+  {
+    "language": "ts",
+    "source": "const opaque=(()=>{return 4;}) as unknown as ()=>never;function helper(){return opaque();}const result=helper();export const observed=result;"
+  },
+  {
+    "language": "ts",
+    "source": "function helper(){return (((function(){})));}const result=helper();export const observed=result.name;"
+  },
+  {
+    "language": "ts",
+    "source": "function helper(){return ((()=>3) as (()=>number));}const result=helper();export const observed=result.name;"
+  },
+  {
+    "language": "ts",
+    "source": "function helper(){return <(()=>number)>(()=>3);}const result=helper();export const observed=result.name;"
+  },
+  {
+    "language": "ts",
+    "source": "function helper(){return ((()=>3) satisfies (()=>number));}const result=helper();export const observed=result.name;"
+  },
+  {
+    "language": "ts",
+    "source": "function helper(){return (function(){})!;}const result=helper();export const observed=result.name;"
+  },
+  {
+    "language": "ts",
+    "source": "function helper(){return (<T>(n:T)=>n)<number>;}const result=helper();export const observed=result.name;"
+  },
+  {
+    "language": "js",
+    "source": "function helper(){return /** @type {()=>number} */ (()=>3);}const result=helper();export const observed=[result.name,result()];"
+  }
+]

@@ -1,0 +1,32 @@
+    Finished `test` profile [unoptimized] target(s) in 0.57s
+     Running tests\facade_file_delete.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\facade_file_delete-38ac8a88c0b59e31.exe)
+
+running 10 tests
+test default_safe_mode_and_propagation_are_distinct_unsupported_file_intents ... ok
+test empty_malformed_directory_missing_and_unsafe_file_selectors_never_prepare_deletions ... ok
+test forced_file_delete_materializes_the_plan_without_removing_the_original_or_its_callers ... ok
+test forced_file_delete_omitted_and_null_selectors_create_one_exact_delete_for_v8_v9 ... ok
+test forced_file_delete_permission_and_external_context_denials_have_zero_change_effects ... ok
+test forced_file_delete_stale_workspace_preflight_preserves_changed_sources_for_v8_v9 ... ok
+test forced_file_delete_workspace_apply_keeps_host_approval_and_verification_gates ... ok
+test public_forced_file_delete_accepts_generated_null_and_false_defaults ... ok
+test readonly_ignored_excluded_and_uncaptured_binary_sources_cannot_be_force_deleted ... ok
+test source_symlink_cannot_redirect_a_forced_file_deletion ... FAILED
+
+failures:
+
+---- source_symlink_cannot_redirect_a_forced_file_deletion stdout ----
+
+thread 'source_symlink_cannot_redirect_a_forced_file_deletion' (13784) panicked at native\tests\facade_file_delete.rs:487:81:
+called `Result::unwrap()` on an `Err` value: Os { code: 1314, kind: Uncategorized, message: "Dem Client fehlt ein erforderliches Recht." }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    source_symlink_cannot_redirect_a_forced_file_deletion
+
+test result: FAILED. 9 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.89s
+
+error: test failed, to rerun pass `--test facade_file_delete`
+error: 1 target failed:
+    `--test facade_file_delete`

@@ -1,0 +1,32 @@
+{
+  "acceptedFullRun": false,
+  "classification": "synthetic_parser_review_not_native_runtime",
+  "files": {
+    "PLAN.md": {
+      "bytes": 4072,
+      "sha256": "75661e75660e40ecd32f84b7ca75562941ddc5a9f6db004ddedd7c4821f78493",
+      "source": "next-wave4-runner-fallback/PLAN.md"
+    },
+    "receipt.json": {
+      "bytes": 568,
+      "sha256": "32a3eb7e28006247dd0f4c42099a4e8167da8541e31afc0d2a85bcebb51e1c13",
+      "source": "new classification receipt"
+    },
+    "synthetic-final.log": {
+      "bytes": 1618,
+      "sha256": "0c33e3571e32dbf53008fa5189ad25001c0865fab070575d1113e646b6ff4554",
+      "source": "next-wave4-runner-fallback/synthetic-final.log"
+    },
+    "test_runner_fallback.py": {
+      "bytes": 14825,
+      "sha256": "819af4abace18f31a218cbb50a140946a9606e6ace212dcb5f5c35041c8be620",
+      "source": "next-wave4-runner-fallback/test_runner_fallback.py"
+    }
+  },
+  "nativeRuntimeCountsContributed": 0,
+  "reviewMemoryReference": "mem_mva1u6k5_605f9e619aa5",
+  "runnerCopied": false,
+  "runnerEvidence": "Accepted runner.py in the eventual successful five-phase bundle independently pins exact runner bytes.",
+  "runnerSha256": "b51bbffbddd07be0aa6ef019fc950d772c628d77b3567f646d7a837726aa3d15",
+  "schema": 1
+}

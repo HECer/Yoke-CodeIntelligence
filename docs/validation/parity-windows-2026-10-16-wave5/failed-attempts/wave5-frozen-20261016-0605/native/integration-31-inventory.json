@@ -1,0 +1,25 @@
+{
+  "federation_epoch_review": {
+    "executable": "target\\debug\\deps\\federation_epoch_review-f3bda00f0381e723.exe",
+    "ignored": [],
+    "registered": [
+      "v1_public_graph_rejects_resealed_invented_label",
+      "v1_public_graph_rejects_resealed_retargeted_call",
+      "v2_public_graph_rejects_resealed_invented_label",
+      "v2_public_graph_rejects_resealed_retargeted_call"
+    ]
+  },
+  "federation_epochs": {
+    "executable": "target\\debug\\deps\\federation_epochs-dd4fcd9d95125532.exe",
+    "ignored": [],
+    "registered": [
+      "authentic_receiver8_v1_receipt_graph_and_archived_provenance_stay_exact",
+      "declared_v2_epoch_cannot_be_downgraded_under_the_same_foreign_identity",
+      "exact_v2_receipt_is_recognized_by_retention_without_an_opaque_kind_allowance",
+      "explicit_receiver9_creates_an_exact_v2_receipt_and_epoch9_source_graph",
+      "retrying_an_existing_v1_envelope_with_receiver9_preserves_old_id_graph_and_receipt",
+      "signed_v1_source_namespace_is_preserved_by_the_same_typed_retention_preflight",
+      "unknown_receipt_epochs_and_added_v1_epoch_fields_fail_before_source_callbacks"
+    ]
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "accepted": true,
+  "afterSourceManifestSha256": "536f049021a3342eaa0b8c73a9eed7dd6b4fe445f33631fc058fbc577d29d5e4",
+  "beforeSourceManifestSha256": "c842983266a68918eee88b747cbe736e9513d71974996331a8f0d57569983987",
+  "candidateSourceManifestSha256": "a3e0210e314936ffe007661111e2780d02081dbd41c9ca21467a85129646f247",
+  "parentIndexSha256": "72777e30aab72ed34281573b218793ad48bce424557fbea7897a4400afa4bf1e",
+  "parentSourceManifestSha256": "bd3278301478b0326a68cdd7cc709b22bded1fef0d1a794344abeaaea65650e5",
+  "paths": {
+    "native/docs/mixed-pdf-views.md": {
+      "after": "94f0115b78d6e5eb3f5f83f77a50c051e2f01d862c016be9ce191b9f5a6c24e5",
+      "before": null
+    },
+    "native/docs/mixed-views.md": {
+      "after": "58fefb7d27956dac998ebbb4dd1b47af4c5878577366dbccd691540904dbf74e",
+      "before": "623d6bf44dc643029078f0757139d9f7b227041d5b90b12bc8e9eb49cebfd345"
+    },
+    "native/src/media.rs": {
+      "after": "4e402828d678678d320f602beac3b4ce71303a384786affa46f84b801f8e00b2",
+      "before": "4405e3e678fef2a3d294ea3bb92b3e24eeb774d6da455e6e70595128144b0e3f"
+    },
+    "native/src/mixed_pdf_input.rs": {
+      "after": "58b356548c9502e142a531b778629c38988ae2a220b5ba885fabbccdb3726f0c",
+      "before": null
+    },
+    "native/src/mixed_view.rs": {
+      "after": "425c0f8c3f823c76eaf6d793e8e036ca527e76c96349acc59d281d9f8475e057",
+      "before": "01584c6fa78b5c78dc076a13eb363e08dee24af8f1863cced690b9d46cf6bca8"
+    },
+    "native/src/mixed_view_cli.rs": {
+      "after": "68d74aa059ba18a9459e139e97c933616d56ec80aacf813c10d480adee931c3c",
+      "before": "63830d60e359679d929186b599c0e347d4cc754df37c068f237b6661742de293"
+    },
+    "native/src/mixed_view_query.rs": {
+      "after": "78ca3491940fdc7ae47607b74b59626ba0b96d88c054075c95be9917408d1267",
+      "before": "a9a24435677c329848af0786e15d3506b4ec43eb9506df528f466e85c9fa306d"
+    },
+    "native/tests/mixed_pdf_view.rs": {
+      "after": "cacc832cfe6e6b9af505011f7b0b4aff9a0b6e5ab0f94a57289c4b0201e1e79e",
+      "before": null
+    },
+    "native/tests/support/mixed_pdf_fixture.rs": {
+      "after": "d8b456dd5afba804b9e6fd0052a0e4135f028ceb4bfaf66fac06c913188c506e",
+      "before": null
+    }
+  },
+  "reviewedBaselineSourceManifestSha256": "d6510d06d4cc8d3f53a0f375f4801e2529e24b16c7a5a960e47bafcfb4c4f5ec"
+}

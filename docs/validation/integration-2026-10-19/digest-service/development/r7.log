@@ -1,0 +1,26 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 3.14s
+     Running tests\github_app_digest_handoff.rs (target\debug\deps\github_app_digest_handoff-8b69d6d873696eca.exe)
+
+running 18 tests
+test actual_cli_send_status_and_lost_response_recovery_use_os_key_without_retry ... ignored, Requires actual Windows per-user Credential Manager; creates and removes one unique signing credential
+test caller_transaction_and_weak_sql_durability_never_create_an_intent ... ok
+test corrupt_captured_source_never_uses_approved_preview_as_source_authority ... ok
+test actual_cli_proposal_is_offline_and_denials_precede_host_files_and_state_creation ... ok
+test exact_approved_bytes_use_one_put_and_keep_captured_headers_and_receipt_scope ... ok
+test held_journal_lock_obeys_original_deadline_without_writing_an_intent ... ok
+test exact_output_boundary_is_admitted_before_the_first_put ... ok
+test host_authority_fixture_scope_and_stale_approval_refuse_before_intent_or_http ... ok
+test lost_response_stays_unknown_blocks_retries_and_recovers_with_get_only ... ok
+test mutated_or_rekeyed_journal_is_refused_before_remote_recovery ... ok
+test output_and_payload_and_journal_reservation_refuse_before_send ... ok
+test pending_repository_blocks_a_different_payload_and_retargeted_approval_refuses ... ok
+test malformed_wrong_oversized_and_redirect_receipts_leave_durable_unknown ... ok
+test receiver_success_followed_by_sql_failure_remains_recoverable_without_resend ... ok
+test remote_absence_does_not_erase_intent_or_authorize_another_send ... ok
+test strict_profiles_and_approval_do_not_echo_unknown_keys_or_accept_ambient_urls ... ok
+test unknown_intent_retains_its_source_but_does_not_turn_payload_hashes_into_roots ... ok
+test sql_contention_preserves_policy_and_deadline_without_network_or_late_intent ... ok
+
+test result: ok. 17 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 1.71s
+

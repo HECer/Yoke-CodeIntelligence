@@ -1,0 +1,24 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\r5-shadow-unavailable-v1\native)
+    Finished `test` profile [unoptimized] target(s) in 10.37s
+     Running tests\git_impact_details_sqlite_limits.rs (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\debug\deps\git_impact_details_sqlite_limits-f5a4447c054ece1f.exe)
+
+running 1 test
+test caller_sqlite_limit_and_read_transaction_survive_success_and_both_refusal_classes ... FAILED
+
+failures:
+
+---- caller_sqlite_limit_and_read_transaction_survive_success_and_both_refusal_classes stdout ----
+
+thread 'caller_sqlite_limit_and_read_transaction_survive_success_and_both_refusal_classes' (97656) panicked at native\tests\git_impact_details_sqlite_limits.rs:20:6:
+genuine successful feature before caller-state regression: git_impact_details_implementation_unavailable
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    caller_sqlite_limit_and_read_transaction_survive_success_and_both_refusal_classes
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.80s
+
+error: test failed, to rerun pass `--test git_impact_details_sqlite_limits`
+error: 1 target failed:
+    `--test git_impact_details_sqlite_limits`

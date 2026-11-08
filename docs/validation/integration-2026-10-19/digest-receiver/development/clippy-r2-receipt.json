@@ -1,0 +1,16 @@
+{
+  "command": [
+    "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+    "clippy",
+    "--workspace",
+    "--all-targets",
+    "--locked",
+    "--keep-going",
+    "-j2",
+    "--",
+    "-D",
+    "warnings"
+  ],
+  "exitCode": 0,
+  "elapsedSeconds": 76.50111459999607
+}

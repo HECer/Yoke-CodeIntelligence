@@ -1,0 +1,1 @@
+{"errors":[{"code":"Neo.ClientError.Statement.SyntaxError","message":"Invalid input 'value': expected an expression, 'RETURN' or <EOF> (line 1, column 60 (offset: 59))\r\n\"CYPHER 5 SHOW SETTINGS YIELD name,value WHERE name= RETURN value\"\r\n                                                            ^"}]}

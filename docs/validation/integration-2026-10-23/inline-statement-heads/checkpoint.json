@@ -1,0 +1,87 @@
+{
+  "complete": true,
+  "sourceInputs": 1112,
+  "sourceInputsUnchanged": true,
+  "groups": {
+    "test-compiler_inline_body": [
+      21,
+      0,
+      0,
+      0
+    ],
+    "test-compiler_inline_predicates": [
+      10,
+      0,
+      0,
+      0
+    ],
+    "test-compiler_inline": [
+      16,
+      0,
+      0,
+      0
+    ],
+    "library-all": [
+      581,
+      0,
+      7,
+      0
+    ],
+    "main-all": [
+      2,
+      0,
+      0,
+      0
+    ]
+  },
+  "rustTotals": {
+    "passed": 630,
+    "failed": 0,
+    "ignored": 7,
+    "filtered": 0
+  },
+  "newFunctionsIncluded": 5,
+  "nativeCliSha256": "57610cc05ed2ba2c3689cbf09e549dc2360bb960bec261fdf72e4fbc642d1db0",
+  "actualCliScenarios": 3,
+  "actualCliOwnedParents": 27,
+  "allJobsEmpty": true,
+  "allOriginalIntegrationBytesRetainedAsExactPrefix": {
+    "bytes": 69244,
+    "sha256": "d7c59cc61d9f0e9373a23776f169839d9f9d51eeae6f7eeaf8d83dbf78a7f5ce"
+  },
+  "allOriginalBodyUnitBytesRetainedAsExactSuffix": true,
+  "originalFixturesIgnoresDeadlinesProfilesUnchanged": true,
+  "releaseBuiltOrRead": false,
+  "completeWindowsNativeSuite": false,
+  "sourceCommitBeforeFeature": "a66b65881bba3a0948c4da1b3ece8b9a951d0339",
+  "sourceCommit": "e01920adcf05b0a4fb3f6ff519179748400800f2",
+  "rawArchive": {
+    "path": "raw-logs.zip",
+    "bytes": 516895,
+    "sha256": "5c81e2fd611dc64ed05e821af588371bfad60d8d75de638fd487877a62563ab4",
+    "members": 123,
+    "everyDecompressedMemberReopenedAndVerified": true
+  },
+  "completeFormatRoots": 362,
+  "clippyAllTargetsWarningsDeniedPassed": true,
+  "pythonTestsPassed": 47,
+  "typecheckPassed": true,
+  "npm": {
+    "passed": 260,
+    "failed": 0,
+    "existingSkipped": 3
+  },
+  "sourceExecutedDuringPreparation": false,
+  "ownedLiteralRuntimeOraclesExecuted": true,
+  "modelCalls": 0,
+  "hostedAcceptanceClaimed": false,
+  "systemPrivilegesDeveloperModeExecutionPolicyChanged": false,
+  "newFeature": "Direct complete if conditions, switch discriminants and throw expressions only",
+  "remaining": "Loop/short-circuit/nested expression sequencing, JSDoc/generic/this/wider predicate forms, broader R1-R9/353/77-runtime/current whole Windows/client/quality/hosted/canonical VSIX/Google/main/release",
+  "intermediatePhases": {
+    "red1": "3 failed /1 passed; JS owned fixture missing attached JSDoc newline gave before-expansion type error; retained",
+    "red2": "After fixing JSDoc attachment, all three intended positive functions refused at original sequencing gate; adversarial function passed",
+    "postRed2UnicodeFixtureCorrection": "PowerShell pipe substituted new test comment Unicode; corrected new comment with explicit Unicode escapes before GREEN. No byte-identical final-test RED claim. Original fixture bytes unchanged.",
+    "green1": "4 passed, 17 filtered; intermediate only, not added to final totals"
+  }
+}

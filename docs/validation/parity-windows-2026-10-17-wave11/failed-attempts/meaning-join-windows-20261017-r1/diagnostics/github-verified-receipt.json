@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "kind": "separate_nonadditive_github_diagnostics",
+  "checkedAtUtc": "2026-10-17T16:24:11.756786+00:00",
+  "runnerSha256": "d51804e3599e9fe7e2fac985ec5cc05d98d6b7cfc0b989b09c34bd928b3cea09",
+  "executable": "E:\\Yoke-Build-Cache\\meaning-aliases-20261016\\debug\\deps\\github-90e5b67e13489e9b.exe",
+  "executableSha256": "4669fcc9690985f717faa53ef2f507553b2d647d1d1ee6959c93384cd1540490",
+  "integrationInventorySha256": "ceba3f8f2652522424cd42dd43be928eff320b69dd764bd03df0cee292e1c3c1",
+  "sourceManifestSha256": "47ecb688e6a3beb16f7a638a93b31f3725b05a948440bbcf44715081b2dee4ec",
+  "sourceChanges": [],
+  "contributesToAcceptedTotals": false,
+  "results": [
+    {
+      "label": "exact",
+      "command": [
+        "E:\\Yoke-Build-Cache\\meaning-aliases-20261016\\debug\\deps\\github-90e5b67e13489e9b.exe",
+        "--exact",
+        "explicit_loopback_http_reads_observed_ci_review_and_scope_without_commands",
+        "--test-threads=1"
+      ],
+      "exitCode": 0,
+      "log": "github-exact-verified.log",
+      "logSha256": "78a58a24706b55c4b047a0b54fcfd013f71f31738b90458891cd7e2c5b68c2fa",
+      "seconds": 0.375,
+      "tempRoot": "E:\\Yoke-Test-Scratch\\github-verified-20261017-exact",
+      "sourceManifestSha256": "47ecb688e6a3beb16f7a638a93b31f3725b05a948440bbcf44715081b2dee4ec",
+      "executableSha256": "4669fcc9690985f717faa53ef2f507553b2d647d1d1ee6959c93384cd1540490"
+    },
+    {
+      "label": "suite",
+      "command": [
+        "E:\\Yoke-Build-Cache\\meaning-aliases-20261016\\debug\\deps\\github-90e5b67e13489e9b.exe",
+        "--test-threads=4"
+      ],
+      "exitCode": 0,
+      "log": "github-suite-verified.log",
+      "logSha256": "6491ef1dbda196d1686ff9fb8c25ef8438f4ac38ad45f4d854d62c9e3c65c46c",
+      "seconds": 0.703,
+      "tempRoot": "E:\\Yoke-Test-Scratch\\github-verified-20261017-suite",
+      "sourceManifestSha256": "47ecb688e6a3beb16f7a638a93b31f3725b05a948440bbcf44715081b2dee4ec",
+      "executableSha256": "4669fcc9690985f717faa53ef2f507553b2d647d1d1ee6959c93384cd1540490"
+    }
+  ]
+}

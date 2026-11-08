@@ -1,0 +1,86 @@
+{
+  "status": "IGNORED_NATIVE_PROCESS_GUARD_V4_UTF16_DRAFT_NOT_APPLIED",
+  "actionId": "act_mvaukns1_a183b926d90a",
+  "baseManifestSha256": "390c70d2c48ad527f6a8e60fdd8f0bd53ec40a588b72caf294aeba24542eb255",
+  "artifacts": {
+    "baseline-mocked-guard-red.log": {
+      "sha256": "15b0e8ee48afc70a424ccda2d6e8dd0203586cee2c6aa1d132a175a1626a2762",
+      "bytes": 551
+    },
+    "cache_origin.before.py": {
+      "sha256": "6e26e3abbd324e62631dd5a3536d9dee8c5adc911afd9f631ca1d705a1c3d336",
+      "bytes": 24343
+    },
+    "cache_origin.forward.patch": {
+      "sha256": "56c0844dcad8b64e458db480e11072d30fcdbf5e848d9d3eb25c00344e5f1846",
+      "bytes": 1016
+    },
+    "cache_origin.inverse.patch": {
+      "sha256": "1233b9301bc7e45eb430575d6bba8b647050d09070b39f981624d23bb7b249f6",
+      "bytes": 1016
+    },
+    "cache_origin.py": {
+      "sha256": "a24fd7ab1c40c0c815117878f16be97760076a6efffd56479386cc363d4865db",
+      "bytes": 24659
+    },
+    "check_mocked_guard.log": {
+      "sha256": "d19d572ba2f75c1b1f534a17dcef09b5aae1c3e178b4f8a7487c932f7672c7d1",
+      "bytes": 1557
+    },
+    "check_mocked_guard.py": {
+      "sha256": "989a92b764bbb185203f560401394f3eed2788cd13ba42e16fee8ec79e337d9d",
+      "bytes": 6552
+    },
+    "check_pure_decoder.log": {
+      "sha256": "dc50566be6c88719e316d6d2c3db547c18835e50ab5e4cac88e051fc84eff648",
+      "bytes": 1575
+    },
+    "check_pure_decoder.py": {
+      "sha256": "8b398f78acdf127551b25af9326cba9aadfa7a5f581c8141a50603c48b229fb9",
+      "bytes": 4449
+    },
+    "check_pure_journal.log": {
+      "sha256": "6df096922a1208484d50fd59a7cdb9997fa410540cd8d53d66138b667f966385",
+      "bytes": 958
+    },
+    "check_pure_journal.py": {
+      "sha256": "50d7ae50823070f4942da1c3d37025bab8650176ae26344a92dbf6fae4ca3693",
+      "bytes": 2743
+    },
+    "DELTA.json": {
+      "sha256": "e8d900dcabff45180d42309e2d21b0fdb3e8f9210afb5787750f2edd980bd948",
+      "bytes": 656
+    },
+    "NATIVE-SNAPSHOT-QUALIFICATION.json": {
+      "sha256": "c284fa780adbc24ae952392b85a01a3f061d4ae0e5a0bce109b26e4916a10035",
+      "bytes": 872
+    },
+    "prepare_revision.py": {
+      "sha256": "4c16b21aff54c4b412fbc842820b627ea5a8303d3eb0710a2f054a0950d9130b",
+      "bytes": 12007
+    },
+    "prepare_utf16_revision.py": {
+      "sha256": "6c202deea7b3c34482386a99e915ad871daeb92fa218f37a1e0d3ae929e81020",
+      "bytes": 5960
+    },
+    "README.md": {
+      "sha256": "e6206146ff12f09d6910eb21d178d71e1801d4633ad315472dc4f4da178d6050",
+      "bytes": 1406
+    },
+    "SOURCE-PINS.json": {
+      "sha256": "54137ff18160805e19642fed5f8441f321e1fbd0799fe704be48bfd61e3ccffc",
+      "bytes": 1255
+    },
+    "utf16-v3-baseline-red.log": {
+      "sha256": "15b0e8ee48afc70a424ccda2d6e8dd0203586cee2c6aa1d132a175a1626a2762",
+      "bytes": 551
+    }
+  },
+  "artifactClosure": "all files except MANIFEST.json",
+  "sourcePins": "SOURCE-PINS.json",
+  "independentStaticReview": "pending",
+  "actualReadOnlyNativeGuardCalls": 10,
+  "helperCliPlanQuarantineCacheOperationInvoked": false,
+  "normalImageWrites": false,
+  "cargoNodeRustcInvoked": false
+}

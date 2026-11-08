@@ -1,0 +1,80 @@
+{
+  "accepted": true,
+  "aclTempRoot": null,
+  "artifactSha256": {
+    "source-after.json": "536f049021a3342eaa0b8c73a9eed7dd6b4fe445f33631fc058fbc577d29d5e4",
+    "source-before.json": "536f049021a3342eaa0b8c73a9eed7dd6b4fe445f33631fc058fbc577d29d5e4",
+    "typecheck.log": "ca76bbbc554c0e3ab10606a9d43f484df25001ba560b45987878ba20a5bd47a5",
+    "typescript.log": "6f7221a1cb4f9545d7be447b4522f05a8458a23fc7d3fd8b3ee340655b977553"
+  },
+  "checkedAtUtc": "2026-10-17T20:36:23.921726+00:00",
+  "failed": 0,
+  "groups": 1,
+  "ignored": 3,
+  "interpretation": "Fresh execution only. Shared freeze required across all five phases; ignored test results are never relabeled as passing.",
+  "matrixCoverage": {},
+  "passed": 254,
+  "phase": "typescript",
+  "phases": [
+    "format",
+    "clippy",
+    "native",
+    "python",
+    "typescript"
+  ],
+  "results": [
+    {
+      "command": [
+        "npm.cmd",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0,
+      "failed": 0,
+      "groups": 0,
+      "ignored": 0,
+      "inventoryOnly": false,
+      "label": "typecheck",
+      "logSha256": "ca76bbbc554c0e3ab10606a9d43f484df25001ba560b45987878ba20a5bd47a5",
+      "origin": "fresh_execution",
+      "passed": 0,
+      "runnerSha256": "5b1dbf5179f274d57fc0217108867d90d9a62ae233ca551496e89d386df81a00",
+      "seconds": 1.922,
+      "sourceManifestSha256": "536f049021a3342eaa0b8c73a9eed7dd6b4fe445f33631fc058fbc577d29d5e4",
+      "tempRoot": "E:\\Yoke-Test-Scratch\\pdf-mixed-view-windows-20261017-r1-typescript"
+    },
+    {
+      "command": [
+        "npm.cmd",
+        "test"
+      ],
+      "exitCode": 0,
+      "failed": 0,
+      "frameworkCounts": {
+        "cancelled": 0,
+        "fail": 0,
+        "pass": 254,
+        "skipped": 3,
+        "tests": 257,
+        "todo": 0
+      },
+      "groups": 1,
+      "ignored": 3,
+      "inventoryOnly": false,
+      "label": "typescript",
+      "logSha256": "6f7221a1cb4f9545d7be447b4522f05a8458a23fc7d3fd8b3ee340655b977553",
+      "origin": "fresh_execution",
+      "passed": 254,
+      "runnerSha256": "5b1dbf5179f274d57fc0217108867d90d9a62ae233ca551496e89d386df81a00",
+      "seconds": 72.031,
+      "sourceManifestSha256": "536f049021a3342eaa0b8c73a9eed7dd6b4fe445f33631fc058fbc577d29d5e4",
+      "tempRoot": "E:\\Yoke-Test-Scratch\\pdf-mixed-view-windows-20261017-r1-typescript"
+    }
+  ],
+  "runnerSha256": "5b1dbf5179f274d57fc0217108867d90d9a62ae233ca551496e89d386df81a00",
+  "sourceChanges": [],
+  "sourceFiles": 3970,
+  "sourceManifestSha256": "536f049021a3342eaa0b8c73a9eed7dd6b4fe445f33631fc058fbc577d29d5e4",
+  "tempRoot": "E:\\Yoke-Test-Scratch\\pdf-mixed-view-windows-20261017-r1-typescript",
+  "validationErrors": []
+}

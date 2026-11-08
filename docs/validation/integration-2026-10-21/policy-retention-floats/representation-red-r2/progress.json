@@ -1,0 +1,58 @@
+[
+  {
+    "name": "fmt",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "fmt",
+      "--all",
+      "--",
+      "--check"
+    ],
+    "exitCode": 0,
+    "seconds": 5.793195100006415,
+    "sourceUnchanged": true,
+    "totals": {
+      "passed": 0,
+      "failed": 0,
+      "ignored": 0
+    },
+    "deletedNewTestArtifacts": []
+  },
+  {
+    "name": "graph_analysis_policy",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "test",
+      "--workspace",
+      "--locked",
+      "-j",
+      "2",
+      "--target-dir",
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+      "--test",
+      "graph_analysis_policy",
+      "--",
+      "--test-threads=1"
+    ],
+    "exitCode": 101,
+    "seconds": 5.268251700006658,
+    "sourceUnchanged": true,
+    "totals": {
+      "passed": 6,
+      "failed": 1,
+      "ignored": 0
+    },
+    "deletedNewTestArtifacts": [
+      {
+        "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\graph_analysis_policy-5aac89ce04278b50.exe",
+        "sha256": "eca0eed2e430a13e4cfa2b2b449d8113442e71d6044086ac3f53929961cd5e7c",
+        "bytes": 118682624
+      },
+      {
+        "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\graph_analysis_policy-5aac89ce04278b50.pdb",
+        "sha256": "59e1e6ac4fadc8c2ca12bcab171160b272a84dd79876a1b22fd745c23ba63dbc",
+        "bytes": 21155840
+      }
+    ]
+  }
+]

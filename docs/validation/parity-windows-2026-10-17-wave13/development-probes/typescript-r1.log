@@ -1,0 +1,350 @@
+
+> @hecer/code-intelligence@0.3.0 test
+> npm run build && node scripts/run-tests.mjs
+
+
+> @hecer/code-intelligence@0.3.0 build
+> tsc -p tsconfig.json
+
+(node:77956) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ Graft v1 graph import retains relationships but does not invent exact call sites (1737.5162ms)
+✔ Graphify historical markers take priority over undirected node-link endpoint order (631.0729ms)
+✔ parallel and opposite raw Graphify edges survive canonical persistence (1185.4365ms)
+✔ stale source hashes and unknown schema versions are refused (666.5738ms)
+✔ unanchored external nodes stay unresolved targets without phantom source entities (283.376ms)
+✔ Serena normalization handles file groups and inherited child locations (0.8719ms)
+✔ Serena unrecognized prose or malformed groups cannot masquerade as zero matches (0.9139ms)
+✔ ordered symbol search results do not create graph paths (0.2185ms)
+✔ LSP framing handles split Content-Length headers and Unicode payloads (1611.3596ms)
+✔ stalled provider is cancelled and does not outlive the shared deadline (1399.6087ms)
+✔ LSP rename converts negotiated positions and binds edits to source hashes (1752.4153ms)
+✔ LSP cannot edit outside its isolated snapshot (1403.5579ms)
+✔ external Serena MCP adapter negotiates and decodes structured grouped symbols (1557.1992ms)
+✔ upstream processes never start without explicit provider trust (855.9754ms)
+(node:62744) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ native TypeScript graph keeps imports, calls and references distinct (3127.0109ms)
+✔ non-call property reads remain references (1046.7759ms)
+✔ same-named functions in different files never collapse by name (749.6838ms)
+✔ interface dispatch is a possible dispatch, not a runtime observation (919.2047ms)
+✔ unresolved external calls stay explicit with null targets (651.8499ms)
+✔ compiler syntax errors appear in coverage and diagnostics (1330.3398ms)
+✔ renaming an export invalidates unchanged consumer resolution (1890.3668ms)
+✔ source reads are immutable and UTF-8 byte-accurate (586.5123ms)
+✔ mixed line/byte/entity read arguments are rejected (1282.2201ms)
+✔ literal text search preserves offsets after Unicode case-expansion characters (502.2533ms)
+✔ camelCase identifiers are discoverable by a constituent word (1175.2221ms)
+✔ scoped search excludes similarly named neighbouring services (1206.3126ms)
+✔ trace is directed, bounded and does not invent an ordered path (956.0181ms)
+✔ read-only plans combine navigation without an extra model call (1245.7436ms)
+✔ Markdown concepts and rationale nodes keep original provenance (1277.6365ms)
+✔ Python AST works without imports or execution of project code (899.8856ms)
+✔ Python syntax errors are reported without empty-success semantics (943.4495ms)
+✔ disabled Python parsing is explicitly reported as unavailable semantics (480.0831ms)
+﹣ Go stdlib parser emits real methods, imports and bounded call candidates (0.6983ms) # SKIP
+(node:80888) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ paired harness uses real independent verification and charges all protocol-fixture attempts (2591.8829ms)
+✔ paired harness refuses implicit driver execution (783.7139ms)
+(node:65844) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ prepare → compiler rename → verify → approve → workspace apply works across files (4341.3925ms)
+✔ reserved keywords cannot be compiler rename targets (1142.1056ms)
+✔ exact native symbol replacement preserves surrounding code (1238.656ms)
+✔ isolated apply materializes a complete result without changing source (862.3979ms)
+✔ workspace integration refuses missing host write permission (707.3615ms)
+✔ workspace integration requires exact approval and verification (374.2589ms)
+✔ concurrent source edits block integration without overwriting user work (1204.5787ms)
+✔ test modifications require separate explicit consent (932.5094ms)
+✔ hash preconditions and overlapping edits cannot be bypassed (689.4264ms)
+✔ Unicode edits reject partial code points and lone surrogates (340.0342ms)
+✔ file creation and deletion are represented and applied correctly (571.9791ms)
+✔ expired and tampered plans are never applied (678.7484ms)
+✔ idempotency key cannot be reused for another plan or mode (761.9393ms)
+✔ ordinary write failure rolls back only files written by that transaction (1043.8908ms)
+✔ rollback preserves concurrent foreign edits rather than resetting the workspace (612.9334ms)
+✔ a killed writer can be recovered from its durable journal (1014.0793ms)
+✔ whole-file unified diff is accepted by git apply including a missing final newline (252.3786ms)
+✔ verification distinguishes newly introduced errors from preexisting errors (972.6764ms)
+✔ diagnostic delta is multiplicity-aware but ignores harmless line shifts (0.5379ms)
+✔ no verifier means incomplete rather than a false successful proof (606.0924ms)
+✔ project verification commands require trusted host permission (1129.3416ms)
+✔ trusted actual test execution records independent exit status and test count (2495.3216ms)
+✔ verification that mutates its source inputs is invalidated (1554.6099ms)
+(node:68284) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ advanced CLI embeds source and retrieves the same snapshot through the local vectorizer (2857.0174ms)
+✔ advanced CLI solution build produces no source-tree output (2650.6501ms)
+✔ advanced CLI model commands reject absent host permission (2140.3012ms)
+✔ advanced CLI rejects misspelled GC application mode instead of deleting (797.7641ms)
+✔ advanced CLI taint labels untrusted input flow as a nonexhaustive candidate (1489.0225ms)
+✔ real editor CLI handshake, authentication, unsaved lookup and unchanged disk source (2489.4771ms)
+(node:81156) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ UTF-8 offsets survive emoji, umlauts and CRLF (1.8491ms)
+✔ canonical hashes are independent of object insertion order (0.9398ms)
+✔ signed cursors reject tampering and a different workspace key (0.8744ms)
+✔ deadline cancellation is distinct from expiration (0.441ms)
+✔ path policy refuses "../x" (0.4319ms)
+✔ path policy refuses "a/../../x" (0.2035ms)
+✔ path policy refuses "/tmp/x" (0.1459ms)
+✔ path policy refuses "C:\\secret" (0.1514ms)
+✔ path policy refuses "\\\\server\\x" (0.1616ms)
+✔ path policy refuses "a\u0000b" (0.1902ms)
+✔ path policy refuses "a//b" (0.2868ms)
+✔ path policy refuses "a/CON.txt" (0.2045ms)
+✔ path policy refuses "a/nul" (0.1347ms)
+✔ path policy refuses "a/trailing." (0.1623ms)
+✔ safe Windows-style relative paths normalize consistently (0.1744ms)
+✔ glob recursion differs from a single path-segment star (0.3535ms)
+✔ test-path detector recognizes root Python tests and Go/TS conventions (0.3072ms)
+✔ protected files, binary data and obvious credentials do not enter a snapshot (371.3208ms)
+✔ Git ignored and generated state files never self-index (553.4616ms)
+✔ non-Git fallback conservatively respects positive root and nested ignores (242.0785ms)
+✔ snapshots retain old bytes after edits, creation and deletion (1159.8235ms)
+✔ request budgets do not change semantic snapshot identities (863.1263ms)
+✔ snapshots are root/workspace isolated (2581.2169ms)
+﹣ parent, leaf and dangling symbolic links are denied (0.2405ms) # Creating symlinks requires elevated Windows privilege
+﹣ SQLite state and CAS path symbolic links are refused (0.1581ms) # SKIP
+✔ CAS integrity failure is visible, not silently reused (296.7984ms)
+✔ schema validator rejects undeclared authority and invalid numbers (1.0214ms)
+✔ full serialized envelope respects byte bound including its metrics (355.1815ms)
+✔ artifact pagination recovers original JSON without splitting Unicode (943.246ms)
+✔ tiny budgets and forged artifact cursors fail explicitly (215.4044ms)
+✔ derived source cannot exceed the configured total capacity (418.7842ms)
+✔ repository configuration cannot select an executable interpreter (219.4259ms)
+✔ explicit host interpreter selection overrides untrusted repository setting (203.3562ms)
+(node:84564) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ installed declarations are immutable, indexed and resolve package calls (1711.4398ms)
+✔ ambient @types are discovered without reading live compiler filesystem (861.3771ms)
+✔ dependency capture can be disabled explicitly (633.3085ms)
+✔ metadata capture reuses unchanged files but cannot authorize source writes (644.2474ms)
+✔ editor overlay analyzes unsaved source without changing disk (1075.0703ms)
+✔ editor versions reject stale writes and allow exact retransmission (436.6853ms)
+✔ editor refuses independent disk mutation and preserves both versions (503.9881ms)
+✔ editor saved-buffer baseline advances for subsequent unsaved changes (2218.5647ms)
+✔ new and closed buffers are separate from saved disk source (1710.3465ms)
+✔ editor rejects protected path ../escape.ts (504.7129ms)
+✔ editor rejects protected path .env (450.9709ms)
+✔ editor rejects protected path node_modules/p/a.d.ts (446.1285ms)
+✔ editor rejects protected path .code-intelligence/config (533.0377ms)
+✔ editor rejects protected path /absolute.ts (551.8652ms)
+✔ editor rejects secrets, unpaired surrogates and versioned close conflicts (500.9041ms)
+✔ real authenticated editor server opens, updates and captures buffers (1567.7919ms)
+✔ tsc solution builder generates referenced declarations entirely in memory (3601.1963ms)
+✔ tsc build reports type failure rather than marking generated output verified (1238.7709ms)
+✔ tsc build rejects output escape and never writes outside virtual root (1097.1215ms)
+(node:28448) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ built-in local vector generation and query need no model service (1249.6911ms)
+✔ model contract fixtures exercise embed, rerank and source-bound meaning with accounted costs (1449.1341ms)
+✔ unknown model billing survives malformed output and blocks overspend (249.9141ms)
+✔ model-produced fabricated source IDs are refused after billing is preserved (990.2388ms)
+✔ taint follows assignment, concatenation and branches to a sink with exact anchors (799.1256ms)
+✔ taint honors host sanitizer assumptions and clears overwritten local bindings (902.9882ms)
+✔ taint distinguishes shadowed local variables using compiler symbols (1750.9619ms)
+✔ actual Node test execution produces hash-bound per-test-file map and broadens unknown changes (1540.4738ms)
+✔ per-test coverage rejects non-executed or mismatched-source observations (525.7914ms)
+✔ Prisma models, SQL migrations, ORM calls and OpenAPI clients retain candidate provenance (1005.6558ms)
+✔ OpenAPI delta reports removed operations and newly required fields (1.0349ms)
+✔ actual Node name-pattern selections map individual cases and refuse zero executed passes (1320.612ms)
+(node:38972) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ signed snapshot transfer preserves bytes, isolated history and replay identity (2121.6052ms)
+✔ signed transfer rejects wrong signer, tenant and modified contents (1119.7107ms)
+✔ even an authorized signature cannot bypass path, secret and expiry policy (1482.4013ms)
+✔ real HTTP federation applies tenant grants before lookup and rank merging (1668.2759ms)
+✔ actual HTTP signed export and import through distinct endpoints (559.8985ms)
+✔ remote plaintext, weak or duplicate tokens and browser origins refused (238.9502ms)
+✔ signed source does not override the receiving host exclusion policy (521.6496ms)
+✔ federation refuses reuse of a physical workspace for different security scopes (201.0913ms)
+(node:80352) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ unchanged independently configured TypeScript unit reuses semantic extraction (1640.4053ms)
+✔ new resolution candidate invalidates negative and existing semantic caches (919.8052ms)
+✔ GC defaults to dry-run and preserves explicitly pinned snapshots (682.6327ms)
+✔ GC refuses a second live connection and succeeds after close (326.0174ms)
+✔ quarantined source is recoverable after interrupted maintenance (347.2744ms)
+✔ GC retains source blobs referenced by memories and prepared changes (492.4888ms)
+(node:73372) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ cost reservations include unknown billing and prevent overspend after failures (181.0797ms)
+✔ streaming cumulative usage is deduplicated rather than added repeatedly (185.7077ms)
+✔ a sent attempt cannot be cancelled as though no request was sent (175.6611ms)
+✔ source-bound memories become stale and corrections supersede old hypotheses (487.3537ms)
+✔ precomputed vector search validates model dimensions and source binding (974.2046ms)
+✔ LCOV imports require matching source hashes and valid line numbers (283.6048ms)
+✔ runtime observations reject multi-node parent cycles (347.8366ms)
+✔ SARIF findings remain analysis findings rather than proofs (325.7035ms)
+✔ import cycles are detected without altering directed observations (868.4584ms)
+✔ occurrence graph diffs do not fabricate rename lineage (1256.8723ms)
+(node:80108) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ one-shot LSP denies missing host authorization before starting any command (196.3029ms)
+✔ one-shot LSP returns bounded hash-checked locations with unknown external usage (527.1024ms)
+✔ one-shot LSP prepares a persisted rename plan without applying it (459.7083ms)
+✔ one-shot LSP refuses a provider which modifies the copied source (406.8638ms)
+✔ one-shot LSP enforces UTF-8 cursor and rename argument preconditions (323.0604ms)
+(node:79680) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ one-shot LSP preserves a full artifact when the envelope is small (426.1169ms)
+✔ CLI exposes checked locations through explicit host-selected arguments (1947.2808ms)
+✔ CLI refuses implicit provider permission and does not treat project text as approval (755.6068ms)
+(node:81396) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ RPC rejects malformed both response without resolving a pending call (1316.879ms)
+✔ RPC rejects malformed neither response without resolving a pending call (1301.0193ms)
+✔ RPC rejects malformed bad-error response without resolving a pending call (1862.8897ms)
+✔ RPC rejects malformed array response without resolving a pending call (1464.0697ms)
+✔ RPC rejects malformed utf8 response without resolving a pending call (1239.1488ms)
+✔ RPC rejects malformed duplicate-header response without resolving a pending call (1313.2383ms)
+✔ RPC rejects malformed giant response without resolving a pending call (1329.2565ms)
+✔ RPC rejects malformed long-header response without resolving a pending call (1338.3348ms)
+✔ RPC bounds individual frames without rejecting many coalesced valid messages (1283.7327ms)
+✔ unsupported server callbacks receive MethodNotFound, not a false success (1293.4912ms)
+✔ server applyEdit callbacks are refused and cannot mutate workspace files (1313.9704ms)
+✔ LSP locations normalize both regular Location and LocationLink against source hashes (1518.865ms)
+✔ LSP external locations are explicitly reported but their files are never read (1505.4982ms)
+✔ LSP null means no matches and malformed locations are a contract error (1383.7371ms)
+✔ LSP malformed location does not masquerade as a zero-match response (1402.6919ms)
+✔ LSP definition query requires advertised capability (1402.1047ms)
+✖ test\lsp-safety.test.mjs (272617.3148ms)
+(node:60012) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ Docker invocation pins image, denies network and privileges and never expands a shell (2.2525ms)
+✔ media native transcript creates a provenance-bound derived snapshot, no source edits (551.159ms)
+✔ media refuses source escape and stale media digest (462.7859ms)
+✔ Serena discovery and explicitly selected read operation preserve source isolation (3995.8214ms)
+✔ provider cleanup closes a real child and its stdio within a bounded interval (1036.9143ms)
+ℹ {"actualChildPid":81784,"beforeSafetyCleanup":{"exited":true,"closed":true,"streams":{"stdin":true,"stdout":true,"stderr":true}}}
+✔ an expired process deadline refuses before any actual child launch (2.1485ms)
+✔ an already cancelled process refuses before any actual child launch (0.3971ms)
+✔ a deadline expiring immediately after actual spawn closes the child and stdio before rejection (992.7776ms)
+✔ cancellation immediately after actual spawn closes the child and stdio before rejection (994.5171ms)
+✔ an armed ordinary process deadline closes a stalled actual child and all stdio (1990.728ms)
+✔ an armed ordinary cancellation closes a ready actual child and all stdio (1140.0167ms)
+✔ an ordinary successful actual process preserves captured output and closes all stdio (97.8558ms)
+✔ a failed Windows tree helper falls back only after its actual nonzero exit (151.8133ms)
+ℹ {"fixture":"controlled Windows helper nonzero exit","actualTargetPid":54776,"actualHelperPid":46360,"helperState":{"exited":true,"closed":true,"exitCode":7},"attempts":[{"signal":"SIGKILL","helperExited":true,"helperExitCode":7}],"beforeSafetyCleanup":{"stdin":true,"stdout":true,"stderr":true}}
+✔ a real missing owned executable reports unavailable after failed-spawn resource cleanup (11.8415ms)
+ℹ {"fixture":"missing executable","actualLaunches":1,"resultError":{"name":"CIError","code":"PROCESS_UNAVAILABLE","message":"spawn E:\\Yoke-Build-Cache\\outcome-learning-20261017\\temp\\yoke-owned-spawn-failure-g2myDA\\missing-owned-executable.exe ENOENT"},"atSettlement":[{"pid":null,"initialPid":null,"childClosed":true,"errors":[{"name":"Error","code":"ENOENT","syscall":"spawn E:\\Yoke-Build-Cache\\outcome-learning-20261017\\temp\\yoke-owned-spawn-failure-g2myDA\\missing-owned-executable.exe"}],"streams":{"stdin":{"shape":"Socket","closeObserved":true,"destroyed":true},"stdout":{"shape":"Socket","closeObserved":true,"destroyed":true},"stderr":{"shape":"Socket","closeObserved":true,"destroyed":true}}}],"finalObserved":[{"pid":null,"initialPid":null,"childClosed":true,"errors":[{"name":"Error","code":"ENOENT","syscall":"spawn E:\\Yoke-Build-Cache\\outcome-learning-20261017\\temp\\yoke-owned-spawn-failure-g2myDA\\missing-owned-executable.exe"}],"streams":{"stdin":{"shape":"Socket","closeObserved":true,"destroyed":true},"stdout":{"shape":"Socket","closeObserved":true,"destroyed":true},"stderr":{"shape":"Socket","closeObserved":true,"destroyed":true}}}]}
+✔ a real nonexistent owned cwd reports unavailable after failed-spawn resource cleanup (3.4928ms)
+ℹ {"fixture":"missing cwd","actualLaunches":1,"resultError":{"name":"CIError","code":"PROCESS_UNAVAILABLE","message":"spawn C:\\Program Files\\nodejs\\node.exe ENOENT"},"atSettlement":[{"pid":null,"initialPid":null,"childClosed":true,"errors":[{"name":"Error","code":"ENOENT","syscall":"spawn C:\\Program Files\\nodejs\\node.exe"}],"streams":{"stdin":{"shape":"Socket","closeObserved":true,"destroyed":true},"stdout":{"shape":"Socket","closeObserved":true,"destroyed":true},"stderr":{"shape":"Socket","closeObserved":true,"destroyed":true}}}],"finalObserved":[{"pid":null,"initialPid":null,"childClosed":true,"errors":[{"name":"Error","code":"ENOENT","syscall":"spawn C:\\Program Files\\nodejs\\node.exe"}],"streams":{"stdin":{"shape":"Socket","closeObserved":true,"destroyed":true},"stdout":{"shape":"Socket","closeObserved":true,"destroyed":true},"stderr":{"shape":"Socket","closeObserved":true,"destroyed":true}}}]}
+(node:24308) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ MCP initializes, exposes exactly eight tools and returns one complete content payload (905.5759ms)
+✔ MCP rejects tools before initialization and reports unknown tools (160.225ms)
+✔ MCP invalid JSON does not poison the next valid request (159.2717ms)
+✔ MCP cancellation reaches the active request AbortSignal (1.2528ms)
+✔ actual CLI emits parseable JSON with runtime warnings kept on stderr (1293.5866ms)
+✔ CLI help and invalid tool exit status work without external packages (1212.8408ms)
+✔ CLI canonical graph export is a real, readable graph file (1441.732ms)
+✔ deleting a tracked Git file produces a new snapshot rather than perpetual WORKSPACE_BUSY (575.8452ms)
+
+<--- Last few GCs --->
+
+[24308:000001FA5BA8A000]     6694 ms: Scavenge 111.6 (198.6) -> 89.1 (208.1) MB, pooled: 0 MB, 15.68 / 0.65 ms  (average mu = 0.979, current mu = 0.979) allocation failure; 
+[24308:000001FA5BA8A000]     6872 ms: Scavenge 145.6 (211.5) -> 112.0 (221.7) MB, pooled: 0 MB, 25.56 / 0.01 ms  (average mu = 0.979, current mu = 0.979) allocation failure; 
+
+FATAL ERROR: Zone Allocation failed - process out of memory
+----- Native stack trace -----
+
+
+<--- Last few GCs --->
+
+[24308:000001FA5BA8A000]     6694 ms: Scavenge 111.6 (198.6) -> 89.1 (208.1) MB, pooled: 0 MB, 15.68 / 0.65 ms  (average mu = 0.979, current mu = 0.979) allocation failure; 
+[24308:000001FA5BA8A000]     6872 ms: Scavenge 145.6 (211.5) -> 112.0 (221.7) MB, pooled: 0 MB, 25.56 / 0.01 ms  (average mu = 0.979, current mu = 0.979) allocation failure; 
+
+FATAL ERROR: Zone Allocation failed - process out of memory
+----- Native stack trace -----
+
+ 1: 00007FF6D467AE1F 
+ 2: 00007FF6D52C37B7 
+ 3: 00007FF6D4C3E556 
+ 4: 00007FF6D47FF6C6 
+ 5: 00007FF6D47FF607 
+ 6: 00007FF6D5FB6623 
+ 7: 00007FF6D5FBDD10 
+ 8: 00007FF6D5FBDA6B 
+ 9: 00007FF6D5FD08F6 
+10: 00007FF6D5FF4036 
+11: 00007FF6D5FBC5F3 
+12: 00007FF6D5FB9351 
+13: 00007FF6D5FB61F7 
+14: 00007FF6D5FB5D69 
+15: 00007FF6D5FB5824 
+16: 00007FF6D5FB4C7F 
+17: 00007FF6D5FB48FE 
+18: 00007FF6D5CA1466 
+19: 00007FF6D5C98618 
+20: 00007FF6D5C97B20 
+21: 00007FF6D52373EF 
+22: 00007FF6D51FC47D 
+23: 00007FF6D51FC175 
+24: 00007FF6D5A9610F 
+25: 00007FF6D45CADDE 
+26: 00007FF6D5318B26 
+27: 00007FF6D655A3B3 
+28: 00007FFE1EC4DDA7 
+29: 00007FFE1F5BEE4C 
+✖ test\protocol.test.mjs (7013.5674ms)
+(node:65080) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ RPC exit wait observes actual process closure and supports repeated waits (886.1455ms)
+✔ RPC exit wait obeys an expired deadline without terminating a live peer (793.0994ms)
+✔ RPC exit wait observes shared cancellation without terminating a live peer (979.5708ms)
+✔ RPC exit wait times out while the provider remains live (710.6165ms)
+(node:79676) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ tsconfig include/exclude controls roots while excluded source remains text-searchable (630.6126ms)
+✔ files list is authoritative rather than every TypeScript file in the snapshot (428.7978ms)
+✔ exclude does not remove a file actually imported by a configured root (543.8458ms)
+✔ extends retains the base configuration origin for relative baseUrl and paths (373.5543ms)
+✔ separate default configs keep unrelated global scripts from contaminating each other (458.0809ms)
+✔ each package resolves the same alias against its own tsconfig (705.4404ms)
+✔ project references discover source and resolve calls without generated outputs (2197.2434ms)
+✔ cross-project compiler rename deduplicates edits and updates the importing project (2458.286ms)
+✔ a shared source file retains conflicting bindings as separate analysis contexts (1217.0194ms)
+✔ changing only a config invalidates unchanged consumer bindings (1077.3079ms)
+✔ missing/outside project references are diagnostics, not silently complete analysis (514.2702ms)
+✔ reference cycles terminate and produce an explicit cycle diagnostic (819.2299ms)
+✔ malformed and circular extended config errors preserve their own paths (501.1711ms)
+✔ jsconfig is discovered and JavaScript is not forced into TypeScript strict mode (510.5481ms)
+✔ nonexistent files from explicit config lists are reported by the compiler (525.8447ms)
+✔ diagnostic baseline comparison includes configuration identity (0.5845ms)
+✔ too many configs fail explicitly before constructing unbounded compiler programs (1126.2971ms)
+✔ compiler reads remain immutable after captured config/source changes on disk (742.7172ms)
+✔ rename refuses to modify a shared consumer that binds differently in another variant (905.8981ms)
+✔ zero configured source files do not claim semantic coverage (346.1655ms)
+✔ configured strict false is not silently overridden by inferred defaults (567.441ms)
+(node:5464) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ a real static failure is not hidden by disabled Python analysis (691.7531ms)
+✔ a failing executed check stays failed when a later check times out (1147.0634ms)
+✔ excluded open documents do not poison startup or prevent allowed buffer capture (6.7827ms)
+✔ failed startup closes its session and permits a fresh process on retry (2.2594ms)
+✔ stop cancels a pending handshake before it can open a session (6.1833ms)
+✔ stop waits for an in-flight open and closes the resulting session (2.3586ms)
+✔ closing a refused newer update removes its previously accepted buffer version (2.383ms)
+✔ startup reconciles changes arriving while its first buffer upload is in flight (2.0255ms)
+✔ accepted version describes transmitted bytes when document changes during upload (2.2692ms)
+ℹ tests 235
+ℹ suites 0
+ℹ pass 230
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 3
+ℹ todo 0
+ℹ duration_ms 343208.7019
+
+✖ failing tests:
+
+test at test\lsp-safety.test.mjs:1:1
+✖ test\lsp-safety.test.mjs (272617.3148ms)
+  'test failed'
+
+test at test\protocol.test.mjs:1:1
+✖ test\protocol.test.mjs (7013.5674ms)
+  'test failed'

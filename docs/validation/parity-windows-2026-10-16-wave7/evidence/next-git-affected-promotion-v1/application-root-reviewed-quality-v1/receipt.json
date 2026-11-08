@@ -1,0 +1,30 @@
+{
+  "accepted": true,
+  "completed": [
+    "native/README.md",
+    "native/docs/git-affected-details.md",
+    "native/docs/git-workflows.md",
+    "native/src/git_affected.rs",
+    "native/src/git_affected_admission_tests.rs",
+    "native/src/git_affected_cli.rs",
+    "native/src/git_affected_index.rs",
+    "native/src/git_affected_output.rs",
+    "native/src/git_affected_source.rs",
+    "native/src/git_affected_tests.rs",
+    "native/src/git_affected_walk.rs",
+    "native/src/git_impact_details.rs",
+    "native/src/git_impact_details_scope_tests.rs",
+    "native/src/git_workflows.rs",
+    "native/src/main.rs",
+    "native/tests/git_affected_cli.rs",
+    "native/tests/git_affected_details.rs",
+    "native/tests/git_affected_qualification.rs",
+    "native/tests/support/git_affected_fixture.rs"
+  ],
+  "imageMapSha256": "a3c40b90bb1232496b89ec5af68c1d34998eb7fd2534e20c5d17655c46e9b33a",
+  "normalAfterSha256": "08bf5536bbc475c1d0a66bef7eeeb5d35bc0a0dbad221668d4d884ed2658d9e4",
+  "normalBeforeSha256": "3f3f86ff7e0fefc2cb9d1defb104b3c2a1aec909a5198493da6522d292967ecd",
+  "normalCheckoutAcceptanceClaim": false,
+  "normalFiles": 2872,
+  "normalOnlyFilesPreserved": 2226
+}

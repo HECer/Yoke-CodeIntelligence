@@ -1,0 +1,24 @@
+warning: failed to save last-use data
+This may prevent cargo from accurately tracking what is being used in its global cache. This information is used for automatically removing unused data in the cache.
+
+database or disk is full
+
+Caused by:
+  Error code 13: database or disk is full
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 3.75s
+     Running tests\model_bedrock_cli_actual.rs (target\debug\deps\model_bedrock_cli_actual-0bfd6a33f71dc038.exe)
+actual_cli_bedrock_batch_has_three_accounted_attempts_and_one_complete_corpus: test
+actual_cli_bedrock_summary_uses_chunked_session_and_one_accounted_attempt: test
+
+2 tests, 0 benchmarks
+     Running tests\model_bedrock_review.rs (target\debug\deps\model_bedrock_review-bf263af38b3aa1ee.exe)
+arn_slashes_and_dot_segments_stay_inside_one_signed_model_segment: test
+cohere_maps_two_ordered_vectors_to_exact_supplied_source_ids: test
+missing_usage_stays_unknown_and_reported_zero_remains_known: test
+rerank_rejects_foreign_missing_duplicate_and_out_of_range_results: test
+session_expiring_inside_credential_callback_never_reaches_wire: test
+unicode_escaped_inner_object_keys_never_echo_temporary_credentials: test
+unsupported_dialect_operation_and_wrong_source_scope_precede_credentials: test
+
+7 tests, 0 benchmarks

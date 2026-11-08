@@ -1,0 +1,17 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 4.45s
+     Running tests\semantic_mcp.rs (target\debug\deps\semantic_mcp-ff5d010631b07000.exe)
+captured_path_language_and_utf8_offset_are_checked_before_execution: test
+ci_find_requires_one_search_mode_and_keeps_eight_advertised_tools: test
+explicit_vector_search_without_a_query_keeps_its_existing_local_mode: test
+mutating_authority_mixed_and_malformed_requests_never_start_a_provider: test
+registered_stdio_navigation_binds_old_requested_snapshot_after_disk_changes: test
+tsx_navigation_can_use_an_explicitly_registered_typescript_provider: test
+unconfigured_semantic_navigation_fails_explicitly_without_execution: test
+
+7 tests, 0 benchmarks
+     Running tests\semantic_provider_context.rs (target\debug\deps\semantic_provider_context-5750f4a178f3dbe2.exe)
+forged_source_context_is_rejected_before_any_overlay_publication: test
+semantic_provider_source_context_is_immutable_and_does_not_rewrite_historical_unknown_context: test
+
+2 tests, 0 benchmarks

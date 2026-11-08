@@ -1,0 +1,25 @@
+warning: failed to save last-use data
+This may prevent cargo from accurately tracking what is being used in its global cache. This information is used for automatically removing unused data in the cache.
+
+database or disk is full
+
+Caused by:
+  Error code 13: database or disk is full
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+error[E0277]: `yoke::changes::Receipt` doesn't implement `Debug`
+    --> native\tests\facade_file_rename.rs:497:41
+     |
+ 497 |         assert!(format!("{:#}", applied.unwrap_err()).contains("Workspace snapshot is stale"));
+     |                                         ^^^^^^^^^^ the trait `Debug` is not implemented for `yoke::changes::Receipt`
+     |
+note: required by a bound in `Result::<T, E>::unwrap_err`
+    --> C:\Users\HEC_e\.rustup\toolchains\stable-x86_64-pc-windows-msvc\lib/rustlib/src/rust\library\core\src\result.rs:1326:12
+     |
+1324 |     pub fn unwrap_err(self) -> E
+     |            ---------- required by a bound in this associated function
+1325 |     where
+1326 |         T: fmt::Debug,
+     |            ^^^^^^^^^^ required by this bound in `Result::<T, E>::unwrap_err`
+
+For more information about this error, try `rustc --explain E0277`.
+error: could not compile `yoke-code-intelligence` (test "facade_file_rename") due to 1 previous error

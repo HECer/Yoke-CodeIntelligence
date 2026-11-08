@@ -1,0 +1,26 @@
+{
+  "qualifiedCodeCommit": "098980976c516da23f56b1b7a64f63ab14c8c378",
+  "productionAndTestBytesExactAfterQualification": true,
+  "changedFrozenInputs": {
+    "docs/REMAINING_WORK.md": {
+      "before": "6d7816807f98a1638fd23c8d231a89bc229ff80a08233bd2f48e4b776a363771",
+      "after": "0b8e1a18031de4ad7c7c947f1eb789d5d37661fca2559b2c8acd1cf86f897fb8"
+    },
+    "docs/STATUS.md": {
+      "before": "7c056d08dc207a82bda65d1d283b442ad3a2676c89b2b9cf50e05cca3eba1643",
+      "after": "65df7d0a3b95dded175241ed838a6821f02b6f0061880d4017154b68770bc08c"
+    },
+    "docs/parity/native-reconciliation-2026-10-15.json": {
+      "before": "9ca92c575e8265a0a37d2a5ccdb67fd938b9b3f73c23fef14e7b3b645797eeb3",
+      "after": "28c730a1bb62d7cc88b341c1391d14ef6078476324db7ccd797b3a8caa535e85"
+    },
+    "native/docs/session-config.md": {
+      "before": "9c5deac0f221b6bc76b30cb46bf53141f3b3a06ea3e8c632989c78fb30fd9bc1",
+      "after": "13b95b7b7b6d146dfec3ec11ab07c299eabc4a1056daf552740b139225d2ad2c"
+    }
+  },
+  "reconciliationExactlyOneAdditiveKey": "nativeSessionConfigDiscovery20261023",
+  "priorReconciliationOtherwiseDeepEqual": true,
+  "everyArchiveMemberLengthAndSha256Reopened": true,
+  "noNewProductTestClaimedAfterDocumentation": true
+}

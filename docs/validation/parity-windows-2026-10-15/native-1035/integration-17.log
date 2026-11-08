@@ -1,0 +1,72 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 17.72s
+     Running tests\lsp_source_execution.rs (target\debug\deps\lsp_source_execution-72fe99b4b2ad15da.exe)
+
+running 7 tests
+test actual_jedi_source_auto_import_module_does_not_execute_without_host_authority ... ignored, requires YOKE_PYTHON_LSP identifying the actual installed Jedi language-server
+test actual_rust_source_selected_rustc_requires_explicit_host_execution_authority ... ignored, requires real installed rust-analyzer and an independently built harmless rustc probe
+test passive_host_redirect_settings_are_refused_before_a_provider_is_started ... ok
+test unknown_passive_backend_contract_is_unavailable_before_process_start ... ok
+test passive_rust_manifest_and_host_tool_redirects_are_refused_before_provider_start ... ok
+test passive_rust_keeps_proven_nested_workspace_and_dependency_paths_available ... ok
+test passive_rust_omits_selectors_only_from_provider_copy_and_reports_original_hashes ... ok
+
+test result: ok. 5 passed; 0 failed; 2 ignored; 0 measured; 0 filtered out; finished in 1.14s
+
+     Running tests\maintenance.rs (target\debug\deps\maintenance-112cf785bcf63746.exe)
+
+running 12 tests
+test blob_links_are_refused_and_external_targets_are_preserved ... ok
+test corrupt_unknown_record_refuses_collection_before_any_blob_moves ... ok
+test dry_run_counts_orphans_without_mutating_source_or_state_files ... ok
+test all_generic_records_and_history_preserve_workflow_editor_vector_and_media_roots ... ok
+test expired_deadlines_and_irreversible_purge_requests_leave_orphans_intact ... ok
+test dry_run_distinguishes_unreferenced_blobs_from_age_eligible_candidates ... ok
+test foreign_store_client_blocks_mutation_until_its_lifecycle_lease_closes ... ok
+test interrupted_quarantine_restores_originals_before_a_new_mark ... ok
+test malformed_snapshot_shape_is_refused_before_an_orphan_is_moved ... ok
+test later_blob_hash_failure_restores_earlier_moves_and_rolls_back_metadata ... ok
+test opaque_record_ids_and_map_keys_are_conservative_blob_roots ... ok
+test raw_sqlite_writer_contention_does_not_extend_failed_maintenance_cleanup ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.09s
+
+     Running tests\manifest_graph.rs (target\debug\deps\manifest_graph-51f2ce9c74f5c644.exe)
+
+running 8 tests
+test apm_yaml_manifest_dependencies_are_not_treated_as_npm ... ok
+test cargo_path_link_must_match_declared_package_identity ... ok
+test cargo_inheritance_uses_the_nearest_declared_workspace ... ok
+test cargo_workspace_inherits_renamed_path_dependencies_without_merging_packages ... ok
+test derived_publication_refuses_an_existing_record_with_different_scope ... ok
+test invalid_xml_or_expired_capture_cannot_publish_derived_graph ... ok
+test package_json_graph_preserves_aliases_and_never_stores_credentials ... ok
+test pyproject_go_and_pom_declarations_have_distinct_ecosystems ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.43s
+
+     Running tests\markdown_graph.rs (target\debug\deps\markdown_graph-773ed0b86310e621.exe)
+
+running 2 tests
+test markdown_wiki_reference_frontmatter_and_symbol_citations_are_source_bound ... ok
+test commonmark_nested_labels_multiline_definitions_and_indented_code_have_correct_links ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.16s
+
+     Running tests\mcp_collection_grants.rs (target\debug\deps\mcp_collection_grants-9bfb327d46861f6e.exe)
+
+running 2 tests
+test native_archive_does_not_open_a_configured_but_unused_federation_receiver ... ok
+test current_principal_grants_are_injected_per_http_call_and_removed_on_upsert ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.45s
+
+     Running tests\mcp_collection_grants_review.rs (target\debug\deps\mcp_collection_grants_review-75ef68191c99f6f8.exe)
+
+running 3 tests
+test non_session_profile_rejects_host_collection_grants_before_opening_source_state ... ok
+test collection_grants_are_borrowed_per_dispatch_and_sources_remain_noncanonical ... ok
+test replacing_principal_policy_cancels_running_session_before_waiting_for_read_lease ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.89s
+

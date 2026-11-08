@@ -1,0 +1,93 @@
+{
+  "artifact": {
+    "id": 12617333082,
+    "run": 40241511443,
+    "job": 121314108148,
+    "zipBytes": 1054,
+    "zipSha256": "c9dad461e9319fc1a97f89eda77d0f57fc60c6467080d2e97c6d67041d448915"
+  },
+  "report": {
+    "schema": 2,
+    "diagnosticOnly": true,
+    "nativeAcceptance": false,
+    "diagnosticComplete": true,
+    "diagnosticMode": "fixed-import-original",
+    "nativeYokeImageReadOrExecuted": false,
+    "trialDeadlineSeconds": 20,
+    "memberObservationSeconds": 0.25,
+    "maxObservedMembers": 16,
+    "sourceRevision": "34410e0480331d852dabcdd59938b4cf2b7098ec",
+    "sourceSha256": "fb5ae0f17a7b05e80d156972fb753a889a81f741180810b16991129397279bd1",
+    "environmentNames": [
+      "CARGO_HOME",
+      "CI",
+      "DO_NOT_TRACK",
+      "NO_COLOR",
+      "PATH",
+      "SystemDrive",
+      "SystemRoot",
+      "TEMP",
+      "TMP",
+      "USERPROFILE",
+      "WINDIR"
+    ],
+    "trials": [
+      {
+        "name": "nested-snapshot-fixed-import-original",
+        "jobsRequested": 2,
+        "resumeMode": "snapshot",
+        "startedSuspended": true,
+        "assignedBeforeResume": true,
+        "timedOut": false,
+        "nativeAcceptance": false,
+        "membersBeforeCleanup": {
+          "complete": true,
+          "members": [],
+          "unavailable": [],
+          "assignedAtQuery": 0,
+          "returnedAtQuery": 0,
+          "startedElapsedSeconds": 0.27412230000004456,
+          "finishedElapsedSeconds": 0.27415320000000065
+        },
+        "pid": 8420,
+        "snapshotEntriesScanned": 1279,
+        "snapshotEndError": 18,
+        "resumedThreads": [
+          {
+            "primary": true,
+            "previousSuspendCount": 1
+          }
+        ],
+        "primaryObservedResumed": true,
+        "resumeElapsedSeconds": 0.014472699999998895,
+        "exitCode": 0,
+        "activeBeforeCleanup": [
+          0,
+          0
+        ],
+        "treeExitedBeforeCleanup": true,
+        "activeAfterCleanup": [
+          0,
+          0
+        ],
+        "rootExitedAfterCleanup": true,
+        "elapsedSeconds": 0.2743427000000338,
+        "stdout": "owned-windows-runtime\r\n",
+        "stderr": "owned-before-original-import-clock\r\nowned-before-original-module-import-ms:1\r\nowned-after-original-module-import-ms:53\r\nowned-script-entry\r\nowned-host-version:5.1.26100.33648\r\nowned-before-folder\r\nowned-after-folder\r\nowned-before-write-output\r\nowned-after-write-output\r\nowned-script-end\r\n",
+        "streamEOF": [
+          true,
+          true
+        ],
+        "readerError": [
+          false,
+          false
+        ],
+        "outputExceeded": [
+          false,
+          false
+        ],
+        "diagnosticComplete": true
+      }
+    ]
+  }
+}

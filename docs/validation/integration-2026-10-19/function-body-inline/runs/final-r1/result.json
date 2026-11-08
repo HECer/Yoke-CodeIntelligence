@@ -1,0 +1,9 @@
+{
+  "status": "intentionally_aborted",
+  "sourceUnchanged": true,
+  "inputs": 805,
+  "allChecksPassed": false,
+  "reason": "Source review found finally break/continue can suppress a pending return and then fall through. Stop owned compile before editing; add regression oracle and clear result on normal body completion. No passing qualification claimed.",
+  "ownedRunnerPid": 15052,
+  "ownedSession": 59882
+}

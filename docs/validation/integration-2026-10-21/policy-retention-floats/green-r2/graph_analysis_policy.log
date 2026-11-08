@@ -1,0 +1,28 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 4.93s
+     Running tests\graph_analysis_policy.rs (target\debug\deps\graph_analysis_policy-6ffd54bdca9a5d8a.exe)
+
+running 7 tests
+test canonical_policy_retention_rejects_rehashed_reports_and_preserves_their_bytes ... ok
+test canonical_policy_retention_replays_reports_and_pins_both_historical_sources ... FAILED
+test declared_categories_runtime_families_and_scores_are_independent_of_source_authority ... ok
+test explicit_percentile_policy_suppresses_the_source_bound_hubs_at_its_declared_boundary ... ok
+test explicit_policy_preserves_original_graph_and_legacy_report_identity ... ok
+test policy_protocol_bounds_deadlines_and_unknown_fields_refuse_without_publication ... ok
+test selected_policy_report_replays_exact_configuration_and_rejects_resealed_metadata ... ok
+
+failures:
+
+---- canonical_policy_retention_replays_reports_and_pins_both_historical_sources stdout ----
+
+thread 'canonical_policy_retention_replays_reports_and_pins_both_historical_sources' (21192) panicked at native\tests\graph_analysis_policy.rs:56:91:
+called `Result::unwrap()` on an `Err` value: Noncanonical retained report
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    canonical_policy_retention_replays_reports_and_pins_both_historical_sources
+
+test result: FAILED. 6 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.14s
+
+error: test failed, to rerun pass `--test graph_analysis_policy`

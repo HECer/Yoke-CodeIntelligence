@@ -1,0 +1,1 @@
+function helper<T>(n:T):T{return n;}const result=helper(()=>3);export const observed=[result.name,result()];

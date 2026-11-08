@@ -1,0 +1,105 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 14.64s
+     Running tests\ignored_capture.rs (target\debug\deps\ignored_capture-0d67016a001ac4c7.exe)
+
+running 15 tests
+test empty_ignored_option_preserves_released_serialization_and_default_capture_identity ... ok
+test empty_ignored_option_preserves_released_nondefault_configured_capture_identity ... ok
+test editor_ignored_prefix_updates_are_denied_before_buffer_revisions_change ... ok
+test derived_edits_outside_ignored_scope_keep_exact_old_classification_and_readonly_sources ... ok
+test host_ignored_option_never_relaxes_secret_internal_or_normalized_path_protection ... ok
+test host_optin_captures_ignored_sources_read_only_and_binds_complete_observed_outcomes ... ok
+test missing_future_reordered_and_incomplete_observed_proofs_never_fall_back_to_default_capture ... ok
+test ignored_source_archives_retain_exact_capture_proof_after_original_store_is_gone ... ok
+test observed_ignore_outcomes_are_immutable_when_current_ignore_files_change ... ok
+test ordinary_editor_overlays_preserve_ignored_source_classification_without_live_receipt_authority ... ok
+test retention_recognizes_only_the_exact_ignored_proof_kind_and_rejects_mutated_rows ... ok
+test windows_short_name_aliases_cannot_create_files_inside_host_readonly_prefixes ... FAILED
+test windows_short_name_aliases_do_not_grant_protected_writes_without_ignored_optin ... FAILED
+test windows_case_aliases_cannot_create_files_inside_host_readonly_ignored_prefixes ... ok
+test readonly_ignored_edits_and_new_files_fail_before_any_durable_plan_or_snapshot ... ok
+
+failures:
+
+---- windows_short_name_aliases_cannot_create_files_inside_host_readonly_prefixes stdout ----
+
+thread 'windows_short_name_aliases_cannot_create_files_inside_host_readonly_prefixes' (13084) panicked at native\tests\ignored_capture.rs:39:5:
+assertion `left != right` failed: This actual Windows gate requires enabled 8.3 directory aliases
+  left: Some("LongIgnoredSourceDirectory")
+ right: Some("LongIgnoredSourceDirectory")
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- windows_short_name_aliases_do_not_grant_protected_writes_without_ignored_optin stdout ----
+
+thread 'windows_short_name_aliases_do_not_grant_protected_writes_without_ignored_optin' (85300) panicked at native\tests\ignored_capture.rs:39:5:
+assertion `left != right` failed: This actual Windows gate requires enabled 8.3 directory aliases
+  left: Some("node_modules")
+ right: Some("node_modules")
+
+
+failures:
+    windows_short_name_aliases_cannot_create_files_inside_host_readonly_prefixes
+    windows_short_name_aliases_do_not_grant_protected_writes_without_ignored_optin
+
+test result: FAILED. 13 passed; 2 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.11s
+
+error: test failed, to rerun pass `--test ignored_capture`
+     Running tests\ignored_capture_cli.rs (target\debug\deps\ignored_capture_cli-f58edd793e6654af.exe)
+
+running 1 test
+test host_cli_can_explicitly_capture_an_ignored_directory_as_read_only ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.26s
+
+     Running tests\ignored_facades.rs (target\debug\deps\ignored_facades-794e2546159fdaae.exe)
+
+running 10 tests
+test ignored_text_is_filtered_before_blob_reads_and_selected_code_paths ... ok
+test list_filters_observed_ignored_files_before_directory_projection ... ok
+test captured_directory_membership_rejects_files_and_unknown_empty_scopes_without_live_reads ... ok
+test malformed_native_directory_arguments_fail_before_capture_publication ... ok
+test native_ignored_filter_is_strict_and_precedes_file_and_symbol_pagination ... ok
+test public_directory_recursion_returns_every_captured_level_and_nonrecursive_keeps_first_level ... ok
+test pinned_fs_facade_defaults_and_explicit_ignored_options_preserve_host_scope ... ok
+test public_external_directory_queries_share_ignored_scope_without_activation_and_honor_removal ... ok
+test querying_a_pinned_snapshot_keeps_original_ignore_outcomes_after_disk_policy_changes ... ok
+test deeply_nested_directory_projection_has_an_explicit_budget_and_can_be_refined ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.65s
+
+     Running tests\json_output_review.rs (target\debug\deps\json_output_review-cd827bb7bbdc2ff1.exe)
+
+running 1 test
+test escaped_json_is_admitted_before_allocation_and_preserves_exact_bytes ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\knowledge.rs (target\debug\deps\knowledge-cbfc45c540800951.exe)
+
+running 13 tests
+test knowledge_refuses_unanchored_paths_secrets_and_scope_escalation ... ok
+test forged_snapshot_and_corrupt_persisted_vectors_fail_closed ... ok
+test corrupt_local_corpus_counts_and_nonunit_coordinates_are_rejected ... ok
+test overflowing_persisted_idf_cannot_be_misreported_as_no_lexical_matches ... ok
+test lcov_import_binds_line_hits_and_rejects_incomplete_or_forged_records ... ok
+test rejected_supersession_preserves_original_and_expired_deadlines_do_not_write ... ok
+test runtime_import_preserves_one_execution_and_refuses_parent_cycles ... ok
+test sarif_import_maps_utf16_unicode_regions_to_source_bytes_and_refuses_escape ... ok
+test remembered_source_hashes_report_changed_deleted_and_superseded_knowledge ... ok
+test expanded_memory_size_is_rejected_without_poisoning_recall_or_supersession ... ok
+test source_bound_external_vectors_normalize_and_reject_forged_or_invalid_vectors ... ok
+test sparse_tfidf_retrieval_matches_unicode_and_camelcase_without_model_execution ... ok
+test vector_import_rejects_mixed_dimensions_duplicates_and_partial_persistence ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.81s
+
+     Running tests\knowledge_cli.rs (target\debug\deps\knowledge_cli-cd250fcd9ca5d2aa.exe)
+
+running 2 tests
+test native_context_includes_labeled_source_knowledge_only_when_requested ... ok
+test cli_builds_vectors_and_mcp_queries_them_without_a_model_or_source_writes ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.15s
+
+error: 1 target failed:
+    `--test ignored_capture`

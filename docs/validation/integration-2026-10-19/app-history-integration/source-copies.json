@@ -1,0 +1,2823 @@
+[
+  {
+    "phase": "debug-r1",
+    "sourcePath": "native/docs/mixed-meaning-queries.md",
+    "sha256": "d39bdfdab8b944082ad3b70c300c36319528b279d096a7e3161e3fefd45b5b94",
+    "archivePath": "source-variants/d39bdfdab8b944082ad3b70c300c36319528b279d096a7e3161e3fefd45b5b94.md",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "debug-r1",
+    "sourcePath": "native/README.md",
+    "sha256": "b27aa8fab2a641212b3603afa8551d48152aa2e6549ced03bcdd247084cbf529",
+    "archivePath": "source-variants/b27aa8fab2a641212b3603afa8551d48152aa2e6549ced03bcdd247084cbf529.md",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "debug-r1",
+    "sourcePath": "native/src/github_app_digest_history_jobs.rs",
+    "sha256": "9b0d12a73a55b84be5d6eb132830ed724fd374558fb57088509dad20711755de",
+    "archivePath": "source-variants/9b0d12a73a55b84be5d6eb132830ed724fd374558fb57088509dad20711755de.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "debug-r1",
+    "sourcePath": "native/src/github_app_worker.rs",
+    "sha256": "6eb4eba068945cec55ef4bd3fa9deb0b5d4285421b6a5f9f42211b5f9bdad8fb",
+    "archivePath": "source-variants/6eb4eba068945cec55ef4bd3fa9deb0b5d4285421b6a5f9f42211b5f9bdad8fb.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "debug-r1",
+    "sourcePath": "native/src/github_app_worker_history.rs",
+    "sha256": "3102c94131f765be1428651599734a96c7523517ae85268feaf8252884bda1ec",
+    "archivePath": "source-variants/3102c94131f765be1428651599734a96c7523517ae85268feaf8252884bda1ec.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "debug-r1",
+    "sourcePath": "native/src/main.rs",
+    "sha256": "05a104205a2eb65cdaade2814c2cad5ab428b84283ee5fdd4e26c7dca4bf9b51",
+    "archivePath": "source-variants/05a104205a2eb65cdaade2814c2cad5ab428b84283ee5fdd4e26c7dca4bf9b51.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "debug-r1",
+    "sourcePath": "native/src/meaning_build.rs",
+    "sha256": "4320a56acc1822fc5140960c6fb98df6f6d4c96d47b564a4d408543f6b6b3463",
+    "archivePath": "source-variants/4320a56acc1822fc5140960c6fb98df6f6d4c96d47b564a4d408543f6b6b3463.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "debug-r1",
+    "sourcePath": "native/src/meaning_graph.rs",
+    "sha256": "abb9065655a90c5d5a2fbfdb51d863d496342136c5405e73becf67ff3b87d71d",
+    "archivePath": "source-variants/abb9065655a90c5d5a2fbfdb51d863d496342136c5405e73becf67ff3b87d71d.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "debug-r1",
+    "sourcePath": "native/src/mixed_meaning_claims.rs",
+    "sha256": "3876d0bb8ff734bbcd1d884e939c896112d71b34779ae5c3960d2eebc4ea406d",
+    "archivePath": "source-variants/3876d0bb8ff734bbcd1d884e939c896112d71b34779ae5c3960d2eebc4ea406d.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "debug-r1",
+    "sourcePath": "native/src/mixed_meaning_cli.rs",
+    "sha256": "cd16b207a105939eaf977beb1689e7552d57f0385716eb2bc6ab247d8293905e",
+    "archivePath": "source-variants/cd16b207a105939eaf977beb1689e7552d57f0385716eb2bc6ab247d8293905e.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "debug-r1",
+    "sourcePath": "native/src/mixed_meaning_composition.rs",
+    "sha256": "1f4a228c31716e8d9a036a54fd2329672a6adc782095ec4d1c9bb704b0c034e9",
+    "archivePath": "source-variants/1f4a228c31716e8d9a036a54fd2329672a6adc782095ec4d1c9bb704b0c034e9.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "debug-r1",
+    "sourcePath": "native/src/mixed_meaning_input.rs",
+    "sha256": "bebf516e57a7ac606291b4491446458da042cb47b717201cb37ebca128293a5c",
+    "archivePath": "source-variants/bebf516e57a7ac606291b4491446458da042cb47b717201cb37ebca128293a5c.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "debug-r1",
+    "sourcePath": "native/src/mixed_meaning_provider.rs",
+    "sha256": "a92bd23cbcd91e44bbfe16e2caf6660a17cf31f7344a7bf403a760041438f79d",
+    "archivePath": "source-variants/a92bd23cbcd91e44bbfe16e2caf6660a17cf31f7344a7bf403a760041438f79d.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "debug-r1",
+    "sourcePath": "native/src/mixed_meaning_query.rs",
+    "sha256": "b2264ea5aa1a3169cb0685e21441da004123ab3b2bbef88e38f70294a43041d9",
+    "archivePath": "source-variants/b2264ea5aa1a3169cb0685e21441da004123ab3b2bbef88e38f70294a43041d9.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "debug-r1",
+    "sourcePath": "native/src/mixed_view.rs",
+    "sha256": "99a9b6abd653feadf4c2c918833f46ee2cf17e8e694be23d131b9aac41665464",
+    "archivePath": "source-variants/99a9b6abd653feadf4c2c918833f46ee2cf17e8e694be23d131b9aac41665464.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "debug-r1",
+    "sourcePath": "native/src/mixed_view_cli.rs",
+    "sha256": "28c75a27233246388753f9e8475a45276bbdc1b153cc6eb62c406f4a3b3417b6",
+    "archivePath": "source-variants/28c75a27233246388753f9e8475a45276bbdc1b153cc6eb62c406f4a3b3417b6.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "debug-r1",
+    "sourcePath": "native/src/retention.rs",
+    "sha256": "9ee70abdfbeb679b27b85352650a2c61266f984b753bf439b5d9bfc4033c8f05",
+    "archivePath": "source-variants/9ee70abdfbeb679b27b85352650a2c61266f984b753bf439b5d9bfc4033c8f05.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "debug-r1",
+    "sourcePath": "native/tests/decision_retention.rs",
+    "sha256": "e1a4c1390de62d18de8163bcfa423a13cf1e22c9d9da4f75c073607c8e67267f",
+    "archivePath": "source-variants/e1a4c1390de62d18de8163bcfa423a13cf1e22c9d9da4f75c073607c8e67267f.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "debug-r1",
+    "sourcePath": "native/tests/github_app_worker.rs",
+    "sha256": "1f7873d5ce1c474668701120ef5a70d748d43f4752aa9393effa9203fd88b457",
+    "archivePath": "source-variants/1f7873d5ce1c474668701120ef5a70d748d43f4752aa9393effa9203fd88b457.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "debug-r1",
+    "sourcePath": "native/tests/github_app_worker_history.rs",
+    "sha256": "3343515cea2504b183fa18ac732d1966c2af110e4ab4e707e2773f80c01526d4",
+    "archivePath": "source-variants/3343515cea2504b183fa18ac732d1966c2af110e4ab4e707e2773f80c01526d4.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "debug-r1",
+    "sourcePath": "native/tests/meaning_build.rs",
+    "sha256": "91d604c038add216a284733b7da28abd596a2ad07f5b43838c2f667f74940fb7",
+    "archivePath": "source-variants/91d604c038add216a284733b7da28abd596a2ad07f5b43838c2f667f74940fb7.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "debug-r1",
+    "sourcePath": "native/tests/meaning_graph.rs",
+    "sha256": "3e5c6b3222476e0962b1c83de046f5a2f6edf81ff98a5b8792f6f09b4b56996f",
+    "archivePath": "source-variants/3e5c6b3222476e0962b1c83de046f5a2f6edf81ff98a5b8792f6f09b4b56996f.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "debug-r1",
+    "sourcePath": "native/tests/mixed_meaning_claims.rs",
+    "sha256": "ad116f831655fc1701bfa5cc9f0e505fc64cc879b0940c95bcab8718d01d3d42",
+    "archivePath": "source-variants/ad116f831655fc1701bfa5cc9f0e505fc64cc879b0940c95bcab8718d01d3d42.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "debug-r1",
+    "sourcePath": "native/tests/mixed_meaning_composition.rs",
+    "sha256": "87f720f5ae304bff5ec1445d799b6ffff90d3ba2b535c9850fba2ee79a08f62a",
+    "archivePath": "source-variants/87f720f5ae304bff5ec1445d799b6ffff90d3ba2b535c9850fba2ee79a08f62a.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "debug-r1",
+    "sourcePath": "native/tests/mixed_meaning_provider.rs",
+    "sha256": "15c331069672ae10d5c1182945d1cec6e6d3f3dc204a37b2d3409f332a83151d",
+    "archivePath": "source-variants/15c331069672ae10d5c1182945d1cec6e6d3f3dc204a37b2d3409f332a83151d.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "debug-r1",
+    "sourcePath": "native/tests/mixed_meaning_queries.rs",
+    "sha256": "2fb8388c9a7c3b20c1a3f5ef88fecc413245ce03fc6ae6ccd9370ebee401af2d",
+    "archivePath": "source-variants/2fb8388c9a7c3b20c1a3f5ef88fecc413245ce03fc6ae6ccd9370ebee401af2d.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "debug-r1",
+    "sourcePath": "native/tests/mixed_pdf_view.rs",
+    "sha256": "a563e4c402e882a67390b294c54af27387856625344f95a2d2e7758b5a1316f0",
+    "archivePath": "source-variants/a563e4c402e882a67390b294c54af27387856625344f95a2d2e7758b5a1316f0.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "debug-r1",
+    "sourcePath": "native/tests/mixed_view_cli.rs",
+    "sha256": "c89bd152184ff4348dc79dd01346211a06110ba6d0a958a59a61ecd5e56f71f0",
+    "archivePath": "source-variants/c89bd152184ff4348dc79dd01346211a06110ba6d0a958a59a61ecd5e56f71f0.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "debug-r1",
+    "sourcePath": "native/tests/parity_retention.rs",
+    "sha256": "56e1daf79691b0d2869dd210f7942a9aae4c80d9f3dd807885aa9f49585d8ac2",
+    "archivePath": "source-variants/56e1daf79691b0d2869dd210f7942a9aae4c80d9f3dd807885aa9f49585d8ac2.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "debug-r1",
+    "sourcePath": "native/tests/retention.rs",
+    "sha256": "1085b0ebe348f13ed5a84b154bbdc7aef2d3447051a267b5df2359c3a4798068",
+    "archivePath": "source-variants/1085b0ebe348f13ed5a84b154bbdc7aef2d3447051a267b5df2359c3a4798068.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "debug-r1",
+    "sourcePath": "native/tests/support/github_app_worker_history_fixture.rs",
+    "sha256": "af581123fbdc74996bd37337f7415dae4c06d7a9d8f5e2115792bd24cf847aa7",
+    "archivePath": "source-variants/af581123fbdc74996bd37337f7415dae4c06d7a9d8f5e2115792bd24cf847aa7.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "debug-r2",
+    "sourcePath": "native/docs/mixed-meaning-queries.md",
+    "sha256": "d39bdfdab8b944082ad3b70c300c36319528b279d096a7e3161e3fefd45b5b94",
+    "archivePath": "source-variants/d39bdfdab8b944082ad3b70c300c36319528b279d096a7e3161e3fefd45b5b94.md",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "debug-r2",
+    "sourcePath": "native/README.md",
+    "sha256": "b27aa8fab2a641212b3603afa8551d48152aa2e6549ced03bcdd247084cbf529",
+    "archivePath": "source-variants/b27aa8fab2a641212b3603afa8551d48152aa2e6549ced03bcdd247084cbf529.md",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "debug-r2",
+    "sourcePath": "native/src/github_app_digest_history_jobs.rs",
+    "sha256": "9b0d12a73a55b84be5d6eb132830ed724fd374558fb57088509dad20711755de",
+    "archivePath": "source-variants/9b0d12a73a55b84be5d6eb132830ed724fd374558fb57088509dad20711755de.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "debug-r2",
+    "sourcePath": "native/src/github_app_worker.rs",
+    "sha256": "6eb4eba068945cec55ef4bd3fa9deb0b5d4285421b6a5f9f42211b5f9bdad8fb",
+    "archivePath": "source-variants/6eb4eba068945cec55ef4bd3fa9deb0b5d4285421b6a5f9f42211b5f9bdad8fb.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "debug-r2",
+    "sourcePath": "native/src/github_app_worker_history.rs",
+    "sha256": "3102c94131f765be1428651599734a96c7523517ae85268feaf8252884bda1ec",
+    "archivePath": "source-variants/3102c94131f765be1428651599734a96c7523517ae85268feaf8252884bda1ec.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "debug-r2",
+    "sourcePath": "native/src/main.rs",
+    "sha256": "05a104205a2eb65cdaade2814c2cad5ab428b84283ee5fdd4e26c7dca4bf9b51",
+    "archivePath": "source-variants/05a104205a2eb65cdaade2814c2cad5ab428b84283ee5fdd4e26c7dca4bf9b51.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "debug-r2",
+    "sourcePath": "native/src/meaning_build.rs",
+    "sha256": "4320a56acc1822fc5140960c6fb98df6f6d4c96d47b564a4d408543f6b6b3463",
+    "archivePath": "source-variants/4320a56acc1822fc5140960c6fb98df6f6d4c96d47b564a4d408543f6b6b3463.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "debug-r2",
+    "sourcePath": "native/src/meaning_graph.rs",
+    "sha256": "abb9065655a90c5d5a2fbfdb51d863d496342136c5405e73becf67ff3b87d71d",
+    "archivePath": "source-variants/abb9065655a90c5d5a2fbfdb51d863d496342136c5405e73becf67ff3b87d71d.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "debug-r2",
+    "sourcePath": "native/src/mixed_meaning_claims.rs",
+    "sha256": "3876d0bb8ff734bbcd1d884e939c896112d71b34779ae5c3960d2eebc4ea406d",
+    "archivePath": "source-variants/3876d0bb8ff734bbcd1d884e939c896112d71b34779ae5c3960d2eebc4ea406d.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "debug-r2",
+    "sourcePath": "native/src/mixed_meaning_cli.rs",
+    "sha256": "cd16b207a105939eaf977beb1689e7552d57f0385716eb2bc6ab247d8293905e",
+    "archivePath": "source-variants/cd16b207a105939eaf977beb1689e7552d57f0385716eb2bc6ab247d8293905e.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "debug-r2",
+    "sourcePath": "native/src/mixed_meaning_composition.rs",
+    "sha256": "1f4a228c31716e8d9a036a54fd2329672a6adc782095ec4d1c9bb704b0c034e9",
+    "archivePath": "source-variants/1f4a228c31716e8d9a036a54fd2329672a6adc782095ec4d1c9bb704b0c034e9.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "debug-r2",
+    "sourcePath": "native/src/mixed_meaning_input.rs",
+    "sha256": "bebf516e57a7ac606291b4491446458da042cb47b717201cb37ebca128293a5c",
+    "archivePath": "source-variants/bebf516e57a7ac606291b4491446458da042cb47b717201cb37ebca128293a5c.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "debug-r2",
+    "sourcePath": "native/src/mixed_meaning_provider.rs",
+    "sha256": "a92bd23cbcd91e44bbfe16e2caf6660a17cf31f7344a7bf403a760041438f79d",
+    "archivePath": "source-variants/a92bd23cbcd91e44bbfe16e2caf6660a17cf31f7344a7bf403a760041438f79d.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "debug-r2",
+    "sourcePath": "native/src/mixed_meaning_query.rs",
+    "sha256": "b2264ea5aa1a3169cb0685e21441da004123ab3b2bbef88e38f70294a43041d9",
+    "archivePath": "source-variants/b2264ea5aa1a3169cb0685e21441da004123ab3b2bbef88e38f70294a43041d9.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "debug-r2",
+    "sourcePath": "native/src/mixed_view.rs",
+    "sha256": "99a9b6abd653feadf4c2c918833f46ee2cf17e8e694be23d131b9aac41665464",
+    "archivePath": "source-variants/99a9b6abd653feadf4c2c918833f46ee2cf17e8e694be23d131b9aac41665464.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "debug-r2",
+    "sourcePath": "native/src/mixed_view_cli.rs",
+    "sha256": "28c75a27233246388753f9e8475a45276bbdc1b153cc6eb62c406f4a3b3417b6",
+    "archivePath": "source-variants/28c75a27233246388753f9e8475a45276bbdc1b153cc6eb62c406f4a3b3417b6.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "debug-r2",
+    "sourcePath": "native/src/retention.rs",
+    "sha256": "9ee70abdfbeb679b27b85352650a2c61266f984b753bf439b5d9bfc4033c8f05",
+    "archivePath": "source-variants/9ee70abdfbeb679b27b85352650a2c61266f984b753bf439b5d9bfc4033c8f05.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "debug-r2",
+    "sourcePath": "native/tests/decision_retention.rs",
+    "sha256": "e1a4c1390de62d18de8163bcfa423a13cf1e22c9d9da4f75c073607c8e67267f",
+    "archivePath": "source-variants/e1a4c1390de62d18de8163bcfa423a13cf1e22c9d9da4f75c073607c8e67267f.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "debug-r2",
+    "sourcePath": "native/tests/github_app_worker.rs",
+    "sha256": "1f7873d5ce1c474668701120ef5a70d748d43f4752aa9393effa9203fd88b457",
+    "archivePath": "source-variants/1f7873d5ce1c474668701120ef5a70d748d43f4752aa9393effa9203fd88b457.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "debug-r2",
+    "sourcePath": "native/tests/meaning_build.rs",
+    "sha256": "91d604c038add216a284733b7da28abd596a2ad07f5b43838c2f667f74940fb7",
+    "archivePath": "source-variants/91d604c038add216a284733b7da28abd596a2ad07f5b43838c2f667f74940fb7.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "debug-r2",
+    "sourcePath": "native/tests/meaning_graph.rs",
+    "sha256": "3e5c6b3222476e0962b1c83de046f5a2f6edf81ff98a5b8792f6f09b4b56996f",
+    "archivePath": "source-variants/3e5c6b3222476e0962b1c83de046f5a2f6edf81ff98a5b8792f6f09b4b56996f.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "debug-r2",
+    "sourcePath": "native/tests/mixed_meaning_claims.rs",
+    "sha256": "ad116f831655fc1701bfa5cc9f0e505fc64cc879b0940c95bcab8718d01d3d42",
+    "archivePath": "source-variants/ad116f831655fc1701bfa5cc9f0e505fc64cc879b0940c95bcab8718d01d3d42.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "debug-r2",
+    "sourcePath": "native/tests/mixed_meaning_composition.rs",
+    "sha256": "87f720f5ae304bff5ec1445d799b6ffff90d3ba2b535c9850fba2ee79a08f62a",
+    "archivePath": "source-variants/87f720f5ae304bff5ec1445d799b6ffff90d3ba2b535c9850fba2ee79a08f62a.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "debug-r2",
+    "sourcePath": "native/tests/mixed_meaning_provider.rs",
+    "sha256": "15c331069672ae10d5c1182945d1cec6e6d3f3dc204a37b2d3409f332a83151d",
+    "archivePath": "source-variants/15c331069672ae10d5c1182945d1cec6e6d3f3dc204a37b2d3409f332a83151d.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "debug-r2",
+    "sourcePath": "native/tests/mixed_meaning_queries.rs",
+    "sha256": "2fb8388c9a7c3b20c1a3f5ef88fecc413245ce03fc6ae6ccd9370ebee401af2d",
+    "archivePath": "source-variants/2fb8388c9a7c3b20c1a3f5ef88fecc413245ce03fc6ae6ccd9370ebee401af2d.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "debug-r2",
+    "sourcePath": "native/tests/mixed_pdf_view.rs",
+    "sha256": "a563e4c402e882a67390b294c54af27387856625344f95a2d2e7758b5a1316f0",
+    "archivePath": "source-variants/a563e4c402e882a67390b294c54af27387856625344f95a2d2e7758b5a1316f0.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "debug-r2",
+    "sourcePath": "native/tests/mixed_view_cli.rs",
+    "sha256": "c89bd152184ff4348dc79dd01346211a06110ba6d0a958a59a61ecd5e56f71f0",
+    "archivePath": "source-variants/c89bd152184ff4348dc79dd01346211a06110ba6d0a958a59a61ecd5e56f71f0.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "debug-r2",
+    "sourcePath": "native/tests/parity_retention.rs",
+    "sha256": "56e1daf79691b0d2869dd210f7942a9aae4c80d9f3dd807885aa9f49585d8ac2",
+    "archivePath": "source-variants/56e1daf79691b0d2869dd210f7942a9aae4c80d9f3dd807885aa9f49585d8ac2.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "debug-r2",
+    "sourcePath": "native/tests/retention.rs",
+    "sha256": "1085b0ebe348f13ed5a84b154bbdc7aef2d3447051a267b5df2359c3a4798068",
+    "archivePath": "source-variants/1085b0ebe348f13ed5a84b154bbdc7aef2d3447051a267b5df2359c3a4798068.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-cli-r1",
+    "sourcePath": "native/docs/mixed-meaning-queries.md",
+    "sha256": "d39bdfdab8b944082ad3b70c300c36319528b279d096a7e3161e3fefd45b5b94",
+    "archivePath": "source-variants/d39bdfdab8b944082ad3b70c300c36319528b279d096a7e3161e3fefd45b5b94.md",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-cli-r1",
+    "sourcePath": "native/README.md",
+    "sha256": "b27aa8fab2a641212b3603afa8551d48152aa2e6549ced03bcdd247084cbf529",
+    "archivePath": "source-variants/b27aa8fab2a641212b3603afa8551d48152aa2e6549ced03bcdd247084cbf529.md",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-cli-r1",
+    "sourcePath": "native/src/github_app_digest_history_jobs.rs",
+    "sha256": "9b0d12a73a55b84be5d6eb132830ed724fd374558fb57088509dad20711755de",
+    "archivePath": "source-variants/9b0d12a73a55b84be5d6eb132830ed724fd374558fb57088509dad20711755de.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-cli-r1",
+    "sourcePath": "native/src/github_app_history_cli.rs",
+    "sha256": "b96c4faf98c02a4f5988a1d79f1e6463d1fb9de74da4aa8f72eb3e2de9ba445e",
+    "archivePath": "source-variants/b96c4faf98c02a4f5988a1d79f1e6463d1fb9de74da4aa8f72eb3e2de9ba445e.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-cli-r1",
+    "sourcePath": "native/src/github_app_worker.rs",
+    "sha256": "6eb4eba068945cec55ef4bd3fa9deb0b5d4285421b6a5f9f42211b5f9bdad8fb",
+    "archivePath": "source-variants/6eb4eba068945cec55ef4bd3fa9deb0b5d4285421b6a5f9f42211b5f9bdad8fb.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-cli-r1",
+    "sourcePath": "native/src/github_app_worker_history.rs",
+    "sha256": "3102c94131f765be1428651599734a96c7523517ae85268feaf8252884bda1ec",
+    "archivePath": "source-variants/3102c94131f765be1428651599734a96c7523517ae85268feaf8252884bda1ec.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-cli-r1",
+    "sourcePath": "native/src/main.rs",
+    "sha256": "336c051aca06890eb173adc7a958f7fb409c92f89a448c09c4eecad6fe492764",
+    "archivePath": "source-variants/336c051aca06890eb173adc7a958f7fb409c92f89a448c09c4eecad6fe492764.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-cli-r1",
+    "sourcePath": "native/src/meaning_build.rs",
+    "sha256": "4320a56acc1822fc5140960c6fb98df6f6d4c96d47b564a4d408543f6b6b3463",
+    "archivePath": "source-variants/4320a56acc1822fc5140960c6fb98df6f6d4c96d47b564a4d408543f6b6b3463.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-cli-r1",
+    "sourcePath": "native/src/meaning_graph.rs",
+    "sha256": "abb9065655a90c5d5a2fbfdb51d863d496342136c5405e73becf67ff3b87d71d",
+    "archivePath": "source-variants/abb9065655a90c5d5a2fbfdb51d863d496342136c5405e73becf67ff3b87d71d.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-cli-r1",
+    "sourcePath": "native/src/mixed_meaning_claims.rs",
+    "sha256": "3876d0bb8ff734bbcd1d884e939c896112d71b34779ae5c3960d2eebc4ea406d",
+    "archivePath": "source-variants/3876d0bb8ff734bbcd1d884e939c896112d71b34779ae5c3960d2eebc4ea406d.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-cli-r1",
+    "sourcePath": "native/src/mixed_meaning_cli.rs",
+    "sha256": "cd16b207a105939eaf977beb1689e7552d57f0385716eb2bc6ab247d8293905e",
+    "archivePath": "source-variants/cd16b207a105939eaf977beb1689e7552d57f0385716eb2bc6ab247d8293905e.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-cli-r1",
+    "sourcePath": "native/src/mixed_meaning_composition.rs",
+    "sha256": "1f4a228c31716e8d9a036a54fd2329672a6adc782095ec4d1c9bb704b0c034e9",
+    "archivePath": "source-variants/1f4a228c31716e8d9a036a54fd2329672a6adc782095ec4d1c9bb704b0c034e9.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-cli-r1",
+    "sourcePath": "native/src/mixed_meaning_input.rs",
+    "sha256": "bebf516e57a7ac606291b4491446458da042cb47b717201cb37ebca128293a5c",
+    "archivePath": "source-variants/bebf516e57a7ac606291b4491446458da042cb47b717201cb37ebca128293a5c.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-cli-r1",
+    "sourcePath": "native/src/mixed_meaning_provider.rs",
+    "sha256": "a92bd23cbcd91e44bbfe16e2caf6660a17cf31f7344a7bf403a760041438f79d",
+    "archivePath": "source-variants/a92bd23cbcd91e44bbfe16e2caf6660a17cf31f7344a7bf403a760041438f79d.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-cli-r1",
+    "sourcePath": "native/src/mixed_meaning_query.rs",
+    "sha256": "b2264ea5aa1a3169cb0685e21441da004123ab3b2bbef88e38f70294a43041d9",
+    "archivePath": "source-variants/b2264ea5aa1a3169cb0685e21441da004123ab3b2bbef88e38f70294a43041d9.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-cli-r1",
+    "sourcePath": "native/src/mixed_view.rs",
+    "sha256": "99a9b6abd653feadf4c2c918833f46ee2cf17e8e694be23d131b9aac41665464",
+    "archivePath": "source-variants/99a9b6abd653feadf4c2c918833f46ee2cf17e8e694be23d131b9aac41665464.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-cli-r1",
+    "sourcePath": "native/src/mixed_view_cli.rs",
+    "sha256": "28c75a27233246388753f9e8475a45276bbdc1b153cc6eb62c406f4a3b3417b6",
+    "archivePath": "source-variants/28c75a27233246388753f9e8475a45276bbdc1b153cc6eb62c406f4a3b3417b6.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-cli-r1",
+    "sourcePath": "native/src/retention.rs",
+    "sha256": "9ee70abdfbeb679b27b85352650a2c61266f984b753bf439b5d9bfc4033c8f05",
+    "archivePath": "source-variants/9ee70abdfbeb679b27b85352650a2c61266f984b753bf439b5d9bfc4033c8f05.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-cli-r1",
+    "sourcePath": "native/tests/decision_retention.rs",
+    "sha256": "e1a4c1390de62d18de8163bcfa423a13cf1e22c9d9da4f75c073607c8e67267f",
+    "archivePath": "source-variants/e1a4c1390de62d18de8163bcfa423a13cf1e22c9d9da4f75c073607c8e67267f.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-cli-r1",
+    "sourcePath": "native/tests/github_app_history_bridge.rs",
+    "sha256": "8d2bb06d632fdb0ee025bc1bb0e62aa8361cd27769b3d1bb043f6425a24701d3",
+    "archivePath": "source-variants/8d2bb06d632fdb0ee025bc1bb0e62aa8361cd27769b3d1bb043f6425a24701d3.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-cli-r1",
+    "sourcePath": "native/tests/github_app_history_cli.rs",
+    "sha256": "08f566206b4688e419cbeced058e6f1f531bb1b030e668c44df1a38421860cae",
+    "archivePath": "source-variants/08f566206b4688e419cbeced058e6f1f531bb1b030e668c44df1a38421860cae.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-cli-r1",
+    "sourcePath": "native/tests/github_app_worker.rs",
+    "sha256": "1f7873d5ce1c474668701120ef5a70d748d43f4752aa9393effa9203fd88b457",
+    "archivePath": "source-variants/1f7873d5ce1c474668701120ef5a70d748d43f4752aa9393effa9203fd88b457.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-cli-r1",
+    "sourcePath": "native/tests/meaning_build.rs",
+    "sha256": "91d604c038add216a284733b7da28abd596a2ad07f5b43838c2f667f74940fb7",
+    "archivePath": "source-variants/91d604c038add216a284733b7da28abd596a2ad07f5b43838c2f667f74940fb7.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-cli-r1",
+    "sourcePath": "native/tests/meaning_graph.rs",
+    "sha256": "3e5c6b3222476e0962b1c83de046f5a2f6edf81ff98a5b8792f6f09b4b56996f",
+    "archivePath": "source-variants/3e5c6b3222476e0962b1c83de046f5a2f6edf81ff98a5b8792f6f09b4b56996f.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-cli-r1",
+    "sourcePath": "native/tests/mixed_meaning_claims.rs",
+    "sha256": "ad116f831655fc1701bfa5cc9f0e505fc64cc879b0940c95bcab8718d01d3d42",
+    "archivePath": "source-variants/ad116f831655fc1701bfa5cc9f0e505fc64cc879b0940c95bcab8718d01d3d42.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-cli-r1",
+    "sourcePath": "native/tests/mixed_meaning_composition.rs",
+    "sha256": "87f720f5ae304bff5ec1445d799b6ffff90d3ba2b535c9850fba2ee79a08f62a",
+    "archivePath": "source-variants/87f720f5ae304bff5ec1445d799b6ffff90d3ba2b535c9850fba2ee79a08f62a.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-cli-r1",
+    "sourcePath": "native/tests/mixed_meaning_provider.rs",
+    "sha256": "15c331069672ae10d5c1182945d1cec6e6d3f3dc204a37b2d3409f332a83151d",
+    "archivePath": "source-variants/15c331069672ae10d5c1182945d1cec6e6d3f3dc204a37b2d3409f332a83151d.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-cli-r1",
+    "sourcePath": "native/tests/mixed_meaning_queries.rs",
+    "sha256": "2fb8388c9a7c3b20c1a3f5ef88fecc413245ce03fc6ae6ccd9370ebee401af2d",
+    "archivePath": "source-variants/2fb8388c9a7c3b20c1a3f5ef88fecc413245ce03fc6ae6ccd9370ebee401af2d.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-cli-r1",
+    "sourcePath": "native/tests/mixed_pdf_view.rs",
+    "sha256": "a563e4c402e882a67390b294c54af27387856625344f95a2d2e7758b5a1316f0",
+    "archivePath": "source-variants/a563e4c402e882a67390b294c54af27387856625344f95a2d2e7758b5a1316f0.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-cli-r1",
+    "sourcePath": "native/tests/mixed_view_cli.rs",
+    "sha256": "c89bd152184ff4348dc79dd01346211a06110ba6d0a958a59a61ecd5e56f71f0",
+    "archivePath": "source-variants/c89bd152184ff4348dc79dd01346211a06110ba6d0a958a59a61ecd5e56f71f0.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-cli-r1",
+    "sourcePath": "native/tests/parity_retention.rs",
+    "sha256": "56e1daf79691b0d2869dd210f7942a9aae4c80d9f3dd807885aa9f49585d8ac2",
+    "archivePath": "source-variants/56e1daf79691b0d2869dd210f7942a9aae4c80d9f3dd807885aa9f49585d8ac2.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-cli-r1",
+    "sourcePath": "native/tests/retention.rs",
+    "sha256": "1085b0ebe348f13ed5a84b154bbdc7aef2d3447051a267b5df2359c3a4798068",
+    "archivePath": "source-variants/1085b0ebe348f13ed5a84b154bbdc7aef2d3447051a267b5df2359c3a4798068.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-cli-r1",
+    "sourcePath": "native/tests/support/github_app_worker_history_fixture.rs",
+    "sha256": "745b646e26d0ed58ecab9249b8e86f491540302c0ccf62fa931186a18ce2f127",
+    "archivePath": "source-variants/745b646e26d0ed58ecab9249b8e86f491540302c0ccf62fa931186a18ce2f127.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r1",
+    "sourcePath": "native/docs/mixed-meaning-queries.md",
+    "sha256": "d39bdfdab8b944082ad3b70c300c36319528b279d096a7e3161e3fefd45b5b94",
+    "archivePath": "source-variants/d39bdfdab8b944082ad3b70c300c36319528b279d096a7e3161e3fefd45b5b94.md",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r1",
+    "sourcePath": "native/README.md",
+    "sha256": "b27aa8fab2a641212b3603afa8551d48152aa2e6549ced03bcdd247084cbf529",
+    "archivePath": "source-variants/b27aa8fab2a641212b3603afa8551d48152aa2e6549ced03bcdd247084cbf529.md",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r1",
+    "sourcePath": "native/src/github_app_digest_history_jobs.rs",
+    "sha256": "5dbbfa335cbb808d9d4915de33c4e645cae1b7ec35bcfe174fa99f04490b73ee",
+    "archivePath": "source-variants/5dbbfa335cbb808d9d4915de33c4e645cae1b7ec35bcfe174fa99f04490b73ee.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r1",
+    "sourcePath": "native/src/github_app_history_cli.rs",
+    "sha256": "b96c4faf98c02a4f5988a1d79f1e6463d1fb9de74da4aa8f72eb3e2de9ba445e",
+    "archivePath": "source-variants/b96c4faf98c02a4f5988a1d79f1e6463d1fb9de74da4aa8f72eb3e2de9ba445e.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r1",
+    "sourcePath": "native/src/github_app_worker.rs",
+    "sha256": "6eb4eba068945cec55ef4bd3fa9deb0b5d4285421b6a5f9f42211b5f9bdad8fb",
+    "archivePath": "source-variants/6eb4eba068945cec55ef4bd3fa9deb0b5d4285421b6a5f9f42211b5f9bdad8fb.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r1",
+    "sourcePath": "native/src/github_app_worker_history.rs",
+    "sha256": "3ff1366cf623ff252d5c0e2705b3af0360c43ae8613dc199a2ad3e010d45c7f5",
+    "archivePath": "source-variants/3ff1366cf623ff252d5c0e2705b3af0360c43ae8613dc199a2ad3e010d45c7f5.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r1",
+    "sourcePath": "native/src/main.rs",
+    "sha256": "336c051aca06890eb173adc7a958f7fb409c92f89a448c09c4eecad6fe492764",
+    "archivePath": "source-variants/336c051aca06890eb173adc7a958f7fb409c92f89a448c09c4eecad6fe492764.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r1",
+    "sourcePath": "native/src/meaning_build.rs",
+    "sha256": "4320a56acc1822fc5140960c6fb98df6f6d4c96d47b564a4d408543f6b6b3463",
+    "archivePath": "source-variants/4320a56acc1822fc5140960c6fb98df6f6d4c96d47b564a4d408543f6b6b3463.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r1",
+    "sourcePath": "native/src/meaning_graph.rs",
+    "sha256": "abb9065655a90c5d5a2fbfdb51d863d496342136c5405e73becf67ff3b87d71d",
+    "archivePath": "source-variants/abb9065655a90c5d5a2fbfdb51d863d496342136c5405e73becf67ff3b87d71d.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r1",
+    "sourcePath": "native/src/mixed_meaning_claims.rs",
+    "sha256": "3876d0bb8ff734bbcd1d884e939c896112d71b34779ae5c3960d2eebc4ea406d",
+    "archivePath": "source-variants/3876d0bb8ff734bbcd1d884e939c896112d71b34779ae5c3960d2eebc4ea406d.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r1",
+    "sourcePath": "native/src/mixed_meaning_cli.rs",
+    "sha256": "cd16b207a105939eaf977beb1689e7552d57f0385716eb2bc6ab247d8293905e",
+    "archivePath": "source-variants/cd16b207a105939eaf977beb1689e7552d57f0385716eb2bc6ab247d8293905e.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r1",
+    "sourcePath": "native/src/mixed_meaning_composition.rs",
+    "sha256": "1f4a228c31716e8d9a036a54fd2329672a6adc782095ec4d1c9bb704b0c034e9",
+    "archivePath": "source-variants/1f4a228c31716e8d9a036a54fd2329672a6adc782095ec4d1c9bb704b0c034e9.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r1",
+    "sourcePath": "native/src/mixed_meaning_input.rs",
+    "sha256": "bebf516e57a7ac606291b4491446458da042cb47b717201cb37ebca128293a5c",
+    "archivePath": "source-variants/bebf516e57a7ac606291b4491446458da042cb47b717201cb37ebca128293a5c.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r1",
+    "sourcePath": "native/src/mixed_meaning_provider.rs",
+    "sha256": "a92bd23cbcd91e44bbfe16e2caf6660a17cf31f7344a7bf403a760041438f79d",
+    "archivePath": "source-variants/a92bd23cbcd91e44bbfe16e2caf6660a17cf31f7344a7bf403a760041438f79d.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r1",
+    "sourcePath": "native/src/mixed_meaning_query.rs",
+    "sha256": "b2264ea5aa1a3169cb0685e21441da004123ab3b2bbef88e38f70294a43041d9",
+    "archivePath": "source-variants/b2264ea5aa1a3169cb0685e21441da004123ab3b2bbef88e38f70294a43041d9.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r1",
+    "sourcePath": "native/src/mixed_view.rs",
+    "sha256": "99a9b6abd653feadf4c2c918833f46ee2cf17e8e694be23d131b9aac41665464",
+    "archivePath": "source-variants/99a9b6abd653feadf4c2c918833f46ee2cf17e8e694be23d131b9aac41665464.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r1",
+    "sourcePath": "native/src/mixed_view_cli.rs",
+    "sha256": "28c75a27233246388753f9e8475a45276bbdc1b153cc6eb62c406f4a3b3417b6",
+    "archivePath": "source-variants/28c75a27233246388753f9e8475a45276bbdc1b153cc6eb62c406f4a3b3417b6.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r1",
+    "sourcePath": "native/src/retention.rs",
+    "sha256": "9ee70abdfbeb679b27b85352650a2c61266f984b753bf439b5d9bfc4033c8f05",
+    "archivePath": "source-variants/9ee70abdfbeb679b27b85352650a2c61266f984b753bf439b5d9bfc4033c8f05.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r1",
+    "sourcePath": "native/tests/decision_retention.rs",
+    "sha256": "e1a4c1390de62d18de8163bcfa423a13cf1e22c9d9da4f75c073607c8e67267f",
+    "archivePath": "source-variants/e1a4c1390de62d18de8163bcfa423a13cf1e22c9d9da4f75c073607c8e67267f.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r1",
+    "sourcePath": "native/tests/github_app_history_cli.rs",
+    "sha256": "08f566206b4688e419cbeced058e6f1f531bb1b030e668c44df1a38421860cae",
+    "archivePath": "source-variants/08f566206b4688e419cbeced058e6f1f531bb1b030e668c44df1a38421860cae.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r1",
+    "sourcePath": "native/tests/github_app_worker.rs",
+    "sha256": "1f7873d5ce1c474668701120ef5a70d748d43f4752aa9393effa9203fd88b457",
+    "archivePath": "source-variants/1f7873d5ce1c474668701120ef5a70d748d43f4752aa9393effa9203fd88b457.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r1",
+    "sourcePath": "native/tests/meaning_build.rs",
+    "sha256": "91d604c038add216a284733b7da28abd596a2ad07f5b43838c2f667f74940fb7",
+    "archivePath": "source-variants/91d604c038add216a284733b7da28abd596a2ad07f5b43838c2f667f74940fb7.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r1",
+    "sourcePath": "native/tests/meaning_graph.rs",
+    "sha256": "3e5c6b3222476e0962b1c83de046f5a2f6edf81ff98a5b8792f6f09b4b56996f",
+    "archivePath": "source-variants/3e5c6b3222476e0962b1c83de046f5a2f6edf81ff98a5b8792f6f09b4b56996f.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r1",
+    "sourcePath": "native/tests/mixed_meaning_claims.rs",
+    "sha256": "ad116f831655fc1701bfa5cc9f0e505fc64cc879b0940c95bcab8718d01d3d42",
+    "archivePath": "source-variants/ad116f831655fc1701bfa5cc9f0e505fc64cc879b0940c95bcab8718d01d3d42.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r1",
+    "sourcePath": "native/tests/mixed_meaning_composition.rs",
+    "sha256": "87f720f5ae304bff5ec1445d799b6ffff90d3ba2b535c9850fba2ee79a08f62a",
+    "archivePath": "source-variants/87f720f5ae304bff5ec1445d799b6ffff90d3ba2b535c9850fba2ee79a08f62a.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r1",
+    "sourcePath": "native/tests/mixed_meaning_provider.rs",
+    "sha256": "15c331069672ae10d5c1182945d1cec6e6d3f3dc204a37b2d3409f332a83151d",
+    "archivePath": "source-variants/15c331069672ae10d5c1182945d1cec6e6d3f3dc204a37b2d3409f332a83151d.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r1",
+    "sourcePath": "native/tests/mixed_meaning_queries.rs",
+    "sha256": "2fb8388c9a7c3b20c1a3f5ef88fecc413245ce03fc6ae6ccd9370ebee401af2d",
+    "archivePath": "source-variants/2fb8388c9a7c3b20c1a3f5ef88fecc413245ce03fc6ae6ccd9370ebee401af2d.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r1",
+    "sourcePath": "native/tests/mixed_pdf_view.rs",
+    "sha256": "a563e4c402e882a67390b294c54af27387856625344f95a2d2e7758b5a1316f0",
+    "archivePath": "source-variants/a563e4c402e882a67390b294c54af27387856625344f95a2d2e7758b5a1316f0.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r1",
+    "sourcePath": "native/tests/mixed_view_cli.rs",
+    "sha256": "c89bd152184ff4348dc79dd01346211a06110ba6d0a958a59a61ecd5e56f71f0",
+    "archivePath": "source-variants/c89bd152184ff4348dc79dd01346211a06110ba6d0a958a59a61ecd5e56f71f0.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r1",
+    "sourcePath": "native/tests/parity_retention.rs",
+    "sha256": "56e1daf79691b0d2869dd210f7942a9aae4c80d9f3dd807885aa9f49585d8ac2",
+    "archivePath": "source-variants/56e1daf79691b0d2869dd210f7942a9aae4c80d9f3dd807885aa9f49585d8ac2.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r1",
+    "sourcePath": "native/tests/retention.rs",
+    "sha256": "1085b0ebe348f13ed5a84b154bbdc7aef2d3447051a267b5df2359c3a4798068",
+    "archivePath": "source-variants/1085b0ebe348f13ed5a84b154bbdc7aef2d3447051a267b5df2359c3a4798068.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r1",
+    "sourcePath": "native/tests/support/github_app_worker_history_fixture.rs",
+    "sha256": "f5088dae5a0b0547ef0335bce9184194a1256cb48b810edd11093f688e62f1fb",
+    "archivePath": "source-variants/f5088dae5a0b0547ef0335bce9184194a1256cb48b810edd11093f688e62f1fb.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r2",
+    "sourcePath": "native/docs/mixed-meaning-queries.md",
+    "sha256": "d39bdfdab8b944082ad3b70c300c36319528b279d096a7e3161e3fefd45b5b94",
+    "archivePath": "source-variants/d39bdfdab8b944082ad3b70c300c36319528b279d096a7e3161e3fefd45b5b94.md",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r2",
+    "sourcePath": "native/README.md",
+    "sha256": "b27aa8fab2a641212b3603afa8551d48152aa2e6549ced03bcdd247084cbf529",
+    "archivePath": "source-variants/b27aa8fab2a641212b3603afa8551d48152aa2e6549ced03bcdd247084cbf529.md",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r2",
+    "sourcePath": "native/src/github_app_digest_history_jobs.rs",
+    "sha256": "5dbbfa335cbb808d9d4915de33c4e645cae1b7ec35bcfe174fa99f04490b73ee",
+    "archivePath": "source-variants/5dbbfa335cbb808d9d4915de33c4e645cae1b7ec35bcfe174fa99f04490b73ee.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r2",
+    "sourcePath": "native/src/github_app_history_cli.rs",
+    "sha256": "b96c4faf98c02a4f5988a1d79f1e6463d1fb9de74da4aa8f72eb3e2de9ba445e",
+    "archivePath": "source-variants/b96c4faf98c02a4f5988a1d79f1e6463d1fb9de74da4aa8f72eb3e2de9ba445e.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r2",
+    "sourcePath": "native/src/github_app_worker.rs",
+    "sha256": "6eb4eba068945cec55ef4bd3fa9deb0b5d4285421b6a5f9f42211b5f9bdad8fb",
+    "archivePath": "source-variants/6eb4eba068945cec55ef4bd3fa9deb0b5d4285421b6a5f9f42211b5f9bdad8fb.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r2",
+    "sourcePath": "native/src/github_app_worker_history.rs",
+    "sha256": "3ff1366cf623ff252d5c0e2705b3af0360c43ae8613dc199a2ad3e010d45c7f5",
+    "archivePath": "source-variants/3ff1366cf623ff252d5c0e2705b3af0360c43ae8613dc199a2ad3e010d45c7f5.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r2",
+    "sourcePath": "native/src/main.rs",
+    "sha256": "336c051aca06890eb173adc7a958f7fb409c92f89a448c09c4eecad6fe492764",
+    "archivePath": "source-variants/336c051aca06890eb173adc7a958f7fb409c92f89a448c09c4eecad6fe492764.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r2",
+    "sourcePath": "native/src/meaning_build.rs",
+    "sha256": "4320a56acc1822fc5140960c6fb98df6f6d4c96d47b564a4d408543f6b6b3463",
+    "archivePath": "source-variants/4320a56acc1822fc5140960c6fb98df6f6d4c96d47b564a4d408543f6b6b3463.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r2",
+    "sourcePath": "native/src/meaning_graph.rs",
+    "sha256": "abb9065655a90c5d5a2fbfdb51d863d496342136c5405e73becf67ff3b87d71d",
+    "archivePath": "source-variants/abb9065655a90c5d5a2fbfdb51d863d496342136c5405e73becf67ff3b87d71d.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r2",
+    "sourcePath": "native/src/mixed_meaning_claims.rs",
+    "sha256": "3876d0bb8ff734bbcd1d884e939c896112d71b34779ae5c3960d2eebc4ea406d",
+    "archivePath": "source-variants/3876d0bb8ff734bbcd1d884e939c896112d71b34779ae5c3960d2eebc4ea406d.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r2",
+    "sourcePath": "native/src/mixed_meaning_cli.rs",
+    "sha256": "cd16b207a105939eaf977beb1689e7552d57f0385716eb2bc6ab247d8293905e",
+    "archivePath": "source-variants/cd16b207a105939eaf977beb1689e7552d57f0385716eb2bc6ab247d8293905e.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r2",
+    "sourcePath": "native/src/mixed_meaning_composition.rs",
+    "sha256": "1f4a228c31716e8d9a036a54fd2329672a6adc782095ec4d1c9bb704b0c034e9",
+    "archivePath": "source-variants/1f4a228c31716e8d9a036a54fd2329672a6adc782095ec4d1c9bb704b0c034e9.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r2",
+    "sourcePath": "native/src/mixed_meaning_input.rs",
+    "sha256": "bebf516e57a7ac606291b4491446458da042cb47b717201cb37ebca128293a5c",
+    "archivePath": "source-variants/bebf516e57a7ac606291b4491446458da042cb47b717201cb37ebca128293a5c.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r2",
+    "sourcePath": "native/src/mixed_meaning_provider.rs",
+    "sha256": "a92bd23cbcd91e44bbfe16e2caf6660a17cf31f7344a7bf403a760041438f79d",
+    "archivePath": "source-variants/a92bd23cbcd91e44bbfe16e2caf6660a17cf31f7344a7bf403a760041438f79d.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r2",
+    "sourcePath": "native/src/mixed_meaning_query.rs",
+    "sha256": "b2264ea5aa1a3169cb0685e21441da004123ab3b2bbef88e38f70294a43041d9",
+    "archivePath": "source-variants/b2264ea5aa1a3169cb0685e21441da004123ab3b2bbef88e38f70294a43041d9.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r2",
+    "sourcePath": "native/src/mixed_view.rs",
+    "sha256": "99a9b6abd653feadf4c2c918833f46ee2cf17e8e694be23d131b9aac41665464",
+    "archivePath": "source-variants/99a9b6abd653feadf4c2c918833f46ee2cf17e8e694be23d131b9aac41665464.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r2",
+    "sourcePath": "native/src/mixed_view_cli.rs",
+    "sha256": "28c75a27233246388753f9e8475a45276bbdc1b153cc6eb62c406f4a3b3417b6",
+    "archivePath": "source-variants/28c75a27233246388753f9e8475a45276bbdc1b153cc6eb62c406f4a3b3417b6.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r2",
+    "sourcePath": "native/src/retention.rs",
+    "sha256": "9ee70abdfbeb679b27b85352650a2c61266f984b753bf439b5d9bfc4033c8f05",
+    "archivePath": "source-variants/9ee70abdfbeb679b27b85352650a2c61266f984b753bf439b5d9bfc4033c8f05.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r2",
+    "sourcePath": "native/tests/decision_retention.rs",
+    "sha256": "e1a4c1390de62d18de8163bcfa423a13cf1e22c9d9da4f75c073607c8e67267f",
+    "archivePath": "source-variants/e1a4c1390de62d18de8163bcfa423a13cf1e22c9d9da4f75c073607c8e67267f.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r2",
+    "sourcePath": "native/tests/github_app_history_cli.rs",
+    "sha256": "8e3e5c498816bbb1d16342ec34a32746c9d210680dcd6ea4319c07eee629a114",
+    "archivePath": "source-variants/8e3e5c498816bbb1d16342ec34a32746c9d210680dcd6ea4319c07eee629a114.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r2",
+    "sourcePath": "native/tests/github_app_worker.rs",
+    "sha256": "1f7873d5ce1c474668701120ef5a70d748d43f4752aa9393effa9203fd88b457",
+    "archivePath": "source-variants/1f7873d5ce1c474668701120ef5a70d748d43f4752aa9393effa9203fd88b457.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r2",
+    "sourcePath": "native/tests/meaning_build.rs",
+    "sha256": "91d604c038add216a284733b7da28abd596a2ad07f5b43838c2f667f74940fb7",
+    "archivePath": "source-variants/91d604c038add216a284733b7da28abd596a2ad07f5b43838c2f667f74940fb7.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r2",
+    "sourcePath": "native/tests/meaning_graph.rs",
+    "sha256": "3e5c6b3222476e0962b1c83de046f5a2f6edf81ff98a5b8792f6f09b4b56996f",
+    "archivePath": "source-variants/3e5c6b3222476e0962b1c83de046f5a2f6edf81ff98a5b8792f6f09b4b56996f.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r2",
+    "sourcePath": "native/tests/mixed_meaning_claims.rs",
+    "sha256": "ad116f831655fc1701bfa5cc9f0e505fc64cc879b0940c95bcab8718d01d3d42",
+    "archivePath": "source-variants/ad116f831655fc1701bfa5cc9f0e505fc64cc879b0940c95bcab8718d01d3d42.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r2",
+    "sourcePath": "native/tests/mixed_meaning_composition.rs",
+    "sha256": "87f720f5ae304bff5ec1445d799b6ffff90d3ba2b535c9850fba2ee79a08f62a",
+    "archivePath": "source-variants/87f720f5ae304bff5ec1445d799b6ffff90d3ba2b535c9850fba2ee79a08f62a.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r2",
+    "sourcePath": "native/tests/mixed_meaning_provider.rs",
+    "sha256": "15c331069672ae10d5c1182945d1cec6e6d3f3dc204a37b2d3409f332a83151d",
+    "archivePath": "source-variants/15c331069672ae10d5c1182945d1cec6e6d3f3dc204a37b2d3409f332a83151d.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r2",
+    "sourcePath": "native/tests/mixed_meaning_queries.rs",
+    "sha256": "2fb8388c9a7c3b20c1a3f5ef88fecc413245ce03fc6ae6ccd9370ebee401af2d",
+    "archivePath": "source-variants/2fb8388c9a7c3b20c1a3f5ef88fecc413245ce03fc6ae6ccd9370ebee401af2d.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r2",
+    "sourcePath": "native/tests/mixed_pdf_view.rs",
+    "sha256": "a563e4c402e882a67390b294c54af27387856625344f95a2d2e7758b5a1316f0",
+    "archivePath": "source-variants/a563e4c402e882a67390b294c54af27387856625344f95a2d2e7758b5a1316f0.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r2",
+    "sourcePath": "native/tests/mixed_view_cli.rs",
+    "sha256": "c89bd152184ff4348dc79dd01346211a06110ba6d0a958a59a61ecd5e56f71f0",
+    "archivePath": "source-variants/c89bd152184ff4348dc79dd01346211a06110ba6d0a958a59a61ecd5e56f71f0.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r2",
+    "sourcePath": "native/tests/parity_retention.rs",
+    "sha256": "56e1daf79691b0d2869dd210f7942a9aae4c80d9f3dd807885aa9f49585d8ac2",
+    "archivePath": "source-variants/56e1daf79691b0d2869dd210f7942a9aae4c80d9f3dd807885aa9f49585d8ac2.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r2",
+    "sourcePath": "native/tests/retention.rs",
+    "sha256": "1085b0ebe348f13ed5a84b154bbdc7aef2d3447051a267b5df2359c3a4798068",
+    "archivePath": "source-variants/1085b0ebe348f13ed5a84b154bbdc7aef2d3447051a267b5df2359c3a4798068.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r2",
+    "sourcePath": "native/tests/support/github_app_worker_history_fixture.rs",
+    "sha256": "a832e2f0778d3f30090aebd4bffdd9c1c90fa4f7e4c971939c35a646588af1a7",
+    "archivePath": "source-variants/a832e2f0778d3f30090aebd4bffdd9c1c90fa4f7e4c971939c35a646588af1a7.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r3",
+    "sourcePath": "native/docs/github-app-workers.md",
+    "sha256": "1468e424904e4ca8eea868ed1cf9f8f57ff195f49448324767d2c87e87af0cef",
+    "archivePath": "source-variants/1468e424904e4ca8eea868ed1cf9f8f57ff195f49448324767d2c87e87af0cef.md",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r3",
+    "sourcePath": "native/README.md",
+    "sha256": "b27aa8fab2a641212b3603afa8551d48152aa2e6549ced03bcdd247084cbf529",
+    "archivePath": "source-variants/b27aa8fab2a641212b3603afa8551d48152aa2e6549ced03bcdd247084cbf529.md",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r3",
+    "sourcePath": "native/src/github_app_digest_acquisition.rs",
+    "sha256": "028df855bade7958b31e4fdbfe0ba009b3e5801a8ab9f60ccfaac20701202692",
+    "archivePath": "source-variants/028df855bade7958b31e4fdbfe0ba009b3e5801a8ab9f60ccfaac20701202692.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r3",
+    "sourcePath": "native/src/github_app_digest_history_jobs.rs",
+    "sha256": "5dbbfa335cbb808d9d4915de33c4e645cae1b7ec35bcfe174fa99f04490b73ee",
+    "archivePath": "source-variants/5dbbfa335cbb808d9d4915de33c4e645cae1b7ec35bcfe174fa99f04490b73ee.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r3",
+    "sourcePath": "native/src/github_app_history_cli.rs",
+    "sha256": "b96c4faf98c02a4f5988a1d79f1e6463d1fb9de74da4aa8f72eb3e2de9ba445e",
+    "archivePath": "source-variants/b96c4faf98c02a4f5988a1d79f1e6463d1fb9de74da4aa8f72eb3e2de9ba445e.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r3",
+    "sourcePath": "native/src/github_app_worker.rs",
+    "sha256": "6eb4eba068945cec55ef4bd3fa9deb0b5d4285421b6a5f9f42211b5f9bdad8fb",
+    "archivePath": "source-variants/6eb4eba068945cec55ef4bd3fa9deb0b5d4285421b6a5f9f42211b5f9bdad8fb.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r3",
+    "sourcePath": "native/src/github_app_worker_cli.rs",
+    "sha256": "6d309711a3b336f4a5d8d55edf8aecb1debef49a675cf4566ccf5844c390e63b",
+    "archivePath": "source-variants/6d309711a3b336f4a5d8d55edf8aecb1debef49a675cf4566ccf5844c390e63b.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r3",
+    "sourcePath": "native/src/github_app_worker_history.rs",
+    "sha256": "3ff1366cf623ff252d5c0e2705b3af0360c43ae8613dc199a2ad3e010d45c7f5",
+    "archivePath": "source-variants/3ff1366cf623ff252d5c0e2705b3af0360c43ae8613dc199a2ad3e010d45c7f5.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r3",
+    "sourcePath": "native/src/main.rs",
+    "sha256": "336c051aca06890eb173adc7a958f7fb409c92f89a448c09c4eecad6fe492764",
+    "archivePath": "source-variants/336c051aca06890eb173adc7a958f7fb409c92f89a448c09c4eecad6fe492764.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r3",
+    "sourcePath": "native/src/retention.rs",
+    "sha256": "9ee70abdfbeb679b27b85352650a2c61266f984b753bf439b5d9bfc4033c8f05",
+    "archivePath": "source-variants/9ee70abdfbeb679b27b85352650a2c61266f984b753bf439b5d9bfc4033c8f05.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r3",
+    "sourcePath": "native/tests/github_app_history_bridge.rs",
+    "sha256": "72d820d9c8b529dda491fc0f2310cc7b88f0df2b4ed8e5f016e756bd38ea4e4e",
+    "archivePath": "source-variants/72d820d9c8b529dda491fc0f2310cc7b88f0df2b4ed8e5f016e756bd38ea4e4e.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r3",
+    "sourcePath": "native/tests/github_app_history_cli.rs",
+    "sha256": "8e3e5c498816bbb1d16342ec34a32746c9d210680dcd6ea4319c07eee629a114",
+    "archivePath": "source-variants/8e3e5c498816bbb1d16342ec34a32746c9d210680dcd6ea4319c07eee629a114.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-driver-r3",
+    "sourcePath": "native/tests/support/github_app_worker_history_fixture.rs",
+    "sha256": "5248e287e79085493a8c2ae8d2fe0d985c2d29ba092c982493c92daf8daec143",
+    "archivePath": "source-variants/5248e287e79085493a8c2ae8d2fe0d985c2d29ba092c982493c92daf8daec143.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r1",
+    "sourcePath": "native/docs/mixed-meaning-queries.md",
+    "sha256": "d39bdfdab8b944082ad3b70c300c36319528b279d096a7e3161e3fefd45b5b94",
+    "archivePath": "source-variants/d39bdfdab8b944082ad3b70c300c36319528b279d096a7e3161e3fefd45b5b94.md",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r1",
+    "sourcePath": "native/README.md",
+    "sha256": "b27aa8fab2a641212b3603afa8551d48152aa2e6549ced03bcdd247084cbf529",
+    "archivePath": "source-variants/b27aa8fab2a641212b3603afa8551d48152aa2e6549ced03bcdd247084cbf529.md",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r1",
+    "sourcePath": "native/src/github_app_digest_history_jobs.rs",
+    "sha256": "9b0d12a73a55b84be5d6eb132830ed724fd374558fb57088509dad20711755de",
+    "archivePath": "source-variants/9b0d12a73a55b84be5d6eb132830ed724fd374558fb57088509dad20711755de.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r1",
+    "sourcePath": "native/src/github_app_worker.rs",
+    "sha256": "6eb4eba068945cec55ef4bd3fa9deb0b5d4285421b6a5f9f42211b5f9bdad8fb",
+    "archivePath": "source-variants/6eb4eba068945cec55ef4bd3fa9deb0b5d4285421b6a5f9f42211b5f9bdad8fb.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r1",
+    "sourcePath": "native/src/github_app_worker_history.rs",
+    "sha256": "3102c94131f765be1428651599734a96c7523517ae85268feaf8252884bda1ec",
+    "archivePath": "source-variants/3102c94131f765be1428651599734a96c7523517ae85268feaf8252884bda1ec.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r1",
+    "sourcePath": "native/src/main.rs",
+    "sha256": "05a104205a2eb65cdaade2814c2cad5ab428b84283ee5fdd4e26c7dca4bf9b51",
+    "archivePath": "source-variants/05a104205a2eb65cdaade2814c2cad5ab428b84283ee5fdd4e26c7dca4bf9b51.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r1",
+    "sourcePath": "native/src/meaning_build.rs",
+    "sha256": "4320a56acc1822fc5140960c6fb98df6f6d4c96d47b564a4d408543f6b6b3463",
+    "archivePath": "source-variants/4320a56acc1822fc5140960c6fb98df6f6d4c96d47b564a4d408543f6b6b3463.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r1",
+    "sourcePath": "native/src/meaning_graph.rs",
+    "sha256": "abb9065655a90c5d5a2fbfdb51d863d496342136c5405e73becf67ff3b87d71d",
+    "archivePath": "source-variants/abb9065655a90c5d5a2fbfdb51d863d496342136c5405e73becf67ff3b87d71d.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r1",
+    "sourcePath": "native/src/mixed_meaning_claims.rs",
+    "sha256": "3876d0bb8ff734bbcd1d884e939c896112d71b34779ae5c3960d2eebc4ea406d",
+    "archivePath": "source-variants/3876d0bb8ff734bbcd1d884e939c896112d71b34779ae5c3960d2eebc4ea406d.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r1",
+    "sourcePath": "native/src/mixed_meaning_cli.rs",
+    "sha256": "cd16b207a105939eaf977beb1689e7552d57f0385716eb2bc6ab247d8293905e",
+    "archivePath": "source-variants/cd16b207a105939eaf977beb1689e7552d57f0385716eb2bc6ab247d8293905e.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r1",
+    "sourcePath": "native/src/mixed_meaning_composition.rs",
+    "sha256": "1f4a228c31716e8d9a036a54fd2329672a6adc782095ec4d1c9bb704b0c034e9",
+    "archivePath": "source-variants/1f4a228c31716e8d9a036a54fd2329672a6adc782095ec4d1c9bb704b0c034e9.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r1",
+    "sourcePath": "native/src/mixed_meaning_input.rs",
+    "sha256": "bebf516e57a7ac606291b4491446458da042cb47b717201cb37ebca128293a5c",
+    "archivePath": "source-variants/bebf516e57a7ac606291b4491446458da042cb47b717201cb37ebca128293a5c.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r1",
+    "sourcePath": "native/src/mixed_meaning_provider.rs",
+    "sha256": "a92bd23cbcd91e44bbfe16e2caf6660a17cf31f7344a7bf403a760041438f79d",
+    "archivePath": "source-variants/a92bd23cbcd91e44bbfe16e2caf6660a17cf31f7344a7bf403a760041438f79d.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r1",
+    "sourcePath": "native/src/mixed_meaning_query.rs",
+    "sha256": "b2264ea5aa1a3169cb0685e21441da004123ab3b2bbef88e38f70294a43041d9",
+    "archivePath": "source-variants/b2264ea5aa1a3169cb0685e21441da004123ab3b2bbef88e38f70294a43041d9.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r1",
+    "sourcePath": "native/src/mixed_view.rs",
+    "sha256": "99a9b6abd653feadf4c2c918833f46ee2cf17e8e694be23d131b9aac41665464",
+    "archivePath": "source-variants/99a9b6abd653feadf4c2c918833f46ee2cf17e8e694be23d131b9aac41665464.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r1",
+    "sourcePath": "native/src/mixed_view_cli.rs",
+    "sha256": "28c75a27233246388753f9e8475a45276bbdc1b153cc6eb62c406f4a3b3417b6",
+    "archivePath": "source-variants/28c75a27233246388753f9e8475a45276bbdc1b153cc6eb62c406f4a3b3417b6.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r1",
+    "sourcePath": "native/src/retention.rs",
+    "sha256": "9ee70abdfbeb679b27b85352650a2c61266f984b753bf439b5d9bfc4033c8f05",
+    "archivePath": "source-variants/9ee70abdfbeb679b27b85352650a2c61266f984b753bf439b5d9bfc4033c8f05.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r1",
+    "sourcePath": "native/tests/decision_retention.rs",
+    "sha256": "e1a4c1390de62d18de8163bcfa423a13cf1e22c9d9da4f75c073607c8e67267f",
+    "archivePath": "source-variants/e1a4c1390de62d18de8163bcfa423a13cf1e22c9d9da4f75c073607c8e67267f.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r1",
+    "sourcePath": "native/tests/github_app_worker.rs",
+    "sha256": "1f7873d5ce1c474668701120ef5a70d748d43f4752aa9393effa9203fd88b457",
+    "archivePath": "source-variants/1f7873d5ce1c474668701120ef5a70d748d43f4752aa9393effa9203fd88b457.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r1",
+    "sourcePath": "native/tests/github_app_worker_history.rs",
+    "sha256": "3343515cea2504b183fa18ac732d1966c2af110e4ab4e707e2773f80c01526d4",
+    "archivePath": "source-variants/3343515cea2504b183fa18ac732d1966c2af110e4ab4e707e2773f80c01526d4.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r1",
+    "sourcePath": "native/tests/meaning_build.rs",
+    "sha256": "91d604c038add216a284733b7da28abd596a2ad07f5b43838c2f667f74940fb7",
+    "archivePath": "source-variants/91d604c038add216a284733b7da28abd596a2ad07f5b43838c2f667f74940fb7.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r1",
+    "sourcePath": "native/tests/meaning_graph.rs",
+    "sha256": "3e5c6b3222476e0962b1c83de046f5a2f6edf81ff98a5b8792f6f09b4b56996f",
+    "archivePath": "source-variants/3e5c6b3222476e0962b1c83de046f5a2f6edf81ff98a5b8792f6f09b4b56996f.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r1",
+    "sourcePath": "native/tests/mixed_meaning_claims.rs",
+    "sha256": "ad116f831655fc1701bfa5cc9f0e505fc64cc879b0940c95bcab8718d01d3d42",
+    "archivePath": "source-variants/ad116f831655fc1701bfa5cc9f0e505fc64cc879b0940c95bcab8718d01d3d42.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r1",
+    "sourcePath": "native/tests/mixed_meaning_composition.rs",
+    "sha256": "87f720f5ae304bff5ec1445d799b6ffff90d3ba2b535c9850fba2ee79a08f62a",
+    "archivePath": "source-variants/87f720f5ae304bff5ec1445d799b6ffff90d3ba2b535c9850fba2ee79a08f62a.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r1",
+    "sourcePath": "native/tests/mixed_meaning_provider.rs",
+    "sha256": "15c331069672ae10d5c1182945d1cec6e6d3f3dc204a37b2d3409f332a83151d",
+    "archivePath": "source-variants/15c331069672ae10d5c1182945d1cec6e6d3f3dc204a37b2d3409f332a83151d.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r1",
+    "sourcePath": "native/tests/mixed_meaning_queries.rs",
+    "sha256": "2fb8388c9a7c3b20c1a3f5ef88fecc413245ce03fc6ae6ccd9370ebee401af2d",
+    "archivePath": "source-variants/2fb8388c9a7c3b20c1a3f5ef88fecc413245ce03fc6ae6ccd9370ebee401af2d.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r1",
+    "sourcePath": "native/tests/mixed_pdf_view.rs",
+    "sha256": "a563e4c402e882a67390b294c54af27387856625344f95a2d2e7758b5a1316f0",
+    "archivePath": "source-variants/a563e4c402e882a67390b294c54af27387856625344f95a2d2e7758b5a1316f0.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r1",
+    "sourcePath": "native/tests/mixed_view_cli.rs",
+    "sha256": "c89bd152184ff4348dc79dd01346211a06110ba6d0a958a59a61ecd5e56f71f0",
+    "archivePath": "source-variants/c89bd152184ff4348dc79dd01346211a06110ba6d0a958a59a61ecd5e56f71f0.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r1",
+    "sourcePath": "native/tests/parity_retention.rs",
+    "sha256": "56e1daf79691b0d2869dd210f7942a9aae4c80d9f3dd807885aa9f49585d8ac2",
+    "archivePath": "source-variants/56e1daf79691b0d2869dd210f7942a9aae4c80d9f3dd807885aa9f49585d8ac2.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r1",
+    "sourcePath": "native/tests/retention.rs",
+    "sha256": "1085b0ebe348f13ed5a84b154bbdc7aef2d3447051a267b5df2359c3a4798068",
+    "archivePath": "source-variants/1085b0ebe348f13ed5a84b154bbdc7aef2d3447051a267b5df2359c3a4798068.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r2",
+    "sourcePath": "native/docs/mixed-meaning-queries.md",
+    "sha256": "d39bdfdab8b944082ad3b70c300c36319528b279d096a7e3161e3fefd45b5b94",
+    "archivePath": "source-variants/d39bdfdab8b944082ad3b70c300c36319528b279d096a7e3161e3fefd45b5b94.md",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r2",
+    "sourcePath": "native/README.md",
+    "sha256": "b27aa8fab2a641212b3603afa8551d48152aa2e6549ced03bcdd247084cbf529",
+    "archivePath": "source-variants/b27aa8fab2a641212b3603afa8551d48152aa2e6549ced03bcdd247084cbf529.md",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r2",
+    "sourcePath": "native/src/github_app_digest_history_jobs.rs",
+    "sha256": "9b0d12a73a55b84be5d6eb132830ed724fd374558fb57088509dad20711755de",
+    "archivePath": "source-variants/9b0d12a73a55b84be5d6eb132830ed724fd374558fb57088509dad20711755de.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r2",
+    "sourcePath": "native/src/github_app_worker.rs",
+    "sha256": "6eb4eba068945cec55ef4bd3fa9deb0b5d4285421b6a5f9f42211b5f9bdad8fb",
+    "archivePath": "source-variants/6eb4eba068945cec55ef4bd3fa9deb0b5d4285421b6a5f9f42211b5f9bdad8fb.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r2",
+    "sourcePath": "native/src/github_app_worker_history.rs",
+    "sha256": "3102c94131f765be1428651599734a96c7523517ae85268feaf8252884bda1ec",
+    "archivePath": "source-variants/3102c94131f765be1428651599734a96c7523517ae85268feaf8252884bda1ec.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r2",
+    "sourcePath": "native/src/main.rs",
+    "sha256": "05a104205a2eb65cdaade2814c2cad5ab428b84283ee5fdd4e26c7dca4bf9b51",
+    "archivePath": "source-variants/05a104205a2eb65cdaade2814c2cad5ab428b84283ee5fdd4e26c7dca4bf9b51.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r2",
+    "sourcePath": "native/src/meaning_build.rs",
+    "sha256": "4320a56acc1822fc5140960c6fb98df6f6d4c96d47b564a4d408543f6b6b3463",
+    "archivePath": "source-variants/4320a56acc1822fc5140960c6fb98df6f6d4c96d47b564a4d408543f6b6b3463.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r2",
+    "sourcePath": "native/src/meaning_graph.rs",
+    "sha256": "abb9065655a90c5d5a2fbfdb51d863d496342136c5405e73becf67ff3b87d71d",
+    "archivePath": "source-variants/abb9065655a90c5d5a2fbfdb51d863d496342136c5405e73becf67ff3b87d71d.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r2",
+    "sourcePath": "native/src/mixed_meaning_claims.rs",
+    "sha256": "3876d0bb8ff734bbcd1d884e939c896112d71b34779ae5c3960d2eebc4ea406d",
+    "archivePath": "source-variants/3876d0bb8ff734bbcd1d884e939c896112d71b34779ae5c3960d2eebc4ea406d.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r2",
+    "sourcePath": "native/src/mixed_meaning_cli.rs",
+    "sha256": "cd16b207a105939eaf977beb1689e7552d57f0385716eb2bc6ab247d8293905e",
+    "archivePath": "source-variants/cd16b207a105939eaf977beb1689e7552d57f0385716eb2bc6ab247d8293905e.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r2",
+    "sourcePath": "native/src/mixed_meaning_composition.rs",
+    "sha256": "1f4a228c31716e8d9a036a54fd2329672a6adc782095ec4d1c9bb704b0c034e9",
+    "archivePath": "source-variants/1f4a228c31716e8d9a036a54fd2329672a6adc782095ec4d1c9bb704b0c034e9.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r2",
+    "sourcePath": "native/src/mixed_meaning_input.rs",
+    "sha256": "bebf516e57a7ac606291b4491446458da042cb47b717201cb37ebca128293a5c",
+    "archivePath": "source-variants/bebf516e57a7ac606291b4491446458da042cb47b717201cb37ebca128293a5c.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r2",
+    "sourcePath": "native/src/mixed_meaning_provider.rs",
+    "sha256": "a92bd23cbcd91e44bbfe16e2caf6660a17cf31f7344a7bf403a760041438f79d",
+    "archivePath": "source-variants/a92bd23cbcd91e44bbfe16e2caf6660a17cf31f7344a7bf403a760041438f79d.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r2",
+    "sourcePath": "native/src/mixed_meaning_query.rs",
+    "sha256": "b2264ea5aa1a3169cb0685e21441da004123ab3b2bbef88e38f70294a43041d9",
+    "archivePath": "source-variants/b2264ea5aa1a3169cb0685e21441da004123ab3b2bbef88e38f70294a43041d9.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r2",
+    "sourcePath": "native/src/mixed_view.rs",
+    "sha256": "99a9b6abd653feadf4c2c918833f46ee2cf17e8e694be23d131b9aac41665464",
+    "archivePath": "source-variants/99a9b6abd653feadf4c2c918833f46ee2cf17e8e694be23d131b9aac41665464.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r2",
+    "sourcePath": "native/src/mixed_view_cli.rs",
+    "sha256": "28c75a27233246388753f9e8475a45276bbdc1b153cc6eb62c406f4a3b3417b6",
+    "archivePath": "source-variants/28c75a27233246388753f9e8475a45276bbdc1b153cc6eb62c406f4a3b3417b6.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r2",
+    "sourcePath": "native/src/retention.rs",
+    "sha256": "9ee70abdfbeb679b27b85352650a2c61266f984b753bf439b5d9bfc4033c8f05",
+    "archivePath": "source-variants/9ee70abdfbeb679b27b85352650a2c61266f984b753bf439b5d9bfc4033c8f05.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r2",
+    "sourcePath": "native/tests/decision_retention.rs",
+    "sha256": "e1a4c1390de62d18de8163bcfa423a13cf1e22c9d9da4f75c073607c8e67267f",
+    "archivePath": "source-variants/e1a4c1390de62d18de8163bcfa423a13cf1e22c9d9da4f75c073607c8e67267f.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r2",
+    "sourcePath": "native/tests/github_app_worker.rs",
+    "sha256": "1f7873d5ce1c474668701120ef5a70d748d43f4752aa9393effa9203fd88b457",
+    "archivePath": "source-variants/1f7873d5ce1c474668701120ef5a70d748d43f4752aa9393effa9203fd88b457.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r2",
+    "sourcePath": "native/tests/github_app_worker_history.rs",
+    "sha256": "3343515cea2504b183fa18ac732d1966c2af110e4ab4e707e2773f80c01526d4",
+    "archivePath": "source-variants/3343515cea2504b183fa18ac732d1966c2af110e4ab4e707e2773f80c01526d4.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r2",
+    "sourcePath": "native/tests/meaning_build.rs",
+    "sha256": "91d604c038add216a284733b7da28abd596a2ad07f5b43838c2f667f74940fb7",
+    "archivePath": "source-variants/91d604c038add216a284733b7da28abd596a2ad07f5b43838c2f667f74940fb7.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r2",
+    "sourcePath": "native/tests/meaning_graph.rs",
+    "sha256": "3e5c6b3222476e0962b1c83de046f5a2f6edf81ff98a5b8792f6f09b4b56996f",
+    "archivePath": "source-variants/3e5c6b3222476e0962b1c83de046f5a2f6edf81ff98a5b8792f6f09b4b56996f.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r2",
+    "sourcePath": "native/tests/mixed_meaning_claims.rs",
+    "sha256": "ad116f831655fc1701bfa5cc9f0e505fc64cc879b0940c95bcab8718d01d3d42",
+    "archivePath": "source-variants/ad116f831655fc1701bfa5cc9f0e505fc64cc879b0940c95bcab8718d01d3d42.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r2",
+    "sourcePath": "native/tests/mixed_meaning_composition.rs",
+    "sha256": "87f720f5ae304bff5ec1445d799b6ffff90d3ba2b535c9850fba2ee79a08f62a",
+    "archivePath": "source-variants/87f720f5ae304bff5ec1445d799b6ffff90d3ba2b535c9850fba2ee79a08f62a.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r2",
+    "sourcePath": "native/tests/mixed_meaning_provider.rs",
+    "sha256": "15c331069672ae10d5c1182945d1cec6e6d3f3dc204a37b2d3409f332a83151d",
+    "archivePath": "source-variants/15c331069672ae10d5c1182945d1cec6e6d3f3dc204a37b2d3409f332a83151d.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r2",
+    "sourcePath": "native/tests/mixed_meaning_queries.rs",
+    "sha256": "2fb8388c9a7c3b20c1a3f5ef88fecc413245ce03fc6ae6ccd9370ebee401af2d",
+    "archivePath": "source-variants/2fb8388c9a7c3b20c1a3f5ef88fecc413245ce03fc6ae6ccd9370ebee401af2d.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r2",
+    "sourcePath": "native/tests/mixed_pdf_view.rs",
+    "sha256": "a563e4c402e882a67390b294c54af27387856625344f95a2d2e7758b5a1316f0",
+    "archivePath": "source-variants/a563e4c402e882a67390b294c54af27387856625344f95a2d2e7758b5a1316f0.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r2",
+    "sourcePath": "native/tests/mixed_view_cli.rs",
+    "sha256": "c89bd152184ff4348dc79dd01346211a06110ba6d0a958a59a61ecd5e56f71f0",
+    "archivePath": "source-variants/c89bd152184ff4348dc79dd01346211a06110ba6d0a958a59a61ecd5e56f71f0.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r2",
+    "sourcePath": "native/tests/parity_retention.rs",
+    "sha256": "56e1daf79691b0d2869dd210f7942a9aae4c80d9f3dd807885aa9f49585d8ac2",
+    "archivePath": "source-variants/56e1daf79691b0d2869dd210f7942a9aae4c80d9f3dd807885aa9f49585d8ac2.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r2",
+    "sourcePath": "native/tests/retention.rs",
+    "sha256": "1085b0ebe348f13ed5a84b154bbdc7aef2d3447051a267b5df2359c3a4798068",
+    "archivePath": "source-variants/1085b0ebe348f13ed5a84b154bbdc7aef2d3447051a267b5df2359c3a4798068.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r2",
+    "sourcePath": "native/tests/support/github_app_worker_history_fixture.rs",
+    "sha256": "745b646e26d0ed58ecab9249b8e86f491540302c0ccf62fa931186a18ce2f127",
+    "archivePath": "source-variants/745b646e26d0ed58ecab9249b8e86f491540302c0ccf62fa931186a18ce2f127.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r3",
+    "sourcePath": "native/docs/mixed-meaning-queries.md",
+    "sha256": "d39bdfdab8b944082ad3b70c300c36319528b279d096a7e3161e3fefd45b5b94",
+    "archivePath": "source-variants/d39bdfdab8b944082ad3b70c300c36319528b279d096a7e3161e3fefd45b5b94.md",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r3",
+    "sourcePath": "native/README.md",
+    "sha256": "b27aa8fab2a641212b3603afa8551d48152aa2e6549ced03bcdd247084cbf529",
+    "archivePath": "source-variants/b27aa8fab2a641212b3603afa8551d48152aa2e6549ced03bcdd247084cbf529.md",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r3",
+    "sourcePath": "native/src/github_app_digest_history_jobs.rs",
+    "sha256": "9b0d12a73a55b84be5d6eb132830ed724fd374558fb57088509dad20711755de",
+    "archivePath": "source-variants/9b0d12a73a55b84be5d6eb132830ed724fd374558fb57088509dad20711755de.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r3",
+    "sourcePath": "native/src/github_app_worker.rs",
+    "sha256": "6eb4eba068945cec55ef4bd3fa9deb0b5d4285421b6a5f9f42211b5f9bdad8fb",
+    "archivePath": "source-variants/6eb4eba068945cec55ef4bd3fa9deb0b5d4285421b6a5f9f42211b5f9bdad8fb.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r3",
+    "sourcePath": "native/src/github_app_worker_history.rs",
+    "sha256": "3102c94131f765be1428651599734a96c7523517ae85268feaf8252884bda1ec",
+    "archivePath": "source-variants/3102c94131f765be1428651599734a96c7523517ae85268feaf8252884bda1ec.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r3",
+    "sourcePath": "native/src/main.rs",
+    "sha256": "05a104205a2eb65cdaade2814c2cad5ab428b84283ee5fdd4e26c7dca4bf9b51",
+    "archivePath": "source-variants/05a104205a2eb65cdaade2814c2cad5ab428b84283ee5fdd4e26c7dca4bf9b51.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r3",
+    "sourcePath": "native/src/meaning_build.rs",
+    "sha256": "4320a56acc1822fc5140960c6fb98df6f6d4c96d47b564a4d408543f6b6b3463",
+    "archivePath": "source-variants/4320a56acc1822fc5140960c6fb98df6f6d4c96d47b564a4d408543f6b6b3463.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r3",
+    "sourcePath": "native/src/meaning_graph.rs",
+    "sha256": "abb9065655a90c5d5a2fbfdb51d863d496342136c5405e73becf67ff3b87d71d",
+    "archivePath": "source-variants/abb9065655a90c5d5a2fbfdb51d863d496342136c5405e73becf67ff3b87d71d.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r3",
+    "sourcePath": "native/src/mixed_meaning_claims.rs",
+    "sha256": "3876d0bb8ff734bbcd1d884e939c896112d71b34779ae5c3960d2eebc4ea406d",
+    "archivePath": "source-variants/3876d0bb8ff734bbcd1d884e939c896112d71b34779ae5c3960d2eebc4ea406d.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r3",
+    "sourcePath": "native/src/mixed_meaning_cli.rs",
+    "sha256": "cd16b207a105939eaf977beb1689e7552d57f0385716eb2bc6ab247d8293905e",
+    "archivePath": "source-variants/cd16b207a105939eaf977beb1689e7552d57f0385716eb2bc6ab247d8293905e.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r3",
+    "sourcePath": "native/src/mixed_meaning_composition.rs",
+    "sha256": "1f4a228c31716e8d9a036a54fd2329672a6adc782095ec4d1c9bb704b0c034e9",
+    "archivePath": "source-variants/1f4a228c31716e8d9a036a54fd2329672a6adc782095ec4d1c9bb704b0c034e9.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r3",
+    "sourcePath": "native/src/mixed_meaning_input.rs",
+    "sha256": "bebf516e57a7ac606291b4491446458da042cb47b717201cb37ebca128293a5c",
+    "archivePath": "source-variants/bebf516e57a7ac606291b4491446458da042cb47b717201cb37ebca128293a5c.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r3",
+    "sourcePath": "native/src/mixed_meaning_provider.rs",
+    "sha256": "a92bd23cbcd91e44bbfe16e2caf6660a17cf31f7344a7bf403a760041438f79d",
+    "archivePath": "source-variants/a92bd23cbcd91e44bbfe16e2caf6660a17cf31f7344a7bf403a760041438f79d.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r3",
+    "sourcePath": "native/src/mixed_meaning_query.rs",
+    "sha256": "b2264ea5aa1a3169cb0685e21441da004123ab3b2bbef88e38f70294a43041d9",
+    "archivePath": "source-variants/b2264ea5aa1a3169cb0685e21441da004123ab3b2bbef88e38f70294a43041d9.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r3",
+    "sourcePath": "native/src/mixed_view.rs",
+    "sha256": "99a9b6abd653feadf4c2c918833f46ee2cf17e8e694be23d131b9aac41665464",
+    "archivePath": "source-variants/99a9b6abd653feadf4c2c918833f46ee2cf17e8e694be23d131b9aac41665464.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r3",
+    "sourcePath": "native/src/mixed_view_cli.rs",
+    "sha256": "28c75a27233246388753f9e8475a45276bbdc1b153cc6eb62c406f4a3b3417b6",
+    "archivePath": "source-variants/28c75a27233246388753f9e8475a45276bbdc1b153cc6eb62c406f4a3b3417b6.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r3",
+    "sourcePath": "native/src/retention.rs",
+    "sha256": "9ee70abdfbeb679b27b85352650a2c61266f984b753bf439b5d9bfc4033c8f05",
+    "archivePath": "source-variants/9ee70abdfbeb679b27b85352650a2c61266f984b753bf439b5d9bfc4033c8f05.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r3",
+    "sourcePath": "native/tests/decision_retention.rs",
+    "sha256": "e1a4c1390de62d18de8163bcfa423a13cf1e22c9d9da4f75c073607c8e67267f",
+    "archivePath": "source-variants/e1a4c1390de62d18de8163bcfa423a13cf1e22c9d9da4f75c073607c8e67267f.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r3",
+    "sourcePath": "native/tests/github_app_worker.rs",
+    "sha256": "1f7873d5ce1c474668701120ef5a70d748d43f4752aa9393effa9203fd88b457",
+    "archivePath": "source-variants/1f7873d5ce1c474668701120ef5a70d748d43f4752aa9393effa9203fd88b457.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r3",
+    "sourcePath": "native/tests/meaning_build.rs",
+    "sha256": "91d604c038add216a284733b7da28abd596a2ad07f5b43838c2f667f74940fb7",
+    "archivePath": "source-variants/91d604c038add216a284733b7da28abd596a2ad07f5b43838c2f667f74940fb7.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r3",
+    "sourcePath": "native/tests/meaning_graph.rs",
+    "sha256": "3e5c6b3222476e0962b1c83de046f5a2f6edf81ff98a5b8792f6f09b4b56996f",
+    "archivePath": "source-variants/3e5c6b3222476e0962b1c83de046f5a2f6edf81ff98a5b8792f6f09b4b56996f.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r3",
+    "sourcePath": "native/tests/mixed_meaning_claims.rs",
+    "sha256": "ad116f831655fc1701bfa5cc9f0e505fc64cc879b0940c95bcab8718d01d3d42",
+    "archivePath": "source-variants/ad116f831655fc1701bfa5cc9f0e505fc64cc879b0940c95bcab8718d01d3d42.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r3",
+    "sourcePath": "native/tests/mixed_meaning_composition.rs",
+    "sha256": "87f720f5ae304bff5ec1445d799b6ffff90d3ba2b535c9850fba2ee79a08f62a",
+    "archivePath": "source-variants/87f720f5ae304bff5ec1445d799b6ffff90d3ba2b535c9850fba2ee79a08f62a.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r3",
+    "sourcePath": "native/tests/mixed_meaning_provider.rs",
+    "sha256": "15c331069672ae10d5c1182945d1cec6e6d3f3dc204a37b2d3409f332a83151d",
+    "archivePath": "source-variants/15c331069672ae10d5c1182945d1cec6e6d3f3dc204a37b2d3409f332a83151d.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r3",
+    "sourcePath": "native/tests/mixed_meaning_queries.rs",
+    "sha256": "2fb8388c9a7c3b20c1a3f5ef88fecc413245ce03fc6ae6ccd9370ebee401af2d",
+    "archivePath": "source-variants/2fb8388c9a7c3b20c1a3f5ef88fecc413245ce03fc6ae6ccd9370ebee401af2d.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r3",
+    "sourcePath": "native/tests/mixed_pdf_view.rs",
+    "sha256": "a563e4c402e882a67390b294c54af27387856625344f95a2d2e7758b5a1316f0",
+    "archivePath": "source-variants/a563e4c402e882a67390b294c54af27387856625344f95a2d2e7758b5a1316f0.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r3",
+    "sourcePath": "native/tests/mixed_view_cli.rs",
+    "sha256": "c89bd152184ff4348dc79dd01346211a06110ba6d0a958a59a61ecd5e56f71f0",
+    "archivePath": "source-variants/c89bd152184ff4348dc79dd01346211a06110ba6d0a958a59a61ecd5e56f71f0.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r3",
+    "sourcePath": "native/tests/parity_retention.rs",
+    "sha256": "56e1daf79691b0d2869dd210f7942a9aae4c80d9f3dd807885aa9f49585d8ac2",
+    "archivePath": "source-variants/56e1daf79691b0d2869dd210f7942a9aae4c80d9f3dd807885aa9f49585d8ac2.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r3",
+    "sourcePath": "native/tests/retention.rs",
+    "sha256": "1085b0ebe348f13ed5a84b154bbdc7aef2d3447051a267b5df2359c3a4798068",
+    "archivePath": "source-variants/1085b0ebe348f13ed5a84b154bbdc7aef2d3447051a267b5df2359c3a4798068.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "feature-r3",
+    "sourcePath": "native/tests/support/github_app_worker_history_fixture.rs",
+    "sha256": "745b646e26d0ed58ecab9249b8e86f491540302c0ccf62fa931186a18ce2f127",
+    "archivePath": "source-variants/745b646e26d0ed58ecab9249b8e86f491540302c0ccf62fa931186a18ce2f127.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "fence-r1",
+    "sourcePath": "native/docs/app-history-integration.md",
+    "sha256": "831bd120e7c61392438b7a8fc96ae28a789b55d811206c345471825171c79a2b",
+    "archivePath": "source-variants/831bd120e7c61392438b7a8fc96ae28a789b55d811206c345471825171c79a2b.md",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "fence-r1",
+    "sourcePath": "native/docs/github-app-workers.md",
+    "sha256": "a3a1b2169a74e3fc2e334d63771645a067e5ef3b0ae76a91bb2c53d924be4840",
+    "archivePath": "source-variants/a3a1b2169a74e3fc2e334d63771645a067e5ef3b0ae76a91bb2c53d924be4840.md",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "fence-r1",
+    "sourcePath": "native/README.md",
+    "sha256": "1cdc5bc96dfe05d4f7d95acdbfb3495aa7b65713c4f55d4e01b458ce161aac28",
+    "archivePath": "source-variants/1cdc5bc96dfe05d4f7d95acdbfb3495aa7b65713c4f55d4e01b458ce161aac28.md",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "fence-r1",
+    "sourcePath": "native/src/github_app_digest_acquisition.rs",
+    "sha256": "028df855bade7958b31e4fdbfe0ba009b3e5801a8ab9f60ccfaac20701202692",
+    "archivePath": "source-variants/028df855bade7958b31e4fdbfe0ba009b3e5801a8ab9f60ccfaac20701202692.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "fence-r1",
+    "sourcePath": "native/src/github_app_digest_history_jobs.rs",
+    "sha256": "5dbbfa335cbb808d9d4915de33c4e645cae1b7ec35bcfe174fa99f04490b73ee",
+    "archivePath": "source-variants/5dbbfa335cbb808d9d4915de33c4e645cae1b7ec35bcfe174fa99f04490b73ee.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "fence-r1",
+    "sourcePath": "native/src/github_app_history_cli.rs",
+    "sha256": "b96c4faf98c02a4f5988a1d79f1e6463d1fb9de74da4aa8f72eb3e2de9ba445e",
+    "archivePath": "source-variants/b96c4faf98c02a4f5988a1d79f1e6463d1fb9de74da4aa8f72eb3e2de9ba445e.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "fence-r1",
+    "sourcePath": "native/src/github_app_worker.rs",
+    "sha256": "6eb4eba068945cec55ef4bd3fa9deb0b5d4285421b6a5f9f42211b5f9bdad8fb",
+    "archivePath": "source-variants/6eb4eba068945cec55ef4bd3fa9deb0b5d4285421b6a5f9f42211b5f9bdad8fb.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "fence-r1",
+    "sourcePath": "native/src/github_app_worker_cli.rs",
+    "sha256": "6d309711a3b336f4a5d8d55edf8aecb1debef49a675cf4566ccf5844c390e63b",
+    "archivePath": "source-variants/6d309711a3b336f4a5d8d55edf8aecb1debef49a675cf4566ccf5844c390e63b.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "fence-r1",
+    "sourcePath": "native/src/github_app_worker_history.rs",
+    "sha256": "3ff1366cf623ff252d5c0e2705b3af0360c43ae8613dc199a2ad3e010d45c7f5",
+    "archivePath": "source-variants/3ff1366cf623ff252d5c0e2705b3af0360c43ae8613dc199a2ad3e010d45c7f5.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "fence-r1",
+    "sourcePath": "native/src/main.rs",
+    "sha256": "336c051aca06890eb173adc7a958f7fb409c92f89a448c09c4eecad6fe492764",
+    "archivePath": "source-variants/336c051aca06890eb173adc7a958f7fb409c92f89a448c09c4eecad6fe492764.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "fence-r1",
+    "sourcePath": "native/src/retention.rs",
+    "sha256": "9ee70abdfbeb679b27b85352650a2c61266f984b753bf439b5d9bfc4033c8f05",
+    "archivePath": "source-variants/9ee70abdfbeb679b27b85352650a2c61266f984b753bf439b5d9bfc4033c8f05.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "fence-r1",
+    "sourcePath": "native/tests/github_app_history_bridge.rs",
+    "sha256": "c4ef62b374085554d590ddfb3bab23e7f41c9745c477eb62267f5362fb0329ca",
+    "archivePath": "source-variants/c4ef62b374085554d590ddfb3bab23e7f41c9745c477eb62267f5362fb0329ca.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "fence-r1",
+    "sourcePath": "native/tests/github_app_history_cli.rs",
+    "sha256": "8e3e5c498816bbb1d16342ec34a32746c9d210680dcd6ea4319c07eee629a114",
+    "archivePath": "source-variants/8e3e5c498816bbb1d16342ec34a32746c9d210680dcd6ea4319c07eee629a114.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "fence-r1",
+    "sourcePath": "native/tests/support/github_app_worker_history_fixture.rs",
+    "sha256": "5248e287e79085493a8c2ae8d2fe0d985c2d29ba092c982493c92daf8daec143",
+    "archivePath": "source-variants/5248e287e79085493a8c2ae8d2fe0d985c2d29ba092c982493c92daf8daec143.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "final-r1",
+    "sourcePath": "native/docs/app-history-integration.md",
+    "sha256": "831bd120e7c61392438b7a8fc96ae28a789b55d811206c345471825171c79a2b",
+    "archivePath": "source-variants/831bd120e7c61392438b7a8fc96ae28a789b55d811206c345471825171c79a2b.md",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "final-r1",
+    "sourcePath": "native/docs/github-app-workers.md",
+    "sha256": "a3a1b2169a74e3fc2e334d63771645a067e5ef3b0ae76a91bb2c53d924be4840",
+    "archivePath": "source-variants/a3a1b2169a74e3fc2e334d63771645a067e5ef3b0ae76a91bb2c53d924be4840.md",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "final-r1",
+    "sourcePath": "native/README.md",
+    "sha256": "1cdc5bc96dfe05d4f7d95acdbfb3495aa7b65713c4f55d4e01b458ce161aac28",
+    "archivePath": "source-variants/1cdc5bc96dfe05d4f7d95acdbfb3495aa7b65713c4f55d4e01b458ce161aac28.md",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "final-r1",
+    "sourcePath": "native/src/github_app_digest_acquisition.rs",
+    "sha256": "028df855bade7958b31e4fdbfe0ba009b3e5801a8ab9f60ccfaac20701202692",
+    "archivePath": "source-variants/028df855bade7958b31e4fdbfe0ba009b3e5801a8ab9f60ccfaac20701202692.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "final-r1",
+    "sourcePath": "native/src/github_app_digest_history_jobs.rs",
+    "sha256": "5dbbfa335cbb808d9d4915de33c4e645cae1b7ec35bcfe174fa99f04490b73ee",
+    "archivePath": "source-variants/5dbbfa335cbb808d9d4915de33c4e645cae1b7ec35bcfe174fa99f04490b73ee.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "final-r1",
+    "sourcePath": "native/src/github_app_history_cli.rs",
+    "sha256": "b96c4faf98c02a4f5988a1d79f1e6463d1fb9de74da4aa8f72eb3e2de9ba445e",
+    "archivePath": "source-variants/b96c4faf98c02a4f5988a1d79f1e6463d1fb9de74da4aa8f72eb3e2de9ba445e.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "final-r1",
+    "sourcePath": "native/src/github_app_worker.rs",
+    "sha256": "6eb4eba068945cec55ef4bd3fa9deb0b5d4285421b6a5f9f42211b5f9bdad8fb",
+    "archivePath": "source-variants/6eb4eba068945cec55ef4bd3fa9deb0b5d4285421b6a5f9f42211b5f9bdad8fb.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "final-r1",
+    "sourcePath": "native/src/github_app_worker_cli.rs",
+    "sha256": "6d309711a3b336f4a5d8d55edf8aecb1debef49a675cf4566ccf5844c390e63b",
+    "archivePath": "source-variants/6d309711a3b336f4a5d8d55edf8aecb1debef49a675cf4566ccf5844c390e63b.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "final-r1",
+    "sourcePath": "native/src/github_app_worker_history.rs",
+    "sha256": "3ff1366cf623ff252d5c0e2705b3af0360c43ae8613dc199a2ad3e010d45c7f5",
+    "archivePath": "source-variants/3ff1366cf623ff252d5c0e2705b3af0360c43ae8613dc199a2ad3e010d45c7f5.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "final-r1",
+    "sourcePath": "native/src/main.rs",
+    "sha256": "336c051aca06890eb173adc7a958f7fb409c92f89a448c09c4eecad6fe492764",
+    "archivePath": "source-variants/336c051aca06890eb173adc7a958f7fb409c92f89a448c09c4eecad6fe492764.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "final-r1",
+    "sourcePath": "native/src/retention.rs",
+    "sha256": "9ee70abdfbeb679b27b85352650a2c61266f984b753bf439b5d9bfc4033c8f05",
+    "archivePath": "source-variants/9ee70abdfbeb679b27b85352650a2c61266f984b753bf439b5d9bfc4033c8f05.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "final-r1",
+    "sourcePath": "native/tests/github_app_history_bridge.rs",
+    "sha256": "72d820d9c8b529dda491fc0f2310cc7b88f0df2b4ed8e5f016e756bd38ea4e4e",
+    "archivePath": "source-variants/72d820d9c8b529dda491fc0f2310cc7b88f0df2b4ed8e5f016e756bd38ea4e4e.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "final-r1",
+    "sourcePath": "native/tests/github_app_history_cli.rs",
+    "sha256": "8e3e5c498816bbb1d16342ec34a32746c9d210680dcd6ea4319c07eee629a114",
+    "archivePath": "source-variants/8e3e5c498816bbb1d16342ec34a32746c9d210680dcd6ea4319c07eee629a114.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "final-r1",
+    "sourcePath": "native/tests/support/github_app_worker_history_fixture.rs",
+    "sha256": "5248e287e79085493a8c2ae8d2fe0d985c2d29ba092c982493c92daf8daec143",
+    "archivePath": "source-variants/5248e287e79085493a8c2ae8d2fe0d985c2d29ba092c982493c92daf8daec143.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "final-r2",
+    "sourcePath": "native/docs/app-history-integration.md",
+    "sha256": "831bd120e7c61392438b7a8fc96ae28a789b55d811206c345471825171c79a2b",
+    "archivePath": "source-variants/831bd120e7c61392438b7a8fc96ae28a789b55d811206c345471825171c79a2b.md",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "final-r2",
+    "sourcePath": "native/docs/github-app-workers.md",
+    "sha256": "a3a1b2169a74e3fc2e334d63771645a067e5ef3b0ae76a91bb2c53d924be4840",
+    "archivePath": "source-variants/a3a1b2169a74e3fc2e334d63771645a067e5ef3b0ae76a91bb2c53d924be4840.md",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "final-r2",
+    "sourcePath": "native/README.md",
+    "sha256": "1cdc5bc96dfe05d4f7d95acdbfb3495aa7b65713c4f55d4e01b458ce161aac28",
+    "archivePath": "source-variants/1cdc5bc96dfe05d4f7d95acdbfb3495aa7b65713c4f55d4e01b458ce161aac28.md",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "final-r2",
+    "sourcePath": "native/src/github_app_digest_acquisition.rs",
+    "sha256": "028df855bade7958b31e4fdbfe0ba009b3e5801a8ab9f60ccfaac20701202692",
+    "archivePath": "source-variants/028df855bade7958b31e4fdbfe0ba009b3e5801a8ab9f60ccfaac20701202692.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "final-r2",
+    "sourcePath": "native/src/github_app_digest_history_jobs.rs",
+    "sha256": "5dbbfa335cbb808d9d4915de33c4e645cae1b7ec35bcfe174fa99f04490b73ee",
+    "archivePath": "source-variants/5dbbfa335cbb808d9d4915de33c4e645cae1b7ec35bcfe174fa99f04490b73ee.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "final-r2",
+    "sourcePath": "native/src/github_app_history_cli.rs",
+    "sha256": "b96c4faf98c02a4f5988a1d79f1e6463d1fb9de74da4aa8f72eb3e2de9ba445e",
+    "archivePath": "source-variants/b96c4faf98c02a4f5988a1d79f1e6463d1fb9de74da4aa8f72eb3e2de9ba445e.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "final-r2",
+    "sourcePath": "native/src/github_app_worker.rs",
+    "sha256": "6eb4eba068945cec55ef4bd3fa9deb0b5d4285421b6a5f9f42211b5f9bdad8fb",
+    "archivePath": "source-variants/6eb4eba068945cec55ef4bd3fa9deb0b5d4285421b6a5f9f42211b5f9bdad8fb.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "final-r2",
+    "sourcePath": "native/src/github_app_worker_cli.rs",
+    "sha256": "6d309711a3b336f4a5d8d55edf8aecb1debef49a675cf4566ccf5844c390e63b",
+    "archivePath": "source-variants/6d309711a3b336f4a5d8d55edf8aecb1debef49a675cf4566ccf5844c390e63b.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "final-r2",
+    "sourcePath": "native/src/github_app_worker_history.rs",
+    "sha256": "5eab74eee9545cea06515b669b9bb4389964935bd0c34cd03e35faba4d6775d6",
+    "archivePath": "source-variants/5eab74eee9545cea06515b669b9bb4389964935bd0c34cd03e35faba4d6775d6.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "final-r2",
+    "sourcePath": "native/src/main.rs",
+    "sha256": "336c051aca06890eb173adc7a958f7fb409c92f89a448c09c4eecad6fe492764",
+    "archivePath": "source-variants/336c051aca06890eb173adc7a958f7fb409c92f89a448c09c4eecad6fe492764.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "final-r2",
+    "sourcePath": "native/src/retention.rs",
+    "sha256": "9ee70abdfbeb679b27b85352650a2c61266f984b753bf439b5d9bfc4033c8f05",
+    "archivePath": "source-variants/9ee70abdfbeb679b27b85352650a2c61266f984b753bf439b5d9bfc4033c8f05.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "final-r2",
+    "sourcePath": "native/tests/github_app_history_bridge.rs",
+    "sha256": "c4ef62b374085554d590ddfb3bab23e7f41c9745c477eb62267f5362fb0329ca",
+    "archivePath": "source-variants/c4ef62b374085554d590ddfb3bab23e7f41c9745c477eb62267f5362fb0329ca.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "final-r2",
+    "sourcePath": "native/tests/github_app_history_cli.rs",
+    "sha256": "8e3e5c498816bbb1d16342ec34a32746c9d210680dcd6ea4319c07eee629a114",
+    "archivePath": "source-variants/8e3e5c498816bbb1d16342ec34a32746c9d210680dcd6ea4319c07eee629a114.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "final-r2",
+    "sourcePath": "native/tests/support/github_app_worker_history_fixture.rs",
+    "sha256": "5248e287e79085493a8c2ae8d2fe0d985c2d29ba092c982493c92daf8daec143",
+    "archivePath": "source-variants/5248e287e79085493a8c2ae8d2fe0d985c2d29ba092c982493c92daf8daec143.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "native-final-r3",
+    "sourcePath": "native/docs/app-history-integration.md",
+    "sha256": "831bd120e7c61392438b7a8fc96ae28a789b55d811206c345471825171c79a2b",
+    "archivePath": "source-variants/831bd120e7c61392438b7a8fc96ae28a789b55d811206c345471825171c79a2b.md",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "native-final-r3",
+    "sourcePath": "native/docs/github-app-workers.md",
+    "sha256": "a3a1b2169a74e3fc2e334d63771645a067e5ef3b0ae76a91bb2c53d924be4840",
+    "archivePath": "source-variants/a3a1b2169a74e3fc2e334d63771645a067e5ef3b0ae76a91bb2c53d924be4840.md",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "native-final-r3",
+    "sourcePath": "native/README.md",
+    "sha256": "1cdc5bc96dfe05d4f7d95acdbfb3495aa7b65713c4f55d4e01b458ce161aac28",
+    "archivePath": "source-variants/1cdc5bc96dfe05d4f7d95acdbfb3495aa7b65713c4f55d4e01b458ce161aac28.md",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "native-final-r3",
+    "sourcePath": "native/src/github_app_digest_acquisition.rs",
+    "sha256": "028df855bade7958b31e4fdbfe0ba009b3e5801a8ab9f60ccfaac20701202692",
+    "archivePath": "source-variants/028df855bade7958b31e4fdbfe0ba009b3e5801a8ab9f60ccfaac20701202692.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "native-final-r3",
+    "sourcePath": "native/src/github_app_digest_history_jobs.rs",
+    "sha256": "5dbbfa335cbb808d9d4915de33c4e645cae1b7ec35bcfe174fa99f04490b73ee",
+    "archivePath": "source-variants/5dbbfa335cbb808d9d4915de33c4e645cae1b7ec35bcfe174fa99f04490b73ee.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "native-final-r3",
+    "sourcePath": "native/src/github_app_history_cli.rs",
+    "sha256": "b96c4faf98c02a4f5988a1d79f1e6463d1fb9de74da4aa8f72eb3e2de9ba445e",
+    "archivePath": "source-variants/b96c4faf98c02a4f5988a1d79f1e6463d1fb9de74da4aa8f72eb3e2de9ba445e.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "native-final-r3",
+    "sourcePath": "native/src/github_app_worker.rs",
+    "sha256": "6eb4eba068945cec55ef4bd3fa9deb0b5d4285421b6a5f9f42211b5f9bdad8fb",
+    "archivePath": "source-variants/6eb4eba068945cec55ef4bd3fa9deb0b5d4285421b6a5f9f42211b5f9bdad8fb.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "native-final-r3",
+    "sourcePath": "native/src/github_app_worker_cli.rs",
+    "sha256": "6d309711a3b336f4a5d8d55edf8aecb1debef49a675cf4566ccf5844c390e63b",
+    "archivePath": "source-variants/6d309711a3b336f4a5d8d55edf8aecb1debef49a675cf4566ccf5844c390e63b.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "native-final-r3",
+    "sourcePath": "native/src/github_app_worker_history.rs",
+    "sha256": "5eab74eee9545cea06515b669b9bb4389964935bd0c34cd03e35faba4d6775d6",
+    "archivePath": "source-variants/5eab74eee9545cea06515b669b9bb4389964935bd0c34cd03e35faba4d6775d6.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "native-final-r3",
+    "sourcePath": "native/src/main.rs",
+    "sha256": "336c051aca06890eb173adc7a958f7fb409c92f89a448c09c4eecad6fe492764",
+    "archivePath": "source-variants/336c051aca06890eb173adc7a958f7fb409c92f89a448c09c4eecad6fe492764.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "native-final-r3",
+    "sourcePath": "native/src/retention.rs",
+    "sha256": "9ee70abdfbeb679b27b85352650a2c61266f984b753bf439b5d9bfc4033c8f05",
+    "archivePath": "source-variants/9ee70abdfbeb679b27b85352650a2c61266f984b753bf439b5d9bfc4033c8f05.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "native-final-r3",
+    "sourcePath": "native/tests/github_app_history_bridge.rs",
+    "sha256": "c4ef62b374085554d590ddfb3bab23e7f41c9745c477eb62267f5362fb0329ca",
+    "archivePath": "source-variants/c4ef62b374085554d590ddfb3bab23e7f41c9745c477eb62267f5362fb0329ca.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "native-final-r3",
+    "sourcePath": "native/tests/github_app_history_cli.rs",
+    "sha256": "8e3e5c498816bbb1d16342ec34a32746c9d210680dcd6ea4319c07eee629a114",
+    "archivePath": "source-variants/8e3e5c498816bbb1d16342ec34a32746c9d210680dcd6ea4319c07eee629a114.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "native-final-r3",
+    "sourcePath": "native/tests/support/github_app_worker_history_fixture.rs",
+    "sha256": "5248e287e79085493a8c2ae8d2fe0d985c2d29ba092c982493c92daf8daec143",
+    "archivePath": "source-variants/5248e287e79085493a8c2ae8d2fe0d985c2d29ba092c982493c92daf8daec143.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "native-final-r5",
+    "sourcePath": "native/docs/app-history-integration.md",
+    "sha256": "831bd120e7c61392438b7a8fc96ae28a789b55d811206c345471825171c79a2b",
+    "archivePath": "source-variants/831bd120e7c61392438b7a8fc96ae28a789b55d811206c345471825171c79a2b.md",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "native-final-r5",
+    "sourcePath": "native/docs/github-app-workers.md",
+    "sha256": "a3a1b2169a74e3fc2e334d63771645a067e5ef3b0ae76a91bb2c53d924be4840",
+    "archivePath": "source-variants/a3a1b2169a74e3fc2e334d63771645a067e5ef3b0ae76a91bb2c53d924be4840.md",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "native-final-r5",
+    "sourcePath": "native/README.md",
+    "sha256": "1cdc5bc96dfe05d4f7d95acdbfb3495aa7b65713c4f55d4e01b458ce161aac28",
+    "archivePath": "source-variants/1cdc5bc96dfe05d4f7d95acdbfb3495aa7b65713c4f55d4e01b458ce161aac28.md",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "native-final-r5",
+    "sourcePath": "native/src/github_app_digest_acquisition.rs",
+    "sha256": "028df855bade7958b31e4fdbfe0ba009b3e5801a8ab9f60ccfaac20701202692",
+    "archivePath": "source-variants/028df855bade7958b31e4fdbfe0ba009b3e5801a8ab9f60ccfaac20701202692.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "native-final-r5",
+    "sourcePath": "native/src/github_app_digest_history_jobs.rs",
+    "sha256": "5dbbfa335cbb808d9d4915de33c4e645cae1b7ec35bcfe174fa99f04490b73ee",
+    "archivePath": "source-variants/5dbbfa335cbb808d9d4915de33c4e645cae1b7ec35bcfe174fa99f04490b73ee.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "native-final-r5",
+    "sourcePath": "native/src/github_app_history_cli.rs",
+    "sha256": "b96c4faf98c02a4f5988a1d79f1e6463d1fb9de74da4aa8f72eb3e2de9ba445e",
+    "archivePath": "source-variants/b96c4faf98c02a4f5988a1d79f1e6463d1fb9de74da4aa8f72eb3e2de9ba445e.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "native-final-r5",
+    "sourcePath": "native/src/github_app_worker.rs",
+    "sha256": "6eb4eba068945cec55ef4bd3fa9deb0b5d4285421b6a5f9f42211b5f9bdad8fb",
+    "archivePath": "source-variants/6eb4eba068945cec55ef4bd3fa9deb0b5d4285421b6a5f9f42211b5f9bdad8fb.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "native-final-r5",
+    "sourcePath": "native/src/github_app_worker_cli.rs",
+    "sha256": "6d309711a3b336f4a5d8d55edf8aecb1debef49a675cf4566ccf5844c390e63b",
+    "archivePath": "source-variants/6d309711a3b336f4a5d8d55edf8aecb1debef49a675cf4566ccf5844c390e63b.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "native-final-r5",
+    "sourcePath": "native/src/github_app_worker_history.rs",
+    "sha256": "5eab74eee9545cea06515b669b9bb4389964935bd0c34cd03e35faba4d6775d6",
+    "archivePath": "source-variants/5eab74eee9545cea06515b669b9bb4389964935bd0c34cd03e35faba4d6775d6.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "native-final-r5",
+    "sourcePath": "native/src/main.rs",
+    "sha256": "336c051aca06890eb173adc7a958f7fb409c92f89a448c09c4eecad6fe492764",
+    "archivePath": "source-variants/336c051aca06890eb173adc7a958f7fb409c92f89a448c09c4eecad6fe492764.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "native-final-r5",
+    "sourcePath": "native/src/retention.rs",
+    "sha256": "9ee70abdfbeb679b27b85352650a2c61266f984b753bf439b5d9bfc4033c8f05",
+    "archivePath": "source-variants/9ee70abdfbeb679b27b85352650a2c61266f984b753bf439b5d9bfc4033c8f05.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "native-final-r5",
+    "sourcePath": "native/tests/github_app_history_bridge.rs",
+    "sha256": "c4ef62b374085554d590ddfb3bab23e7f41c9745c477eb62267f5362fb0329ca",
+    "archivePath": "source-variants/c4ef62b374085554d590ddfb3bab23e7f41c9745c477eb62267f5362fb0329ca.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "native-final-r5",
+    "sourcePath": "native/tests/github_app_history_cli.rs",
+    "sha256": "8e3e5c498816bbb1d16342ec34a32746c9d210680dcd6ea4319c07eee629a114",
+    "archivePath": "source-variants/8e3e5c498816bbb1d16342ec34a32746c9d210680dcd6ea4319c07eee629a114.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "native-final-r5",
+    "sourcePath": "native/tests/support/github_app_worker_history_fixture.rs",
+    "sha256": "5248e287e79085493a8c2ae8d2fe0d985c2d29ba092c982493c92daf8daec143",
+    "archivePath": "source-variants/5248e287e79085493a8c2ae8d2fe0d985c2d29ba092c982493c92daf8daec143.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "prerequisites-r1",
+    "sourcePath": "native/docs/mixed-meaning-queries.md",
+    "sha256": "d39bdfdab8b944082ad3b70c300c36319528b279d096a7e3161e3fefd45b5b94",
+    "archivePath": "source-variants/d39bdfdab8b944082ad3b70c300c36319528b279d096a7e3161e3fefd45b5b94.md",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "prerequisites-r1",
+    "sourcePath": "native/README.md",
+    "sha256": "b27aa8fab2a641212b3603afa8551d48152aa2e6549ced03bcdd247084cbf529",
+    "archivePath": "source-variants/b27aa8fab2a641212b3603afa8551d48152aa2e6549ced03bcdd247084cbf529.md",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "prerequisites-r1",
+    "sourcePath": "native/src/github_app_digest_history_jobs.rs",
+    "sha256": "202861b4c0088d2e09e2a365bb2beab6519e7a2de102c6625905b7a42d4f0c25",
+    "archivePath": "source-variants/202861b4c0088d2e09e2a365bb2beab6519e7a2de102c6625905b7a42d4f0c25.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "prerequisites-r1",
+    "sourcePath": "native/src/github_app_worker.rs",
+    "sha256": "e48e4cd5aba3aefe85417102fbfed307cf662281da6a26289ca260f453ca51ee",
+    "archivePath": "source-variants/e48e4cd5aba3aefe85417102fbfed307cf662281da6a26289ca260f453ca51ee.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "prerequisites-r1",
+    "sourcePath": "native/src/github_app_worker_history.rs",
+    "sha256": "a42c98f77091567ae6fab4b82d193ad8bdeb914da44d459b349b5315650f852a",
+    "archivePath": "source-variants/a42c98f77091567ae6fab4b82d193ad8bdeb914da44d459b349b5315650f852a.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "prerequisites-r1",
+    "sourcePath": "native/src/main.rs",
+    "sha256": "05a104205a2eb65cdaade2814c2cad5ab428b84283ee5fdd4e26c7dca4bf9b51",
+    "archivePath": "source-variants/05a104205a2eb65cdaade2814c2cad5ab428b84283ee5fdd4e26c7dca4bf9b51.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "prerequisites-r1",
+    "sourcePath": "native/src/meaning_build.rs",
+    "sha256": "4320a56acc1822fc5140960c6fb98df6f6d4c96d47b564a4d408543f6b6b3463",
+    "archivePath": "source-variants/4320a56acc1822fc5140960c6fb98df6f6d4c96d47b564a4d408543f6b6b3463.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "prerequisites-r1",
+    "sourcePath": "native/src/meaning_graph.rs",
+    "sha256": "abb9065655a90c5d5a2fbfdb51d863d496342136c5405e73becf67ff3b87d71d",
+    "archivePath": "source-variants/abb9065655a90c5d5a2fbfdb51d863d496342136c5405e73becf67ff3b87d71d.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "prerequisites-r1",
+    "sourcePath": "native/src/mixed_meaning_claims.rs",
+    "sha256": "3876d0bb8ff734bbcd1d884e939c896112d71b34779ae5c3960d2eebc4ea406d",
+    "archivePath": "source-variants/3876d0bb8ff734bbcd1d884e939c896112d71b34779ae5c3960d2eebc4ea406d.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "prerequisites-r1",
+    "sourcePath": "native/src/mixed_meaning_cli.rs",
+    "sha256": "cd16b207a105939eaf977beb1689e7552d57f0385716eb2bc6ab247d8293905e",
+    "archivePath": "source-variants/cd16b207a105939eaf977beb1689e7552d57f0385716eb2bc6ab247d8293905e.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "prerequisites-r1",
+    "sourcePath": "native/src/mixed_meaning_composition.rs",
+    "sha256": "1f4a228c31716e8d9a036a54fd2329672a6adc782095ec4d1c9bb704b0c034e9",
+    "archivePath": "source-variants/1f4a228c31716e8d9a036a54fd2329672a6adc782095ec4d1c9bb704b0c034e9.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "prerequisites-r1",
+    "sourcePath": "native/src/mixed_meaning_input.rs",
+    "sha256": "bebf516e57a7ac606291b4491446458da042cb47b717201cb37ebca128293a5c",
+    "archivePath": "source-variants/bebf516e57a7ac606291b4491446458da042cb47b717201cb37ebca128293a5c.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "prerequisites-r1",
+    "sourcePath": "native/src/mixed_meaning_provider.rs",
+    "sha256": "a92bd23cbcd91e44bbfe16e2caf6660a17cf31f7344a7bf403a760041438f79d",
+    "archivePath": "source-variants/a92bd23cbcd91e44bbfe16e2caf6660a17cf31f7344a7bf403a760041438f79d.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "prerequisites-r1",
+    "sourcePath": "native/src/mixed_meaning_query.rs",
+    "sha256": "b2264ea5aa1a3169cb0685e21441da004123ab3b2bbef88e38f70294a43041d9",
+    "archivePath": "source-variants/b2264ea5aa1a3169cb0685e21441da004123ab3b2bbef88e38f70294a43041d9.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "prerequisites-r1",
+    "sourcePath": "native/src/mixed_view.rs",
+    "sha256": "99a9b6abd653feadf4c2c918833f46ee2cf17e8e694be23d131b9aac41665464",
+    "archivePath": "source-variants/99a9b6abd653feadf4c2c918833f46ee2cf17e8e694be23d131b9aac41665464.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "prerequisites-r1",
+    "sourcePath": "native/src/mixed_view_cli.rs",
+    "sha256": "28c75a27233246388753f9e8475a45276bbdc1b153cc6eb62c406f4a3b3417b6",
+    "archivePath": "source-variants/28c75a27233246388753f9e8475a45276bbdc1b153cc6eb62c406f4a3b3417b6.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "prerequisites-r1",
+    "sourcePath": "native/src/retention.rs",
+    "sha256": "f68052d0ff3b37c3a623416df77f4ba0b7a4afc31a21252ad0a8f8d7d4f42fa6",
+    "archivePath": "source-variants/f68052d0ff3b37c3a623416df77f4ba0b7a4afc31a21252ad0a8f8d7d4f42fa6.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "prerequisites-r1",
+    "sourcePath": "native/tests/decision_retention.rs",
+    "sha256": "e1a4c1390de62d18de8163bcfa423a13cf1e22c9d9da4f75c073607c8e67267f",
+    "archivePath": "source-variants/e1a4c1390de62d18de8163bcfa423a13cf1e22c9d9da4f75c073607c8e67267f.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "prerequisites-r1",
+    "sourcePath": "native/tests/github_app_worker.rs",
+    "sha256": "1f7873d5ce1c474668701120ef5a70d748d43f4752aa9393effa9203fd88b457",
+    "archivePath": "source-variants/1f7873d5ce1c474668701120ef5a70d748d43f4752aa9393effa9203fd88b457.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "prerequisites-r1",
+    "sourcePath": "native/tests/meaning_build.rs",
+    "sha256": "91d604c038add216a284733b7da28abd596a2ad07f5b43838c2f667f74940fb7",
+    "archivePath": "source-variants/91d604c038add216a284733b7da28abd596a2ad07f5b43838c2f667f74940fb7.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "prerequisites-r1",
+    "sourcePath": "native/tests/meaning_graph.rs",
+    "sha256": "3e5c6b3222476e0962b1c83de046f5a2f6edf81ff98a5b8792f6f09b4b56996f",
+    "archivePath": "source-variants/3e5c6b3222476e0962b1c83de046f5a2f6edf81ff98a5b8792f6f09b4b56996f.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "prerequisites-r1",
+    "sourcePath": "native/tests/mixed_meaning_claims.rs",
+    "sha256": "ad116f831655fc1701bfa5cc9f0e505fc64cc879b0940c95bcab8718d01d3d42",
+    "archivePath": "source-variants/ad116f831655fc1701bfa5cc9f0e505fc64cc879b0940c95bcab8718d01d3d42.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "prerequisites-r1",
+    "sourcePath": "native/tests/mixed_meaning_composition.rs",
+    "sha256": "87f720f5ae304bff5ec1445d799b6ffff90d3ba2b535c9850fba2ee79a08f62a",
+    "archivePath": "source-variants/87f720f5ae304bff5ec1445d799b6ffff90d3ba2b535c9850fba2ee79a08f62a.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "prerequisites-r1",
+    "sourcePath": "native/tests/mixed_meaning_provider.rs",
+    "sha256": "15c331069672ae10d5c1182945d1cec6e6d3f3dc204a37b2d3409f332a83151d",
+    "archivePath": "source-variants/15c331069672ae10d5c1182945d1cec6e6d3f3dc204a37b2d3409f332a83151d.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "prerequisites-r1",
+    "sourcePath": "native/tests/mixed_meaning_queries.rs",
+    "sha256": "2fb8388c9a7c3b20c1a3f5ef88fecc413245ce03fc6ae6ccd9370ebee401af2d",
+    "archivePath": "source-variants/2fb8388c9a7c3b20c1a3f5ef88fecc413245ce03fc6ae6ccd9370ebee401af2d.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "prerequisites-r1",
+    "sourcePath": "native/tests/mixed_pdf_view.rs",
+    "sha256": "a563e4c402e882a67390b294c54af27387856625344f95a2d2e7758b5a1316f0",
+    "archivePath": "source-variants/a563e4c402e882a67390b294c54af27387856625344f95a2d2e7758b5a1316f0.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "prerequisites-r1",
+    "sourcePath": "native/tests/mixed_view_cli.rs",
+    "sha256": "c89bd152184ff4348dc79dd01346211a06110ba6d0a958a59a61ecd5e56f71f0",
+    "archivePath": "source-variants/c89bd152184ff4348dc79dd01346211a06110ba6d0a958a59a61ecd5e56f71f0.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "prerequisites-r1",
+    "sourcePath": "native/tests/parity_retention.rs",
+    "sha256": "56e1daf79691b0d2869dd210f7942a9aae4c80d9f3dd807885aa9f49585d8ac2",
+    "archivePath": "source-variants/56e1daf79691b0d2869dd210f7942a9aae4c80d9f3dd807885aa9f49585d8ac2.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "prerequisites-r1",
+    "sourcePath": "native/tests/retention.rs",
+    "sha256": "1085b0ebe348f13ed5a84b154bbdc7aef2d3447051a267b5df2359c3a4798068",
+    "archivePath": "source-variants/1085b0ebe348f13ed5a84b154bbdc7aef2d3447051a267b5df2359c3a4798068.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "prerequisites-r2",
+    "sourcePath": "native/docs/mixed-meaning-queries.md",
+    "sha256": "d39bdfdab8b944082ad3b70c300c36319528b279d096a7e3161e3fefd45b5b94",
+    "archivePath": "source-variants/d39bdfdab8b944082ad3b70c300c36319528b279d096a7e3161e3fefd45b5b94.md",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "prerequisites-r2",
+    "sourcePath": "native/README.md",
+    "sha256": "b27aa8fab2a641212b3603afa8551d48152aa2e6549ced03bcdd247084cbf529",
+    "archivePath": "source-variants/b27aa8fab2a641212b3603afa8551d48152aa2e6549ced03bcdd247084cbf529.md",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "prerequisites-r2",
+    "sourcePath": "native/src/github_app_digest_history_jobs.rs",
+    "sha256": "9b0d12a73a55b84be5d6eb132830ed724fd374558fb57088509dad20711755de",
+    "archivePath": "source-variants/9b0d12a73a55b84be5d6eb132830ed724fd374558fb57088509dad20711755de.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "prerequisites-r2",
+    "sourcePath": "native/src/github_app_worker.rs",
+    "sha256": "6eb4eba068945cec55ef4bd3fa9deb0b5d4285421b6a5f9f42211b5f9bdad8fb",
+    "archivePath": "source-variants/6eb4eba068945cec55ef4bd3fa9deb0b5d4285421b6a5f9f42211b5f9bdad8fb.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "prerequisites-r2",
+    "sourcePath": "native/src/github_app_worker_history.rs",
+    "sha256": "74693b816212e5605ffdebc12c7a1c17994ff456987e975b23ce752f17bd70c7",
+    "archivePath": "source-variants/74693b816212e5605ffdebc12c7a1c17994ff456987e975b23ce752f17bd70c7.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "prerequisites-r2",
+    "sourcePath": "native/src/main.rs",
+    "sha256": "05a104205a2eb65cdaade2814c2cad5ab428b84283ee5fdd4e26c7dca4bf9b51",
+    "archivePath": "source-variants/05a104205a2eb65cdaade2814c2cad5ab428b84283ee5fdd4e26c7dca4bf9b51.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "prerequisites-r2",
+    "sourcePath": "native/src/meaning_build.rs",
+    "sha256": "4320a56acc1822fc5140960c6fb98df6f6d4c96d47b564a4d408543f6b6b3463",
+    "archivePath": "source-variants/4320a56acc1822fc5140960c6fb98df6f6d4c96d47b564a4d408543f6b6b3463.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "prerequisites-r2",
+    "sourcePath": "native/src/meaning_graph.rs",
+    "sha256": "abb9065655a90c5d5a2fbfdb51d863d496342136c5405e73becf67ff3b87d71d",
+    "archivePath": "source-variants/abb9065655a90c5d5a2fbfdb51d863d496342136c5405e73becf67ff3b87d71d.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "prerequisites-r2",
+    "sourcePath": "native/src/mixed_meaning_claims.rs",
+    "sha256": "3876d0bb8ff734bbcd1d884e939c896112d71b34779ae5c3960d2eebc4ea406d",
+    "archivePath": "source-variants/3876d0bb8ff734bbcd1d884e939c896112d71b34779ae5c3960d2eebc4ea406d.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "prerequisites-r2",
+    "sourcePath": "native/src/mixed_meaning_cli.rs",
+    "sha256": "cd16b207a105939eaf977beb1689e7552d57f0385716eb2bc6ab247d8293905e",
+    "archivePath": "source-variants/cd16b207a105939eaf977beb1689e7552d57f0385716eb2bc6ab247d8293905e.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "prerequisites-r2",
+    "sourcePath": "native/src/mixed_meaning_composition.rs",
+    "sha256": "1f4a228c31716e8d9a036a54fd2329672a6adc782095ec4d1c9bb704b0c034e9",
+    "archivePath": "source-variants/1f4a228c31716e8d9a036a54fd2329672a6adc782095ec4d1c9bb704b0c034e9.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "prerequisites-r2",
+    "sourcePath": "native/src/mixed_meaning_input.rs",
+    "sha256": "bebf516e57a7ac606291b4491446458da042cb47b717201cb37ebca128293a5c",
+    "archivePath": "source-variants/bebf516e57a7ac606291b4491446458da042cb47b717201cb37ebca128293a5c.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "prerequisites-r2",
+    "sourcePath": "native/src/mixed_meaning_provider.rs",
+    "sha256": "a92bd23cbcd91e44bbfe16e2caf6660a17cf31f7344a7bf403a760041438f79d",
+    "archivePath": "source-variants/a92bd23cbcd91e44bbfe16e2caf6660a17cf31f7344a7bf403a760041438f79d.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "prerequisites-r2",
+    "sourcePath": "native/src/mixed_meaning_query.rs",
+    "sha256": "b2264ea5aa1a3169cb0685e21441da004123ab3b2bbef88e38f70294a43041d9",
+    "archivePath": "source-variants/b2264ea5aa1a3169cb0685e21441da004123ab3b2bbef88e38f70294a43041d9.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "prerequisites-r2",
+    "sourcePath": "native/src/mixed_view.rs",
+    "sha256": "99a9b6abd653feadf4c2c918833f46ee2cf17e8e694be23d131b9aac41665464",
+    "archivePath": "source-variants/99a9b6abd653feadf4c2c918833f46ee2cf17e8e694be23d131b9aac41665464.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "prerequisites-r2",
+    "sourcePath": "native/src/mixed_view_cli.rs",
+    "sha256": "28c75a27233246388753f9e8475a45276bbdc1b153cc6eb62c406f4a3b3417b6",
+    "archivePath": "source-variants/28c75a27233246388753f9e8475a45276bbdc1b153cc6eb62c406f4a3b3417b6.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "prerequisites-r2",
+    "sourcePath": "native/src/retention.rs",
+    "sha256": "9ee70abdfbeb679b27b85352650a2c61266f984b753bf439b5d9bfc4033c8f05",
+    "archivePath": "source-variants/9ee70abdfbeb679b27b85352650a2c61266f984b753bf439b5d9bfc4033c8f05.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "prerequisites-r2",
+    "sourcePath": "native/tests/decision_retention.rs",
+    "sha256": "e1a4c1390de62d18de8163bcfa423a13cf1e22c9d9da4f75c073607c8e67267f",
+    "archivePath": "source-variants/e1a4c1390de62d18de8163bcfa423a13cf1e22c9d9da4f75c073607c8e67267f.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "prerequisites-r2",
+    "sourcePath": "native/tests/github_app_worker.rs",
+    "sha256": "1f7873d5ce1c474668701120ef5a70d748d43f4752aa9393effa9203fd88b457",
+    "archivePath": "source-variants/1f7873d5ce1c474668701120ef5a70d748d43f4752aa9393effa9203fd88b457.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "prerequisites-r2",
+    "sourcePath": "native/tests/meaning_build.rs",
+    "sha256": "91d604c038add216a284733b7da28abd596a2ad07f5b43838c2f667f74940fb7",
+    "archivePath": "source-variants/91d604c038add216a284733b7da28abd596a2ad07f5b43838c2f667f74940fb7.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "prerequisites-r2",
+    "sourcePath": "native/tests/meaning_graph.rs",
+    "sha256": "3e5c6b3222476e0962b1c83de046f5a2f6edf81ff98a5b8792f6f09b4b56996f",
+    "archivePath": "source-variants/3e5c6b3222476e0962b1c83de046f5a2f6edf81ff98a5b8792f6f09b4b56996f.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "prerequisites-r2",
+    "sourcePath": "native/tests/mixed_meaning_claims.rs",
+    "sha256": "ad116f831655fc1701bfa5cc9f0e505fc64cc879b0940c95bcab8718d01d3d42",
+    "archivePath": "source-variants/ad116f831655fc1701bfa5cc9f0e505fc64cc879b0940c95bcab8718d01d3d42.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "prerequisites-r2",
+    "sourcePath": "native/tests/mixed_meaning_composition.rs",
+    "sha256": "87f720f5ae304bff5ec1445d799b6ffff90d3ba2b535c9850fba2ee79a08f62a",
+    "archivePath": "source-variants/87f720f5ae304bff5ec1445d799b6ffff90d3ba2b535c9850fba2ee79a08f62a.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "prerequisites-r2",
+    "sourcePath": "native/tests/mixed_meaning_provider.rs",
+    "sha256": "15c331069672ae10d5c1182945d1cec6e6d3f3dc204a37b2d3409f332a83151d",
+    "archivePath": "source-variants/15c331069672ae10d5c1182945d1cec6e6d3f3dc204a37b2d3409f332a83151d.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "prerequisites-r2",
+    "sourcePath": "native/tests/mixed_meaning_queries.rs",
+    "sha256": "2fb8388c9a7c3b20c1a3f5ef88fecc413245ce03fc6ae6ccd9370ebee401af2d",
+    "archivePath": "source-variants/2fb8388c9a7c3b20c1a3f5ef88fecc413245ce03fc6ae6ccd9370ebee401af2d.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "prerequisites-r2",
+    "sourcePath": "native/tests/mixed_pdf_view.rs",
+    "sha256": "a563e4c402e882a67390b294c54af27387856625344f95a2d2e7758b5a1316f0",
+    "archivePath": "source-variants/a563e4c402e882a67390b294c54af27387856625344f95a2d2e7758b5a1316f0.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "prerequisites-r2",
+    "sourcePath": "native/tests/mixed_view_cli.rs",
+    "sha256": "c89bd152184ff4348dc79dd01346211a06110ba6d0a958a59a61ecd5e56f71f0",
+    "archivePath": "source-variants/c89bd152184ff4348dc79dd01346211a06110ba6d0a958a59a61ecd5e56f71f0.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "prerequisites-r2",
+    "sourcePath": "native/tests/parity_retention.rs",
+    "sha256": "56e1daf79691b0d2869dd210f7942a9aae4c80d9f3dd807885aa9f49585d8ac2",
+    "archivePath": "source-variants/56e1daf79691b0d2869dd210f7942a9aae4c80d9f3dd807885aa9f49585d8ac2.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "prerequisites-r2",
+    "sourcePath": "native/tests/retention.rs",
+    "sha256": "1085b0ebe348f13ed5a84b154bbdc7aef2d3447051a267b5df2359c3a4798068",
+    "archivePath": "source-variants/1085b0ebe348f13ed5a84b154bbdc7aef2d3447051a267b5df2359c3a4798068.rs",
+    "origin": "exact raw frozen source copy"
+  },
+  {
+    "phase": "final-checked-source",
+    "sourcePath": "native/README.md",
+    "sha256": "1cdc5bc96dfe05d4f7d95acdbfb3495aa7b65713c4f55d4e01b458ce161aac28",
+    "archivePath": "source-variants/1cdc5bc96dfe05d4f7d95acdbfb3495aa7b65713c4f55d4e01b458ce161aac28.md",
+    "origin": "exact final checkout bytes; matches all final native manifests"
+  },
+  {
+    "phase": "final-checked-source",
+    "sourcePath": "native/docs/app-history-integration.md",
+    "sha256": "831bd120e7c61392438b7a8fc96ae28a789b55d811206c345471825171c79a2b",
+    "archivePath": "source-variants/831bd120e7c61392438b7a8fc96ae28a789b55d811206c345471825171c79a2b.md",
+    "origin": "exact final checkout bytes; matches all final native manifests"
+  },
+  {
+    "phase": "final-checked-source",
+    "sourcePath": "native/docs/github-app-workers.md",
+    "sha256": "a3a1b2169a74e3fc2e334d63771645a067e5ef3b0ae76a91bb2c53d924be4840",
+    "archivePath": "source-variants/a3a1b2169a74e3fc2e334d63771645a067e5ef3b0ae76a91bb2c53d924be4840.md",
+    "origin": "exact final checkout bytes; matches all final native manifests"
+  },
+  {
+    "phase": "final-checked-source",
+    "sourcePath": "native/src/github_app_digest_acquisition.rs",
+    "sha256": "028df855bade7958b31e4fdbfe0ba009b3e5801a8ab9f60ccfaac20701202692",
+    "archivePath": "source-variants/028df855bade7958b31e4fdbfe0ba009b3e5801a8ab9f60ccfaac20701202692.rs",
+    "origin": "exact final checkout bytes; matches all final native manifests"
+  },
+  {
+    "phase": "final-checked-source",
+    "sourcePath": "native/src/github_app_digest_history_jobs.rs",
+    "sha256": "5dbbfa335cbb808d9d4915de33c4e645cae1b7ec35bcfe174fa99f04490b73ee",
+    "archivePath": "source-variants/5dbbfa335cbb808d9d4915de33c4e645cae1b7ec35bcfe174fa99f04490b73ee.rs",
+    "origin": "exact final checkout bytes; matches all final native manifests"
+  },
+  {
+    "phase": "final-checked-source",
+    "sourcePath": "native/src/github_app_history_cli.rs",
+    "sha256": "b96c4faf98c02a4f5988a1d79f1e6463d1fb9de74da4aa8f72eb3e2de9ba445e",
+    "archivePath": "source-variants/b96c4faf98c02a4f5988a1d79f1e6463d1fb9de74da4aa8f72eb3e2de9ba445e.rs",
+    "origin": "exact final checkout bytes; matches all final native manifests"
+  },
+  {
+    "phase": "final-checked-source",
+    "sourcePath": "native/src/github_app_worker.rs",
+    "sha256": "6eb4eba068945cec55ef4bd3fa9deb0b5d4285421b6a5f9f42211b5f9bdad8fb",
+    "archivePath": "source-variants/6eb4eba068945cec55ef4bd3fa9deb0b5d4285421b6a5f9f42211b5f9bdad8fb.rs",
+    "origin": "exact final checkout bytes; matches all final native manifests"
+  },
+  {
+    "phase": "final-checked-source",
+    "sourcePath": "native/src/github_app_worker_cli.rs",
+    "sha256": "6d309711a3b336f4a5d8d55edf8aecb1debef49a675cf4566ccf5844c390e63b",
+    "archivePath": "source-variants/6d309711a3b336f4a5d8d55edf8aecb1debef49a675cf4566ccf5844c390e63b.rs",
+    "origin": "exact final checkout bytes; matches all final native manifests"
+  },
+  {
+    "phase": "final-checked-source",
+    "sourcePath": "native/src/github_app_worker_history.rs",
+    "sha256": "5eab74eee9545cea06515b669b9bb4389964935bd0c34cd03e35faba4d6775d6",
+    "archivePath": "source-variants/5eab74eee9545cea06515b669b9bb4389964935bd0c34cd03e35faba4d6775d6.rs",
+    "origin": "exact final checkout bytes; matches all final native manifests"
+  },
+  {
+    "phase": "final-checked-source",
+    "sourcePath": "native/src/main.rs",
+    "sha256": "336c051aca06890eb173adc7a958f7fb409c92f89a448c09c4eecad6fe492764",
+    "archivePath": "source-variants/336c051aca06890eb173adc7a958f7fb409c92f89a448c09c4eecad6fe492764.rs",
+    "origin": "exact final checkout bytes; matches all final native manifests"
+  },
+  {
+    "phase": "final-checked-source",
+    "sourcePath": "native/src/retention.rs",
+    "sha256": "9ee70abdfbeb679b27b85352650a2c61266f984b753bf439b5d9bfc4033c8f05",
+    "archivePath": "source-variants/9ee70abdfbeb679b27b85352650a2c61266f984b753bf439b5d9bfc4033c8f05.rs",
+    "origin": "exact final checkout bytes; matches all final native manifests"
+  },
+  {
+    "phase": "final-checked-source",
+    "sourcePath": "native/tests/github_app_history_bridge.rs",
+    "sha256": "c4ef62b374085554d590ddfb3bab23e7f41c9745c477eb62267f5362fb0329ca",
+    "archivePath": "source-variants/c4ef62b374085554d590ddfb3bab23e7f41c9745c477eb62267f5362fb0329ca.rs",
+    "origin": "exact final checkout bytes; matches all final native manifests"
+  },
+  {
+    "phase": "final-checked-source",
+    "sourcePath": "native/tests/github_app_history_cli.rs",
+    "sha256": "8e3e5c498816bbb1d16342ec34a32746c9d210680dcd6ea4319c07eee629a114",
+    "archivePath": "source-variants/8e3e5c498816bbb1d16342ec34a32746c9d210680dcd6ea4319c07eee629a114.rs",
+    "origin": "exact final checkout bytes; matches all final native manifests"
+  },
+  {
+    "phase": "final-checked-source",
+    "sourcePath": "native/tests/support/github_app_worker_history_fixture.rs",
+    "sha256": "5248e287e79085493a8c2ae8d2fe0d985c2d29ba092c982493c92daf8daec143",
+    "archivePath": "source-variants/5248e287e79085493a8c2ae8d2fe0d985c2d29ba092c982493c92daf8daec143.rs",
+    "origin": "exact final checkout bytes; matches all final native manifests"
+  }
+]

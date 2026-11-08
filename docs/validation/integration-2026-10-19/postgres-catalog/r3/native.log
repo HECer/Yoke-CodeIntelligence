@@ -1,0 +1,18 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+error[E0308]: `match` arms have incompatible types
+   --> native\src\postgres_catalog_client.rs:124:37
+    |
+122 |           match part {
+    |           ---------- `match` arms have incompatible types
+123 |               Component::ParentDir | Component::CurDir => catalog::input(false)?,
+    |                                                           ---------------------- this is found to be of type `()`
+124 |               Component::Normal(n) => crate::paths::normalized_syntax(
+    |  _____________________________________^
+125 | |                 n.to_str()
+126 | |                     .ok_or_else(|| anyhow::anyhow!("postgres_catalog_client_path_invalid"))?,
+127 | |             )
+128 | |             .map_err(|_| anyhow::anyhow!("postgres_catalog_client_path_invalid"))?,
+    | |__________________________________________________________________________________^ expected `()`, found `String`
+
+For more information about this error, try `rustc --explain E0308`.
+error: could not compile `yoke-code-intelligence` (lib) due to 1 previous error

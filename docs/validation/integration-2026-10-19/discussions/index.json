@@ -1,0 +1,594 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-19T04:07:02.088995+00:00",
+  "parentCommit": "abe32fb3f54f4be5063af5c9b6dcf3b8cddc7d5f",
+  "accepted": false,
+  "allLocalChecksPassed": true,
+  "nativeTotals": {
+    "passed": 544,
+    "failed": 0,
+    "ignored": 7
+  },
+  "nativeResultGroups": 11,
+  "summary": {
+    "allChecksPassed": true,
+    "sourceUnchanged": true,
+    "checks": [
+      {
+        "gate": "format",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "fmt",
+          "--all",
+          "--check"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 4.492,
+        "recordedAt": "2026-10-19T03:58:45.481711+00:00",
+        "resultGroups": []
+      },
+      {
+        "gate": "clippy",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "clippy",
+          "--workspace",
+          "--all-targets",
+          "--locked",
+          "--keep-going",
+          "-j2",
+          "--",
+          "-D",
+          "warnings"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 1.12,
+        "recordedAt": "2026-10-19T03:58:46.601954+00:00",
+        "resultGroups": []
+      },
+      {
+        "gate": "native-discussions-and-source",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "test",
+          "--locked",
+          "--no-fail-fast",
+          "-j2",
+          "--lib",
+          "--test",
+          "github",
+          "--test",
+          "github_discussions",
+          "--test",
+          "github_app_digest",
+          "--test",
+          "github_app_digest_cli",
+          "--test",
+          "github_app_digest_mapping",
+          "--test",
+          "github_app_cli",
+          "--test",
+          "github_app_auth_cli",
+          "--test",
+          "store_read_only",
+          "--test",
+          "store_open_deadline",
+          "--test",
+          "store_cancellation",
+          "--",
+          "--test-threads=2"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 209.536,
+        "recordedAt": "2026-10-19T04:02:16.138691+00:00",
+        "resultGroups": [
+          {
+            "passed": 403,
+            "failed": 0,
+            "ignored": 7
+          },
+          {
+            "passed": 12,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 4,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 35,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 38,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 13,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 14,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 9,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 7,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 7,
+            "failed": 0,
+            "ignored": 0
+          }
+        ]
+      },
+      {
+        "gate": "python-contracts",
+        "command": [
+          "python",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "scripts/tests",
+          "-v"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 1.17,
+        "recordedAt": "2026-10-19T04:02:17.309409+00:00",
+        "resultGroups": []
+      },
+      {
+        "gate": "typescript-typecheck",
+        "command": [
+          "npm.cmd",
+          "run",
+          "typecheck"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 4.72,
+        "recordedAt": "2026-10-19T04:02:22.030389+00:00",
+        "resultGroups": []
+      },
+      {
+        "gate": "typescript-tests",
+        "command": [
+          "npm.cmd",
+          "test"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 62.969,
+        "recordedAt": "2026-10-19T04:03:24.999856+00:00",
+        "resultGroups": []
+      },
+      {
+        "gate": "actual-native-github-https",
+        "command": [
+          "python",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\validation\\integration-20261018\\run-discussions-live-final.py"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 3.937,
+        "recordedAt": "2026-10-19T04:03:28.937729+00:00",
+        "resultGroups": []
+      }
+    ],
+    "scope": "Frozen local Windows development validation plus three actual anonymous native GitHub HTTPS captures; raw foreign discussion text is not published. Service publication/approval/recovery and full platform/STATUS acceptance remain open."
+  },
+  "liveCases": [
+    {
+      "label": "own-empty",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--timeout",
+        "60000",
+        "--max-bytes",
+        "8000000",
+        "github-discussions",
+        "capture",
+        "--profile",
+        "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\discussions-live-qwsgl8os\\own-empty-profile.json",
+        "--request",
+        "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\discussions-live-qwsgl8os\\own-empty-request.json",
+        "--allow-network",
+        "--allow-discussion-text"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 0.571,
+      "outputBytes": 1049,
+      "outputHash": "70246215b17a952ff678cc4f311934febad43d8d46459bdabb147e404cfa29e4",
+      "sourceStoreCreated": false,
+      "rawPayloadPublished": false,
+      "captureId": "5a6d19de91d279ebf58b054ebcf8b7742843bbb0edb737618f7856ecc89a81cd",
+      "repository": "hecer/yoke-codeintelligence",
+      "repositoryId": 1417787673,
+      "pullNumbers": [],
+      "unacquiredPulls": [],
+      "observations": 0,
+      "observationsByKind": {},
+      "requests": 2,
+      "responseBytes": 7843,
+      "coverageComplete": true,
+      "transport": "host_authorized_github_https",
+      "atomic": false
+    },
+    {
+      "label": "upstream-closed",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--timeout",
+        "60000",
+        "--max-bytes",
+        "8000000",
+        "github-discussions",
+        "capture",
+        "--profile",
+        "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\discussions-live-qwsgl8os\\upstream-closed-profile.json",
+        "--request",
+        "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\discussions-live-qwsgl8os\\upstream-closed-request.json",
+        "--allow-network",
+        "--allow-discussion-text"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 1.389,
+      "outputBytes": 7302,
+      "outputHash": "69e20f3bb08506b7b3c02d3b60a7b832b76f69a54eddb205e590dae31b51a7e5",
+      "sourceStoreCreated": false,
+      "rawPayloadPublished": false,
+      "captureId": "3c1f86b3d483c748c9415f1881a6d32c198eba7b463c405146d9437a7b8096ae",
+      "repository": "trailhq/trail-code",
+      "repositoryId": 1288325627,
+      "pullNumbers": [
+        623
+      ],
+      "unacquiredPulls": [],
+      "observations": 2,
+      "observationsByKind": {
+        "description": 1,
+        "issue_comment": 1
+      },
+      "requests": 6,
+      "responseBytes": 56982,
+      "coverageComplete": true,
+      "transport": "host_authorized_github_https",
+      "atomic": false
+    },
+    {
+      "label": "actual-reviews",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--timeout",
+        "60000",
+        "--max-bytes",
+        "8000000",
+        "github-discussions",
+        "capture",
+        "--profile",
+        "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\discussions-live-qwsgl8os\\actual-reviews-profile.json",
+        "--request",
+        "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\discussions-live-qwsgl8os\\actual-reviews-request.json",
+        "--allow-network",
+        "--allow-discussion-text"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 1.862,
+      "outputBytes": 174105,
+      "outputHash": "c06fbd6eeccdb837631a70bc137555dccc93137bd4f0bc3963e6f24d9444e736",
+      "sourceStoreCreated": false,
+      "rawPayloadPublished": false,
+      "captureId": "200377e58253055e7327ea705476b1374ebc2aa7b868a9f35a71e44857bc4e14",
+      "repository": "rust-lang/rust",
+      "repositoryId": 724712,
+      "pullNumbers": [
+        163746
+      ],
+      "unacquiredPulls": [],
+      "observations": 97,
+      "observationsByKind": {
+        "description": 1,
+        "issue_comment": 35,
+        "review": 25,
+        "review_comment": 36
+      },
+      "requests": 6,
+      "responseBytes": 363668,
+      "coverageComplete": true,
+      "transport": "host_authorized_github_https",
+      "atomic": false
+    }
+  ],
+  "findings": [
+    "Explicit bounded closed-PR GET acquisition covers description, issue comments, reviews and review comments, preserving exact decoded UTF8, text hashes, provider coordinates and reply/review identifiers. Network/text grants precede credentials/network; no source Store, model, execution, comment or service write is acquired.",
+    "Typed unsigned packet replay validates content hash, scopes, URLs/queries, page/request/text counters, observation identities, body hashes, coverage and selected/unacquired pulls. Null description is known absence; missing body is protocol refusal. Partial provider coverage stays explicit. Receipt hashes and imported transport labels do not authenticate provider/author or atomic state.",
+    "Native source/history composition replays immutable source and distinguishes verified commit history from an explicitly selected source capture. Provider anchors never become source-byte authority. Header-only handoff preview excludes discussion text/diff hunks/authors/titles/commit messages and top-level implementation/initializer bodies, preserves omissions and binds source/capture identities.",
+    "Fourteen contract cases include HTTP scope/freshness/permission/budget attacks, rehashed hostile packets, credential-like text/error redaction, exact output boundary, actual owned Git capture/history association, source tamper refusal, CLI default denials and offline digest/handoff composition.",
+    "Final local source freeze passes native544/0fail/7ignored across11groups, Python17, TypeScript260/3skip, typecheck, format and all-target Clippy. These selected targets do not rerun or accept the previously recorded federation/maintenance symlink setup failures or whole-platform suite.",
+    "All three final native anonymous HTTPS cases pass: own repository empty closed-PR listing; canonical Trail-Code PR623; Rust PR163746 with97 observations (description1, issue_comment35, review25, review_comment36). Raw foreign texts stay in an owned external validation directory and are not published. Final binary hash and metadata-only receipts are preserved.",
+    "Development red traces, initial schema/fixture failures and corrected follow-ups remain separate from final unchanged-source validation. No service send, durable exact-payload approval/outcome recovery, live App deployment, full upstream/proprietary brain or whole STATUS/R1-R9 acceptance is certified."
+  ],
+  "references": [
+    "https://docs.github.com/en/rest/issues/comments",
+    "https://docs.github.com/en/rest/pulls/reviews",
+    "https://docs.github.com/en/rest/pulls/comments"
+  ],
+  "artifacts": [
+    {
+      "path": "development/development-clippy-r2-receipt.json",
+      "bytes": 267,
+      "sha256": "46831eae45ae39f2deb03b7938b368b365caeba73238cd1a8efb98fdb66d6eb8"
+    },
+    {
+      "path": "development/development-clippy-r2.log",
+      "bytes": 172,
+      "sha256": "696a0a3e40719eb330523078f5c7681a4e1bd66f0ebcc16fe3017eaffdf7257f"
+    },
+    {
+      "path": "development/development-clippy-receipt.json",
+      "bytes": 269,
+      "sha256": "382e9969c26a1a5402c68da30dca5dc381032c518d6c32cb028b5e2aee171203"
+    },
+    {
+      "path": "development/development-clippy.log",
+      "bytes": 967,
+      "sha256": "bd399bfc840b44f9f8c2a7ff3413fd842bbc36bd6783518fd9acb2a14a8db557"
+    },
+    {
+      "path": "development/live-r1/own-empty.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "development/live-r1/receipts.json",
+      "bytes": 2492,
+      "sha256": "6b1819d9eb9f2a2650c6eda582061293796d681b2996e051c760f221222dd521"
+    },
+    {
+      "path": "development/live-r1/scope.json",
+      "bytes": 395,
+      "sha256": "bf5cea1ba75567f099fbb5051edbc6961234cfc2a4b852b7a887c96938ff074a"
+    },
+    {
+      "path": "development/live-r1/upstream-closed.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "development/live-r2/actual-reviews.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "development/live-r2/own-empty.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "development/live-r2/receipts.json",
+      "bytes": 4002,
+      "sha256": "8b7d7abe6963b087c84299bfded7e224e9711afdd7d514c68abb5190b5f748a2"
+    },
+    {
+      "path": "development/live-r2/scope.json",
+      "bytes": 426,
+      "sha256": "42c38259c45e51e2ea24ffc1857d2a7e13d56005bac1451db2aef0559b5e91d2"
+    },
+    {
+      "path": "development/live-r2/upstream-closed.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "development/r1-receipt.json",
+      "bytes": 243,
+      "sha256": "e19c8b9a5e453e3537dd97e6562aa4e92693237ee40efcec8d468968027b5581"
+    },
+    {
+      "path": "development/r1.log",
+      "bytes": 1748,
+      "sha256": "666a8db4f11b18666f84dc6634f3223a846915eeeab39948ac7f48c3165f4d83"
+    },
+    {
+      "path": "development/r2-receipt.json",
+      "bytes": 243,
+      "sha256": "47285f07cf8847c50d7466874b4919dc57c1c309d3e71cefed468b3672be8c82"
+    },
+    {
+      "path": "development/r2.log",
+      "bytes": 1682,
+      "sha256": "4824c7bd20c15127e0c070954db8346d1273c7c45a5a6c388c5efcb32f5add51"
+    },
+    {
+      "path": "development/r3-receipt.json",
+      "bytes": 295,
+      "sha256": "b8c93f677af11f6c6b34d1af4ae1bdfe707e5bc5e807cab364f13dda038bc430"
+    },
+    {
+      "path": "development/r3.log",
+      "bytes": 4289,
+      "sha256": "279f032681dd0a49ea64d46e70ea43f1733e423c95ec6db039f145cfdfd4eac0"
+    },
+    {
+      "path": "development/r4-receipt.json",
+      "bytes": 294,
+      "sha256": "e117af1a5afec2e1336e6a422f8203ae69e50420f2f00bafbfbb2aa66cf51def"
+    },
+    {
+      "path": "development/r4.log",
+      "bytes": 2147,
+      "sha256": "f1d91b6f0d259119b3fe34d034e6566ae5a3076ccb212ef090ae77ff5aa47c2c"
+    },
+    {
+      "path": "development/r5-receipt.json",
+      "bytes": 400,
+      "sha256": "129b15f2e46dedbb9b480c4907fb9f8d65d5bf2e5e267a081a5cd496a6cb4646"
+    },
+    {
+      "path": "development/r5.log",
+      "bytes": 9708,
+      "sha256": "006ab1f836dc1380953a71d80243e67c198f709cf73f0153374f1c773ccbaec0"
+    },
+    {
+      "path": "development/r6-receipt.json",
+      "bytes": 402,
+      "sha256": "e13313efdfcae9df44cf4a86c1c8ea8f68a5009504da7805f4dea937113fda79"
+    },
+    {
+      "path": "development/r6.log",
+      "bytes": 14278,
+      "sha256": "8768142c97c5d8fc3c7d4a1d439bd24f7eb979b620db839a9c669abe86980f9a"
+    },
+    {
+      "path": "development/r7-receipt.json",
+      "bytes": 241,
+      "sha256": "448552abf928416dcf123a2c63a0b76d6a708919bde8e53a68ab200a194c721e"
+    },
+    {
+      "path": "development/r7.log",
+      "bytes": 1497,
+      "sha256": "d186f7ac69de3517d1bcef14b62db0757c602a1abf433155c016aa4ff6ed642b"
+    },
+    {
+      "path": "final/actual-native-github-https.log",
+      "bytes": 3296,
+      "sha256": "718acfb8d528b80cf0c658a46c1a3283af8ac6ac7cfe44ab748e8ea7994fd8b4"
+    },
+    {
+      "path": "final/clippy.log",
+      "bytes": 60,
+      "sha256": "fba211bba927d08ea8476b363c933b5ae1cb09de586d1e975824e38fac256f77"
+    },
+    {
+      "path": "final/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "final/live-actual-reviews.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "final/live-own-empty.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "final/live-receipts.json",
+      "bytes": 4003,
+      "sha256": "41fda06c5d298eedbf6a621b5d4337e193cd0a093070cba4a87556c0e1388b6c"
+    },
+    {
+      "path": "final/live-scope.json",
+      "bytes": 426,
+      "sha256": "e59002c49ce043864fe14927608aca5335a85df8d6351fdf0c8f498876682816"
+    },
+    {
+      "path": "final/live-upstream-closed.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "final/native-discussions-and-source.log",
+      "bytes": 61286,
+      "sha256": "6f3962a8fe98b4db478f6084e1606199a1717f7fc99b00f402c99492a589f3b0"
+    },
+    {
+      "path": "final/python-contracts.log",
+      "bytes": 2845,
+      "sha256": "a758749344c7f63c95e50b8655e840fa7c1148d0191c7b6cbb233f421f3aa926"
+    },
+    {
+      "path": "final/receipts.json",
+      "bytes": 3647,
+      "sha256": "4479b80b8cd880f505271dfeeb21af98be5c37809078085453344dbeb5751b43"
+    },
+    {
+      "path": "final/run-live-validation.py",
+      "bytes": 3084,
+      "sha256": "80aa0f200d62867896fce0cf1153bde7cbfe15dc786d5b8cf1dd275935de0e12"
+    },
+    {
+      "path": "final/source-after.json",
+      "bytes": 66806,
+      "sha256": "edaeebc1a731651036d10e372f31f78352a17f29ee6a25898358d6c471313147"
+    },
+    {
+      "path": "final/source-before.json",
+      "bytes": 66806,
+      "sha256": "edaeebc1a731651036d10e372f31f78352a17f29ee6a25898358d6c471313147"
+    },
+    {
+      "path": "final/summary.json",
+      "bytes": 4323,
+      "sha256": "df316e3eb2fd8a99a5a6385a7623fd3bf63392ff2ce0ccf6951aed989e885a41"
+    },
+    {
+      "path": "final/tested-native-binary.json",
+      "bytes": 122,
+      "sha256": "e4183740a2a8f16ff86904bbfc8ab96f48bdc16913c959b82373c2d033ce21e9"
+    },
+    {
+      "path": "final/typescript-tests.log",
+      "bytes": 25037,
+      "sha256": "e778261083c6d6341c0c5bb74043ef0927d46d532c2d4862cb3137bc00dd5782"
+    },
+    {
+      "path": "final/typescript-typecheck.log",
+      "bytes": 101,
+      "sha256": "30ef9ce16cf042ab6f160e0a76c1fbfe22f02a3c3a3659ee62863ffc1efdbfdf"
+    },
+    {
+      "path": "new-source/source-/github_app_digest_discussions.rs",
+      "bytes": 10097,
+      "sha256": "2fd695dfc9b75ede1c0ab91743fd37b4b5f18149970da46c70108674f916f12b"
+    },
+    {
+      "path": "new-source/source-/github_discussions.rs",
+      "bytes": 31231,
+      "sha256": "2e460f69f9952cbec9cc89ccb76f55cfe669c6e42d802af933172700e4ed5d42"
+    },
+    {
+      "path": "new-source/source-/github_discussions_cli.rs",
+      "bytes": 2707,
+      "sha256": "a788c4fee32bdf90e2b0c2c097039574070e39eb5516c86175076c89d05abfa5"
+    },
+    {
+      "path": "new-source/test-/github_discussions.rs",
+      "bytes": 26756,
+      "sha256": "2be6dbfe73c20a0f6eb30bf8bf6aafdd4323bc013c110b1687b92f6b111d5b5f"
+    },
+    {
+      "path": "run-local-validation.py",
+      "bytes": 3714,
+      "sha256": "72418d7e52f2f652980baa5091915e9c695150b39d49ad29dec2c8e6a2aee504"
+    },
+    {
+      "path": "runtime-change.patch",
+      "bytes": 10071,
+      "sha256": "3331f8ac546ba3f50e62f9b884ca5529e8af8536455cf4421722163cb03a2e36"
+    }
+  ],
+  "newSourceFiles": {
+    "native/src/github_discussions.rs": "new-source/source-/github_discussions.rs",
+    "native/src/github_discussions_cli.rs": "new-source/source-/github_discussions_cli.rs",
+    "native/src/github_app_digest_discussions.rs": "new-source/source-/github_app_digest_discussions.rs",
+    "native/tests/github_discussions.rs": "new-source/test-/github_discussions.rs"
+  }
+}

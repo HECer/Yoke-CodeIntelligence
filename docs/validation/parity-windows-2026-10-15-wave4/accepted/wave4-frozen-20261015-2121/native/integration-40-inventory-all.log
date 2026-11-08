@@ -1,0 +1,22 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 4.10s
+     Running tests\graph_extensions.rs (target\debug\deps\graph_extensions-5cf6101264dc4545.exe)
+ambiguous_members_cannot_collide_community_identities: test
+duplicate_structural_identities_are_reported_ambiguous: test
+empty_graph_and_hub_exclusion_remain_explicit: test
+expired_and_rebound_or_corrupt_source_reports_are_rejected: test
+invalid_analysis_options_fail_without_persisting: test
+persisted_wrong_line_anchors_are_not_certified_as_exact: test
+report_is_reproducible_with_actual_leiden_and_source_bound_labels: test
+report_keeps_parallel_arcs_exact_anchors_and_uncertainty: test
+snapshot_diff_ignores_offset_and_id_churn_but_detects_body_change: test
+
+9 tests, 0 benchmarks
+     Running tests\graph_review_adversarial.rs (target\debug\deps\graph_review_adversarial-69abd8cc0880666f.exe)
+review_cargo_ordinary_ancestor_does_not_shadow_workspace: test
+review_json_pointer_can_address_array_child_keys: test
+review_launcher_option_values_are_not_persisted_as_packages: test
+review_tree_export_script_is_valid_javascript: test
+review_yaml_mcp_config_preserves_server_contract: test
+
+5 tests, 0 benchmarks

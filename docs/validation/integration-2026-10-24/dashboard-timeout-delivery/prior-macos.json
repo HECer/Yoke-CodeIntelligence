@@ -1,0 +1,47 @@
+{
+  "artifact": {
+    "id": 12563492042,
+    "name": "native-shard-macos-latest-7",
+    "bytes": 104938,
+    "digest": "sha256:8d5214127b32a9f4fd99056bde29630aefaaff740f421e2ca3e56d64de105fbb",
+    "run": 40101366598,
+    "head": "84e1186621eb2ac984609bb05549e9a3b93d759b"
+  },
+  "artifactDigestReverified": true,
+  "group": {
+    "group": "yoke-code-intelligence:test:session_dashboard_management:test",
+    "exitCode": 101,
+    "logs": [
+      {
+        "name": "0035.stdout",
+        "bytes": 1849,
+        "sha256": "584c09dacae6666d9613a9cb47d1295b3fc21bd2828cff95942c1a53b2cfcdf1"
+      },
+      {
+        "name": "0035.stderr",
+        "bytes": 548,
+        "sha256": "c2b4bf4c33b2172e4e97ca4e8b804b83bfa2bd131ad34c73fcc1bd7b20196318"
+      }
+    ]
+  },
+  "priorSources": [
+    {
+      "path": "native/src/session_dashboard.rs",
+      "sha256": "1e0d9d0ccec127fae5fc80ec9abb4ee1474998c7a651013c21dd00c102d4e382",
+      "exactToSelectedPriorMacInput": true
+    },
+    {
+      "path": "native/src/session_dashboard_management.rs",
+      "sha256": "314cf2498c4d25bdc0deca0e5656bbe4efb59f835026addfef6b39b6ef34c13f",
+      "exactToSelectedPriorMacInput": true
+    },
+    {
+      "path": "native/tests/session_dashboard_management.rs",
+      "sha256": "fbbb37b3466648dc04e94f99793ea841bdd0871b87650832764b46efc06fffb6",
+      "exactToSelectedPriorMacInput": true
+    }
+  ],
+  "failureExcerpt": "---- queued_expiry_and_stale_session_requests_never_apply_after_their_caller_exits stdout ----\n\nthread 'queued_expiry_and_stale_session_requests_never_apply_after_their_caller_exits' (79737) panicked at native/tests/session_dashboard_management.rs:561:5:\nassertion `left == right` failed\n  left: Null\n right: true\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\n\n\nfailures:\n    queued_expiry_and_stale_session_requests_never_apply_after_their_caller_exits\n\ntest result: FAILED. 13 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.43s\n\n",
+  "exactHostedSerializationCauseMeasured": false,
+  "scope": "Failed prior macOS integration group; source-path correction awaits native execution"
+}

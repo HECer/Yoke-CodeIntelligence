@@ -1,0 +1,130 @@
+{
+  "sourceCommit": "7ef75a2c8c88c4ea0951e6d9f562716dbfe4676a",
+  "runtimeCommit": "36f0ab2b51643b27c44cdbcfd2050bf1c1ea1bbb",
+  "parentCommit": "58be008555e9d24df1af346245fe8249d8d4d998",
+  "paths": [
+    "docs/native-neo4j-publish.md",
+    "native/examples/neo4j_owned_probe.rs",
+    "native/src/host_credentials.rs",
+    "native/src/lib.rs",
+    "native/src/main.rs",
+    "native/src/neo4j_publish.rs",
+    "native/src/neo4j_publish_checks.rs",
+    "native/src/neo4j_publish_checks_tests.rs",
+    "native/src/neo4j_publish_cli.rs",
+    "native/src/neo4j_publish_client.rs",
+    "native/src/neo4j_publish_journal.rs",
+    "native/src/neo4j_publish_journal_tests.rs",
+    "native/src/neo4j_publish_plan.rs",
+    "native/src/neo4j_publish_program.rs",
+    "native/src/neo4j_publish_transport.rs",
+    "native/src/neo4j_publish_transport_tests.rs",
+    "native/tests/neo4j_publish.rs",
+    "native/tests/neo4j_publish_cli.rs"
+  ],
+  "runtimeCodeChanged": true,
+  "newCases": 21,
+  "nativeGroups": [
+    [
+      447,
+      0,
+      7
+    ],
+    [
+      5,
+      0,
+      0
+    ],
+    [
+      3,
+      0,
+      0
+    ],
+    [
+      4,
+      0,
+      0
+    ],
+    [
+      16,
+      0,
+      0
+    ],
+    [
+      12,
+      1,
+      0
+    ],
+    [
+      16,
+      0,
+      0
+    ],
+    [
+      3,
+      0,
+      1
+    ],
+    [
+      3,
+      0,
+      0
+    ],
+    [
+      7,
+      0,
+      0
+    ],
+    [
+      6,
+      0,
+      0
+    ],
+    [
+      8,
+      0,
+      0
+    ],
+    [
+      4,
+      0,
+      0
+    ],
+    [
+      7,
+      0,
+      0
+    ],
+    [
+      5,
+      0,
+      0
+    ],
+    [
+      4,
+      0,
+      0
+    ],
+    [
+      5,
+      0,
+      0
+    ]
+  ],
+  "nativeTotals": {
+    "passed": 555,
+    "failed": 1,
+    "ignored": 8
+  },
+  "failedCases": [
+    "media_cannot_bypass_source_scope_links_ignore_or_protected_paths"
+  ],
+  "testOnlySourceBridge": {
+    "path": "native/tests/neo4j_publish_cli.rs",
+    "priorSha256": "b69756e40aac2ebb248ccfa921c603566bf916a154da5c1e2db9633a8627e8d8",
+    "currentSha256": "0a6200645642f812a44f28d727facea81bb75ac957b56e263fc0abff07d8cb12",
+    "reason": "Windows-only Stdio import is cfg-gated for non-Windows compiler hygiene; no runtime or test behavior change on Windows"
+  },
+  "productionBinaryUnchangedAcrossTestImportBridge": true,
+  "wholeNativeRerun": false
+}

@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "status": "ignored_drafts_frozen_uncompiled_unexecuted",
+  "action": "act_mv9zp176_d848c4d9031d",
+  "owner": "host_cli_review",
+  "normalEditsAuthorized": false,
+  "normalSourcesChangedByA": [],
+  "acceptedDesignSha256": {
+    "CONTRACT.md": "4dc1105faa6731076dde6f0d3e5003624049a3392a4a7c1dafd1ba94f6fad53e",
+    "API.md": "f94a6cde51979e4cc5e740eb39561533d0095e22360280d1e7158b0d7045b5f5",
+    "FIXTURES.json": "39f875158543e9bc64046d2144ea82480f275cc3ef2c0fd4c4cce2c5f449a1f7"
+  },
+  "files": [
+    {
+      "path": "monorepo_scopes.rs",
+      "bytes": 6108,
+      "sha256": "ae6cc9f97f0d669b94ee9df5794f24da623202ee334fcef43f1b31ab34814ba2",
+      "testCount": 3
+    },
+    {
+      "path": "PROMOTION.json",
+      "bytes": 5365,
+      "sha256": "ac8293f43137def4f9365730d2f56e2d0bb1f4d2b5e6a7de2558e7a31b48b676",
+      "testCount": 0
+    },
+    {
+      "path": "README.md",
+      "bytes": 7265,
+      "sha256": "8d9f6471d68a73aa0819d75abc33fc5f38358f1113898be75af898c965b3228f",
+      "testCount": 0
+    },
+    {
+      "path": "retrieval_scopes.rs",
+      "bytes": 12564,
+      "sha256": "3a72ba9a1da437767c945263dd135a808a0a34329bce78304deefbe16457a664",
+      "testCount": 0
+    },
+    {
+      "path": "retrieval_scopes_tests.rs",
+      "bytes": 39556,
+      "sha256": "3a295bb80077ff7740d4e335326ac2e45cce5349c4a61cbe68bef7cd38944240",
+      "testCount": 28
+    }
+  ],
+  "privateTestCount": 28,
+  "publicTestCount": 3,
+  "validation": {
+    "rustfmtEdition2024Check": "passed_parse_format_only",
+    "promotionJson": "parsed",
+    "cargo": "not_run",
+    "node": "not_run",
+    "featureTests": "not_run",
+    "services": "not_used",
+    "normalFileSampleUnchanged": {
+      "native/src/retrieval.rs": "c209e6da3dc36e09613066ea1031d3174067675d8ac97e235f887de4e6cc633b",
+      "native/src/protocol.rs": "e99af9335ced8b8d102ac0805ae8292591da31447e987b41be786f79308028f1",
+      "native/src/trail_adapter.rs": "97202f01513121bc2ee9606223f54fa5e7b7aa89a4bdf6995e6819bc00153ad3",
+      "native/src/lsp.rs": "d18a847db5cfa61eff934e69cb821e7c83595a461e54af63cb66e91d21a87da3",
+      "native/src/lsp_refactor_intents.rs": "d7a45ca95038d6e929c87daa9790393fc91de693d602b0e7e6429775b4067db4"
+    },
+    "normalFileSampleScope": "five named frozen files only; not a whole-workspace source manifest"
+  },
+  "authorityStubs": "begin/probe/source_cost/read_source/document_cost/admit_document/validate_for/owner/scope all return typed Internal implementation_unavailable",
+  "limits": "Remaining large-capacity guard proof obligations explicitly recorded in README.md and PROMOTION.json; no capacity acceptance claimed",
+  "release": "Hold. Only root may promote after current-wave full acceptance and actual RED sequencing."
+}

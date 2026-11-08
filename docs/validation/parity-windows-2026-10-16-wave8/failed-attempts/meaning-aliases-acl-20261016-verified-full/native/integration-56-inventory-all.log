@@ -1,0 +1,19 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 9.44s
+     Running tests\ignored_capture_cli.rs (E:\Yoke-Build-Cache\meaning-aliases-20261016\debug\deps\ignored_capture_cli-f58edd793e6654af.exe)
+host_cli_can_explicitly_capture_an_ignored_directory_as_read_only: test
+
+1 test, 0 benchmarks
+     Running tests\ignored_facades.rs (E:\Yoke-Build-Cache\meaning-aliases-20261016\debug\deps\ignored_facades-794e2546159fdaae.exe)
+captured_directory_membership_rejects_files_and_unknown_empty_scopes_without_live_reads: test
+deeply_nested_directory_projection_has_an_explicit_budget_and_can_be_refined: test
+ignored_text_is_filtered_before_blob_reads_and_selected_code_paths: test
+list_filters_observed_ignored_files_before_directory_projection: test
+malformed_native_directory_arguments_fail_before_capture_publication: test
+native_ignored_filter_is_strict_and_precedes_file_and_symbol_pagination: test
+pinned_fs_facade_defaults_and_explicit_ignored_options_preserve_host_scope: test
+public_directory_recursion_returns_every_captured_level_and_nonrecursive_keeps_first_level: test
+public_external_directory_queries_share_ignored_scope_without_activation_and_honor_removal: test
+querying_a_pinned_snapshot_keeps_original_ignore_outcomes_after_disk_policy_changes: test
+
+10 tests, 0 benchmarks

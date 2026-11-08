@@ -1,0 +1,166 @@
+{
+  "sourceCommit": "159e5f535c99e9b1c5f7b252875194bf2374a09b",
+  "cliSha256": "1e17e1d071e9b30c960e607f2b8ee5b018629653c1e82e06eb91f46bd3f1ed78",
+  "frozenInputs": 1037,
+  "rust": {
+    "targets": {
+      "shared-lib": {
+        "passed": 32,
+        "failed": 0,
+        "ignored": 0
+      },
+      "source_line_endings": {
+        "passed": 10,
+        "failed": 0,
+        "ignored": 0
+      },
+      "plan_integrity": {
+        "passed": 13,
+        "failed": 0,
+        "ignored": 0
+      },
+      "project_session": {
+        "passed": 6,
+        "failed": 0,
+        "ignored": 0
+      },
+      "session_mcp": {
+        "passed": 3,
+        "failed": 0,
+        "ignored": 0
+      },
+      "session_steering": {
+        "passed": 12,
+        "failed": 0,
+        "ignored": 0
+      },
+      "session_primary_read_only": {
+        "passed": 8,
+        "failed": 0,
+        "ignored": 0
+      },
+      "session_config_cli": {
+        "passed": 4,
+        "failed": 0,
+        "ignored": 0
+      },
+      "session_refactor": {
+        "passed": 9,
+        "failed": 0,
+        "ignored": 2
+      },
+      "session_root_aliases": {
+        "passed": 3,
+        "failed": 0,
+        "ignored": 0
+      },
+      "session_review": {
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0
+      },
+      "agent_repl": {
+        "passed": 22,
+        "failed": 0,
+        "ignored": 0
+      },
+      "agent_facade_semantics": {
+        "passed": 4,
+        "failed": 0,
+        "ignored": 0
+      },
+      "compatibility": {
+        "passed": 6,
+        "failed": 0,
+        "ignored": 0
+      },
+      "compatibility_review": {
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0
+      },
+      "compiler_inline": {
+        "passed": 16,
+        "failed": 0,
+        "ignored": 0
+      },
+      "compiler_inline_body": {
+        "passed": 17,
+        "failed": 0,
+        "ignored": 0
+      },
+      "compiler_inline_predicates": {
+        "passed": 10,
+        "failed": 0,
+        "ignored": 0
+      },
+      "compiler_move": {
+        "passed": 25,
+        "failed": 0,
+        "ignored": 0
+      },
+      "lsp": {
+        "passed": 10,
+        "failed": 0,
+        "ignored": 0
+      },
+      "lsp_action_resolve": {
+        "passed": 5,
+        "failed": 0,
+        "ignored": 1
+      },
+      "lsp_enrichment": {
+        "passed": 19,
+        "failed": 0,
+        "ignored": 0
+      },
+      "refactor_intents": {
+        "passed": 15,
+        "failed": 0,
+        "ignored": 0
+      },
+      "semantic_refactor": {
+        "passed": 7,
+        "failed": 0,
+        "ignored": 0
+      },
+      "facade_directory_move": {
+        "passed": 10,
+        "failed": 0,
+        "ignored": 0
+      },
+      "directory_move_live": {
+        "passed": 0,
+        "failed": 0,
+        "ignored": 1
+      },
+      "facade_file_move": {
+        "passed": 8,
+        "failed": 0,
+        "ignored": 0
+      },
+      "facade_file_rename": {
+        "passed": 9,
+        "failed": 0,
+        "ignored": 0
+      }
+    },
+    "distinctPassed": 285,
+    "failed": 0,
+    "existingIgnored": 4,
+    "newFunctions": 14
+  },
+  "formatTargetRoots": 337,
+  "cargoFormatAllWindowsOs206": true,
+  "npm": {
+    "passed": 260,
+    "failed": 0,
+    "existingSkipped": 3
+  },
+  "allQualifiedJobsEmpty": true,
+  "fullStatusComplete": false,
+  "fullNativeCurrentHeadCertified": false,
+  "originalInventoryAssessmentsUnchanged": true,
+  "systemSettingsChanged": false,
+  "rawMembers": 409
+}

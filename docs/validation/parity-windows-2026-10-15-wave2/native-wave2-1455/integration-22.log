@@ -1,0 +1,90 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 11.73s
+     Running tests\notes.rs (target\debug\deps\notes-662e2c807df93ad8.exe)
+
+running 15 tests
+test authored_revision_timestamp_uses_unix_milliseconds ... ok
+test global_address_namespace_is_reserved_and_reference_boundaries_are_exact ... ok
+test edited_note_keeps_historical_anchor_and_reports_changed_source ... ok
+test global_note_policy_matches_its_canonical_global_namespace ... ok
+test host_note_policy_defaults_read_only_and_rejects_unknown_authority_fields ... ok
+test hidden_and_read_only_references_do_not_leak_or_block_renames ... ok
+test global_storage_is_host_selected_and_missing_or_ignored_notes_do_not_leak ... ok
+test maximally_encoded_accepted_note_remains_readable_after_commit ... ok
+test memory_reference_left_boundaries_exclude_larger_uri_schemes_and_identifiers ... ok
+test named_note_crud_retains_authored_scope_revisions_and_exact_source ... ok
+test regex_edits_count_guard_and_read_only_policy_do_not_partially_mutate_notes ... ok
+test regex_gap_growth_fails_before_remaining_budget_underflow_and_keeps_the_revision ... ok
+test rename_rewrites_exact_mem_references_atomically_except_read_only_notes ... ok
+test full_retired_head_quota_rejects_publication_atomically_and_allows_reuse ... ok
+test retired_heads_remain_bounded_without_consuming_active_note_content_quota ... ok
+
+test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 6.57s
+
+     Running tests\office.rs (target\debug\deps\office-dd16d7ee5a8a673a.exe)
+
+running 8 tests
+test office_refuses_wrong_main_root_instead_of_extracting_fake_document_text ... ok
+test native_docx_inspection_decodes_source_bound_unicode_paragraphs_and_tables ... ok
+test native_xlsx_keeps_shared_inline_values_and_formula_cache_distinct ... ok
+test public_cli_reads_office_without_starting_office_or_a_worker ... ok
+test public_office_cli_retains_large_results_as_artifacts_within_its_output_budget ... ok
+test forbidden_xml_scalars_cannot_enter_persisted_office_text ... ok
+test unicode_zip_extra_fields_cannot_replace_admitted_part_identity ... ok
+test package_paths_bounds_entities_secrets_and_crc_fail_before_persistence ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.70s
+
+     Running tests\office_bounds.rs (target\debug\deps\office_bounds-9fc912b3f32f0c6c.exe)
+
+running 1 test
+test rejected_office_text_is_admitted_before_dom_and_extraction_copies ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.31s
+
+     Running tests\ollama.rs (target\debug\deps\ollama-01f2a21a87bcee8f.exe)
+
+running 12 tests
+test actual_local_installed_embedding_model_gate ... ignored, Actual running local Ollama endpoint and explicitly selected installed embedding model digest required; never auto-start or pull
+test actual_http_summary_request_is_concise_for_single_and_multiple_sources ... ok
+test invalid_protocol_hashes_and_authority_fields_are_rejected ... ok
+test actual_http_summary_replies_cannot_exceed_concise_generation_bounds ... ok
+test labeled_http_chat_fixture_maps_source_citations_and_reported_usage ... ok
+test labeled_http_embedding_fixture_maps_exact_native_protocol_binding ... ok
+test labeled_vision_fixture_receives_hash_bound_image_bytes ... ok
+test labeled_model_reranking_is_exact_and_scores_are_bounded_inferences ... ok
+test summary_unicode_characters_cannot_exceed_the_utf8_byte_budget ... ok
+test endpoint_identity_capability_and_http_failures_never_become_successes ... ok
+test chunked_query_vectors_are_bounded_and_a_stalled_backend_times_out ... ok
+test native_executable_worker_drives_http_adapter_and_durable_unknown_billing ... ok
+
+test result: ok. 11 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.57s
+
+     Running tests\operations.rs (target\debug\deps\operations-ed9395c3e80089b9.exe)
+
+running 8 tests
+test binary_resource_reads_cannot_abort_the_next_mcp_request ... ok
+test cross_file_imports_are_recomputed_after_dependency_changes ... ok
+test lsp_unicode_position_roundtrip_rejects_split_surrogates ... ok
+test additional_grammar_call_sites_have_exact_evidence_and_labeled_candidates ... ok
+test additional_real_grammars_extract_symbols_without_running_source ... ok
+test mcp_stdio_initialization_lists_exactly_eight_tools_and_rejects_host_authority ... ok
+test real_grammars_extract_multilingual_symbols_and_diagnostics ... ok
+test symbol_insertions_and_overlaps_use_immutable_exact_ranges ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.33s
+
+     Running tests\parity_cli.rs (target\debug\deps\parity_cli-c7f5b814c46c6b5e.exe)
+
+running 8 tests
+test public_graph_view_cli_combines_manifest_nodes_and_reads_historical_view ... ok
+test public_named_notes_cli_is_persistent_and_global_store_is_explicit ... ok
+test public_graph_cli_analyzes_and_exports_without_overwriting_human_cards ... ok
+test public_retrieval_cli_ranks_task_words_in_source_bodies ... ok
+test public_agent_repl_cli_executes_persistent_cells_only_with_host_trust ... ok
+test public_session_stdio_cli_serves_the_extended_profile_and_exits_on_eof ... ok
+test public_session_cli_resumes_host_registered_project_and_notes ... ok
+test public_serena_stdio_cli_preserves_cells_and_reports_errors_under_host_authority ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.61s
+

@@ -1,0 +1,235 @@
+diff --git a/native/src/agent_repl.rs b/native/src/agent_repl.rs
+index 690c46f..b7b4064 100644
+--- a/native/src/agent_repl.rs
++++ b/native/src/agent_repl.rs
+@@ -168,7 +168,15 @@ impl AgentRepl {
+             .stdout(Stdio::piped())
+             .stderr(Stdio::piped())
+             .env_clear();
+-        for name in ["PATH", "SystemRoot", "WINDIR", "TEMP", "TMP", "LANG"] {
++        for name in [
++            "PATH",
++            "SystemRoot",
++            "SystemDrive",
++            "WINDIR",
++            "TEMP",
++            "TMP",
++            "LANG",
++        ] {
+             if let Some(value) = std::env::var_os(name) {
+                 command.env(name, value);
+             }
+diff --git a/native/src/debug_adapter.rs b/native/src/debug_adapter.rs
+index 9250d52..b9c3cf5 100644
+--- a/native/src/debug_adapter.rs
++++ b/native/src/debug_adapter.rs
+@@ -196,7 +196,15 @@ impl DebugAdapter {
+             .stdout(Stdio::piped())
+             .stderr(Stdio::piped())
+             .env_clear();
+-        for name in ["PATH", "SystemRoot", "WINDIR", "TEMP", "TMP", "LANG"] {
++        for name in [
++            "PATH",
++            "SystemRoot",
++            "SystemDrive",
++            "WINDIR",
++            "TEMP",
++            "TMP",
++            "LANG",
++        ] {
+             if let Some(value) = std::env::var_os(name) {
+                 command.env(name, value);
+             }
+diff --git a/native/src/lsp.rs b/native/src/lsp.rs
+index 34c3b55..914e1f8 100644
+--- a/native/src/lsp.rs
++++ b/native/src/lsp.rs
+@@ -478,6 +478,7 @@ impl Session {
+         for name in [
+             "PATH",
+             "SystemRoot",
++            "SystemDrive",
+             "WINDIR",
+             "USERPROFILE",
+             "HOME",
+diff --git a/native/src/media.rs b/native/src/media.rs
+index 53b64ae..190f4f9 100644
+--- a/native/src/media.rs
++++ b/native/src/media.rs
+@@ -1705,7 +1705,7 @@ pub(crate) fn frozen_pdf_with_worker(
+         .stdin(std::process::Stdio::null())
+         .stdout(std::process::Stdio::piped())
+         .stderr(std::process::Stdio::piped());
+-    for key in ["SystemRoot", "WINDIR", "TEMP", "TMP", "LANG"] {
++    for key in ["SystemRoot", "SystemDrive", "WINDIR", "TEMP", "TMP", "LANG"] {
+         if let Some(value) = std::env::var_os(key) {
+             command.env(key, value);
+         }
+diff --git a/native/src/process.rs b/native/src/process.rs
+index 4512c73..3dd8b01 100644
+--- a/native/src/process.rs
++++ b/native/src/process.rs
+@@ -106,6 +106,7 @@ pub fn run_capture(
+     for name in [
+         "PATH",
+         "SystemRoot",
++        "SystemDrive",
+         "WINDIR",
+         "USERPROFILE",
+         "HOME",
+diff --git a/native/src/runtime.rs b/native/src/runtime.rs
+index dda4d04..2856eef 100644
+--- a/native/src/runtime.rs
++++ b/native/src/runtime.rs
+@@ -193,6 +193,7 @@ impl<'a> Session<'a> {
+         for name in [
+             "PATH",
+             "SystemRoot",
++            "SystemDrive",
+             "WINDIR",
+             "USERPROFILE",
+             "HOME",
+diff --git a/native/src/verify.rs b/native/src/verify.rs
+index 58985bf..c8de2f9 100644
+--- a/native/src/verify.rs
++++ b/native/src/verify.rs
+@@ -154,6 +154,7 @@ pub fn execute(
+     for name in [
+         "PATH",
+         "SystemRoot",
++        "SystemDrive",
+         "WINDIR",
+         "USERPROFILE",
+         "HOME",
+diff --git a/native/tests/agent_repl.rs b/native/tests/agent_repl.rs
+index 991fc1c..1dd8459 100644
+--- a/native/tests/agent_repl.rs
++++ b/native/tests/agent_repl.rs
+@@ -267,6 +267,24 @@ fn explicitly_selected_shell_runs_and_cell_errors_preserve_namespace() {
+     assert_eq!(value["result"], true);
+ }
+ 
++#[cfg(windows)]
++#[test]
++fn selected_python_worker_preserves_windows_runtime_drive() {
++    let root = tempfile::tempdir().unwrap();
++    let setup = Deadline::new(60000);
++    let mut s = session(root.path(), HostProfile::default(), &setup);
++    let mut repl = AgentRepl::spawn(spec(), &setup).unwrap();
++    let value = repl
++        .execute(
++            &mut s,
++            "import os\nos.environ.get('SystemDrive')",
++            &Deadline::new(20000),
++        )
++        .unwrap();
++    assert_eq!(value["result"], std::env::var("SystemDrive").unwrap());
++    repl.close().unwrap();
++}
++
+ #[test]
+ fn python_regex_declaration_and_semantic_implementations_preserve_snapshot_anchors() {
+     let root = tempfile::tempdir().unwrap();
+diff --git a/native/tests/process.rs b/native/tests/process.rs
+index fdf9ff7..6a09487 100644
+--- a/native/tests/process.rs
++++ b/native/tests/process.rs
+@@ -97,6 +97,98 @@ fn source_selected_defaults_and_oversized_stdin_are_rejected_before_spawn() {
+     assert!(run_capture(command, b"", &Deadline::new(10_000), limits()).is_err());
+ }
+ 
++#[test]
++fn runtime_environment_filters_secrets_and_preserves_host_overrides() {
++    const CHILD: &str = "YOKE_PROCESS_ENV_CHILD_20261019";
++    let root = TempDir::new().unwrap();
++    if std::env::var(CHILD).as_deref() != Ok("owned") {
++        let mut child = Command::new(std::env::current_exe().unwrap());
++        child
++            .current_dir(root.path())
++            .args([
++                "--exact",
++                "runtime_environment_filters_secrets_and_preserves_host_overrides",
++                "--nocapture",
++            ])
++            .env(CHILD, "owned")
++            .env("OPENAI_API_KEY", "owned-not-a-credential")
++            .env("YOKE_UNAPPROVED_HOST_VALUE", "owned-private-value");
++        // Seed the isolated test host explicitly. The inner capture must inherit
++        // this runtime value while filtering the synthetic secret values.
++        #[cfg(windows)]
++        child.env("SystemDrive", std::env::var_os("SystemDrive").unwrap());
++        let result = run_capture(child, b"", &Deadline::new(20_000), limits()).unwrap();
++        assert_eq!(
++            result.exit_code,
++            Some(0),
++            "{}\n{}",
++            String::from_utf8_lossy(&result.stdout),
++            String::from_utf8_lossy(&result.stderr)
++        );
++        assert!(
++            result.output_complete
++                && !result.timed_out
++                && !result.output_exceeded
++                && !result.io_error
++        );
++        return;
++    }
++    assert_eq!(
++        std::env::var("OPENAI_API_KEY").unwrap(),
++        "owned-not-a-credential"
++    );
++    let program = "process.stdout.write(JSON.stringify({drive:process.env.SystemDrive??null,secret:'OPENAI_API_KEY' in process.env,unapproved:'YOKE_UNAPPROVED_HOST_VALUE' in process.env,explicit:process.env.YOKE_EXPLICIT_HOST_VALUE??null}));";
++    let result = run_capture(node(&root, program), b"", &Deadline::new(10_000), limits()).unwrap();
++    assert_eq!(result.exit_code, Some(0));
++    assert!(
++        result.output_complete && !result.timed_out && !result.output_exceeded && !result.io_error
++    );
++    let value: serde_json::Value = serde_json::from_slice(&result.stdout).unwrap();
++    assert_eq!(value["secret"], false);
++    assert_eq!(value["unapproved"], false);
++    #[cfg(windows)]
++    assert_eq!(value["drive"], std::env::var("SystemDrive").unwrap());
++    let mut override_command = node(&root, program);
++    override_command
++        .env_remove("SystemDrive")
++        .env("YOKE_EXPLICIT_HOST_VALUE", "owned-explicit");
++    let result = run_capture(override_command, b"", &Deadline::new(10_000), limits()).unwrap();
++    assert_eq!(result.exit_code, Some(0));
++    assert!(
++        result.output_complete && !result.timed_out && !result.output_exceeded && !result.io_error
++    );
++    let value: serde_json::Value = serde_json::from_slice(&result.stdout).unwrap();
++    assert!(value["drive"].is_null());
++    assert_eq!(value["explicit"], "owned-explicit");
++    assert_eq!(value["secret"], false);
++    assert_eq!(value["unapproved"], false);
++}
++
++#[cfg(windows)]
++#[test]
++fn windows_runtime_environment_supports_managed_known_folders() {
++    let root = TempDir::new().unwrap();
++    let mut command = Command::new(
++        std::path::PathBuf::from(std::env::var_os("SystemRoot").unwrap())
++            .join("System32/WindowsPowerShell/v1.0/powershell.exe"),
++    );
++    command.current_dir(root.path()).args(["-NoProfile", "-NonInteractive", "-Command", r#"$ErrorActionPreference='Stop'; if([string]::IsNullOrEmpty($env:SystemDrive)){throw 'Host system drive missing'}; $folder=[Environment]::GetFolderPath([Environment+SpecialFolder]::CommonApplicationData,[Environment+SpecialFolderOption]::DoNotVerify); if(-not [IO.Path]::IsPathRooted($folder)){throw 'Managed known folder is not absolute'}; Write-Output 'owned-windows-runtime'"#]);
++    let result = run_capture(command, b"", &Deadline::new(20_000), limits()).unwrap();
++    assert_eq!(
++        result.exit_code,
++        Some(0),
++        "{}",
++        String::from_utf8_lossy(&result.stderr)
++    );
++    assert_eq!(
++        String::from_utf8(result.stdout).unwrap().trim(),
++        "owned-windows-runtime"
++    );
++    assert!(
++        result.output_complete && !result.timed_out && !result.output_exceeded && !result.io_error
++    );
++}
++
+ #[cfg(windows)]
+ #[test]
+ fn windows_host_fixture_does_not_allocate_a_console_window() {

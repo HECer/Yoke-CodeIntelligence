@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-19T02:13:15.605075+00:00",
+  "headCommit": "328ea51729a8ffa7c310c092535b159f3c56b5e7",
+  "accepted": false,
+  "platforms": {
+    "linux": {
+      "jobId": 117844454264,
+      "groups": 258,
+      "passed": 1964,
+      "failed": 39,
+      "ignored": 23,
+      "url": "https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/39184671955/job/117844454264"
+    },
+    "windows": {
+      "jobId": 117844454647,
+      "groups": 258,
+      "passed": 2310,
+      "failed": 1,
+      "ignored": 37,
+      "url": "https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/39184671955/job/117844454647"
+    },
+    "macos": {
+      "jobId": 117844454499,
+      "groups": 258,
+      "passed": 1930,
+      "failed": 73,
+      "ignored": 23,
+      "url": "https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/39184671955/job/117844454499"
+    }
+  },
+  "typescript": {
+    "runId": 39184671941,
+    "conclusion": "success",
+    "jobsPassed": 6,
+    "npmCiStepsPassed": 6
+  },
+  "findings": [
+    "Complete exact-head PR-event runs only; duplicate push runs are not added.",
+    "Windows executes the real symlink fixtures and now has one failure: the explicitly selected PowerShell Agent-REPL call still exceeds its fresh operation deadline. The other five previously failing Windows cases pass.",
+    "Linux and macOS remain failed, including unavailable Unix guarded host installation and other recorded runtime/SQL/PDF cases.",
+    "bf6471a later corrects the first-SQL lock fixture and POSIX root spelling; these older328 results do not validate that follow-up or the new optional bridge repairs.",
+    "No full-native/platform acceptance, release, merge or deployment is claimed."
+  ],
+  "artifacts": [
+    {
+      "path": "linux.json",
+      "bytes": 15549,
+      "sha256": "2a9c195190d2f357d373b7985d77c6345c8aaf902b6a27dcbd4840e4d0c1e926"
+    },
+    {
+      "path": "linux.log",
+      "bytes": 481532,
+      "sha256": "f78d7672b5eadbcaed25f6315277ac402ea4830e3daa4b9f6286e9477eb66918"
+    },
+    {
+      "path": "macos.json",
+      "bytes": 29362,
+      "sha256": "b7f3b63695ba0e7864c5cf554fa05194e3adea28f2bbfef15777a5f9d4eae41d"
+    },
+    {
+      "path": "macos.log",
+      "bytes": 501871,
+      "sha256": "ce8fa363c60f8ec68b7d01c624b78c6bf20c1fdf674826f7a495ce3510fc2dd6"
+    },
+    {
+      "path": "rust-run.json",
+      "bytes": 17756,
+      "sha256": "d9e53bb300ac8b20496c585ae8ab713bfdde5402bdf215aa600a7efaf7ce9f96"
+    },
+    {
+      "path": "summary.json",
+      "bytes": 10675,
+      "sha256": "e20cb944620d1c54628f4876c190ab173a0561029549534cd3c4ecea511e3993"
+    },
+    {
+      "path": "typescript-run.json",
+      "bytes": 27641,
+      "sha256": "099fe60b33b7174b51bf27958a9f2ea2439ae07195c35fe5e57fc2e225b5c88d"
+    },
+    {
+      "path": "windows.json",
+      "bytes": 579,
+      "sha256": "2cd40dcccb48a94abc8c2dcf98703a4217d3df632bbf01eef222d8c837ad9f75"
+    },
+    {
+      "path": "windows.log",
+      "bytes": 502706,
+      "sha256": "0a6736baafaae84fd6832627938ec3395aa31c365ffbf998d0f89d6ff7fc1e41"
+    }
+  ]
+}

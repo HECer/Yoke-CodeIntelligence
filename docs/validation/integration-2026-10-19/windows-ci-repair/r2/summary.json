@@ -1,0 +1,326 @@
+{
+  "allChecksPassed": true,
+  "sourceUnchanged": true,
+  "checks": [
+    {
+      "gate": "format",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "fmt",
+        "--all",
+        "--check"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 4.442,
+      "recordedAt": "2026-10-19T01:11:51.300310+00:00",
+      "resultGroups": []
+    },
+    {
+      "gate": "clippy",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "clippy",
+        "--workspace",
+        "--all-targets",
+        "--locked",
+        "--keep-going",
+        "-j2",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 81.137,
+      "recordedAt": "2026-10-19T01:13:12.438390+00:00",
+      "resultGroups": []
+    },
+    {
+      "gate": "library-and-session",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j2",
+        "--no-fail-fast",
+        "--lib",
+        "--test",
+        "session_root_aliases",
+        "--test",
+        "ignored_facades",
+        "--test",
+        "process",
+        "--test",
+        "agent_repl",
+        "--test",
+        "mcp_http",
+        "--test",
+        "project_session",
+        "--test",
+        "session_mcp",
+        "--test",
+        "session_review",
+        "--test",
+        "session_epoch_selection",
+        "--test",
+        "collections_cli_review",
+        "--test",
+        "collections_cli",
+        "--",
+        "--test-threads=2"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 140.517,
+      "recordedAt": "2026-10-19T01:15:32.956701+00:00",
+      "resultGroups": [
+        {
+          "passed": 400,
+          "failed": 0,
+          "ignored": 7
+        },
+        {
+          "passed": 21,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "passed": 5,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "passed": 10,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "passed": 18,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "passed": 5,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "passed": 6,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "passed": 6,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "passed": 3,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "passed": 3,
+          "failed": 0,
+          "ignored": 0
+        }
+      ]
+    },
+    {
+      "gate": "short-react-uri",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j2",
+        "--lib",
+        "react_documents_and_siblings_keep_their_ids_with_base_language_providers",
+        "--",
+        "--test-threads=1"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 1.076,
+      "recordedAt": "2026-10-19T01:15:34.033215+00:00",
+      "resultGroups": [
+        {
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0
+        }
+      ]
+    },
+    {
+      "gate": "short-react-equivalent-uri",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j2",
+        "--lib",
+        "react_fixture_uses_requested_document_and_equivalent_tilde_uri_spellings",
+        "--",
+        "--test-threads=1"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 0.726,
+      "recordedAt": "2026-10-19T01:15:34.759715+00:00",
+      "resultGroups": [
+        {
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0
+        }
+      ]
+    },
+    {
+      "gate": "short-registered-root",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j2",
+        "--test",
+        "ignored_facades",
+        "public_external_directory_queries_share_ignored_scope_without_activation_and_honor_removal",
+        "--",
+        "--test-threads=1"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 0.809,
+      "recordedAt": "2026-10-19T01:15:35.569942+00:00",
+      "resultGroups": [
+        {
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0
+        }
+      ]
+    },
+    {
+      "gate": "short-root-aliases",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j2",
+        "--test",
+        "session_root_aliases",
+        "--",
+        "--test-threads=1"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 1.112,
+      "recordedAt": "2026-10-19T01:15:36.682121+00:00",
+      "resultGroups": [
+        {
+          "passed": 3,
+          "failed": 0,
+          "ignored": 0
+        }
+      ]
+    },
+    {
+      "gate": "short-console",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j2",
+        "--test",
+        "process",
+        "windows_host_fixture_does_not_allocate_a_console_window",
+        "--",
+        "--test-threads=1"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 1.008,
+      "recordedAt": "2026-10-19T01:15:37.690864+00:00",
+      "resultGroups": [
+        {
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0
+        }
+      ]
+    },
+    {
+      "gate": "short-source-binding",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j2",
+        "--lib",
+        "provider_queries_keep_the_symbol_snapshot_after_original_source_changes",
+        "--",
+        "--test-threads=1"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 0.887,
+      "recordedAt": "2026-10-19T01:15:38.578611+00:00",
+      "resultGroups": [
+        {
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0
+        }
+      ]
+    },
+    {
+      "gate": "short-shell",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j2",
+        "--test",
+        "agent_repl",
+        "explicitly_selected_shell_runs_and_cell_errors_preserve_namespace",
+        "--",
+        "--test-threads=1"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 1.212,
+      "recordedAt": "2026-10-19T01:15:39.791584+00:00",
+      "resultGroups": [
+        {
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0
+        }
+      ]
+    },
+    {
+      "gate": "short-http-session",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j2",
+        "--test",
+        "mcp_http",
+        "session_capacity_expiry_and_slow_connection_shutdown_are_bounded",
+        "--",
+        "--test-threads=1"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 8.036,
+      "recordedAt": "2026-10-19T01:15:47.828300+00:00",
+      "resultGroups": [
+        {
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0
+        }
+      ]
+    }
+  ]
+}

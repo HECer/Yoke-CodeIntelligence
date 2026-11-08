@@ -12,7 +12,7 @@ async function setup(t, spec = {}, source = 'nameText\r\nsecond\r\n') {
     const f = fixture(t, { 'main.ts': source });
     const s = f.snapshot();
     const adapter = new LspAdapter(f.ws);
-    t.after(() => adapter.close());
+    f.cleanup(() => adapter.close());
     await adapter.start(process.execPath, [peerFile, JSON.stringify(spec)], s, join(f.ws.store.directory, 'changes', 'lsp', 'tree'), deadline());
     return { ...f, s, adapter };
 }
@@ -20,20 +20,20 @@ for (const kind of ['both', 'neither', 'bad-error', 'array', 'utf8', 'duplicate-
     test(`RPC rejects malformed ${kind} response without resolving a pending call`, async (t) => {
         const f = fixture(t);
         const p = new RpcPeer('lsp', 1024);
-        t.after(() => p.close());
+        f.cleanup(() => p.close());
         p.start(process.execPath, [peerFile, JSON.stringify({ kind })], f.root);
         await assert.rejects(() => p.request('malformed', {}, deadline()), e => ['PROTOCOL_ERROR', 'PROTOCOL_LIMIT'].includes(e.code));
     });
 }
 test('RPC bounds individual frames without rejecting many coalesced valid messages', async (t) => {
     const f = fixture(t), p = new RpcPeer('lsp', 512);
-    t.after(() => p.close());
+    f.cleanup(() => p.close());
     p.start(process.execPath, [peerFile, '{}'], f.root);
     assert.equal(await p.request('many', {}, deadline()), 'batch-ok');
 });
 test('unsupported server callbacks receive MethodNotFound, not a false success', async (t) => {
     const f = fixture(t), p = new RpcPeer('lsp');
-    t.after(() => p.close());
+    f.cleanup(() => p.close());
     p.start(process.execPath, [peerFile, '{}'], f.root);
     const r = await p.request('callback', {}, deadline());
     assert.equal(r.error.code, -32601);
@@ -41,7 +41,7 @@ test('unsupported server callbacks receive MethodNotFound, not a false success',
 });
 test('server applyEdit callbacks are refused and cannot mutate workspace files', async (t) => {
     const f = fixture(t, { 'a.txt': 'original' }), p = new RpcPeer('lsp');
-    t.after(() => p.close());
+    f.cleanup(() => p.close());
     p.start(process.execPath, [peerFile, JSON.stringify({ callback: 'workspace/applyEdit', params: { edit: {} } })], f.root);
     const r = await p.request('callback', {}, deadline());
     assert.equal(r.result.applied, false);
@@ -136,13 +136,13 @@ test('LSP diagnostic notifications are source-scoped and reject stale versions',
 });
 test('LSP startup rejects unsupported negotiated encodings and closes the peer', async (t) => {
     const f = fixture(t, { 'main.ts': 'hello' }), adapter = new LspAdapter(f.ws);
-    t.after(() => adapter.close());
+    f.cleanup(() => adapter.close());
     await assert.rejects(() => adapter.start(process.execPath, [peerFile, '{"encoding":"utf-8"}'], f.snapshot(), join(f.ws.store.directory, 'changes', 'bad', 'tree'), deadline()), e => e.code === 'UNSUPPORTED_ENCODING');
     await assert.rejects(() => adapter.peer.request('opened', {}, deadline()), e => e.code === 'PEER_CLOSED');
 });
 test('LSP advertises JSX documents using their correct language identifiers', async (t) => {
     const f = fixture(t, { 'view.tsx': 'export const v=<div/>;', 'view.jsx': 'export const v=<div/>;' }), adapter = new LspAdapter(f.ws);
-    t.after(() => adapter.close());
+    f.cleanup(() => adapter.close());
     await adapter.start(process.execPath, [peerFile, '{}'], f.snapshot(), join(f.ws.store.directory, 'changes', 'jsx', 'tree'), deadline());
     const opened = await adapter.peer.request('opened', {}, deadline());
     assert.deepEqual(opened.map(d => d.languageId).sort(), ['javascriptreact', 'typescriptreact']);

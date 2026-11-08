@@ -1,0 +1,22 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 47s
+     Running tests\postgres_catalog.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\postgres_catalog-8df809963e4d3afb.exe)
+
+running 1 test
+test actual_received_catalog_rows_preserve_oid_overloads_and_parallel_composite_keys ... FAILED
+
+failures:
+
+---- actual_received_catalog_rows_preserve_oid_overloads_and_parallel_composite_keys stdout ----
+
+thread 'actual_received_catalog_rows_preserve_oid_overloads_and_parallel_composite_keys' (9540) panicked at native\tests\postgres_catalog.rs:6:68:
+called `Result::unwrap()` on an `Err` value: postgres_catalog_unavailable
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    actual_received_catalog_rows_preserve_oid_overloads_and_parallel_composite_keys
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `--test postgres_catalog`

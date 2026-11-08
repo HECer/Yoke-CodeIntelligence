@@ -1,0 +1,475 @@
+{
+  "accepted": true,
+  "artifactSha256": {
+    "aliases-inventory.log": "4bc2fb4e5871a9cd5d6a74621f3b129bd4d8f7ce84524796e9a25578b810bb53",
+    "aliases.log": "072aca413b04d760b1aa928363762495095340e76af76b84a7f7e322575b3ca3",
+    "cli-admission-inventory.log": "25573f57d16571e6d2b4cbe108adaec7638ee462689434fc53f25297927dfe62",
+    "cli-admission.log": "fd28ba7cf4f209beb4bc98def084b202e6770659eada5f23f164b28353756a65",
+    "clippy.log": "2f32ff0d657bf8142cd6fbdbeb43f7e4fe27b78b964bab1b098b142f481f0c5a",
+    "format.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "freeze.json": "7c724a7398b01d3998d66125f13b9f124fed2e1f607b6bad18150ef0ba11592d",
+    "group-core-inventory.log": "605e52ff010f0b9593a0cffcf0973d77369d6d3970a2e2ccb4a2533ca5127558",
+    "group-core.log": "3b95930f22d02d148622be480bb307f57ecae09605e2d99d80ec6358576b0979",
+    "parser.py": "412b796dff54e94a5ba1076204c28646f85dc1a769a4e7afa0428416b07f6a6b",
+    "runner.py": "8fff3af62df640622dcba22c727aa413e19422330540f28ff52125ee8606c661",
+    "source-after.json": "ae5c68faebe887cbd063266ebe479b62dd43dd671f6ec6fe035f67126585f78f",
+    "source-before.json": "ae5c68faebe887cbd063266ebe479b62dd43dd671f6ec6fe035f67126585f78f",
+    "source-freeze.json": "ae5c68faebe887cbd063266ebe479b62dd43dd671f6ec6fe035f67126585f78f"
+  },
+  "checkedAtUtc": "2026-10-17T01:09:04.096251+00:00",
+  "claims": {
+    "authenticatedHumanReview": false,
+    "crossGraphDeduplication": false,
+    "newWholeNativeAcceptance": false,
+    "releaseCertified": false,
+    "semanticIdentityEstablished": false,
+    "universalParity": false
+  },
+  "fixtureRoot": "E:\\Yoke-Test-Scratch\\meaning-groups-windows-20261017-r1",
+  "interpretation": "Fresh Windows scoped matrix only:15 meaning-group unit tests,12 alias unit tests,13 complete meaning CLI tests and7 public group-admission tests. 25 unique group tests and all scoped counts are nonadditive to the separate historical Wave8 whole-project result. Rejected runs have null validated scoped counters; observedCompletedHarnessTotals retains raw completed-summary counts, not a complete/accepted matrix.",
+  "kind": "windows_meaning_groups_scoped_checks",
+  "nonadditiveMeaningGroupTests": [
+    "meaning_group_admission_every_hard_limit_and_all_zero_capacities_are_checked",
+    "meaning_group_admission_library_serialized_review_is_bounded_before_parent_loading",
+    "meaning_group_admission_nested_unknown_fields_and_duplicate_json_keys_refuse",
+    "meaning_group_admission_oversized_blank_rationale_hits_byte_guard_before_trimming",
+    "meaning_group_admission_per_group_member_limit_is_independent_of_total_capacity",
+    "meaning_group_admission_rationale_limit_counts_exact_utf8_bytes",
+    "meaning_group_admission_zero_output_is_a_valid_capacity",
+    "meaning_group_cli_rejects_ambiguous_host_review_and_limits_before_store_creation",
+    "meaning_group_cli_replays_parent_and_preserves_all_sql_cas_and_original_claims",
+    "meaning_group_cli_requires_existing_store_and_refuses_capture_or_execution_flags",
+    "meaning_groups::tests::grouping_canonicalizes_review_order_and_separates_policy_from_capacity",
+    "meaning_groups::tests::grouping_counts_original_records_and_slots_before_any_collapse",
+    "meaning_groups::tests::grouping_expired_deadline_refuses_before_projection",
+    "meaning_groups::tests::grouping_keeps_every_hyperedge_slot_role_position_and_original_reference",
+    "meaning_groups::tests::grouping_keeps_parallel_directed_relations_as_original_observations_and_selfloops",
+    "meaning_groups::tests::grouping_output_capacity_is_exact_including_a_real_zero_limit",
+    "meaning_groups::tests::grouping_packet_qualifies_colliding_concepts_relations_hyperedges_and_evidence",
+    "meaning_groups::tests::grouping_partitions_every_original_concept_without_changing_claims_or_evidence",
+    "meaning_groups::tests::grouping_refuses_duplicate_overlap_absent_refs_and_nonmember_representatives",
+    "meaning_groups::tests::grouping_refuses_invalid_version_graph_binding_and_rationale_without_echoing_values",
+    "meaning_groups::tests::grouping_representative_changes_policy_and_presentation_but_not_node_membership_ids",
+    "meaning_groups::tests::grouping_shared_host_cancellation_is_inherited_by_nested_deadlines",
+    "meaning_groups::tests::grouping_tagged_tuple_identities_follow_the_declared_byte_recipes",
+    "meaning_groups::tests::grouping_two_disjoint_groups_have_canonical_order_independent_of_review_order",
+    "meaning_groups::tests::grouping_zero_limits_admit_a_truly_empty_graph_and_review_only"
+  ],
+  "observedCompletedHarnessTotals": {
+    "failed": 0,
+    "groups": 4,
+    "ignored": 0,
+    "passed": 47
+  },
+  "parserSha256": "412b796dff54e94a5ba1076204c28646f85dc1a769a4e7afa0428416b07f6a6b",
+  "results": [
+    {
+      "command": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "exitCode": 0,
+      "inventoryOnly": false,
+      "label": "format",
+      "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "observedHarnessTotals": {
+        "failed": 0,
+        "groups": 0,
+        "ignored": 0,
+        "passed": 0
+      },
+      "origin": "fresh_execution",
+      "runnerSha256": "8fff3af62df640622dcba22c727aa413e19422330540f28ff52125ee8606c661",
+      "seconds": 4.922,
+      "sourceManifestSha256": "ae5c68faebe887cbd063266ebe479b62dd43dd671f6ec6fe035f67126585f78f"
+    },
+    {
+      "command": [
+        "cargo",
+        "clippy",
+        "--workspace",
+        "--all-targets",
+        "--locked",
+        "--offline",
+        "-j",
+        "1",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exitCode": 0,
+      "inventoryOnly": false,
+      "label": "clippy",
+      "logSha256": "2f32ff0d657bf8142cd6fbdbeb43f7e4fe27b78b964bab1b098b142f481f0c5a",
+      "observedHarnessTotals": {
+        "failed": 0,
+        "groups": 0,
+        "ignored": 0,
+        "passed": 0
+      },
+      "origin": "fresh_execution",
+      "runnerSha256": "8fff3af62df640622dcba22c727aa413e19422330540f28ff52125ee8606c661",
+      "seconds": 353.704,
+      "sourceManifestSha256": "ae5c68faebe887cbd063266ebe479b62dd43dd671f6ec6fe035f67126585f78f"
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--workspace",
+        "--locked",
+        "--offline",
+        "-j",
+        "1",
+        "--no-fail-fast",
+        "--lib",
+        "meaning_groups::",
+        "--",
+        "--list"
+      ],
+      "exitCode": 0,
+      "inventoryOnly": true,
+      "label": "group-core-inventory",
+      "logSha256": "605e52ff010f0b9593a0cffcf0973d77369d6d3970a2e2ccb4a2533ca5127558",
+      "origin": "fresh_execution",
+      "runnerSha256": "8fff3af62df640622dcba22c727aa413e19422330540f28ff52125ee8606c661",
+      "seconds": 109.313,
+      "sourceManifestSha256": "ae5c68faebe887cbd063266ebe479b62dd43dd671f6ec6fe035f67126585f78f",
+      "testGroups": {
+        "yoke": {
+          "executable": "E:/Yoke-Build-Cache/meaning-aliases-20261016\\debug\\deps\\yoke-35b101204e4eb110.exe",
+          "rows": {
+            "meaning_groups::tests::grouping_canonicalizes_review_order_and_separates_policy_from_capacity": "registered",
+            "meaning_groups::tests::grouping_counts_original_records_and_slots_before_any_collapse": "registered",
+            "meaning_groups::tests::grouping_expired_deadline_refuses_before_projection": "registered",
+            "meaning_groups::tests::grouping_keeps_every_hyperedge_slot_role_position_and_original_reference": "registered",
+            "meaning_groups::tests::grouping_keeps_parallel_directed_relations_as_original_observations_and_selfloops": "registered",
+            "meaning_groups::tests::grouping_output_capacity_is_exact_including_a_real_zero_limit": "registered",
+            "meaning_groups::tests::grouping_packet_qualifies_colliding_concepts_relations_hyperedges_and_evidence": "registered",
+            "meaning_groups::tests::grouping_partitions_every_original_concept_without_changing_claims_or_evidence": "registered",
+            "meaning_groups::tests::grouping_refuses_duplicate_overlap_absent_refs_and_nonmember_representatives": "registered",
+            "meaning_groups::tests::grouping_refuses_invalid_version_graph_binding_and_rationale_without_echoing_values": "registered",
+            "meaning_groups::tests::grouping_representative_changes_policy_and_presentation_but_not_node_membership_ids": "registered",
+            "meaning_groups::tests::grouping_shared_host_cancellation_is_inherited_by_nested_deadlines": "registered",
+            "meaning_groups::tests::grouping_tagged_tuple_identities_follow_the_declared_byte_recipes": "registered",
+            "meaning_groups::tests::grouping_two_disjoint_groups_have_canonical_order_independent_of_review_order": "registered",
+            "meaning_groups::tests::grouping_zero_limits_admit_a_truly_empty_graph_and_review_only": "registered"
+          }
+        }
+      }
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--workspace",
+        "--locked",
+        "--offline",
+        "-j",
+        "1",
+        "--no-fail-fast",
+        "--lib",
+        "meaning_groups::",
+        "--",
+        "--format",
+        "pretty",
+        "--test-threads=1"
+      ],
+      "exitCode": 0,
+      "failed": 0,
+      "ignored": 0,
+      "inventoryOnly": false,
+      "label": "group-core",
+      "logSha256": "3b95930f22d02d148622be480bb307f57ecae09605e2d99d80ec6358576b0979",
+      "observedHarnessTotals": {
+        "failed": 0,
+        "groups": 1,
+        "ignored": 0,
+        "passed": 15
+      },
+      "origin": "fresh_execution",
+      "passed": 15,
+      "runnerSha256": "8fff3af62df640622dcba22c727aa413e19422330540f28ff52125ee8606c661",
+      "seconds": 1.031,
+      "sourceManifestSha256": "ae5c68faebe887cbd063266ebe479b62dd43dd671f6ec6fe035f67126585f78f",
+      "testGroups": {
+        "yoke": {
+          "executable": "E:/Yoke-Build-Cache/meaning-aliases-20261016\\debug\\deps\\yoke-35b101204e4eb110.exe",
+          "failed": 0,
+          "filtered": 356,
+          "ignored": 0,
+          "measured": 0,
+          "passed": 15,
+          "rows": {
+            "meaning_groups::tests::grouping_canonicalizes_review_order_and_separates_policy_from_capacity": "ok",
+            "meaning_groups::tests::grouping_counts_original_records_and_slots_before_any_collapse": "ok",
+            "meaning_groups::tests::grouping_expired_deadline_refuses_before_projection": "ok",
+            "meaning_groups::tests::grouping_keeps_every_hyperedge_slot_role_position_and_original_reference": "ok",
+            "meaning_groups::tests::grouping_keeps_parallel_directed_relations_as_original_observations_and_selfloops": "ok",
+            "meaning_groups::tests::grouping_output_capacity_is_exact_including_a_real_zero_limit": "ok",
+            "meaning_groups::tests::grouping_packet_qualifies_colliding_concepts_relations_hyperedges_and_evidence": "ok",
+            "meaning_groups::tests::grouping_partitions_every_original_concept_without_changing_claims_or_evidence": "ok",
+            "meaning_groups::tests::grouping_refuses_duplicate_overlap_absent_refs_and_nonmember_representatives": "ok",
+            "meaning_groups::tests::grouping_refuses_invalid_version_graph_binding_and_rationale_without_echoing_values": "ok",
+            "meaning_groups::tests::grouping_representative_changes_policy_and_presentation_but_not_node_membership_ids": "ok",
+            "meaning_groups::tests::grouping_shared_host_cancellation_is_inherited_by_nested_deadlines": "ok",
+            "meaning_groups::tests::grouping_tagged_tuple_identities_follow_the_declared_byte_recipes": "ok",
+            "meaning_groups::tests::grouping_two_disjoint_groups_have_canonical_order_independent_of_review_order": "ok",
+            "meaning_groups::tests::grouping_zero_limits_admit_a_truly_empty_graph_and_review_only": "ok"
+          }
+        }
+      }
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--workspace",
+        "--locked",
+        "--offline",
+        "-j",
+        "1",
+        "--no-fail-fast",
+        "--lib",
+        "meaning_aliases::",
+        "--",
+        "--list"
+      ],
+      "exitCode": 0,
+      "inventoryOnly": true,
+      "label": "aliases-inventory",
+      "logSha256": "4bc2fb4e5871a9cd5d6a74621f3b129bd4d8f7ce84524796e9a25578b810bb53",
+      "origin": "fresh_execution",
+      "runnerSha256": "8fff3af62df640622dcba22c727aa413e19422330540f28ff52125ee8606c661",
+      "seconds": 0.906,
+      "sourceManifestSha256": "ae5c68faebe887cbd063266ebe479b62dd43dd671f6ec6fe035f67126585f78f",
+      "testGroups": {
+        "yoke": {
+          "executable": "E:/Yoke-Build-Cache/meaning-aliases-20261016\\debug\\deps\\yoke-35b101204e4eb110.exe",
+          "rows": {
+            "meaning_aliases::tests::canonical_pair_order_is_independent_of_materialized_concept_order": "registered",
+            "meaning_aliases::tests::capacities_refuse_the_complete_operation_instead_of_returning_a_top_k": "registered",
+            "meaning_aliases::tests::compatibility_normalization_preserves_accent_and_script_distinctions": "registered",
+            "meaning_aliases::tests::equal_native_ids_in_separate_packets_retain_qualified_proof": "registered",
+            "meaning_aliases::tests::explicit_alias_overlap_retains_which_provider_terms_matched": "registered",
+            "meaning_aliases::tests::invalid_host_limits_and_deadlines_are_refused": "registered",
+            "meaning_aliases::tests::normalization_expansion_refuses_instead_of_truncating_a_label": "registered",
+            "meaning_aliases::tests::normalized_aliases_propose_a_pair_without_merging_or_rewriting_source": "registered",
+            "meaning_aliases::tests::normalized_term_dedup_preserves_label_priority_and_exact_work_admission": "registered",
+            "meaning_aliases::tests::short_unrelated_names_and_empty_normalizations_do_not_get_fuzzy_matches": "registered",
+            "meaning_aliases::tests::transposed_letters_are_scored_without_becoming_identity_proof": "registered",
+            "meaning_aliases::tests::trigram_similarity_is_separate_from_normalized_equality": "registered"
+          }
+        }
+      }
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--workspace",
+        "--locked",
+        "--offline",
+        "-j",
+        "1",
+        "--no-fail-fast",
+        "--lib",
+        "meaning_aliases::",
+        "--",
+        "--format",
+        "pretty",
+        "--test-threads=1"
+      ],
+      "exitCode": 0,
+      "failed": 0,
+      "ignored": 0,
+      "inventoryOnly": false,
+      "label": "aliases",
+      "logSha256": "072aca413b04d760b1aa928363762495095340e76af76b84a7f7e322575b3ca3",
+      "observedHarnessTotals": {
+        "failed": 0,
+        "groups": 1,
+        "ignored": 0,
+        "passed": 12
+      },
+      "origin": "fresh_execution",
+      "passed": 12,
+      "runnerSha256": "8fff3af62df640622dcba22c727aa413e19422330540f28ff52125ee8606c661",
+      "seconds": 1.234,
+      "sourceManifestSha256": "ae5c68faebe887cbd063266ebe479b62dd43dd671f6ec6fe035f67126585f78f",
+      "testGroups": {
+        "yoke": {
+          "executable": "E:/Yoke-Build-Cache/meaning-aliases-20261016\\debug\\deps\\yoke-35b101204e4eb110.exe",
+          "failed": 0,
+          "filtered": 359,
+          "ignored": 0,
+          "measured": 0,
+          "passed": 12,
+          "rows": {
+            "meaning_aliases::tests::canonical_pair_order_is_independent_of_materialized_concept_order": "ok",
+            "meaning_aliases::tests::capacities_refuse_the_complete_operation_instead_of_returning_a_top_k": "ok",
+            "meaning_aliases::tests::compatibility_normalization_preserves_accent_and_script_distinctions": "ok",
+            "meaning_aliases::tests::equal_native_ids_in_separate_packets_retain_qualified_proof": "ok",
+            "meaning_aliases::tests::explicit_alias_overlap_retains_which_provider_terms_matched": "ok",
+            "meaning_aliases::tests::invalid_host_limits_and_deadlines_are_refused": "ok",
+            "meaning_aliases::tests::normalization_expansion_refuses_instead_of_truncating_a_label": "ok",
+            "meaning_aliases::tests::normalized_aliases_propose_a_pair_without_merging_or_rewriting_source": "ok",
+            "meaning_aliases::tests::normalized_term_dedup_preserves_label_priority_and_exact_work_admission": "ok",
+            "meaning_aliases::tests::short_unrelated_names_and_empty_normalizations_do_not_get_fuzzy_matches": "ok",
+            "meaning_aliases::tests::transposed_letters_are_scored_without_becoming_identity_proof": "ok",
+            "meaning_aliases::tests::trigram_similarity_is_separate_from_normalized_equality": "ok"
+          }
+        }
+      }
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--workspace",
+        "--locked",
+        "--offline",
+        "-j",
+        "1",
+        "--no-fail-fast",
+        "--test",
+        "meaning_cli",
+        "--test",
+        "meaning_groups_admission",
+        "--",
+        "--list"
+      ],
+      "exitCode": 0,
+      "inventoryOnly": true,
+      "label": "cli-admission-inventory",
+      "logSha256": "25573f57d16571e6d2b4cbe108adaec7638ee462689434fc53f25297927dfe62",
+      "origin": "fresh_execution",
+      "runnerSha256": "8fff3af62df640622dcba22c727aa413e19422330540f28ff52125ee8606c661",
+      "seconds": 3.781,
+      "sourceManifestSha256": "ae5c68faebe887cbd063266ebe479b62dd43dd671f6ec6fe035f67126585f78f",
+      "testGroups": {
+        "meaning_cli": {
+          "executable": "E:/Yoke-Build-Cache/meaning-aliases-20261016\\debug\\deps\\meaning_cli-6092092382a6115f.exe",
+          "rows": {
+            "meaning_alias_cli_replays_exact_graph_without_provider_source_capture_or_writes": "registered",
+            "meaning_alias_limits_fail_before_creating_state": "registered",
+            "meaning_cli_admits_the_entire_selection_and_cost_before_first_worker": "registered",
+            "meaning_cli_build_reference_is_bounded_and_graph_reads_never_create_overflow_artifacts": "registered",
+            "meaning_cli_builds_queries_and_reuses_immutable_receipts_without_read_time_execution": "registered",
+            "meaning_cli_failed_later_claim_keeps_billing_and_no_partial_publication": "registered",
+            "meaning_cli_output_pipe_loss_reports_the_already_durable_job_and_graph": "registered",
+            "meaning_cli_read_commands_require_existing_store_and_reject_execution_configuration": "registered",
+            "meaning_cli_rejects_ambiguous_host_json_and_invalid_output_budget_before_state": "registered",
+            "meaning_cli_requires_explicit_provider_permission_before_opening_source_state": "registered",
+            "meaning_group_cli_rejects_ambiguous_host_review_and_limits_before_store_creation": "registered",
+            "meaning_group_cli_replays_parent_and_preserves_all_sql_cas_and_original_claims": "registered",
+            "meaning_group_cli_requires_existing_store_and_refuses_capture_or_execution_flags": "registered"
+          }
+        },
+        "meaning_groups_admission": {
+          "executable": "E:/Yoke-Build-Cache/meaning-aliases-20261016\\debug\\deps\\meaning_groups_admission-561737e9547fb6a6.exe",
+          "rows": {
+            "meaning_group_admission_every_hard_limit_and_all_zero_capacities_are_checked": "registered",
+            "meaning_group_admission_library_serialized_review_is_bounded_before_parent_loading": "registered",
+            "meaning_group_admission_nested_unknown_fields_and_duplicate_json_keys_refuse": "registered",
+            "meaning_group_admission_oversized_blank_rationale_hits_byte_guard_before_trimming": "registered",
+            "meaning_group_admission_per_group_member_limit_is_independent_of_total_capacity": "registered",
+            "meaning_group_admission_rationale_limit_counts_exact_utf8_bytes": "registered",
+            "meaning_group_admission_zero_output_is_a_valid_capacity": "registered"
+          }
+        }
+      }
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--workspace",
+        "--locked",
+        "--offline",
+        "-j",
+        "1",
+        "--no-fail-fast",
+        "--test",
+        "meaning_cli",
+        "--test",
+        "meaning_groups_admission",
+        "--",
+        "--format",
+        "pretty",
+        "--test-threads=1"
+      ],
+      "exitCode": 0,
+      "failed": 0,
+      "ignored": 0,
+      "inventoryOnly": false,
+      "label": "cli-admission",
+      "logSha256": "fd28ba7cf4f209beb4bc98def084b202e6770659eada5f23f164b28353756a65",
+      "observedHarnessTotals": {
+        "failed": 0,
+        "groups": 2,
+        "ignored": 0,
+        "passed": 20
+      },
+      "origin": "fresh_execution",
+      "passed": 20,
+      "runnerSha256": "8fff3af62df640622dcba22c727aa413e19422330540f28ff52125ee8606c661",
+      "seconds": 8.078,
+      "sourceManifestSha256": "ae5c68faebe887cbd063266ebe479b62dd43dd671f6ec6fe035f67126585f78f",
+      "testGroups": {
+        "meaning_cli": {
+          "executable": "E:/Yoke-Build-Cache/meaning-aliases-20261016\\debug\\deps\\meaning_cli-6092092382a6115f.exe",
+          "failed": 0,
+          "filtered": 0,
+          "ignored": 0,
+          "measured": 0,
+          "passed": 13,
+          "rows": {
+            "meaning_alias_cli_replays_exact_graph_without_provider_source_capture_or_writes": "ok",
+            "meaning_alias_limits_fail_before_creating_state": "ok",
+            "meaning_cli_admits_the_entire_selection_and_cost_before_first_worker": "ok",
+            "meaning_cli_build_reference_is_bounded_and_graph_reads_never_create_overflow_artifacts": "ok",
+            "meaning_cli_builds_queries_and_reuses_immutable_receipts_without_read_time_execution": "ok",
+            "meaning_cli_failed_later_claim_keeps_billing_and_no_partial_publication": "ok",
+            "meaning_cli_output_pipe_loss_reports_the_already_durable_job_and_graph": "ok",
+            "meaning_cli_read_commands_require_existing_store_and_reject_execution_configuration": "ok",
+            "meaning_cli_rejects_ambiguous_host_json_and_invalid_output_budget_before_state": "ok",
+            "meaning_cli_requires_explicit_provider_permission_before_opening_source_state": "ok",
+            "meaning_group_cli_rejects_ambiguous_host_review_and_limits_before_store_creation": "ok",
+            "meaning_group_cli_replays_parent_and_preserves_all_sql_cas_and_original_claims": "ok",
+            "meaning_group_cli_requires_existing_store_and_refuses_capture_or_execution_flags": "ok"
+          }
+        },
+        "meaning_groups_admission": {
+          "executable": "E:/Yoke-Build-Cache/meaning-aliases-20261016\\debug\\deps\\meaning_groups_admission-561737e9547fb6a6.exe",
+          "failed": 0,
+          "filtered": 0,
+          "ignored": 0,
+          "measured": 0,
+          "passed": 7,
+          "rows": {
+            "meaning_group_admission_every_hard_limit_and_all_zero_capacities_are_checked": "ok",
+            "meaning_group_admission_library_serialized_review_is_bounded_before_parent_loading": "ok",
+            "meaning_group_admission_nested_unknown_fields_and_duplicate_json_keys_refuse": "ok",
+            "meaning_group_admission_oversized_blank_rationale_hits_byte_guard_before_trimming": "ok",
+            "meaning_group_admission_per_group_member_limit_is_independent_of_total_capacity": "ok",
+            "meaning_group_admission_rationale_limit_counts_exact_utf8_bytes": "ok",
+            "meaning_group_admission_zero_output_is_a_valid_capacity": "ok"
+          }
+        }
+      }
+    }
+  ],
+  "runnerSha256": "8fff3af62df640622dcba22c727aa413e19422330540f28ff52125ee8606c661",
+  "rustFiles": 398,
+  "scopedNativeFailed": 0,
+  "scopedNativeIgnored": 0,
+  "scopedNativePassed": 47,
+  "sourceChanges": [],
+  "sourceFiles": 3614,
+  "sourceManifestSha256": "ae5c68faebe887cbd063266ebe479b62dd43dd671f6ec6fe035f67126585f78f",
+  "validationErrors": []
+}

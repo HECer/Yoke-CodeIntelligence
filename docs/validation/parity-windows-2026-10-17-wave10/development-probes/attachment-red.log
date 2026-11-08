@@ -1,0 +1,52 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 7.50s
+     Running tests\symbol_move_declarations.rs (E:/Yoke-Build-Cache/meaning-aliases-20261016\debug\deps\symbol_move_declarations-a99000b0174e1718.exe)
+
+running 5 tests
+test block_docs_crlf_and_bom_keep_exact_transfer_bytes_and_ordinary_leading_comments ... FAILED
+test negotiated_attachments_move_as_one_bundle_with_distinct_entity_and_text_ranges ... FAILED
+test attachments_require_an_explicit_recognized_provider_capability ... FAILED
+test provider_cannot_leave_source_attachments_or_strip_them_from_the_target ... FAILED
+test same_file_inline_bundle_preserves_inner_docs_and_other_items_attachments ... FAILED
+
+failures:
+
+---- block_docs_crlf_and_bom_keep_exact_transfer_bytes_and_ordinary_leading_comments stdout ----
+
+thread 'block_docs_crlf_and_bom_keep_exact_transfer_bytes_and_ordinary_leading_comments' (65844) panicked at native\tests\symbol_move_declarations.rs:479:68:
+called `Result::unwrap()` on an `Err` value: Attached source attributes or documentation are unsupported
+
+---- negotiated_attachments_move_as_one_bundle_with_distinct_entity_and_text_ranges stdout ----
+
+thread 'negotiated_attachments_move_as_one_bundle_with_distinct_entity_and_text_ranges' (24560) panicked at native\tests\symbol_move_declarations.rs:345:81:
+called `Result::unwrap()` on an `Err` value: Attached source attributes or documentation are unsupported
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- attachments_require_an_explicit_recognized_provider_capability stdout ----
+
+thread 'attachments_require_an_explicit_recognized_provider_capability' (61736) panicked at native\tests\symbol_move_declarations.rs:409:9:
+Must reach capability negotiation: Attached source attributes or documentation are unsupported
+
+---- provider_cannot_leave_source_attachments_or_strip_them_from_the_target stdout ----
+
+thread 'provider_cannot_leave_source_attachments_or_strip_them_from_the_target' (50472) panicked at native\tests\symbol_move_declarations.rs:114:5:
+assertion `left == right` failed
+  left: 0
+ right: 1
+
+---- same_file_inline_bundle_preserves_inner_docs_and_other_items_attachments stdout ----
+
+thread 'same_file_inline_bundle_preserves_inner_docs_and_other_items_attachments' (62360) panicked at native\tests\symbol_move_declarations.rs:458:69:
+called `Result::unwrap()` on an `Err` value: Attached source attributes or documentation are unsupported
+
+
+failures:
+    attachments_require_an_explicit_recognized_provider_capability
+    block_docs_crlf_and_bom_keep_exact_transfer_bytes_and_ordinary_leading_comments
+    negotiated_attachments_move_as_one_bundle_with_distinct_entity_and_text_ranges
+    provider_cannot_leave_source_attachments_or_strip_them_from_the_target
+    same_file_inline_bundle_preserves_inner_docs_and_other_items_attachments
+
+test result: FAILED. 0 passed; 5 failed; 0 ignored; 0 measured; 10 filtered out; finished in 0.13s
+
+error: test failed, to rerun pass `--test symbol_move_declarations`

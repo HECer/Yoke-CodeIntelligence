@@ -1,0 +1,189 @@
+{
+  "sourceCommit": "1b49799413fb9d33656569dd67b75771c178966c",
+  "cliSha256": "a59887ccd18f6b0791eea00edf229fa823c23749e46a77fdc20e75b03dc47a8b",
+  "frozenInputs": 1048,
+  "rust": {
+    "targets": {
+      "workspace-lib": {
+        "passed": 16,
+        "failed": 0,
+        "ignored": 0
+      },
+      "symbol_workspace_routes": {
+        "passed": 4,
+        "failed": 0,
+        "ignored": 0
+      },
+      "symbol_workspace": {
+        "passed": 9,
+        "failed": 0,
+        "ignored": 0
+      },
+      "agent_symbol_contracts": {
+        "passed": 8,
+        "failed": 0,
+        "ignored": 0
+      },
+      "agent_facade_semantics": {
+        "passed": 4,
+        "failed": 0,
+        "ignored": 0
+      },
+      "agent_facade_options": {
+        "passed": 3,
+        "failed": 0,
+        "ignored": 0
+      },
+      "agent_repl_api_selection": {
+        "passed": 8,
+        "failed": 0,
+        "ignored": 0
+      },
+      "agent_repl_lifecycle": {
+        "passed": 3,
+        "failed": 0,
+        "ignored": 0
+      },
+      "agent_repl": {
+        "passed": 22,
+        "failed": 0,
+        "ignored": 0
+      },
+      "session_config_cli": {
+        "passed": 4,
+        "failed": 0,
+        "ignored": 0
+      },
+      "session_steering": {
+        "passed": 12,
+        "failed": 0,
+        "ignored": 0
+      },
+      "session_agent_interface": {
+        "passed": 8,
+        "failed": 0,
+        "ignored": 0
+      },
+      "session_optional_defaults": {
+        "passed": 8,
+        "failed": 0,
+        "ignored": 0
+      },
+      "project_session": {
+        "passed": 6,
+        "failed": 0,
+        "ignored": 0
+      },
+      "session_mcp": {
+        "passed": 3,
+        "failed": 0,
+        "ignored": 0
+      },
+      "deadline_scope": {
+        "passed": 2,
+        "failed": 0,
+        "ignored": 0
+      },
+      "protocol_connection": {
+        "passed": 5,
+        "failed": 0,
+        "ignored": 0
+      },
+      "lsp": {
+        "passed": 10,
+        "failed": 0,
+        "ignored": 0
+      },
+      "lsp_source_execution": {
+        "passed": 5,
+        "failed": 0,
+        "ignored": 2
+      },
+      "lsp_dependency_scope": {
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0
+      },
+      "session_epoch_selection": {
+        "passed": 6,
+        "failed": 0,
+        "ignored": 0
+      },
+      "query_parity": {
+        "passed": 12,
+        "failed": 0,
+        "ignored": 0
+      },
+      "symbol_info_budget": {
+        "passed": 7,
+        "failed": 0,
+        "ignored": 0
+      },
+      "source_exclusions": {
+        "passed": 7,
+        "failed": 0,
+        "ignored": 0
+      },
+      "lsp_lifecycle": {
+        "passed": 2,
+        "failed": 0,
+        "ignored": 0
+      },
+      "semantic_refactor": {
+        "passed": 7,
+        "failed": 0,
+        "ignored": 0
+      },
+      "refactor_intents": {
+        "passed": 15,
+        "failed": 0,
+        "ignored": 0
+      },
+      "symbol_move_own_v1": {
+        "passed": 18,
+        "failed": 0,
+        "ignored": 0
+      },
+      "facade_directory_move": {
+        "passed": 10,
+        "failed": 0,
+        "ignored": 0
+      },
+      "facade_file_move": {
+        "passed": 8,
+        "failed": 0,
+        "ignored": 0
+      },
+      "facade_file_delete": {
+        "passed": 9,
+        "failed": 1,
+        "ignored": 0
+      },
+      "session_refactor": {
+        "passed": 9,
+        "failed": 0,
+        "ignored": 2
+      }
+    },
+    "distinctPassed": 251,
+    "failed": 1,
+    "knownOriginalOs1314Failures": 1,
+    "unexpectedFailed": 0,
+    "existingIgnored": 4,
+    "newFunctions": 4
+  },
+  "npm": {
+    "passed": 260,
+    "failed": 0,
+    "existingSkipped": 3
+  },
+  "formatTargetRoots": 341,
+  "cargoFormatAllWindowsOs206": true,
+  "allQualifiedJobsEmpty": true,
+  "originalTenSymlinkFixtureFilesByteIdenticalToParent": true,
+  "fullStatusComplete": false,
+  "fullNativeCurrentHeadCertified": false,
+  "systemSettingsChanged": false,
+  "originalInventoryAssessmentsUnchanged": true,
+  "rawMembers": 241
+}

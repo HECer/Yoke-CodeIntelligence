@@ -1,0 +1,21 @@
+    Finished `test` profile [unoptimized] target(s) in 0.57s
+     Running tests\derived_graph_preparation.rs (E:\Yoke-Build-Cache\meaning-aliases-20261016\debug\deps\derived_graph_preparation-f4e273a0e37b1f12.exe)
+
+running 7 tests
+test config_preparation_keeps_authentic_v8_v9_released_bytes_without_publication ... ok
+test foreign_connection_is_refused_before_any_cas_or_record_write ... ok
+test manifest_preparation_keeps_authentic_v8_v9_released_bytes_without_publication ... ok
+test conflicting_existing_derived_rows_refuse_before_cas_in_caller_and_standalone_publication ... ok
+test rolling_back_caller_transaction_removes_all_three_graph_registrations ... ok
+test three_prepared_graphs_publish_in_one_caller_transaction_without_nested_transactions ... ok
+test markdown_preparation_keeps_authentic_v8_v9_released_bytes_without_publication ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.23s
+
+     Running tests\document_cli.rs (E:\Yoke-Build-Cache\meaning-aliases-20261016\debug\deps\document_cli-954103af4cf9dd24.exe)
+
+running 1 test
+test public_document_cli_builds_searches_reads_and_queries_archive_without_source_store ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.27s
+

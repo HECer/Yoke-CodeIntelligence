@@ -1,0 +1,843 @@
+{
+  "conclusion": "success",
+  "event": "pull_request",
+  "headSha": "328ea51729a8ffa7c310c092535b159f3c56b5e7",
+  "jobs": [
+    {
+      "completedAt": "2026-10-19T01:19:02Z",
+      "conclusion": "success",
+      "databaseId": 117844454259,
+      "name": "native (ubuntu-latest, 22.16.0)",
+      "startedAt": "2026-10-19T01:17:20Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-10-19T01:17:22Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-10-19T01:17:21Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:17:25Z",
+          "conclusion": "success",
+          "name": "Run actions/checkout@v4",
+          "number": 2,
+          "startedAt": "2026-10-19T01:17:22Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:17:33Z",
+          "conclusion": "success",
+          "name": "Run actions/setup-node@v4",
+          "number": 3,
+          "startedAt": "2026-10-19T01:17:25Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:17:33Z",
+          "conclusion": "success",
+          "name": "Run actions/setup-python@v5",
+          "number": 4,
+          "startedAt": "2026-10-19T01:17:33Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:17:45Z",
+          "conclusion": "success",
+          "name": "Run actions/setup-go@v5",
+          "number": 5,
+          "startedAt": "2026-10-19T01:17:33Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:17:46Z",
+          "conclusion": "success",
+          "name": "Run npm ci",
+          "number": 6,
+          "startedAt": "2026-10-19T01:17:45Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:17:49Z",
+          "conclusion": "success",
+          "name": "Run npm run typecheck",
+          "number": 7,
+          "startedAt": "2026-10-19T01:17:46Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:18:34Z",
+          "conclusion": "success",
+          "name": "Run npm test",
+          "number": 8,
+          "startedAt": "2026-10-19T01:17:49Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:18:39Z",
+          "conclusion": "success",
+          "name": "Run node scripts/configured-smoke.mjs",
+          "number": 9,
+          "startedAt": "2026-10-19T01:18:34Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:18:39Z",
+          "conclusion": "success",
+          "name": "Run node scripts/publish-github.mjs --dry-run",
+          "number": 10,
+          "startedAt": "2026-10-19T01:18:39Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:18:58Z",
+          "conclusion": "success",
+          "name": "Run npm pack --dry-run",
+          "number": 11,
+          "startedAt": "2026-10-19T01:18:39Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:18:58Z",
+          "conclusion": "success",
+          "name": "Post Run actions/setup-go@v5",
+          "number": 19,
+          "startedAt": "2026-10-19T01:18:58Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:18:58Z",
+          "conclusion": "success",
+          "name": "Post Run actions/setup-python@v5",
+          "number": 20,
+          "startedAt": "2026-10-19T01:18:58Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:18:58Z",
+          "conclusion": "success",
+          "name": "Post Run actions/setup-node@v4",
+          "number": 21,
+          "startedAt": "2026-10-19T01:18:58Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:18:59Z",
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@v4",
+          "number": 22,
+          "startedAt": "2026-10-19T01:18:58Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:18:59Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 23,
+          "startedAt": "2026-10-19T01:18:59Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/39184671941/job/117844454259"
+    },
+    {
+      "completedAt": "2026-10-19T01:18:46Z",
+      "conclusion": "success",
+      "databaseId": 117844454530,
+      "name": "native (ubuntu-latest, 24)",
+      "startedAt": "2026-10-19T01:17:20Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-10-19T01:17:21Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-10-19T01:17:20Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:17:24Z",
+          "conclusion": "success",
+          "name": "Run actions/checkout@v4",
+          "number": 2,
+          "startedAt": "2026-10-19T01:17:21Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:17:25Z",
+          "conclusion": "success",
+          "name": "Run actions/setup-node@v4",
+          "number": 3,
+          "startedAt": "2026-10-19T01:17:24Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:17:25Z",
+          "conclusion": "success",
+          "name": "Run actions/setup-python@v5",
+          "number": 4,
+          "startedAt": "2026-10-19T01:17:25Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:17:33Z",
+          "conclusion": "success",
+          "name": "Run actions/setup-go@v5",
+          "number": 5,
+          "startedAt": "2026-10-19T01:17:25Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:17:34Z",
+          "conclusion": "success",
+          "name": "Run npm ci",
+          "number": 6,
+          "startedAt": "2026-10-19T01:17:33Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:17:37Z",
+          "conclusion": "success",
+          "name": "Run npm run typecheck",
+          "number": 7,
+          "startedAt": "2026-10-19T01:17:34Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:18:18Z",
+          "conclusion": "success",
+          "name": "Run npm test",
+          "number": 8,
+          "startedAt": "2026-10-19T01:17:37Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:18:22Z",
+          "conclusion": "success",
+          "name": "Run node scripts/configured-smoke.mjs",
+          "number": 9,
+          "startedAt": "2026-10-19T01:18:18Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:18:22Z",
+          "conclusion": "success",
+          "name": "Run node scripts/publish-github.mjs --dry-run",
+          "number": 10,
+          "startedAt": "2026-10-19T01:18:22Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:18:43Z",
+          "conclusion": "success",
+          "name": "Run npm pack --dry-run",
+          "number": 11,
+          "startedAt": "2026-10-19T01:18:22Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:18:43Z",
+          "conclusion": "success",
+          "name": "Post Run actions/setup-go@v5",
+          "number": 19,
+          "startedAt": "2026-10-19T01:18:43Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:18:43Z",
+          "conclusion": "success",
+          "name": "Post Run actions/setup-python@v5",
+          "number": 20,
+          "startedAt": "2026-10-19T01:18:43Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:18:43Z",
+          "conclusion": "success",
+          "name": "Post Run actions/setup-node@v4",
+          "number": 21,
+          "startedAt": "2026-10-19T01:18:43Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:18:43Z",
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@v4",
+          "number": 22,
+          "startedAt": "2026-10-19T01:18:43Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:18:43Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 23,
+          "startedAt": "2026-10-19T01:18:43Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/39184671941/job/117844454530"
+    },
+    {
+      "completedAt": "2026-10-19T01:21:24Z",
+      "conclusion": "success",
+      "databaseId": 117844454551,
+      "name": "native (windows-latest, 24)",
+      "startedAt": "2026-10-19T01:17:20Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-10-19T01:17:23Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-10-19T01:17:21Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:17:33Z",
+          "conclusion": "success",
+          "name": "Run actions/checkout@v4",
+          "number": 2,
+          "startedAt": "2026-10-19T01:17:23Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:17:44Z",
+          "conclusion": "success",
+          "name": "Run actions/setup-node@v4",
+          "number": 3,
+          "startedAt": "2026-10-19T01:17:33Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:17:44Z",
+          "conclusion": "success",
+          "name": "Run actions/setup-python@v5",
+          "number": 4,
+          "startedAt": "2026-10-19T01:17:44Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:18:06Z",
+          "conclusion": "success",
+          "name": "Run actions/setup-go@v5",
+          "number": 5,
+          "startedAt": "2026-10-19T01:17:44Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:18:13Z",
+          "conclusion": "success",
+          "name": "Run npm ci",
+          "number": 6,
+          "startedAt": "2026-10-19T01:18:06Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:18:16Z",
+          "conclusion": "success",
+          "name": "Run npm run typecheck",
+          "number": 7,
+          "startedAt": "2026-10-19T01:18:13Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:20:49Z",
+          "conclusion": "success",
+          "name": "Run npm test",
+          "number": 8,
+          "startedAt": "2026-10-19T01:18:16Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:20:55Z",
+          "conclusion": "success",
+          "name": "Run node scripts/configured-smoke.mjs",
+          "number": 9,
+          "startedAt": "2026-10-19T01:20:49Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:20:56Z",
+          "conclusion": "success",
+          "name": "Run node scripts/publish-github.mjs --dry-run",
+          "number": 10,
+          "startedAt": "2026-10-19T01:20:55Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:21:19Z",
+          "conclusion": "success",
+          "name": "Run npm pack --dry-run",
+          "number": 11,
+          "startedAt": "2026-10-19T01:20:56Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:21:19Z",
+          "conclusion": "success",
+          "name": "Post Run actions/setup-go@v5",
+          "number": 19,
+          "startedAt": "2026-10-19T01:21:19Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:21:19Z",
+          "conclusion": "success",
+          "name": "Post Run actions/setup-python@v5",
+          "number": 20,
+          "startedAt": "2026-10-19T01:21:19Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:21:19Z",
+          "conclusion": "success",
+          "name": "Post Run actions/setup-node@v4",
+          "number": 21,
+          "startedAt": "2026-10-19T01:21:19Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:21:22Z",
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@v4",
+          "number": 22,
+          "startedAt": "2026-10-19T01:21:19Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:21:22Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 23,
+          "startedAt": "2026-10-19T01:21:22Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/39184671941/job/117844454551"
+    },
+    {
+      "completedAt": "2026-10-19T01:18:40Z",
+      "conclusion": "success",
+      "databaseId": 117844454558,
+      "name": "native (macos-latest, 24)",
+      "startedAt": "2026-10-19T01:17:24Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-10-19T01:17:25Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-10-19T01:17:24Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:17:29Z",
+          "conclusion": "success",
+          "name": "Run actions/checkout@v4",
+          "number": 2,
+          "startedAt": "2026-10-19T01:17:25Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:17:31Z",
+          "conclusion": "success",
+          "name": "Run actions/setup-node@v4",
+          "number": 3,
+          "startedAt": "2026-10-19T01:17:29Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:17:31Z",
+          "conclusion": "success",
+          "name": "Run actions/setup-python@v5",
+          "number": 4,
+          "startedAt": "2026-10-19T01:17:31Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:17:43Z",
+          "conclusion": "success",
+          "name": "Run actions/setup-go@v5",
+          "number": 5,
+          "startedAt": "2026-10-19T01:17:31Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:17:44Z",
+          "conclusion": "success",
+          "name": "Run npm ci",
+          "number": 6,
+          "startedAt": "2026-10-19T01:17:43Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:17:46Z",
+          "conclusion": "success",
+          "name": "Run npm run typecheck",
+          "number": 7,
+          "startedAt": "2026-10-19T01:17:44Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:18:19Z",
+          "conclusion": "success",
+          "name": "Run npm test",
+          "number": 8,
+          "startedAt": "2026-10-19T01:17:46Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:18:21Z",
+          "conclusion": "success",
+          "name": "Run node scripts/configured-smoke.mjs",
+          "number": 9,
+          "startedAt": "2026-10-19T01:18:19Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:18:21Z",
+          "conclusion": "success",
+          "name": "Run node scripts/publish-github.mjs --dry-run",
+          "number": 10,
+          "startedAt": "2026-10-19T01:18:21Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:18:34Z",
+          "conclusion": "success",
+          "name": "Run npm pack --dry-run",
+          "number": 11,
+          "startedAt": "2026-10-19T01:18:21Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:18:35Z",
+          "conclusion": "success",
+          "name": "Post Run actions/setup-go@v5",
+          "number": 19,
+          "startedAt": "2026-10-19T01:18:34Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:18:35Z",
+          "conclusion": "success",
+          "name": "Post Run actions/setup-python@v5",
+          "number": 20,
+          "startedAt": "2026-10-19T01:18:35Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:18:35Z",
+          "conclusion": "success",
+          "name": "Post Run actions/setup-node@v4",
+          "number": 21,
+          "startedAt": "2026-10-19T01:18:35Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:18:36Z",
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@v4",
+          "number": 22,
+          "startedAt": "2026-10-19T01:18:35Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:18:36Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 23,
+          "startedAt": "2026-10-19T01:18:36Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/39184671941/job/117844454558"
+    },
+    {
+      "completedAt": "2026-10-19T01:20:10Z",
+      "conclusion": "success",
+      "databaseId": 117844454578,
+      "name": "native (macos-latest, 22.16.0)",
+      "startedAt": "2026-10-19T01:17:26Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-10-19T01:17:28Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-10-19T01:17:26Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:17:33Z",
+          "conclusion": "success",
+          "name": "Run actions/checkout@v4",
+          "number": 2,
+          "startedAt": "2026-10-19T01:17:28Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:17:41Z",
+          "conclusion": "success",
+          "name": "Run actions/setup-node@v4",
+          "number": 3,
+          "startedAt": "2026-10-19T01:17:33Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:17:42Z",
+          "conclusion": "success",
+          "name": "Run actions/setup-python@v5",
+          "number": 4,
+          "startedAt": "2026-10-19T01:17:41Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:18:09Z",
+          "conclusion": "success",
+          "name": "Run actions/setup-go@v5",
+          "number": 5,
+          "startedAt": "2026-10-19T01:17:42Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:18:12Z",
+          "conclusion": "success",
+          "name": "Run npm ci",
+          "number": 6,
+          "startedAt": "2026-10-19T01:18:09Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:18:16Z",
+          "conclusion": "success",
+          "name": "Run npm run typecheck",
+          "number": 7,
+          "startedAt": "2026-10-19T01:18:12Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:19:28Z",
+          "conclusion": "success",
+          "name": "Run npm test",
+          "number": 8,
+          "startedAt": "2026-10-19T01:18:16Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:19:35Z",
+          "conclusion": "success",
+          "name": "Run node scripts/configured-smoke.mjs",
+          "number": 9,
+          "startedAt": "2026-10-19T01:19:28Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:19:35Z",
+          "conclusion": "success",
+          "name": "Run node scripts/publish-github.mjs --dry-run",
+          "number": 10,
+          "startedAt": "2026-10-19T01:19:35Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:20:03Z",
+          "conclusion": "success",
+          "name": "Run npm pack --dry-run",
+          "number": 11,
+          "startedAt": "2026-10-19T01:19:35Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:20:03Z",
+          "conclusion": "success",
+          "name": "Post Run actions/setup-go@v5",
+          "number": 19,
+          "startedAt": "2026-10-19T01:20:03Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:20:04Z",
+          "conclusion": "success",
+          "name": "Post Run actions/setup-python@v5",
+          "number": 20,
+          "startedAt": "2026-10-19T01:20:03Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:20:04Z",
+          "conclusion": "success",
+          "name": "Post Run actions/setup-node@v4",
+          "number": 21,
+          "startedAt": "2026-10-19T01:20:04Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:20:05Z",
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@v4",
+          "number": 22,
+          "startedAt": "2026-10-19T01:20:04Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:20:06Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 23,
+          "startedAt": "2026-10-19T01:20:05Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/39184671941/job/117844454578"
+    },
+    {
+      "completedAt": "2026-10-19T01:20:53Z",
+      "conclusion": "success",
+      "databaseId": 117844454580,
+      "name": "native (windows-latest, 22.16.0)",
+      "startedAt": "2026-10-19T01:17:20Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-10-19T01:17:22Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-10-19T01:17:21Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:17:30Z",
+          "conclusion": "success",
+          "name": "Run actions/checkout@v4",
+          "number": 2,
+          "startedAt": "2026-10-19T01:17:22Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:17:43Z",
+          "conclusion": "success",
+          "name": "Run actions/setup-node@v4",
+          "number": 3,
+          "startedAt": "2026-10-19T01:17:30Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:17:43Z",
+          "conclusion": "success",
+          "name": "Run actions/setup-python@v5",
+          "number": 4,
+          "startedAt": "2026-10-19T01:17:43Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:18:03Z",
+          "conclusion": "success",
+          "name": "Run actions/setup-go@v5",
+          "number": 5,
+          "startedAt": "2026-10-19T01:17:43Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:18:07Z",
+          "conclusion": "success",
+          "name": "Run npm ci",
+          "number": 6,
+          "startedAt": "2026-10-19T01:18:03Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:18:12Z",
+          "conclusion": "success",
+          "name": "Run npm run typecheck",
+          "number": 7,
+          "startedAt": "2026-10-19T01:18:07Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:20:12Z",
+          "conclusion": "success",
+          "name": "Run npm test",
+          "number": 8,
+          "startedAt": "2026-10-19T01:18:12Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:20:20Z",
+          "conclusion": "success",
+          "name": "Run node scripts/configured-smoke.mjs",
+          "number": 9,
+          "startedAt": "2026-10-19T01:20:12Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:20:20Z",
+          "conclusion": "success",
+          "name": "Run node scripts/publish-github.mjs --dry-run",
+          "number": 10,
+          "startedAt": "2026-10-19T01:20:20Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:20:48Z",
+          "conclusion": "success",
+          "name": "Run npm pack --dry-run",
+          "number": 11,
+          "startedAt": "2026-10-19T01:20:20Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:20:48Z",
+          "conclusion": "success",
+          "name": "Post Run actions/setup-go@v5",
+          "number": 19,
+          "startedAt": "2026-10-19T01:20:48Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:20:48Z",
+          "conclusion": "success",
+          "name": "Post Run actions/setup-python@v5",
+          "number": 20,
+          "startedAt": "2026-10-19T01:20:48Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:20:48Z",
+          "conclusion": "success",
+          "name": "Post Run actions/setup-node@v4",
+          "number": 21,
+          "startedAt": "2026-10-19T01:20:48Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:20:51Z",
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@v4",
+          "number": 22,
+          "startedAt": "2026-10-19T01:20:48Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-19T01:20:51Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 23,
+          "startedAt": "2026-10-19T01:20:51Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/39184671941/job/117844454580"
+    }
+  ],
+  "status": "completed",
+  "url": "https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/39184671941"
+}

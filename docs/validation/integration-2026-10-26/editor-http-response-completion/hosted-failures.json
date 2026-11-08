@@ -1,0 +1,306 @@
+{
+  "sourceHead": "52b746dcb313e3f0f26a3d4538456cb1285f6c5e",
+  "checkoutMerge": "5a9a3ce6efef58367e433c291b8a7e75af4d2df8",
+  "runId": 40312779978,
+  "shards": [
+    {
+      "artifactId": 12647357957,
+      "zipBytes": 118436,
+      "zipSha256": "24053ed8d3d1b8dd09670fe9181979817a23629edf28fb4326ac5ca5acc7c82a",
+      "index": 2,
+      "complete": false,
+      "groups": 46,
+      "verifiedLogs": 92,
+      "failed": [
+        {
+          "group": "yoke-code-intelligence:lib:yoke:test",
+          "exitCode": 101,
+          "failedTests": [
+            "test editor_http::tests::backpressured_socket_writes_cannot_extend_the_response_deadline ... FAILED",
+            "test git_workflows::history_read::tests::object_information_and_contents_share_the_original_deadline ... FAILED"
+          ],
+          "summaries": [
+            "test result: FAILED. 477 passed; 2 failed; 6 ignored; 0 measured; 0 filtered out; finished in 88.27s"
+          ],
+          "resourceLimitLines": 0,
+          "hostInvalidArgumentLines": 0,
+          "causes": [
+            "thread 'editor_http::tests::backpressured_socket_writes_cannot_extend_the_response_deadline' (41253) panicked at native/src/editor_http.rs:602:9:",
+            "Fixture must reach genuinely backpressured response writing: status=None, queued=131072, elapsed=257.353791ms",
+            "thread 'git_workflows::history_read::tests::object_information_and_contents_share_the_original_deadline' (41400) panicked at native/src/git_history_read_tests.rs:242:5:",
+            "assertion `left == right` failed: elapsed=188.242334ms; fixture_delay=40ms; host_remaining=0ns; phases=ReadPhases { size_entry: Some((4.084?s, 64.957459ms)), size_pre_sleep: Some((4.375?s, 64.957167ms)), size_post_sleep: Some((188.18625ms, 0ns)), size_deadline_check_ok: None, contents_entry: None }",
+            "left: (1, 0)",
+            "right: (1, 1)"
+          ]
+        }
+      ],
+      "receiptFields": {
+        "schemaVersion": {
+          "type": "int",
+          "count": null
+        },
+        "platform": {
+          "type": "str",
+          "count": null
+        },
+        "sourceRevision": {
+          "type": "str",
+          "count": null
+        },
+        "index": {
+          "type": "int",
+          "count": null
+        },
+        "shards": {
+          "type": "int",
+          "count": null
+        },
+        "complete": {
+          "type": "bool",
+          "count": null
+        },
+        "inventory": {
+          "type": "list",
+          "count": 369
+        },
+        "inventorySha256": {
+          "type": "str",
+          "count": null
+        },
+        "sourceInputs": {
+          "type": "dict",
+          "count": 1087
+        },
+        "sourceScope": {
+          "type": "str",
+          "count": null
+        },
+        "wholeCargoTargets": {
+          "type": "bool",
+          "count": null
+        },
+        "countsAreNotCombined": {
+          "type": "bool",
+          "count": null
+        }
+      }
+    },
+    {
+      "artifactId": 12647397149,
+      "zipBytes": 106962,
+      "zipSha256": "43f67d8ce5a379176288bb0295ed75affa967af61fe113637a47af0d7f0b5950",
+      "index": 4,
+      "complete": false,
+      "groups": 47,
+      "verifiedLogs": 94,
+      "failed": [
+        {
+          "group": "yoke-code-intelligence:test:mixed_meaning_provider:test",
+          "exitCode": 101,
+          "failedTests": [
+            "test bound_invalid_fragment_error_or_usage_retains_reported_bill_without_graph_or_secret_echo ... FAILED",
+            "test cli_build_requires_separate_trust_and_reads_replay_without_provider_configuration ... FAILED",
+            "test explicit_mixed_provider_preserves_original_claims_and_replays_without_provider_or_live_files ... FAILED",
+            "test jobs_count_budget_precedes_malformed_record_materialization_at_4096_boundary ... FAILED",
+            "test metadata_jobs_recover_identities_without_provider_files_source_replay_or_writes ... FAILED",
+            "test malformed_host_config_is_private_and_refuses_before_missing_store_initialization ... FAILED",
+            "test status_preserves_caller_read_transaction_sqlite_limit_and_never_spawns_a_provider ... FAILED",
+            "test saved_quote_tampering_refuses_both_source_load_and_retention_before_history_changes ... FAILED",
+            "test trust_source_permission_and_capacity_refuse_before_accounting_or_process ... FAILED",
+            "test unbound_reply_keeps_unknown_reservation_and_status_performs_no_retry ... FAILED",
+            "test unknown_original_cost_is_not_upgraded_by_later_ledger_reconciliation ... FAILED"
+          ],
+          "summaries": [
+            "test result: FAILED. 0 passed; 11 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.38s"
+          ],
+          "resourceLimitLines": 11,
+          "hostInvalidArgumentLines": 0,
+          "causes": [
+            "thread 'bound_invalid_fragment_error_or_usage_retains_reported_bill_without_graph_or_secret_echo' (68489) panicked at native/tests/support/mixed_pdf_fixture.rs:155:6:",
+            "called `Result::unwrap()` on an `Err` value: Native PDF worker failed; malformed, encrypted or resource-limited PDF; exitCode=Some(1); signal=None; diagnostic=Recorded(PdfFailureRecord { schema: 1, phase: ResourceLimits, api: Some(SetAddressSpace), os_error: Some(22), requested_memory_bytes: 268435456, requested_cpu_seconds: 20 })",
+            "thread 'cli_build_requires_separate_trust_and_reads_replay_without_provider_configuration' (68490) panicked at native/tests/support/mixed_pdf_fixture.rs:155:6:",
+            "thread 'explicit_mixed_provider_preserves_original_claims_and_replays_without_provider_or_live_files' (68513) panicked at native/tests/support/mixed_pdf_fixture.rs:155:6:",
+            "thread 'jobs_count_budget_precedes_malformed_record_materialization_at_4096_boundary' (68514) panicked at native/tests/support/mixed_pdf_fixture.rs:155:6:",
+            "thread 'metadata_jobs_recover_identities_without_provider_files_source_replay_or_writes' (68523) panicked at native/tests/support/mixed_pdf_fixture.rs:155:6:",
+            "thread 'malformed_host_config_is_private_and_refuses_before_missing_store_initialization' (68522) panicked at native/tests/support/mixed_pdf_fixture.rs:155:6:",
+            "thread 'status_preserves_caller_read_transaction_sqlite_limit_and_never_spawns_a_provider' (68532) panicked at native/tests/support/mixed_pdf_fixture.rs:155:6:",
+            "thread 'saved_quote_tampering_refuses_both_source_load_and_retention_before_history_changes' (68531) panicked at native/tests/support/mixed_pdf_fixture.rs:155:6:",
+            "thread 'trust_source_permission_and_capacity_refuse_before_accounting_or_process' (68539) panicked at native/tests/support/mixed_pdf_fixture.rs:155:6:",
+            "thread 'unbound_reply_keeps_unknown_reservation_and_status_performs_no_retry' (68540) panicked at native/tests/support/mixed_pdf_fixture.rs:155:6:",
+            "thread 'unknown_original_cost_is_not_upgraded_by_later_ledger_reconciliation' (68547) panicked at native/tests/support/mixed_pdf_fixture.rs:155:6:"
+          ]
+        },
+        {
+          "group": "yoke-code-intelligence:test:session_config_templates:test",
+          "exitCode": 101,
+          "failedTests": [
+            "test templates_cannot_mutate_yaml_policy_or_supply_host_runtime_trust ... FAILED",
+            "test templates_discovery_returns_replayable_context_and_identical_pinned_plan ... FAILED",
+            "test templates_export_is_create_only_and_failed_render_never_creates_output ... FAILED",
+            "test templates_render_conditions_loops_filters_macros_and_json_data_without_evaluation_authority ... FAILED",
+            "test templates_use_selected_catalog_includes_inheritance_imports_and_unicode_exactly ... FAILED",
+            "test templates_worker_direct_call_self_imposes_and_observes_os_memory_limit ... FAILED"
+          ],
+          "summaries": [
+            "test result: FAILED. 7 passed; 6 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.49s"
+          ],
+          "resourceLimitLines": 0,
+          "hostInvalidArgumentLines": 5,
+          "causes": [
+            "thread 'templates_cannot_mutate_yaml_policy_or_supply_host_runtime_trust' (74791) panicked at native/tests/session_config_templates.rs:50:9:",
+            "yoke: Host executable unavailable: Invalid argument (os error 22)",
+            "thread 'templates_discovery_returns_replayable_context_and_identical_pinned_plan' (74797) panicked at native/tests/session_config_templates.rs:276:5:",
+            "thread 'templates_export_is_create_only_and_failed_render_never_creates_output' (74800) panicked at native/tests/session_config_templates.rs:201:5:",
+            "thread 'templates_render_conditions_loops_filters_macros_and_json_data_without_evaluation_authority' (74851) panicked at native/tests/session_config_templates.rs:50:9:",
+            "thread 'templates_use_selected_catalog_includes_inheritance_imports_and_unicode_exactly' (74859) panicked at native/tests/session_config_templates.rs:50:9:",
+            "thread 'templates_worker_direct_call_self_imposes_and_observes_os_memory_limit' (74865) panicked at native/tests/session_config_templates.rs:327:5:",
+            "yoke: Owned memory limit unavailable"
+          ]
+        }
+      ],
+      "receiptFields": {
+        "schemaVersion": {
+          "type": "int",
+          "count": null
+        },
+        "platform": {
+          "type": "str",
+          "count": null
+        },
+        "sourceRevision": {
+          "type": "str",
+          "count": null
+        },
+        "index": {
+          "type": "int",
+          "count": null
+        },
+        "shards": {
+          "type": "int",
+          "count": null
+        },
+        "complete": {
+          "type": "bool",
+          "count": null
+        },
+        "inventory": {
+          "type": "list",
+          "count": 369
+        },
+        "inventorySha256": {
+          "type": "str",
+          "count": null
+        },
+        "sourceInputs": {
+          "type": "dict",
+          "count": 1087
+        },
+        "sourceScope": {
+          "type": "str",
+          "count": null
+        },
+        "wholeCargoTargets": {
+          "type": "bool",
+          "count": null
+        },
+        "countsAreNotCombined": {
+          "type": "bool",
+          "count": null
+        }
+      }
+    },
+    {
+      "artifactId": 12646579628,
+      "zipBytes": 104567,
+      "zipSha256": "9a40350e4e94479a93a1b882bd06d9f7ef0812ae664b0e74f114ef732d3f87f0",
+      "index": 7,
+      "complete": false,
+      "groups": 47,
+      "verifiedLogs": 94,
+      "failed": [
+        {
+          "group": "yoke-code-intelligence:test:session_prompt_runtime:test",
+          "exitCode": 101,
+          "failedTests": [
+            "test actual_project_activation_recomputes_project_modes_and_rendered_guidance ... FAILED",
+            "test deferred_yaml_export_and_discovery_preserve_raw_prompts_and_require_runtime_authority ... FAILED",
+            "test live_native_mode_changes_share_the_exact_published_catalog_and_revision_binding ... FAILED",
+            "test live_serena_fixed_optional_selection_derives_real_names_and_inherited_marker_api ... FAILED",
+            "test live_trail_graft_and_graphify_initialization_use_their_actual_transport_names ... FAILED",
+            "test worker_three_binds_inert_runtime_data_and_refuses_version_mix_and_named_text_forgery ... FAILED"
+          ],
+          "summaries": [
+            "test result: FAILED. 5 passed; 6 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.51s"
+          ],
+          "resourceLimitLines": 0,
+          "hostInvalidArgumentLines": 2,
+          "causes": [
+            "thread 'actual_project_activation_recomputes_project_modes_and_rendered_guidance' (67145) panicked at native/tests/session_prompt_runtime.rs:329:5:",
+            "yoke: Host executable unavailable: Invalid argument (os error 22)",
+            "thread 'deferred_yaml_export_and_discovery_preserve_raw_prompts_and_require_runtime_authority' (67146) panicked at native/tests/session_prompt_runtime.rs:688:5:",
+            "thread 'live_native_mode_changes_share_the_exact_published_catalog_and_revision_binding' (67169) panicked at native/tests/session_prompt_runtime.rs:135:5:",
+            "assertion `left == right` failed: {\"error\":{\"code\":-32002,\"message\":\"Initialize first\"},\"id\":3,\"jsonrpc\":\"2.0\"}",
+            "left: Null",
+            "right: false",
+            "thread 'live_serena_fixed_optional_selection_derives_real_names_and_inherited_marker_api' (67174) panicked at native/tests/session_prompt_runtime.rs:135:5:",
+            "thread 'live_trail_graft_and_graphify_initialization_use_their_actual_transport_names' (67177) panicked at native/tests/session_prompt_runtime.rs:305:18:",
+            "called `Option::unwrap()` on a `None` value",
+            "thread 'worker_three_binds_inert_runtime_data_and_refuses_version_mix_and_named_text_forgery' (67186) panicked at native/tests/session_prompt_runtime.rs:454:5:",
+            "yoke: Owned memory limit unavailable"
+          ]
+        }
+      ],
+      "receiptFields": {
+        "schemaVersion": {
+          "type": "int",
+          "count": null
+        },
+        "platform": {
+          "type": "str",
+          "count": null
+        },
+        "sourceRevision": {
+          "type": "str",
+          "count": null
+        },
+        "index": {
+          "type": "int",
+          "count": null
+        },
+        "shards": {
+          "type": "int",
+          "count": null
+        },
+        "complete": {
+          "type": "bool",
+          "count": null
+        },
+        "inventory": {
+          "type": "list",
+          "count": 369
+        },
+        "inventorySha256": {
+          "type": "str",
+          "count": null
+        },
+        "sourceInputs": {
+          "type": "dict",
+          "count": 1087
+        },
+        "sourceScope": {
+          "type": "str",
+          "count": null
+        },
+        "wholeCargoTargets": {
+          "type": "bool",
+          "count": null
+        },
+        "countsAreNotCombined": {
+          "type": "bool",
+          "count": null
+        }
+      }
+    }
+  ],
+  "allShardOrPlatformCompletionClaimed": false
+}

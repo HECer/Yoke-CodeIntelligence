@@ -1,0 +1,11 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 15s
+     Running tests\github_app_digest_service.rs (target\debug\deps\github_app_digest_service-1b96734347e70c9f.exe)
+
+running 18 tests
+test actual_cli_send_status_and_lost_response_recovery_use_os_key_without_retry ... ignored, Requires actual Windows per-user Credential Manager; creates and removes one unique signing credential
+error: test failed, to rerun pass `--test github_app_digest_service`
+
+Caused by:
+  process didn't exit successfully: `C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\github_app_digest_service-1b96734347e70c9f.exe --test-threads=2` (exit code: 0xc0000409, STATUS_STACK_BUFFER_OVERRUN)
+note: test exited abnormally; to see the full output pass --no-capture to the harness.

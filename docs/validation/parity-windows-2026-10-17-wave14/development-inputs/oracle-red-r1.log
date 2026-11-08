@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "E:\Yoke-Build-Cache\pdf-mixed-view-20261017\record-before-page-lf.py", line 29, in <module>
+    assert parsed['segments'][0]['text'] == expected, repr(parsed['segments'][0]['text'])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'Native storage Grüße\n'

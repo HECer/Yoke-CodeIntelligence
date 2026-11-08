@@ -1,0 +1,8 @@
+{
+  "path": "native/src/lib.rs",
+  "precedingFrozenSha256": "d39f941a344f7bf115b9c5c90940953c5558dc3b4b075e11f00ee2bc1babd7b9",
+  "currentTestedSha256": "bc68c6d675c4906f0cdb6b9e1fde80c14f13a35d55b1484f7eb5bf180b50dfc8",
+  "correction": "Order consecutive module declarations store before symbol_info_budget.",
+  "reconstructsPrecedingBytes": true,
+  "otherPreflight3To4InputsUnchanged": true
+}

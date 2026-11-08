@@ -1,0 +1,28 @@
+{
+  "checkedAtUtc": "2026-10-16T00:27:11.101618+00:00",
+  "scope": "focused_gate_not_frozen_suite",
+  "command": [
+    "cargo",
+    "test",
+    "-j",
+    "2",
+    "--manifest-path",
+    "native/Cargo.toml",
+    "--test",
+    "monorepo_retrieval",
+    "--test",
+    "monorepo_scopes",
+    "--",
+    "--nocapture",
+    "--test-threads=4"
+  ],
+  "exitCode": 0,
+  "seconds": 82.422,
+  "tempRoot": "D:\\Yoke-Test-Scratch\\wave5-functional-public-retrieval",
+  "logSha256": "90860f0827df7c07231b008186c5ddf903c34f406ecfd9f14fce5aa50b926ee7",
+  "groups": 2,
+  "passed": 10,
+  "failed": 0,
+  "ignored": 0,
+  "sourceChanges": []
+}

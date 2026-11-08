@@ -1,0 +1,18 @@
+{
+  "model_http_review": {
+    "executable": "target\\debug\\deps\\model_http_review-cbcd6667172ac33b.exe",
+    "ignored": [],
+    "registered": [
+      "credential_with_quote_and_backslash_is_rejected_after_json_unescaping",
+      "present_malformed_tool_calls_cannot_be_treated_as_absent_tools",
+      "unicode_escaped_credential_echo_is_rejected_after_decoding_model_text"
+    ]
+  },
+  "model_identity": {
+    "executable": "target\\debug\\deps\\model_identity-19f2f210e851753e.exe",
+    "ignored": [],
+    "registered": [
+      "large_identity_preserves_exact_released_json_bytes_without_a_second_corpus_buffer"
+    ]
+  }
+}

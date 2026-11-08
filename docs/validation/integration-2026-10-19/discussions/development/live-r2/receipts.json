@@ -1,0 +1,122 @@
+[
+  {
+    "label": "own-empty",
+    "command": [
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+      "--timeout",
+      "60000",
+      "--max-bytes",
+      "8000000",
+      "github-discussions",
+      "capture",
+      "--profile",
+      "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\discussions-live-soa50c5r\\own-empty-profile.json",
+      "--request",
+      "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\discussions-live-soa50c5r\\own-empty-request.json",
+      "--allow-network",
+      "--allow-discussion-text"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 0.62,
+    "outputBytes": 1049,
+    "outputHash": "06e90e694f345bb55d85f47e9683fe830c91137c9bdd18d76f1dd6bdccd1968b",
+    "sourceStoreCreated": false,
+    "rawPayloadPublished": false,
+    "captureId": "984c77c0e0e65cebeafdd93887b6232662fe845b73aa416f253e5b9bfadf434e",
+    "repository": "hecer/yoke-codeintelligence",
+    "repositoryId": 1417787673,
+    "pullNumbers": [],
+    "unacquiredPulls": [],
+    "observations": 0,
+    "observationsByKind": {},
+    "requests": 2,
+    "responseBytes": 7866,
+    "coverageComplete": true,
+    "transport": "host_authorized_github_https",
+    "atomic": false
+  },
+  {
+    "label": "upstream-closed",
+    "command": [
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+      "--timeout",
+      "60000",
+      "--max-bytes",
+      "8000000",
+      "github-discussions",
+      "capture",
+      "--profile",
+      "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\discussions-live-soa50c5r\\upstream-closed-profile.json",
+      "--request",
+      "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\discussions-live-soa50c5r\\upstream-closed-request.json",
+      "--allow-network",
+      "--allow-discussion-text"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 1.393,
+    "outputBytes": 7302,
+    "outputHash": "d2c480b2530d073e4776090593b6dc8133076ef64c420b17dca418637cf5e9c5",
+    "sourceStoreCreated": false,
+    "rawPayloadPublished": false,
+    "captureId": "216cdcf9eb3708860edb754b80a61f3f83af3d7188ee682b4c7781a68c413517",
+    "repository": "trailhq/trail-code",
+    "repositoryId": 1288325627,
+    "pullNumbers": [
+      623
+    ],
+    "unacquiredPulls": [],
+    "observations": 2,
+    "observationsByKind": {
+      "description": 1,
+      "issue_comment": 1
+    },
+    "requests": 6,
+    "responseBytes": 57048,
+    "coverageComplete": true,
+    "transport": "host_authorized_github_https",
+    "atomic": false
+  },
+  {
+    "label": "actual-reviews",
+    "command": [
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+      "--timeout",
+      "60000",
+      "--max-bytes",
+      "8000000",
+      "github-discussions",
+      "capture",
+      "--profile",
+      "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\discussions-live-soa50c5r\\actual-reviews-profile.json",
+      "--request",
+      "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\discussions-live-soa50c5r\\actual-reviews-request.json",
+      "--allow-network",
+      "--allow-discussion-text"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 2.087,
+    "outputBytes": 174105,
+    "outputHash": "94093caee573e561edb826ad14eb5c1d7114684a439d131c874e1256530f1162",
+    "sourceStoreCreated": false,
+    "rawPayloadPublished": false,
+    "captureId": "4e40cbdb26d77d6f65e2164de18a2a7e6eedf2acaf8764850d4c238e059cf2a1",
+    "repository": "rust-lang/rust",
+    "repositoryId": 724712,
+    "pullNumbers": [
+      163746
+    ],
+    "unacquiredPulls": [],
+    "observations": 97,
+    "observationsByKind": {
+      "description": 1,
+      "issue_comment": 35,
+      "review": 25,
+      "review_comment": 36
+    },
+    "requests": 6,
+    "responseBytes": 363730,
+    "coverageComplete": true,
+    "transport": "host_authorized_github_https",
+    "atomic": false
+  }
+]

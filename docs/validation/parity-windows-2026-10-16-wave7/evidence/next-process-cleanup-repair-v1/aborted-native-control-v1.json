@@ -1,0 +1,22 @@
+{
+  "checkedAtUtc": "2026-10-16T16:15:52.355314+00:00",
+  "accepted": false,
+  "nativePhaseAborted": true,
+  "fullTag": "affected-r5b-process-20261016-full",
+  "reason": "The three explicit ACL fixtures failed setup under the chosen C root ACL; restart with a fresh user Temp child. No product test assertion or source changed.",
+  "ownedRunner": {
+    "ProcessId": 86992,
+    "ParentProcessId": 86424,
+    "ExecutablePath": "C:\\Users\\HEC_e\\AppData\\Local\\Programs\\Miniconda3\\python.exe",
+    "CommandLine": "\"C:\\Users\\HEC_e\\AppData\\Local\\Programs\\Miniconda3\\python.exe\" -B -X utf8 target/parity-validation-20261015/acceptance_wave4.py native --tag affected-r5b-process-20261016-full --temp D:/Yoke-Test-Scratch/affected-r5b-process-20261016-native --acl-temp C:/Yoke-Test-ACL/affected-r5b-process-20261016-acl"
+  },
+  "taskkillExitCode": 0,
+  "failedFixtureLogSha256": {
+    "library-c-acl-0.log": "bf8c4bc4eebe25b2becbcbe8e241c33c3263a59d794772f21f408a54b09abe41",
+    "library-c-acl-1.log": "4a6ca81e3ff4e96d3723b08cd11fb37ac17679a1ea6cdbca09bc459263779e3d",
+    "library-c-acl-2.log": "2f2280a0a860a206e281d68efd3760d04e8afb24b2b6eb37c6233ba9a113cb06"
+  },
+  "nativeFinalReceiptExists": false,
+  "sourceChanges": false,
+  "sourceManifestSha256": "d9b2112398d06212d977212518c2377f6ed2d8df89c359a9925b1b7999bbfa31"
+}

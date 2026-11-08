@@ -1,0 +1,22 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 5.21s
+     Running tests\graph_archive_review.rs (target\debug\deps\graph_archive_review-34a08598b98b6c0e.exe)
+collection_reregistration_caps_existing_source_sql_cells_before_length_reads: test
+resealed_archives_cannot_reclassify_a_captured_file_as_protected_source: test
+
+2 tests, 0 benchmarks
+     Running tests\graph_collections.rs (target\debug\deps\graph_collections-07ab8869252f0b4a.exe)
+archived_capture_scope_keeps_configured_readonly_dependencies_and_rejects_missing_proof: test
+canonical_collection_also_rejects_resealed_protected_source_after_registration: test
+collection_historical_source_survives_original_history_retirement_and_blob_purge: test
+collection_queries_use_namespaced_entities_and_exact_original_call_anchors: test
+collection_sqlite_sidecars_cannot_write_through_links: test
+legacy_default_native_archive_without_scope_sidecar_retains_original_identity: test
+registered_collection_namespaces_equal_symbols_and_preserves_parallel_edges: test
+registration_is_immutable_and_rejects_forged_graph_or_unregistered_scope: test
+registry_payload_capacity_is_checked_before_decoding_corrupt_registration: test
+registry_payload_sqlite_cell_is_capped_before_length_admission: test
+selected_view_collection_preserves_origins_namespaces_and_source_after_retirement: test
+view_archive_rejects_resealed_invented_rows_corrupt_inputs_and_foreign_view: test
+
+12 tests, 0 benchmarks

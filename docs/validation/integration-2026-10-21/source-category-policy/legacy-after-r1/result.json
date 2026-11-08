@@ -1,0 +1,50 @@
+{
+  "guard": "guard-r3",
+  "commands": [
+    {
+      "label": "legacy",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-r3-policy-xk79eno_",
+        "--snapshot",
+        "edec03185544ca0339b7a66e237f8aa7bfeee0f470f2027b7e34cdc3aa6fb786",
+        "--timeout",
+        "30000",
+        "--max-bytes",
+        "1000000",
+        "graph",
+        "analyze"
+      ],
+      "exitCode": 0
+    },
+    {
+      "label": "policy",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-r3-policy-xk79eno_",
+        "--snapshot",
+        "edec03185544ca0339b7a66e237f8aa7bfeee0f470f2027b7e34cdc3aa6fb786",
+        "--timeout",
+        "30000",
+        "--max-bytes",
+        "1000000",
+        "graph",
+        "analyze",
+        "--options",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\validation\\integration-20261018\\r3-source-categories\\legacy-after-r1\\options.json"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "cliSha256": "f98306321bc2203176b481c0ca4b50ae426eb08cb1b5b9b18f6b8546c69c5edd",
+  "legacyReportByteValueAndArtifactIdsExact": true,
+  "legacyRawStdoutExact": true,
+  "policyProducer": "yoke-source-category-report-1",
+  "policyArtifactId": "8abfaf99d19592f1dfa262a07d49d97cb9b314d25751c8b36d7c452bd6b0257b",
+  "originalSourceEvidenceAndGraphPreserved": true,
+  "sourceUnchanged": true,
+  "modelCalls": 0,
+  "analyzedSourceExecuted": false
+}

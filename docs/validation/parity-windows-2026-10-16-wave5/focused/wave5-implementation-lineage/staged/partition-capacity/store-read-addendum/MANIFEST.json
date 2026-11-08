@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "status": "ignored_saved_authority_addendum_frozen_uncompiled_unexecuted",
+  "action": "act_mva0w19b_ed935c0ac58d",
+  "preservedCapacityManifest": "369292a4411180dfd9f4fdbaed8c112902cdb28b4b259baff15a070a3be9234a",
+  "preservedPartitionManifest": "18e8d83be0a8985bb0d711e6321e26d6a6e410961f08d3df698a80b3caf0c2d4",
+  "allPredecessorBoundFilesUnchanged": true,
+  "normalSourcesChanged": [],
+  "normalEditsAuthorized": false,
+  "files": [
+    {
+      "path": "CONTRACT.md",
+      "sha256": "9a6a2dbf830a3d4a9aecceb71d975bc30449b857538c438ad8d5783a4410f0b5",
+      "bytes": 7310,
+      "draftTests": 0,
+      "qualifiedIgnoredTests": 0
+    },
+    {
+      "path": "PROMOTION.json",
+      "sha256": "84fc908abdbc37adfdaea05467afe5562059db580de90f529b96fbb3dae5572d",
+      "bytes": 1695,
+      "draftTests": 0,
+      "qualifiedIgnoredTests": 0
+    },
+    {
+      "path": "retrieval_saved_graph.rs",
+      "sha256": "98c72f69b302c5017d347cd3e9b3c4f746355e2fc3244f5ab9e4e1bc1bbdea28",
+      "bytes": 856,
+      "draftTests": 0,
+      "qualifiedIgnoredTests": 0
+    },
+    {
+      "path": "retrieval_saved_graph_tests.rs",
+      "sha256": "efa98700a143a4314af33851fc66fb152a1ee7b488afb1645f1a0722f8a368ca",
+      "bytes": 13169,
+      "draftTests": 8,
+      "qualifiedIgnoredTests": 1
+    }
+  ],
+  "ordinaryDraftTests": 7,
+  "qualifiedIgnoredDraftTests": 1,
+  "stub": "verify_saved_graph_in remains explicit Internal implementation_unavailable; no source authority constructed",
+  "sourceSeams": {
+    "native/src/store.rs": "graph492/load512 unbounded String before serde; new scoped Run only, generic API unchanged",
+    "native/src/federation.rs": "bounded archive record935 pattern; same read transaction strengthened",
+    "native/src/capture_ignored.rs": "bounded record63 pattern; exact prior limits restored",
+    "native/Cargo.toml": "rusqlite0.37 hooks/limits already enabled"
+  },
+  "validation": {
+    "rustfmt": "check passed parse/format only",
+    "json": "PROMOTION parsed",
+    "cargo": "not_run",
+    "node": "not_run",
+    "fixtures": "not_built_or_run",
+    "liveServices": "not_used",
+    "broadIO": "none during root27087 native run"
+  },
+  "review": "independent decision_review requested; no runtime or certification claim",
+  "rootRelease": "Required before normal promotion or functionality; observe causal RED and actual auto call-site protection."
+}

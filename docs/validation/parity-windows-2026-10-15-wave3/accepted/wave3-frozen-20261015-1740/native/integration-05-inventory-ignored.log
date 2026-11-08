@@ -1,0 +1,18 @@
+    Finished `test` profile [unoptimized] target(s) in 0.85s
+     Running tests\core.rs (target\debug\deps\core-7a5fad0c4c025ad0.exe)
+0 tests, 0 benchmarks
+     Running tests\credentials.rs (target\debug\deps\credentials-e5a8ba326d82852f.exe)
+windows_gate::windows_concurrent_generation_keeps_one_key: test
+windows_gate::windows_credential_roundtrip_refuses_overwrite: test
+
+2 tests, 0 benchmarks
+     Running tests\dataflow.rs (target\debug\deps\dataflow-1cba2cc503bc1b4d.exe)
+0 tests, 0 benchmarks
+     Running tests\deadline_scope.rs (target\debug\deps\deadline_scope-82d04ac5a671f47b.exe)
+0 tests, 0 benchmarks
+     Running tests\deadlines.rs (target\debug\deps\deadlines-7e944d9e9fcce6f9.exe)
+0 tests, 0 benchmarks
+     Running tests\debug_adapter.rs (target\debug\deps\debug_adapter-b0106548c278352b.exe)
+actual_windows_debugpy_persistent_evaluation_has_exact_captured_source: test
+
+1 test, 0 benchmarks

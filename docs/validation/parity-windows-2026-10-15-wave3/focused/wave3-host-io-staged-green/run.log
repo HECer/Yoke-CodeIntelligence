@@ -1,0 +1,32 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+warning: methods `path` and `identity` are never used
+   --> native\src\host_install.rs:634:19
+    |
+633 | impl DurableOutputRegistration {
+    | ------------------------------ methods in this implementation
+634 |     pub(super) fn path(&self) -> &Path {
+    |                   ^^^^
+...
+637 |     pub(super) fn identity(&self) -> &str {
+    |                   ^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `yoke-code-intelligence` (lib test) generated 1 warning
+    Finished `test` profile [unoptimized] target(s) in 46.32s
+     Running unittests src\lib.rs (target\debug\deps\yoke-35b101204e4eb110.exe)
+
+running 10 tests
+test host_install::io::tests::staged_armed_output_rejects_wrong_registration_or_expired_retain_before_persistence ... ok
+test host_install::io::tests::staged_armed_output_is_empty_secured_guarded_and_deleted_on_drop ... ok
+test host_install::io::tests::staged_existing_occupant_and_replaced_registered_identity_are_preserved ... ok
+test host_install::io::tests::staged_registered_output_appends_raw_canonical_chunks_and_finishes_same_identity ... ok
+test host_install::io::tests::staged_registered_output_rechecks_security_and_full_hash_before_writes_or_cleanup ... ok
+test host_install::io::tests::staged_registered_reopen_refuses_hardlinks_readonly_and_incomplete_finalization ... ok
+test host_install::io::tests::staged_retains_owned_output_when_cancellation_arrives_after_disarm ... ok
+test host_install::io::tests::staged_registered_prefix_reopens_without_truncation_and_discards_by_held_identity ... ok
+test host_install::io::tests::staged_registered_reopen_refuses_wrong_id_stage_hash_and_noncanonical_bytes ... ok
+test host_install::io::tests::staged_registered_reopen_checks_original_security_before_any_mutation ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 138 filtered out; finished in 0.11s
+

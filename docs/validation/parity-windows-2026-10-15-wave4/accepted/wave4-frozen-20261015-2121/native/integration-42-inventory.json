@@ -1,0 +1,22 @@
+{
+  "graphify_adapter": {
+    "executable": "target\\debug\\deps\\graphify_adapter-e1d8de0958eea3b6.exe",
+    "ignored": [],
+    "registered": [
+      "community_and_ambiguous_neighbor_responses_honor_the_requested_budget",
+      "filters_depth_and_conservative_token_byte_budget_are_real",
+      "foreign_roots_unknown_arguments_and_ambiguous_names_fail_closed",
+      "parallel_neighbors_exact_evidence_and_directed_shortest_path_are_preserved",
+      "question_context_inference_is_labeled_and_explicit_filter_takes_precedence",
+      "shortest_path_bounds_are_consistent_for_missing_and_ambiguous_endpoints",
+      "ten_pinned_schemas_six_resources_and_pr_unavailability_are_explicit"
+    ]
+  },
+  "graphify_cli": {
+    "executable": "target\\debug\\deps\\graphify_cli-2f3cad2bee8ea6cb.exe",
+    "ignored": [],
+    "registered": [
+      "public_graphify_cli_exposes_ten_tools_six_resources_and_real_graph_stats"
+    ]
+  }
+}

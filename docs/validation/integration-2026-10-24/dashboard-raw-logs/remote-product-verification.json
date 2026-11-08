@@ -1,0 +1,98 @@
+{
+  "complete": true,
+  "commit": "c65c1512bfbefc7f5c408bf4a31b6a7cdd15a73e",
+  "repository": "HECer/Yoke-CodeIntelligence",
+  "branch": "integrate/native-parity-github-app-20261018",
+  "files": [
+    {
+      "path": "native/src/compatibility.rs",
+      "sha256": "9da7daa5dbe362d56a46294183f694bd32175b580943a5a99066dfbc68993773",
+      "bytes": 14221,
+      "gitBlobSha": "bdab9d7846731bddda41b98304f0a42faea7ac55",
+      "remoteGitBlobSha": "bdab9d7846731bddda41b98304f0a42faea7ac55",
+      "verified": true
+    },
+    {
+      "path": "native/src/host_install.rs",
+      "sha256": "13d8b882949e37f0f3c96013fe9679ba21abed3881bbc6a9fad378e05a974cee",
+      "bytes": 108285,
+      "gitBlobSha": "b69caedb6ca12ff00945d9a4517dae7f80691836",
+      "remoteGitBlobSha": "b69caedb6ca12ff00945d9a4517dae7f80691836",
+      "verified": true
+    },
+    {
+      "path": "native/src/host_install_io.rs",
+      "sha256": "0aaaa39c1010b0a5c49f847584ad85891a6822430a301870a859529a711ea052",
+      "bytes": 144008,
+      "gitBlobSha": "765985f577739c5a8082dc022a50d7eaf7b867b3",
+      "remoteGitBlobSha": "765985f577739c5a8082dc022a50d7eaf7b867b3",
+      "verified": true
+    },
+    {
+      "path": "native/src/host_logs.rs",
+      "sha256": "7f970043d44f821ad52466e9ed01455bba55a3a425ac17640edf85448accf8cb",
+      "bytes": 12520,
+      "gitBlobSha": "f022d1e218c2c76e86f78522bb11706b8df9b760",
+      "remoteGitBlobSha": "f022d1e218c2c76e86f78522bb11706b8df9b760",
+      "verified": true
+    },
+    {
+      "path": "native/src/project_session.rs",
+      "sha256": "fe773757ef2806fd843fe231bc688556552de1753aeffda184adce88f8c482e0",
+      "bytes": 121449,
+      "gitBlobSha": "f8fa987e1db048d3604b0992db07160452322a50",
+      "remoteGitBlobSha": "f8fa987e1db048d3604b0992db07160452322a50",
+      "verified": true
+    },
+    {
+      "path": "native/src/session_dashboard.html",
+      "sha256": "c22a62b72eeee5a0291daba8ca31db6d7746af5e828fae24d33a805d0e227563",
+      "bytes": 57060,
+      "gitBlobSha": "711de0700c19c36463051769b02f121f4fa18a69",
+      "remoteGitBlobSha": "711de0700c19c36463051769b02f121f4fa18a69",
+      "verified": true
+    },
+    {
+      "path": "native/src/session_dashboard.rs",
+      "sha256": "cf179bc6f982b3280604b4cc2849658142c821bac71cec9c101c7c3a2bbc0c3e",
+      "bytes": 26925,
+      "gitBlobSha": "491425bcbba03af982cda030474a04afd72acf9c",
+      "remoteGitBlobSha": "491425bcbba03af982cda030474a04afd72acf9c",
+      "verified": true
+    },
+    {
+      "path": "native/src/session_dashboard_logs.rs",
+      "sha256": "4b7706cc89820d055cd922defce0ab712d4642145ca0359846ad78b78de2b5f6",
+      "bytes": 3802,
+      "gitBlobSha": "4e08e44e20544d74dd5dc300ea0826b2318c7d15",
+      "remoteGitBlobSha": "4e08e44e20544d74dd5dc300ea0826b2318c7d15",
+      "verified": true
+    },
+    {
+      "path": "native/src/session_dashboard_management.rs",
+      "sha256": "73d61dd650b71bd16782eb27515d802ad2502c1c81fdf55984158200ae7fae2f",
+      "bytes": 19577,
+      "gitBlobSha": "d4326d44dd5c967b2061868a0685b536fedbb023",
+      "remoteGitBlobSha": "d4326d44dd5c967b2061868a0685b536fedbb023",
+      "verified": true
+    },
+    {
+      "path": "native/src/session_dashboard_session.rs",
+      "sha256": "68cb0fe6cbcd7602cb651e4ca0825a5893bf9bcd49a4e96970838cfa880a0919",
+      "bytes": 12981,
+      "gitBlobSha": "4a1e407fb5c95abdf0c15f8287f92fa694ae7825",
+      "remoteGitBlobSha": "4a1e407fb5c95abdf0c15f8287f92fa694ae7825",
+      "verified": true
+    },
+    {
+      "path": "native/tests/session_dashboard_management.rs",
+      "sha256": "bc2756ccf89366944c641cd1c458795bb148e5beef0fceb11169dec2f713eedf",
+      "bytes": 48999,
+      "gitBlobSha": "00c9d316a1a31265bfeaaeccee370a9d50b1db56",
+      "remoteGitBlobSha": "00c9d316a1a31265bfeaaeccee370a9d50b1db56",
+      "verified": true
+    }
+  ],
+  "independentGitHubFetch": true,
+  "forcePush": false
+}

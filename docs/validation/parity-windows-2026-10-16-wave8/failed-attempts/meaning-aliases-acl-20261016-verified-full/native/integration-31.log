@@ -1,0 +1,24 @@
+    Finished `test` profile [unoptimized] target(s) in 0.92s
+     Running tests\federation_epoch_review.rs (E:\Yoke-Build-Cache\meaning-aliases-20261016\debug\deps\federation_epoch_review-f3bda00f0381e723.exe)
+
+running 4 tests
+test v2_public_graph_rejects_resealed_retargeted_call ... ok
+test v1_public_graph_rejects_resealed_invented_label ... ok
+test v1_public_graph_rejects_resealed_retargeted_call ... ok
+test v2_public_graph_rejects_resealed_invented_label ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.20s
+
+     Running tests\federation_epochs.rs (E:\Yoke-Build-Cache\meaning-aliases-20261016\debug\deps\federation_epochs-dd4fcd9d95125532.exe)
+
+running 7 tests
+test authentic_receiver8_v1_receipt_graph_and_archived_provenance_stay_exact ... ok
+test declared_v2_epoch_cannot_be_downgraded_under_the_same_foreign_identity ... ok
+test exact_v2_receipt_is_recognized_by_retention_without_an_opaque_kind_allowance ... ok
+test unknown_receipt_epochs_and_added_v1_epoch_fields_fail_before_source_callbacks ... ok
+test explicit_receiver9_creates_an_exact_v2_receipt_and_epoch9_source_graph ... ok
+test signed_v1_source_namespace_is_preserved_by_the_same_typed_retention_preflight ... ok
+test retrying_an_existing_v1_envelope_with_receiver9_preserves_old_id_graph_and_receipt ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.27s
+

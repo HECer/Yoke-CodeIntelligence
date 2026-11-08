@@ -1,0 +1,22 @@
+test_blob_tampering_fails_exact_git_object_identity (test_package_native.LicenseDiscovery.test_blob_tampering_fails_exact_git_object_identity) ... ok
+test_named_notice_cannot_escape_repository_path (test_package_native.LicenseDiscovery.test_named_notice_cannot_escape_repository_path) ... ok
+test_named_notice_keeps_raw_byte_limit (test_package_native.LicenseDiscovery.test_named_notice_keeps_raw_byte_limit) ... ok
+test_named_notice_lookalikes_cannot_substitute_for_missing_notice (test_package_native.LicenseDiscovery.test_named_notice_lookalikes_cannot_substitute_for_missing_notice) ... ok
+test_named_notice_tampering_still_fails_git_object_identity (test_package_native.LicenseDiscovery.test_named_notice_tampering_still_fails_git_object_identity) ... ok
+test_named_notices_keep_revision_unicode_path_and_sibling_boundaries (test_package_native.LicenseDiscovery.test_named_notices_keep_revision_unicode_path_and_sibling_boundaries) ... ok
+test_nested_license_without_root_license_is_found (test_package_native.LicenseDiscovery.test_nested_license_without_root_license_is_found) ... ok
+test_nested_package_notice_and_ancestor_license_exclude_sibling_crates (test_package_native.LicenseDiscovery.test_nested_package_notice_and_ancestor_license_exclude_sibling_crates) ... ok
+test_no_license_is_a_revision_specific_failure (test_package_native.LicenseDiscovery.test_no_license_is_a_revision_specific_failure) ... ok
+test_truncated_recursive_tree_fails_even_with_root_license (test_package_native.LicenseDiscovery.test_truncated_recursive_tree_fails_even_with_root_license) ... ok
+test_external_cargo_target_directory_does_not_package_a_stale_repo_binary (test_package_native.PackagingInputs.test_external_cargo_target_directory_does_not_package_a_stale_repo_binary) ... ok
+test_matching_release_keeps_public_security_and_release_guidance (test_package_native.PackagingInputs.test_matching_release_keeps_public_security_and_release_guidance) ... ok
+test_named_notice_in_locked_crate_needs_no_online_fallback (test_package_native.PackagingInputs.test_named_notice_in_locked_crate_needs_no_online_fallback) ... ok
+test_stale_release_binary_cannot_be_labeled_with_a_new_manifest_version (test_package_native.PackagingInputs.test_stale_release_binary_cannot_be_labeled_with_a_new_manifest_version) ... ok
+test_existing_output_is_preserved (test_package_vscode.NativeVsix.test_existing_output_is_preserved) ... ok
+test_host_fixture_and_typescript_are_excluded_from_native_default (test_package_vscode.NativeVsix.test_host_fixture_and_typescript_are_excluded_from_native_default) ... ok
+test_native_binary_remains_executable_in_unix_vsix (test_package_vscode.NativeVsix.test_native_binary_remains_executable_in_unix_vsix) ... ok
+
+----------------------------------------------------------------------
+Ran 17 tests in 0.206s
+
+OK

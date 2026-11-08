@@ -1,0 +1,24 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 3.52s
+     Running tests\retention.rs (target\debug\deps\retention-f1ace34b5fbe6915.exe)
+
+running 16 tests
+test committed_retirement_can_feed_conservative_cas_quarantine_and_purge_without_losing_receipts ... ok
+test future_opaque_json_artifact_schema_is_not_inferred_to_be_dependency_free ... ok
+test labeled_uncommitted_history_journal_restores_missing_rows_without_changing_current_source ... ok
+test labeled_uncommitted_history_journal_restores_only_hash_bound_rows ... ok
+test missing_history_age_and_corrupt_metadata_never_become_retirement_permission ... ok
+test multiply_linked_quarantine_content_is_unknown_physical_reclamation_and_is_preserved ... ok
+test newly_rooted_quarantine_and_tampered_plan_refuse_purge_without_deleting_bytes ... ok
+test opaque_published_artifacts_defer_history ... ok
+test partial_purge_reports_actual_removed_bytes_and_can_resume_only_its_exact_intent ... ok
+test pin_and_every_source_bound_workflow_record_protect_history ... ok
+test purge_reclaims_only_exact_committed_unreachable_quarantine_bytes_after_confirmation ... ok
+test reviewed_history_retirement_removes_only_unrooted_rows_and_preserves_original_source ... ok
+test source_bindings_inside_published_json_artifacts_protect_history ... ok
+test stale_plan_and_concurrent_client_leave_history_intact ... ok
+test unknown_nested_snapshot_fields_defer_history ... ok
+test unknown_record_blocks_retirement_even_without_explicit_hash_fields ... ok
+
+test result: ok. 16 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.18s
+

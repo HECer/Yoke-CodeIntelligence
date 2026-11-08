@@ -1,0 +1,14 @@
+let __ci_inline_1;
+{
+
+if (void 0 !== void 0) {
+var __ci_inline_3 = function(){return ((()=>3) satisfies (()=>number));};var __ci_inline_4 = __ci_inline_3();void __ci_inline_4;
+}
+{
+__ci_inline_2: {
+if (void 0 === void 0) {{ __ci_inline_1 = (void 0, ((()=>3) satisfies (()=>number)));; break __ci_inline_2; }}
+__ci_inline_1 = void 0;
+}
+}
+}
+const result=(__ci_inline_1 as unknown as (typeof __ci_inline_4));export const observed=result.name;

@@ -1,0 +1,226 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\r3-shadow-unavailable-v1\native)
+warning: fields `before_proof_bytes`, `after_proof_bytes`, and `distinct_source_objects` are never read
+   --> native\src\graph_view_comparison_input.rs:113:5
+    |
+112 | pub(crate) struct ComparisonInputAccounting {
+    |                   ------------------------- fields in this struct
+113 |     before_proof_bytes: usize,
+    |     ^^^^^^^^^^^^^^^^^^
+114 |     after_proof_bytes: usize,
+    |     ^^^^^^^^^^^^^^^^^
+...
+117 |     distinct_source_objects: usize,
+    |     ^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: `ComparisonInputAccounting` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: methods `before_proof_bytes`, `after_proof_bytes`, and `distinct_source_objects` are never used
+   --> native\src\graph_view_comparison_input.rs:765:19
+    |
+764 | impl ComparisonInputAccounting {
+    | ------------------------------ methods in this implementation
+765 |     pub(crate) fn before_proof_bytes(&self) -> usize {
+    |                   ^^^^^^^^^^^^^^^^^^
+...
+768 |     pub(crate) fn after_proof_bytes(&self) -> usize {
+    |                   ^^^^^^^^^^^^^^^^^
+...
+777 |     pub(crate) fn distinct_source_objects(&self) -> usize {
+    |                   ^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: method `snapshot` is never used
+   --> native\src\graph_view_comparison_input.rs:782:19
+    |
+781 | impl BoundComparisonScope<'_> {
+    | ----------------------------- method in this implementation
+782 |     pub(crate) fn snapshot(&self) -> &Snapshot {
+    |                   ^^^^^^^^
+
+warning: method `snapshot` is never used
+   --> native\src\meaning_build.rs:185:19
+    |
+184 | impl BoundFrozenScope<'_> {
+    | ------------------------- method in this implementation
+185 |     pub(crate) fn snapshot(&self) -> &Snapshot {
+    |                   ^^^^^^^^
+
+warning: `yoke-code-intelligence` (lib) generated 4 warnings
+warning: unused import: `serde_json::json`
+ --> native\tests\support\meaning_comparison_fixture.rs:2:5
+  |
+2 | use serde_json::json;
+  |     ^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `calibrate_foreign_connection_mutation_oracle` is never used
+  --> native\tests\support\historical_fixture_state.rs:52:8
+   |
+52 | pub fn calibrate_foreign_connection_mutation_oracle(engine: &Engine) {
+   |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: constant `B` is never used
+  --> native\tests\support\meaning_comparison_fixture.rs:16:11
+   |
+16 | pub const B: &str = "// __MEANING_B_EVIDENCE_ONLY_b87d91__\npub fn beta() -> u32 { 2 }\n";
+   |           ^
+
+warning: constant `HISTORY_OLD` is never used
+  --> native\tests\support\meaning_comparison_fixture.rs:17:11
+   |
+17 | pub const HISTORY_OLD: &str = "// __HISTORICAL_OLD_SOURCE_ONLY_394ace__\npub fn history() -> u32 { 0 }\n";
+   |           ^^^^^^^^^^^
+
+warning: constant `HISTORY_NEW` is never used
+  --> native\tests\support\meaning_comparison_fixture.rs:18:11
+   |
+18 | pub const HISTORY_NEW: &str = "// __HISTORICAL_NEW_SOURCE_ONLY_6a52bc__\npub fn history() -> u32 { 9 }\n";
+   |           ^^^^^^^^^^^
+
+warning: struct `Fixture` is never constructed
+  --> native\tests\support\meaning_comparison_fixture.rs:23:12
+   |
+23 | pub struct Fixture {
+   |            ^^^^^^^
+
+warning: function `fixture` is never used
+  --> native\tests\support\meaning_comparison_fixture.rs:35:8
+   |
+35 | pub fn fixture(epoch: AnalyzerEpoch) -> Fixture {
+   |        ^^^^^^^
+
+warning: function `remove_source_workspace` is never used
+   --> native\tests\support\meaning_comparison_fixture.rs:149:8
+    |
+149 | pub fn remove_source_workspace(f: Fixture) -> TempDir {
+    |        ^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: `yoke-code-intelligence` (test "historical_view_budget_options") generated 8 warnings (run `cargo fix --test "historical_view_budget_options" -p yoke-code-intelligence` to apply 1 suggestion)
+warning: field `rebound_snapshot` is never read
+   --> native\tests\support\meaning_receipt_fixture.rs:106:9
+    |
+102 | pub struct Fixture {
+    |            ------- field in this struct
+...
+106 |     pub rebound_snapshot: Snapshot,
+    |         ^^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `yoke-code-intelligence` (test "historical_view_receipts") generated 1 warning
+warning: fields `dir`, `snapshot`, and `graph` are never read
+  --> native\tests\support\meaning_comparison_fixture.rs:24:9
+   |
+23 | pub struct Fixture {
+   |            ------- fields in this struct
+24 |     pub dir: TempDir,
+   |         ^^^
+...
+28 |     pub snapshot: Snapshot,
+   |         ^^^^^^^^
+29 |     pub graph: Graph,
+   |         ^^^^^
+
+warning: `yoke-code-intelligence` (test "historical_view_adversarial") generated 4 warnings (3 duplicates)
+warning: `yoke-code-intelligence` (test "historical_view_comparison") generated 1 warning (1 duplicate)
+warning: `yoke-code-intelligence` (test "historical_view_boundaries") generated 4 warnings (4 duplicates)
+warning: field `graph` is never read
+  --> native\tests\support\meaning_comparison_fixture.rs:29:9
+   |
+23 | pub struct Fixture {
+   |            ------- field in this struct
+...
+29 |     pub graph: Graph,
+   |         ^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `yoke-code-intelligence` (test "historical_view_semantics") generated 1 warning (1 duplicate)
+warning: `yoke-code-intelligence` (test "historical_view_fixture_qualification") generated 2 warnings (1 duplicate)
+    Finished `test` profile [unoptimized] target(s) in 1m 25s
+     Running tests\historical_receipt_fixture_qualification.rs (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\debug\deps\historical_receipt_fixture_qualification-72ab9d25051d43a1.exe)
+
+running 2 tests
+test h11_owned_worker_publishes_literal_reports_and_reuses_only_original_receipts ... ok
+test h11_owned_archives_replay_original_reports_after_later_host_accounting_and_store_removal ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.87s
+
+     Running tests\historical_view_adversarial.rs (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\debug\deps\historical_view_adversarial-02d723fb92bdcde2.exe)
+
+running 4 tests
+test error_redaction::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling ... ok
+test h08_portable_full_source_and_proof_closure_cannot_be_repaired_from_live_paths ... ok
+test h09_public_view_resealing_does_not_authorize_forged_precision_ranges_edges_or_completeness ... ok
+test h08_published_comparison_requires_uncited_history_and_uncorrupted_view_overlay_cas ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.27s
+
+     Running tests\historical_view_boundaries.rs (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\debug\deps\historical_view_boundaries-f5d82ba0450ad0f8.exe)
+
+running 7 tests
+test error_oracle::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling ... ok
+test h14_each_of_the_five_genuine_capture_option_fields_is_a_compatibility_boundary ... ok
+test h14_individually_valid_epoch8_and_epoch9_refuse_cross_epoch_in_both_orders ... ok
+test h14_normalized_options_replay_identically_including_both_empty_optional_fields ... ok
+test h06_historical_union_membership_does_not_satisfy_current_primary_binding ... ok
+test h06_genuine_primary_controls_precede_malformed_and_nonbijective_declarations ... ok
+test h06_one_hundred_real_primary_declarations_pass_and_one_hundred_one_refuse ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.91s
+
+     Running tests\historical_view_budget_options.rs (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\debug\deps\historical_view_budget_options-0bd7ee08ae66cb3e.exe)
+
+running 2 tests
+test explicit_budgets_above_defaults_are_admitted_and_reported_without_clamping ... ok
+test zero_budgets_refuse_positive_work_instead_of_meaning_unlimited ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.43s
+
+     Running tests\historical_view_comparison.rs (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\debug\deps\historical_view_comparison-9338980b82f50dc0.exe)
+
+running 8 tests
+test error_redaction::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling ... ok
+test directed_parallel_delta_does_not_infer_which_identical_occurrence_survived ... ok
+test identical_bytes_across_paths_do_not_manufacture_rename_lineage ... ok
+test explicit_pair_replays_historical_bytes_and_is_deterministic_without_publication ... ok
+test all_output_or_deadline_failures_publish_nothing ... ok
+test stale_snapshot_artifact_and_graph_pins_refuse_without_mutation ... ok
+test wrong_store_and_cross_workspace_pins_do_not_fall_back_to_equal_paths ... ok
+test checked_archives_compare_after_live_store_and_worker_are_gone_without_quote_leaks ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.71s
+
+     Running tests\historical_view_fixture_qualification.rs (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\debug\deps\historical_view_fixture_qualification-51cfbc36f26879ae.exe)
+
+running 2 tests
+test genuine_source_only_views_qualify_epoch8_and_epoch9_and_the_mutation_oracle ... ok
+test genuine_original_and_rebound_typed_archives_qualify_both_epochs_without_a_live_store ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.57s
+
+     Running tests\historical_view_receipts.rs (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\debug\deps\historical_view_receipts-9bd63eedbe6a9c95.exe)
+
+running 4 tests
+test h11_new_digest_oracle_sorts_nested_objects_without_reordering_arrays_or_erasing_nulls ... ok
+test h11_different_currencies_and_versions_remain_original_nonaggregated_receipts ... ok
+test h11_checked_archives_keep_original_reports_after_later_ledger_reconciliation_and_store_removal ... ok
+test h11_published_comparison_preserves_null_zero_independent_usage_and_receipt_reuse ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 7.96s
+
+     Running tests\historical_view_semantics.rs (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\debug\deps\historical_view_semantics-9119bdf4ff5b8103.exe)
+
+running 6 tests
+test h12_directed_parallel_and_self_loop_occurrences_use_original_ids_and_literal_counts ... ok
+test h10_position_closed_schema_preserves_unicode_crlf_file_and_multiple_bindings ... ok
+test h16_declared_moved_file_pairs_only_that_file_and_keeps_duplicate_descendants_ambiguous ... ok
+test h16_duplicate_structural_candidates_and_their_calls_stay_ambiguous_even_with_host_continuity ... ok
+test h12_owned_fixture_qualifies_two_legal_independent_generations_before_comparison ... ok
+test h12_independent_meaning_generations_keep_order_repetition_direction_and_exact_namespaces_storelessly ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.52s
+

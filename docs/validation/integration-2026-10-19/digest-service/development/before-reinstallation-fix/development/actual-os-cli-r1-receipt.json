@@ -1,0 +1,17 @@
+{
+  "command": [
+    "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+    "test",
+    "--locked",
+    "-j2",
+    "--test",
+    "github_app_digest_handoff",
+    "actual_cli_send_status_and_lost_response_recovery_use_os_key_without_retry",
+    "--",
+    "--exact",
+    "--ignored",
+    "--test-threads=1"
+  ],
+  "exitCode": 0,
+  "elapsedSeconds": 0.9063275999942562
+}

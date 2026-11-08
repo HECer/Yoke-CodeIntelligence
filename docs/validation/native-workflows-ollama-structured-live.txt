@@ -1,0 +1,24 @@
+Actual native structured-completion validation, 2026-10-14 UTC
+
+Explicit host-authorized isolated setup:
+rtk proxy python.exe C:/Users/HEC_e/AppData/Local/Temp/yoke-ollama-structured-gate-20261014.py
+
+Official model: smollm2:135m, Apache-2.0, 270,898,672 model/metadata bytes (authorized cap: 1 GiB).
+Installed runtime: Ollama 0.40.3, hidden owned CPU server PID 68340, http://127.0.0.1:62375.
+Independently verified manifest digest: 9077fe9d2ae1a4a41a868836b56b8163731a8fe16621397028c2c76f838c6907.
+Actual capabilities include completion; model metadata meets the native 8,192-token context minimum.
+
+The existing native CLI indexed an owned synthetic billing.rs source, selected its exact invoice entity and ran both summarize and rerank through host ProviderSpec, actual model-worker inference and native provider validation/Store/Ledger. Entity: a2972f275db9410a96f6644017e51322c081083cfff729c2f0102d4c56662bb4; full captured file hash: 86bc9cacd1252cb8d4e7d5e6f04ebe8b9a7b32631a94355842da0cef7fb07d64; exact selected UTF-8 range: 0..83.
+
+Actual rerank passed: one exact candidate, finite score within 0..1, exact source ID/hash binding, one model call and unknown provider cost. Ranking remains labeled ranking_not_evidence. Semantic ranking quality was not evaluated.
+
+Actual summarize did not pass: native parent provider reported EOF/no protocol reply, exit 1. No generated summary or inferred fact was accepted. Both actual parent-provider attempts retain unknown billing: 2 attempts, 2 unknown, 20 reserved/encumbered micro-units, 0 known actual micro-units, immutable EUR 100 micro-unit task policy. The captured source bytes remained unchanged. Zero known billing is not a verified free-model claim.
+
+One separately authorized bounded summary diagnostic reused exactly the same downloaded test model through a copied native executable, avoiding shared Cargo output locks:
+C:/Users/HEC_e/AppData/Local/Temp/yoke-structured-diagnostic-native-20261014/yoke.exe --timeout 30000 model-worker --endpoint http://127.0.0.1:64933 --model smollm2:135m --digest 9077fe9d2ae1a4a41a868836b56b8163731a8fe16621397028c2c76f838c6907
+
+Diagnostic result: exit 1, stdout 0 bytes, true native stderr category Windows socket timeout (OS error 10060) within the configured 30,000 ms budget. This does not establish empty/invalid model JSON or an adapter formatting bug. A successful live source summary is not claimed. This direct worker diagnostic did not invoke the parent Ledger; the two full provider attempts above remain accounted.
+
+Both owned hidden server jobs were closed, server exits and endpoint closures confirmed, and shared target/debug/yoke.exe handles released. User identity length/mtime stayed unchanged; no identity bytes/configuration logs were read, copied or stored in evidence. User model junction/configuration and existing default server received no changes or control actions. Dedicated test weights remain outside the repository/release. No fallback fixture output was substituted. Core adapter default behavior still starts no server and downloads no model.
+
+Subsequent focused validation is recorded separately in native-workflows-ollama-summary-live.json and .txt. After adapter-specific concise summary bounds were applied, exactly one final full ProviderSpec/Store/Ledger summary retry passed within a 60-second native budget. It returned one 83-byte inferred statement with exact captured-source citation, retained its unknown 10-micro-unit reservation, preserved source bytes and stopped the owned server. The failures above describe their original attempts and remain unchanged. Neural quality and exhaustive summary coverage are not claimed.

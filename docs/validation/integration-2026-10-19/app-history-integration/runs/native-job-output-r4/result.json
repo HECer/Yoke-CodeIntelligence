@@ -1,0 +1,52 @@
+{
+  "sourceUnchanged": true,
+  "inputs": 758,
+  "commands": [
+    {
+      "name": "build",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "rustc",
+        "-p",
+        "yoke-code-intelligence",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--test",
+        "digest_history_jobs",
+        "--",
+        "-C",
+        "extra-filename=-r8-acquisition"
+      ],
+      "exitCode": 0,
+      "seconds": 11.893297300004633
+    },
+    {
+      "name": "native",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\digest_history_jobs-r8-acquisition.exe",
+        "--test-threads=1"
+      ],
+      "exitCode": 0,
+      "seconds": 66.34492460000911,
+      "groups": 1,
+      "totals": {
+        "passed": 13,
+        "failed": 0,
+        "ignored": 0
+      }
+    }
+  ],
+  "binary": {
+    "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\digest_history_jobs-r8-acquisition.exe",
+    "bytes": 116621312,
+    "beforeSha256": "acb302ab55dbd64b082c425cfbcade62f81dd79b97bcc5e9d92d61863e7ff386",
+    "afterSha256": "acb302ab55dbd64b082c425cfbcade62f81dd79b97bcc5e9d92d61863e7ff386"
+  },
+  "allChecksPassed": true,
+  "standardCargoTest": false,
+  "compilerDifference": "Only target output suffix -C extra-filename=-r8-acquisition; same unchanged source, dependency lock, normal test harness and assertions. Original target output is held by crashed MSVC linker PID22940 (termination denied).",
+  "wholeNativeRerun": false
+}

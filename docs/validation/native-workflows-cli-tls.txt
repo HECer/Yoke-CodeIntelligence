@@ -1,0 +1,18 @@
+warning: unused import: `PathBuf`
+  --> native\src\federation_http.rs:16:18
+   |
+16 |     path::{Path, PathBuf},
+   |                  ^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `yoke-code-intelligence` (lib) generated 1 warning (run `cargo fix --lib -p yoke-code-intelligence` to apply 1 suggestion)
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 4.97s
+     Running tests\workflow_cli.rs (target\debug\deps\workflow_cli-df3e580128d03842.exe)
+
+running 1 test
+test actual_native_cli_tls_service_and_client_load_os_credentials ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 5 filtered out; finished in 5.49s
+

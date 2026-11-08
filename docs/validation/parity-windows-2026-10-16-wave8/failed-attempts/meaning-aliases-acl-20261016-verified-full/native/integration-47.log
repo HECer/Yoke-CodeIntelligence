@@ -1,0 +1,22 @@
+    Finished `test` profile [unoptimized] target(s) in 0.89s
+     Running tests\graphify_selected_queries.rs (E:\Yoke-Build-Cache\meaning-aliases-20261016\debug\deps\graphify_selected_queries-b3254669bd3c17dc.exe)
+
+running 8 tests
+test mismatched_published_view_scope_cannot_fall_back_to_live_capture ... ok
+test selected_neighbors_preserve_parallel_directions_and_exact_utf8_evidence ... ok
+test selected_get_node_resolves_only_members_of_the_published_nondefault_view ... ok
+test omitted_selector_keeps_the_default_view_after_a_nondefault_view_was_published ... ok
+test selected_query_graph_traverses_the_selected_document_and_induced_parallel_edges ... ok
+test selected_shortest_path_keeps_stored_direction_and_an_explicit_undirected_option ... ok
+test unknown_and_malformed_view_ids_refuse_before_first_capture ... ok
+test selected_queries_replay_historical_views_after_new_index_and_unsaved_host_changes ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.54s
+
+     Running tests\historical_publication.rs (E:\Yoke-Build-Cache\meaning-aliases-20261016\debug\deps\historical_publication-45cd239aba97d211.exe)
+
+running 1 test
+test historical_publication_is_atomic_without_repointing_latest_or_disk_checkpoint ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+

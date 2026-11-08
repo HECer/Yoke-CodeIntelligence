@@ -1,0 +1,325 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-19T03:12:30.548864+00:00",
+  "parentCommit": "c2c3f9b2c1675499ac80586e4608bc9174058c2a",
+  "accepted": false,
+  "allLocalChecksPassed": false,
+  "nativeTotals": {
+    "passed": 574,
+    "failed": 2,
+    "ignored": 7
+  },
+  "nativeResultGroups": 18,
+  "summary": {
+    "allChecksPassed": false,
+    "sourceUnchanged": true,
+    "checks": [
+      {
+        "gate": "format",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "fmt",
+          "--all",
+          "--check"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 4.485,
+        "recordedAt": "2026-10-19T03:05:21.354705+00:00",
+        "resultGroups": []
+      },
+      {
+        "gate": "opening-and-mapped-history",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "test",
+          "--locked",
+          "--no-fail-fast",
+          "-j2",
+          "--test",
+          "store_open_deadline",
+          "--test",
+          "github_app_digest_mapping",
+          "--",
+          "--test-threads=2"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 82.841,
+        "recordedAt": "2026-10-19T03:06:44.196372+00:00",
+        "resultGroups": [
+          {
+            "passed": 13,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 7,
+            "failed": 0,
+            "ignored": 0
+          }
+        ]
+      },
+      {
+        "gate": "native-opening-regressions",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "test",
+          "--locked",
+          "--no-fail-fast",
+          "-j2",
+          "--lib",
+          "--test",
+          "store_cancellation",
+          "--test",
+          "store_read_only",
+          "--test",
+          "store_identity",
+          "--test",
+          "store_review",
+          "--test",
+          "deadline_scope",
+          "--test",
+          "deadlines",
+          "--test",
+          "ledger",
+          "--test",
+          "ledger_admission_review",
+          "--test",
+          "ledger_batches",
+          "--test",
+          "ledger_batches_review",
+          "--test",
+          "federation",
+          "--test",
+          "federation_http",
+          "--test",
+          "maintenance",
+          "--test",
+          "github_app_digest",
+          "--test",
+          "github_app_digest_cli",
+          "--",
+          "--test-threads=2"
+        ],
+        "exitCode": 101,
+        "elapsedSeconds": 174.954,
+        "recordedAt": "2026-10-19T03:09:39.151150+00:00",
+        "resultGroups": [
+          {
+            "passed": 403,
+            "failed": 0,
+            "ignored": 7
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 12,
+            "failed": 1,
+            "ignored": 0
+          },
+          {
+            "passed": 16,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 35,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 38,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 5,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 6,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 3,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 11,
+            "failed": 1,
+            "ignored": 0
+          },
+          {
+            "passed": 9,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 4,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 7,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          }
+        ]
+      },
+      {
+        "gate": "clippy",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "clippy",
+          "--workspace",
+          "--all-targets",
+          "--locked",
+          "--keep-going",
+          "-j2",
+          "--",
+          "-D",
+          "warnings"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 88.841,
+        "recordedAt": "2026-10-19T03:11:07.992815+00:00",
+        "resultGroups": []
+      },
+      {
+        "gate": "typescript-typecheck",
+        "command": [
+          "npm.cmd",
+          "run",
+          "typecheck"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 2.818,
+        "recordedAt": "2026-10-19T03:11:10.811657+00:00",
+        "resultGroups": []
+      },
+      {
+        "gate": "typescript-tests",
+        "command": [
+          "npm.cmd",
+          "test"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 57.574,
+        "recordedAt": "2026-10-19T03:12:08.386263+00:00",
+        "resultGroups": []
+      }
+    ],
+    "scope": "Scoped Windows opening/deadline/Git mapping checks. Unix chmod branch requires actual hosted Unix validation; no emulation/certification. Symlink setup failures remain visible; no security fixture gated away."
+  },
+  "findings": [
+    "Five of six original Store opening regressions fail before correction: already-cancelled opening is admitted, zero timeout leaves state, physical client admission ignores cancellation for1.9400714s, schema lock ignores cancellation for3.1331248s, and a120ms inherited ceiling permits3.1976735s of opening.",
+    "Store opening now inherits a full-Duration absolute host deadline before creating state and shares it across both client locks and SQLite schema/identity work. SQLite busy/progress policy is installed before the first statement and cleared on successful opening.",
+    "Final seven opening tests pass, including zero/MAX durations without panic/state, pre-cancelled opening, both lease files, actual rollback-journal reader exclusion, inherited ceiling/cancellation, recovery, exact workspace/Unicode data after brief contention and discarded setup policy after successful opening.",
+    "The owned Windows Git probe explicitly selects core.filemode=true and reproduces an index100755/worktree100644 discrepancy plus the same checkout refusal as hosted macOS. It is not a Unix emulator or Unix runtime validation.",
+    "The fixture now sets the physical executable mode on Unix before staging and asserts clean tracked bytes/modes before capture/checkout. No force checkout, filemode-disable flag or test gate bypass is added. All13 mapping tests pass on Windows; actual Unix branch validation remains pending.",
+    "All18 selected final native result groups execute. The only two failures are unchanged real symlink fixture creation OS1314 in federation and maintenance. Original RED logs are development traces; the final unchanged-source manifest is the authoritative final input set.",
+    "Other raw SQLite connections, Unix guarded installation, macOS runtime/PDF issues, provider discussion/handoff, broader STATUS/R1-R9 and full native/platform acceptance remain separate."
+  ],
+  "artifacts": [
+    {
+      "path": "before-fix-receipt.json",
+      "bytes": 243,
+      "sha256": "adb98924b0f5ac107bab7829629f2321ce0e732f8ae44d181b2dadfc10038a7e"
+    },
+    {
+      "path": "before-fix.log",
+      "bytes": 2575,
+      "sha256": "1a793f63b1e837200ee8fdebbc6a6457edb917aeadce67e500c94de96728f676"
+    },
+    {
+      "path": "final/clippy.log",
+      "bytes": 172,
+      "sha256": "ffeebf44a9ce6bfb94ffb06a0c71af12953b61ed0265e5c89903930774acdbc6"
+    },
+    {
+      "path": "final/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "final/native-opening-regressions.log",
+      "bytes": 64550,
+      "sha256": "6cf48d6e1a3315c002fd1d0b299fe6510845993013d17867347270954e413181"
+    },
+    {
+      "path": "final/opening-and-mapped-history.log",
+      "bytes": 2283,
+      "sha256": "0f1f32fab9f232b65e3104c0a1dd631d05965c56cd623a7677ecd59f6534c4d6"
+    },
+    {
+      "path": "final/receipts.json",
+      "bytes": 4231,
+      "sha256": "1c4d7dadff0a24d60424e50a8a97791789a5802ec88581d4e3e1942025f74d2e"
+    },
+    {
+      "path": "final/source-after.json",
+      "bytes": 66148,
+      "sha256": "24a78efb0752b6c6ba4a5cab665a61cb96f059ceaf853abd34a2165e258b2ad4"
+    },
+    {
+      "path": "final/source-before.json",
+      "bytes": 66148,
+      "sha256": "24a78efb0752b6c6ba4a5cab665a61cb96f059ceaf853abd34a2165e258b2ad4"
+    },
+    {
+      "path": "final/summary.json",
+      "bytes": 4960,
+      "sha256": "0b832890cc4b991299dae348348de6a32a1e0396fdc23714329956b980997312"
+    },
+    {
+      "path": "final/typescript-tests.log",
+      "bytes": 25036,
+      "sha256": "c98d1944c15660c0d363d31e34b8481dd7ab901a6d2e4cc142f2492ed5120a66"
+    },
+    {
+      "path": "final/typescript-typecheck.log",
+      "bytes": 101,
+      "sha256": "30ef9ce16cf042ab6f160e0a76c1fbfe22f02a3c3a3659ee62863ffc1efdbfdf"
+    },
+    {
+      "path": "owned-windows-git-mode-probe.json",
+      "bytes": 2168,
+      "sha256": "2b8ce0167222f05c82b29d56631950e6eb8f44f264c7e3834c07dc4ce011f755"
+    },
+    {
+      "path": "run-local-validation.py",
+      "bytes": 3114,
+      "sha256": "e12c0af630ec58075e160ce04795bdc8f96d2fba4f106b8963a7579b67f874b0"
+    },
+    {
+      "path": "runtime-change.patch",
+      "bytes": 6059,
+      "sha256": "95ea58b3c305fbfaa3ccb59637ac242cedc01459f9fdfade5db9f94f3d455885"
+    },
+    {
+      "path": "store_open_deadline.rs",
+      "bytes": 6358,
+      "sha256": "cdd9fca38ed87cf765a571964b658067ee8da983c7db48efabd46fe07602fe2d"
+    }
+  ]
+}

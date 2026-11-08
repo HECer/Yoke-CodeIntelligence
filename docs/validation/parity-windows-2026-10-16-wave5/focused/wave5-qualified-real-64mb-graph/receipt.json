@@ -1,0 +1,28 @@
+{
+  "checkedAtUtc": "2026-10-16T00:46:51.093728+00:00",
+  "scope": "focused_gate_not_frozen_suite",
+  "command": [
+    "cargo",
+    "test",
+    "-j",
+    "2",
+    "--manifest-path",
+    "native/Cargo.toml",
+    "--lib",
+    "retrieval_scopes::capacity_tests::real_graph_exact_64mb_passes_and_plus_one_refuses_before_saved_graph_loading",
+    "--",
+    "--ignored",
+    "--exact",
+    "--nocapture",
+    "--test-threads=4"
+  ],
+  "exitCode": 0,
+  "seconds": 240.078,
+  "tempRoot": "D:\\Yoke-Test-Scratch\\wave5-qualified-real-64mb-graph",
+  "logSha256": "0882bd28b4650cac5f743802645d8354c9b945f6a221b17aac7c12d2d3d6f616",
+  "groups": 1,
+  "passed": 1,
+  "failed": 0,
+  "ignored": 0,
+  "sourceChanges": []
+}

@@ -1,0 +1,104 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\r5-shadow-unavailable-v1\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 08s
+     Running tests\git_impact_details.rs (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\debug\deps\git_impact_details-97cd7cd6968dae57.exe)
+
+running 29 tests
+test admitted_control_character_source_is_omitted_without_fabricated_safe_quote_text ... ok
+test a_positive_aggregate_quote_cap_is_consumed_in_documented_occurrence_order ... ok
+test an_exact_content_pair_stays_ambiguous_when_a_modified_partner_also_qualifies ... ok
+test caller_owned_read_transaction_survives_success_and_refusal ... ok
+test canonical_full_result_id_row_counter_and_exact_wire_limit_are_independent ... ok
+test changed_source_cas_refuses_with_a_static_error_and_no_live_source_fallback ... ok
+test duplicate_identical_groups_retain_the_complete_ambiguous_cross_product ... ok
+test changed_or_missing_captured_graph_refuses_without_reanalysis_or_publication ... ok
+test exact_pair_line_work_source_and_row_budgets_succeed_and_one_below_refuses ... ok
+test exact_similarity_threshold_is_inclusive_and_lower_nonzero_scores_are_rejected ... ok
+test expired_deadline_refuses_without_sql_cas_or_transaction_mutation ... ok
+test html_escapes_captured_source_markup_without_changing_structured_quote_bytes ... ok
+test identical_source_objects_are_charged_once_per_hash_across_both_scoped_sides ... ok
+test insertion_empty_ranges_and_absent_sides_remain_distinct_exact_source_values ... ok
+test historical_epoch_eight_and_nine_reports_keep_their_bindings_after_host_epoch_changes ... ok
+test modified_move_keeps_all_original_claims_parallel_ids_and_exact_two_side_quotes ... ok
+test quote_prefixes_stop_on_utf8_boundaries_and_report_actual_excerpt_ranges ... ok
+test replay_uses_report_snapshots_after_live_files_and_latest_selection_change ... ok
+test report_id_authority_rejects_missing_cross_workspace_and_resealed_fabricated_reports ... ok
+test same_path_edits_are_excluded_and_unrelated_added_deleted_sources_stay_unpaired ... ok
+test score_normalizes_only_horizontal_ascii_edges_and_crlf_not_quote_bytes ... ok
+test similarity_counts_repeated_normalized_lines_with_multiplicity ... ok
+test tied_modified_candidates_are_all_visible_in_stable_path_order ... ok
+test unequal_whitespace_only_sources_report_no_signal_instead_of_a_rename ... ok
+test zero_hard_budgets_are_real_limits_and_never_restore_defaults ... ok
+test unique_identical_content_including_empty_files_does_not_prove_rename_identity ... ok
+test similarity_preserves_unicode_case_composition_and_unterminated_carriage_return ... ok
+test zero_charge_dimensions_succeed_instead_of_becoming_unconditional_refusals ... ok
+test zero_quote_caps_omit_nonempty_ranges_but_keep_genuine_empty_ranges_complete ... ok
+
+test result: ok. 29 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 41.59s
+
+     Running tests\git_impact_details_cli.rs (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\debug\deps\git_impact_details_cli-469a41b44fa7fa24.exe)
+
+running 13 tests
+test impact_options_and_html_flags_refuse_legacy_kinds_instead_of_silent_ignoring ... ok
+test global_stdout_cap_includes_lf_for_json_and_html_without_clamping_options ... ok
+test historical_details_need_no_git_live_sources_latest_capture_or_provider ... ok
+test invalid_report_and_domain_flags_are_static_without_creating_missing_store ... ok
+test explicit_zero_hard_budgets_are_capacity_refusals_instead_of_defaults ... ok
+test incomplete_existing_stores_refuse_without_schema_directory_lock_or_journal_initialization ... FAILED
+test public_impact_details_cli_returns_complete_canonical_library_result_and_literal_sources ... FAILED
+test legacy_load_render_and_three_digest_values_keep_existing_contracts ... ok
+test public_impact_details_html_is_exact_sealed_render_and_escapes_source_markup ... ok
+test strict_options_reject_unknown_duplicate_bad_utf8_and_oversize_without_diagnostics_leaks ... ok
+test valid_closed_options_at_exact_raw_cap_succeed_and_one_more_byte_refuses ... ok
+test windows_real_options_file_and_ancestor_reparse_points_refuse_after_genuine_positive ... ok
+test zero_quote_caps_preserve_explicit_options_and_report_omissions ... ok
+
+failures:
+
+---- incomplete_existing_stores_refuse_without_schema_directory_lock_or_journal_initialization stdout ----
+
+thread 'incomplete_existing_stores_refuse_without_schema_directory_lock_or_journal_initialization' (77280) panicked at native\tests\git_impact_details_cli.rs:809:9:
+assertion `left == right` failed: constructor mutation for schema
+  left: {".yoke": None, ".yoke\\blobs": None, ".yoke\\clients.lock": Some("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"), ".yoke\\index.sqlite": Some("c9fc0338e30a5a31d95bc18de79bed633b697a7a7aa3d07da5ca6faf4266cf0d"), ".yoke\\index.sqlite-shm": Some("fd4c9fda9cd3f9ae7c962b0ddf37232294d55580e1aa165aa06129b8549389eb"), ".yoke\\index.sqlite-wal": Some("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"), ".yoke\\maintenance.lock": Some("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"), ".yoke\\trees": None}
+ right: {".yoke": None, ".yoke\\blobs": None, ".yoke\\clients.lock": Some("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"), ".yoke\\index.sqlite": Some("c9fc0338e30a5a31d95bc18de79bed633b697a7a7aa3d07da5ca6faf4266cf0d"), ".yoke\\maintenance.lock": Some("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"), ".yoke\\trees": None}
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- public_impact_details_cli_returns_complete_canonical_library_result_and_literal_sources stdout ----
+
+thread 'public_impact_details_cli_returns_complete_canonical_library_result_and_literal_sources' (75572) panicked at native\tests\git_impact_details_cli.rs:295:5:
+assertion `left == right` failed
+  left: Null
+ right: "src/old-ü.rs"
+
+
+failures:
+    incomplete_existing_stores_refuse_without_schema_directory_lock_or_journal_initialization
+    public_impact_details_cli_returns_complete_canonical_library_result_and_literal_sources
+
+test result: FAILED. 11 passed; 2 failed; 0 ignored; 0 measured; 0 filtered out; finished in 15.74s
+
+error: test failed, to rerun pass `--test git_impact_details_cli`
+     Running tests\git_impact_details_no_git.rs (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\debug\deps\git_impact_details_no_git-8cb897d3edd4c06c.exe)
+
+running 1 test
+test historical_details_succeed_without_host_path_git_and_ignore_repo_execution_traps ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.80s
+
+     Running tests\git_impact_details_qualification.rs (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\debug\deps\git_impact_details_qualification-2a08cfdda8d0ab9e.exe)
+
+running 3 tests
+test configured_real_capture_retains_the_policy_record_used_by_private_denial_cases ... ok
+test owned_move_report_replays_both_original_sources_and_all_parallel_occurrences ... ok
+test independent_quote_oracle_distinguishes_unicode_bytes_crlf_empty_and_null ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.99s
+
+     Running tests\git_impact_details_sqlite_limits.rs (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\debug\deps\git_impact_details_sqlite_limits-f5a4447c054ece1f.exe)
+
+running 1 test
+test caller_sqlite_limit_and_read_transaction_survive_success_and_both_refusal_classes ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.59s
+
+error: 1 target failed:
+    `--test git_impact_details_cli`

@@ -1,0 +1,101 @@
+{
+  "resource_paging": {
+    "executable": "target\\debug\\deps\\resource_paging-a420510022e74047.exe",
+    "ignored": [],
+    "registered": [
+      "generic_resource_pages_reach_large_artifacts_under_the_original_eight_tool_profile",
+      "large_graphify_resources_preserve_the_complete_original_body_in_paged_storage",
+      "project_resource_pages_use_only_registered_roots_without_activation",
+      "streaming_pages_verify_bytes_outside_the_page_and_preserve_unicode_boundaries"
+    ]
+  },
+  "retention": {
+    "executable": "target\\debug\\deps\\retention-c9716eb52673495e.exe",
+    "ignored": [],
+    "registered": [
+      "committed_retirement_can_feed_conservative_cas_quarantine_and_purge_without_losing_receipts",
+      "future_opaque_json_artifact_schema_is_not_inferred_to_be_dependency_free",
+      "labeled_uncommitted_history_journal_restores_missing_rows_without_changing_current_source",
+      "labeled_uncommitted_history_journal_restores_only_hash_bound_rows",
+      "missing_history_age_and_corrupt_metadata_never_become_retirement_permission",
+      "multiply_linked_quarantine_content_is_unknown_physical_reclamation_and_is_preserved",
+      "newly_rooted_quarantine_and_tampered_plan_refuse_purge_without_deleting_bytes",
+      "opaque_published_artifacts_defer_history",
+      "partial_purge_reports_actual_removed_bytes_and_can_resume_only_its_exact_intent",
+      "pin_and_every_source_bound_workflow_record_protect_history",
+      "purge_reclaims_only_exact_committed_unreachable_quarantine_bytes_after_confirmation",
+      "reviewed_history_retirement_removes_only_unrooted_rows_and_preserves_original_source",
+      "source_bindings_inside_published_json_artifacts_protect_history",
+      "stale_plan_and_concurrent_client_leave_history_intact",
+      "unknown_nested_snapshot_fields_defer_history",
+      "unknown_record_blocks_retirement_even_without_explicit_hash_fields"
+    ]
+  },
+  "retrieval": {
+    "executable": "target\\debug\\deps\\retrieval-1eb097bf0ffff17d.exe",
+    "ignored": [],
+    "registered": [
+      "common_document_terms_cannot_amplify_unbounded_highlight_work",
+      "context_plan_find_references_read_select_preserves_exact_old_source",
+      "context_plan_rejects_execution_unknown_fields_and_over_budget_steps",
+      "document_fts_normalization_keeps_exact_diacritic_and_punctuation_evidence",
+      "identifier_components_and_document_body_are_retrievable_from_the_snapshot"
+    ]
+  },
+  "runtime": {
+    "executable": "target\\debug\\deps\\runtime-78dd1c087d67934d.exe",
+    "ignored": [],
+    "registered": [
+      "actual_debugger_pauses_steps_and_hits_hash_bound_unicode_breakpoints",
+      "deadline_and_output_bounds_terminate_sessions_without_source_writes",
+      "explicit_eval_and_repl_have_actual_module_global_semantics",
+      "inspecting_a_metaclass_does_not_call_its_equality_hook",
+      "modifying_copied_source_invalidates_runtime_evidence",
+      "ordinary_function_locals_use_intrinsic_frame_storage",
+      "program_exceptions_remain_program_outcomes_and_never_protocol_success",
+      "runtime_and_evaluation_authority_are_distinct_and_source_cannot_grant_them",
+      "stack_metadata_does_not_execute_string_subclass_hooks",
+      "stale_breakpoints_forged_snapshots_and_relative_interpreters_are_denied",
+      "unsupported_custom_locals_are_explicit_failed_operations_without_hooks",
+      "variable_inspection_bypasses_custom_dictionary_accessors",
+      "variable_inspection_does_not_execute_custom_repr",
+      "variable_inspection_does_not_execute_equality_of_non_string_global_keys"
+    ]
+  },
+  "scoped_parent_performance": {
+    "executable": "target\\debug\\deps\\scoped_parent_performance-d7d573f20e7ab13e.exe",
+    "ignored": [],
+    "registered": [
+      "wide_comment_siblings_preserve_source_facts_within_the_request_deadline"
+    ]
+  },
+  "scoped_resolution": {
+    "executable": "target\\debug\\deps\\scoped_resolution-1bfc4b64fd13bc76.exe",
+    "ignored": [],
+    "registered": [
+      "a_rebound_receiver_in_a_conditional_branch_cannot_keep_a_definite_type_candidate",
+      "containers_and_function_return_annotations_cannot_be_used_as_receiver_types",
+      "destructured_locals_cannot_be_replaced_by_an_unrelated_global_function",
+      "embedded_typescript_imports_bind_using_the_embedded_language_family",
+      "explicit_interface_method_declarations_are_candidates_with_exact_signatures",
+      "extends_and_implements_remain_distinct_and_inherited_member_calls_are_candidates",
+      "grouped_rust_imports_can_select_symbols_from_inline_modules",
+      "identical_methods_in_separate_namespaces_do_not_cross_bind",
+      "imported_aliases_select_the_declared_module_instead_of_another_same_named_symbol",
+      "imported_receiver_types_and_constructor_fields_stay_in_the_imported_class",
+      "java_explicit_receiver_cannot_bind_to_the_callers_own_same_named_method",
+      "keyword_argument_and_object_key_spelling_are_not_symbol_references",
+      "lexical_shadowing_and_reassignment_block_unique_global_name_guesses",
+      "multiline_signatures_preserve_the_complete_header_without_the_body",
+      "named_reexports_follow_the_captured_module_chain",
+      "namespace_import_member_calls_and_non_call_references_keep_exact_utf8_anchors",
+      "nested_functions_reference_the_nearest_lexical_function",
+      "relative_module_paths_that_escape_the_captured_root_remain_unresolved",
+      "rust_future_non_hoisted_let_binding_does_not_shadow_an_earlier_call",
+      "rust_impl_receivers_and_explicit_type_paths_bind_to_the_same_method_owner",
+      "shared_inheritance_paths_cannot_amplify_work_past_the_original_request_budget",
+      "typed_receivers_do_not_cross_bind_methods_with_the_same_name",
+      "union_receiver_candidates_preserve_parallel_possible_dispatch"
+    ]
+  }
+}

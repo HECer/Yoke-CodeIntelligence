@@ -1,0 +1,26 @@
+{
+  "label": "format",
+  "command": [
+    "cargo",
+    "fmt",
+    "--all",
+    "--",
+    "--check"
+  ],
+  "exitCode": 0,
+  "environment": {
+    "CARGO_TARGET_DIR": "E:\\Yoke-Build-Cache\\pdf-mixed-view-20261017",
+    "CARGO_HOME": "E:/Yoke-Build-Cache/cargo-home-yoke-20261017",
+    "CARGO_NET_OFFLINE": "true",
+    "TEMP": "E:\\Yoke-Build-Cache\\pdf-mixed-view-20261017\\temp",
+    "TMP": "E:\\Yoke-Build-Cache\\pdf-mixed-view-20261017\\temp",
+    "RTK_SUPPRESS_HOOK_WARNING": "1"
+  },
+  "runnerSha256": "dbf6e95ee624c6f05ec0edf336ae6c0d4ec302d48120e6211e13ede1bb833062",
+  "sourceBefore": "a3e0210e314936ffe007661111e2780d02081dbd41c9ca21467a85129646f247",
+  "sourceAfter": "a3e0210e314936ffe007661111e2780d02081dbd41c9ca21467a85129646f247",
+  "sourceChanges": [],
+  "log": "format-r1.log",
+  "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "interpretation": "Isolated scoped development only; no integrated acceptance or universal parity claim."
+}

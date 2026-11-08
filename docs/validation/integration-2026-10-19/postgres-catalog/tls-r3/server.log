@@ -1,0 +1,14 @@
+2026-10-19 21:21:09.978 CEST [15164] LOG:  starting PostgreSQL 18.6 on x86_64-windows, compiled by msvc-19.44.35229, 64-bit
+2026-10-19 21:21:09.978 CEST [15164] LOG:  listening on IPv4 address "127.0.0.1", port 56648
+2026-10-19 21:21:10.036 CEST [22860] LOG:  database system was shut down at 2026-10-19 21:21:07 CEST
+2026-10-19 21:21:10.047 CEST [15164] LOG:  database system is ready to accept connections
+2026-10-19 21:21:10.355 CEST [15164] LOG:  received SIGHUP, reloading configuration files
+2026-10-19 21:21:10.981 CEST [16968] LOG:  could not accept SSL connection: tlsv1 alert unknown ca
+2026-10-19 21:21:11.168 CEST [20780] LOG:  could not accept SSL connection: tlsv1 alert unknown ca
+2026-10-19 21:21:11.204 CEST [15164] LOG:  received fast shutdown request
+2026-10-19 21:21:11.206 CEST [15164] LOG:  aborting any active transactions
+2026-10-19 21:21:11.210 CEST [15164] LOG:  background worker "logical replication launcher" (PID 11592) exited with exit code 1
+2026-10-19 21:21:11.210 CEST [23892] LOG:  shutting down
+2026-10-19 21:21:11.211 CEST [23892] LOG:  checkpoint starting: shutdown immediate
+2026-10-19 21:21:11.264 CEST [23892] LOG:  checkpoint complete: wrote 77 buffers (0.5%), wrote 3 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.009 s, sync=0.037 s, total=0.054 s; sync files=59, longest=0.001 s, average=0.001 s; distance=376 kB, estimate=376 kB; lsn=0/1846640, redo lsn=0/1846640
+2026-10-19 21:21:11.333 CEST [15164] LOG:  database system is shut down

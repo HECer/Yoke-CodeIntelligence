@@ -1,0 +1,70 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 17s
+     Running tests\digest_history_jobs.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\digest_history_jobs-2b5969e3eb9af212.exe)
+
+running 13 tests
+test branched_clock_skew_and_equal_dates_checkpoint_partial_frontiers_before_selecting ... ok
+test cli_denials_precede_host_files_and_never_initialize_missing_store ... ok
+test corrupt_or_unrelated_proof_and_reordered_or_missing_visits_never_resume ... ok
+test cumulative_capture_and_source_limits_do_not_reset_between_batches ... ok
+test default_permission_caller_transaction_and_durability_refuse_before_progress ... ok
+test history_over_mapping_limit_resumes_after_real_store_restart_and_never_changes_checkout_or_latest ... ok
+test lost_ack_stale_revision_pause_resume_cancel_and_current_grants ... ok
+test missing_git_object_and_sql_lock_deadline_leave_the_checkpoint_unchanged ... ok
+test object_proof_and_parent_limits_are_cumulative_across_restartable_steps ... ok
+test output_and_late_sql_failure_roll_back_job_and_all_new_captures ... ok
+test real_cli_creates_runs_resumes_and_reads_existing_state_without_a_signing_key ... ok
+test swapped_valid_local_capture_references_cannot_supply_another_commits_mapping ... ok
+test typed_retention_keeps_head_origin_and_every_recorded_capture_but_refuses_forgery ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 53.77s
+
+     Running tests\github_app_worker_history.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\github_app_worker_history-d183e1a85f1029f4.exe)
+
+running 8 tests
+test a_disk_snapshot_or_an_unrelated_worker_record_cannot_become_history_authority ... FAILED
+test authenticated_original_plan_and_native_job_must_survive_every_retry ... FAILED
+test changed_queue_blocks_acquisition_but_allows_historical_pause_and_status ... FAILED
+test checked_completion_creates_one_signed_job_and_offline_status_uses_read_only_store ... FAILED
+test closed_selection_rejects_duplicate_fields_unknown_flags_and_unbounded_ids ... ok
+test permissions_output_and_sql_failure_cannot_leave_half_an_app_job ... error: test failed, to rerun pass `--test github_app_worker_history`
+
+Caused by:
+  process didn't exit successfully: `C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\github_app_worker_history-d183e1a85f1029f4.exe --test-threads=1` (exit code: 0xc0000409, STATUS_STACK_BUFFER_OVERRUN)
+note: test exited abnormally; to see the full output pass --no-capture to the harness.
+     Running tests\github_app_worker_run.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\github_app_worker_run-774c7d1031a3038c.exe)
+
+running 28 tests
+test a_client_created_outside_tokio_cannot_run_a_worker_inside_it ... ok
+test a_deleted_source_blob_at_final_observation_is_named_unavailable ... ok
+test closed_completion_binding_corruption_refuses_retention_even_with_valid_fixture_mac ... ok
+test completed_job_is_terminal_and_a_fresh_claim_cannot_erase_its_completion ... ok
+test completed_request_retry_is_historical_after_expiry_and_changed_source_cannot_rebind_it ... ok
+test exact_historical_report_obeys_the_current_report_byte_budget_without_http ... ok
+test execution_permissions_and_zero_budgets_precede_sql_and_http ... ok
+test execution_request_is_closed_duplicate_safe_and_has_no_endpoint_or_clock_selector ... ok
+test execution_restores_the_callers_actual_limits_and_deadline_handler ... ok
+test final_completion_writer_conflict_is_causal_bounded_and_restores_sql_policy ... ok
+test final_source_seals_detect_changes_to_graph_and_absent_scope_rows ... ok
+test historical_result_checks_source_again_but_status_remains_historical ... ok
+test lease_expiry_and_new_queue_revision_during_http_prevent_completion ... ok
+test lease_expiry_observed_during_source_preparation_refuses_before_token_minting ... ok
+test local_source_binding_on_a_blob_mismatch_is_not_a_checked_remote_blob_match ... ok
+test mid_body_file_cancellation_preserves_the_cause_closes_http_and_leaves_no_completion ... ok
+test native_run_binds_exact_crlf_utf8_source_and_finishes_without_intermediate_artifacts ... ok
+test provider_count_fork_draft_coverage_links_and_token_reflections_refuse ... ok
+test provider_head_change_at_the_final_metadata_read_cannot_complete_work ... ok
+test pull_request_read_permission_alone_can_finish_existing_source_analysis ... ok
+test racing_identical_run_keeps_one_completion_and_reports_the_attempts_real_requests ... ok
+test removed_files_use_only_an_explicit_base_and_label_the_base_commit ... ok
+test report_and_output_refusals_leave_no_completion ... ok
+test retention_preserves_typed_completion_roots_without_walking_inert_report_ids ... ok
+test run_refuses_a_caller_transaction_before_any_http_and_preserves_it ... ok
+test source_seals_allow_graph_rows_larger_than_the_worker_record_limit ... ok
+test typed_pagination_covers_all_files_and_reserves_the_final_observation ... ok
+test unknown_explicit_snapshot_refuses_without_capture_or_http ... ok
+
+test result: ok. 28 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.53s
+
+error: 1 target failed:
+    `--test github_app_worker_history`

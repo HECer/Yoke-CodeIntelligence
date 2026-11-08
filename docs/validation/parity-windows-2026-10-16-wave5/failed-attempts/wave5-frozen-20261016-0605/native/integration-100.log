@@ -1,0 +1,21 @@
+    Finished `test` profile [unoptimized] target(s) in 0.73s
+     Running tests\skills_cli.rs (target\debug\deps\skills_cli-091e7a1a8e0b53d0.exe)
+
+running 5 tests
+test cli_rejects_untrusted_roots_and_source_options_before_initializing_state ... ok
+test small_output_budget_retains_the_complete_mutation_receipt_in_the_personal_store ... ok
+test host_cli_observes_missing_revision_guards_and_preserves_explicit_stale_guards ... ok
+test public_cli_preserves_authored_history_through_confirm_fold_and_publish ... ok
+test folding_the_library_preflights_every_revision_before_changing_the_first_skill ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.95s
+
+     Running tests\store_cancellation.rs (target\debug\deps\store_cancellation-a0db40c66b27d046.exe)
+
+running 3 tests
+test cancelled_store_refuses_new_publication_until_deadline_is_replaced ... ok
+test active_sql_is_interrupted_by_inherited_host_cancellation ... ok
+test sqlite_lock_contention_retains_a_finite_timeout_and_atomic_recovery ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.64s
+

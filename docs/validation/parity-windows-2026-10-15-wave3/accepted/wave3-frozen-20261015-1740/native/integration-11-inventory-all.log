@@ -1,0 +1,39 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 7.69s
+     Running tests\file_api.rs (target\debug\deps\file_api-434f6c438855712a.exe)
+basename_resolution_is_unique_and_paging_remains_exact_file_scoped: test
+composite_api_headers_keep_parent_offsets_without_script_bodies: test
+exact_multiline_api_headers_exclude_bodies_and_preserve_source_byte_bindings: test
+
+3 tests, 0 benchmarks
+     Running tests\freshness.rs (target\debug\deps\freshness-d4cbab680707e392.exe)
+freshness_observes_drift_without_publishing_or_moving_latest: test
+unindexed_freshness_is_explicit_and_does_not_create_index: test
+
+2 tests, 0 benchmarks
+     Running tests\freshness_epoch.rs (target\debug\deps\freshness_epoch-82901587d2a56894.exe)
+freshness_refuses_a_new_host_epoch_until_it_is_explicitly_indexed: test
+freshness_reuses_the_proven_disk_epoch_and_does_not_publish_new_source: test
+
+2 tests, 0 benchmarks
+     Running tests\git_cli.rs (target\debug\deps\git_cli-e30b12c3158d0146.exe)
+public_git_cli_analyzes_and_reloads_immutable_reports_with_explicit_host_execution: test
+
+1 test, 0 benchmarks
+     Running tests\git_epoch_selection.rs (target\debug\deps\git_epoch_selection-f81aa6a9b3a3098a.exe)
+selected_epoch_is_shared_by_working_and_committed_git_report_sides: test
+worktree_cache_seed_uses_selected_epoch_without_copying_other_epoch_entries: test
+
+2 tests, 0 benchmarks
+     Running tests\git_epochs.rs (target\debug\deps\git_epochs-6ff58d8bd476da88.exe)
+authentic_git8_receipts_reports_and_graphs_remain_readable: test
+explicit_git9_capture_has_distinct_identity_facts_and_missing_graph_replay: test
+git8_registry_archive_replays_without_the_original_workspace: test
+git_epoch_accessors_install_the_new_callers_deadline: test
+git_epoch_selection_rejects_invalid_receipts_missing_proofs_and_expired_deadlines: test
+guarded_derivative_archive_keeps_older_git_source_proof_offline: test
+missing_authentic_git8_graph_replays_the_original_extraction_epoch: test
+resealed_offline_git_proof_cannot_invent_commit_or_source_bytes: test
+synthetic_legacy_git_receipts_remain_readable_without_an_extractor_claim: test
+
+9 tests, 0 benchmarks

@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "operation": "reviewed_parser_only_promotion",
+  "normalPath": "native/src/retrieval_marker_decode.rs",
+  "stagedPath": "target/parity-validation-20261015/next-universal-slice/functional-a/repairs-3/retrieval_marker_decode.rs",
+  "beforeSha256": "cac84322709379946d79a39cf6c59c0d157d982cd6edf1693293fc861692e10f",
+  "afterSha256": "6f9387d1bd246f75c72050af4b6d72c9ba39a11a4b9e1f64d0221a1f659e9149",
+  "scope": "Only the normal parser file was copied; tests and other normal files were preserved.",
+  "independentReview": "mem_mva7xvs6_dd76b2e10192",
+  "rootOldParserGate": {
+    "process": 25898,
+    "selected": 12,
+    "passed": 5,
+    "failed": 7,
+    "ignored": 0,
+    "sourceChanges": [],
+    "rawLogSha256": "b3f4c08cfd7051d24ed9ed0dcb08b68a33af3bf8c085fe2879f194ca9042dabf",
+    "causalFailure": "Original duplicate, three additional format-specific duplicates, and three later-syntax cases each missed the exact hard selector-capacity refusal after valid controls."
+  },
+  "frozenNormalSha256": {
+    "native/src/retrieval_scopes.rs": "f7652274180fe6ac7dbe36b2590e12851a6c1944e508fdca532ecb53dd8ca165",
+    "native/src/retrieval_partition.rs": "02062490f3cbb8317da2cc95f215574ed74b7a860d19f86eb5eb86a615117440",
+    "native/src/retrieval_marker_decode.rs": "6f9387d1bd246f75c72050af4b6d72c9ba39a11a4b9e1f64d0221a1f659e9149",
+    "native/src/retrieval_scopes_tests.rs": "af14c13b5de980bfd41f0c0f2dc7c91c61a65e8a3d84035ba610b1c1628ab365"
+  },
+  "pendingAtReceipt": "Root full retrieval gate 85431 and two remaining public integration targets. No functional success for this final parser is claimed by this receipt.",
+  "qualifications": [
+    "This child ran no Cargo or Node commands.",
+    "The six large qualified capacity fixtures remain ignored and unexecuted.",
+    "No upstream ordering, performance, full-contract, Linux, or macOS certification is implied."
+  ]
+}

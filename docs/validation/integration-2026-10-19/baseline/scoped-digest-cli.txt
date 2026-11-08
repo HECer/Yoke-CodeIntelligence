@@ -1,0 +1,45 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 01s
+     Running tests\github_app_digest_cli.rs (target\debug\deps\github_app_digest_cli-696b02f48ff9d18f.exe)
+
+running 37 tests
+test captured_history::a_parent_with_a_non_commit_object_type_is_unavailable ... ok
+test captured_history::asymmetric_parent_walk_matches_git_date_priority_and_reverse_output ... ok
+test captured_history::committer_date_order::clock_skew_preserves_git_discovery_order_instead_of_globally_sorting_dates ... ok
+test captured_history::committer_date_order::commit_date_priority_matches_git_and_ignores_reversed_author_dates ... ok
+test captured_history::disk_source_cannot_masquerade_as_an_empty_complete_git_history ... ok
+test captured_history::committer_date_order::equal_commit_dates_preserve_git_parent_insertion_order ... ok
+test captured_history::frontier_budget_counts_the_queue_across_multiple_visited_commits ... ok
+test captured_history::history_consent_and_git_trust_precede_host_inputs_and_store_creation ... ok
+test captured_history::history_first_sql_wait_uses_the_cli_deadline_without_store_repair ... ok
+test captured_history::history_aggregate_raw_commit_bytes_have_an_exact_runtime_boundary ... ok
+test captured_history::history_hard_caps_precede_missing_host_inputs ... ok
+test captured_history::history_refuses_network_webhook_and_write_authority_before_host_inputs ... ok
+test captured_history::history_grant_denial_precedes_absent_store_and_git_execution ... ok
+test captured_history::history_selection_and_visit_limits_report_the_unvisited_frontier ... ok
+test captured_history::history_reverifies_the_captured_receipt_and_commit_artifact_before_git_reads ... ok
+test captured_history::in_budget_substituted_ancestor_bytes_cannot_bypass_object_identity ... ok
+test captured_history::history_uses_the_verified_captured_head_and_preserves_message_delimiters_and_output_boundary ... ok
+test captured_history::invalid_utf8_ancestor_messages_are_not_lossily_decoded_or_echoed ... ok
+test captured_history::misplaced_canonical_parent_header_refuses_without_partial_output_or_store_repair ... ok
+test captured_history::missing_ancestor_refuses_without_a_successful_empty_history_or_store_repair ... ok
+test captured_history::oversized_ancestor_is_refused_before_its_corrupt_object_hash_is_read ... ok
+test captured_history::parent_like_message_lines_never_become_header_parent_links ... ok
+test captured_history::per_commit_size_has_an_exact_lowered_runtime_boundary ... ok
+test captured_history::skipped_merge_payloads_consume_the_aggregate_commit_byte_budget ... ok
+test captured_history::skipped_merge_objects_still_consume_visit_and_frontier_budgets ... ok
+test digest_cli_hard_budgets_are_checked_before_missing_inputs_or_store ... ok
+test digest_cli_refuses_source_bearing_and_duplicate_request_fields_without_echo ... ok
+test digest_existing_store_access_refuses_missing_lease_files_without_recreating_them ... ok
+test digest_profile_grant_is_checked_before_opening_an_absent_workspace ... ok
+test digest_read_consent_precedes_inputs_credentials_and_workspace_creation ... ok
+test digest_refuses_network_webhook_and_write_authority_before_host_inputs ... ok
+test git_digest_cli_uses_verified_captured_objects_after_git_metadata_and_worktree_change ... ok
+test local_digest_cli_needs_no_signing_key_and_preserves_an_existing_delete_mode_store ... ok
+test local_digest_reads_the_committed_live_wal_without_checkpointing_or_ignoring_it ... ok
+test local_digest_requires_absolute_host_input_paths_before_workspace_discovery ... ok
+test locked_existing_store_obeys_the_cli_deadline_before_native_projection ... ok
+test captured_history::unsupported_encoding_and_malformed_parent_headers_have_static_errors ... ok
+
+test result: ok. 37 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.72s
+

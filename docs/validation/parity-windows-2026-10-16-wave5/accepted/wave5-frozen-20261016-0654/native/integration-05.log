@@ -1,0 +1,25 @@
+    Finished `test` profile [unoptimized] target(s) in 0.56s
+     Running tests\agent_symbol_contracts.rs (target\debug\deps\agent_symbol_contracts-361051c1602db6e8.exe)
+
+running 8 tests
+test jb_wildcard_only_queries_require_the_overview_facade ... ok
+test excluded_root_kinds_cannot_seed_descendants_beyond_a_zero_root_match_threshold ... ok
+test full_bodies_suppress_descendant_depth_and_hover_provider_queries ... ok
+test max_matches_is_a_permitted_match_threshold_and_unlimited_does_not_mean_native_default_thirty ... ok
+test overloaded_symbol_paths_have_stable_zero_based_indices_and_resolve_back_to_the_same_source ... ok
+test overview_depth_defaults_are_language_specific_and_explicit_depth_limits_descendants ... ok
+test substring_matching_expands_only_the_last_name_segment_and_absolute_paths_stay_rooted ... ok
+test requested_hover_is_attached_to_root_matches_and_never_descendants ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.84s
+
+     Running tests\analyzer_cli.rs (target\debug\deps\analyzer_cli-0170f59877ad504c.exe)
+
+running 4 tests
+test invalid_cli_epoch_fails_before_creating_source_state ... ok
+test analyzer_epoch_is_host_configuration_and_not_an_mcp_argument ... ok
+test explicit_cli_session_epoch_survives_restart_and_rejects_an_unpinned_resume ... ok
+test explicit_cli_epoch_changes_new_capture_semantics_and_default_eight_is_stable ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.34s
+

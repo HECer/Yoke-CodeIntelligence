@@ -1,0 +1,24 @@
+{
+  "Runner": [
+    {
+      "ProcessId": 86992,
+      "ParentProcessId": 86424,
+      "ExecutablePath": "C:\\Users\\HEC_e\\AppData\\Local\\Programs\\Miniconda3\\python.exe",
+      "CommandLine": "\"C:\\Users\\HEC_e\\AppData\\Local\\Programs\\Miniconda3\\python.exe\" -B -X utf8 target/parity-validation-20261015/acceptance_wave4.py native --tag affected-r5b-process-20261016-full --temp D:/Yoke-Test-Scratch/affected-r5b-process-20261016-native --acl-temp C:/Yoke-Test-ACL/affected-r5b-process-20261016-acl"
+    }
+  ],
+  "Acls": [
+    {
+      "path": "C:/Yoke-Test-ACL",
+      "sddl": "O:S-1-5-21-2609963913-1860074147-265295579-1003G:S-1-5-21-2609963913-1860074147-265295579-1003D:(A;OICIID;0x1301bf;;;AU)(A;OICIID;FA;;;SY)(A;OICIID;FA;;;BA)(A;OICIID;0x1200a9;;;BU)"
+    },
+    {
+      "path": "C:/Yoke-Test-ACL/affected-r5b-process-20261016-acl",
+      "sddl": "O:S-1-5-21-2609963913-1860074147-265295579-1003G:S-1-5-21-2609963913-1860074147-265295579-1003D:(A;OICIID;0x1301bf;;;AU)(A;OICIID;FA;;;SY)(A;OICIID;FA;;;BA)(A;OICIID;0x1200a9;;;BU)"
+    },
+    {
+      "path": "C:/Users/HEC_e/AppData/Local/Temp",
+      "sddl": "O:S-1-5-21-2609963913-1860074147-265295579-1003G:SYD:AI(A;OICI;0x1301bf;;;S-1-5-21-1138165829-740855370-3859856455-1603930567)(A;OICI;0x1301bf;;;S-1-5-21-1930928753-1220937680-775426624-602172828)(A;OICIID;0x1200a9;;;S-1-5-21-2609963913-1860074147-265295579-1012)(A;OICIID;FA;;;SY)(A;OICIID;FA;;;BA)(A;OICIID;FA;;;S-1-5-21-2609963913-1860074147-265295579-1003)"
+    }
+  ]
+}

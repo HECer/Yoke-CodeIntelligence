@@ -1,0 +1,12 @@
+    Finished `test` profile [unoptimized] target(s) in 0.71s
+     Running unittests src\lib.rs (target\debug\deps\yoke-35b101204e4eb110.exe)
+
+running 1 test
+host-output-capacity prefix_ms=549
+host-output-capacity remaining_prepare_ms=3006
+host-output-capacity profile={"elapsedMicros":16460928,"inclusiveSpans":[{"calls":52,"inclusiveMicros":11430667,"maxMicros":474619,"phase":"load"},{"calls":52,"inclusiveMicros":1328883,"maxMicros":37028,"phase":"loadNames"},{"calls":5903,"inclusiveMicros":3586817,"maxMicros":4348,"phase":"eventRead"},{"calls":52,"inclusiveMicros":1420443,"maxMicros":43842,"phase":"planRead"},{"calls":5903,"inclusiveMicros":2989597,"maxMicros":24313,"phase":"eventValidate"},{"calls":52,"inclusiveMicros":153954,"maxMicros":5691,"phase":"chain"},{"calls":51,"inclusiveMicros":16039241,"maxMicros":571495,"phase":"append"},{"calls":0,"inclusiveMicros":0,"maxMicros":0,"phase":"prepare"},{"calls":6183,"inclusiveMicros":6563443,"maxMicros":23346,"phase":"metadata"},{"calls":110,"inclusiveMicros":2631035,"maxMicros":37195,"phase":"names"},{"calls":54,"inclusiveMicros":2217761,"maxMicros":70328,"phase":"reserve"},{"calls":52,"inclusiveMicros":2915721,"maxMicros":83836,"phase":"immutable"},{"calls":128,"inclusiveMicros":21070,"maxMicros":687,"phase":"sourceSecurity"},{"calls":0,"inclusiveMicros":0,"maxMicros":0,"phase":"freshSecurity"}]}
+host-output-capacity recover_ms=16461 success=true
+test host_install::output_recovery_tests::sixteen_root_v2_history_reserves_only_remaining_output_work ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 184 filtered out; finished in 20.66s
+

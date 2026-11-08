@@ -1,0 +1,1570 @@
+{
+  "sourceCommit": "10586ebaba1bec44d55ff6420763f80674f90019",
+  "sourceFiles": [
+    "native/src/session_steering.rs",
+    "native/src/project_session.rs",
+    "native/src/protocol.rs",
+    "native/src/compatibility.rs",
+    "native/src/trail_adapter.rs",
+    "native/src/graphify_adapter.rs",
+    "native/tests/session_fixed_tools.rs"
+  ],
+  "currentScopedRustTotals": {
+    "session_fixed_tools": {
+      "passed": 8,
+      "failed": 0,
+      "ignored": 0
+    },
+    "session_steering": {
+      "passed": 12,
+      "failed": 0,
+      "ignored": 0
+    },
+    "session_memory_patterns": {
+      "passed": 9,
+      "failed": 0,
+      "ignored": 0
+    },
+    "session_startup_project": {
+      "passed": 8,
+      "failed": 0,
+      "ignored": 0
+    },
+    "compatibility": {
+      "passed": 6,
+      "failed": 0,
+      "ignored": 0
+    },
+    "agent_repl_api_selection": {
+      "passed": 8,
+      "failed": 0,
+      "ignored": 0
+    },
+    "trail_adapter": {
+      "passed": 4,
+      "failed": 0,
+      "ignored": 0
+    },
+    "graphify_adapter": {
+      "passed": 7,
+      "failed": 0,
+      "ignored": 0
+    },
+    "notes": {
+      "passed": 15,
+      "failed": 0,
+      "ignored": 0
+    },
+    "agent_memory_namespaces": {
+      "passed": 2,
+      "failed": 0,
+      "ignored": 0
+    },
+    "project_session": {
+      "passed": 6,
+      "failed": 0,
+      "ignored": 0
+    },
+    "compatibility_review": {
+      "passed": 1,
+      "failed": 0,
+      "ignored": 0
+    },
+    "session_mcp": {
+      "passed": 3,
+      "failed": 0,
+      "ignored": 0
+    },
+    "session_review": {
+      "passed": 1,
+      "failed": 0,
+      "ignored": 0
+    },
+    "session_refactor": {
+      "passed": 9,
+      "failed": 0,
+      "ignored": 2
+    },
+    "session_root_aliases": {
+      "passed": 3,
+      "failed": 0,
+      "ignored": 0
+    },
+    "session_epoch_selection": {
+      "passed": 6,
+      "failed": 0,
+      "ignored": 0
+    },
+    "session_collections": {
+      "passed": 8,
+      "failed": 0,
+      "ignored": 0
+    },
+    "session_collections_admission": {
+      "passed": 1,
+      "failed": 0,
+      "ignored": 0
+    },
+    "agent_file_options": {
+      "passed": 4,
+      "failed": 0,
+      "ignored": 0
+    },
+    "agent_repl": {
+      "passed": 22,
+      "failed": 0,
+      "ignored": 0
+    },
+    "agent_repl_lifecycle": {
+      "passed": 3,
+      "failed": 0,
+      "ignored": 0
+    },
+    "mcp_http": {
+      "passed": 18,
+      "failed": 0,
+      "ignored": 0
+    },
+    "mcp_http_review": {
+      "passed": 1,
+      "failed": 0,
+      "ignored": 0
+    },
+    "mcp_http_cli": {
+      "passed": 3,
+      "failed": 0,
+      "ignored": 1
+    },
+    "mcp_collection_grants": {
+      "passed": 2,
+      "failed": 0,
+      "ignored": 0
+    },
+    "mcp_collection_grants_review": {
+      "passed": 3,
+      "failed": 0,
+      "ignored": 0
+    },
+    "resource_paging": {
+      "passed": 4,
+      "failed": 0,
+      "ignored": 0
+    },
+    "parity_retention": {
+      "passed": 8,
+      "failed": 0,
+      "ignored": 0
+    },
+    "trail_review": {
+      "passed": 4,
+      "failed": 0,
+      "ignored": 0
+    },
+    "trail_bodies": {
+      "passed": 5,
+      "failed": 0,
+      "ignored": 0
+    },
+    "graphify_selected_queries": {
+      "passed": 8,
+      "failed": 0,
+      "ignored": 0
+    },
+    "graphify_cli": {
+      "passed": 1,
+      "failed": 0,
+      "ignored": 0
+    }
+  },
+  "distinctScopedRustFunctionsPassed": 203,
+  "existingIgnoredFunctions": 3,
+  "newFixedToolFunctions": 8,
+  "sameExactFrozenInputs": 1021,
+  "reusedFocusedFunctions": 62,
+  "reusedRows": [
+    {
+      "name": "session_fixed_tools",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j",
+        "2",
+        "--test",
+        "session_fixed_tools",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "pid": 32788,
+      "exitCode": 0,
+      "activeAtParentExit": 2,
+      "activeAfterCleanup": 0,
+      "seconds": 6.43,
+      "reusedCheckedPhase": "session-fixed-tools-r2",
+      "rerun": false
+    },
+    {
+      "name": "session_steering",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j",
+        "2",
+        "--test",
+        "session_steering",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "pid": 32304,
+      "exitCode": 0,
+      "activeAtParentExit": 2,
+      "activeAfterCleanup": 0,
+      "seconds": 8.899,
+      "reusedCheckedPhase": "session-fixed-tools-r2",
+      "rerun": false
+    },
+    {
+      "name": "session_memory_patterns",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j",
+        "2",
+        "--test",
+        "session_memory_patterns",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "pid": 33768,
+      "exitCode": 0,
+      "activeAtParentExit": 2,
+      "activeAfterCleanup": 0,
+      "seconds": 6.482,
+      "reusedCheckedPhase": "session-fixed-tools-r2",
+      "rerun": false
+    },
+    {
+      "name": "session_startup_project",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j",
+        "2",
+        "--test",
+        "session_startup_project",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "pid": 39032,
+      "exitCode": 0,
+      "activeAtParentExit": 2,
+      "activeAfterCleanup": 0,
+      "seconds": 6.701,
+      "reusedCheckedPhase": "session-fixed-tools-r2",
+      "rerun": false
+    },
+    {
+      "name": "compatibility",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j",
+        "2",
+        "--test",
+        "compatibility",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "pid": 29392,
+      "exitCode": 0,
+      "activeAtParentExit": 2,
+      "activeAfterCleanup": 0,
+      "seconds": 5.244,
+      "reusedCheckedPhase": "session-fixed-tools-r2",
+      "rerun": false
+    },
+    {
+      "name": "agent_repl_api_selection",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j",
+        "2",
+        "--test",
+        "agent_repl_api_selection",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "pid": 30784,
+      "exitCode": 0,
+      "activeAtParentExit": 2,
+      "activeAfterCleanup": 0,
+      "seconds": 6.404,
+      "reusedCheckedPhase": "session-fixed-tools-r2",
+      "rerun": false
+    },
+    {
+      "name": "trail_adapter",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j",
+        "2",
+        "--test",
+        "trail_adapter",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "pid": 28604,
+      "exitCode": 0,
+      "activeAtParentExit": 2,
+      "activeAfterCleanup": 0,
+      "seconds": 5.006,
+      "reusedCheckedPhase": "session-fixed-tools-r2",
+      "rerun": false
+    },
+    {
+      "name": "graphify_adapter",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j",
+        "2",
+        "--test",
+        "graphify_adapter",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "pid": 8940,
+      "exitCode": 0,
+      "activeAtParentExit": 2,
+      "activeAfterCleanup": 0,
+      "seconds": 6.037,
+      "reusedCheckedPhase": "session-fixed-tools-r2",
+      "rerun": false
+    }
+  ],
+  "retainedTypeScript": {
+    "passed": 260,
+    "skipped": 3
+  },
+  "finalRows": [
+    {
+      "name": "git-init",
+      "command": [
+        "C:\\Program Files\\Git\\cmd\\git.EXE",
+        "-c",
+        "init.templateDir=",
+        "-c",
+        "core.autocrlf=false",
+        "-c",
+        "core.hooksPath=",
+        "-c",
+        "user.name=Owned CLI fixture",
+        "-c",
+        "user.email=owned@example.invalid",
+        "init",
+        "-b",
+        "main"
+      ],
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "pid": 41116,
+      "exitCode": 0,
+      "activeAtParentExit": 1,
+      "activeAfterCleanup": 0,
+      "seconds": 0.045
+    },
+    {
+      "name": "session_fixed_tools",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j",
+        "2",
+        "--test",
+        "session_fixed_tools",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "pid": 32788,
+      "exitCode": 0,
+      "activeAtParentExit": 2,
+      "activeAfterCleanup": 0,
+      "seconds": 6.43,
+      "reusedCheckedPhase": "session-fixed-tools-r2",
+      "rerun": false
+    },
+    {
+      "name": "session_steering",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j",
+        "2",
+        "--test",
+        "session_steering",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "pid": 32304,
+      "exitCode": 0,
+      "activeAtParentExit": 2,
+      "activeAfterCleanup": 0,
+      "seconds": 8.899,
+      "reusedCheckedPhase": "session-fixed-tools-r2",
+      "rerun": false
+    },
+    {
+      "name": "session_memory_patterns",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j",
+        "2",
+        "--test",
+        "session_memory_patterns",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "pid": 33768,
+      "exitCode": 0,
+      "activeAtParentExit": 2,
+      "activeAfterCleanup": 0,
+      "seconds": 6.482,
+      "reusedCheckedPhase": "session-fixed-tools-r2",
+      "rerun": false
+    },
+    {
+      "name": "session_startup_project",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j",
+        "2",
+        "--test",
+        "session_startup_project",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "pid": 39032,
+      "exitCode": 0,
+      "activeAtParentExit": 2,
+      "activeAfterCleanup": 0,
+      "seconds": 6.701,
+      "reusedCheckedPhase": "session-fixed-tools-r2",
+      "rerun": false
+    },
+    {
+      "name": "compatibility",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j",
+        "2",
+        "--test",
+        "compatibility",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "pid": 29392,
+      "exitCode": 0,
+      "activeAtParentExit": 2,
+      "activeAfterCleanup": 0,
+      "seconds": 5.244,
+      "reusedCheckedPhase": "session-fixed-tools-r2",
+      "rerun": false
+    },
+    {
+      "name": "agent_repl_api_selection",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j",
+        "2",
+        "--test",
+        "agent_repl_api_selection",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "pid": 30784,
+      "exitCode": 0,
+      "activeAtParentExit": 2,
+      "activeAfterCleanup": 0,
+      "seconds": 6.404,
+      "reusedCheckedPhase": "session-fixed-tools-r2",
+      "rerun": false
+    },
+    {
+      "name": "trail_adapter",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j",
+        "2",
+        "--test",
+        "trail_adapter",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "pid": 28604,
+      "exitCode": 0,
+      "activeAtParentExit": 2,
+      "activeAfterCleanup": 0,
+      "seconds": 5.006,
+      "reusedCheckedPhase": "session-fixed-tools-r2",
+      "rerun": false
+    },
+    {
+      "name": "graphify_adapter",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j",
+        "2",
+        "--test",
+        "graphify_adapter",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "pid": 8940,
+      "exitCode": 0,
+      "activeAtParentExit": 2,
+      "activeAfterCleanup": 0,
+      "seconds": 6.037,
+      "reusedCheckedPhase": "session-fixed-tools-r2",
+      "rerun": false
+    },
+    {
+      "name": "notes",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j",
+        "2",
+        "--test",
+        "notes",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "pid": 35816,
+      "exitCode": 0,
+      "activeAtParentExit": 2,
+      "activeAfterCleanup": 0,
+      "seconds": 11.744
+    },
+    {
+      "name": "agent_memory_namespaces",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j",
+        "2",
+        "--test",
+        "agent_memory_namespaces",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "pid": 37892,
+      "exitCode": 0,
+      "activeAtParentExit": 2,
+      "activeAfterCleanup": 0,
+      "seconds": 4.938
+    },
+    {
+      "name": "project_session",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j",
+        "2",
+        "--test",
+        "project_session",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "pid": 29240,
+      "exitCode": 0,
+      "activeAtParentExit": 2,
+      "activeAfterCleanup": 0,
+      "seconds": 5.274
+    },
+    {
+      "name": "compatibility_review",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j",
+        "2",
+        "--test",
+        "compatibility_review",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "pid": 26208,
+      "exitCode": 0,
+      "activeAtParentExit": 2,
+      "activeAfterCleanup": 0,
+      "seconds": 5.059
+    },
+    {
+      "name": "session_mcp",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j",
+        "2",
+        "--test",
+        "session_mcp",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "pid": 19384,
+      "exitCode": 0,
+      "activeAtParentExit": 2,
+      "activeAfterCleanup": 0,
+      "seconds": 5.339
+    },
+    {
+      "name": "session_review",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j",
+        "2",
+        "--test",
+        "session_review",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "pid": 42292,
+      "exitCode": 0,
+      "activeAtParentExit": 2,
+      "activeAfterCleanup": 0,
+      "seconds": 6.056
+    },
+    {
+      "name": "session_refactor",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j",
+        "2",
+        "--test",
+        "session_refactor",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "pid": 40916,
+      "exitCode": 0,
+      "activeAtParentExit": 2,
+      "activeAfterCleanup": 0,
+      "seconds": 13.909
+    },
+    {
+      "name": "session_root_aliases",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j",
+        "2",
+        "--test",
+        "session_root_aliases",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "pid": 35492,
+      "exitCode": 0,
+      "activeAtParentExit": 2,
+      "activeAfterCleanup": 0,
+      "seconds": 5.573
+    },
+    {
+      "name": "session_epoch_selection",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j",
+        "2",
+        "--test",
+        "session_epoch_selection",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "pid": 35692,
+      "exitCode": 0,
+      "activeAtParentExit": 2,
+      "activeAfterCleanup": 0,
+      "seconds": 5.459
+    },
+    {
+      "name": "session_collections",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j",
+        "2",
+        "--test",
+        "session_collections",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "pid": 38156,
+      "exitCode": 0,
+      "activeAtParentExit": 2,
+      "activeAfterCleanup": 0,
+      "seconds": 5.718
+    },
+    {
+      "name": "session_collections_admission",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j",
+        "2",
+        "--test",
+        "session_collections_admission",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "pid": 36412,
+      "exitCode": 0,
+      "activeAtParentExit": 2,
+      "activeAfterCleanup": 0,
+      "seconds": 5.028
+    },
+    {
+      "name": "agent_file_options",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j",
+        "2",
+        "--test",
+        "agent_file_options",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "pid": 34596,
+      "exitCode": 0,
+      "activeAtParentExit": 2,
+      "activeAfterCleanup": 0,
+      "seconds": 4.811
+    },
+    {
+      "name": "agent_repl",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j",
+        "2",
+        "--test",
+        "agent_repl",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "pid": 37932,
+      "exitCode": 0,
+      "activeAtParentExit": 2,
+      "activeAfterCleanup": 0,
+      "seconds": 11.143
+    },
+    {
+      "name": "agent_repl_lifecycle",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j",
+        "2",
+        "--test",
+        "agent_repl_lifecycle",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "pid": 28796,
+      "exitCode": 0,
+      "activeAtParentExit": 2,
+      "activeAfterCleanup": 0,
+      "seconds": 5.235
+    },
+    {
+      "name": "mcp_http",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j",
+        "2",
+        "--test",
+        "mcp_http",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "pid": 34684,
+      "exitCode": 0,
+      "activeAtParentExit": 2,
+      "activeAfterCleanup": 0,
+      "seconds": 28.914
+    },
+    {
+      "name": "mcp_http_review",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j",
+        "2",
+        "--test",
+        "mcp_http_review",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "pid": 32416,
+      "exitCode": 0,
+      "activeAtParentExit": 2,
+      "activeAfterCleanup": 0,
+      "seconds": 6.234
+    },
+    {
+      "name": "mcp_http_cli",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j",
+        "2",
+        "--test",
+        "mcp_http_cli",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "pid": 35472,
+      "exitCode": 0,
+      "activeAtParentExit": 2,
+      "activeAfterCleanup": 0,
+      "seconds": 4.766
+    },
+    {
+      "name": "mcp_collection_grants",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j",
+        "2",
+        "--test",
+        "mcp_collection_grants",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "pid": 12268,
+      "exitCode": 0,
+      "activeAtParentExit": 2,
+      "activeAfterCleanup": 0,
+      "seconds": 5.181
+    },
+    {
+      "name": "mcp_collection_grants_review",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j",
+        "2",
+        "--test",
+        "mcp_collection_grants_review",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "pid": 25424,
+      "exitCode": 0,
+      "activeAtParentExit": 2,
+      "activeAfterCleanup": 0,
+      "seconds": 5.855
+    },
+    {
+      "name": "resource_paging",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j",
+        "2",
+        "--test",
+        "resource_paging",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "pid": 42404,
+      "exitCode": 0,
+      "activeAtParentExit": 2,
+      "activeAfterCleanup": 0,
+      "seconds": 6.471
+    },
+    {
+      "name": "parity_retention",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j",
+        "2",
+        "--test",
+        "parity_retention",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "pid": 33196,
+      "exitCode": 0,
+      "activeAtParentExit": 2,
+      "activeAfterCleanup": 0,
+      "seconds": 5.875
+    },
+    {
+      "name": "trail_review",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j",
+        "2",
+        "--test",
+        "trail_review",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "pid": 34776,
+      "exitCode": 0,
+      "activeAtParentExit": 2,
+      "activeAfterCleanup": 0,
+      "seconds": 5.37
+    },
+    {
+      "name": "trail_bodies",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j",
+        "2",
+        "--test",
+        "trail_bodies",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "pid": 41100,
+      "exitCode": 0,
+      "activeAtParentExit": 2,
+      "activeAfterCleanup": 0,
+      "seconds": 17.192
+    },
+    {
+      "name": "graphify_selected_queries",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j",
+        "2",
+        "--test",
+        "graphify_selected_queries",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "pid": 38940,
+      "exitCode": 0,
+      "activeAtParentExit": 2,
+      "activeAfterCleanup": 0,
+      "seconds": 6.584
+    },
+    {
+      "name": "graphify_cli",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j",
+        "2",
+        "--test",
+        "graphify_cli",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "pid": 36932,
+      "exitCode": 0,
+      "activeAtParentExit": 2,
+      "activeAfterCleanup": 0,
+      "seconds": 2.098
+    },
+    {
+      "name": "clippy",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "clippy",
+        "--locked",
+        "--all-targets",
+        "-j",
+        "2",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "pid": 4192,
+      "exitCode": 0,
+      "activeAtParentExit": 1,
+      "activeAfterCleanup": 0,
+      "seconds": 116.794
+    },
+    {
+      "name": "fmt",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "fmt",
+        "--all",
+        "--check"
+      ],
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "pid": 31832,
+      "exitCode": 0,
+      "activeAtParentExit": 1,
+      "activeAfterCleanup": 0,
+      "seconds": 6.35
+    },
+    {
+      "name": "build",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "build",
+        "--locked",
+        "-j",
+        "2",
+        "--bin",
+        "yoke"
+      ],
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "pid": 40760,
+      "exitCode": 0,
+      "activeAtParentExit": 1,
+      "activeAfterCleanup": 0,
+      "seconds": 0.713
+    },
+    {
+      "name": "typecheck",
+      "command": [
+        "cmd.exe",
+        "/d",
+        "/c",
+        "npm.cmd run typecheck"
+      ],
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "pid": 32704,
+      "exitCode": 0,
+      "activeAtParentExit": 1,
+      "activeAfterCleanup": 0,
+      "seconds": 8.037
+    },
+    {
+      "name": "npm-tests",
+      "command": [
+        "cmd.exe",
+        "/d",
+        "/c",
+        "npm.cmd test"
+      ],
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "pid": 37264,
+      "exitCode": 0,
+      "activeAtParentExit": 1,
+      "activeAfterCleanup": 0,
+      "seconds": 59.186
+    }
+  ],
+  "actualOriginalCliRed": {
+    "complete": true,
+    "cliSha256": "4f7f28df6d5d8ebe780b53398da9167c7dd909b387073af1a8031558c2358a62",
+    "sourceRoot": "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-fixed-tools-red-is7sgzus\\source",
+    "profile": "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-fixed-tools-red-is7sgzus\\host.json",
+    "requests": "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-fixed-tools-red-is7sgzus\\requests.json",
+    "argv": [
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+      "--root",
+      "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-fixed-tools-red-is7sgzus\\source",
+      "--max-bytes",
+      "4000000",
+      "--timeout",
+      "60000",
+      "session",
+      "--host-profile",
+      "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-fixed-tools-red-is7sgzus\\host.json",
+      "--requests",
+      "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-fixed-tools-red-is7sgzus\\requests.json"
+    ],
+    "serverArgv": [
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+      "--root",
+      "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-fixed-tools-red-is7sgzus\\source",
+      "--max-bytes",
+      "4000000",
+      "--timeout",
+      "60000",
+      "serve-session",
+      "--id",
+      "positive",
+      "--profile",
+      "serena",
+      "--host-profile",
+      "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-fixed-tools-red-is7sgzus\\host.json"
+    ],
+    "driver": "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-fixed-tools-red-is7sgzus\\original-mcp.cjs",
+    "original53SchemasAndRealReadPositive": true,
+    "fixedToolsUnsupported": true,
+    "sourceGitFiles": {
+      "main.rs": {
+        "bytes": 33,
+        "sha256": "3fa2d2d5f4e83676bad5d885f7b226cb677354b1b827df77d01b2578654bef00"
+      },
+      ".git\\config": {
+        "bytes": 130,
+        "sha256": "05becdb83bb897f6103c8d91439e2e9092144edf5b3955a746fce4975c12bfdc"
+      },
+      ".git\\HEAD": {
+        "bytes": 21,
+        "sha256": "28d25bf82af4c0e2b72f50959b2beb859e3e60b9630a5e8c603dad4ddb2b6e80"
+      }
+    },
+    "allJobsEmpty": true,
+    "commands": [
+      {
+        "name": "git-init",
+        "command": [
+          "C:\\Program Files\\Git\\cmd\\git.EXE",
+          "-c",
+          "init.templateDir=",
+          "-c",
+          "core.autocrlf=false",
+          "-c",
+          "core.hooksPath=",
+          "-c",
+          "user.name=Owned CLI fixture",
+          "-c",
+          "user.email=owned@example.invalid",
+          "init",
+          "-b",
+          "main"
+        ],
+        "startedSuspended": true,
+        "assignedBeforeResume": true,
+        "pid": 30488,
+        "exitCode": 0,
+        "activeAtParentExit": 1,
+        "activeAfterCleanup": 0,
+        "seconds": 0.048
+      },
+      {
+        "name": "original-configuration",
+        "command": [
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+          "--root",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-fixed-tools-red-is7sgzus\\source",
+          "--max-bytes",
+          "4000000",
+          "--timeout",
+          "60000",
+          "session",
+          "--host-profile",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-fixed-tools-red-is7sgzus\\host.json",
+          "--requests",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-fixed-tools-red-is7sgzus\\requests.json",
+          "--id",
+          "positive"
+        ],
+        "startedSuspended": true,
+        "assignedBeforeResume": true,
+        "pid": 35152,
+        "exitCode": 0,
+        "activeAtParentExit": 1,
+        "activeAfterCleanup": 0,
+        "seconds": 0.077
+      },
+      {
+        "name": "original-full-mcp-positive",
+        "command": [
+          "C:\\Program Files\\nodejs\\node.exe",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-fixed-tools-red-is7sgzus\\original-mcp.cjs"
+        ],
+        "startedSuspended": true,
+        "assignedBeforeResume": true,
+        "pid": 40524,
+        "exitCode": 0,
+        "activeAtParentExit": 1,
+        "activeAfterCleanup": 0,
+        "seconds": 0.18
+      },
+      {
+        "name": "original-fixed-setting-unsupported",
+        "command": [
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+          "--root",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-fixed-tools-red-is7sgzus\\source",
+          "--max-bytes",
+          "4000000",
+          "--timeout",
+          "60000",
+          "session",
+          "--host-profile",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-fixed-tools-red-is7sgzus\\host.json",
+          "--requests",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-fixed-tools-red-is7sgzus\\requests.json",
+          "--id",
+          "restricted"
+        ],
+        "startedSuspended": true,
+        "assignedBeforeResume": true,
+        "pid": 36592,
+        "exitCode": 1,
+        "activeAtParentExit": 1,
+        "activeAfterCleanup": 0,
+        "seconds": 0.048
+      }
+    ]
+  },
+  "sameOriginalFixtureGreen": {
+    "complete": true,
+    "cliSha256": "67fe45777d71774e0acd3462f9f01a714cb7b092e8508a6a98f24848fda9ed52",
+    "sameOriginalRedSourceRoot": "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-fixed-tools-red-is7sgzus\\source",
+    "original53SchemasAndFullMcpRawBytesExactWithoutSetting": true,
+    "originalCliRawAndFullLogicalSqlExactWithoutSetting": true,
+    "sameOriginalFixedSettingNowAdmitted": true,
+    "selectedTwoSchemasExactOriginalSubset": true,
+    "actualSelectedMcpMetadataAndMemoryPositive": true,
+    "originalReadCallNowRefused": true,
+    "oldBindingAndConflictBeforePublicationRefused": true,
+    "allOriginalRecordValuesAndSourceGitBytesExact": true,
+    "noExecutionGrantAdded": true,
+    "allJobsEmpty": true,
+    "modelCalled": false,
+    "analyzedSourceExecuted": false,
+    "commands": [
+      {
+        "name": "git-init",
+        "command": [
+          "C:\\Program Files\\Git\\cmd\\git.EXE",
+          "-c",
+          "init.templateDir=",
+          "-c",
+          "core.autocrlf=false",
+          "-c",
+          "core.hooksPath=",
+          "-c",
+          "user.name=Owned CLI fixture",
+          "-c",
+          "user.email=owned@example.invalid",
+          "init",
+          "-b",
+          "main"
+        ],
+        "startedSuspended": true,
+        "assignedBeforeResume": true,
+        "pid": 38412,
+        "exitCode": 0,
+        "activeAtParentExit": 1,
+        "activeAfterCleanup": 0,
+        "seconds": 0.051
+      },
+      {
+        "name": "original-cli-without-setting",
+        "command": [
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+          "--root",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-fixed-tools-red-is7sgzus\\source",
+          "--max-bytes",
+          "4000000",
+          "--timeout",
+          "60000",
+          "session",
+          "--host-profile",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-fixed-tools-red-is7sgzus\\host.json",
+          "--requests",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-fixed-tools-red-is7sgzus\\requests.json",
+          "--id",
+          "positive"
+        ],
+        "startedSuspended": true,
+        "assignedBeforeResume": true,
+        "pid": 35412,
+        "exitCode": 0,
+        "activeAtParentExit": 0,
+        "activeAfterCleanup": 0,
+        "seconds": 0.057
+      },
+      {
+        "name": "same-original-mcp-without-setting",
+        "command": [
+          "C:\\Program Files\\nodejs\\node.exe",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-fixed-tools-red-is7sgzus\\original-mcp.cjs"
+        ],
+        "startedSuspended": true,
+        "assignedBeforeResume": true,
+        "pid": 41888,
+        "exitCode": 0,
+        "activeAtParentExit": 1,
+        "activeAfterCleanup": 0,
+        "seconds": 0.151
+      },
+      {
+        "name": "same-original-fixed-setting-input",
+        "command": [
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+          "--root",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-fixed-tools-red-is7sgzus\\source",
+          "--max-bytes",
+          "4000000",
+          "--timeout",
+          "60000",
+          "session",
+          "--host-profile",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-fixed-tools-red-is7sgzus\\host.json",
+          "--requests",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-fixed-tools-red-is7sgzus\\requests.json",
+          "--id",
+          "restricted"
+        ],
+        "startedSuspended": true,
+        "assignedBeforeResume": true,
+        "pid": 34708,
+        "exitCode": 0,
+        "activeAtParentExit": 1,
+        "activeAfterCleanup": 0,
+        "seconds": 0.048
+      },
+      {
+        "name": "same-original-selected-mcp",
+        "command": [
+          "C:\\Program Files\\nodejs\\node.exe",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-fixed-tools-green-se_4zo2_\\same-original-selected-mcp.cjs"
+        ],
+        "startedSuspended": true,
+        "assignedBeforeResume": true,
+        "pid": 37772,
+        "exitCode": 0,
+        "activeAtParentExit": 0,
+        "activeAfterCleanup": 0,
+        "seconds": 0.141
+      },
+      {
+        "name": "old-session-new-fixed-binding",
+        "command": [
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+          "--root",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-fixed-tools-red-is7sgzus\\source",
+          "--max-bytes",
+          "4000000",
+          "--timeout",
+          "60000",
+          "session",
+          "--host-profile",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-fixed-tools-red-is7sgzus\\host.json",
+          "--requests",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-fixed-tools-red-is7sgzus\\requests.json",
+          "--id",
+          "positive"
+        ],
+        "startedSuspended": true,
+        "assignedBeforeResume": true,
+        "pid": 25848,
+        "exitCode": 1,
+        "activeAtParentExit": 1,
+        "activeAfterCleanup": 0,
+        "seconds": 0.04
+      },
+      {
+        "name": "conflicting-base-before-publication",
+        "command": [
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+          "--root",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-fixed-tools-red-is7sgzus\\source",
+          "--max-bytes",
+          "4000000",
+          "--timeout",
+          "60000",
+          "session",
+          "--host-profile",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-fixed-tools-green-se_4zo2_\\invalid-fixed-host.json",
+          "--requests",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-fixed-tools-red-is7sgzus\\requests.json",
+          "--id",
+          "bad"
+        ],
+        "startedSuspended": true,
+        "assignedBeforeResume": true,
+        "pid": 28828,
+        "exitCode": 1,
+        "activeAtParentExit": 1,
+        "activeAfterCleanup": 0,
+        "seconds": 0.047
+      }
+    ]
+  },
+  "initialPlanningVsApplicationTestOracleCorrected": true,
+  "systemSettingsChanged": false,
+  "originalSymlinkFixturesChanged": false,
+  "fullStatusComplete": false
+}

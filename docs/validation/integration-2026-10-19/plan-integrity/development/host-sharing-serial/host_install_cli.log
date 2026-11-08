@@ -1,0 +1,16 @@
+
+running 11 tests
+test host_install_cli_initialization_admits_a_valid_output_budget_before_writing_state ... ok
+test host_install_cli_initialization_output_failure_identifies_its_durable_result ... ok
+test host_install_cli_initialization_permission_precedes_selection_and_plan_reads ... ok
+test host_install_cli_initialization_refuses_foreign_scaffold_bytes_without_disclosing_them ... ok
+test host_install_cli_initialization_repairs_an_owned_scaffold_and_replays_without_source_changes ... ok
+test host_install_cli_installs_and_uninstalls_only_its_owned_fragment ... ok
+test host_install_cli_output_failure_identifies_the_committed_result_and_can_be_retried ... ok
+test host_install_cli_planning_and_status_are_pure_and_keep_human_text_private ... ok
+test host_install_cli_rejects_ambiguous_selection_and_small_write_output_before_mutation ... ok
+test host_install_cli_valid_output_budget_is_admitted_before_any_host_state_or_file_write ... ok
+test host_install_cli_write_permission_precedes_selection_or_plan_reads ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.14s
+

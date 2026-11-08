@@ -1,0 +1,184 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 2m 55s
+     Running tests\lsp_action_resolve.rs (target\debug\deps\lsp_action_resolve-53fe1341ce53a403.exe)
+
+running 6 tests
+test actual_typescript_lazy_fix_all_preserves_the_unexecuted_auxiliary_command_boundary ... ignored, requires YOKE_TS_LSP selecting the actual installed TypeScript language server
+test deferred_edit_with_a_follow_up_command_is_resolved_but_cannot_prepare_a_partial_action ... ok
+test action_context_preserves_validated_provider_diagnostic_data_and_refuses_outside_ranges ... ok
+test lazy_code_actions_preserve_opaque_identity_and_prepare_checked_edits_before_owned_shutdown ... ok
+test unavailable_disabled_command_and_unrequested_actions_do_not_invoke_resolution ... ok
+test resolution_refuses_changed_action_identity_foreign_ranges_and_materialized_source_mutation ... ok
+
+test result: ok. 5 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 10.47s
+
+     Running tests\lsp_source_execution.rs (target\debug\deps\lsp_source_execution-72fe99b4b2ad15da.exe)
+
+running 7 tests
+test actual_jedi_source_auto_import_module_does_not_execute_without_host_authority ... ignored, requires YOKE_PYTHON_LSP identifying the actual installed Jedi language-server
+test actual_rust_source_selected_rustc_requires_explicit_host_execution_authority ... ignored, requires real installed rust-analyzer and an independently built harmless rustc probe
+test passive_host_redirect_settings_are_refused_before_a_provider_is_started ... ok
+test unknown_passive_backend_contract_is_unavailable_before_process_start ... ok
+test passive_rust_manifest_and_host_tool_redirects_are_refused_before_provider_start ... ok
+test passive_rust_keeps_proven_nested_workspace_and_dependency_paths_available ... ok
+test passive_rust_omits_selectors_only_from_provider_copy_and_reports_original_hashes ... ok
+
+test result: ok. 5 passed; 0 failed; 2 ignored; 0 measured; 0 filtered out; finished in 1.58s
+
+     Running tests\meaning_cli.rs (target\debug\deps\meaning_cli-6092092382a6115f.exe)
+
+running 8 tests
+test meaning_cli_builds_queries_and_reuses_immutable_receipts_without_read_time_execution ... FAILED
+test meaning_cli_failed_later_claim_keeps_billing_and_no_partial_publication ... FAILED
+test meaning_cli_build_reference_is_bounded_and_graph_reads_never_create_overflow_artifacts ... FAILED
+test meaning_cli_rejects_ambiguous_host_json_and_invalid_output_budget_before_state ... FAILED
+test meaning_cli_read_commands_require_existing_store_and_reject_execution_configuration ... FAILED
+test meaning_cli_output_pipe_loss_reports_the_already_durable_job_and_graph ... FAILED
+test meaning_cli_requires_explicit_provider_permission_before_opening_source_state ... FAILED
+test meaning_cli_admits_the_entire_selection_and_cost_before_first_worker ... ok
+
+failures:
+
+---- meaning_cli_builds_queries_and_reuses_immutable_receipts_without_read_time_execution stdout ----
+
+thread 'meaning_cli_builds_queries_and_reuses_immutable_receipts_without_read_time_execution' (91052) panicked at native\tests\meaning_cli.rs:81:5:
+stderr: error: unrecognized subcommand 'meaning'
+
+  tip: some similar subcommands exist: 'media', 'maintenance'
+
+Usage: yoke.exe [OPTIONS] <COMMAND>
+
+For more information, try '--help'.
+
+stdout: 
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- meaning_cli_failed_later_claim_keeps_billing_and_no_partial_publication stdout ----
+
+thread 'meaning_cli_failed_later_claim_keeps_billing_and_no_partial_publication' (42216) panicked at native\tests\meaning_cli.rs:293:5:
+assertion `left == right` failed
+  left: 0
+ right: 1
+
+---- meaning_cli_build_reference_is_bounded_and_graph_reads_never_create_overflow_artifacts stdout ----
+
+thread 'meaning_cli_build_reference_is_bounded_and_graph_reads_never_create_overflow_artifacts' (72216) panicked at native\tests\meaning_cli.rs:81:5:
+stderr: error: unrecognized subcommand 'meaning'
+
+  tip: some similar subcommands exist: 'media', 'maintenance'
+
+Usage: yoke.exe [OPTIONS] <COMMAND>
+
+For more information, try '--help'.
+
+stdout: 
+
+---- meaning_cli_rejects_ambiguous_host_json_and_invalid_output_budget_before_state stdout ----
+
+thread 'meaning_cli_rejects_ambiguous_host_json_and_invalid_output_budget_before_state' (55904) panicked at native\tests\meaning_cli.rs:178:9:
+0: error: unrecognized subcommand 'meaning'
+
+  tip: some similar subcommands exist: 'media', 'maintenance'
+
+Usage: yoke.exe [OPTIONS] <COMMAND>
+
+For more information, try '--help'.
+
+
+---- meaning_cli_read_commands_require_existing_store_and_reject_execution_configuration stdout ----
+
+thread 'meaning_cli_read_commands_require_existing_store_and_reject_execution_configuration' (4868) panicked at native\tests\meaning_cli.rs:204:9:
+assertion failed: String::from_utf8_lossy(&output.stderr).contains("existing")
+
+---- meaning_cli_output_pipe_loss_reports_the_already_durable_job_and_graph stdout ----
+
+thread 'meaning_cli_output_pipe_loss_reports_the_already_durable_job_and_graph' (41288) panicked at native\tests\meaning_cli.rs:322:5:
+assertion `left == right` failed
+  left: 0
+ right: 1
+
+---- meaning_cli_requires_explicit_provider_permission_before_opening_source_state stdout ----
+
+thread 'meaning_cli_requires_explicit_provider_permission_before_opening_source_state' (49228) panicked at native\tests\meaning_cli.rs:153:5:
+assertion failed: String::from_utf8_lossy(&output.stderr).contains("--trust-provider")
+
+
+failures:
+    meaning_cli_build_reference_is_bounded_and_graph_reads_never_create_overflow_artifacts
+    meaning_cli_builds_queries_and_reuses_immutable_receipts_without_read_time_execution
+    meaning_cli_failed_later_claim_keeps_billing_and_no_partial_publication
+    meaning_cli_output_pipe_loss_reports_the_already_durable_job_and_graph
+    meaning_cli_read_commands_require_existing_store_and_reject_execution_configuration
+    meaning_cli_rejects_ambiguous_host_json_and_invalid_output_budget_before_state
+    meaning_cli_requires_explicit_provider_permission_before_opening_source_state
+
+test result: FAILED. 1 passed; 7 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.84s
+
+error: test failed, to rerun pass `--test meaning_cli`
+     Running tests\meaning_retention_review.rs (target\debug\deps\meaning_retention_review-22514ce83193a930.exe)
+
+running 3 tests
+test original_and_rebound_meaning_roots_survive_retirement_quarantine_and_purge_with_controls ... FAILED
+test supplied_job_cache_and_graph_metadata_cannot_override_the_persisted_retention_proof ... ok
+test corrupted_job_cache_and_graph_rows_refuse_retirement_and_purge_before_deleting_history ... FAILED
+
+failures:
+
+---- original_and_rebound_meaning_roots_survive_retirement_quarantine_and_purge_with_controls stdout ----
+
+thread 'original_and_rebound_meaning_roots_survive_retirement_quarantine_and_purge_with_controls' (56772) panicked at native\tests\meaning_retention_review.rs:149:5:
+assertion `left == right` failed: Meaning records need typed retention, not an opaque stop-all fallback
+  left: Array [String("artifact:unknown-shape"), String("native_meaning_cache_v1"), String("native_meaning_graph_v1"), String("native_meaning_job_v1")]
+ right: Array []
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- corrupted_job_cache_and_graph_rows_refuse_retirement_and_purge_before_deleting_history stdout ----
+
+thread 'corrupted_job_cache_and_graph_rows_refuse_retirement_and_purge_before_deleting_history' (90904) panicked at native\tests\meaning_retention_review.rs:320:9:
+Corrupt native_meaning_job_v1 admitted a history retirement plan
+
+
+failures:
+    corrupted_job_cache_and_graph_rows_refuse_retirement_and_purge_before_deleting_history
+    original_and_rebound_meaning_roots_survive_retirement_quarantine_and_purge_with_controls
+
+test result: FAILED. 1 passed; 2 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.34s
+
+error: test failed, to rerun pass `--test meaning_retention_review`
+     Running tests\refactor_intents.rs (target\debug\deps\refactor_intents-e45b8130e18e3e90.exe)
+
+running 15 tests
+test flagged_refactoring_obeys_session_plan_permissions_before_querying_a_provider ... ok
+test inline_keep_definition_preserves_exact_declaration_bytes_while_replacing_a_call ... ok
+test flagged_rename_rejects_unrelated_and_wholefile_provider_changes_before_publication ... ok
+test invalid_later_inline_candidate_cannot_leave_an_earlier_hidden_plan_or_derivative ... ok
+test deterministic_later_noop_nul_or_secret_candidate_is_rejected_before_any_publication ... ok
+test amplified_candidate_contents_are_bounded_before_any_publication ... ok
+test keeping_an_inline_definition_requires_a_real_source_bound_call_replacement ... ok
+test native_text_occurrences_refuse_potentially_interpolated_strings_before_publication ... ok
+test keep_definition_rejects_broad_ambiguous_and_command_candidates_without_plans ... ok
+test native_occurrences_distinguish_string_comment_markers_and_unicode_word_boundaries ... ok
+test native_unicode_rename_refuses_byte_string_occurrences_before_publication ... ok
+test native_text_rename_never_rewrites_rust_raw_string_delimiters ... ok
+test requested_comment_and_text_rename_options_change_only_their_own_occurrence_classes ... ok
+test projected_refactors_keep_v8_v9_source_proofs_and_never_edit_readonly_or_ignored_sources ... ok
+test requested_false_occurrence_flags_also_constrain_provider_supplied_edits ... ok
+
+test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 15.04s
+
+     Running tests\semantic_refactor.rs (target\debug\deps\semantic_refactor-f66dd7e99dc076bb.exe)
+
+running 7 tests
+test indexed_symbol_refactoring_selects_the_same_source_order_overload_as_the_facade ... ok
+test file_move_negotiates_will_rename_and_combines_pre_rename_edits_into_one_guarded_plan ... ok
+test explicit_force_delete_keeps_verified_usage_context_and_still_refuses_foreign_or_stale_sources ... ok
+test inspection_equivalent_uses_actual_registered_diagnostics_and_declared_kind_registry ... ok
+test semantic_delete_refuses_actual_candidate_unresolved_foreign_and_stale_uses_without_publishing_plans ... ok
+test unused_semantic_delete_requires_registered_source_proof_and_only_prepares_a_guarded_plan ... ok
+test inline_refactoring_accepts_only_the_requested_kind_and_explicit_workspace_edits ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 7.07s
+
+error: 2 targets failed:
+    `--test meaning_cli`
+    `--test meaning_retention_review`

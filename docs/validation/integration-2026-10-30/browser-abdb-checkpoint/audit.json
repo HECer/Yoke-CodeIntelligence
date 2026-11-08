@@ -1,0 +1,750 @@
+{
+  "sourceCommit": "abdbdb0308aee2acec821f9f3da710cbb1976535",
+  "runId": 41013033443,
+  "jobId": 123922975632,
+  "sourceMap": {
+    "files": 1101,
+    "gitBlobBytes": 18082590,
+    "rawMatches": 45,
+    "LFCRLFOnlyMatches": 1056,
+    "allFiveMapsEqual": true
+  },
+  "profiles": [
+    {
+      "artifactId": 12960152034,
+      "variant": "http",
+      "complete": true,
+      "pngs": 6,
+      "job": {
+        "startedSuspended": true,
+        "assignedBeforeResume": true,
+        "complete": true,
+        "pid": 6608,
+        "exitCode": 0,
+        "activeAtParentExit": 0,
+        "activeBeforeCleanup": 0,
+        "treeExitedBeforeCleanup": true,
+        "activeAfterCleanup": 0
+      },
+      "agentVisualReview": {
+        "complete": true,
+        "imagesIndividuallyInspected": [
+          "desktop-after.png",
+          "desktop-before.png",
+          "desktop-pending.png",
+          "mobile-after.png",
+          "mobile-before.png",
+          "mobile-pending.png"
+        ],
+        "blockingVisualFindings": [],
+        "findings": [
+          "Readable desktop and mobile layout and Unicode draft/original text.",
+          "Pending archival retains the draft, blocks Review and Save, and shows the host-only archival explanation.",
+          "Keyboard focus ring is visible on Inspect recovery in pending screenshots.",
+          "After saves, exact updated draft text and no-pending-journal state are visible."
+        ],
+        "humanAcceptance": false,
+        "visibleDesktopShellInteraction": false
+      },
+      "observed": {
+        "variant": "http",
+        "owningProtocol": "session",
+        "owningTransport": "http",
+        "profileObservations": [
+          {
+            "role": "old",
+            "protocol": "session",
+            "toolCount": 9,
+            "sessionDashboardToolObserved": true,
+            "serenaDashboardToolsAbsent": true
+          },
+          {
+            "role": "current",
+            "protocol": "session",
+            "toolCount": 9,
+            "sessionDashboardToolObserved": true,
+            "serenaDashboardToolsAbsent": true
+          }
+        ],
+        "persistentRuntimes": [],
+        "httpAuthorities": [
+          {
+            "role": "old",
+            "foreignSessionRefused": true,
+            "authenticationRefusals": [
+              401,
+              401,
+              403
+            ]
+          },
+          {
+            "role": "current",
+            "foreignSessionRefused": true,
+            "authenticationRefusals": [
+              401,
+              401,
+              403
+            ]
+          }
+        ],
+        "httpSessionExits": [
+          {
+            "role": "current",
+            "scope": "owning_http_mcp_session",
+            "revokedSessionStatus": 404,
+            "serviceStillRunning": true,
+            "beforeJobCleanup": true
+          },
+          {
+            "role": "old",
+            "scope": "owning_http_mcp_session",
+            "revokedSessionStatus": 404,
+            "serviceStillRunning": true,
+            "beforeJobCleanup": true
+          }
+        ],
+        "httpServiceExits": [
+          {
+            "role": "current",
+            "nativeExitCode": 0,
+            "stdinWasStillOpen": true,
+            "stdoutEOF": true,
+            "naturalHostDurationMs": 120000,
+            "observedElapsedMs": 120048,
+            "beforeJobCleanup": true,
+            "logonScopedCredential": true,
+            "ownedCredentialRemoved": true
+          },
+          {
+            "role": "old",
+            "nativeExitCode": 0,
+            "stdinWasStillOpen": true,
+            "stdoutEOF": true,
+            "naturalHostDurationMs": 120000,
+            "observedElapsedMs": 120737,
+            "beforeJobCleanup": true,
+            "logonScopedCredential": true,
+            "ownedCredentialRemoved": true
+          }
+        ],
+        "browserExit": {
+          "phase": "close",
+          "ok": true,
+          "browserCloseRequested": true,
+          "browserExitCode": 0,
+          "cdpEOF": true,
+          "browserOutputEOF": true,
+          "scriptErrors": 0,
+          "consoleErrors": 0,
+          "screenshots": 6,
+          "visualReviewComplete": false,
+          "driverExitCode": 0,
+          "driverStdoutEOF": true,
+          "beforeForcedCleanup": true
+        },
+        "nativeExits": [],
+        "cli": [
+          {
+            "operation": "migration-plan",
+            "exitCode": 0,
+            "expectedSuccess": true
+          },
+          {
+            "operation": "migration-apply",
+            "exitCode": 0,
+            "expectedSuccess": true
+          },
+          {
+            "operation": "history-plan",
+            "exitCode": 0,
+            "expectedSuccess": true
+          },
+          {
+            "operation": "blocked-completion",
+            "exitCode": 1,
+            "expectedSuccess": false
+          },
+          {
+            "operation": "pending-inspect",
+            "exitCode": 0,
+            "expectedSuccess": true
+          },
+          {
+            "operation": "history-resume",
+            "exitCode": 0,
+            "expectedSuccess": true
+          },
+          {
+            "operation": "read-0",
+            "exitCode": 0,
+            "expectedSuccess": true
+          },
+          {
+            "operation": "read-1",
+            "exitCode": 0,
+            "expectedSuccess": true
+          },
+          {
+            "operation": "read-2",
+            "exitCode": 0,
+            "expectedSuccess": true
+          },
+          {
+            "operation": "read-3",
+            "exitCode": 0,
+            "expectedSuccess": true
+          },
+          {
+            "operation": "read-4",
+            "exitCode": 0,
+            "expectedSuccess": true
+          },
+          {
+            "operation": "read-5",
+            "exitCode": 0,
+            "expectedSuccess": true
+          },
+          {
+            "operation": "read-6",
+            "exitCode": 0,
+            "expectedSuccess": true
+          },
+          {
+            "operation": "read-7",
+            "exitCode": 0,
+            "expectedSuccess": true
+          },
+          {
+            "operation": "read-8",
+            "exitCode": 0,
+            "expectedSuccess": true
+          },
+          {
+            "operation": "read-9",
+            "exitCode": 0,
+            "expectedSuccess": true
+          },
+          {
+            "operation": "read-10",
+            "exitCode": 0,
+            "expectedSuccess": true
+          },
+          {
+            "operation": "read-11",
+            "exitCode": 0,
+            "expectedSuccess": true
+          },
+          {
+            "operation": "read-12",
+            "exitCode": 0,
+            "expectedSuccess": true
+          },
+          {
+            "operation": "read-13",
+            "exitCode": 0,
+            "expectedSuccess": true
+          }
+        ]
+      }
+    },
+    {
+      "artifactId": 12959274216,
+      "variant": "native",
+      "complete": true,
+      "pngs": 6,
+      "job": {
+        "startedSuspended": true,
+        "assignedBeforeResume": true,
+        "complete": true,
+        "pid": 400,
+        "exitCode": 0,
+        "activeAtParentExit": 0,
+        "activeBeforeCleanup": 0,
+        "treeExitedBeforeCleanup": true,
+        "activeAfterCleanup": 0
+      },
+      "agentVisualReview": {
+        "complete": true,
+        "imagesIndividuallyInspected": [
+          "desktop-after.png",
+          "desktop-before.png",
+          "desktop-pending.png",
+          "mobile-after.png",
+          "mobile-before.png",
+          "mobile-pending.png"
+        ],
+        "blockingVisualFindings": [],
+        "findings": [
+          "Readable desktop and mobile layout and Unicode draft/original text.",
+          "Pending archival retains the draft, blocks Review and Save, and shows the host-only archival explanation.",
+          "Keyboard focus ring is visible on Inspect recovery in pending screenshots.",
+          "After saves, exact updated draft text and no-pending-journal state are visible."
+        ],
+        "humanAcceptance": false,
+        "visibleDesktopShellInteraction": false
+      },
+      "observed": {
+        "variant": "native",
+        "owningProtocol": "native",
+        "owningTransport": "stdio",
+        "profileObservations": [],
+        "persistentRuntimes": [],
+        "httpAuthorities": [],
+        "httpSessionExits": [],
+        "httpServiceExits": [],
+        "browserExit": {
+          "phase": "close",
+          "ok": true,
+          "browserCloseRequested": true,
+          "browserExitCode": 0,
+          "cdpEOF": true,
+          "browserOutputEOF": true,
+          "scriptErrors": 0,
+          "consoleErrors": 0,
+          "screenshots": 6,
+          "visualReviewComplete": false,
+          "driverExitCode": 0,
+          "driverStdoutEOF": true,
+          "beforeForcedCleanup": true
+        },
+        "nativeExits": [
+          {
+            "nativeExitCode": 0,
+            "stdinWasStillOpen": true,
+            "beforeJobCleanup": true
+          },
+          {
+            "nativeExitCode": 0,
+            "stdinWasStillOpen": true,
+            "beforeJobCleanup": true
+          }
+        ],
+        "cli": [
+          {
+            "operation": "migration-plan",
+            "exitCode": 0,
+            "expectedSuccess": true
+          },
+          {
+            "operation": "migration-apply",
+            "exitCode": 0,
+            "expectedSuccess": true
+          },
+          {
+            "operation": "history-plan",
+            "exitCode": 0,
+            "expectedSuccess": true
+          },
+          {
+            "operation": "blocked-completion",
+            "exitCode": 1,
+            "expectedSuccess": false
+          },
+          {
+            "operation": "pending-inspect",
+            "exitCode": 0,
+            "expectedSuccess": true
+          },
+          {
+            "operation": "history-resume",
+            "exitCode": 0,
+            "expectedSuccess": true
+          },
+          {
+            "operation": "read-0",
+            "exitCode": 0,
+            "expectedSuccess": true
+          },
+          {
+            "operation": "read-1",
+            "exitCode": 0,
+            "expectedSuccess": true
+          },
+          {
+            "operation": "read-2",
+            "exitCode": 0,
+            "expectedSuccess": true
+          },
+          {
+            "operation": "read-3",
+            "exitCode": 0,
+            "expectedSuccess": true
+          },
+          {
+            "operation": "read-4",
+            "exitCode": 0,
+            "expectedSuccess": true
+          },
+          {
+            "operation": "read-5",
+            "exitCode": 0,
+            "expectedSuccess": true
+          },
+          {
+            "operation": "read-6",
+            "exitCode": 0,
+            "expectedSuccess": true
+          },
+          {
+            "operation": "read-7",
+            "exitCode": 0,
+            "expectedSuccess": true
+          },
+          {
+            "operation": "read-8",
+            "exitCode": 0,
+            "expectedSuccess": true
+          },
+          {
+            "operation": "read-9",
+            "exitCode": 0,
+            "expectedSuccess": true
+          },
+          {
+            "operation": "read-10",
+            "exitCode": 0,
+            "expectedSuccess": true
+          },
+          {
+            "operation": "read-11",
+            "exitCode": 0,
+            "expectedSuccess": true
+          },
+          {
+            "operation": "read-12",
+            "exitCode": 0,
+            "expectedSuccess": true
+          },
+          {
+            "operation": "read-13",
+            "exitCode": 0,
+            "expectedSuccess": true
+          }
+        ]
+      }
+    },
+    {
+      "artifactId": 12959274185,
+      "variant": "original-three-variant-history",
+      "complete": true,
+      "pngs": 0,
+      "job": {
+        "startedSuspended": true,
+        "assignedBeforeResume": true,
+        "complete": true,
+        "pid": 2244,
+        "exitCode": 0,
+        "activeAtParentExit": 0,
+        "activeBeforeCleanup": 0,
+        "treeExitedBeforeCleanup": true,
+        "activeAfterCleanup": 0
+      },
+      "variants": [
+        {
+          "variant": "native",
+          "complete": true,
+          "packages": 2,
+          "originalRecords": 42,
+          "allOriginalsReadBack": true,
+          "oldAndCurrentAuthorityRefusedDuringPending": true,
+          "configurationAndOwnerExactDuringArchival": true,
+          "freshSameHostSaveAfterArchival": true,
+          "actualJournalCurrentGeneration": true,
+          "bothArchiveFramesRemainExact": true,
+          "persistent45Retained": false,
+          "runtimeExitBeforeJobCleanup": false,
+          "currentExit": {
+            "nativeExitCode": 0,
+            "stdinWasStillOpen": true,
+            "beforeJobCleanup": true
+          },
+          "oldExit": {
+            "nativeExitCode": 0,
+            "stdinWasStillOpen": true,
+            "beforeJobCleanup": true
+          },
+          "analyzedSourceUnchanged": true
+        },
+        {
+          "variant": "serena",
+          "complete": true,
+          "packages": 2,
+          "originalRecords": 42,
+          "allOriginalsReadBack": true,
+          "oldAndCurrentAuthorityRefusedDuringPending": true,
+          "configurationAndOwnerExactDuringArchival": true,
+          "freshSameHostSaveAfterArchival": true,
+          "actualJournalCurrentGeneration": true,
+          "bothArchiveFramesRemainExact": true,
+          "persistent45Retained": false,
+          "runtimeExitBeforeJobCleanup": false,
+          "currentExit": {
+            "nativeExitCode": 0,
+            "stdinWasStillOpen": true,
+            "beforeJobCleanup": true
+          },
+          "oldExit": {
+            "nativeExitCode": 0,
+            "stdinWasStillOpen": true,
+            "beforeJobCleanup": true
+          },
+          "analyzedSourceUnchanged": true
+        },
+        {
+          "variant": "persistent-python",
+          "complete": true,
+          "packages": 2,
+          "originalRecords": 42,
+          "allOriginalsReadBack": true,
+          "oldAndCurrentAuthorityRefusedDuringPending": true,
+          "configurationAndOwnerExactDuringArchival": true,
+          "freshSameHostSaveAfterArchival": true,
+          "actualJournalCurrentGeneration": true,
+          "bothArchiveFramesRemainExact": true,
+          "persistent45Retained": true,
+          "runtimeExitBeforeJobCleanup": true,
+          "currentExit": {
+            "nativeExitCode": 0,
+            "stdinWasStillOpen": true,
+            "beforeJobCleanup": true
+          },
+          "oldExit": {
+            "nativeExitCode": 0,
+            "stdinWasStillOpen": true,
+            "beforeJobCleanup": true
+          },
+          "analyzedSourceUnchanged": true
+        }
+      ]
+    },
+    {
+      "artifactId": 12959169660,
+      "variant": "persistent-python",
+      "complete": false,
+      "pngs": 3,
+      "job": {
+        "startedSuspended": true,
+        "assignedBeforeResume": true,
+        "complete": false,
+        "pid": 2664,
+        "exitCode": 1,
+        "activeAtParentExit": 1,
+        "activeBeforeCleanup": 0,
+        "treeExitedBeforeCleanup": true,
+        "activeAfterCleanup": 0
+      },
+      "failure": "Owned browser driver failed: checkpoint=pending-click; viewport=mobile\nOwned browser exercise failed: browser-pending\nCode Intelligence 0.5.0 owned browser acceptance failed\n",
+      "agentVisualReview": {
+        "complete": false,
+        "imagesIndividuallyInspected": [
+          "desktop-before.png",
+          "desktop-pending.png",
+          "mobile-before.png"
+        ],
+        "blockingVisualFindingsInAvailableImages": [],
+        "remainingStatesUnobserved": [
+          "mobile-pending",
+          "desktop-after",
+          "mobile-after"
+        ]
+      }
+    },
+    {
+      "artifactId": 12958979925,
+      "variant": "serena",
+      "complete": true,
+      "pngs": 6,
+      "job": {
+        "startedSuspended": true,
+        "assignedBeforeResume": true,
+        "complete": true,
+        "pid": 8216,
+        "exitCode": 0,
+        "activeAtParentExit": 0,
+        "activeBeforeCleanup": 0,
+        "treeExitedBeforeCleanup": true,
+        "activeAfterCleanup": 0
+      },
+      "agentVisualReview": {
+        "complete": true,
+        "imagesIndividuallyInspected": [
+          "desktop-after.png",
+          "desktop-before.png",
+          "desktop-pending.png",
+          "mobile-after.png",
+          "mobile-before.png",
+          "mobile-pending.png"
+        ],
+        "blockingVisualFindings": [],
+        "findings": [
+          "Readable desktop and mobile layout and Unicode draft/original text.",
+          "Pending archival retains the draft, blocks Review and Save, and shows the host-only archival explanation.",
+          "Keyboard focus ring is visible on Inspect recovery in pending screenshots.",
+          "After saves, exact updated draft text and no-pending-journal state are visible."
+        ],
+        "humanAcceptance": false,
+        "visibleDesktopShellInteraction": false
+      },
+      "observed": {
+        "variant": "serena",
+        "owningProtocol": "serena",
+        "owningTransport": "stdio",
+        "profileObservations": [
+          {
+            "role": "old",
+            "protocol": "serena",
+            "toolCount": 53,
+            "serenaDashboardToolsObserved": true,
+            "nativeSessionToolAbsent": true,
+            "persistentToolObserved": true
+          },
+          {
+            "role": "current",
+            "protocol": "serena",
+            "toolCount": 53,
+            "serenaDashboardToolsObserved": true,
+            "nativeSessionToolAbsent": true,
+            "persistentToolObserved": true
+          }
+        ],
+        "persistentRuntimes": [],
+        "httpAuthorities": [],
+        "httpSessionExits": [],
+        "httpServiceExits": [],
+        "browserExit": {
+          "phase": "close",
+          "ok": true,
+          "browserCloseRequested": true,
+          "browserExitCode": 0,
+          "cdpEOF": true,
+          "browserOutputEOF": true,
+          "scriptErrors": 0,
+          "consoleErrors": 0,
+          "screenshots": 6,
+          "visualReviewComplete": false,
+          "driverExitCode": 0,
+          "driverStdoutEOF": true,
+          "beforeForcedCleanup": true
+        },
+        "nativeExits": [
+          {
+            "nativeExitCode": 0,
+            "stdinWasStillOpen": true,
+            "beforeJobCleanup": true
+          },
+          {
+            "nativeExitCode": 0,
+            "stdinWasStillOpen": true,
+            "beforeJobCleanup": true
+          }
+        ],
+        "cli": [
+          {
+            "operation": "migration-plan",
+            "exitCode": 0,
+            "expectedSuccess": true
+          },
+          {
+            "operation": "migration-apply",
+            "exitCode": 0,
+            "expectedSuccess": true
+          },
+          {
+            "operation": "history-plan",
+            "exitCode": 0,
+            "expectedSuccess": true
+          },
+          {
+            "operation": "blocked-completion",
+            "exitCode": 1,
+            "expectedSuccess": false
+          },
+          {
+            "operation": "pending-inspect",
+            "exitCode": 0,
+            "expectedSuccess": true
+          },
+          {
+            "operation": "history-resume",
+            "exitCode": 0,
+            "expectedSuccess": true
+          },
+          {
+            "operation": "read-0",
+            "exitCode": 0,
+            "expectedSuccess": true
+          },
+          {
+            "operation": "read-1",
+            "exitCode": 0,
+            "expectedSuccess": true
+          },
+          {
+            "operation": "read-2",
+            "exitCode": 0,
+            "expectedSuccess": true
+          },
+          {
+            "operation": "read-3",
+            "exitCode": 0,
+            "expectedSuccess": true
+          },
+          {
+            "operation": "read-4",
+            "exitCode": 0,
+            "expectedSuccess": true
+          },
+          {
+            "operation": "read-5",
+            "exitCode": 0,
+            "expectedSuccess": true
+          },
+          {
+            "operation": "read-6",
+            "exitCode": 0,
+            "expectedSuccess": true
+          },
+          {
+            "operation": "read-7",
+            "exitCode": 0,
+            "expectedSuccess": true
+          },
+          {
+            "operation": "read-8",
+            "exitCode": 0,
+            "expectedSuccess": true
+          },
+          {
+            "operation": "read-9",
+            "exitCode": 0,
+            "expectedSuccess": true
+          },
+          {
+            "operation": "read-10",
+            "exitCode": 0,
+            "expectedSuccess": true
+          },
+          {
+            "operation": "read-11",
+            "exitCode": 0,
+            "expectedSuccess": true
+          },
+          {
+            "operation": "read-12",
+            "exitCode": 0,
+            "expectedSuccess": true
+          },
+          {
+            "operation": "read-13",
+            "exitCode": 0,
+            "expectedSuccess": true
+          }
+        ]
+      }
+    }
+  ],
+  "allFourBrowserProfilesAccepted": false,
+  "nativeImagesAccessedOrExecutedLocally": false,
+  "releaseAcceptance": false,
+  "humanAcceptance": false
+}

@@ -1,0 +1,529 @@
+//! Owned protocol/byte contracts; actual compiler evidence is a separate gate.
+use serde_json::{Value, json};
+use std::{collections::BTreeSet, fs, path::Path};
+use yoke::{
+    Engine,
+    analysis::AnalyzerEpoch,
+    capture::Deadline,
+    changes, lsp,
+    project_session::{HostProfile, Session},
+};
+const SOURCE: &str = "// owned café 🦀\r\nfunction leaf() { return 1; }\r\nfunction dependency() { return leaf(); }\r\nexport function removeMe() { return dependency(); }\r\nexport function keep() { removeMe(); return 2; }\r\n";
+fn d() -> Deadline {
+    Deadline::new(30_000)
+}
+struct Fixture {
+    session: Session,
+    root: tempfile::TempDir,
+    log: tempfile::TempDir,
+}
+fn fixture(source: &str, mode: &str, epoch: AnalyzerEpoch) -> Fixture {
+    let root = tempfile::tempdir().unwrap();
+    let log = tempfile::tempdir().unwrap();
+    fs::write(root.path().join("module.ts"), source).unwrap();
+    let mut engine = Engine::open(root.path()).unwrap();
+    engine.capture_epoch = epoch;
+    engine
+        .register_configured_server(lsp::ConfiguredServer {
+            server: lsp::Server {
+                command: "node".into(),
+                args: vec![
+                    Path::new(env!("CARGO_MANIFEST_DIR"))
+                        .join("tests/fixtures/propagated-delete-lsp.mjs")
+                        .display()
+                        .to_string(),
+                    log.path().join("protocol.log").display().to_string(),
+                    mode.into(),
+                    root.path().join("module.ts").display().to_string(),
+                ],
+                language: "typescript".into(),
+                trust: true,
+            },
+            configuration: lsp::HostConfiguration {
+                passive_profile: Some(lsp::PassiveProfile::ContractFixture),
+                ..Default::default()
+            },
+        })
+        .unwrap();
+    Fixture {
+        session: Session::open(
+            engine,
+            HostProfile::default(),
+            Some("owned-propagation"),
+            &d(),
+        )
+        .unwrap(),
+        root,
+        log,
+    }
+}
+fn args() -> Value {
+    json!({"relative_path":"module.ts","name_path":"removeMe","propagate":true})
+}
+fn invoke(f: &mut Fixture, args: Value) -> anyhow::Result<Value> {
+    yoke::agent_repl::invoke_facade(&mut f.session, "jb.safe_delete", args, None, &d())
+}
+fn transcript(f: &Fixture) -> String {
+    fs::read_to_string(f.log.path().join("protocol.log")).unwrap_or_default()
+}
+fn unpublished(f: &Fixture) {
+    assert_eq!(f.session.engine.store.db.query_row("SELECT COUNT(*) FROM records WHERE kind IN ('plan','approval','receipt','journal')",[],|r|r.get::<_,usize>(0)).unwrap(),0);
+    assert_eq!(
+        f.session
+            .engine
+            .store
+            .db
+            .query_row(
+                "SELECT COUNT(*) FROM snapshots WHERE json_extract(value,'$.kind')='derived'",
+                [],
+                |r| r.get::<_, usize>(0)
+            )
+            .unwrap(),
+        0
+    );
+}
+fn deleted(value: &Value) -> BTreeSet<&str> {
+    value["propagation"]["deletedDeclarations"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .map(|item| item["name"].as_str().unwrap())
+        .collect()
+}
+fn after(f: &Fixture, value: &Value) -> String {
+    let snapshot = f
+        .session
+        .engine
+        .store
+        .snapshot(value["plan"]["resultSnapshotId"].as_str().unwrap())
+        .unwrap();
+    yoke::query::source(&f.session.engine.store, &snapshot, "module.ts")
+        .unwrap()
+        .0
+}
+
+#[test]
+fn facade_propagation_preserves_both_epochs_force_flags_and_original_byte_anchors() {
+    for epoch in [AnalyzerEpoch::V8, AnalyzerEpoch::V9] {
+        for force in [false, true] {
+            let mut f = fixture(SOURCE, "ok", epoch);
+            let mut request = args();
+            request["delete_even_if_used"] = json!(force);
+            let value = invoke(&mut f, request).unwrap();
+            assert_eq!(
+                deleted(&value),
+                BTreeSet::from(["leaf", "dependency", "removeMe"])
+            );
+            assert_eq!(value["forced"], force);
+            assert_eq!(value["complete"], false);
+            assert_eq!(value["remainingUsagesMayBreak"], true);
+            assert_eq!(value["propagation"]["providerRequestCount"], 8);
+            assert_eq!(value["propagation"]["removedUsageCount"], 1);
+            assert_eq!(
+                after(&f, &value),
+                "// owned café 🦀\r\n\r\n\r\n\r\nexport function keep() {  return 2; }\r\n"
+            );
+            assert_eq!(
+                fs::read_to_string(f.root.path().join("module.ts")).unwrap(),
+                SOURCE
+            );
+            assert!(transcript(&f).contains("\"includeDeclaration\":true"));
+        }
+    }
+}
+
+#[test]
+fn private_cycles_are_pruned_together_and_surviving_consumers_keep_the_cycle() {
+    for surviving in [false, true] {
+        let source = format!(
+            "function alpha() {{ return beta(); }}\nfunction beta() {{ return alpha(); }}\nexport function removeMe() {{ return alpha(); }}\nexport function keep() {{ removeMe(); {}return 2; }}\n",
+            if surviving { "beta(); " } else { "" }
+        );
+        let mut f = fixture(&source, "ok", AnalyzerEpoch::V9);
+        let value = invoke(&mut f, args()).unwrap();
+        assert_eq!(
+            deleted(&value),
+            if surviving {
+                BTreeSet::from(["removeMe"])
+            } else {
+                BTreeSet::from(["alpha", "beta", "removeMe"])
+            }
+        );
+        assert_eq!(value["propagation"]["removedUsageCount"], 1);
+    }
+}
+
+#[test]
+fn bom_and_utf16_provider_positions_preserve_multibyte_bytes_before_the_removed_call() {
+    let source = format!(
+        "\u{feff}{}",
+        SOURCE.replace(
+            "keep() { removeMe();",
+            "keep() { const marker = '🦀'; removeMe();"
+        )
+    );
+    let mut f = fixture(&source, "ok", AnalyzerEpoch::V9);
+    let value = invoke(&mut f, args()).unwrap();
+    let result = after(&f, &value);
+    assert!(result.starts_with('\u{feff}'));
+    assert!(result.contains("const marker = '🦀';  return 2;"));
+    let mut f = fixture(
+        &format!("{SOURCE}function escaped\\u004eame() {{ return 1; }}\n"),
+        "ok",
+        AnalyzerEpoch::V9,
+    );
+    assert!(invoke(&mut f, args()).is_err());
+    unpublished(&f);
+    assert!(transcript(&f).is_empty());
+}
+
+#[test]
+fn stalled_provider_cannot_publish_after_the_original_deadline() {
+    let mut f = fixture(SOURCE, "stall", AnalyzerEpoch::V9);
+    assert!(
+        yoke::agent_repl::invoke_facade(
+            &mut f.session,
+            "jb.safe_delete",
+            args(),
+            None,
+            &Deadline::new(750)
+        )
+        .is_err()
+    );
+    unpublished(&f);
+    assert_eq!(
+        fs::read_to_string(f.root.path().join("module.ts")).unwrap(),
+        SOURCE
+    );
+}
+
+#[test]
+fn argument_dependencies_become_unused_without_sweeping_unrelated_unused_functions() {
+    let source = "function argumentOnly() { return 1; }\nfunction unrelated() { return 3; }\nexport function removeMe(value: number) { return value; }\nexport function keep() { removeMe(argumentOnly()); return 2; }\n";
+    let mut f = fixture(source, "ok", AnalyzerEpoch::V9);
+    let value = invoke(&mut f, args()).unwrap();
+    assert_eq!(
+        deleted(&value),
+        BTreeSet::from(["argumentOnly", "removeMe"])
+    );
+    assert!(after(&f, &value).contains("function unrelated()"));
+}
+
+#[test]
+fn exported_and_captured_external_dependencies_keep_their_own_dependencies() {
+    for case in ["export", "external-literal", "surviving-reference"] {
+        let source = match case {
+            "export" => SOURCE.replace("function dependency()", "export function dependency()"),
+            "surviving-reference" => {
+                format!("{SOURCE}export function anotherConsumer() {{ return dependency(); }}\n")
+            }
+            _ => SOURCE.into(),
+        };
+        let mut f = fixture(&source, "ok", AnalyzerEpoch::V9);
+        if case == "external-literal" {
+            fs::write(f.root.path().join("notes.txt"), "dependency").unwrap();
+        }
+        let value = invoke(&mut f, args()).unwrap();
+        assert_eq!(deleted(&value), BTreeSet::from(["removeMe"]));
+        assert_eq!(
+            value["propagation"]["retainedCandidates"]
+                .as_array()
+                .unwrap()
+                .len(),
+            2
+        );
+    }
+}
+
+#[test]
+fn duplicate_provider_observations_and_nested_target_calls_emit_one_physical_statement_edit() {
+    for mode in ["ok", "duplicates"] {
+        let source = "export function removeMe(...values: unknown[]) { return 1; }\nexport function keep() { removeMe(removeMe()); return 2; }\n";
+        let mut f = fixture(source, mode, AnalyzerEpoch::V9);
+        let value = invoke(&mut f, args()).unwrap();
+        assert_eq!(value["propagation"]["removedUsageCount"], 1);
+        assert_eq!(
+            after(&f, &value),
+            "\nexport function keep() {  return 2; }\n"
+        );
+    }
+}
+
+#[test]
+fn value_return_constructor_and_other_expression_consumers_refuse_without_a_plan() {
+    for usage in [
+        "return removeMe();",
+        "const held = removeMe; return held;",
+        "other(removeMe()); return 2;",
+        "new removeMe(); return 2;",
+        "void removeMe(); return 2;",
+    ] {
+        let source = format!(
+            "export function removeMe() {{ return 1; }}\nexport function keep() {{ {usage} }}\n"
+        );
+        let mut f = fixture(&source, "ok", AnalyzerEpoch::V9);
+        assert!(invoke(&mut f, args()).is_err(), "{usage}");
+        unpublished(&f);
+    }
+}
+
+#[test]
+fn missing_empty_omitted_truncated_foreign_and_malformed_proofs_do_not_publish() {
+    for mode in [
+        "no-definition",
+        "foreign-definition",
+        "wrong-definition",
+        "empty-references",
+        "omit-self",
+        "omit-use",
+        "truncated",
+        "proof-overflow",
+        "malformed-references",
+        "other-file-reference",
+    ] {
+        let mut f = fixture(SOURCE, mode, AnalyzerEpoch::V9);
+        if mode == "other-file-reference" {
+            fs::write(f.root.path().join("other.ts"), "removeMe();\n").unwrap();
+        }
+        assert!(invoke(&mut f, args()).is_err(), "{mode}");
+        unpublished(&f);
+        assert_eq!(
+            fs::read_to_string(f.root.path().join("module.ts")).unwrap(),
+            SOURCE
+        );
+    }
+}
+
+#[test]
+fn unreported_identifier_and_literal_target_candidates_cannot_be_disguised_as_no_uses() {
+    for (suffix, mode) in [
+        (
+            "export function other() { const held = removeMe; return held; }\n",
+            "omit-use",
+        ),
+        ("export function other() { return 'removeMe'; }\n", "ok"),
+    ] {
+        let mut f = fixture(&format!("{SOURCE}{suffix}"), mode, AnalyzerEpoch::V9);
+        assert!(invoke(&mut f, args()).is_err());
+        unpublished(&f);
+    }
+    let mut f = fixture(SOURCE, "ok", AnalyzerEpoch::V9);
+    fs::write(f.root.path().join("notes.txt"), "removeMe").unwrap();
+    assert!(invoke(&mut f, args()).is_err());
+    unpublished(&f);
+}
+
+#[test]
+fn source_changes_during_provider_work_are_preserved_and_refused_before_publication() {
+    let mut f = fixture(SOURCE, "tamper-original", AnalyzerEpoch::V9);
+    assert!(invoke(&mut f, args()).is_err());
+    unpublished(&f);
+    assert_eq!(
+        fs::read_to_string(f.root.path().join("module.ts")).unwrap(),
+        "// foreign edit\n"
+    );
+}
+
+#[test]
+fn missing_edit_or_provider_authority_and_invalid_selectors_refuse_before_provider_start() {
+    for case in [
+        "planning",
+        "readonly",
+        "missing",
+        "untrusted",
+        "no-profile",
+        "traversal",
+        "case-alias",
+        "empty",
+        "file-selection",
+    ] {
+        let mut f = fixture(SOURCE, "ok", AnalyzerEpoch::V9);
+        let mut request = args();
+        match case {
+            "planning" => {
+                f.session
+                    .invoke("switchModes", &json!({"modes":["planning"]}), &d())
+                    .unwrap();
+            }
+            "readonly" => {
+                f.session.engine.capture_options.read_only_dependency_dirs = vec![".".into()]
+            }
+            "missing" => f.session.engine.servers.clear(),
+            "untrusted" => {
+                f.session
+                    .engine
+                    .servers
+                    .get_mut("typescript")
+                    .unwrap()
+                    .trust = false
+            }
+            "no-profile" => f.session.engine.server_configurations.clear(),
+            "traversal" => request["relative_path"] = json!("../module.ts"),
+            "case-alias" => request["relative_path"] = json!("MODULE.ts"),
+            "empty" => request["name_path"] = json!(""),
+            _ => request["name_path"] = Value::Null,
+        }
+        assert!(invoke(&mut f, request).is_err(), "{case}");
+        unpublished(&f);
+        assert!(transcript(&f).is_empty(), "{case}");
+    }
+}
+
+#[test]
+fn unsupported_module_shapes_refuse_before_provider_start() {
+    for suffix in [
+        "export const variable = 1;\n",
+        "import value from './outside';\n",
+        "export class Other {}\n",
+        "export interface Other {}\n",
+        "export default function() {}\n",
+        "/* malformed",
+    ] {
+        let mut f = fixture(&format!("{SOURCE}{suffix}"), "ok", AnalyzerEpoch::V9);
+        assert!(invoke(&mut f, args()).is_err(), "{suffix}");
+        unpublished(&f);
+        assert!(transcript(&f).is_empty());
+    }
+}
+
+#[test]
+fn declaration_quota_admits_sixteen_and_refuses_seventeen_before_provider_start() {
+    for count in [16, 17] {
+        let source = format!(
+            "{}export function removeMe() {{ return 1; }}\nexport function keep() {{ removeMe(); return 2; }}\n",
+            (0..count - 2)
+                .map(|i| format!("function filler{i}() {{ return {i}; }}\n"))
+                .collect::<String>()
+        );
+        let mut f = fixture(&source, "ok", AnalyzerEpoch::V9);
+        let value = invoke(&mut f, args());
+        if count == 16 {
+            assert_eq!(value.unwrap()["propagation"]["providerRequestCount"], 32);
+        } else {
+            assert!(value.is_err());
+            unpublished(&f);
+            assert!(transcript(&f).is_empty());
+        }
+    }
+}
+
+#[test]
+fn usage_statement_quota_admits128_and_refuses129_without_publication() {
+    for count in [128, 129] {
+        let source = format!(
+            "export function removeMe() {{ return 1; }}\nexport function keep() {{ {}return 2; }}\n",
+            "removeMe();".repeat(count)
+        );
+        let mut f = fixture(&source, "ok", AnalyzerEpoch::V9);
+        let value = invoke(&mut f, args());
+        if count == 128 {
+            assert_eq!(value.unwrap()["propagation"]["removedUsageCount"], 128);
+        } else {
+            assert!(value.is_err());
+            unpublished(&f);
+        }
+    }
+}
+
+#[test]
+fn selected_module_byte_quota_is_exact_and_checked_before_provider_start() {
+    for size in [256_000, 256_001] {
+        let source = format!("//{}\n{SOURCE}", "x".repeat(size - SOURCE.len() - 3));
+        assert_eq!(source.len(), size);
+        let mut f = fixture(&source, "no-definition", AnalyzerEpoch::V9);
+        let error = invoke(&mut f, args()).unwrap_err();
+        unpublished(&f);
+        assert_eq!(
+            transcript(&f).is_empty(),
+            size == 256_001,
+            "{size}: {error:#}"
+        );
+    }
+}
+
+#[test]
+fn captured_file_quota_admits2000_and_refuses2001_before_provider_start() {
+    for count in [2000, 2001] {
+        let mut f = fixture(SOURCE, "no-definition", AnalyzerEpoch::V9);
+        for i in 1..count {
+            fs::write(f.root.path().join(format!("entry_{i:04}.txt")), b"").unwrap();
+        }
+        let error = invoke(&mut f, args()).unwrap_err();
+        unpublished(&f);
+        assert_eq!(
+            transcript(&f).is_empty(),
+            count == 2001,
+            "{count}: {error:#}"
+        );
+    }
+}
+
+#[test]
+fn captured_byte_quota_counts_physical_duplicate_cas_members() {
+    for size in [16_000_000usize, 16_000_001] {
+        let mut f = fixture(SOURCE, "no-definition", AnalyzerEpoch::V9);
+        let mut left = size - SOURCE.len();
+        for i in 0..4 {
+            let bytes = left.min(4_000_000);
+            fs::write(
+                f.root.path().join(format!("payload_{i}.txt")),
+                vec![b'x'; bytes],
+            )
+            .unwrap();
+            left -= bytes;
+        }
+        assert_eq!(left, 0);
+        let error = invoke(&mut f, args()).unwrap_err();
+        unpublished(&f);
+        assert_eq!(
+            transcript(&f).is_empty(),
+            size == 16_000_001,
+            "{size}: {error:#}"
+        );
+    }
+}
+
+#[test]
+fn actual_owned_byte_verification_permission_approval_stale_and_recovery_gates_remain() {
+    let mut f = fixture(SOURCE, "ok", AnalyzerEpoch::V9);
+    let value = invoke(&mut f, args()).unwrap();
+    let id = value["plan"]["id"].as_str().unwrap();
+    let expected = after(&f, &value);
+    let apply = json!({"planId":id,"idempotencyKey":"owned-propagated-delete","mode":"workspace"});
+    assert!(changes::apply(&f.session.engine.store, f.root.path(), &apply, true, &d()).is_err());
+    changes::approve(&f.session.engine.store, id, false).unwrap();
+    assert!(changes::apply(&f.session.engine.store, f.root.path(), &apply, true, &d()).is_err());
+    let command = format!(
+        "const f=require('node:fs');if(f.readFileSync('module.ts','utf8')!=={})process.exit(7)",
+        serde_json::to_string(&expected).unwrap()
+    );
+    let verification = yoke::verify::execute(
+        &f.session.engine,
+        id,
+        "node",
+        &["-e".into(), command],
+        true,
+        &d(),
+    )
+    .unwrap();
+    assert_eq!(verification["status"], "passed");
+    assert!(changes::apply(&f.session.engine.store, f.root.path(), &apply, false, &d()).is_err());
+    fs::write(f.root.path().join("module.ts"), "// foreign edit\n").unwrap();
+    assert!(changes::apply(&f.session.engine.store, f.root.path(), &apply, true, &d()).is_err());
+    assert_eq!(
+        fs::read_to_string(f.root.path().join("module.ts")).unwrap(),
+        "// foreign edit\n"
+    );
+    fs::write(f.root.path().join("module.ts"), SOURCE).unwrap();
+    let receipt =
+        changes::apply(&f.session.engine.store, f.root.path(), &apply, true, &d()).unwrap();
+    assert_eq!(
+        fs::read_to_string(f.root.path().join("module.ts")).unwrap(),
+        expected
+    );
+    changes::recover(&f.session.engine.store, f.root.path(), &receipt.id, true).unwrap();
+    assert_eq!(
+        fs::read_to_string(f.root.path().join("module.ts")).unwrap(),
+        SOURCE
+    );
+}

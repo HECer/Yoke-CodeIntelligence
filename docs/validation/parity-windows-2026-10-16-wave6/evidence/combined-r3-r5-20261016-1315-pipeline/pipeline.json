@@ -1,0 +1,203 @@
+{
+  "accepted": true,
+  "artifactProvenanceInferredFromDepMetadata": false,
+  "cacheOriginQuarantineInvokedByWrapper": false,
+  "checkedAtUtc": "2026-10-16T14:06:16.608481+00:00",
+  "commonHelperSha256": "035eb4e6f0a513b5c6bc271803640678feca1c73b8015167ad7602de9b013751",
+  "exitCode": 0,
+  "h18ReceiptSha256": "20acc09773ff4df5a2fa428ed9e81e5bb3930cf1be3df9dc4ae87f2622ff4181",
+  "imageGateOriginsReviewed": [
+    {
+      "name": "R3-public35",
+      "receiptSha256": "cece652d2ac3ff49e8c3089ef9a5bab7b1a91531920eb7fee7d11d879bc65c5c",
+      "role": "R3"
+    },
+    {
+      "name": "R3-private21",
+      "receiptSha256": "877442e99e391a16d6154ce134fa7cbb97ddf89a10c7269999bfcfc08f71fa1c",
+      "role": "R3"
+    },
+    {
+      "name": "R5-public49-library-role",
+      "receiptSha256": "3db419a69e82fec428c68ee2ecce87d7908a574c95bce837c041464eab592734",
+      "role": "R5-library"
+    },
+    {
+      "name": "R5-public49-CLI-role",
+      "receiptSha256": "3db419a69e82fec428c68ee2ecce87d7908a574c95bce837c041464eab592734",
+      "role": "R5-CLI"
+    },
+    {
+      "name": "R5-private4",
+      "receiptSha256": "ac8ab17593fe04ef577376f57c2b084dc58ca484a8d53ec65dfaef8793e38e9e",
+      "role": "R5-library"
+    },
+    {
+      "name": "R5-legacy-MeaningArchive-CLI10",
+      "receiptSha256": "9eb1a60010d3ff7b55cf584cb61c41c6a49c7ed47f214bb083c5a501b22816c8",
+      "role": "R5-CLI"
+    }
+  ],
+  "interpretation": "No estimated/inherited counts. Only the original five fresh frozen phase receipts plus verified finalize establish full Windows acceptance. No context switch/quarantine between these normal gates.",
+  "normalCacheOriginReceiptSha256": "63af1804a375766d48d445685fc29ed7dfe3add0854cbe5a58b5a35740d65496",
+  "normalLibSha256": "b44900a1eebc861109252301092696257c0c174dd8f4bbce96ffd467a3ec8c16",
+  "normalMainSha256": "c114e0f1f8509f970d22a167259498f8798f32a43113ed61792844f6c488af43",
+  "pipelineLogSha256": "e669e8068ff8dcb8e6441378b551d9d9c71f228375a17514537472bbbbd37d03",
+  "pipelineSha256": "70a8fff46d663f1481bbe4d5875e76d0a6193e747cd532a97a661d496aa23ebc",
+  "pipelineTag": "combined-r3-r5-20261016-1315-pipeline",
+  "promotionManifestSha256": "4ede4e32b6671a4af17d65ea4edb9c733b2d1b16e25a80c923a519750b81bcdd",
+  "promotionReceiptSha256": "efb050a3cd75fbbe291ed4d387652b72d3f5d894b461ce08b3c623ac46d98104",
+  "qualifiedCapacityRuns": "separate_nonadditive_receipts_not_reexecuted_by_this_wrapper",
+  "reviewedContextPath": "target/parity-validation-20261015/next-git-impact-details/revisions/combined-context-prep-v1/actual-contexts/combined-r3-r5-20261016-1315.json",
+  "reviewedContextSha256": "6475705a81b2dbc053082b17d0a8445617b4a0724c8f565277601b897c17a88b",
+  "runnerSha256": "b51bbffbddd07be0aa6ef019fc950d772c628d77b3567f646d7a837726aa3d15",
+  "scope": "combined_normal_sequential_orchestration_only_use_phase_receipts",
+  "sourceAfterSha256": "11f688628aa77bf3f50c440cd954aa49e0588800aeabb838bc17d09efe9ef30f",
+  "sourceBeforeSha256": "11f688628aa77bf3f50c440cd954aa49e0588800aeabb838bc17d09efe9ef30f",
+  "sourceChanges": [],
+  "sourceFilesAfter": 2419,
+  "sourceFilesBefore": 2419,
+  "sourceManifestSha256": "11f688628aa77bf3f50c440cd954aa49e0588800aeabb838bc17d09efe9ef30f",
+  "stages": [
+    {
+      "accepted": true,
+      "command": [
+        "C:\\Users\\HEC_e\\AppData\\Local\\Programs\\Miniconda3\\python.exe",
+        "-X",
+        "utf8",
+        "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\target\\parity-validation-20261015\\acceptance_wave4.py",
+        "format",
+        "--tag",
+        "combined-r3-r5-20261016-1315-full",
+        "--temp",
+        "D:\\Yoke-Test-Scratch\\combined-r3-r5-20261016-1315-full-format"
+      ],
+      "exitCode": 0,
+      "failed": 0,
+      "groups": 0,
+      "ignored": 0,
+      "passed": 0,
+      "receiptSha256": "fb372b83551bd81962434bb40a424f947616c1c245dad45eedd0754c78fec2bf",
+      "sourceChanges": [],
+      "stage": "format",
+      "validationErrors": []
+    },
+    {
+      "accepted": true,
+      "command": [
+        "C:\\Users\\HEC_e\\AppData\\Local\\Programs\\Miniconda3\\python.exe",
+        "-X",
+        "utf8",
+        "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\target\\parity-validation-20261015\\acceptance_wave4.py",
+        "clippy",
+        "--tag",
+        "combined-r3-r5-20261016-1315-full",
+        "--temp",
+        "D:\\Yoke-Test-Scratch\\combined-r3-r5-20261016-1315-full-clippy"
+      ],
+      "exitCode": 0,
+      "failed": 0,
+      "groups": 0,
+      "ignored": 0,
+      "passed": 0,
+      "receiptSha256": "c5b975d286a4bb2200bdb484c71610f6ae943548b4a57285fb2965c2e9f8715f",
+      "sourceChanges": [],
+      "stage": "clippy",
+      "validationErrors": []
+    },
+    {
+      "accepted": true,
+      "command": [
+        "C:\\Users\\HEC_e\\AppData\\Local\\Programs\\Miniconda3\\python.exe",
+        "-X",
+        "utf8",
+        "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\target\\parity-validation-20261015\\acceptance_wave4.py",
+        "python",
+        "--tag",
+        "combined-r3-r5-20261016-1315-full",
+        "--temp",
+        "D:\\Yoke-Test-Scratch\\combined-r3-r5-20261016-1315-full-python"
+      ],
+      "exitCode": 0,
+      "failed": 0,
+      "groups": 1,
+      "ignored": 0,
+      "passed": 11,
+      "receiptSha256": "9a8fd7c88437d9134af5a6240648187c12e6207bf9074710020e192245ce73f4",
+      "sourceChanges": [],
+      "stage": "python",
+      "validationErrors": []
+    },
+    {
+      "accepted": true,
+      "command": [
+        "C:\\Users\\HEC_e\\AppData\\Local\\Programs\\Miniconda3\\python.exe",
+        "-X",
+        "utf8",
+        "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\target\\parity-validation-20261015\\acceptance_wave4.py",
+        "typescript",
+        "--tag",
+        "combined-r3-r5-20261016-1315-full",
+        "--temp",
+        "D:\\Yoke-Test-Scratch\\combined-r3-r5-20261016-1315-full-typescript"
+      ],
+      "exitCode": 0,
+      "failed": 0,
+      "groups": 1,
+      "ignored": 3,
+      "passed": 249,
+      "receiptSha256": "1a9097800491dee9836b6df3198f3f5771124b4ee07bec2dc4fa670d136d551b",
+      "sourceChanges": [],
+      "stage": "typescript",
+      "validationErrors": []
+    },
+    {
+      "accepted": true,
+      "command": [
+        "C:\\Users\\HEC_e\\AppData\\Local\\Programs\\Miniconda3\\python.exe",
+        "-X",
+        "utf8",
+        "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\target\\parity-validation-20261015\\acceptance_wave4.py",
+        "native",
+        "--tag",
+        "combined-r3-r5-20261016-1315-full",
+        "--temp",
+        "D:\\Yoke-Test-Scratch\\combined-r3-r5-20261016-1315-full-native",
+        "--acl-temp",
+        "C:\\Users\\Public\\Yoke-Test-Scratch\\combined-r3-r5-20261016-1315-full-acl"
+      ],
+      "exitCode": 0,
+      "failed": 0,
+      "groups": 235,
+      "ignored": 33,
+      "passed": 1744,
+      "receiptSha256": "debf60af7d145d46543bc794898f58d12e5c4032625c5370d057ea9408143538",
+      "sourceChanges": [],
+      "stage": "native",
+      "validationErrors": []
+    },
+    {
+      "accepted": true,
+      "command": [
+        "C:\\Users\\HEC_e\\AppData\\Local\\Programs\\Miniconda3\\python.exe",
+        "-X",
+        "utf8",
+        "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\target\\parity-validation-20261015\\acceptance_wave4.py",
+        "finalize",
+        "--tag",
+        "combined-r3-r5-20261016-1315-full"
+      ],
+      "exitCode": 0,
+      "failed": null,
+      "groups": null,
+      "ignored": null,
+      "passed": null,
+      "receiptSha256": "8ca348de4de1674ebbe992402c81a6ca523949d232f37f84d1391c3cc3d5cfa4",
+      "sourceChanges": null,
+      "stage": "finalize",
+      "validationErrors": null
+    }
+  ],
+  "tag": "combined-r3-r5-20261016-1315-full",
+  "validationErrors": []
+}

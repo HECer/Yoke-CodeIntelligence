@@ -1,0 +1,9 @@
+
+running 4 tests
+test arxiv_rate::tests::abandoned_request_requires_explicit_exact_hash_recovery ... ok
+test arxiv_rate::tests::corrupt_partial_or_reordered_slots_are_never_reset_or_recovered ... ok
+test arxiv_rate::tests::journal_holds_exclusive_lock_and_completion_starts_cooldown ... ok
+test arxiv_rate::tests::permissions_paths_deadlines_and_hardlinks_refuse_before_state_mutation ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 483 filtered out; finished in 0.11s
+

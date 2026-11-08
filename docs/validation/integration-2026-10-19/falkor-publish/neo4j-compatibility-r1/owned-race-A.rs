@@ -1,0 +1,1 @@
+fn candidate_A(){}

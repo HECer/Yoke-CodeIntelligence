@@ -1,0 +1,31 @@
+{
+  "federated_collections": {
+    "executable": "E:\\Yoke-Build-Cache\\meaning-aliases-20261016\\debug\\deps\\federated_collections-97e4dc2b6e05984f.exe",
+    "ignored": [],
+    "registered": [
+      "archived_foreign_collection_requires_current_host_context_for_every_operation",
+      "archived_sources_outlive_original_receipts_but_not_changed_receiver_policy",
+      "source_only_archive_does_not_invent_canonical_graph_authority",
+      "unknown_authority_kinds_and_nested_fields_are_not_silently_accepted"
+    ]
+  },
+  "federation": {
+    "executable": "E:\\Yoke-Build-Cache\\meaning-aliases-20261016\\debug\\deps\\federation-a6d0d4a87e5d87b1.exe",
+    "ignored": [],
+    "registered": [
+      "canonical_editor_overlays_round_trip_without_saved_source_or_reexport_authority",
+      "correctly_signed_malicious_sources_still_fail_receiver_safety_policy",
+      "corrupt_remote_graph_cannot_be_returned_as_a_successful_empty_index",
+      "granted_foreign_search_reuses_verified_sources_without_native_publication",
+      "host_exclude_patterns_cannot_be_bypassed_with_path_case_aliases",
+      "nonce_reuse_expired_import_and_current_grant_revocation_are_distinct",
+      "receiver_effective_ignore_precedence_handles_virtual_paths_and_whitelists",
+      "receiver_ignore_excludes_links_and_remote_policy_text_cannot_change_host_authority",
+      "signed_sources_are_separate_immutable_and_locally_reindexed_without_source_writes",
+      "source_namespace_capacity_accounts_for_every_file_in_prior_receipts",
+      "sqlite_writer_contention_consumes_only_the_remaining_import_deadline",
+      "tampered_bytes_signatures_scope_and_workspace_are_rejected_before_persistence",
+      "valid_signature_does_not_authorize_protected_secret_binary_or_colliding_source"
+    ]
+  }
+}

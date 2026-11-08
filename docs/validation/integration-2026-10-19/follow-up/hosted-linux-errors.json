@@ -1,0 +1,14 @@
+[
+  {
+    "error": "error: field `dir` is never read",
+    "location": "  --> native/tests/host_install.rs:10:5"
+  },
+  {
+    "error": "error: unused import: `path::Path`",
+    "location": " --> native/tests/container.rs:2:15"
+  },
+  {
+    "error": "error: function `options` is never used",
+    "location": "  --> native/tests/github_app_auth.rs:14:4"
+  }
+]

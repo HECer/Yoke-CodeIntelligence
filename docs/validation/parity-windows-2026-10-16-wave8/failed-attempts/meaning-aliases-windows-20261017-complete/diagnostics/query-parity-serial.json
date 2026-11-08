@@ -1,0 +1,30 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--workspace",
+    "--locked",
+    "-j",
+    "1",
+    "--no-fail-fast",
+    "--test",
+    "query_parity",
+    "--",
+    "--format",
+    "pretty",
+    "--test-threads=1"
+  ],
+  "contributesToAcceptedTotals": false,
+  "exitCode": 0,
+  "logSha256": "d018162be9d6abde7f03621262138c9e1a49aa960f68547b3569f74be48d4f48",
+  "sourceManifestSha256": "ee3aa27d31684acd0c16e14af519929e603a187bf5a23d17ef977af2956d5934",
+  "sourceUnchanged": true,
+  "summaries": [
+    [
+      12,
+      0,
+      0
+    ]
+  ],
+  "testDeadlineChanged": false
+}

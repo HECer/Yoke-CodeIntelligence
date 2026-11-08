@@ -1,0 +1,38 @@
+{
+  "sourceUnchanged": true,
+  "inputs": 793,
+  "commands": [
+    {
+      "name": "native",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--no-fail-fast",
+        "--test",
+        "compiler_move",
+        "--",
+        "--test-threads=1"
+      ],
+      "exitCode": 101,
+      "seconds": 38.06475750001846,
+      "totals": {
+        "passed": 6,
+        "failed": 2,
+        "ignored": 0
+      },
+      "groups": 1,
+      "failures": [
+        "actual_declaration_matrix_keeps_original_graph_identity_and_explicit_scalar_origin",
+        "actual_language_matrix_keeps_bom_unicode_crlf_and_repository_plugins_inert"
+      ]
+    }
+  ],
+  "allChecksPassed": false,
+  "wholeNativeRerun": false
+}

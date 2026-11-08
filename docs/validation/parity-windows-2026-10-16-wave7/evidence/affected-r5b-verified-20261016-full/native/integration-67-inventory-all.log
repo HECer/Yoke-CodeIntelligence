@@ -1,0 +1,13 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 4.12s
+     Running tests\mcp_collection_grants.rs (target\debug\deps\mcp_collection_grants-9bfb327d46861f6e.exe)
+current_principal_grants_are_injected_per_http_call_and_removed_on_upsert: test
+native_archive_does_not_open_a_configured_but_unused_federation_receiver: test
+
+2 tests, 0 benchmarks
+     Running tests\mcp_collection_grants_review.rs (target\debug\deps\mcp_collection_grants_review-75ef68191c99f6f8.exe)
+collection_grants_are_borrowed_per_dispatch_and_sources_remain_noncanonical: test
+non_session_profile_rejects_host_collection_grants_before_opening_source_state: test
+replacing_principal_policy_cancels_running_session_before_waiting_for_read_lease: test
+
+3 tests, 0 benchmarks

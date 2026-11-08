@@ -1,0 +1,14 @@
+{
+  "recordedAt": "2026-10-19T08:35:42.680218+00:00",
+  "nativeBinary": "target/debug/yoke.exe",
+  "nativeBinarySha256": "7aaf4f7aa4586e1ddb0a753cd6f7c065e6204b5ec3691481804702f0afe30033",
+  "allCasesPassed": true,
+  "competingCliProcesses": 2,
+  "successfulAtomicSteps": 1,
+  "staleRevisionRefusals": 1,
+  "finalRevision": 1,
+  "visitedCommits": 2,
+  "sourceIndexRefAndLatestUnchanged": true,
+  "reopenedReadonlyStatusAgrees": true,
+  "scope": "Owned actual Git, source capture and two independent real CLI processes. Both request revision0; exactly one step publishes and the other refuses stale revision without stdout. This separate process-race gate is not added to Cargo result-group totals."
+}

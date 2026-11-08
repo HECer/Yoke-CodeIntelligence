@@ -1,0 +1,1 @@
+[{"language": "js", "source": "/** @template T\n * @param {T} n\n * @returns {T} */\nfunction helper(n){return n;}const result=helper(()=>3);export const observed=[result.name,result()];"}]

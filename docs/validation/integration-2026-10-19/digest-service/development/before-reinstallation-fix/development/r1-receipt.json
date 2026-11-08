@@ -1,0 +1,14 @@
+{
+  "command": [
+    "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+    "test",
+    "--locked",
+    "-j2",
+    "--test",
+    "github_app_digest_service",
+    "--",
+    "--test-threads=2"
+  ],
+  "exitCode": 101,
+  "elapsedSeconds": 64.61041869999463
+}

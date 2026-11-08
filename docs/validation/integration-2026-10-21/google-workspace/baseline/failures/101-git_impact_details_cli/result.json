@@ -1,0 +1,79 @@
+{
+  "group": "git_impact_details_cli",
+  "index": 101,
+  "freeBytesBefore": 3642875904,
+  "commands": [
+    {
+      "name": "compile",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--test",
+        "git_impact_details_cli",
+        "--no-run",
+        "--message-format=json-render-diagnostics"
+      ],
+      "exitCode": 0,
+      "seconds": 12.333240899984958
+    },
+    {
+      "name": "test",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--test",
+        "git_impact_details_cli",
+        "--no-fail-fast",
+        "--",
+        "--test-threads=1"
+      ],
+      "exitCode": 101,
+      "seconds": 13.952725700015435
+    }
+  ],
+  "deletedNewTestArtifacts": [
+    {
+      "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\git_impact_details_cli-d6aaffa18eaa1361.exe",
+      "bytes": 101396480,
+      "sha256": "7f7003b20c39d2a4d7bdf581bf1ef2e7deebd562a2a08166efec71a1afd6ae7e",
+      "deleted": true
+    },
+    {
+      "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\git_impact_details_cli-d6aaffa18eaa1361.pdb",
+      "bytes": 11145216,
+      "sha256": "c1d8356a364577c2f3bd2f7d229447f06df2f795ee8c7cf602599e1fd8ea5058",
+      "deleted": true
+    }
+  ],
+  "testExecutables": [
+    {
+      "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\git_impact_details_cli-d6aaffa18eaa1361.exe",
+      "sha256": "7f7003b20c39d2a4d7bdf581bf1ef2e7deebd562a2a08166efec71a1afd6ae7e",
+      "existedBefore": false
+    }
+  ],
+  "totals": {
+    "passed": 14,
+    "failed": 1,
+    "ignored": 0
+  },
+  "resultGroups": 1,
+  "failures": [
+    "windows_real_options_file_and_ancestor_reparse_points_refuse_after_genuine_positive"
+  ],
+  "allChecksPassed": false,
+  "sourceUnchanged": true,
+  "freeBytesAfter": 3593555968
+}

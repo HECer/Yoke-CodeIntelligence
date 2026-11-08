@@ -1,0 +1,270 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-19T01:16:31.694972+00:00",
+  "baseCommit": "c36207b83e5aedcb067e34e219add0c2d47a2e5e",
+  "kind": "windows_short_path_and_bounded_http_refusal_repair",
+  "acceptedWholeNative": false,
+  "host": "EVY Windows; Rust 1.94.1, Node 24.21.0, Python 3.14.7",
+  "checks": {
+    "firstFrozenNativeRun": {
+      "groups": 10,
+      "passed": 469,
+      "failed": 1,
+      "ignored": 7
+    },
+    "firstFrozenRunAccepted": false,
+    "finalFrozenNativeRun": {
+      "groups": 12,
+      "passed": 479,
+      "failed": 0,
+      "ignored": 7
+    },
+    "finalFormat": "passed",
+    "finalAllTargetClippyWarningsDenied": "passed",
+    "actualShortTempChecks": 8,
+    "actualShortTempPassed": 10,
+    "actualShortTempFailed": 0,
+    "typescriptTypecheck": "passed_in_r1",
+    "typescript": {
+      "passed": 254,
+      "failed": 0,
+      "skipped": 3,
+      "run": "r1"
+    },
+    "sourceUnchangedWithinBothRuns": true,
+    "runtimeInputsVerified": 604
+  },
+  "findings": [
+    "Before repair, the existing React-language fixture and external registered-root query fail under an actual Windows 8.3 TEMP parent; four other selected CI cases already pass locally.",
+    "Host-selected registered-root aliases are rebuilt from current host inputs, never serialized into session authority and never resolved from arbitrary requested paths. Removal and Unicode lowercase-expansion refusals are tested.",
+    "The React fixture compares decoded file paths for equivalent tilde URI spellings and uses the requested document independently of notification order. Production URI encoding and language IDs are unchanged.",
+    "The console fixture calls the real kernel GetConsoleWindow through an owned compiled native probe, without a PowerShell CodeDOM dependency. Existing process flags are unchanged.",
+    "Positive REPL/source-binding fixtures separate host/store/worker setup from unchanged 20-second operation budgets. The positive HTTP session fixture has a usable five-second absolute lifetime; short stalled-initialization expiry tests remain unchanged.",
+    "The first frozen run also reproduces a reset before a complete oversized-header refusal. Production HTTP shutdown now half-closes the response and discards at most 16 KiB for at most 50ms within the original physical deadline, never parsing or dispatching tail bytes.",
+    "Real TCP regressions prove bounded tail bytes, unchanged queued bytes after expiry/stop, and idle-peer deadline behavior. Existing framing, TLS, revocation, cancellation and absolute session lifetime tests remain active.",
+    "The Unix positive archive CLI fixture now explicitly grants existing SQLite registry coordination; the default remains denied. Actual Unix validation of that fixture awaits CI."
+  ],
+  "preparationNotes": [
+    "The first manual root-alias assertions expected file strings instead of public file objects; assertions were corrected to inspect path fields.",
+    "The first frozen run retains two Clippy collapsible-if errors and one HTTP admission-response reset. It is not accepted.",
+    "A separate three-test TCP preparation passed; its integration target matched zero tests due to the unit filter. Final validation executes the entire integration target."
+  ],
+  "boundaries": [
+    "Final native counts cover selected library/Session/HTTP/process/registry targets, not all Cargo targets; all scoped/diagnostic runs overlap and are not summed.",
+    "TypeScript checks ran in r1; the explicit inter-run source delta contains only native Rust/test files, and no TypeScript inputs changed.",
+    "The original hosted d4 Windows six failures are not declared fixed remotely merely because the six selected local short-temp cases pass.",
+    "Unix host-install availability, macOS PDF/runtime/SQL issues, other STATUS/R1-R9 work, full-native acceptance and external provider installations remain open.",
+    "No release, main merge, deployment or live GitHub App installation is claimed."
+  ],
+  "proofs": {
+    "sourceDelta": "source-delta.json",
+    "documentationAndEvidenceWrittenAfterValidation": true
+  },
+  "artifacts": [
+    {
+      "path": "original-short-temp-reproduction/console.log",
+      "bytes": 431,
+      "sha256": "f7dee0680811e060550da6543f4283fd75d005b1c64ab8b4a16254962d802de5"
+    },
+    {
+      "path": "original-short-temp-reproduction/http-session.log",
+      "bytes": 443,
+      "sha256": "ad4444e748bf826dbe067cfefb30ff48f7b6ca338950c7485080d385a33618a5"
+    },
+    {
+      "path": "original-short-temp-reproduction/react-uri.log",
+      "bytes": 1016,
+      "sha256": "86cfa445c6fb6f963725b23ccbbc03d0da2fa62f2a53e7c2126f5087afff36f0"
+    },
+    {
+      "path": "original-short-temp-reproduction/receipts.json",
+      "bytes": 2178,
+      "sha256": "4bf862d93457425af1a5562fbea6f027aaa4aac77c183b0931a2fba780e11870"
+    },
+    {
+      "path": "original-short-temp-reproduction/registered-root.log",
+      "bytes": 1095,
+      "sha256": "a20c44f4a95237d9c450e9dbca507847136f39c2d9f3d96dfd15d7666b578b11"
+    },
+    {
+      "path": "original-short-temp-reproduction/shell.log",
+      "bytes": 448,
+      "sha256": "8a3b4e6c9ae79502c6387d0aedd9b355b8b1791145258a8f214d288bd3db86b9"
+    },
+    {
+      "path": "original-short-temp-reproduction/source-binding.log",
+      "bytes": 373,
+      "sha256": "1983b62068da71b1a44120052cfe8b8bcdd0d86046bba9b5cef8f4819b8aada2"
+    },
+    {
+      "path": "original-short-temp-reproduction/summary.json",
+      "bytes": 2669,
+      "sha256": "2c28800c879a23d82b64208e87248d2f7afcdd8c6895d4560cb09a7377224d4e"
+    },
+    {
+      "path": "r1/clippy.log",
+      "bytes": 2183,
+      "sha256": "618070edba277e5a209e1a6092eb4870f9f0c1c3e86d69609130648d2c939632"
+    },
+    {
+      "path": "r1/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "r1/library-and-session.log",
+      "bytes": 54971,
+      "sha256": "9980dc48830b528f6a68398508b16e6fc65f69abb2add21cbc880ecd9bbe0c53"
+    },
+    {
+      "path": "r1/receipts.json",
+      "bytes": 7036,
+      "sha256": "62524c147c62f79028b7737a7f3a224286b3ea4f2407f575d9c3422b71f67d8d"
+    },
+    {
+      "path": "r1/short-console.log",
+      "bytes": 320,
+      "sha256": "4f975600b6ebb349adb9e50f37cf63b8077e35b8bbb12f0d64bc68197f4e8d80"
+    },
+    {
+      "path": "r1/short-http-session.log",
+      "bytes": 332,
+      "sha256": "f76cbf31c552c13b4dbdc0755f4ebc2d3fdfba72d25ce4c6d32dc34e9ac1ce49"
+    },
+    {
+      "path": "r1/short-react-equivalent-uri.log",
+      "bytes": 356,
+      "sha256": "73806f1ba40b1d9eb9ab8df47ca9e73c5fee7143cef8ffc47a8d3b3f9553e3a3"
+    },
+    {
+      "path": "r1/short-react-uri.log",
+      "bytes": 356,
+      "sha256": "de414bc638445e802e3941f735efd5f90e2d649214fcb42ed2e794e0db3dfba8"
+    },
+    {
+      "path": "r1/short-registered-root.log",
+      "bytes": 371,
+      "sha256": "a55da2974b9570ccb92959dc0f78a90acca683dd3e90624ac53ee8f982dbdb81"
+    },
+    {
+      "path": "r1/short-root-aliases.log",
+      "bytes": 553,
+      "sha256": "4aa1c54b46d4f831f63a355ecce9bf6c87c47bc15e61f39decf30af93e9a1ae0"
+    },
+    {
+      "path": "r1/short-shell.log",
+      "bytes": 337,
+      "sha256": "7b4c7fcce96f47e09237accc7be4cd8485940a8e44a54c2812c4ed8eafeb4c1d"
+    },
+    {
+      "path": "r1/short-source-binding.log",
+      "bytes": 373,
+      "sha256": "1b134703be160f428c8046ca70b9ef960880c489238f148fa4340e647042dbc0"
+    },
+    {
+      "path": "r1/short-temp.json",
+      "bytes": 254,
+      "sha256": "f7b24206f6ba082d2de0fd7a81ed1a318d5dd624cbb8a9bc06bcaeebdc370f72"
+    },
+    {
+      "path": "r1/source-freeze.json",
+      "bytes": 64463,
+      "sha256": "c7a3575d2fadc17efc5319e792e3647f1d4035971757e2beeda4dd10709da856"
+    },
+    {
+      "path": "r1/summary.json",
+      "bytes": 7771,
+      "sha256": "a04e82e3869b719b2d7b629d67b91920e8f0dc877397f9ae4c702163d01aa705"
+    },
+    {
+      "path": "r1/typescript-tests.log",
+      "bytes": 24426,
+      "sha256": "2cf7a0d8266d9ff73f68674337fdcf9c2cc61842df138ba9b53665f73a32d75c"
+    },
+    {
+      "path": "r1/typescript-typecheck.log",
+      "bytes": 101,
+      "sha256": "30ef9ce16cf042ab6f160e0a76c1fbfe22f02a3c3a3659ee62863ffc1efdbfdf"
+    },
+    {
+      "path": "r2/clippy.log",
+      "bytes": 172,
+      "sha256": "f73fef1dd403b3e560bd190c7908035d979a7ee4db2a7dc4c2b0ec58eb527453"
+    },
+    {
+      "path": "r2/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "r2/library-and-session.log",
+      "bytes": 55473,
+      "sha256": "94ffd81c912a53dc64281512d34b440de4928da9fd75c5b9b74afc647212314d"
+    },
+    {
+      "path": "r2/receipts.json",
+      "bytes": 6810,
+      "sha256": "8dd52c969b14b59c605091ad3b09135e209299c4f9535b54e79762e79b94d831"
+    },
+    {
+      "path": "r2/short-console.log",
+      "bytes": 320,
+      "sha256": "e42f088273bf36879dfabd46c564fe46f2a6fb0820ab5b206857254d4528744f"
+    },
+    {
+      "path": "r2/short-http-session.log",
+      "bytes": 332,
+      "sha256": "6ad615f99a4606866f8900b24f1910b30ac8530aab5362508eb18e0c0777d23d"
+    },
+    {
+      "path": "r2/short-react-equivalent-uri.log",
+      "bytes": 356,
+      "sha256": "20e5e8c82f9898d1b54345c968801a4e94102cb254eb3d9d4ab7647d15bdb4de"
+    },
+    {
+      "path": "r2/short-react-uri.log",
+      "bytes": 356,
+      "sha256": "bb543eeb87b1bb15ace46c79bc5ae1d833b8a763d6a1c17a68cc0782f77b30ca"
+    },
+    {
+      "path": "r2/short-registered-root.log",
+      "bytes": 371,
+      "sha256": "b098fea161664157cf1949510fb0561b16930bd7971faddce166cc22a13c0d86"
+    },
+    {
+      "path": "r2/short-root-aliases.log",
+      "bytes": 553,
+      "sha256": "a3e4f3f5c20193152b8e6150f0c0dfae6415ab5a25622971e41ea40098702d99"
+    },
+    {
+      "path": "r2/short-shell.log",
+      "bytes": 337,
+      "sha256": "cfbcec6096ef872715da933c0dd47ac3f1549d059de7b326fa21f45b63d4ae47"
+    },
+    {
+      "path": "r2/short-source-binding.log",
+      "bytes": 373,
+      "sha256": "cf384d888067e195d4d5aca367277d30eb5ef5ad2b4cd319a9505bc595efa3ee"
+    },
+    {
+      "path": "r2/short-temp.json",
+      "bytes": 254,
+      "sha256": "f7b24206f6ba082d2de0fd7a81ed1a318d5dd624cbb8a9bc06bcaeebdc370f72"
+    },
+    {
+      "path": "r2/source-freeze.json",
+      "bytes": 64576,
+      "sha256": "e59a9cab050f35968250f6591141d08b55fcc5e59822899764d56f835b9b2236"
+    },
+    {
+      "path": "r2/summary.json",
+      "bytes": 7526,
+      "sha256": "a0db4d393d6c08b291ce03621d9d3d8d5e5a96ebc104b23210af2d600b8eb054"
+    },
+    {
+      "path": "source-delta.json",
+      "bytes": 989,
+      "sha256": "75fe72a0aeeb8984d753cd32debad648435767217fc4883667f6054503c1b1e2"
+    }
+  ]
+}

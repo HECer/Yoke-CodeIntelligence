@@ -1,0 +1,22 @@
+    Finished `test` profile [unoptimized] target(s) in 0.93s
+     Running tests\model_bedrock_cli_actual.rs (target\debug\deps\model_bedrock_cli_actual-0bfd6a33f71dc038.exe)
+
+running 2 tests
+test actual_cli_bedrock_batch_has_three_accounted_attempts_and_one_complete_corpus ... ignored, Actual Windows credentials and three owned TCP Bedrock attempts; cleans only fake generation
+test actual_cli_bedrock_summary_uses_chunked_session_and_one_accounted_attempt ... ignored, Actual Windows Credential Manager and owned loopback HTTP; creates and removes one unique fake AWS credential generation
+
+test result: ok. 0 passed; 0 failed; 2 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\model_bedrock_review.rs (target\debug\deps\model_bedrock_review-bf263af38b3aa1ee.exe)
+
+running 7 tests
+test arn_slashes_and_dot_segments_stay_inside_one_signed_model_segment ... ok
+test cohere_maps_two_ordered_vectors_to_exact_supplied_source_ids ... ok
+test missing_usage_stays_unknown_and_reported_zero_remains_known ... ok
+test unsupported_dialect_operation_and_wrong_source_scope_precede_credentials ... ok
+test unicode_escaped_inner_object_keys_never_echo_temporary_credentials ... ok
+test rerank_rejects_foreign_missing_duplicate_and_out_of_range_results ... ok
+test session_expiring_inside_credential_callback_never_reaches_wire ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.18s
+

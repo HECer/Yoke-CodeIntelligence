@@ -1,0 +1,7 @@
+use std::{env,fs::OpenOptions,io::Write,process::Command};
+fn main() {
+ let mut f=OpenOptions::new().create(true).append(true).open("C:/Users/Lomi/Documents/NN-Developed/Yoke-CodeIntelligence/validation/integration-20261018/live-host-r1/rustc-probe-r2-events.txt").expect("owned marker open");
+ f.write_all(b"invoked\n").expect("marker write");
+ let s=Command::new("C:/Users/Lomi/.rustup/toolchains/1.94.1-x86_64-pc-windows-msvc/bin/rustc.exe").args(env::args_os().skip(1)).status().expect("host rustc");
+ std::process::exit(s.code().unwrap_or(1));
+}

@@ -1,0 +1,81 @@
+✖ LIVE installed graft pinned structural extraction (839.0249ms)
+✖ LIVE installed graphify pinned structural extraction (1558.078ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2841.959
+
+✖ failing tests:
+
+test at test\live\upstreams.mjs:10:5
+✖ LIVE installed graft pinned structural extraction (839.0249ms)
+  Error [CIError]: C:\Users\Lomi\AppData\Local\YokeValidation\upstreams-20261019-2hp9hr7r\node\node_modules\node-gyp-build\node-gyp-build.js:60
+    throw new Error('No native build was found for ' + target + '\n    loaded from: ' + dir + '\n')
+          ^
+  
+  Error: No native build was found for platform=win32 arch=x64 runtime=node abi=137 uv=1 libc=glibc node=24.21.0
+      loaded from: C:\Users\Lomi\AppData\Local\YokeValidation\upstreams-20261019-2hp9hr7r\node\node_modules\@nanonets\graft\node_modules\tree-sitter-kotlin
+  
+      at load.resolve.load.path (C:\Users\Lomi\AppData\Local\YokeValidation\upstreams-20261019-2hp9hr7r\node\node_modules\node-gyp-build\node-gyp-build.js:60:9)
+      at load (C:\Users\Lomi\AppData\Local\YokeValidation\upstreams-20261019-2hp9hr7r\node\node_modules\node-gyp-build\node-gyp-build.js:22:30)
+      at Object.<anonymous> (C:\Users\Lomi\AppData\Local\YokeValidation\upstreams-20261019-2hp9hr7r\node\node_modules\@nanonets\graft\node_modules\tree-sitter-kotlin\bindings\node\index.js:3:43)
+      at Module._compile (node:internal/modules/cjs/loader:1929:14)
+      at Object..js (node:internal/modules/cjs/loader:2060:10)
+      at Module.load (node:internal/modules/cjs/loader:1651:32)
+      at Module._load (node:internal/modules/cjs/loader:1443:12)
+      at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)
+      at loadCJSModuleWithModuleLoad (node:internal/modules/esm/translators:372:15)
+      at ModuleWrap.<anonymous> (node:internal/modules/esm/translators:244:9)
+  
+  Node.js v24.21.0
+  
+      at assert (file:///C:/Users/Lomi/AppData/Local/YokeValidation/upstreams-20261019-2hp9hr7r/node/dist/core/util.js:15:15)
+      at runBridge (file:///C:/Users/Lomi/AppData/Local/YokeValidation/upstreams-20261019-2hp9hr7r/node/dist/adapters/bridges.js:18:9)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///C:/Users/Lomi/AppData/Local/YokeValidation/upstreams-20261019-2hp9hr7r/node/test/live/upstreams.mjs:10:233)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    code: 'PROVIDER_FAILED'
+  }
+
+test at test\live\upstreams.mjs:10:5
+✖ LIVE installed graphify pinned structural extraction (1558.078ms)
+  Error [CIError]: Traceback (most recent call last):
+    File "C:\Users\Lomi\AppData\Local\YokeValidation\upstreams-20261019-2hp9hr7r\node\workers\graphify_bridge.py", line 28, in <module>
+      main()
+      ~~~~^^
+    File "C:\Users\Lomi\AppData\Local\YokeValidation\upstreams-20261019-2hp9hr7r\node\workers\graphify_bridge.py", line 23, in main
+      result = extract(paths, root=root)
+    File "C:\Users\Lomi\AppData\Local\YokeValidation\upstreams-20261019-2hp9hr7r\python\Lib\site-packages\graphify\extract.py", line 8370, in extract
+      _extract_sequential(
+      ~~~~~~~~~~~~~~~~~~~^
+          [(i, p) for (i, p) in uncached_work if per_file[i] is None],
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          per_file, root, total, cache_location,
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      )
+      ^
+    File "C:\Users\Lomi\AppData\Local\YokeValidation\upstreams-20261019-2hp9hr7r\python\Lib\site-packages\graphify\extract.py", line 8172, in _extract_sequential
+      save_cached(path, result, root, cache_root=cache_location, salt=cache_salt(path))
+      ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\Lomi\AppData\Local\YokeValidation\upstreams-20261019-2hp9hr7r\python\Lib\site-packages\graphify\cache.py", line 1268, in save_cached
+      fd, tmp_path = tempfile.mkstemp(dir=target_dir, prefix=f"{h}.", suffix=".tmp")
+                     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Python314\Lib\tempfile.py", line 354, in mkstemp
+      return _mkstemp_inner(dir, prefix, suffix, flags, output_type)
+    File "C:\Python314\Lib\tempfile.py", line 255, in _mkstemp_inner
+      fd = _os.open(file, flags, 0o600)
+  FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\upstreams-20261019-2hp9hr7r\\fixtures\\ci-test-ZDaqJE\\.code-intelligence\\changes\\bridge-8b403092-7f63-48f3-9868-5a09bbd1e915\\tree\\graphify-out\\cache\\ast\\v0.9.87-s10-g7154a062ba57\\7a2e722ea9d7f63467d872d22b83d7e3e5424df9e1b14fa0c6230131713c6e54.q89d7sj0.tmp'
+  
+      at assert (file:///C:/Users/Lomi/AppData/Local/YokeValidation/upstreams-20261019-2hp9hr7r/node/dist/core/util.js:15:15)
+      at runBridge (file:///C:/Users/Lomi/AppData/Local/YokeValidation/upstreams-20261019-2hp9hr7r/node/dist/adapters/bridges.js:18:9)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///C:/Users/Lomi/AppData/Local/YokeValidation/upstreams-20261019-2hp9hr7r/node/test/live/upstreams.mjs:10:233)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    code: 'PROVIDER_FAILED'
+  }

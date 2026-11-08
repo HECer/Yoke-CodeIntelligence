@@ -1,0 +1,10 @@
+    Finished `test` profile [unoptimized] target(s) in 0.60s
+     Running tests\python_empty_suite.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\python_empty_suite-44c8ad02260bca75.exe)
+
+running 1 test
+test actual_python_ast_and_guarded_apply_recovery_validate_the_planned_pass ... actual-python-pass-verification={"args":["-I","-S","-c","import ast,pathlib; tree=ast.parse(pathlib.Path('module.py').read_bytes(),filename='module.py'); parent=tree.body[0]; assert isinstance(parent,ast.ClassDef); assert len(parent.body)==1 and isinstance(parent.body[0],ast.Pass); assert len(parent.decorator_list)==1 and parent.decorator_list[0].id=='not_executed'"],"command":"C:\\Python314\\python.exe","exitCode":0,"level":"executed","limitations":["Host-selected command ran in a copied tree under the host account; this is not an OS sandbox or proof of exhaustive test coverage."],"outputComplete":true,"outputExceeded":false,"planId":"4ef74039a9274623ab5b7dcaf6ab5fb7bb8a5a08193d5f2522fd9a022d5ebaf8","snapshotId":"6f3b3ea2818a77f099cec5c6f5ac6d64cf777ded6682062797fcfb35cb39f0c9","sourceIntegrity":true,"status":"passed","stderr":"","stdout":"","timedOut":false}
+actual-python-pass-plan={"baseSnapshotId":"6ef051fd4b1ef84b42c1c6209581fe732a27e47260e0a03871174e9fea00a6ed","createdAt":1792462792,"diff":"--- module.py\n+++ module.py\n@@ -1,6 +1,4 @@\n ﻿# café 🦀\r\n @not_executed\r\n class Parent:\r\n-    @also_not_executed\r\n-    async def delete_me(self):\r\n-        return 1\r\n+    pass\r\n","expiresAt":1792549192,"files":[{"afterHash":"69d088751174375c79b1aaf659979c620ba2c1ecd92b726bc686918ab9c07d0f","beforeHash":"fdd29f363c6ea5ee3b0c2e3f9243406ad3b39b78f6397824a028fcd954d52a72","mode":420,"path":"module.py"}],"id":"4ef74039a9274623ab5b7dcaf6ab5fb7bb8a5a08193d5f2522fd9a022d5ebaf8","resultSnapshotId":"6f3b3ea2818a77f099cec5c6f5ac6d64cf777ded6682062797fcfb35cb39f0c9","warnings":[],"workspaceId":"c49aaff95a628cc6852ab75ec8584211714af2f5735530f07f4735107ca08138"}
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 8 filtered out; finished in 0.16s
+

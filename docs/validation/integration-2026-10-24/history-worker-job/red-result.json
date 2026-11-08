@@ -1,0 +1,9 @@
+{
+  "baseline": "74b442556c1e2f0d454f95f0c1fe1017774104ee",
+  "testsRun": 1,
+  "expectedRegressionFailure": true,
+  "observed": "Preceding worker reaches blocked native-hash callback without assigned Job",
+  "actualNativeRead": false,
+  "actualNativeExecution": false,
+  "admissionDiskStateSimulatedOnly": true
+}

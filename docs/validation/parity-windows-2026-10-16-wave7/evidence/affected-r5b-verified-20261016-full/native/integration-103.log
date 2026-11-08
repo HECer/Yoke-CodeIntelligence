@@ -1,0 +1,22 @@
+    Finished `test` profile [unoptimized] target(s) in 0.79s
+     Running tests\server_catalog.rs (target\debug\deps\server_catalog-daa9d2634cae3c47.exe)
+
+running 2 tests
+test host_registration_resolves_language_metadata_without_starting_any_process ... ok
+test registration_never_derives_execution_authority_from_a_backend_name ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\session_collections.rs (target\debug\deps\session_collections-729062ee8f2bd3cf.exe)
+
+running 7 tests
+test empty_collections_preserve_legacy_host_serialization ... ok
+test collection_policy_changes_invalidate_resume_but_empty_policy_keeps_original_fingerprint ... ok
+test native_registry_read_wrapper_uses_exact_archived_membership ... ok
+test native_archived_queries_never_open_original_or_active_source ... ok
+test configured_query_only_project_can_register_current_checked_view_without_activation ... ok
+test registration_requires_host_write_authority_and_explicit_binding_expectation ... ok
+test transient_current_foreign_grants_authorize_only_the_registered_receiver_and_call ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.65s
+

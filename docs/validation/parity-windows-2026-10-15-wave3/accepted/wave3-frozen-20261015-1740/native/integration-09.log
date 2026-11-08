@@ -1,0 +1,81 @@
+    Finished `test` profile [unoptimized] target(s) in 0.54s
+     Running tests\export.rs (target\debug\deps\export-892d9be829d70668.exe)
+
+running 1 test
+test canonical_export_preserves_directed_parallel_evidence ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.12s
+
+     Running tests\facade_file_delete.rs (target\debug\deps\facade_file_delete-10f76ec2ac5264c5.exe)
+
+running 10 tests
+test forced_file_delete_materializes_the_plan_without_removing_the_original_or_its_callers ... ok
+test forced_file_delete_permission_and_external_context_denials_have_zero_change_effects ... ok
+test forced_file_delete_omitted_and_null_selectors_create_one_exact_delete_for_v8_v9 ... ok
+test forced_file_delete_stale_workspace_preflight_preserves_changed_sources_for_v8_v9 ... ok
+test default_safe_mode_and_propagation_are_distinct_unsupported_file_intents ... ok
+test forced_file_delete_workspace_apply_keeps_host_approval_and_verification_gates ... ok
+test public_forced_file_delete_accepts_generated_null_and_false_defaults ... ok
+test source_symlink_cannot_redirect_a_forced_file_deletion ... ok
+test readonly_ignored_excluded_and_uncaptured_binary_sources_cannot_be_force_deleted ... ok
+test empty_malformed_directory_missing_and_unsafe_file_selectors_never_prepare_deletions ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.47s
+
+     Running tests\facade_file_move.rs (target\debug\deps\facade_file_move-6144897cf260e5ee.exe)
+
+running 7 tests
+test move_permissions_and_external_project_refusal_precede_provider_start ... ok
+test move_target_parent_must_be_explicit_and_must_not_be_an_existing_file ... ok
+test occupied_final_child_and_same_parent_moves_refuse_without_change_objects ... ok
+test omitted_binary_host_destination_is_still_occupied_before_provider_and_plan ... ok
+test directory_symbol_parent_and_malformed_file_selectors_are_explicit_refusals ... ok
+test unsafe_target_parents_and_captured_readonly_or_excluded_scopes_never_prepare_plans ... ok
+test file_move_omitted_null_and_empty_selectors_preserve_basename_in_the_target_parent_for_v8_v9 ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.21s
+
+     Running tests\facade_file_rename.rs (target\debug\deps\facade_file_rename-26aacd7ab6c8a3a1.exe)
+
+running 9 tests
+test file_rename_permissions_and_external_context_refusal_precede_provider_start ... ok
+test directory_missing_excluded_and_readonly_sources_have_no_file_rename_authority ... ok
+test guarded_file_rename_plan_refuses_stale_source_before_any_workspace_write ... ok
+test empty_selectors_and_true_or_malformed_file_occurrence_options_refuse_before_provider ... ok
+test file_rename_new_name_is_a_portable_single_basename_and_never_a_destination_path ... ok
+test occupied_file_directory_uncaptured_binary_and_source_alias_refuse_before_provider ... ok
+test root_file_rename_uses_the_supplied_unicode_basename_without_creating_a_parent ... ok
+test nullable_file_rename_omitted_and_null_selectors_preserve_parent_for_v8_v9 ... ok
+test public_file_rename_accepts_generated_false_defaults_and_explicit_false_options ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 7.35s
+
+     Running tests\federated_collections.rs (target\debug\deps\federated_collections-97e4dc2b6e05984f.exe)
+
+running 4 tests
+test source_only_archive_does_not_invent_canonical_graph_authority ... ok
+test unknown_authority_kinds_and_nested_fields_are_not_silently_accepted ... ok
+test archived_foreign_collection_requires_current_host_context_for_every_operation ... ok
+test archived_sources_outlive_original_receipts_but_not_changed_receiver_policy ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.90s
+
+     Running tests\federation.rs (target\debug\deps\federation-a6d0d4a87e5d87b1.exe)
+
+running 13 tests
+test correctly_signed_malicious_sources_still_fail_receiver_safety_policy ... ok
+test corrupt_remote_graph_cannot_be_returned_as_a_successful_empty_index ... ok
+test canonical_editor_overlays_round_trip_without_saved_source_or_reexport_authority ... ok
+test granted_foreign_search_reuses_verified_sources_without_native_publication ... ok
+test host_exclude_patterns_cannot_be_bypassed_with_path_case_aliases ... ok
+test nonce_reuse_expired_import_and_current_grant_revocation_are_distinct ... ok
+test receiver_effective_ignore_precedence_handles_virtual_paths_and_whitelists ... ok
+test receiver_ignore_excludes_links_and_remote_policy_text_cannot_change_host_authority ... ok
+test signed_sources_are_separate_immutable_and_locally_reindexed_without_source_writes ... ok
+test source_namespace_capacity_accounts_for_every_file_in_prior_receipts ... ok
+test tampered_bytes_signatures_scope_and_workspace_are_rejected_before_persistence ... ok
+test valid_signature_does_not_authorize_protected_secret_binary_or_colliding_source ... ok
+test sqlite_writer_contention_consumes_only_the_remaining_import_deadline ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.33s
+

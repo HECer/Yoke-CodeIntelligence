@@ -1,0 +1,16 @@
+    Finished `test` profile [unoptimized] target(s) in 1.36s
+     Running tests\capture_analyzer8_fixture.rs (E:\Yoke-Build-Cache\meaning-aliases-20261016\debug\deps\capture_analyzer8_fixture-f6a913d94bf0d50b.exe)
+
+running 2 tests
+test capture_authentic_analyzer8_before_migration ... ignored, one-time authentic analyzer-8 capture; requires YOKE_CAPTURE_ANALYZER8_DIR
+test capture_authentic_federation_receiver8_before_receipt_migration ... ignored, authentic V1 receiver-8 archive capture; requires YOKE_CAPTURE_ANALYZER8_DIR
+
+test result: ok. 0 passed; 0 failed; 2 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\capture_changes.rs (E:\Yoke-Build-Cache\meaning-aliases-20261016\debug\deps\capture_changes-baab65246c798430.exe)
+
+running 1 test
+test host_language_overrides_survive_guarded_derived_snapshots_and_workspace_apply ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.47s
+

@@ -1,0 +1,33 @@
+{
+  "vector_admission_review": {
+    "executable": "target\\debug\\deps\\vector_admission_review-e93b61cc8239ca76.exe",
+    "ignored": [],
+    "registered": [
+      "corrupt_source_blob_is_size_admitted_before_vector_reader_allocation",
+      "explicit_readonly_dependency_vectors_import_and_search_without_write_authority",
+      "oversized_escaped_import_is_counted_before_allocating_encoded_json",
+      "oversized_persisted_vector_cell_is_bounded_before_string_copy",
+      "prepared_collection_preserves_legacy_vector_identity_and_serialized_bytes",
+      "prepared_vector_admission_checks_global_capacity_without_publishing_a_record",
+      "prepared_vector_admission_rejects_unpublishable_plans_before_vectors_exist",
+      "prepared_vectors_reject_changed_source_model_count_dimensions_and_zero_norm"
+    ]
+  },
+  "workflow_cli": {
+    "executable": "target\\debug\\deps\\workflow_cli-927186d3a166e179.exe",
+    "ignored": [
+      "actual_native_cli_tls_service_and_client_load_os_credentials"
+    ],
+    "registered": [
+      "actual_native_cli_tls_service_and_client_load_os_credentials",
+      "ambiguous_json_rpc_ids_and_nested_lsp_results_are_refused",
+      "host_only_execution_and_retention_never_inherit_authority_from_config_json",
+      "host_profiles_reject_duplicate_keys_instead_of_replacing_policy",
+      "malformed_host_profile_values_are_not_repeated_in_cli_errors",
+      "model_worker_deadline_includes_an_input_pipe_that_never_closes",
+      "native_runtime_cli_preserves_state_across_authorized_repl_commands",
+      "readonly_mcp_dataflow_and_native_cli_share_exact_snapshot_evidence",
+      "runtime_cli_preserves_failed_program_evidence_and_returns_failure"
+    ]
+  }
+}

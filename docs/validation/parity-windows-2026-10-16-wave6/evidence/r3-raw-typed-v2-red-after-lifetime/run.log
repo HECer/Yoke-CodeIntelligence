@@ -1,0 +1,95 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\r3-shadow-unavailable-v1\native)
+warning: unused import: `serde_json::json`
+ --> native\src\meaning_comparison_fixture_internal.rs:2:5
+  |
+2 | use serde_json::json;
+  |     ^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: method `snapshot` is never used
+   --> native\src\graph_view_comparison_input.rs:789:19
+    |
+788 | impl BoundComparisonScope<'_> {
+    | ----------------------------- method in this implementation
+789 |     pub(crate) fn snapshot(&self) -> &Snapshot {
+    |                   ^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: fields `dir` and `graph` are never read
+  --> native\src\meaning_comparison_fixture_internal.rs:24:9
+   |
+23 | pub struct Fixture {
+   |            ------- fields in this struct
+24 |     pub dir: TempDir,
+   |         ^^^
+...
+29 |     pub graph: Graph,
+   |         ^^^^^
+
+warning: function `remove_source_workspace` is never used
+   --> native\src\meaning_comparison_fixture_internal.rs:149:8
+    |
+149 | pub fn remove_source_workspace(f: Fixture) -> TempDir {
+    |        ^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `calibrate_foreign_connection_mutation_oracle` is never used
+  --> native\src\historical_fixture_state_internal.rs:52:8
+   |
+52 | pub fn calibrate_foreign_connection_mutation_oracle(engine: &Engine) {
+   |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: fields `dir`, `snapshot`, and `graph` are never read
+  --> native\src\meaning_comparison_fixture_internal.rs:24:9
+   |
+23 | pub struct Fixture {
+   |            ------- fields in this struct
+24 |     pub dir: TempDir,
+   |         ^^^
+...
+28 |     pub snapshot: Snapshot,
+   |         ^^^^^^^^
+29 |     pub graph: Graph,
+   |         ^^^^^
+
+warning: fields `snapshot` and `graph` are never read
+  --> native\src\meaning_comparison_fixture_internal.rs:28:9
+   |
+23 | pub struct Fixture {
+   |            ------- fields in this struct
+...
+28 |     pub snapshot: Snapshot,
+   |         ^^^^^^^^
+29 |     pub graph: Graph,
+   |         ^^^^^
+
+warning: method `snapshot` is never used
+   --> native\src\meaning_build.rs:185:19
+    |
+184 | impl BoundFrozenScope<'_> {
+    | ------------------------- method in this implementation
+185 |     pub(crate) fn snapshot(&self) -> &Snapshot {
+    |                   ^^^^^^^^
+
+warning: `yoke-code-intelligence` (lib test) generated 8 warnings (run `cargo fix --lib -p yoke-code-intelligence --tests` to apply 1 suggestion)
+    Finished `test` profile [unoptimized] target(s) in 43.53s
+     Running unittests src\lib.rs (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\debug\deps\yoke-35b101204e4eb110.exe)
+
+running 1 test
+
+thread 'graph_view::comparison_raw_typed_tests::raw_sql_metadata_above_exact_typed_pair_budget_remains_a_read_only_positive' (41440) panicked at native\src\graph_view_comparison_raw_typed_tests.rs:124:13:
+lossless padded rows at original exact typed pair budget expected a genuine positive pair; received comparison_capacity_exceeded
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test graph_view::comparison_raw_typed_tests::raw_sql_metadata_above_exact_typed_pair_budget_remains_a_read_only_positive ... FAILED
+
+failures:
+
+failures:
+    graph_view::comparison_raw_typed_tests::raw_sql_metadata_above_exact_typed_pair_budget_remains_a_read_only_positive
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 306 filtered out; finished in 0.26s
+
+error: test failed, to rerun pass `--lib`
+error: 1 target failed:
+    `--lib`

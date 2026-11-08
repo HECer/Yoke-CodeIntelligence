@@ -1,0 +1,19 @@
+    Finished `test` profile [unoptimized] target(s) in 0.84s
+     Running unittests src\lib.rs (target\debug\deps\yoke-35b101204e4eb110.exe)
+
+running 1 test
+Owned reparse diagnostic: physical_handle_attributes=Some(Ok(1040)); raw_held_entries=Ok([(Some("link"), 16, 0)]); names=Ok(["link"]); stat=error(Host entry type refused); read=error(Cannot read held host metadata entry: Anchored host namespace open failed: Zugriff verweigert (os error 5))
+
+thread 'host_install::io::tests::metadata_directory_reparse_child_is_an_error_not_missing_or_ordinary' (97356) panicked at native\src\host_metadata_directory_tests.rs:283:5:
+Reparse child was silently accepted by enumeration
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test host_install::io::tests::metadata_directory_reparse_child_is_an_error_not_missing_or_ordinary ... FAILED
+
+failures:
+
+failures:
+    host_install::io::tests::metadata_directory_reparse_child_is_an_error_not_missing_or_ordinary
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 184 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `--lib`

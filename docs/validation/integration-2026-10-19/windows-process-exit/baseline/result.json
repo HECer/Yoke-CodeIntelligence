@@ -1,0 +1,99 @@
+{
+  "policy": "up_to8_serial_same_binary_stop_first_failure_nonadditive",
+  "binarySha256": "1b29b64868b96c055e8e03841dc42f16b6145c6db672ba3761c14ead30af45b3",
+  "binaryUnchanged": true,
+  "sourceUnchanged": true,
+  "inputs": 694,
+  "iterations": [
+    {
+      "iteration": 1,
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\yoke-f14d0af26d19713e.exe",
+        "--exact",
+        "github_app::digest::history_boundary_tests::history_owned_process_tests::cancellation_and_deadline_stop_owned_git_and_restore_the_same_store",
+        "--test-threads=1"
+      ],
+      "exitCode": 0,
+      "seconds": 8.005606651306152
+    },
+    {
+      "iteration": 2,
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\yoke-f14d0af26d19713e.exe",
+        "--exact",
+        "github_app::digest::history_boundary_tests::history_owned_process_tests::cancellation_and_deadline_stop_owned_git_and_restore_the_same_store",
+        "--test-threads=1"
+      ],
+      "exitCode": 0,
+      "seconds": 3.4927897453308105
+    },
+    {
+      "iteration": 3,
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\yoke-f14d0af26d19713e.exe",
+        "--exact",
+        "github_app::digest::history_boundary_tests::history_owned_process_tests::cancellation_and_deadline_stop_owned_git_and_restore_the_same_store",
+        "--test-threads=1"
+      ],
+      "exitCode": 0,
+      "seconds": 3.551419496536255
+    },
+    {
+      "iteration": 4,
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\yoke-f14d0af26d19713e.exe",
+        "--exact",
+        "github_app::digest::history_boundary_tests::history_owned_process_tests::cancellation_and_deadline_stop_owned_git_and_restore_the_same_store",
+        "--test-threads=1"
+      ],
+      "exitCode": 0,
+      "seconds": 3.396402597427368
+    },
+    {
+      "iteration": 5,
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\yoke-f14d0af26d19713e.exe",
+        "--exact",
+        "github_app::digest::history_boundary_tests::history_owned_process_tests::cancellation_and_deadline_stop_owned_git_and_restore_the_same_store",
+        "--test-threads=1"
+      ],
+      "exitCode": 0,
+      "seconds": 3.4270241260528564
+    },
+    {
+      "iteration": 6,
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\yoke-f14d0af26d19713e.exe",
+        "--exact",
+        "github_app::digest::history_boundary_tests::history_owned_process_tests::cancellation_and_deadline_stop_owned_git_and_restore_the_same_store",
+        "--test-threads=1"
+      ],
+      "exitCode": 0,
+      "seconds": 3.46132230758667
+    },
+    {
+      "iteration": 7,
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\yoke-f14d0af26d19713e.exe",
+        "--exact",
+        "github_app::digest::history_boundary_tests::history_owned_process_tests::cancellation_and_deadline_stop_owned_git_and_restore_the_same_store",
+        "--test-threads=1"
+      ],
+      "exitCode": 0,
+      "seconds": 3.537881851196289
+    },
+    {
+      "iteration": 8,
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\yoke-f14d0af26d19713e.exe",
+        "--exact",
+        "github_app::digest::history_boundary_tests::history_owned_process_tests::cancellation_and_deadline_stop_owned_git_and_restore_the_same_store",
+        "--test-threads=1"
+      ],
+      "exitCode": 0,
+      "seconds": 3.6050312519073486
+    }
+  ],
+  "parentCheckpoint": "7237a6c54b217df7be61afa8044786a1c7e75406",
+  "causalConclusion": null
+}

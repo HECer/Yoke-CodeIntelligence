@@ -1,0 +1,22 @@
+{
+  "cases": [
+    {
+      "expression": "(eval)('typeof helper')",
+      "exitCode": 0,
+      "incorrectlyAcceptedByWorker": true
+    },
+    {
+      "expression": "eval!('typeof helper')",
+      "exitCode": 0,
+      "incorrectlyAcceptedByWorker": true
+    },
+    {
+      "expression": "(eval as (source:string)=>any)('typeof helper')",
+      "exitCode": 0,
+      "incorrectlyAcceptedByWorker": true
+    }
+  ],
+  "nativeAdmission": false,
+  "snapshotIdsSynthetic": true,
+  "analyzedCodeExecuted": false
+}

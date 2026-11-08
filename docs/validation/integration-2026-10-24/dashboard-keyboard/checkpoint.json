@@ -1,0 +1,79 @@
+{
+  "product": "Code Intelligence",
+  "version": "0.5.0",
+  "productCommit": "480fb00d3ba2866cb0b0a63fb8f3e7f2361d8737",
+  "productRemoteBlobsVerified": 1,
+  "frozenInputs": 1152,
+  "nativeDashboardTests": {
+    "passed": 13,
+    "failed": 0,
+    "ignored": 0,
+    "filtered": 0,
+    "artifact": {
+      "reason": "compiler-artifact",
+      "package_id": "path+file:///C:/Users/Lomi/Documents/NN-Developed/Yoke-CodeIntelligence/native#yoke-code-intelligence@0.5.0",
+      "manifest_path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\native\\Cargo.toml",
+      "target": {
+        "kind": [
+          "test"
+        ],
+        "crate_types": [
+          "bin"
+        ],
+        "name": "session_dashboard",
+        "src_path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\native\\tests\\session_dashboard.rs",
+        "edition": "2024",
+        "doc": false,
+        "doctest": false,
+        "test": true
+      },
+      "profile": {
+        "opt_level": "0",
+        "debuginfo": 0,
+        "debug_assertions": true,
+        "overflow_checks": true,
+        "test": true
+      },
+      "features": [],
+      "filenames": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\session_dashboard-e13324dd90851931.exe",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\session_dashboard-e13324dd90851931.pdb"
+      ],
+      "executable": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\session_dashboard-e13324dd90851931.exe",
+      "fresh": false
+    },
+    "executableSha256": "be80684aff6362cdafc3c75f05f6aec34e6591b5c89226b63d97fa4ae7ecc01c",
+    "htmlOnlyChangeNo805CurrentSourceClaim": true
+  },
+  "cliSha256": "03ef5e39ce72e21269bd447d9bf814ca2479f486221fe9bfc40674f267df7bcf",
+  "browserAcceptance": {
+    "complete": true,
+    "actualNativeHost": true,
+    "exactNativeBootstrapAsset": true,
+    "keyboardTabEnterShiftTabEscape": true,
+    "skipAfterDocumentActivation": true,
+    "initialActivationAttemptPreserved": true,
+    "userNavigationHeadingFocus": true,
+    "automaticRefreshRetainsInputFocusAndDraft": true,
+    "describedDialogSafeCancelFocus": true,
+    "escapeRetainsDraftAndRestoresInvoker": true,
+    "mobileViewport": {
+      "width": 390,
+      "height": 844
+    },
+    "mobileDialogWithinViewport": true,
+    "ownShutdownBeforeStdinEofAndJobCleanup": true,
+    "afterShutdownCopyableReadOnlyDraft": true,
+    "nativeScreenshot": false,
+    "twoNativeSnapshotTimeouts": true,
+    "twoClickAdapterTimeouts": true,
+    "keyboardFallbackUsed": true,
+    "fullAccessibilityCertificate": false
+  },
+  "allJobsEmpty": true,
+  "prior805BelongsToBindingMigrationCommitOnly": true,
+  "fullAccessibilityCertificate": false,
+  "fullStatusComplete": false,
+  "mainMerged": false,
+  "released": false
+}

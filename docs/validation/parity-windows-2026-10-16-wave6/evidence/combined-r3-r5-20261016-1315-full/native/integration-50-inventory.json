@@ -1,0 +1,22 @@
+{
+  "historical_view_semantics": {
+    "executable": "target\\debug\\deps\\historical_view_semantics-9119bdf4ff5b8103.exe",
+    "ignored": [],
+    "registered": [
+      "h10_position_closed_schema_preserves_unicode_crlf_file_and_multiple_bindings",
+      "h12_directed_parallel_and_self_loop_occurrences_use_original_ids_and_literal_counts",
+      "h12_independent_meaning_generations_keep_order_repetition_direction_and_exact_namespaces_storelessly",
+      "h12_owned_fixture_qualifies_two_legal_independent_generations_before_comparison",
+      "h16_declared_moved_file_pairs_only_that_file_and_keeps_duplicate_descendants_ambiguous",
+      "h16_duplicate_structural_candidates_and_their_calls_stay_ambiguous_even_with_host_continuity"
+    ]
+  },
+  "host_cli": {
+    "executable": "target\\debug\\deps\\host_cli-571e33e0142ac8d1.exe",
+    "ignored": [],
+    "registered": [
+      "explicit_maintenance_cli_preserves_issued_artifacts_and_changes_no_source",
+      "signed_source_cli_requires_a_host_grant_and_queries_a_separate_namespace"
+    ]
+  }
+}

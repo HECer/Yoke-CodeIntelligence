@@ -1,0 +1,38 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 55s
+     Running tests\compiler_inline_body.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\compiler_inline_body-0168f6b8da48a03c.exe)
+
+running 12 tests
+test actual_body_frames_preserve_argument_order_local_scope_closures_and_finally_control ... ok
+test actual_classic_body_expansion_removes_the_call_and_retains_the_original_definition_only_when_requested ... ok
+test actual_jsdoc_body_and_retained_export_keep_their_captured_bindings ... ok
+test actual_var_hoisting_preserves_parameter_environments_loops_patterns_and_catch_assignments ... ok
+test body_cli_plans_require_independent_verification_approval_and_foreign_preserving_recovery ... ok
+test inert_inference_preserves_enabled_compiler_diagnostics_and_initializer_counts ... ok
+test inferred_var_types_keep_object_array_tuple_union_function_and_nested_loop_closures ... ok
+test parameter_initialization_preserves_defaults_rest_patterns_optional_types_and_inferred_names ... ok
+test strict_completion_preserves_returns_throws_cancellation_and_inferred_result_types ... FAILED
+test unsafe_or_unowned_body_forms_refuse_before_any_plan_or_derived_source ... ok
+test var_lowering_keeps_jsdoc_nested_scopes_comments_unicode_and_finally ... ok
+test wrapped_eval_in_the_body_or_caller_cannot_publish_a_plan ... ok
+
+failures:
+
+---- strict_completion_preserves_returns_throws_cancellation_and_inferred_result_types stdout ----
+
+thread 'strict_completion_preserves_returns_throws_cancellation_and_inferred_result_types' (21444) panicked at native\tests\compiler_inline_body.rs:585:37:
+/** @param {number} n */
+/* between */
+/** @returns {{value:number}} */
+function helper(n){return {value:n};}const result=helper(3);export const observed=result.value;: Compiler worker failed, exceeded bounds or timed out: Body context has errors before expansion
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    strict_completion_preserves_returns_throws_cancellation_and_inferred_result_types
+
+test result: FAILED. 11 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 302.98s
+
+error: test failed, to rerun pass `--test compiler_inline_body`
+error: 1 target failed:
+    `--test compiler_inline_body`

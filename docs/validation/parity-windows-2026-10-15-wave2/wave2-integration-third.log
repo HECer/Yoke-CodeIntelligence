@@ -1,0 +1,415 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 2m 32s
+     Running unittests src\lib.rs (target\debug\deps\yoke-35b101204e4eb110.exe)
+
+running 58 tests
+test capture::analyzer_migration_tests::authentic_analyzer_six_languages_survive_seven_with_exact_scope_proof ... ok
+test capture::analyzer_migration_tests::authentic_analyzer_seven_scope_survives_eight_without_relabeling ... ok
+test capture::analyzer_migration_tests::released_analyzer_four_archives_preserve_unknown_vue_and_powershell_languages ... ok
+test capture::archive_scope_tests::exact_native_archive_identity_denies_resealed_protected_members_and_future_fields ... ok
+test capture::archive_scope_tests::offline_dependency_and_derived_scope_proofs_require_exact_options_and_origin_chain ... ok
+test capture::archive_scope_tests::released_capture_and_overlay_receipts_remain_exact_offline_after_workspace_closes ... ok
+test capture::epoch_migration_tests::authentic_archived8_scope_proofs_remain_valid_for_a9_reader ... ok
+test changes::recovery_tests::expired_emergency_write_preserves_the_durable_recovery_identifier ... ok
+test capture::epoch_migration_tests::authentic_native8_scope_proofs_remain_valid_for_a9_reader ... ok
+test agent_repl::source_binding_tests::provider_queries_keep_the_symbol_snapshot_after_original_source_changes ... ok
+test decision_records::tests::authored_decision_creates_a_source_bound_immutable_revision ... ok
+test editor_http::tests::an_expired_response_never_claims_the_operation_succeeded ... ok
+test host_credentials::aws_session::tests::aws_chunks_roundtrip_larger_than_single_blob_and_are_create_only ... ok
+test host_credentials::aws_session::tests::aws_manifest_failure_leaves_only_unpublished_chunks_and_expired_deadline_writes_nothing ... ok
+test host_credentials::aws_session::tests::aws_manifest_rejects_missing_mixed_corrupt_and_expired_generation ... ok
+test host_credentials::aws_session::tests::aws_private_json_parser_accepts_exact_dto_and_refuses_ambiguity ... ok
+test host_credentials::aws_session::tests::interrupted_publication_and_changed_chunks_never_yield_session ... ok
+test host_install::io::tests::bounded_reads_reject_oversize_without_mutation ... ok
+test host_install::io::tests::directory_guard_pins_each_existing_ancestor ... ok
+test host_install::io::tests::held_target_denies_external_writes_and_deletion ... ok
+test host_install::io::tests::multiply_linked_files_are_refused_and_prepare_never_overwrites ... ok
+test host_install::io::tests::no_replace_preserves_foreign_occupant_and_original_backup ... FAILED
+test host_install::io::tests::own_handle_rename_retains_identity_and_write_guard ... FAILED
+test host_install::io::tests::prepared_output_keeps_guard_through_promotion_and_owned_delete ... FAILED
+test host_install::io::tests::prepared_output_preserves_dacl_entries_and_inheritance_control ... FAILED
+test host_install::io::tests::prepared_output_preserves_owner_and_nondefault_group_before_human_bytes ... FAILED
+test agent_repl::cleanup_proof_tests::lost_process_cleanup_proof_stays_typed_across_repeated_close ... ok
+test editor_http::tests::backpressured_socket_writes_cannot_extend_the_response_deadline ... ok
+test host_install::tests::foreign_occupant_blocks_resume_and_rollback_without_changing_original_backup ... FAILED
+test host_install::tests::journal_progress_cannot_widen_beyond_the_authorized_target_set ... FAILED
+test host_install::tests::receipt_commit_does_not_disguise_pending_cleanup_as_successful_replay ... FAILED
+test host_install::tests::resume_after_original_rename_publishes_owned_output_and_finishes_cleanup ... FAILED
+test host_install::tests::state_capacity_reserves_the_next_receipt_and_journal_before_touching_targets ... FAILED
+test host_install::tests::rollback_after_original_rename_restores_same_original_and_releases_ownership ... FAILED
+test host_install::tests::successful_receipt_replay_rejects_foreign_target_edits ... FAILED
+test lsp::uri_tests::an_outside_uri_is_rejected_lexically_before_a_filesystem_lookup ... ok
+test host_install::tests::unknown_journal_phase_is_refused_before_it_can_accumulate_in_pending_results ... FAILED
+test lsp::uri_tests::grown_provider_copy_is_rejected_without_reading_unbounded_source ... ok
+test lsp::uri_tests::nonlocal_file_authorities_are_refused_without_target_lookup ... ok
+test host_install::io::tests::readonly_guard_can_pin_running_executable ... ok
+test lsp::uri_tests::blocked_pipe_write_uses_300ms_deadline_after_confirmed_server_pause ... ok
+test maintenance::tests::expired_rollback_budget_preserves_quarantine_for_later_recovery ... ok
+test model_protocol::meaning_extract_tests::meaning_extract_accepts_no_claims_but_requires_exact_honest_unit_coverage ... ok
+test model_protocol::meaning_extract_tests::meaning_extract_admits_schema_one_operation_without_changing_envelope ... ok
+test model_protocol::meaning_extract_tests::meaning_extract_prepares_exact_sources_and_bounded_strict_output_schema ... ok
+test model_protocol::meaning_extract_tests::meaning_extract_rejects_forged_units_omissions_and_arbitrary_instructions ... ok
+test model_protocol::meaning_extract_tests::meaning_extract_rejects_unknown_anchor_fields_and_duplicate_result_fields ... ok
+test model_protocol::meaning_extract_tests::meaning_extract_validates_local_claims_and_own_support_on_every_edge ... ok
+test ollama::endpoint_tests::explicit_default_http_port_remains_host_selected ... ok
+test platform_credentials::creation_lock::tests::contaminated_and_nonfile_locks_are_refused_without_repair ... ok
+test platform_credentials::creation_lock::tests::creation_locks_serialize_and_time_out_without_secret_contents ... ok
+test debug_adapter::cleanup_tests::unjoined_worker_cleanup_failure_remains_sticky_after_worker_eventually_exits ... ok
+test skill_takeaways::tests::expanded_yaml_frontmatter_is_rejected_before_alias_materialization ... ok
+test skill_takeaways::tests::manual_edit_after_observation_is_never_adopted_as_a_write_precondition ... ok
+test skill_takeaways::tests::a_large_applied_receipt_prefix_cannot_hide_pending_journals ... ok
+test verify::integrity_tests::oversized_copied_source_is_rejected_within_the_hash_budget ... ok
+test lsp::uri_tests::react_documents_and_siblings_keep_their_ids_with_base_language_providers ... ok
+test lsp::uri_tests::slow_shutdown_uses_800ms_deadline_after_completed_protocol_response ... ok
+
+failures:
+
+---- host_install::io::tests::no_replace_preserves_foreign_occupant_and_original_backup stdout ----
+Error: Exact original DACL/inheritance preservation is unavailable
+
+---- host_install::io::tests::own_handle_rename_retains_identity_and_write_guard stdout ----
+Error: Host no-replace rename failed: Der Prozess kann nicht auf die Datei zugreifen, da sie von einem anderen Prozess verwendet wird. (os error 32)
+
+---- host_install::io::tests::prepared_output_keeps_guard_through_promotion_and_owned_delete stdout ----
+Error: Host no-replace rename failed: Der Prozess kann nicht auf die Datei zugreifen, da sie von einem anderen Prozess verwendet wird. (os error 32)
+
+---- host_install::io::tests::prepared_output_preserves_dacl_entries_and_inheritance_control stdout ----
+Error: Exact original DACL/inheritance preservation is unavailable
+
+---- host_install::io::tests::prepared_output_preserves_owner_and_nondefault_group_before_human_bytes stdout ----
+Error: Exact original DACL/inheritance preservation is unavailable
+
+---- host_install::tests::foreign_occupant_blocks_resume_and_rollback_without_changing_original_backup stdout ----
+
+thread 'host_install::tests::foreign_occupant_blocks_resume_and_rollback_without_changing_original_backup' (80044) panicked at native\src\host_install.rs:1122:48:
+called `Result::unwrap()` on an `Err` value: Host no-replace rename failed: Der Prozess kann nicht auf die Datei zugreifen, da sie von einem anderen Prozess verwendet wird. (os error 32)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- host_install::tests::journal_progress_cannot_widen_beyond_the_authorized_target_set stdout ----
+
+thread 'host_install::tests::journal_progress_cannot_widen_beyond_the_authorized_target_set' (46656) panicked at native\src\host_install.rs:1122:48:
+called `Result::unwrap()` on an `Err` value: Host no-replace rename failed: Der Prozess kann nicht auf die Datei zugreifen, da sie von einem anderen Prozess verwendet wird. (os error 32)
+
+---- host_install::tests::receipt_commit_does_not_disguise_pending_cleanup_as_successful_replay stdout ----
+
+thread 'host_install::tests::receipt_commit_does_not_disguise_pending_cleanup_as_successful_replay' (77096) panicked at native\src\host_install.rs:1122:48:
+called `Result::unwrap()` on an `Err` value: Host no-replace rename failed: Der Prozess kann nicht auf die Datei zugreifen, da sie von einem anderen Prozess verwendet wird. (os error 32)
+
+---- host_install::tests::resume_after_original_rename_publishes_owned_output_and_finishes_cleanup stdout ----
+
+thread 'host_install::tests::resume_after_original_rename_publishes_owned_output_and_finishes_cleanup' (89524) panicked at native\src\host_install.rs:1122:48:
+called `Result::unwrap()` on an `Err` value: Host no-replace rename failed: Der Prozess kann nicht auf die Datei zugreifen, da sie von einem anderen Prozess verwendet wird. (os error 32)
+
+---- host_install::tests::state_capacity_reserves_the_next_receipt_and_journal_before_touching_targets stdout ----
+
+thread 'host_install::tests::state_capacity_reserves_the_next_receipt_and_journal_before_touching_targets' (86376) panicked at native\src\host_install.rs:1122:48:
+called `Result::unwrap()` on an `Err` value: Host no-replace rename failed: Der Prozess kann nicht auf die Datei zugreifen, da sie von einem anderen Prozess verwendet wird. (os error 32)
+
+---- host_install::tests::rollback_after_original_rename_restores_same_original_and_releases_ownership stdout ----
+
+thread 'host_install::tests::rollback_after_original_rename_restores_same_original_and_releases_ownership' (78524) panicked at native\src\host_install.rs:1122:48:
+called `Result::unwrap()` on an `Err` value: Host no-replace rename failed: Der Prozess kann nicht auf die Datei zugreifen, da sie von einem anderen Prozess verwendet wird. (os error 32)
+
+---- host_install::tests::successful_receipt_replay_rejects_foreign_target_edits stdout ----
+
+thread 'host_install::tests::successful_receipt_replay_rejects_foreign_target_edits' (78212) panicked at native\src\host_install.rs:1122:48:
+called `Result::unwrap()` on an `Err` value: Host no-replace rename failed: Der Prozess kann nicht auf die Datei zugreifen, da sie von einem anderen Prozess verwendet wird. (os error 32)
+
+---- host_install::tests::unknown_journal_phase_is_refused_before_it_can_accumulate_in_pending_results stdout ----
+
+thread 'host_install::tests::unknown_journal_phase_is_refused_before_it_can_accumulate_in_pending_results' (21520) panicked at native\src\host_install.rs:1122:48:
+called `Result::unwrap()` on an `Err` value: Host no-replace rename failed: Der Prozess kann nicht auf die Datei zugreifen, da sie von einem anderen Prozess verwendet wird. (os error 32)
+
+
+failures:
+    host_install::io::tests::no_replace_preserves_foreign_occupant_and_original_backup
+    host_install::io::tests::own_handle_rename_retains_identity_and_write_guard
+    host_install::io::tests::prepared_output_keeps_guard_through_promotion_and_owned_delete
+    host_install::io::tests::prepared_output_preserves_dacl_entries_and_inheritance_control
+    host_install::io::tests::prepared_output_preserves_owner_and_nondefault_group_before_human_bytes
+    host_install::tests::foreign_occupant_blocks_resume_and_rollback_without_changing_original_backup
+    host_install::tests::journal_progress_cannot_widen_beyond_the_authorized_target_set
+    host_install::tests::receipt_commit_does_not_disguise_pending_cleanup_as_successful_replay
+    host_install::tests::resume_after_original_rename_publishes_owned_output_and_finishes_cleanup
+    host_install::tests::rollback_after_original_rename_restores_same_original_and_releases_ownership
+    host_install::tests::state_capacity_reserves_the_next_receipt_and_journal_before_touching_targets
+    host_install::tests::successful_receipt_replay_rejects_foreign_target_edits
+    host_install::tests::unknown_journal_phase_is_refused_before_it_can_accumulate_in_pending_results
+
+test result: FAILED. 45 passed; 13 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.55s
+
+error: test failed, to rerun pass `--lib`
+     Running tests\host_config.rs (target\debug\deps\host_config-7659402ec860ad5b.exe)
+
+running 19 tests
+test agents_marker_presence_never_grants_ownership ... ok
+test agents_install_update_remove_preserve_bom_unicode_and_crlf_bytes ... ok
+test agents_reject_changed_receipts_owned_bytes_duplicate_and_nested_markers ... ok
+test agents_empty_existing_file_round_trips_without_phantom_bytes ... ok
+test agents_and_patch_work_are_bounded_before_output ... ok
+test agents_removal_preserves_later_human_prefix_and_append ... ok
+test jsonc_decoded_duplicate_keys_unowned_entries_and_ambiguous_parents_fail ... ok
+test jsonc_accepts_only_json_whitespace_outside_comments_and_strings ... ok
+test jsonc_empty_and_trailing_comma_parents_restore_original_punctuation ... ok
+test jsonc_human_append_is_preserved_or_rejected_when_unrecorded_punctuation_would_be_removed ... ok
+test jsonc_oversized_receipt_selector_is_rejected_before_unbounded_decoding ... ok
+test patch_application_checks_entire_input_fragments_ranges_and_output_hash ... ok
+test jsonc_named_entry_preserves_comments_bom_crlf_and_literal_unowned_bytes ... ok
+test receipts_are_strict_serialized_data_and_do_not_include_human_prefix ... ok
+test serialized_empty_owned_fragment_returns_error_instead_of_panicking ... ok
+test structured_formats_reject_stale_selectors_body_capacity_and_deadlines ... ok
+test toml_quoted_aliases_dotted_conflicts_and_body_headers_fail_without_claiming_ownership ... ok
+test toml_managed_table_preserves_human_comments_and_round_trips_crlf ... ok
+test toml_table_removal_never_reparents_later_human_keys ... ok
+
+test result: ok. 19 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests\host_install.rs (target\debug\deps\host_install-ecb3efabd0fd83d7.exe)
+
+running 8 tests
+test dry_run_is_deterministic_and_creates_no_source_engine_or_host_state ... ok
+test install_and_uninstall_preserve_human_bom_crlf_and_original_empty_presence ... FAILED
+test private_state_never_contains_unrelated_human_config_or_policy_contents ... FAILED
+test state_and_target_aliases_bounds_invalid_utf8_and_deadlines_fail_closed ... ok
+test uninstall_preserves_foreign_appends_and_refuses_changes_inside_owned_block ... FAILED
+test receipt_ownership_is_required_and_serialized_plans_cannot_widen_paths ... ok
+test windows_existing_writer_and_hardlink_alias_are_refused_before_other_targets_change ... ok
+test every_target_and_host_binding_is_checked_before_first_write ... ok
+
+failures:
+
+---- install_and_uninstall_preserve_human_bom_crlf_and_original_empty_presence stdout ----
+
+thread 'install_and_uninstall_preserve_human_bom_crlf_and_original_empty_presence' (77392) panicked at native\tests\host_install.rs:62:6:
+called `Result::unwrap()` on an `Err` value: Host no-replace rename failed: Der Prozess kann nicht auf die Datei zugreifen, da sie von einem anderen Prozess verwendet wird. (os error 32)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- private_state_never_contains_unrelated_human_config_or_policy_contents stdout ----
+
+thread 'private_state_never_contains_unrelated_human_config_or_policy_contents' (48996) panicked at native\tests\host_install.rs:62:6:
+called `Result::unwrap()` on an `Err` value: Host no-replace rename failed: Der Prozess kann nicht auf die Datei zugreifen, da sie von einem anderen Prozess verwendet wird. (os error 32)
+
+---- uninstall_preserves_foreign_appends_and_refuses_changes_inside_owned_block stdout ----
+
+thread 'uninstall_preserves_foreign_appends_and_refuses_changes_inside_owned_block' (81784) panicked at native\tests\host_install.rs:62:6:
+called `Result::unwrap()` on an `Err` value: Host no-replace rename failed: Der Prozess kann nicht auf die Datei zugreifen, da sie von einem anderen Prozess verwendet wird. (os error 32)
+
+
+failures:
+    install_and_uninstall_preserve_human_bom_crlf_and_original_empty_presence
+    private_state_never_contains_unrelated_human_config_or_policy_contents
+    uninstall_preserves_foreign_appends_and_refuses_changes_inside_owned_block
+
+test result: FAILED. 5 passed; 3 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.37s
+
+error: test failed, to rerun pass `--test host_install`
+     Running tests\host_install_cli.rs (target\debug\deps\host_install_cli-580c103695fa8de9.exe)
+
+running 6 tests
+test host_install_cli_planning_and_status_are_pure_and_keep_human_text_private ... ok
+test host_install_cli_installs_and_uninstalls_only_its_owned_fragment ... FAILED
+test host_install_cli_rejects_ambiguous_selection_and_small_write_output_before_mutation ... ok
+test host_install_cli_output_failure_identifies_the_committed_result_and_can_be_retried ... FAILED
+test host_install_cli_write_permission_precedes_selection_or_plan_reads ... ok
+test host_install_cli_valid_output_budget_is_admitted_before_any_host_state_or_file_write ... ok
+
+failures:
+
+---- host_install_cli_installs_and_uninstalls_only_its_owned_fragment stdout ----
+
+thread 'host_install_cli_installs_and_uninstalls_only_its_owned_fragment' (5388) panicked at native\tests\host_install_cli.rs:74:5:
+yoke: Host no-replace rename failed: Der Prozess kann nicht auf die Datei zugreifen, da sie von einem anderen Prozess verwendet wird. (os error 32)
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- host_install_cli_output_failure_identifies_the_committed_result_and_can_be_retried stdout ----
+
+thread 'host_install_cli_output_failure_identifies_the_committed_result_and_can_be_retried' (73048) panicked at native\tests\host_install_cli.rs:74:5:
+yoke: Host protocol metadata missing
+
+
+
+failures:
+    host_install_cli_installs_and_uninstalls_only_its_owned_fragment
+    host_install_cli_output_failure_identifies_the_committed_result_and_can_be_retried
+
+test result: FAILED. 4 passed; 2 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.08s
+
+error: test failed, to rerun pass `--test host_install_cli`
+     Running tests\meaning_build.rs (target\debug\deps\meaning_build-5530091b88518422.exe)
+
+running 26 tests
+test accounted_overrun_blocks_later_reserved_send_and_never_publishes ... ok
+test cache_reuse_requires_the_original_completed_graph_registration ... ok
+test body_selection_uses_full_body_and_invalidates_unchanged_signature_changes ... ok
+test every_selected_source_budget_and_graph_sink_is_admitted_before_first_child ... ok
+test currency_scoped_cache_prevents_mixing_old_and_new_monetary_units ... FAILED
+test failed_status_counts_only_dispatched_attempts_and_reports_missing_unknown_receipts ... ok
+test exact_snapshot_analyzer_epochs_have_separate_cache_namespaces ... ok
+test altered_contract_and_provider_version_do_not_reuse_old_claims ... ok
+test fixed_cross_file_packet_preserves_relations_and_hyperedge_roles ... ok
+test fully_bound_bill_is_accounted_even_when_provider_error_text_is_unsafe ... FAILED
+test forged_cache_origin_is_rejected_without_starting_worker ... ok
+test immutable_response_preserves_provider_local_claim_keys_before_normalization ... ok
+test later_invalid_claim_accounts_bill_but_publishes_no_partial_graph_or_cache ... ok
+test in_place_provider_script_change_invalidates_cache_even_when_command_is_unchanged ... ok
+test malformed_provider_schema_does_not_echo_untrusted_field_values ... FAILED
+test oversized_source_is_rejected_as_complete_selection_before_worker ... ok
+test malformed_or_unbound_replies_keep_sent_hold_and_cancel_only_unsent ... ok
+test no_claims_is_explicit_successful_coverage ... ok
+test publication_failure_rolls_back_every_new_cache_pointer ... ok
+test publishes_source_bound_claims_then_reuses_receipts_with_zero_calls_or_reservations ... ok
+test query_matches_literal_quotes_and_backslashes_in_displayed_claim_text ... ok
+test retained_cache_value_must_match_the_validated_immutable_row ... FAILED
+test retained_graph_validates_original_receipt_and_rebound_snapshot_dependencies ... ok
+test valid_bound_bill_is_preserved_when_worker_exits_unsuccessfully ... ok
+test unknown_billing_remains_reserved_after_valid_graph_publication ... ok
+test unchanged_body_cache_rebinds_new_snapshot_and_changed_body_invalidates_it ... ok
+
+failures:
+
+---- currency_scoped_cache_prevents_mixing_old_and_new_monetary_units stdout ----
+
+thread 'currency_scoped_cache_prevents_mixing_old_and_new_monetary_units' (49356) panicked at native\tests\meaning_build.rs:547:5:
+assertion `left == right` failed
+  left: Number(1)
+ right: 3
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- fully_bound_bill_is_accounted_even_when_provider_error_text_is_unsafe stdout ----
+
+thread 'fully_bound_bill_is_accounted_even_when_provider_error_text_is_unsafe' (89832) panicked at native\tests\meaning_build.rs:502:5:
+assertion `left == right` failed
+  left: 0
+ right: 7
+
+---- malformed_provider_schema_does_not_echo_untrusted_field_values stdout ----
+
+thread 'malformed_provider_schema_does_not_echo_untrusted_field_values' (85784) panicked at native\tests\meaning_build.rs:510:5:
+assertion failed: !format!("{error:#}").contains("PRIVATE_PROVIDER_FIELD")
+
+---- retained_cache_value_must_match_the_validated_immutable_row stdout ----
+
+thread 'retained_cache_value_must_match_the_validated_immutable_row' (46428) panicked at native\tests\meaning_build.rs:525:5:
+assertion failed: meaning_build::validate_retained_record(&f.engine.store,
+        "native_meaning_cache_v1", &id, &value, &Deadline::new(5000)).is_err()
+
+
+failures:
+    currency_scoped_cache_prevents_mixing_old_and_new_monetary_units
+    fully_bound_bill_is_accounted_even_when_provider_error_text_is_unsafe
+    malformed_provider_schema_does_not_echo_untrusted_field_values
+    retained_cache_value_must_match_the_validated_immutable_row
+
+test result: FAILED. 22 passed; 4 failed; 0 ignored; 0 measured; 0 filtered out; finished in 29.79s
+
+error: test failed, to rerun pass `--test meaning_build`
+     Running tests\meaning_protocol.rs (target\debug\deps\meaning_protocol-883198981305159f.exe)
+
+running 4 tests
+test meaning_ollama_accounting_keeps_invalid_usage_unknown_in_bound_error ... ok
+test meaning_ollama_accounting_preserves_usage_after_postcall_digest_change ... ok
+test meaning_ollama_success_keeps_exact_no_claims_and_reported_usage ... ok
+test meaning_ollama_accounting_preserves_usage_after_invalid_shape_and_duplicate_json ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.08s
+
+     Running tests\ollama.rs (target\debug\deps\ollama-01f2a21a87bcee8f.exe)
+
+running 12 tests
+test actual_local_installed_embedding_model_gate ... ignored, Actual running local Ollama endpoint and explicitly selected installed embedding model digest required; never auto-start or pull
+test actual_http_summary_request_is_concise_for_single_and_multiple_sources ... ok
+test invalid_protocol_hashes_and_authority_fields_are_rejected ... ok
+test actual_http_summary_replies_cannot_exceed_concise_generation_bounds ... ok
+test labeled_http_chat_fixture_maps_source_citations_and_reported_usage ... ok
+test labeled_http_embedding_fixture_maps_exact_native_protocol_binding ... ok
+test labeled_vision_fixture_receives_hash_bound_image_bytes ... ok
+test labeled_model_reranking_is_exact_and_scores_are_bounded_inferences ... ok
+test endpoint_identity_capability_and_http_failures_never_become_successes ... ok
+test summary_unicode_characters_cannot_exceed_the_utf8_byte_budget ... ok
+test chunked_query_vectors_are_bounded_and_a_stalled_backend_times_out ... ok
+test native_executable_worker_drives_http_adapter_and_durable_unknown_billing ... ok
+
+test result: ok. 11 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 1.04s
+
+     Running tests\refactor_intents.rs (target\debug\deps\refactor_intents-e45b8130e18e3e90.exe)
+
+running 15 tests
+test flagged_refactoring_obeys_session_plan_permissions_before_querying_a_provider ... ok
+test inline_keep_definition_preserves_exact_declaration_bytes_while_replacing_a_call ... ok
+test flagged_rename_rejects_unrelated_and_wholefile_provider_changes_before_publication ... ok
+test deterministic_later_noop_nul_or_secret_candidate_is_rejected_before_any_publication ... ok
+test invalid_later_inline_candidate_cannot_leave_an_earlier_hidden_plan_or_derivative ... ok
+test keeping_an_inline_definition_requires_a_real_source_bound_call_replacement ... ok
+test amplified_candidate_contents_are_bounded_before_any_publication ... ok
+test native_text_occurrences_refuse_potentially_interpolated_strings_before_publication ... ok
+test native_occurrences_distinguish_string_comment_markers_and_unicode_word_boundaries ... ok
+test keep_definition_rejects_broad_ambiguous_and_command_candidates_without_plans ... ok
+test native_unicode_rename_refuses_byte_string_occurrences_before_publication ... FAILED
+test requested_false_occurrence_flags_also_constrain_provider_supplied_edits ... ok
+test native_text_rename_never_rewrites_rust_raw_string_delimiters ... ok
+test requested_comment_and_text_rename_options_change_only_their_own_occurrence_classes ... ok
+test projected_refactors_keep_v8_v9_source_proofs_and_never_edit_readonly_or_ignored_sources ... ok
+
+failures:
+
+---- native_unicode_rename_refuses_byte_string_occurrences_before_publication stdout ----
+
+thread 'native_unicode_rename_refuses_byte_string_occurrences_before_publication' (8080) panicked at native\tests\refactor_intents.rs:474:9:
+native Unicode must not create invalid byte-string contents: b"helper": Ok(Object {"commandsExecuted": Bool(false), "complete": Bool(false), "intent": Object {"newName": String("café"), "operation": String("rename"), "renameInComments": Bool(false), "renameInTextOccurrences": Bool(true), "source": Object {"contentHash": String("01843264ae0188433040cff17dbdc92633c2017fb5f099f2d0b46ae3614d8b4c"), "endByte": Number(14), "entityId": String("b545e84a13f13e1bd26ce3065da056df46d6083ef8adaac4ac3f5c2322ca257b"), "nameEndByte": Number(9), "namePath": String("helper"), "nameStartByte": Number(3), "path": String("main.rs"), "snapshotId": String("d8343093e383ce09f8333d431a5f124e44c26461dc60ffcced6684d510fc618c"), "startByte": Number(0)}}, "intentProjection": Object {"excludedSources": Array [], "semanticBindingOfTextOccurrences": Bool(false), "semantics": String("literal_identifier_occurrences_in_captured_writable_rust_comments_and_plain_strings"), "sourceBindings": Object {"main.rs": String("01843264ae0188433040cff17dbdc92633c2017fb5f099f2d0b46ae3614d8b4c")}, "supplementalOccurrenceCount": Number(1)}, "operationDigestSemantics": String("source_and_server_bound_audit_correlation_not_provider_attestation_or_replay"), "plan": Object {"baseSnapshotId": String("d8343093e383ce09f8333d431a5f124e44c26461dc60ffcced6684d510fc618c"), "createdAt": Number(1792067548), "diff": String("--- main.rs\n+++ main.rs\n@@ -1,3 +1,3 @@\n-fn helper() {}\n-const LABEL: &[u8] = b\"helper\";\n-fn caller() { helper(); }\n+fn café() {}\n+const LABEL: &[u8] = b\"café\";\n+fn caller() { café(); }\n"), "expiresAt": Number(1792153948), "files": Array [Object {"afterHash": String("cc846540d19cfe4b57fe5d3445aa044f0781a86a6aa51c0ffb98b676f9d57faa"), "beforeHash": String("01843264ae0188433040cff17dbdc92633c2017fb5f099f2d0b46ae3614d8b4c"), "mode": Number(420), "path": String("main.rs")}], "id": String("1b140d52cef6d2cc1eec8a061ec5b8dd861faa5d0c38007ba129c643c2cf57e0"), "resultSnapshotId": String("9705e9eb81a3897769b53aafb63c60a7754876d34e5cbb262d6b9773f0dcfa59"), "warnings": Array [], "workspaceId": String("6c8b284cf5f421abd7dc136d13228692d1fbf25fc23d32799c14455e28291cb8")}, "producer": String("node"), "projectedOperationDigest": String("f7b08aa3e3e6da2eba4f7e70da07e851a2775471a533cc3f2d81280662cd79ba"), "providerOperationDigest": String("46adfee32db162a3549f76988a8c71ba98488ab14049c7e2f52b7e418cc5bb58"), "providerSourceOmissions": Array [], "providerSourcePolicy": String("contract_fixture_rust_selector_broker_only"), "serverProfileBinding": Object {"contentHash": String("d14ba95cdce1ef7dc9ad3ac74949ca5db38b27378ee30f30a23cf26f9e875a11"), "executionAttestation": String("unverified"), "kind": String("selected_command_bytes"), "path": String("\\\\?\\C:\\Program Files\\nodejs\\node.exe"), "transitiveCode": String("not_attested")}, "serverProfileHash": String("dd60d1856e929233a2aef8b3266bafe7afc544da768cdf61fdf8f5fbe9004fbf"), "snapshotId": String("d8343093e383ce09f8333d431a5f124e44c26461dc60ffcced6684d510fc618c"), "sourceExecutionAuthorized": Bool(false)})
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    native_unicode_rename_refuses_byte_string_occurrences_before_publication
+
+test result: FAILED. 14 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.21s
+
+error: test failed, to rerun pass `--test refactor_intents`
+     Running tests\selected_view_analysis.rs (target\debug\deps\selected_view_analysis-4bdd1f0c8eb0e5b6.exe)
+
+running 11 tests
+test canonical_report_bytes_and_registration_match_frozen_golden ... ok
+test existing_graphify_hubs_preserve_file_level_manifest_source_precision ... ok
+test existing_graphify_hubs_include_parallel_citations_and_count_self_loops_twice ... ok
+test selected_report_keeps_multiple_source_bindings_without_choosing_a_fabricated_exact_anchor ... ok
+test selected_report_preparation_validation_and_admission_have_no_publication_side_effects ... ok
+test selected_report_publication_rechecks_cas_after_preparation ... ok
+test selected_report_preserves_provider_claims_and_every_original_anchor_family ... FAILED
+test explicit_selected_analysis_and_resources_replay_historic_views_and_reject_unsupported_scope ... ok
+test existing_graphify_community_tools_assign_default_view_overlay_nodes ... ok
+test selected_report_retention_replays_exact_bytes_and_rejects_scope_and_cas_tampering ... ok
+test selected_report_resource_admission_precedes_publication_of_a_large_formatted_body ... ok
+
+failures:
+
+---- selected_report_preserves_provider_claims_and_every_original_anchor_family stdout ----
+
+thread 'selected_report_preserves_provider_claims_and_every_original_anchor_family' (83944) panicked at native\tests\selected_view_analysis.rs:239:5:
+assertion `left == right` failed
+  left: Number(2)
+ right: 3
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    selected_report_preserves_provider_claims_and_every_original_anchor_family
+
+test result: FAILED. 10 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 21.26s
+
+error: test failed, to rerun pass `--test selected_view_analysis`
+     Running tests\selected_view_analysis_review.rs (target\debug\deps\selected_view_analysis_review-ad14a7cd287a04cc.exe)
+
+running 2 tests
+test retention_plan_recognizes_selected_report_and_preserves_exact_history_and_cas_roots ... ok
+test retention_plan_refuses_forged_selected_report_scope_before_retiring_any_history ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.45s
+
+error: 6 targets failed:
+    `--lib`
+    `--test host_install`
+    `--test host_install_cli`
+    `--test meaning_build`
+    `--test refactor_intents`
+    `--test selected_view_analysis`

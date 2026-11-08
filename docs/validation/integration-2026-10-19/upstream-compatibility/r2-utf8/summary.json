@@ -1,0 +1,16 @@
+{
+  "command": [
+    "node",
+    "--test",
+    "--test-concurrency=1",
+    "--test-name-pattern",
+    "^LIVE installed (graft|graphify) pinned structural extraction$",
+    "test/live/upstreams.mjs"
+  ],
+  "exitCode": 0,
+  "elapsedSeconds": 2.855,
+  "recordedAt": "2026-10-19T02:05:02.445411+00:00",
+  "sourceUnchanged": true,
+  "copiedInputsVerified": 165,
+  "interRunDelta": "Only the live fixture now adds non-BMP UTF-8, CRLF, exact byte-anchor assertions and both original-file checks"
+}

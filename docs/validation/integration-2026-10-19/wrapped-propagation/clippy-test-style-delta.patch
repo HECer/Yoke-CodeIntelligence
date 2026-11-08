@@ -1,0 +1,15 @@
+--- final-r2/native/src/semantic_propagated_delete_ast.rs
++++ final-r3/native/src/semantic_propagated_delete_ast.rs
+@@ -130,9 +130,10 @@
+         let old = parser.parse(before, None).unwrap();
+         let new = parser.parse(after, None).unwrap();
+         let d = Deadline::new(5_000);
+-        let result = unchanged(&old, &new, &[0..end], &d);
++        let spans: Vec<_> = std::iter::once(0..end).collect();
++        let result = unchanged(&old, &new, &spans, &d);
+         if result.is_err() {
+-            let removed = Removed::new(&[0..end]).unwrap();
++            let removed = Removed::new(&spans).unwrap();
+             let mut visited = 0;
+             let a = signature(&old, Some(&removed), &mut visited, &d).unwrap();
+             let b = signature(&new, None, &mut visited, &d).unwrap();

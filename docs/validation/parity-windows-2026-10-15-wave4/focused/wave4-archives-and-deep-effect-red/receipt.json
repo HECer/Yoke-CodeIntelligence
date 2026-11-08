@@ -1,0 +1,32 @@
+{
+  "checkedAtUtc": "2026-10-15T18:49:30.150227+00:00",
+  "scope": "focused_gate_not_frozen_suite",
+  "command": [
+    "cargo",
+    "test",
+    "--workspace",
+    "--locked",
+    "-j",
+    "2",
+    "--no-fail-fast",
+    "--test",
+    "meaning_view_archives",
+    "--test",
+    "meaning_collection_archives",
+    "--test",
+    "symbol_move_own_v1",
+    "--test",
+    "symbol_move_effect_admission",
+    "--",
+    "--test-threads=4"
+  ],
+  "exitCode": 101,
+  "seconds": 85.969,
+  "tempRoot": "D:\\Yoke-Test-Scratch\\wave4-archives-and-deep-effect-red",
+  "logSha256": "347e288d801dada17f49754bf0d1df7355dc02b4fe4b264f489b087bd32017ce",
+  "groups": 4,
+  "passed": 27,
+  "failed": 22,
+  "ignored": 0,
+  "sourceChanges": []
+}

@@ -1,0 +1,31 @@
+{
+  "cases": [
+    {
+      "mode": "published",
+      "case": 0,
+      "exitCode": 0,
+      "error": ""
+    },
+    {
+      "mode": "published",
+      "case": 1,
+      "exitCode": 0,
+      "error": ""
+    },
+    {
+      "mode": "current",
+      "case": 0,
+      "exitCode": 1,
+      "error": "Body context has errors after expansion: [{\"config\":\"tsconfig.json\",\"code\":18046,\"severity\":\"error\",\"message\":\"'result' is of type 'unknown'.\",\"path\":\"main.js\",\"startByte\":596,\"endByte\":602,\"text\":\"result\"}]"
+    },
+    {
+      "mode": "current",
+      "case": 1,
+      "exitCode": 1,
+      "error": "Body context has errors after expansion: [{\"config\":\"tsconfig.json\",\"code\":18046,\"severity\":\"error\",\"message\":\"'result' is of type 'unknown'.\",\"path\":\"main.js\",\"startByte\":600,\"endByte\":606,\"text\":\"result\"}]"
+    }
+  ],
+  "nativeAdmission": false,
+  "snapshotIdsSynthetic": true,
+  "analyzedCodeExecuted": false
+}

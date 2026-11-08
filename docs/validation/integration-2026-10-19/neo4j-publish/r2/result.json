@@ -1,0 +1,20 @@
+{
+  "command": [
+    "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+    "test",
+    "--workspace",
+    "--locked",
+    "-j",
+    "2",
+    "--target-dir",
+    "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+    "--test",
+    "neo4j_publish",
+    "--",
+    "--test-threads=1"
+  ],
+  "exitCode": 0,
+  "seconds": 72.81698322296143,
+  "inputs": 696,
+  "sourceUnchanged": true
+}

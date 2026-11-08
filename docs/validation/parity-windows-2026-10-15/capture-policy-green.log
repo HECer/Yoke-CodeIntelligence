@@ -1,0 +1,88 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 39s
+     Running tests\capture_analyzer8_fixture.rs (target\debug\deps\capture_analyzer8_fixture-f6a913d94bf0d50b.exe)
+
+running 2 tests
+test capture_authentic_analyzer8_before_migration ... ignored, one-time authentic analyzer-8 capture; requires YOKE_CAPTURE_ANALYZER8_DIR
+test capture_authentic_federation_receiver8_before_receipt_migration ... ignored, authentic V1 receiver-8 archive capture; requires YOKE_CAPTURE_ANALYZER8_DIR
+
+test result: ok. 0 passed; 0 failed; 2 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\capture_epoch_selection.rs (target\debug\deps\capture_epoch_selection-53e108e301f91721.exe)
+
+running 3 tests
+test resealed_unknown_epoch_and_changed_v9_proofs_fail_closed ... ok
+test typed_v8_disk_capture_matches_authentic_snapshot_and_receipt_bytes ... ok
+test selected_v9_capture_has_distinct_proofs_and_replays_through_default_readers ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.04s
+
+     Running tests\capture_options.rs (target\debug\deps\capture_options-402d0090ba83d878.exe)
+
+running 8 tests
+test capture_option_proof_obeys_the_shared_store_deadline ... ok
+test known_lsp_only_languages_are_explicit_capture_metadata_without_ast_claims ... ok
+test explicit_include_lifts_only_builtin_skip_and_never_widens_only_dirs ... ok
+test derived_snapshot_preserves_only_proven_capture_options ... ok
+test language_overrides_are_host_typed_and_change_immutable_identity ... ok
+test unsafe_scope_and_unknown_language_fail_before_capture ... ok
+test scoped_capture_uses_directory_segments_and_keeps_protections ... ok
+test exhausted_origin_chain_cannot_publish_an_invalid_capture_proof ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.45s
+
+     Running tests\capture_policy.rs (target\debug\deps\capture_policy-b99a3d9405396fbe.exe)
+
+running 9 tests
+test arbitrary_derived_id_preserves_proven_v9_capture_policy_without_claiming_extraction ... ok
+test canonical_derived_v9_from_disk_v8_retains_v8_source_acquisition_policy ... ok
+test capture_policy_traversal_is_bounded_and_honors_the_callers_expired_deadline ... ok
+test foreign_scope_receipts_and_their_native_children_do_not_grant_disk_acquisition ... ok
+test ignored_capture_v9_lineage_preserves_members_and_rejects_resealed_member_changes ... ok
+test resealed_scope_proof_cannot_widen_only_dirs_before_following_its_valid_origin ... ok
+test overlay_v9_from_disk_v8_retains_the_base_capture_policy ... ok
+test unproven_or_tampered_capture_lineage_cannot_authorize_disk_recapture ... ok
+test exact_git_capture_receipts_select_their_own_policy_and_never_fall_back_on_corruption ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.28s
+
+     Running tests\epoch_producers.rs (target\debug\deps\epoch_producers-42d26cbc6208d4bd.exe)
+
+running 3 tests
+test ordinary_guarded_prepare_preserves_the_proven_base_epoch ... ok
+test ordinary_editor_capture_uses_the_explicit_host_epoch ... ok
+test mcp_prepare_uses_historical_source_policy_instead_of_new_capture_policy ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.20s
+
+     Running tests\freshness_epoch.rs (target\debug\deps\freshness_epoch-82901587d2a56894.exe)
+
+running 2 tests
+test freshness_reuses_the_proven_disk_epoch_and_does_not_publish_new_source ... ok
+test freshness_refuses_a_new_host_epoch_until_it_is_explicitly_indexed ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.12s
+
+     Running tests\git_epoch_selection.rs (target\debug\deps\git_epoch_selection-f81aa6a9b3a3098a.exe)
+
+running 2 tests
+test worktree_cache_seed_uses_selected_epoch_without_copying_other_epoch_entries ... ok
+test selected_epoch_is_shared_by_working_and_committed_git_report_sides ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 11.35s
+
+     Running tests\git_epochs.rs (target\debug\deps\git_epochs-6ff58d8bd476da88.exe)
+
+running 9 tests
+test git_epoch_accessors_install_the_new_callers_deadline ... ok
+test authentic_git8_receipts_reports_and_graphs_remain_readable ... ok
+test git8_registry_archive_replays_without_the_original_workspace ... ok
+test missing_authentic_git8_graph_replays_the_original_extraction_epoch ... ok
+test guarded_derivative_archive_keeps_older_git_source_proof_offline ... ok
+test explicit_git9_capture_has_distinct_identity_facts_and_missing_graph_replay ... ok
+test synthetic_legacy_git_receipts_remain_readable_without_an_extractor_claim ... ok
+test resealed_offline_git_proof_cannot_invent_commit_or_source_bytes ... ok
+test git_epoch_selection_rejects_invalid_receipts_missing_proofs_and_expired_deadlines ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.83s
+

@@ -1,0 +1,105 @@
+{
+  "sourceCommit": "b8cd7b05ef1ed0dadd3fd96f5b44cbb125a9f4ef",
+  "runtimeCommit": "1edc0684888ce553b814764b890829abaccea053",
+  "parentCommit": "280947eb70a8b596c848863029d6e39c15704698",
+  "paths": [
+    "native/README.md",
+    "native/docs/arxiv-source.md",
+    "native/docs/source-acquisition.md",
+    "native/src/arxiv_rate.rs",
+    "native/src/arxiv_source.rs",
+    "native/src/lib.rs",
+    "native/src/source_acquisition_cli.rs",
+    "native/src/source_acquisition_http.rs",
+    "native/tests/arxiv_source.rs",
+    "native/tests/arxiv_source_cli.rs",
+    "native/tests/arxiv_source_http.rs"
+  ],
+  "nativeGroups": [
+    [
+      437,
+      0,
+      7
+    ],
+    [
+      5,
+      0,
+      0
+    ],
+    [
+      3,
+      0,
+      0
+    ],
+    [
+      4,
+      0,
+      0
+    ],
+    [
+      16,
+      0,
+      0
+    ],
+    [
+      12,
+      1,
+      0
+    ],
+    [
+      16,
+      0,
+      0
+    ],
+    [
+      3,
+      0,
+      1
+    ],
+    [
+      3,
+      0,
+      0
+    ],
+    [
+      8,
+      0,
+      0
+    ],
+    [
+      4,
+      0,
+      0
+    ],
+    [
+      7,
+      0,
+      0
+    ],
+    [
+      5,
+      0,
+      0
+    ],
+    [
+      4,
+      0,
+      0
+    ],
+    [
+      5,
+      0,
+      0
+    ]
+  ],
+  "nativeTotals": {
+    "passed": 532,
+    "failed": 1,
+    "ignored": 8
+  },
+  "failedCases": [
+    "media_cannot_bypass_source_scope_links_ignore_or_protected_paths"
+  ],
+  "newCases": 16,
+  "wholeNativeRerun": false
+}

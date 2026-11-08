@@ -1,0 +1,158 @@
+{
+  "fixtureRoot": "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-claude-mcp-a8voy1sz",
+  "cliSha256": "39241a19acd6fcd7bd47acb8d1a9bf467ddc88af6e4335791ba49149f7ac2da8",
+  "clientSha256": "f6bc9de38f507c36c9a3bb0085a59a27e32156e2208252bf1707c4e3ef309114",
+  "clientVersion": "2.1.306",
+  "modelTurnRequested": false,
+  "accountLoginRequested": false,
+  "userConfigurationSelected": false,
+  "clientGetExitCode": 1,
+  "clientHealthConnected": false,
+  "originalConfigBytesRestored": true,
+  "sourceBytesUnchanged": true,
+  "nativeExecutableUnchanged": true,
+  "completed": true,
+  "commands": [
+    {
+      "name": "install-plan",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--timeout",
+        "60000",
+        "host-install",
+        "plan",
+        "--selection",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-claude-mcp-a8voy1sz\\selection.json"
+      ],
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "pid": 30360,
+      "exitCode": 0,
+      "activeAtParentExit": 0,
+      "activeAfterCleanup": 0,
+      "seconds": 0.902
+    },
+    {
+      "name": "install-apply",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--timeout",
+        "60000",
+        "host-install",
+        "apply",
+        "--selection",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-claude-mcp-a8voy1sz\\selection.json",
+        "--plan",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-claude-mcp-a8voy1sz\\plan.json",
+        "--allow-host-writes"
+      ],
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "pid": 25868,
+      "exitCode": 0,
+      "activeAtParentExit": 0,
+      "activeAfterCleanup": 0,
+      "seconds": 1.414
+    },
+    {
+      "name": "index-owned-source",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--root",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-claude-mcp-a8voy1sz\\source \ud83c\udf0d",
+        "index"
+      ],
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "pid": 4476,
+      "exitCode": 0,
+      "activeAtParentExit": 0,
+      "activeAfterCleanup": 0,
+      "seconds": 0.082
+    },
+    {
+      "name": "actual-client-get",
+      "command": [
+        "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\tools\\claude-2.1.306-win32-x64\\claude.exe",
+        "--bare",
+        "--setting-sources",
+        "",
+        "--mcp-config",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-claude-mcp-a8voy1sz\\client \u03c0\\.mcp.json",
+        "--strict-mcp-config",
+        "mcp",
+        "get",
+        "yoke_owned-json-fixture"
+      ],
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "pid": 20624,
+      "exitCode": 1,
+      "activeAtParentExit": 0,
+      "activeAfterCleanup": 0,
+      "seconds": 0.335
+    },
+    {
+      "name": "actual-client-list",
+      "command": [
+        "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\tools\\claude-2.1.306-win32-x64\\claude.exe",
+        "--bare",
+        "--setting-sources",
+        "",
+        "--mcp-config",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-claude-mcp-a8voy1sz\\client \u03c0\\.mcp.json",
+        "--strict-mcp-config",
+        "mcp",
+        "list"
+      ],
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "pid": 25628,
+      "exitCode": 0,
+      "activeAtParentExit": 0,
+      "activeAfterCleanup": 0,
+      "seconds": 0.285
+    },
+    {
+      "name": "uninstall-plan",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--timeout",
+        "60000",
+        "host-install",
+        "uninstall-plan",
+        "--selection",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-claude-mcp-a8voy1sz\\selection.json"
+      ],
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "pid": 26908,
+      "exitCode": 0,
+      "activeAtParentExit": 0,
+      "activeAfterCleanup": 0,
+      "seconds": 0.919
+    },
+    {
+      "name": "uninstall-apply",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+        "--timeout",
+        "60000",
+        "host-install",
+        "apply",
+        "--selection",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-claude-mcp-a8voy1sz\\selection.json",
+        "--plan",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-claude-mcp-a8voy1sz\\remove.json",
+        "--allow-host-writes"
+      ],
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "pid": 13968,
+      "exitCode": 0,
+      "activeAtParentExit": 1,
+      "activeAfterCleanup": 0,
+      "seconds": 1.46
+    }
+  ]
+}

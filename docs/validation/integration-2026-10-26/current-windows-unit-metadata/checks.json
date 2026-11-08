@@ -1,0 +1,71 @@
+{
+  "sourceCommit": "b3a87d5d5de32668ddf7f36f230424e5f3a3a7ca",
+  "platform": "Windows x86_64",
+  "library": {
+    "passed": 773,
+    "failed": 0,
+    "ignored": 7,
+    "measured": 0,
+    "filteredOut": 0,
+    "suite": "lib",
+    "ignoredTests": [
+      "host_install::output_recovery_tests::output_recovery_worker",
+      "retrieval_saved_graph::tests::oversized_saved_row_refuses_before_raw_payload_read_and_auto_fallback",
+      "retrieval_scopes::capacity_tests::genuine_4096_utf8_path_is_captured_and_4097_is_refused_by_existing_capture_boundary",
+      "retrieval_scopes::capacity_tests::genuine_one_million_observations_is_byte_dominated_then_plus_one_refuses_before_graph_loading",
+      "retrieval_scopes::capacity_tests::real_100k_files_pass_then_one_real_function_rejects_entity_100001_before_graph_reload",
+      "retrieval_scopes::capacity_tests::real_graph_exact_64mb_passes_and_plus_one_refuses_before_saved_graph_loading",
+      "retrieval_scopes::capacity_tests::real_ownership_exact_16mb_passes_and_next_byte_refuses_before_body_scoring"
+    ],
+    "existingIgnoredPromoted": false,
+    "wholeHarness": true,
+    "testThreads": 1,
+    "summaryLineCountIncludingNestedOutput": 1
+  },
+  "cliUnit": {
+    "passed": 16,
+    "failed": 0,
+    "ignored": 0,
+    "measured": 0,
+    "filteredOut": 0,
+    "suite": "cli",
+    "ignoredTests": [],
+    "existingIgnoredPromoted": false,
+    "wholeHarness": true,
+    "testThreads": 1,
+    "summaryLineCountIncludingNestedOutput": 1
+  },
+  "protocolGuards": {
+    "passed": 116,
+    "skipped": 0,
+    "nativeRuntimeCoverage": false
+  },
+  "actualProtectedRoleCount": 10,
+  "clippy": {
+    "completed": true,
+    "warningsDenied": true,
+    "workspaceAllTargets": true,
+    "artifactObservationsMetadataOnly": 757
+  },
+  "node": {
+    "scope": "exact-raw-byte-equivalence-not-a-new-test-run",
+    "actualNodeSourceCommit": "771833bb5180f3d51e092e64de5fd22c783c920a",
+    "currentNativeSourceCommit": "b3a87d5d5de32668ddf7f36f230424e5f3a3a7ca",
+    "selectedInputsEqual": 1135,
+    "originalControlsEqual": 7,
+    "actualTypecheckExitCode": 0,
+    "actualNpmPass": 260,
+    "actualNpmFail": 0,
+    "actualNpmOriginalSkips": 3,
+    "commandsRerun": false,
+    "broaderEnvironmentOrCacheFrozen": false
+  },
+  "priorFailedAttemptsRetained": [
+    "schema5-protected-metadata-mode",
+    "schema6-disk-reserve"
+  ],
+  "releaseQualification": false,
+  "vsixQualification": false,
+  "hostedOrUnixAcceptance": false,
+  "fullProjectComplete": false
+}

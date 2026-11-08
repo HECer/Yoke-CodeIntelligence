@@ -1,0 +1,35 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 21s
+     Running tests\project_session.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\project_session-d90448755f8b3931.exe)
+
+running 6 tests
+test external_project_queries_cannot_mutate_or_activate_query_only_roots ... ok
+test external_queries_cannot_publish_semantic_plans_through_find ... ok
+test global_note_host_identity_is_bound_to_canonical_directory ... ok
+test modes_onboarding_and_named_notes_are_persistent_without_granting_execution ... ok
+test registered_projects_inherit_explicit_host_capture_and_provider_defaults ... ok
+test session_activation_and_resume_use_only_host_registered_projects ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.30s
+
+     Running tests\session_mcp.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\session_mcp-40ae1e2224ac586e.exe)
+
+running 3 tests
+test session_graph_tool_builds_an_explicit_source_bound_view ... ok
+test session_mcp_retrieval_uses_exact_source_bodies_and_rejects_authority_options ... ok
+test session_profile_exposes_persistent_steering_without_host_authority_arguments ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.12s
+
+     Running tests\session_refactor.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\session_refactor-7d4d1615b98760f6.exe)
+
+running 6 tests
+test session_mcp_refactor_uses_the_same_guarded_native_result_and_rejects_extra_fields ... ok
+test session_refactor_argument_budget_admits_64000_and_refuses_64001_without_clipping ... ok
+test session_refactor_checks_modes_read_only_projects_and_original_deadline ... ok
+test session_refactor_prepares_the_native_plan_without_steering_or_source_writes ... ok
+test session_refactor_refuses_a_session_changed_by_another_client_before_provider_start ... ok
+test session_refactor_rejects_unknown_envelopes_operations_and_authority_fields ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.19s
+

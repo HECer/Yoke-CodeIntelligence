@@ -1,0 +1,196 @@
+    Finished `test` profile [unoptimized] target(s) in 9.60s
+     Running tests\github_app_digest_service.rs (target\debug\deps\github_app_digest_service-1b96734347e70c9f.exe)
+
+running 1 test
+test exact_approved_bytes_use_one_put_and_keep_captured_headers_and_receipt_scope ... 
+thread '<unnamed>' (17396) panicked at native\tests\github_app_digest_service.rs:128:21:
+unexpected path /repos/org/repo?
+stack backtrace:
+   0: std::panicking::panic_handler
+             at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\std\src\panicking.rs:689
+   1: core::panicking::panic_fmt
+             at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\core\src\panicking.rs:80
+   2: github_app_digest_service::Fixture::new::{{closure}}
+note: Some details are omitted, run with `RUST_BACKTRACE=full` for a verbose backtrace.
+
+thread 'exact_approved_bytes_use_one_put_and_keep_captured_headers_and_receipt_scope' (19844) panicked at native\tests\github_app_digest_service.rs:187:10:
+called `Result::unwrap()` on an `Err` value: Fixture GitHub request failed: reqwest::Error { kind: Request, source: hyper_util::client::legacy::Error(SendRequest, hyper::Error(IncompleteMessage)) }
+
+Stack backtrace:
+   0: std::backtrace_rs::backtrace::win64::trace
+             at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\std\src\..\..\backtrace\src\backtrace\win64.rs:85
+   1: std::backtrace_rs::backtrace::trace_unsynchronized
+             at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\std\src\..\..\backtrace\src\backtrace\mod.rs:66
+   2: std::backtrace::Backtrace::create
+             at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\std\src\backtrace.rs:331
+   3: std::backtrace::Backtrace::capture
+             at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\std\src\backtrace.rs:296
+   4: anyhow::error::<impl anyhow::Error>::msg
+   5: yoke::github::Operation::get::{{closure}}
+   6: core::result::Result<T,E>::map_err
+   7: yoke::github::Operation::get
+   8: yoke::github::discussions::capture
+   9: github_app_digest_service::Fixture::new::{{closure}}::{{closure}}
+  10: github_app_digest_service::Fixture::new::{{closure}}::{{closure}}
+  11: github_app_digest_service::sql_contention_preserves_policy_and_deadline_without_network_or_late_intent::{{closure}}
+  12: github_app_digest_service::exact_approved_bytes_use_one_put_and_keep_captured_headers_and_receipt_scope::{{closure}}
+  13: core::ops::function::FnOnce::call_once
+  14: core::ops::function::FnOnce::call_once
+             at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\core\src\ops\function.rs:250
+  15: test::__rust_begin_short_backtrace<enum2$<core::result::Result<tuple$<>,alloc::string::String> >,enum2$<core::result::Result<tuple$<>,alloc::string::String> > (*)()>
+             at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\test\src\lib.rs:663
+  16: test::run_test_in_process
+             at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\test\src\lib.rs:686
+  17: test::run_test::closure$0
+             at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\test\src\lib.rs:607
+  18: test::run_test::closure$1
+             at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\test\src\lib.rs:637
+  19: std::sys::backtrace::__rust_begin_short_backtrace<test::run_test::closure_env$1,tuple$<> >
+             at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\std\src\sys\backtrace.rs:166
+  20: std::thread::lifecycle::spawn_unchecked::closure$1::closure$0
+             at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\std\src\thread\lifecycle.rs:91
+  21: core::panic::unwind_safe::impl$25::call_once
+             at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\core\src\panic\unwind_safe.rs:274
+  22: std::panicking::catch_unwind::do_call
+             at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\std\src\panicking.rs:581
+  23: std::panicking::catch_unwind
+             at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\std\src\panicking.rs:544
+  24: std::panic::catch_unwind
+             at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\std\src\panic.rs:359
+  25: std::thread::lifecycle::spawn_unchecked::closure$1
+             at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\std\src\thread\lifecycle.rs:89
+  26: core::ops::function::FnOnce::call_once<std::thread::lifecycle::spawn_unchecked::closure_env$1<test::run_test::closure_env$1,tuple$<> >,tuple$<> >
+             at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\core\src\ops\function.rs:250
+  27: std::sys::thread::windows::impl$0::new::thread_start
+             at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\std\src\sys\thread\windows.rs:58
+  28: BaseThreadInitThunk
+  29: RtlUserThreadStart
+stack backtrace:
+   0: std::panicking::panic_handler
+             at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\std\src\panicking.rs:689
+   1: core::panicking::panic_fmt
+             at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\core\src\panicking.rs:80
+   2: core::result::unwrap_failed
+             at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\core\src\result.rs:1867
+   3: github_app_digest_service::Fixture::new::{{closure}}::{{closure}}
+   4: github_app_digest_service::Fixture::new::{{closure}}::{{closure}}
+   5: github_app_digest_service::sql_contention_preserves_policy_and_deadline_without_network_or_late_intent::{{closure}}
+   6: github_app_digest_service::exact_approved_bytes_use_one_put_and_keep_captured_headers_and_receipt_scope::{{closure}}
+   7: core::ops::function::FnOnce::call_once
+   8: core::ops::function::FnOnce::call_once
+             at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\core\src\ops\function.rs:250
+note: Some details are omitted, run with `RUST_BACKTRACE=full` for a verbose backtrace.
+
+thread 'exact_approved_bytes_use_one_put_and_keep_captured_headers_and_receipt_scope' (19844) panicked at native\tests\github_app_digest_service.rs:203:27:
+called `Result::unwrap()` on an `Err` value: Any { .. }
+stack backtrace:
+   0:     0x7ff7309b0802 - std::backtrace_rs::backtrace::win64::trace
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\std\src\..\..\backtrace\src\backtrace\win64.rs:85
+   1:     0x7ff7309b0802 - std::backtrace_rs::backtrace::trace_unsynchronized
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\std\src\..\..\backtrace\src\backtrace\mod.rs:66
+   2:     0x7ff7309b0802 - std::sys::backtrace::_print_fmt
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\std\src\sys\backtrace.rs:74
+   3:     0x7ff7309b0802 - std::sys::backtrace::impl$0::print::impl$0::fmt
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\std\src\sys\backtrace.rs:44
+   4:     0x7ff7309bc6a1 - core::fmt::write
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\core\src\fmt\mod.rs:0
+   5:     0x7ff730988f34 - std::io::default_write_fmt
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\std\src\io\mod.rs:639
+   6:     0x7ff730988f34 - std::io::Write::write_fmt<std::sys::stdio::windows::Stderr>
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\std\src\io\mod.rs:1994
+   7:     0x7ff7309a24f0 - std::sys::backtrace::BacktraceLock::print
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\std\src\sys\backtrace.rs:47
+   8:     0x7ff7309a24f0 - std::panicking::default_hook::closure$0
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\std\src\panicking.rs:292
+   9:     0x7ff7309a2308 - std::panicking::default_hook
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\std\src\panicking.rs:319
+  10:     0x7ff7309a2822 - std::panicking::panic_with_hook
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\std\src\panicking.rs:825
+  11:     0x7ff7309a25c4 - std::panicking::panic_handler::closure$0
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\std\src\panicking.rs:698
+  12:     0x7ff73099c3ff - std::sys::backtrace::__rust_end_short_backtrace<std::panicking::panic_handler::closure_env$0,never$>
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\std\src\sys\backtrace.rs:182
+  13:     0x7ff7309851fe - std::panicking::panic_handler
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\std\src\panicking.rs:689
+  14:     0x7ff730eefecd - core::panicking::panic_fmt
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\core\src\panicking.rs:80
+  15:     0x7ff730eef9f7 - core::result::unwrap_failed
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\core\src\result.rs:1867
+  16:     0x7ff72f3f655e - <github_app_digest_service::Fixture as core::ops::drop::Drop>::drop::hbeb1e5d111bc6bf5
+  17:     0x7ff72f40284b - core::ptr::drop_in_place<github_app_digest_service::Fixture>::h7fd810761ed4fb96
+  18:     0x7ff72f3eb90d - github_app_digest_service::sql_contention_preserves_policy_and_deadline_without_network_or_late_intent::{{closure}}::hefc2cf85adf3cb26
+  19:     0x7ffb845fbb00 - _CxxFrameHandler3
+  20:     0x7ffb845e3a9d - is_exception_typeof
+  21:     0x7ffb845fae8d - _C_specific_handler
+  22:     0x7ffb845e2ce2 - is_exception_typeof
+  23:     0x7ffb845fb8f8 - _CxxFrameHandler3
+  24:     0x7ffbaf6b29ef - _chkstk
+  25:     0x7ffbaf640939 - RtlUnwindEx
+  26:     0x7ffb845fb3d6 - _C_specific_handler
+  27:     0x7ffb845e1c20 - is_exception_typeof
+  28:     0x7ffb845e2dd8 - is_exception_typeof
+  29:     0x7ffb845fb8f8 - _CxxFrameHandler3
+  30:     0x7ffbaf6b296f - _chkstk
+  31:     0x7ffbaf662554 - RtlRaiseException
+  32:     0x7ffbaf6622a7 - RtlRaiseException
+  33:     0x7ffbaccf5369 - RaiseException
+  34:     0x7ffb845e55a9 - CxxThrowException
+  35:     0x7ff7309b0cfd - panic_unwind::imp::throw_exception
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\panic_unwind\src\seh.rs:368
+  36:     0x7ff7309b0bd5 - panic_unwind::imp::panic
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\panic_unwind\src\seh.rs:302
+  37:     0x7ff7309b0bd5 - panic_unwind::__rust_start_panic
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\panic_unwind\src\lib.rs:108
+  38:     0x7ff730984f2f - std::panicking::rust_panic
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\std\src\panicking.rs:886
+  39:     0x7ff7309a289a - std::panicking::panic_with_hook
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\std\src\panicking.rs:850
+  40:     0x7ff7309a25c4 - std::panicking::panic_handler::closure$0
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\std\src\panicking.rs:698
+  41:     0x7ff73099c3ff - std::sys::backtrace::__rust_end_short_backtrace<std::panicking::panic_handler::closure_env$0,never$>
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\std\src\sys\backtrace.rs:182
+  42:     0x7ff7309851fe - std::panicking::panic_handler
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\std\src\panicking.rs:689
+  43:     0x7ff730eefecd - core::panicking::panic_fmt
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\core\src\panicking.rs:80
+  44:     0x7ff730eef9f7 - core::result::unwrap_failed
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\core\src\result.rs:1867
+  45:     0x7ff72f3f272e - github_app_digest_service::Fixture::new::{{closure}}::{{closure}}::hf65e1944447f898a
+  46:     0x7ff72f3f3480 - github_app_digest_service::Fixture::new::{{closure}}::{{closure}}::hf65e1944447f898a
+  47:     0x7ff72f3ead61 - github_app_digest_service::sql_contention_preserves_policy_and_deadline_without_network_or_late_intent::{{closure}}::hefc2cf85adf3cb26
+  48:     0x7ff72f3ebc63 - github_app_digest_service::exact_approved_bytes_use_one_put_and_keep_captured_headers_and_receipt_scope::{{closure}}::h40e77969e48654d0
+  49:     0x7ff72f402082 - core::ops::function::FnOnce::call_once::h65f95e6cf48013ff
+  50:     0x7ff72f429680 - core::ops::function::FnOnce::call_once
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\core\src\ops\function.rs:250
+  51:     0x7ff72f429680 - test::__rust_begin_short_backtrace<enum2$<core::result::Result<tuple$<>,alloc::string::String> >,enum2$<core::result::Result<tuple$<>,alloc::string::String> > (*)()>
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\test\src\lib.rs:663
+  52:     0x7ff72f44288d - test::run_test_in_process
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\test\src\lib.rs:686
+  53:     0x7ff72f44288d - test::run_test::closure$0
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\test\src\lib.rs:607
+  54:     0x7ff72f41431c - test::run_test::closure$1
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\test\src\lib.rs:637
+  55:     0x7ff72f41431c - std::sys::backtrace::__rust_begin_short_backtrace<test::run_test::closure_env$1,tuple$<> >
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\std\src\sys\backtrace.rs:166
+  56:     0x7ff72f4187b2 - std::thread::lifecycle::spawn_unchecked::closure$1::closure$0
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\std\src\thread\lifecycle.rs:91
+  57:     0x7ff72f4187b2 - core::panic::unwind_safe::impl$25::call_once
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\core\src\panic\unwind_safe.rs:274
+  58:     0x7ff72f4187b2 - std::panicking::catch_unwind::do_call
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\std\src\panicking.rs:581
+  59:     0x7ff72f4187b2 - std::panicking::catch_unwind
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\std\src\panicking.rs:544
+  60:     0x7ff72f4187b2 - std::panic::catch_unwind
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\std\src\panic.rs:359
+  61:     0x7ff72f4187b2 - std::thread::lifecycle::spawn_unchecked::closure$1
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\std\src\thread\lifecycle.rs:89
+  62:     0x7ff72f4187b2 - core::ops::function::FnOnce::call_once<std::thread::lifecycle::spawn_unchecked::closure_env$1<test::run_test::closure_env$1,tuple$<> >,tuple$<> >
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\core\src\ops\function.rs:250
+  63:     0x7ff730994078 - std::sys::thread::windows::impl$0::new::thread_start
+                               at /rustc/e408947bfd200af42db322daf0fadfe7e26d3bd1/library\std\src\sys\thread\windows.rs:58
+  64:     0x7ffbaf247374 - BaseThreadInitThunk
+  65:     0x7ffbaf65cc91 - RtlUserThreadStart
+error: test failed, to rerun pass `--test github_app_digest_service`
+
+Caused by:
+  process didn't exit successfully: `C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\github_app_digest_service-1b96734347e70c9f.exe exact_approved_bytes_use_one_put_and_keep_captured_headers_and_receipt_scope --exact --nocapture --test-threads=1` (exit code: 0xc0000409, STATUS_STACK_BUFFER_OVERRUN)

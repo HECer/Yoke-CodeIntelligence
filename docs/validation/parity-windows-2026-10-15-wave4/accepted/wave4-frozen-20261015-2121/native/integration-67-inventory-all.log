@@ -1,0 +1,40 @@
+warning: failed to save last-use data
+This may prevent cargo from accurately tracking what is being used in its global cache. This information is used for automatically removing unused data in the cache.
+
+database or disk is full
+
+Caused by:
+  Error code 13: database or disk is full
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 3.81s
+     Running tests\media.rs (target\debug\deps\media-96dd54905e72b0ab.exe)
+explicitly_captured_binary_assets_are_published_with_exact_ids_and_paged_bytes: test
+malformed_and_truncated_containers_fail_without_fabricated_metadata: test
+media_cannot_bypass_source_scope_links_ignore_or_protected_paths: test
+media_persistence_refreshes_the_remaining_deadline_after_asset_capture: test
+native_media_metadata_is_technical_and_binary_capture_is_explicit: test
+native_pdf_worker_extracts_actual_text_without_opening_a_source_index: test
+pdf_worker_deadline_and_malformed_input_fail_closed: test
+strict_pdf_visitor_decodes_nonbmp_tounicode_and_text_array_line_operators: test
+strict_pdf_visitor_discloses_form_text_exclusion_and_enforces_page_text_cap: test
+strict_pdf_visitor_refuses_unknown_fonts_malformed_encodings_and_content: test
+strict_pdf_visitor_respects_code_spaces_and_rejects_ambiguous_or_invalid_unicode: test
+strict_pdf_visitor_validates_every_page_tree_child_count_and_parent: test
+supplied_unicode_transcript_binds_asset_digest_and_discloses_unverified_authorship: test
+
+13 tests, 0 benchmarks
+     Running tests\model_bedrock.rs (target\debug\deps\model_bedrock-f9c29e631b53577c.exe)
+actual_wire_signature_binds_arn_body_host_port_date_region_and_session_token: test
+converse_refuses_overlarge_image_before_credential_read: test
+converse_signs_one_source_bound_request_and_preserves_unknown_cost: test
+independent_signature_oracle_matches_official_aws_post_vanilla_vector: test
+malformed_vectors_usage_and_tool_blocks_never_become_success: test
+network_authority_input_integrity_deadline_and_cohere_batch_precede_credentials: test
+non_200_status_is_one_attempt_with_unknown_billing_and_no_service_body: test
+oversized_titan_batch_and_invalid_authority_never_read_credentials: test
+refusals_preserve_valid_usage_and_decoded_secret_echo_is_never_returned: test
+session_admission_refuses_expiry_header_injection_and_partial_temporary_identity: test
+titan_and_cohere_each_use_exactly_one_wire_batch_and_ordered_float_vectors: test
+tls_uses_owned_roots_and_never_accepts_untrusted_fixture_certificate: test
+
+12 tests, 0 benchmarks

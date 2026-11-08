@@ -1,0 +1,13 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 01s
+     Running unittests src\lib.rs (target\debug\deps\yoke-d0206a40818d4343.exe)
+
+running 5 tests
+test graph_collections::reader_tests::canceled_and_expired_coordinated_admission_leave_the_directory_empty ... ok
+test graph_collections::reader_tests::coordinated_admission_never_creates_a_database_or_initializes_an_unknown_schema ... ok
+test graph_collections::reader_tests::coordinated_reader_pins_committed_wal_before_the_first_public_query ... ok
+test graph_collections::reader_tests::coordinated_reader_treats_unicode_and_uri_punctuation_as_path_bytes ... ok
+test graph_collections::reader_tests::coordinated_schema_reads_obey_the_host_lock_budget ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 396 filtered out; finished in 0.36s
+

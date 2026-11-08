@@ -1,0 +1,36 @@
+{
+  "sourceCommit": "dd462925450c77965418261cf46aca5cf9ea6859",
+  "qualifiedInputCount": 1071,
+  "unchangedInputsAfterDocsReview": 1068,
+  "onlyChangedQualifiedPaths": [
+    {
+      "path": "docs/REMAINING_WORK.md",
+      "qualifiedSha256": "f3662a574ced68b70e3bf675166b2354a59c2ac24d209f5323c7f62d2d208a0e",
+      "reviewedSha256": "dfe026aded587c57265ed0e1cc310d4778dabc75a2c140f61a3ae332a45b9310"
+    },
+    {
+      "path": "docs/STATUS.md",
+      "qualifiedSha256": "960827ed658f8e7b1fcf445d2fa050dd2615eee27453274356c262a7fdcf3dd8",
+      "reviewedSha256": "331364c8db170251f0408ca4a3f453e782b44b5fae52fbe6ab2045e15a4d9ae2"
+    },
+    {
+      "path": "docs/parity/native-reconciliation-2026-10-15.json",
+      "qualifiedSha256": "ccd75b0171330a8b2e73e77b60a743ec1e4dea6373ced29af9d0674e8883d855",
+      "reviewedSha256": "450feb2586cfeda74a7058e8ca93f3771dbbc3c07ec85d30e1fa579822af3aa0"
+    }
+  ],
+  "qualifiedProductionGitBlobsEqualWorkingBytes": {
+    "native/src/lib.rs": "2c66f83a187dfad9c781d47704abcbaef53b0e417549b325fb343545e6e655b6",
+    "native/src/main.rs": "476d92303c1364dea662530a5243d8bf3bb68eaac9d0b6d5b9203658465694da",
+    "native/src/media.rs": "986f23b3ceb2daa54255f08c8b37a94148b324b552a6ce4ad5716a0806db1c6b",
+    "native/src/retention.rs": "e405c99083089fa807b52b7c0259769ae9e8d580055bf28cc78805ae6ba97453",
+    "native/src/media_asr.rs": "4930a09feca158d2966cb278aa499e586c7b1cece9056940f03e675e60a4b3d3",
+    "native/src/media_asr_host.rs": "e49075ce565ed3963a127e927345fa376f3a156e9946fb162b2760b4b0374962",
+    "native/src/media_asr_report.rs": "0df381844bd755623e50a67908145319b0f25a8306564664bc9cca4713bbd99d",
+    "native/src/media_asr_cli.rs": "379546d0ad6c6c20c0346406c901c630375afe1555b4aa462f62ad7378ad56f1",
+    "native/src/media_asr_worker.py": "031425b762ef3898b9ca970897a64335e0c2bf75f04d554ac7a1b7ca38f947f4",
+    "native/tests/media_asr.rs": "fa090f956cace52c506341f41c368dc09240b569c28631fb5adaad009919eeff"
+  },
+  "historicalInventoryLedgerAndSummaryExact": true,
+  "runtimeTestsRunAfterDocReview": false
+}

@@ -1,0 +1,61 @@
+{
+  "baseline": "74b442556c1e2f0d454f95f0c1fe1017774104ee",
+  "localAdmissionComplete": true,
+  "pythonTests": {
+    "passed": 16,
+    "failed": 0,
+    "skipped": 0
+  },
+  "existingElevenTestBodiesAndDecoratorsExact": true,
+  "actualWindowsQueryScope": "Empty named Job refuses this unassigned Python process; both handles close",
+  "simulatedPrecedingSourceRegressionConfirmed": true,
+  "nativeYokeImageReadOrExecuted": false,
+  "nativeRustAndWorkflowExactToBaseline": true,
+  "reconciliationAndBroadCertificatesUnchanged": true,
+  "typecheckExit": 0,
+  "npmTestExit": 0,
+  "npm": {
+    "passed": 260,
+    "failed": 0,
+    "existingSkipped": 3
+  },
+  "parentSuspendedAssignmentDeadlineAndDiskReserveUnchanged": true,
+  "diskReserveBytes": 500000000,
+  "actualAssignedNativeWorkerAcceptanceComplete": false,
+  "fullStatusComplete": false,
+  "source": [
+    {
+      "path": "scripts/host_history_live.py",
+      "sha256": "d446f2862c3b4f6d87cee0c64c495b9392ef2205a1679f9fe5340fefc460e696",
+      "gitBlobSha": "8f666533cf93397622bdfd3c3949e172dd616563"
+    },
+    {
+      "path": "scripts/tests/test_host_history_live.py",
+      "sha256": "59809439e8a7abede8b4a7f4b3ac7444f6d52ebb3bacea922434593ad0f72e46",
+      "gitBlobSha": "f787275854c3747d759f7a8644eb739dc7a128dc"
+    }
+  ],
+  "logs": [
+    {
+      "path": "python-tests.txt",
+      "sha256": "1d45c50212293c68f7a9a7e8dde7ea36d58b0f5d6f411735674c8ac826c667f9",
+      "originalEncoding": "utf-16",
+      "originalSha256": "fe4d801be1d98d68c17f1d2e7e7c8d964d59de2f6d479123663077d7bfc6f382",
+      "publicRendering": "UTF-8/LF, trailing whitespace removed"
+    },
+    {
+      "path": "typecheck.txt",
+      "sha256": "9c9c47e9830f307bffde0337abe9a8d1c1dc0bbd95ca2a6c337cbd40a0516e1b",
+      "originalEncoding": "utf-16",
+      "originalSha256": "641ce1cc4e8f446e16f25f0cdabe3c3c36f40a5dbd087a886c3a90868cf0ada2",
+      "publicRendering": "UTF-8/LF, trailing whitespace removed"
+    },
+    {
+      "path": "npm-test.txt",
+      "sha256": "eb8e8d826b19a522a0b38bc844e285ab07493a4b49acbbc41a4f4c13ee95ed1e",
+      "originalEncoding": "utf-16",
+      "originalSha256": "9667174bb57bf2f3fb1744ef6877da336cc35b618cf761706d9d155da3926144",
+      "publicRendering": "UTF-8/LF, trailing whitespace removed"
+    }
+  ]
+}

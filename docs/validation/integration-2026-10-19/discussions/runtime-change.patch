@@ -1,0 +1,247 @@
+diff --git a/native/src/github.rs b/native/src/github.rs
+index 36b2f14..4632848 100644
+--- a/native/src/github.rs
++++ b/native/src/github.rs
+@@ -8,6 +8,9 @@ use std::io::Read;
+ use std::net::SocketAddr;
+ use zeroize::Zeroizing;
+ 
++#[path = "github_discussions.rs"]
++pub mod discussions;
++
+ #[derive(Clone, Debug, Serialize, Deserialize)]
+ #[serde(rename_all = "camelCase", deny_unknown_fields, default)]
+ pub struct HostReadProfile {
+@@ -668,6 +671,17 @@ impl Operation<'_> {
+         endpoint: &str,
+         params: &[(&str, String)],
+         field: Option<&str>,
++    ) -> Result<Pages> {
++        self.pages_reserved(repo, repo_id, endpoint, params, field, 0)
++    }
++    fn pages_reserved(
++        &mut self,
++        repo: &str,
++        repo_id: u64,
++        endpoint: &str,
++        params: &[(&str, String)],
++        field: Option<&str>,
++        reserve_requests: usize,
+     ) -> Result<Pages> {
+         let path = format!("/repos/{repo}/{endpoint}");
+         let mut items = vec![];
+@@ -677,7 +691,9 @@ impl Operation<'_> {
+         let mut reason = "page_budget_exhausted";
+         for page in 1..=self.client.profile.max_pages {
+             self.deadline.check()?;
+-            if self.requests >= self.client.profile.max_requests as usize {
++            if self.requests.saturating_add(reserve_requests)
++                >= self.client.profile.max_requests as usize
++            {
+                 reason = "request_budget_exhausted";
+                 break;
+             }
+@@ -889,6 +905,10 @@ fn next_page(
+                 );
+             }
+         }
++        ensure!(
++            expected.keys().all(|key| keys.contains(*key)),
++            "GitHub pagination filter missing"
++        );
+         next = Some(page.context("GitHub next page number missing")?);
+     }
+     Ok(next)
+diff --git a/native/src/github_app_digest.rs b/native/src/github_app_digest.rs
+index c810360..a39c655 100644
+--- a/native/src/github_app_digest.rs
++++ b/native/src/github_app_digest.rs
+@@ -6,6 +6,8 @@ use anyhow::{Context as _, Result, ensure};
+ use serde::{Deserialize, Serialize};
+ use serde_json::{Value, json};
+ 
++#[path = "github_app_digest_discussions.rs"]
++pub mod discussions;
+ #[cfg(test)]
+ #[path = "github_app_digest_history_tests.rs"]
+ mod history_boundary_tests;
+diff --git a/native/src/github_app_digest_cli.rs b/native/src/github_app_digest_cli.rs
+index fc82972..c824d51 100644
+--- a/native/src/github_app_digest_cli.rs
++++ b/native/src/github_app_digest_cli.rs
+@@ -27,6 +27,14 @@ pub struct Arguments {
+     max_metadata_bytes: usize,
+     #[arg(long, global = true, default_value_t = 16_000_000)]
+     max_lineage_metadata_bytes: usize,
++    #[arg(long, global = true)]
++    discussion_capture: Option<PathBuf>,
++    #[arg(long, global = true)]
++    allow_discussions: bool,
++    #[arg(long, global = true)]
++    allow_fixture_discussions: bool,
++    #[arg(long, global = true)]
++    handoff_preview: bool,
+ }
+ #[derive(Subcommand)]
+ enum Operation {
+@@ -82,6 +90,8 @@ pub struct Prepared {
+     request: digest::PreviewRequest,
+     options: digest::Options,
+     output_bytes: usize,
++    discussions: Option<yoke::github::discussions::Capture>,
++    discussion_permission: digest::discussions::Permission,
+     history: Option<(
+         yoke::git_workflows::HostGit,
+         digest::HistoryOptions,
+@@ -101,6 +111,12 @@ impl Arguments {
+     pub fn check_permission(&self, webhooks: bool, network: bool, writes: bool) -> Result<()> {
+         ensure!(self.allow_digest, "github_app_digest_permission_required");
+         ensure!(!webhooks && !network && !writes, INVALID);
++        ensure!(
++            self.discussion_capture.is_some() == self.allow_discussions
++                && (self.discussion_capture.is_some()
++                    || (!self.allow_fixture_discussions && !self.handoff_preview)),
++            INVALID
++        );
+         if let Operation::History(history) = &self.operation {
+             ensure!(
+                 history.allow_history,
+@@ -144,7 +160,12 @@ impl Arguments {
+         let request_path = request.as_deref().ok_or_else(|| anyhow::anyhow!(INVALID))?;
+         // Admit both paths before reading either host-selected document.
+         ensure!(
+-            profile_path.is_absolute() && request_path.is_absolute(),
++            profile_path.is_absolute()
++                && request_path.is_absolute()
++                && self
++                    .discussion_capture
++                    .as_deref()
++                    .is_none_or(Path::is_absolute),
+             INVALID
+         );
+         let profile = HostProfile::parse(&bytes(profile_path, 32_000, d)?)
+@@ -152,6 +173,33 @@ impl Arguments {
+         let request = digest::PreviewRequest::parse(&bytes(request_path, 4096, d)?)
+             .map_err(|_| public_error(d, INVALID))?;
+         digest::authorize_profile(&profile, &request)?;
++        let discussion_permission = digest::discussions::Permission {
++            allow_discussions: self.allow_discussions,
++            allow_fixture: self.allow_fixture_discussions,
++            handoff_preview: self.handoff_preview,
++        };
++        let discussions = self
++            .discussion_capture
++            .as_deref()
++            .map(|path| -> Result<_> {
++                let capture = yoke::github::discussions::Capture::parse(
++                    &bytes(
++                        path,
++                        yoke::github::discussions::Profile::default().max_output_bytes,
++                        d,
++                    )?,
++                    d,
++                )?;
++                digest::discussions::authorize(
++                    &profile,
++                    &request,
++                    &capture,
++                    &discussion_permission,
++                    d,
++                )?;
++                Ok(capture)
++            })
++            .transpose()?;
+         let history = history
+             .map(|history| -> Result<_> {
+                 let selection = if history.map_captured_history {
+@@ -182,6 +230,8 @@ impl Arguments {
+                 ..hard
+             },
+             output_bytes: max_bytes as usize,
++            discussions,
++            discussion_permission,
+             history,
+         })
+     }
+@@ -190,7 +240,29 @@ impl Prepared {
+     pub fn run(self, root: &Path, d: &Deadline) -> Result<bool> {
+         let store = Store::open_existing_read_only(root, d)
+             .map_err(|_| public_error(d, "github_app_digest_store_unavailable"))?;
+-        let value = if let Some((git, history_options, selection)) = &self.history {
++        let value = if let Some(capture) = &self.discussions {
++            let source = if let Some((git, options, selection)) = &self.history {
++                digest::discussions::Source::History {
++                    git,
++                    options,
++                    mapping: selection.as_ref(),
++                }
++            } else {
++                digest::discussions::Source::Current
++            };
++            digest::discussions::preview(
++                &digest::discussions::Context {
++                    store: &store,
++                    profile: &self.profile,
++                    options: &self.options,
++                    permission: &self.discussion_permission,
++                    source,
++                },
++                &self.request,
++                capture,
++                d,
++            )?
++        } else if let Some((git, history_options, selection)) = &self.history {
+             if let Some(selection) = selection {
+                 digest::preview_mapped_history_with_profile(
+                     &store,
+diff --git a/native/src/main.rs b/native/src/main.rs
+index 7841768..ba0a6db 100644
+--- a/native/src/main.rs
++++ b/native/src/main.rs
+@@ -17,6 +17,7 @@ mod github_app_ingress_cli;
+ mod github_app_pages_cli;
+ mod github_app_publication_cli;
+ mod github_app_worker_cli;
++mod github_discussions_cli;
+ mod host_install_cli;
+ mod meaning_archive_cli;
+ mod meaning_cli;
+@@ -82,6 +83,7 @@ enum ExtensionOperation {
+     MixedView(Box<mixed_view_cli::Arguments>),
+     Feedback(Box<feedback_cli::Arguments>),
+     GithubApp(Box<github_app_cli::Arguments>),
++    GithubDiscussions(Box<github_discussions_cli::Arguments>),
+     ModelsHttp(Box<HttpModelArguments>),
+     ModelHttpWorker(Box<HttpModelWorkerArguments>),
+     ModelsBedrock(Box<bedrock_cli::Arguments>),
+@@ -1937,6 +1939,7 @@ fn run_parity(
+         ExtensionOperation::MixedView(_) => bail!("Mixed views host dispatch error"),
+         ExtensionOperation::Feedback(_) => bail!("Feedback host dispatch error"),
+         ExtensionOperation::GithubApp(_) => bail!("GitHub App host dispatch error"),
++        ExtensionOperation::GithubDiscussions(_) => bail!("GitHub discussions host dispatch error"),
+         ExtensionOperation::Decisions(args) => run_decisions(engine, *args, arguments, deadline),
+         ExtensionOperation::Document(args) => run_document(engine, *args, arguments, deadline),
+         ExtensionOperation::Retrieve { query, options } => {
+@@ -3243,6 +3246,22 @@ fn run(cli: Cli) -> Result<bool> {
+         );
+         return host_install_cli::run(args, cli.timeout, cli.max_bytes);
+     }
++    if let Operation::Extensions(extension) = &operation
++        && let ExtensionOperation::GithubDiscussions(args) = extension.as_ref()
++    {
++        ensure!(
++            cli.root == std::path::Path::new(".")
++                && cli.snapshot.is_none()
++                && cli.capture_config.is_none()
++                && cli.include_ignored_dir.is_empty()
++                && cli.language_server_config.is_none()
++                && !cli.trust_servers
++                && !cli.allow_writes
++                && cli.analyzer_epoch.is_none(),
++            "GitHub discussion reads select explicit host inputs; source/provider/write flags are unavailable"
++        );
++        return args.run(cli.timeout, cli.max_bytes);
++    }
+     if let Operation::Extensions(extension) = &operation
+         && let ExtensionOperation::GithubApp(args) = extension.as_ref()
+     {

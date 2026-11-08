@@ -1,0 +1,25 @@
+{
+  "checkedAtUtc": "2026-10-15T20:41:09.997235+00:00",
+  "scope": "focused_gate_not_frozen_suite",
+  "command": [
+    "cargo",
+    "test",
+    "--manifest-path",
+    "native/Cargo.toml",
+    "-j",
+    "2",
+    "--lib",
+    "metadata_directory_",
+    "--",
+    "--test-threads=4"
+  ],
+  "exitCode": 101,
+  "seconds": 59.25,
+  "tempRoot": "D:\\Yoke-Test-Scratch\\wave4-host-metadata-stub-red",
+  "logSha256": "3090560ec494e376e5ff8e8c29c2eb8324df2c448d1e1235005c86cda89e9000",
+  "groups": 1,
+  "passed": 0,
+  "failed": 18,
+  "ignored": 0,
+  "sourceChanges": []
+}

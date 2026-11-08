@@ -1,0 +1,40 @@
+    Finished `test` profile [unoptimized] target(s) in 1.60s
+     Running tests\container.rs (target\debug\deps\container-4a70619a3574679a.exe)
+
+running 1 test
+test real_daemon_digest_pinned_offline_container_verification ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 6 filtered out; finished in 13.13s
+
+     Running tests\credentials.rs (target\debug\deps\credentials-1d32840b6c6b85b8.exe)
+
+running 2 tests
+test windows_gate::windows_concurrent_generation_keeps_one_key ... ok
+test windows_gate::windows_credential_roundtrip_refuses_overwrite ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 2 filtered out; finished in 0.28s
+
+     Running tests\host_credentials.rs (target\debug\deps\host_credentials-ff4e9dd030d7026b.exe)
+
+running 1 test
+test actual_tls_and_service_token_never_export_private_material_or_overwrite_entries ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.15s
+
+     Running tests\live.rs (target\debug\deps\live-e794c2b81df93c6f.exe)
+
+running 4 tests
+test actual_python_server_cross_file_unicode_historical_navigation_and_rename ... ok
+test actual_rust_analyzer_definition_references_and_rename ... ok
+test actual_rust_analyzer_mcp_references_bind_immutable_snapshot ... ok
+test actual_typescript_server_cross_file_definition_and_rename ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 88.15s
+
+     Running tests\workflow_cli.rs (target\debug\deps\workflow_cli-df3e580128d03842.exe)
+
+running 1 test
+test actual_native_cli_tls_service_and_client_load_os_credentials ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 8 filtered out; finished in 5.55s
+

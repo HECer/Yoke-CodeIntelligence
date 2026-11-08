@@ -1,0 +1,75 @@
+{
+  "CheckedAtUtc": "2026-10-17T17:53:36.1133474Z",
+  "Kind": "interrupted_incomplete_scoped_typescript_run",
+  "Reason": "LSP suite log unchanged for over180seconds; owned provider and test worker still live; same case passes independently in1.4seconds; exact cause unproven.",
+  "SourceChanged": false,
+  "ContributesToAcceptedTotals": false,
+  "RootPid": 60932,
+  "Processes": [
+    {
+      "Id": 60932,
+      "Parent": 45756,
+      "Name": "python.exe",
+      "Started": "2026-10-17T19:47:44.252055+02:00",
+      "Depth": 0
+    },
+    {
+      "Id": 12048,
+      "Parent": 60932,
+      "Name": "rtk.exe",
+      "Started": "2026-10-17T19:47:45.731238+02:00",
+      "Depth": 1
+    },
+    {
+      "Id": 80184,
+      "Parent": 12048,
+      "Name": "cmd.exe",
+      "Started": "2026-10-17T19:47:45.769685+02:00",
+      "Depth": 2
+    },
+    {
+      "Id": 36380,
+      "Parent": 80184,
+      "Name": "node.exe",
+      "Started": "2026-10-17T19:47:46.00803+02:00",
+      "Depth": 3
+    },
+    {
+      "Id": 61100,
+      "Parent": 36380,
+      "Name": "cmd.exe",
+      "Started": "2026-10-17T19:47:46.568796+02:00",
+      "Depth": 4
+    },
+    {
+      "Id": 76220,
+      "Parent": 61100,
+      "Name": "node.exe",
+      "Started": "2026-10-17T19:47:54.345249+02:00",
+      "Depth": 5
+    },
+    {
+      "Id": 6768,
+      "Parent": 76220,
+      "Name": "node.exe",
+      "Started": "2026-10-17T19:47:54.411562+02:00",
+      "Depth": 6
+    },
+    {
+      "Id": 81396,
+      "Parent": 6768,
+      "Name": "node.exe",
+      "Started": "2026-10-17T19:49:05.066413+02:00",
+      "Depth": 7
+    },
+    {
+      "Id": 42644,
+      "Parent": 81396,
+      "Name": "node.exe",
+      "Started": "2026-10-17T19:49:28.264568+02:00",
+      "Depth": 8
+    }
+  ],
+  "sourceBefore": "7de284896cab937e23e8b779b31498443f8cd816c0e8b04324a9ec93be470080",
+  "sourceAfter": "7de284896cab937e23e8b779b31498443f8cd816c0e8b04324a9ec93be470080"
+}

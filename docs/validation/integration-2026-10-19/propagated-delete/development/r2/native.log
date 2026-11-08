@@ -1,0 +1,22 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+error[E0505]: cannot move out of `tree` because it is borrowed
+   --> native\src\semantic_propagated_delete.rs:135:17
+    |
+ 60 |     let tree = parser
+    |         ---- binding `tree` declared here
+...
+ 72 |     let mut cursor = tree.root_node().walk();
+    |                      ---- borrow of `tree` occurs here
+...
+135 |     Ok(Module { tree, declarations })
+    |                 ^^^^ move out of `tree` occurs here
+136 | }
+    | - borrow might be used here, when `cursor` is dropped and runs the `Drop` code for type `TreeCursor`
+    |
+help: consider cloning the value if the performance cost is acceptable
+    |
+ 72 |     let mut cursor = tree.clone().root_node().walk();
+    |                          ++++++++
+
+For more information about this error, try `rustc --explain E0505`.
+error: could not compile `yoke-code-intelligence` (lib) due to 1 previous error

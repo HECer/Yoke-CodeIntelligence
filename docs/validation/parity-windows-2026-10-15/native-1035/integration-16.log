@@ -1,0 +1,79 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 15.19s
+     Running tests\live_enrichment.rs (target\debug\deps\live_enrichment-fe0b6210f3ac9031.exe)
+
+running 3 tests
+test actual_python_server_normalized_symbols_and_signature_help ... ignored, requires YOKE_PYTHON_LSP identifying the actual installed Jedi language-server
+test actual_rust_server_expanded_call_symbols_completion_signature_diagnostics_and_prepare_rename ... ignored, requires an actual installed rust-analyzer
+test actual_typescript_server_expanded_type_call_symbols_signature_and_published_diagnostics ... ignored, requires YOKE_TS_LSP identifying the actual installed TypeScript language-server CLI
+
+test result: ok. 0 passed; 0 failed; 3 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\lsp.rs (target\debug\deps\lsp-ad376eb03f90ca87.exe)
+
+running 10 tests
+test host_registered_semantic_rename_uses_the_requested_mcp_snapshot ... ok
+test lsp_deadline_includes_a_server_that_refuses_to_read_didopen ... ok
+test lsp_shutdown_grace_uses_the_remaining_request_deadline ... ok
+test protocol_fixture_locations_bind_to_exact_immutable_source ... ok
+test protocol_fixture_rename_prepares_a_plan_without_touching_source ... ok
+test protocol_fixture_unsafe_workspace_edits_fail_closed ... ok
+test semantic_positions_preserve_cr_crlf_lf_and_unicode_boundaries ... ok
+test repeated_large_lsp_locations_remain_exact_anchors_with_bounded_body_bytes ... ok
+test semantic_calls_refuse_rebound_source_under_a_published_snapshot_id ... ok
+test semantic_location_link_selection_must_be_inside_its_target_range ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 6.52s
+
+     Running tests\lsp_action_resolve.rs (target\debug\deps\lsp_action_resolve-53fe1341ce53a403.exe)
+
+running 6 tests
+test actual_typescript_lazy_fix_all_preserves_the_unexecuted_auxiliary_command_boundary ... ignored, requires YOKE_TS_LSP selecting the actual installed TypeScript language server
+test deferred_edit_with_a_follow_up_command_is_resolved_but_cannot_prepare_a_partial_action ... ok
+test lazy_code_actions_preserve_opaque_identity_and_prepare_checked_edits_before_owned_shutdown ... ok
+test action_context_preserves_validated_provider_diagnostic_data_and_refuses_outside_ranges ... ok
+test unavailable_disabled_command_and_unrequested_actions_do_not_invoke_resolution ... ok
+test resolution_refuses_changed_action_identity_foreign_ranges_and_materialized_source_mutation ... ok
+
+test result: ok. 5 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 5.89s
+
+     Running tests\lsp_dependency_scope.rs (target\debug\deps\lsp_dependency_scope-c5f769ee5acdbb3b.exe)
+
+running 1 test
+test captured_readonly_dependency_uris_are_readable_but_cannot_be_workspace_edit_targets ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.13s
+
+     Running tests\lsp_enrichment.rs (target\debug\deps\lsp_enrichment-48c225064c76c69a.exe)
+
+running 19 tests
+test code_actions_prepare_immutable_plans_and_do_not_execute_server_commands ... ok
+test canonical_symbols_have_checked_anchors_and_refuse_escaped_selections ... ok
+test completion_insert_replace_edits_require_nested_ranges_and_string_replacements ... ok
+test configuration_callbacks_are_bounded_before_host_settings_are_replicated ... ok
+test diagnostic_notifications_have_a_cumulative_retention_budget ... ok
+test diagnostic_ranges_and_completion_edits_are_source_checked ... ok
+test existing_loopback_tcp_provider_is_used_without_launching_or_stopping_its_process ... ok
+test hierarchy_rounds_retain_each_providers_data_and_stop_cycles ... ok
+test incoming_calls_preserve_parallel_call_evidence_and_opaque_provider_data ... ok
+test normalized_symbols_refuse_selection_ranges_outside_the_symbol ... ok
+test prepare_rename_validates_the_providers_exact_anchor ... ok
+test published_diagnostic_uri_drive_spelling_preserves_the_captured_file_identity ... ok
+test push_only_diagnostics_preserve_actual_publication_and_reject_stale_versions ... ok
+test resource_rename_creates_a_guarded_delete_and_create_plan ... ok
+test semantic_options_reject_unknown_authority_and_configured_settings_reach_the_server ... ok
+test semantic_profiles_distinguish_host_settings_for_identical_source_results ... ok
+test semantic_rename_resource_operations_and_following_text_edits_share_one_guarded_plan ... ok
+test type_definition_binds_the_requested_snapshot_and_utf8_name ... ok
+test type_hierarchies_return_checked_source_ranges ... ok
+
+test result: ok. 19 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 20.36s
+
+     Running tests\lsp_lifecycle.rs (target\debug\deps\lsp_lifecycle-6843554963ada3d4.exe)
+
+running 2 tests
+test failed_health_does_not_publish_status_generation_or_claim_restart ... ok
+test restart_performs_new_real_provider_handshakes_and_advances_only_owned_status ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.37s
+

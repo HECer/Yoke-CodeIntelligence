@@ -1,0 +1,41 @@
+{
+  "sourceCommit": "771833bb5180f3d51e092e64de5fd22c783c920a",
+  "baselineCommit": "52b746dcb313e3f0f26a3d4538456cb1285f6c5e",
+  "sourcePath": "native/src/editor_http.rs",
+  "rustfmt": {
+    "version": "1.94.1",
+    "edition": "2024",
+    "scopedCheckExitCode": 0
+  },
+  "diffCheckExitCode": 0,
+  "staticRestoration": "static-restoration.json",
+  "node": {
+    "phases": [
+      {
+        "phase": "typecheck",
+        "exitCode": 0,
+        "elapsedSeconds": 2.2014637000029325,
+        "naturalRootAndTreeExit": true
+      },
+      {
+        "phase": "npm-test",
+        "exitCode": 0,
+        "elapsedSeconds": 55.516987400005746,
+        "naturalRootAndTreeExit": true
+      }
+    ],
+    "sourceFiles": 1135,
+    "controls": 7,
+    "sourceAndControlsUnchanged": true,
+    "pass": 260,
+    "skip": 3,
+    "failed": 0,
+    "driverSha256": "664feb952fdafdac4489ef1fbc110f30535d3f31e948836ac8f81fe31ea4fdd0"
+  },
+  "nativeCompilationRun": false,
+  "nativeLibraryRun": false,
+  "allTargetClippyRun": false,
+  "macOSChangedDiagnosticRun": false,
+  "productionRuntimeRepairClaimed": false,
+  "completePlatformOrReleaseAcceptance": false
+}

@@ -1,0 +1,181 @@
+{
+  "baseline": "313f66b2c0b4e6d4a097e16d2236786bc206ac89",
+  "wholePython": {
+    "passed": 103,
+    "failed": 0,
+    "skipped": 0,
+    "warningsAreErrors": true
+  },
+  "pythonAttemptsNonadditive": 2,
+  "nativeFmt": {
+    "roots": 368,
+    "failed": 0
+  },
+  "typecheckExit": 0,
+  "npmExit": 0,
+  "npm": {
+    "passed": 260,
+    "failed": 0,
+    "existingSkipped": 3
+  },
+  "typescriptAndPythonInputsExactThroughFinalRustPropagation": true,
+  "newNativeTestsNotExecutedLocally": 3,
+  "originalServiceTestCargoAndWorkflowExactToBaseline": true,
+  "nativeCompilationOrExecutionAttemptedLocally": false,
+  "nativeYokeImageReadOrExecutedLocally": false,
+  "bundledNativeSqliteQualified": false,
+  "completeHostedTimingCauseProven": false,
+  "fullStatusComplete": false,
+  "localNativeFullBuildAdmissionBytes": 1200000000,
+  "freeBytesObserved": 1085820928,
+  "gitWhitespaceChecks": {
+    "default": 2,
+    "crlf": 0
+  },
+  "preservedTrackedCrLfSource": [
+    {
+      "path": "native/src/changes.rs",
+      "onlyClosureArgumentChanged": true,
+      "priorCrLfCount": 1138,
+      "currentCrLfCount": 1138
+    },
+    {
+      "path": "native/src/changes_plan.rs",
+      "onlyClosureArgumentChanged": true,
+      "priorCrLfCount": 404,
+      "currentCrLfCount": 404
+    }
+  ],
+  "sources": [
+    {
+      "path": "native/docs/digest-service.md",
+      "sha256": "f82cfdc35ebd28b629c87adc884253310fffc8834f4b290669b2f0f0e2cb4e70",
+      "gitBlobSha": "3bba0567bc3798eca30a2d4a46253549a7641bc1"
+    },
+    {
+      "path": "native/docs/github-app-workers.md",
+      "sha256": "fe734c86ed1c2e6992462c8f749af42b0463e7eac2baee2984770fea03be50c2",
+      "gitBlobSha": "d6523be22c105ed15f361e27e8d9cebb81044839"
+    },
+    {
+      "path": "native/src/changes.rs",
+      "sha256": "ece83c069f1c8a1ea6c5681520f36319e9a50d62b1e694cd46c78efc0011bb50",
+      "gitBlobSha": "60b0fa8b96fd1be4a3e7adfd8ad0245fd599772f"
+    },
+    {
+      "path": "native/src/changes_plan.rs",
+      "sha256": "ae442f012ef7f995e19f4f6cbaea1b3a1c32653c8752febc4b1bcee389928c5c",
+      "gitBlobSha": "7561eff826661d33db725a09c61bb233662c6813"
+    },
+    {
+      "path": "native/src/git_areas.rs",
+      "sha256": "848a26b1dbbc948aaf45d6d92b5ec8d4a36e901f6b489ad46b6f9c3d48fc5a4b",
+      "gitBlobSha": "e8cbc9af2ef71de6f2287a9b4431c8b3e353998e"
+    },
+    {
+      "path": "native/src/git_conflicts.rs",
+      "sha256": "43b7c748d1456a4afbc9cc9c97ac5d36e585d9884ebf69fc9d987c89f8b61c98",
+      "gitBlobSha": "74aec84e78584f5d26ff2a758019ec2fad2cff8e"
+    },
+    {
+      "path": "native/src/git_workflows.rs",
+      "sha256": "f51321a5a350d862bc1e012cff6314dcb6ea46616153f19a972a2c28b955b709",
+      "gitBlobSha": "ca0a46962b7b130039aefce8eb6ccab19cbdb5f3"
+    },
+    {
+      "path": "native/src/github_app_digest_acquisition.rs",
+      "sha256": "9f385e6b7bdd77b4688ed99a7691c6bcc95a6568e66ea2b55f66c419c9417993",
+      "gitBlobSha": "5eff609179f83e478dcc21381179a3b08caa47ac"
+    },
+    {
+      "path": "native/src/github_app_digest_history_jobs.rs",
+      "sha256": "257189aa118e41fdab1554544a4ff45d3a1537c258d7aa606b99f8aef242af03",
+      "gitBlobSha": "c5a8051fd3b42a2371c7e315d35398b033005f5a"
+    },
+    {
+      "path": "native/src/github_app_digest_receiver_store.rs",
+      "sha256": "f72a3692f37047ecb059220f9f7180e9faf48693498182caddad91106f875774",
+      "gitBlobSha": "deb5938061b9f60c4b7dee5f3e45bb67a91345b3"
+    },
+    {
+      "path": "native/src/github_app_digest_service_state.rs",
+      "sha256": "2d5a69fae02b7fea1827318ef821442ad07583e7ed4ba848b99ed41a1ef60397",
+      "gitBlobSha": "13cb9bd89217ca5c069bd2c5ffb1af3b3d28d99b"
+    },
+    {
+      "path": "native/src/github_app_pages_state.rs",
+      "sha256": "57d13431be9d5d1a43075edc72a6b7f287c2d96d7036d5f4d0ba8f2757493eaf",
+      "gitBlobSha": "f0792f83f28e37a4983a2097b451acc9b012f885"
+    },
+    {
+      "path": "native/src/github_app_publication_state.rs",
+      "sha256": "00291f11ad636b3be44453fb56b796094aba688c5fe42b2e7f33f78491c0af20",
+      "gitBlobSha": "a0808a114b34f9a67417b2bfc8fa021a1bd08c49"
+    },
+    {
+      "path": "native/src/github_app_worker.rs",
+      "sha256": "8097602c56fe49461da04221d26059b58257ca59037e4ece4695ceb2eaeac675",
+      "gitBlobSha": "bac9446a92a9aa97ae2de8b5c1ff84cfa3340df5"
+    },
+    {
+      "path": "native/src/github_app_worker_source.rs",
+      "sha256": "be9604efe492467739b2dd7c5f7fc465d45141fd9fe5b514f94d2d4d424d9fbc",
+      "gitBlobSha": "f73ebce81b2a39b07abd963d8a25bf87b2f0f75d"
+    },
+    {
+      "path": "docs/validation/integration-2026-10-24/sqlite-publication-deadline/inert-sqlite-probe.py",
+      "sha256": "3500971adefd18678af785f66773987b5e4978e2c3777c60a5c077714f4c79d1",
+      "gitBlobSha": "c79724f8f60f972d64b2c61f44350d1d195d88e2"
+    }
+  ],
+  "logs": [
+    {
+      "path": "python-all.txt",
+      "sha256": "4ed4c9d90656c744a6c8e3eb611f6485424cbbe3e8ba5152307ac467f3bfa7f4",
+      "originalSha256": "a6a968a919da8b91f1c85b1ce9e36d7fd1ae05a7d5e07984fdf0b5f4263f3283",
+      "originalEncoding": "utf-16",
+      "displayTransform": "UTF-16 to UTF-8, LF, trim trailing whitespace"
+    },
+    {
+      "path": "python-final.txt",
+      "sha256": "007d5953c22bc03d3aa49180ebe3ff762142e20e87f17d57aa67760ea2529aad",
+      "originalSha256": "bba90cf4e31d878f6d518f7095ed8243dd23b9776ba4adc387964abedaea0486",
+      "originalEncoding": "utf-16",
+      "displayTransform": "UTF-16 to UTF-8, LF, trim trailing whitespace"
+    },
+    {
+      "path": "native-fmt.txt",
+      "sha256": "49f385c37548415c5c3e7171ad0500e48bf2a935e8dc6414fc3556b9a673a0a0",
+      "originalSha256": "72783b69578f249abfe1450531bf6eb8c0beed2af00510f6fae7e2b34524326a",
+      "originalEncoding": "utf-16",
+      "displayTransform": "UTF-16 to UTF-8, LF, trim trailing whitespace"
+    },
+    {
+      "path": "rustfmt.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "originalEncoding": "utf-16",
+      "displayTransform": "UTF-16 to UTF-8, LF, trim trailing whitespace"
+    },
+    {
+      "path": "typecheck.txt",
+      "sha256": "ffa27cfc2a15478e11c58ccbadd75d7c609427feb53b6dc1c32b2d2109818178",
+      "originalSha256": "abef310ac38ac49a485edf00c0657eb58d0af341e7b71c1986f35c7305b58718",
+      "originalEncoding": "utf-16",
+      "displayTransform": "UTF-16 to UTF-8, LF, trim trailing whitespace"
+    },
+    {
+      "path": "npm-test.txt",
+      "sha256": "4a1aaac0faa3ed2cc205475e54f89bcdf8f9a574e680c4ff16e5e4a7259f492a",
+      "originalSha256": "2364004de52df000e620aef2169194fe396f48f24e92e5189787f43ab640afb2",
+      "originalEncoding": "utf-16",
+      "displayTransform": "UTF-16 to UTF-8, LF, trim trailing whitespace"
+    },
+    {
+      "path": "inert-sqlite-probe.json",
+      "originalSha256": "174f4ebc24a5e5656f21606d72dd68e180072e54e11f14ecd8c45ea1baa4ca25",
+      "originalEncoding": "utf-16",
+      "sha256": "b7be7b280c7c3006cb9d3a0b21aed213fa923ac1f910929d80eb00111182e02b"
+    }
+  ]
+}

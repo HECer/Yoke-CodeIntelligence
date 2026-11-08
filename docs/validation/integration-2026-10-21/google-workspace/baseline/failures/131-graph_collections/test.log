@@ -1,0 +1,34 @@
+    Finished `test` profile [unoptimized] target(s) in 0.59s
+     Running tests\graph_collections.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\graph_collections-4cd6898727de2824.exe)
+
+running 12 tests
+test archived_capture_scope_keeps_configured_readonly_dependencies_and_rejects_missing_proof ... ok
+test canonical_collection_also_rejects_resealed_protected_source_after_registration ... ok
+test collection_historical_source_survives_original_history_retirement_and_blob_purge ... ok
+test collection_queries_use_namespaced_entities_and_exact_original_call_anchors ... ok
+test collection_sqlite_sidecars_cannot_write_through_links ... FAILED
+test legacy_default_native_archive_without_scope_sidecar_retains_original_identity ... ok
+test registered_collection_namespaces_equal_symbols_and_preserves_parallel_edges ... ok
+test registration_is_immutable_and_rejects_forged_graph_or_unregistered_scope ... ok
+test registry_payload_capacity_is_checked_before_decoding_corrupt_registration ... ok
+test registry_payload_sqlite_cell_is_capped_before_length_admission ... ok
+test selected_view_collection_preserves_origins_namespaces_and_source_after_retirement ... ok
+test view_archive_rejects_resealed_invented_rows_corrupt_inputs_and_foreign_view ... ok
+
+failures:
+
+---- collection_sqlite_sidecars_cannot_write_through_links stdout ----
+
+thread 'collection_sqlite_sidecars_cannot_write_through_links' (6792) panicked at native\tests\graph_collections.rs:612:60:
+called `Result::unwrap()` on an `Err` value: Os { code: 1314, kind: Uncategorized, message: "Dem Client fehlt ein erforderliches Recht." }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    collection_sqlite_sidecars_cannot_write_through_links
+
+test result: FAILED. 11 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.98s
+
+error: test failed, to rerun pass `--test graph_collections`
+error: 1 target failed:
+    `--test graph_collections`

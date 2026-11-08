@@ -1,0 +1,140 @@
+{
+  "schemaVersion": 1,
+  "status": "PROMOTER_PREPARED_NOT_EXECUTED_QUALITY_PINS_REQUIRED",
+  "normalBefore": {
+    "path": "target/parity-validation-20261015/next-combined-metadata-v1/application-caae35463fff5c8d65713e56823fdd8c7a8bba60fc5a5d90bdd30789b8968f40/normal-after.json",
+    "sha256": "3f3f86ff7e0fefc2cb9d1defb104b3c2a1aec909a5198493da6522d292967ecd",
+    "files": 2859
+  },
+  "image": {
+    "path": "target/parity-validation-20261015/next-git-affected-implementation-v1/final-image-quality-v1.json",
+    "sha256": "a3c40b90bb1232496b89ec5af68c1d34998eb7fd2534e20c5d17655c46e9b33a",
+    "files": 646
+  },
+  "actions": [
+    {
+      "path": "native/README.md",
+      "before": "52b27c05f75b8fd3a2cac0f39b3f9bd3c45a2f3035ec3504c961053e82ea43d0",
+      "after": "e12dba6a94be6a64df3b74d9d8cabdd9494280f1a336991798791d2e0cbcaa1a",
+      "operation": "REPLACE_FILE"
+    },
+    {
+      "path": "native/docs/git-affected-details.md",
+      "before": "ABSENT",
+      "after": "2fd316460c25ff3dce9395b10ac613396f3400d8fd4d0f0191e3a1bc6e05c56b",
+      "operation": "CREATE_FILE"
+    },
+    {
+      "path": "native/docs/git-workflows.md",
+      "before": "efa4d38decd72f32d145f34f748526ea917170a69db78c3f00f08f46d944ae6b",
+      "after": "51c6de43f1a2ae807c9f1321e7ccbe5dc367549b8d44b776e4c24f5583907e27",
+      "operation": "REPLACE_FILE"
+    },
+    {
+      "path": "native/src/git_affected.rs",
+      "before": "ABSENT",
+      "after": "6a4582030cf9bb3a30358a84227ff5b768a4b5160bb328ff83f482a669c2e2b6",
+      "operation": "CREATE_FILE"
+    },
+    {
+      "path": "native/src/git_affected_admission_tests.rs",
+      "before": "ABSENT",
+      "after": "b482feb965899efd2ffaf98e8a995cb9f19a871713bec274f65c7d2e49a957db",
+      "operation": "CREATE_FILE"
+    },
+    {
+      "path": "native/src/git_affected_cli.rs",
+      "before": "ABSENT",
+      "after": "cfc2fa975e83b00dc0a91195e548e7e510acecd1643b36e11c8c6ffe1ed43248",
+      "operation": "CREATE_FILE"
+    },
+    {
+      "path": "native/src/git_affected_index.rs",
+      "before": "ABSENT",
+      "after": "b870347817b0827026d902cb45a681b905f8d08448b8808b5374250a3e4074ad",
+      "operation": "CREATE_FILE"
+    },
+    {
+      "path": "native/src/git_affected_output.rs",
+      "before": "ABSENT",
+      "after": "6ce152c882aebc34e2325392ef21c952a09daebafe6af8175ad9aa4574c17f01",
+      "operation": "CREATE_FILE"
+    },
+    {
+      "path": "native/src/git_affected_source.rs",
+      "before": "ABSENT",
+      "after": "8c3a3f54a1f47c1b52a9935cea3747e8274db766ae64f0a05302f700298bc2e1",
+      "operation": "CREATE_FILE"
+    },
+    {
+      "path": "native/src/git_affected_tests.rs",
+      "before": "ABSENT",
+      "after": "f5a2b2cdacf2e541f492268b9bc56a75070dd5396f4a488c18aec054b7a114b1",
+      "operation": "CREATE_FILE"
+    },
+    {
+      "path": "native/src/git_affected_walk.rs",
+      "before": "ABSENT",
+      "after": "201ecf1b60c7f10090bcfefaacb8472c8b94d85d2ec0ce78c648051eb57d48f0",
+      "operation": "CREATE_FILE"
+    },
+    {
+      "path": "native/src/git_impact_details.rs",
+      "before": "aa1b882f7dc3bebe94de5f95997f39897ef68a2f795892e6a04edbb974b6742e",
+      "after": "d7f84eeb84383769c1e229552326f351265b46a568c6ea9df5518fcd79c564bd",
+      "operation": "REPLACE_FILE"
+    },
+    {
+      "path": "native/src/git_impact_details_scope_tests.rs",
+      "before": "6d7efb8f7defd2cf047d5270650324b9ed8c24ea381a5f2beec1e28e9fe02d8e",
+      "after": "f24968952160ececccbf2160a30b504cecf18184bff552dac43e464c4fdc5cf9",
+      "operation": "REPLACE_FILE"
+    },
+    {
+      "path": "native/src/git_workflows.rs",
+      "before": "0e2d9ea13aa11a8d54559012b015da61fbee27afe2596d32315b5a268d6c26cb",
+      "after": "befe0fd8c1fdad1eb26b15382de1535366f6e625a6c150cf2d7b32bbf1cfa616",
+      "operation": "REPLACE_FILE"
+    },
+    {
+      "path": "native/src/main.rs",
+      "before": "c114e0f1f8509f970d22a167259498f8798f32a43113ed61792844f6c488af43",
+      "after": "3a815f70eeaa1a9ab76355ce8d42bf6dd72c27ef76205abc0029edea023d2854",
+      "operation": "REPLACE_FILE"
+    },
+    {
+      "path": "native/tests/git_affected_cli.rs",
+      "before": "ABSENT",
+      "after": "cc505044835c6cf3ae9777c3233f74a1e28e6d0ad0737fc482dce0718a978ef1",
+      "operation": "CREATE_FILE"
+    },
+    {
+      "path": "native/tests/git_affected_details.rs",
+      "before": "ABSENT",
+      "after": "a3316e52adedb57d2dcf047776ceb60b8fe7220ee43e0557c81724230deb95dc",
+      "operation": "CREATE_FILE"
+    },
+    {
+      "path": "native/tests/git_affected_qualification.rs",
+      "before": "ABSENT",
+      "after": "f7a71a8523bf793ae328bafe8858d0f1585e3dac29066fca319074910fe7ca2d",
+      "operation": "CREATE_FILE"
+    },
+    {
+      "path": "native/tests/support/git_affected_fixture.rs",
+      "before": "ABSENT",
+      "after": "4d09c558e34a8f3cb333cece29b522a0a948f912afe14da36d70e122abdf4171",
+      "operation": "CREATE_FILE"
+    }
+  ],
+  "creates": 13,
+  "replaces": 6,
+  "normalAfterFiles": 2872,
+  "normalOnlyFilesPreserved": 2226,
+  "freshWholeNormalCheckRequiredAtExecution": true,
+  "earlierAnalysisPlanSha256": "791ff4b961e268c0dde16b5f952979599658f5a37c3243080ee6cfb6e6bc25ba",
+  "qualityStatus": "No green status inferred; runtime requires root-pinned successful format and strictClippy receipt bytes on this exact image.",
+  "normalWrites": false,
+  "imageWrites": false,
+  "promoterExecuted": false
+}

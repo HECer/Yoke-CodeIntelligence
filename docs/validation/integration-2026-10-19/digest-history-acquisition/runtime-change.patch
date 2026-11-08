@@ -1,0 +1,342 @@
+diff --git a/native/src/git_workflows.rs b/native/src/git_workflows.rs
+index 08d83b4..e2a5016 100644
+--- a/native/src/git_workflows.rs
++++ b/native/src/git_workflows.rs
+@@ -1072,6 +1072,52 @@ pub fn capture_commit_at(
+     commit: &str,
+     deadline: &Deadline,
+ ) -> Result<(Snapshot, Graph)> {
++    ensure!(
++        engine.store.db.is_autocommit(),
++        "Git capture caller transaction refused"
++    );
++    crate::github_app::worker::publication_policy(&engine.store, deadline, || {
++        let tx = rusqlite::Transaction::new_unchecked(
++            &engine.store.db,
++            rusqlite::TransactionBehavior::Immediate,
++        )?;
++        let mut budget = CaptureBudget {
++            files: usize::MAX,
++            source_bytes: 64_000_000,
++            commit_bytes: 1_000_000,
++            tree_bytes: 4_000_000,
++            tree_entries: usize::MAX,
++        };
++        let result =
++            capture_commit_pending(epoch, engine, host, origin, commit, &mut budget, deadline)?;
++        deadline.check()?;
++        tx.commit()?;
++        Ok(result)
++    })
++}
++/// Shared acquisition allowances, debited before object bodies or entries are
++/// retained. The owned caller admits every bound before opening a transaction.
++pub(crate) struct CaptureBudget {
++    pub(crate) files: usize,
++    pub(crate) source_bytes: usize,
++    pub(crate) commit_bytes: usize,
++    pub(crate) tree_bytes: usize,
++    pub(crate) tree_entries: usize,
++}
++#[allow(clippy::too_many_arguments)] // Exact source origin, epoch and aggregate acquisition budget.
++pub(crate) fn capture_commit_pending(
++    epoch: crate::analysis::AnalyzerEpoch,
++    engine: &Engine,
++    host: &HostGit,
++    origin: &Snapshot,
++    commit: &str,
++    budget: &mut CaptureBudget,
++    deadline: &Deadline,
++) -> Result<(Snapshot, Graph)> {
++    ensure!(
++        !engine.store.db.is_autocommit(),
++        "Git capture requires owned transaction"
++    );
+     deadline.check()?;
+     engine.store.set_deadline(deadline)?;
+     ensure!(
+@@ -1086,9 +1132,13 @@ pub fn capture_commit_at(
+         &engine.root,
+         &["cat-file", "commit", commit],
+         &[],
+-        1_000_000,
++        budget.commit_bytes.min(1_000_000),
+         deadline,
+     )?;
++    budget.commit_bytes = budget
++        .commit_bytes
++        .checked_sub(commit_bytes.len())
++        .context("Git acquisition capacity exceeded")?;
+     ensure!(
+         object_id("commit", &commit_bytes, commit.len()) == commit,
+         "Git commit object hash mismatch"
+@@ -1112,9 +1162,13 @@ pub fn capture_commit_at(
+         &engine.root,
+         &["ls-tree", "-r", "-t", "-l", "-z", "--full-tree", &tree],
+         &[],
+-        4_000_000,
++        budget.tree_bytes.min(4_000_000),
+         deadline,
+     )?;
++    budget.tree_bytes = budget
++        .tree_bytes
++        .checked_sub(listing.len())
++        .context("Git acquisition capacity exceeded")?;
+     let origin_scope = crate::capture::source_scope_policy(&engine.store, origin)?;
+     let mut entries = vec![];
+     let mut tree_entries = vec![];
+@@ -1122,6 +1176,10 @@ pub fn capture_commit_at(
+     let mut total = 0usize;
+     for raw in listing.split(|b| *b == 0).filter(|part| !part.is_empty()) {
+         deadline.check()?;
++        budget.tree_entries = budget
++            .tree_entries
++            .checked_sub(1)
++            .context("Git acquisition capacity exceeded")?;
+         ensure!(
+             entries.len() + omissions.len() < 10000,
+             "Git tree entry capacity exceeded"
+@@ -1181,6 +1239,14 @@ pub fn capture_commit_at(
+             total <= 64_000_000,
+             "Git committed source byte capacity exceeded"
+         );
++        budget.source_bytes = budget
++            .source_bytes
++            .checked_sub(size)
++            .context("Git acquisition capacity exceeded")?;
++        budget.files = budget
++            .files
++            .checked_sub(1)
++            .context("Git acquisition capacity exceeded")?;
+         entries.push(TreeFile {
+             path: path.into(),
+             language: if policy_only {
+@@ -1360,7 +1426,7 @@ pub fn capture_commit_at(
+         capture_consistency: "immutable_git_objects_verified".into(),
+     };
+     let graph = crate::analysis::assemble_at(epoch, &snapshot, parsed, deadline)?;
+-    engine.store.publish_historical(&snapshot, &graph)?;
++    engine.store.publish_historical_pending(&snapshot, &graph)?;
+     crate::capture::inherit_options(&engine.store, origin, &snapshot)?;
+     let commit_artifact_id = engine.store.artifact(&commit_bytes)?;
+     let receipt = SourceReceipt {
+diff --git a/native/src/github_app_digest.rs b/native/src/github_app_digest.rs
+index bb7fa96..d136080 100644
+--- a/native/src/github_app_digest.rs
++++ b/native/src/github_app_digest.rs
+@@ -6,6 +6,8 @@ use anyhow::{Context as _, Result, ensure};
+ use serde::{Deserialize, Serialize};
+ use serde_json::{Value, json};
+ 
++#[path = "github_app_digest_acquisition.rs"]
++pub mod acquisition;
+ #[path = "github_app_digest_discussions.rs"]
+ pub mod discussions;
+ #[cfg(test)]
+@@ -94,6 +96,25 @@ impl Default for Options {
+         }
+     }
+ }
++impl Options {
++    pub fn validate(&self) -> Result<()> {
++        let hard = Self::default();
++        ensure!(
++            self.max_symbols <= hard.max_symbols
++                && self.max_source_bytes <= hard.max_source_bytes
++                && self.max_output_bytes <= hard.max_output_bytes
++                && self.max_files <= hard.max_files
++                && self.max_entities <= hard.max_entities
++                && self.max_metadata_bytes <= hard.max_metadata_bytes
++                && self.max_ast_nodes <= hard.max_ast_nodes
++                && self.max_ast_depth <= hard.max_ast_depth
++                && self.max_replay_name_bytes <= hard.max_replay_name_bytes
++                && self.max_lineage_metadata_bytes <= hard.max_lineage_metadata_bytes,
++            CAPACITY
++        );
++        Ok(())
++    }
++}
+ pub struct Context<'a> {
+     pub store: &'a Store,
+     pub host: &'a Host,
+@@ -253,20 +274,7 @@ fn preview_with_readers(
+         c.store.db.is_autocommit(),
+         "github_app_digest_caller_transaction_refused"
+     );
+-    let hard = Options::default();
+-    ensure!(
+-        c.options.max_symbols <= hard.max_symbols
+-            && c.options.max_source_bytes <= hard.max_source_bytes
+-            && c.options.max_output_bytes <= hard.max_output_bytes
+-            && c.options.max_files <= hard.max_files
+-            && c.options.max_entities <= hard.max_entities
+-            && c.options.max_metadata_bytes <= hard.max_metadata_bytes
+-            && c.options.max_ast_nodes <= hard.max_ast_nodes
+-            && c.options.max_ast_depth <= hard.max_ast_depth
+-            && c.options.max_replay_name_bytes <= hard.max_replay_name_bytes
+-            && c.options.max_lineage_metadata_bytes <= hard.max_lineage_metadata_bytes,
+-        CAPACITY
+-    );
++    c.options.validate()?;
+     // Each reader charges its own aggregate before decoding. The connection
+     // ceiling must also admit lineage and separately bounded artifact rows.
+     let row_ceiling = c
+diff --git a/native/src/main.rs b/native/src/main.rs
+index 173f2db..6d63032 100644
+--- a/native/src/main.rs
++++ b/native/src/main.rs
+@@ -8,6 +8,7 @@ use std::{
+ };
+ use yoke::{Engine, capture::Deadline};
+ mod bedrock_cli;
++mod digest_history_capture_cli;
+ mod digest_inbox_cli;
+ mod digest_receiver_cli;
+ mod feedback_cli;
+@@ -88,6 +89,7 @@ enum ExtensionOperation {
+     GithubDiscussions(Box<github_discussions_cli::Arguments>),
+     DigestReceiver(Box<digest_receiver_cli::Arguments>),
+     DigestInbox(Box<digest_inbox_cli::Arguments>),
++    DigestHistoryCapture(Box<digest_history_capture_cli::Arguments>),
+     ModelsHttp(Box<HttpModelArguments>),
+     ModelHttpWorker(Box<HttpModelWorkerArguments>),
+     ModelsBedrock(Box<bedrock_cli::Arguments>),
+@@ -1944,6 +1946,9 @@ fn run_parity(
+         ExtensionOperation::Feedback(_) => bail!("Feedback host dispatch error"),
+         ExtensionOperation::DigestReceiver(_) => bail!("Digest receiver host dispatch error"),
+         ExtensionOperation::DigestInbox(_) => bail!("Digest inbox host dispatch error"),
++        ExtensionOperation::DigestHistoryCapture(_) => {
++            bail!("Digest history capture host dispatch error")
++        }
+         ExtensionOperation::GithubApp(_) => bail!("GitHub App host dispatch error"),
+         ExtensionOperation::GithubDiscussions(_) => bail!("GitHub discussions host dispatch error"),
+         ExtensionOperation::Decisions(args) => run_decisions(engine, *args, arguments, deadline),
+@@ -3268,6 +3273,20 @@ fn run(cli: Cli) -> Result<bool> {
+         );
+         return args.run(cli.timeout, cli.max_bytes);
+     }
++    if let Operation::Extensions(extension) = &operation
++        && let ExtensionOperation::DigestHistoryCapture(args) = extension.as_ref()
++    {
++        ensure!(
++            cli.snapshot.is_none()
++                && cli.capture_config.is_none()
++                && cli.include_ignored_dir.is_empty()
++                && cli.language_server_config.is_none()
++                && !cli.trust_servers
++                && cli.analyzer_epoch.is_none(),
++            "History acquisition inherits captured scope; source/provider options are unavailable"
++        );
++        return args.run(&cli.root, cli.allow_writes, cli.timeout, cli.max_bytes);
++    }
+     if let Operation::Extensions(extension) = &operation
+         && let ExtensionOperation::DigestInbox(args) = extension.as_ref()
+     {
+diff --git a/native/src/store.rs b/native/src/store.rs
+index 2f4b56a..9f97fe8 100644
+--- a/native/src/store.rs
++++ b/native/src/store.rs
+@@ -647,6 +647,28 @@ impl Store {
+         snapshot: &Snapshot,
+         graph: &Graph,
+         update_latest: bool,
++    ) -> Result<()> {
++        self.publish_rows(snapshot, graph, update_latest, false)
++    }
++    /// Only owned atomic acquisition uses this path; public publication still
++    /// owns its transaction and refuses nesting. No latest pointer is changed.
++    pub(crate) fn publish_historical_pending(
++        &self,
++        snapshot: &Snapshot,
++        graph: &Graph,
++    ) -> Result<()> {
++        ensure!(
++            !self.db.is_autocommit(),
++            "Historical publication requires owned transaction"
++        );
++        self.publish_rows(snapshot, graph, false, true)
++    }
++    fn publish_rows(
++        &self,
++        snapshot: &Snapshot,
++        graph: &Graph,
++        update_latest: bool,
++        pending: bool,
+     ) -> Result<()> {
+         self.check_deadline()?;
+         let documents: Vec<_> = snapshot
+@@ -668,8 +690,16 @@ impl Store {
+             }
+             Ok(())
+         };
+-        let tx = self.db.transaction()?;
+-        let snapshot_inserted = tx.execute(
++        let tx = if pending {
++            None
++        } else {
++            Some(rusqlite::Transaction::new_unchecked(
++                &self.db,
++                rusqlite::TransactionBehavior::Deferred,
++            )?)
++        };
++        let db: &Connection = tx.as_deref().unwrap_or(&self.db);
++        let snapshot_inserted = db.execute(
+             "INSERT OR IGNORE INTO snapshots VALUES(?1,?2)",
+             params![snapshot.id, serde_json::to_string(snapshot)?],
+         )?;
+@@ -681,19 +711,19 @@ impl Store {
+                 "snapshotId": snapshot.id, "workspaceId": snapshot.workspace_id,
+                 "publishedAtMs": u64::try_from(published_at)?
+             });
+-            tx.execute(
++            db.execute(
+                 "INSERT INTO records(kind,id,value) VALUES('snapshot-published',?1,?2)",
+                 params![snapshot.id, serde_json::to_string(&receipt)?],
+             )?;
+         }
+-        let inserted = tx.execute(
++        let inserted = db.execute(
+             "INSERT OR IGNORE INTO graphs VALUES(?1,?2)",
+             params![snapshot.id, serde_json::to_string(graph)?],
+         )?;
+         if inserted > 0 {
+             for e in &graph.entities {
+                 check()?;
+-                tx.execute(
++                db.execute(
+                     "INSERT INTO symbols VALUES(?1,?2,?3,?4,?5)",
+                     params![
+                         snapshot.id,
+@@ -706,18 +736,29 @@ impl Store {
+             }
+             for (path, text) in documents {
+                 check()?;
+-                tx.execute(
++                db.execute(
+                     "INSERT INTO documents VALUES(?1,?2,?3)",
+                     params![snapshot.id, path, text],
+                 )?;
+             }
+         }
++        if pending {
++            ensure!(
++                serde_json::to_value(self.snapshot(&snapshot.id)?)?
++                    == serde_json::to_value(snapshot)?
++                    && serde_json::to_value(self.graph(&snapshot.id)?)?
++                        == serde_json::to_value(graph)?,
++                "Immutable historical publication collision"
++            );
++        }
+         check()?;
+         if update_latest {
+-            tx.execute("INSERT INTO meta VALUES('latest',?1) ON CONFLICT(key) DO UPDATE SET value=excluded.value",[&snapshot.id])?;
++            db.execute("INSERT INTO meta VALUES('latest',?1) ON CONFLICT(key) DO UPDATE SET value=excluded.value",[&snapshot.id])?;
+         }
+         check()?;
+-        tx.commit()?;
++        if let Some(tx) = tx {
++            tx.commit()?;
++        }
+         Ok(())
+     }
+     pub fn latest(&self) -> Result<Option<String>> {

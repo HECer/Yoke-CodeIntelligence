@@ -1,0 +1,89 @@
+{
+  "cases": [
+    {
+      "case": 0,
+      "language": "js",
+      "beforeDiagnostics": [],
+      "beforeTypes": [
+        "() => 3"
+      ],
+      "beforeObserved": "[\"\",3]",
+      "afterDiagnostics": [],
+      "afterTypes": [
+        "() => 3"
+      ],
+      "afterObserved": "[\"\",3]",
+      "sameTypes": true,
+      "sameRuntime": true
+    },
+    {
+      "case": 1,
+      "language": "ts",
+      "beforeDiagnostics": [],
+      "beforeTypes": [
+        "() => 3"
+      ],
+      "beforeObserved": "[\"\",3]",
+      "afterDiagnostics": [],
+      "afterTypes": [
+        "() => 3"
+      ],
+      "afterObserved": "[\"\",3]",
+      "sameTypes": true,
+      "sameRuntime": true
+    },
+    {
+      "case": 2,
+      "language": "ts",
+      "beforeDiagnostics": [],
+      "beforeTypes": [
+        "number"
+      ],
+      "beforeObserved": "4",
+      "afterDiagnostics": [],
+      "afterTypes": [
+        "number"
+      ],
+      "afterObserved": "4",
+      "sameTypes": true,
+      "sameRuntime": true
+    },
+    {
+      "case": 3,
+      "language": "ts",
+      "beforeDiagnostics": [],
+      "beforeTypes": [
+        "number"
+      ],
+      "beforeObserved": "{\"result\":3,\"events\":[]}",
+      "afterDiagnostics": [],
+      "afterTypes": [
+        "number"
+      ],
+      "afterObserved": "{\"result\":3,\"events\":[]}",
+      "sameTypes": true,
+      "sameRuntime": true
+    },
+    {
+      "case": 4,
+      "language": "ts",
+      "beforeDiagnostics": [],
+      "beforeTypes": [
+        "number"
+      ],
+      "beforeObserved": "{\"result\":3,\"events\":[\"arg\",\"default\"]}",
+      "afterDiagnostics": [],
+      "afterTypes": [
+        "number"
+      ],
+      "afterObserved": "{\"result\":3,\"events\":[\"arg\",\"default\"]}",
+      "sameTypes": true,
+      "sameRuntime": true
+    }
+  ],
+  "allChecksPassed": true,
+  "nativeAdmission": false,
+  "prototypeOnly": true,
+  "ownedLiteralFixturesExecuted": true,
+  "analyzedCodeExecuted": false
+}

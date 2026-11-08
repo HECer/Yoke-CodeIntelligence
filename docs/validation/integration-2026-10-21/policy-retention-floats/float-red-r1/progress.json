@@ -1,0 +1,58 @@
+[
+  {
+    "name": "fmt",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "fmt",
+      "--all",
+      "--",
+      "--check"
+    ],
+    "exitCode": 0,
+    "seconds": 6.244448500016006,
+    "sourceUnchanged": true,
+    "totals": {
+      "passed": 0,
+      "failed": 0,
+      "ignored": 0
+    },
+    "deletedNewTestArtifacts": []
+  },
+  {
+    "name": "json_float_roundtrip",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "test",
+      "--workspace",
+      "--locked",
+      "-j",
+      "2",
+      "--target-dir",
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+      "--test",
+      "json_float_roundtrip",
+      "--",
+      "--test-threads=1"
+    ],
+    "exitCode": 101,
+    "seconds": 15.690973100019619,
+    "sourceUnchanged": true,
+    "totals": {
+      "passed": 1,
+      "failed": 1,
+      "ignored": 0
+    },
+    "deletedNewTestArtifacts": [
+      {
+        "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\json_float_roundtrip-6ffbf70adf9330ee.exe",
+        "sha256": "ac5173c7aee8f00a3f0d11503d128f3b4dfbc09717162c5191a00f542210d001",
+        "bytes": 91012096
+      },
+      {
+        "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\json_float_roundtrip-6ffbf70adf9330ee.pdb",
+        "sha256": "917a39c72ec85940a6859d718544db0275a9493ece8a52faf19acb34c029dd8e",
+        "bytes": 4403200
+      }
+    ]
+  }
+]

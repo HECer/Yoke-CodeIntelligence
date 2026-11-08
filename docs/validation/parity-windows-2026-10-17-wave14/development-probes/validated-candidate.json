@@ -1,0 +1,101 @@
+{
+  "sourceManifestSha256": "a3e0210e314936ffe007661111e2780d02081dbd41c9ca21467a85129646f247",
+  "sourceFiles": 3751,
+  "rustFiles": 420,
+  "changedPaths": {
+    "native/docs/mixed-pdf-views.md": {
+      "before": null,
+      "after": "94f0115b78d6e5eb3f5f83f77a50c051e2f01d862c016be9ce191b9f5a6c24e5"
+    },
+    "native/docs/mixed-views.md": {
+      "before": "623d6bf44dc643029078f0757139d9f7b227041d5b90b12bc8e9eb49cebfd345",
+      "after": "58fefb7d27956dac998ebbb4dd1b47af4c5878577366dbccd691540904dbf74e"
+    },
+    "native/src/media.rs": {
+      "before": "4405e3e678fef2a3d294ea3bb92b3e24eeb774d6da455e6e70595128144b0e3f",
+      "after": "4e402828d678678d320f602beac3b4ce71303a384786affa46f84b801f8e00b2"
+    },
+    "native/src/mixed_pdf_input.rs": {
+      "before": null,
+      "after": "58b356548c9502e142a531b778629c38988ae2a220b5ba885fabbccdb3726f0c"
+    },
+    "native/src/mixed_view.rs": {
+      "before": "01584c6fa78b5c78dc076a13eb363e08dee24af8f1863cced690b9d46cf6bca8",
+      "after": "425c0f8c3f823c76eaf6d793e8e036ca527e76c96349acc59d281d9f8475e057"
+    },
+    "native/src/mixed_view_cli.rs": {
+      "before": "63830d60e359679d929186b599c0e347d4cc754df37c068f237b6661742de293",
+      "after": "68d74aa059ba18a9459e139e97c933616d56ec80aacf813c10d480adee931c3c"
+    },
+    "native/src/mixed_view_query.rs": {
+      "before": "a9a24435677c329848af0786e15d3506b4ec43eb9506df528f466e85c9fa306d",
+      "after": "78ca3491940fdc7ae47607b74b59626ba0b96d88c054075c95be9917408d1267"
+    },
+    "native/tests/mixed_pdf_view.rs": {
+      "before": null,
+      "after": "cacc832cfe6e6b9af505011f7b0b4aff9a0b6e5ab0f94a57289c4b0201e1e79e"
+    },
+    "native/tests/support/mixed_pdf_fixture.rs": {
+      "before": null,
+      "after": "d8b456dd5afba804b9e6fd0052a0e4135f028ceb4bfaf66fac06c913188c506e"
+    }
+  },
+  "artifactPins": {
+    "development/candidate-r3-source-freeze.json": "a3e0210e314936ffe007661111e2780d02081dbd41c9ca21467a85129646f247",
+    "baseline-source-freeze.json": "d6510d06d4cc8d3f53a0f375f4801e2529e24b16c7a5a960e47bafcfb4c4f5ec",
+    "development/candidate-r2-source-freeze.json": "f23616f840be3d746859b469f1473b221747e1085aa2f85342fcfcfb05a8ddab",
+    "run_scoped.py": "dbf6e95ee624c6f05ec0edf336ae6c0d4ec302d48120e6211e13ede1bb833062",
+    "development/pdf-r1.json": "b39cb31a956d6441c94dbe5b2b8bd8396a228a88f002020e7a47c3067d10b662",
+    "development/pdf-r1.log": "bd33a10680e7727b66633015d72bef856c6a3bbb9afe498067b5901bbaa1ace5",
+    "development/pdf-r1-before.json": "f23616f840be3d746859b469f1473b221747e1085aa2f85342fcfcfb05a8ddab",
+    "development/pdf-r1-after.json": "f23616f840be3d746859b469f1473b221747e1085aa2f85342fcfcfb05a8ddab",
+    "development/regressions-r1.json": "775e79263619bcefe0b2a5d8a982278956d619e485b1e4a530bf300845889336",
+    "development/regressions-r1.log": "a4be7dbaa33ffb450d8a09e480f9644be1b9efb2f975f299a31b5c6f32def947",
+    "development/regressions-r1-before.json": "f23616f840be3d746859b469f1473b221747e1085aa2f85342fcfcfb05a8ddab",
+    "development/regressions-r1-after.json": "f23616f840be3d746859b469f1473b221747e1085aa2f85342fcfcfb05a8ddab",
+    "development/pdf-r2.json": "f99781b6a4ac0dbca68c192efcf0df4ff0022ec5c9df2d1d95815a42da1065b1",
+    "development/pdf-r2.log": "9810c0505e2590a535d691f9e03d38bcb653358c26fd4ce1cfe3292c13eedb99",
+    "development/pdf-r2-before.json": "a3e0210e314936ffe007661111e2780d02081dbd41c9ca21467a85129646f247",
+    "development/pdf-r2-after.json": "a3e0210e314936ffe007661111e2780d02081dbd41c9ca21467a85129646f247",
+    "development/format-r1.json": "bf464f9db82a94d76427ca7ae989d9739d4a9c5f36bf9c94453ab0746a8cde54",
+    "development/format-r1.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "development/format-r1-before.json": "a3e0210e314936ffe007661111e2780d02081dbd41c9ca21467a85129646f247",
+    "development/format-r1-after.json": "a3e0210e314936ffe007661111e2780d02081dbd41c9ca21467a85129646f247",
+    "development/clippy-r1.json": "a82ccc95747b6f215e57db9e3cdd8b67c6e01e6e0c57b5dd96760b32ad2fe348",
+    "development/clippy-r1.log": "032b46c989829c5713114f0e147d842b3f49358997ed2905be72463703ac6092",
+    "development/clippy-r1-before.json": "a3e0210e314936ffe007661111e2780d02081dbd41c9ca21467a85129646f247",
+    "development/clippy-r1-after.json": "a3e0210e314936ffe007661111e2780d02081dbd41c9ca21467a85129646f247",
+    "development/typecheck-r1.json": "d2f8ebb19c435bf9df41b46ccb7d065cc151ac6d526ce485de83ab99a8a2739e",
+    "development/typecheck-r1.log": "ca76bbbc554c0e3ab10606a9d43f484df25001ba560b45987878ba20a5bd47a5",
+    "development/typecheck-r1-before.json": "a3e0210e314936ffe007661111e2780d02081dbd41c9ca21467a85129646f247",
+    "development/typecheck-r1-after.json": "a3e0210e314936ffe007661111e2780d02081dbd41c9ca21467a85129646f247",
+    "development/typescript-r1.json": "d6aa04ed54ac38e2d5fa6447b7d28f1c89a9de56088d696e8fe7c9874e22d123",
+    "development/typescript-r1.log": "7e42e712282cfaa24625599963e4a1e79b977bbf5d758986281786060a64c72a",
+    "development/typescript-r1-before.json": "a3e0210e314936ffe007661111e2780d02081dbd41c9ca21467a85129646f247",
+    "development/typescript-r1-after.json": "a3e0210e314936ffe007661111e2780d02081dbd41c9ca21467a85129646f247",
+    "cli-red-r3-receipt.json": "b1d7e5008389ef9405ad98ab053ccfbf95cfc881fe509ed0b346b764b37aa620",
+    "development/contract-green.json": "62bd886d785517a0808da237a2abf01f47423df38f6e25729b678766a6c03ea2",
+    "contract_red.py": "fe2091eebfee097f447dfc6b3b358201f4026a961002361e298b8f7f0573c968",
+    "cli-red-r3.log": "8a282023f383dc3cb76848fcebfa16dfad59f3e0490e0e302f9422774c9d36b7",
+    "original-pdf-worker-oracle.json": "97aa510dd9d92d6d75ef53a700937f05b2958ffda4ace51e406073c4af322b84",
+    "development/contract-green.log": "5449c4fbc05b575006880f609fa20960cb8b6cb48e590be1c544b6cd1b09feae",
+    "run_contract_green.py": "36f96d91d8007c6b83f94cf8ce0c94a741bba31fb3858d6fd27a0068054927d6",
+    "collect_scoped_validation.py": "eb7b5f775b9afdb847014f8b82578dc381d2bda334dc5e21d81eb31c36d6874c"
+  },
+  "scopedUniqueRustPassed": 112,
+  "newPdfTests": 9,
+  "existingRegressionTests": 103,
+  "regressionTargets": 14,
+  "unchangedCliContractGreen": 2,
+  "typescriptPassed": 254,
+  "typescriptSkipped": 3,
+  "sourceUnchanged": true,
+  "format": "passed",
+  "allTargetClippy": "passed",
+  "typecheck": "passed",
+  "earlierSourceContinuity": "Only the mixed-views.md schema2 link differs; all code/test bytes are identical. Earlier scoped counts remain nonadditive.",
+  "primaryIntegrated": false,
+  "wholeAcceptance": false,
+  "universalParity": false,
+  "interpretation": "Actual isolated development checks only. Nine PDF tests were repeated, never added twice; final primary integration requires accepted Wave13."
+}

@@ -1,0 +1,59 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+warning: fields `directory` and `texts` are never read
+   --> native\tests\support\monorepo_retrieval_fixture.rs:173:9
+    |
+172 | pub struct Fixture {
+    |            ------- fields in this struct
+173 |     pub directory: tempfile::TempDir,
+    |         ^^^^^^^^^
+...
+177 |     pub texts: BTreeMap<String, String>,
+    |         ^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `padded_json` is never used
+   --> native\tests\support\monorepo_retrieval_fixture.rs:242:8
+    |
+242 | pub fn padded_json(json: &str, bytes: usize) -> String {
+    |        ^^^^^^^^^^^
+
+warning: function `eight_package_markers` is never used
+   --> native\tests\support\monorepo_retrieval_fixture.rs:248:8
+    |
+248 | pub fn eight_package_markers() -> BTreeMap<String, String> {
+    |        ^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `function_body` is never used
+   --> native\tests\support\monorepo_retrieval_fixture.rs:262:8
+    |
+262 | pub fn function_body(name: &str, bytes: usize) -> String {
+    |        ^^^^^^^^^^^^^
+
+warning: function `nested_body` is never used
+   --> native\tests\support\monorepo_retrieval_fixture.rs:271:8
+    |
+271 | pub fn nested_body(parent: &str, child: &str, bytes: usize) -> String {
+    |        ^^^^^^^^^^^
+
+warning: `yoke-code-intelligence` (test "legacy_retrieval_oracle") generated 5 warnings
+    Finished `test` profile [unoptimized] target(s) in 4.80s
+     Running tests\legacy_retrieval_oracle.rs (target\debug\deps\legacy_retrieval_oracle-c68f8fd262f61b26.exe)
+
+running 1 test
+
+thread 'native_global_complete_json_matches_pre_feature_frozen_oracle' (12892) panicked at native\tests\legacy_retrieval_oracle.rs:28:5:
+assertion `left == right` failed: Freeze this literal OLD-production hash before promoting new mode stubs
+  left: "56a374f44ff295af6cbcd19f71f529d545abe156c0ea739936cb4e069d88aed3"
+ right: "ROOT_CAPTURE_OLD_PRODUCTION_BEFORE_PROMOTION"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test native_global_complete_json_matches_pre_feature_frozen_oracle ... FAILED
+
+failures:
+
+failures:
+    native_global_complete_json_matches_pre_feature_frozen_oracle
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.84s
+
+error: test failed, to rerun pass `--test legacy_retrieval_oracle`

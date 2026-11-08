@@ -1,0 +1,44 @@
+{
+  "sourceCommit": "ee4cbf15cb934dd3f288b55aa81aa3f391848df1",
+  "runtimeCommit": "9f9366790a4111f1c73702ab0300257f81665dcc",
+  "parentCommit": "9ce6654e9beedb03c7d197c4c1d7e87bc383bd82",
+  "paths": [
+    "native/README.md",
+    "native/docs/propagated-delete.md",
+    "native/docs/semantic-refactor-intents.md",
+    "native/src/semantic_propagated_delete.rs",
+    "native/src/semantic_propagated_delete_ast.rs",
+    "native/src/semantic_refactor.rs",
+    "native/tests/propagated_delete_contract.rs",
+    "native/tests/propagated_delete_live.rs"
+  ],
+  "newCases": {
+    "unitAdmission": 1,
+    "defaultIntegration": 9,
+    "actualCompilerAndLanguageServer": 1
+  },
+  "nativeGroups": 13,
+  "nativeTotals": {
+    "passed": 587,
+    "failed": 0,
+    "ignored": 13
+  },
+  "nativeInputsMatched": 737,
+  "nativeBinarySha256": "e240ba4b709b3e00281185a1ef313628aa9b70df0cb6b6dae1bcda681483610a",
+  "nativeBinaryBytes": 159182336,
+  "binaryHashObservedAfterFinalBuildAt": "2026-10-20T04:10:59.551243+00:00",
+  "actualTools": {
+    "node": "C:\\Program Files\\nodejs\\node.exe",
+    "nodeSha256": "ba4e6d110e8c1592a1ecd390f6b05f3da124b13871a5be62b341a07a853c6c32",
+    "nodeVersion": "v24.21.0",
+    "compiler": "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\typescript-5.8.3-lsp-5.1.3\\node_modules\\typescript\\lib\\tsc.js",
+    "compilerSha256": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983",
+    "compilerVersion": "Version 5.8.3",
+    "server": "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\typescript-5.8.3-lsp-5.1.3\\node_modules\\typescript-language-server\\lib\\cli.mjs",
+    "serverSha256": "3c2a7818315bd8399e56f461fe7da01c0f8f67a9c66108af0b655605b088dd77",
+    "serverVersion": "5.1.3",
+    "compilerLibrary": "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\typescript-5.8.3-lsp-5.1.3\\node_modules\\typescript\\lib\\typescript.js",
+    "compilerLibrarySha256": "dd17428736a07e1db1a138d8a14295ddb2699ba780ee15038acdd2c6da5373a0"
+  },
+  "wholeNativeRerun": false
+}

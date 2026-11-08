@@ -1,0 +1,26 @@
+{
+  "checkedAtUtc": "2026-10-15T23:23:10.735901+00:00",
+  "scope": "focused_gate_not_frozen_suite",
+  "command": [
+    "cargo",
+    "test",
+    "-j",
+    "2",
+    "--manifest-path",
+    "native/Cargo.toml",
+    "--lib",
+    "retrieval_saved_graph::tests",
+    "--",
+    "--nocapture",
+    "--test-threads=4"
+  ],
+  "exitCode": 101,
+  "seconds": 3.219,
+  "tempRoot": "D:\\Yoke-Test-Scratch\\wave5-saved-graph-stub-red",
+  "logSha256": "2513cc3886fed5f612ec1345c6afb14708f9f6c6055ed6967c5d757e339685a3",
+  "groups": 1,
+  "passed": 0,
+  "failed": 7,
+  "ignored": 1,
+  "sourceChanges": []
+}

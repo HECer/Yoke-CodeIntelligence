@@ -1,0 +1,19 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+error[E0609]: no field `identity` on type `host_install::io::EntryInfo`
+    --> native\src\host_output_recovery_tests.rs:2254:10
+     |
+2254 |         .identity;
+     |          ^^^^^^^^ unknown field
+     |
+     = note: available fields are: `directory`, `length`
+
+error[E0609]: no field `identity` on type `host_install::io::EntryInfo`
+    --> native\src\host_output_recovery_tests.rs:2265:18
+     |
+2265 |                 .identity
+     |                  ^^^^^^^^ unknown field
+     |
+     = note: available fields are: `directory`, `length`
+
+For more information about this error, try `rustc --explain E0609`.
+error: could not compile `yoke-code-intelligence` (lib test) due to 2 previous errors

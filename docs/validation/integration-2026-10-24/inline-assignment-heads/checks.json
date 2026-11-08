@@ -1,0 +1,101 @@
+{
+  "schema": 1,
+  "recordedAt": "2026-10-24T18:13:43.625631+00:00",
+  "parentCommit": "e125c30430cd70ce513d82fbb06f76492a1e9dde",
+  "sourceHashScope": "Local working-copy bytes; Git text checkout line endings may differ. Exact remote Git blobs are verified separately.",
+  "sourceHashes": {
+    "native/src/projects.rs": "b9d1c74db77d6d5f504c4cf8d0b35227c142f99b60b9ff3af397a6605e549846",
+    "native/src/compiler_inline_body.rs": "de7953e02b2a713268122fe6eaf47bcd397b1ec7fae5cbe93a61dbf211e2836f",
+    "native/src/compiler_inline_body_admission_tests.rs": "3f9e8ad94bc4e47ce4f7e8f2b679ba228d9111228671a8534b80f3afbaf1d9e1",
+    "native/tests/compiler_inline_body.rs": "09d4be3079a270712bd6b808da724a8c43d17de602d3b77c6def8ff025a7015c",
+    "native/docs/compiler-inline.md": "824b71ecca0bac799850631181ebe9d07d3d320b8353a685756cda1de67161fa",
+    "docs/STATUS.md": "8e0fbfa3f46a319e021e40a8215f3c386868a347bbd4fba6b5694b0e06758617",
+    "docs/REMAINING_WORK.md": "dd208be04c02763eb06aff5e1c24d48442cb655ef5256eb4a5225e8a3d316213",
+    "docs/validation/integration-2026-10-24/inline-assignment-heads/probe.cjs": "84e4eaf49e479b408757be93aed43cef387d22af956a0eb6ac045d20a869515a",
+    "native/src/compiler_worker.cjs": "1e9d9430ef11349beb9355d929c09e909e0e8dc280ac51759464043de0f0a32f",
+    "native/src/compiler_inline_worker.cjs": "8109940b3bfb288c3b970cacf114543f45b036ab66de8db976c69d5aec3171da",
+    "native/src/compiler_inline_body_worker.cjs": "ab7a6d3b64653bdc9797bdf13bdabdd872b49fc46470648da9a8a33c1252064e",
+    "native/src/compiler_inline_body_arguments_worker.cjs": "3b7299a8d8338d87f00ef373d9a6f9def164fed80a85690c646d630ffe331d9f",
+    "native/src/compiler_inline_body_vars_worker.cjs": "a8ea0f4639b310fd81f434ccb7deb35f78a07c960e8e478e9f05210177b3e424",
+    "native/src/compiler_inline_body_types_worker.cjs": "f04ca7a8c2d6959021a6b7ceec8560c022eda595f3964c2220404459090d83b1",
+    "native/src/compiler_move_worker.cjs": "54342e465a382aab011ce9ecbf3dd113c0b849b14677277405806e7b2d94f813",
+    "native/src/compiler_move_repairs_worker.cjs": "a46cdd6dd404ec96c7cb03d7f46eee992de4a1690c61a682453171d23328b051",
+    "native/src/compiler_hierarchy_worker.cjs": "0a4eef184c36c0bb4853ad0f0cf5d7bfa224705b6f17fa086cf992da9c2a343f",
+    "native/src/compiler_properties_worker.cjs": "fa82e87df7d356d356869b239b189b1ec95830761f7f5934c01b805c1c77da4f"
+  },
+  "worker": {
+    "cases": 44,
+    "accepted": 20,
+    "refused": 24,
+    "unexpected": 0,
+    "nativeAdmission": false
+  },
+  "namespaceRegression": {
+    "cases": 22,
+    "accepted": 12,
+    "refused": 10,
+    "unexpected": 0,
+    "nativeAdmission": false
+  },
+  "commands": [
+    {
+      "command": "npm.cmd run typecheck",
+      "exit": 0,
+      "log": "typecheck.txt"
+    },
+    {
+      "command": "npm.cmd test",
+      "exit": 0,
+      "passed": 260,
+      "failed": 0,
+      "skipped": 3,
+      "existingSkips": true,
+      "log": "npm-test.txt"
+    },
+    {
+      "command": "rustfmt --edition 2024 --check native/src/compiler_inline_body.rs native/src/compiler_inline_body_admission_tests.rs native/tests/compiler_inline_body.rs",
+      "exit": 0
+    },
+    {
+      "command": "node --check native/src/compiler_inline_body_worker.cjs",
+      "exit": 0
+    },
+    {
+      "command": "node --check docs/validation/integration-2026-10-24/inline-assignment-heads/probe.cjs",
+      "exit": 0
+    },
+    {
+      "command": "git diff --check",
+      "exit": 0
+    }
+  ],
+  "native": {
+    "compiled": false,
+    "executed": false,
+    "newTestFunctions": 3,
+    "extendedTestFunctions": 1,
+    "coherentForgeryCasesAdded": 6,
+    "buildAdmissionBytes": 1200000000,
+    "freeBytesAtObservation": 1073025024,
+    "reason": "Below established local native build admission; no old binary substituted"
+  },
+  "logRendering": {
+    "change": "UTF-8 rendering with trailing line whitespace removed",
+    "rawPrivateLogHashes": {
+      "typecheck.txt": "968bb81d4c452b68b6ca10874d33244529da7caf9caa2a7814776ab44c66ad21",
+      "npm-test.txt": "c5fd6694bf2378bc2b1fc8b8c045d667832eea06098074ffa6c7d72dfa095710"
+    },
+    "npmStderrNotice": "PowerShell wraps an npm notice as NativeCommandError; actual exit remains0"
+  },
+  "diagnosticHistory": [
+    "Initial44-case pass and separate wrapper-bound pass retained privately",
+    "Final module fixture additionally mutates target in callee; baseline and current were rerun on final fixtures",
+    "An attempted multi-file patch did not match rustfmt output and made no edit; corrected before final runs"
+  ],
+  "limits": [
+    "Independent Rust typing/reconstruction/application not executed",
+    "No current platform or history/VSIX live acceptance",
+    "Full R1/STATUS remains open",
+    "No main merge or release"
+  ]
+}

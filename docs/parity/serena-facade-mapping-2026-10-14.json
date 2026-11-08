@@ -1,0 +1,1153 @@
+{
+  "schemaVersion": 1,
+  "upstream": "oraios/serena",
+  "upstreamRevision": "4f2520efb128dd02e66a2302095bdbbb26ddd5a0",
+  "scope": "Independent Windows implementation wave; Linux/macOS deferred. Inventory coverage does not assert universal semantic parity.",
+  "licenseBoundary": "Public contract facts only; no GPL Serena application implementation copied.",
+  "publicToolCount": 53,
+  "replFacadeMethodCount": 50,
+  "pureAdapter": "agent_repl::invoke_facade(&mut Session, method, arguments, project, &Deadline)",
+  "proof": {
+    "integrationGates": 21,
+    "optionGates": 3,
+    "semanticOptionGates": 4,
+    "documentationGates": 2,
+    "diagnosticBoundaryGates": 4,
+    "symbolContractGates": 8,
+    "dependencyScopeGates": 2,
+    "memoryNamespaceGates": 2,
+    "actionResolverContractGates": 5,
+    "actualTypescriptActionResolutionGates": 1,
+    "privateSourceBindingGates": 1,
+    "result": "GREEN",
+    "actualProviders": "Separate measured Rust Analyzer, TypeScript Language Server and Jedi Windows gates. Protocol fixture profiles are explicitly labeled contract_fixture. Isolated real debugpy 1.8.22 evaluation and disconnect gate passed. Actual TypeScript lazy action resolution passed while auxiliary command execution remains refused. Gate sets overlap; counts are not cumulative universal certification.",
+    "fileOptionGates": 4
+  },
+  "globalBoundaries": [
+    "Native JSON responses differ from upstream formatted outputs.",
+    "Source edits prepare immutable guarded plans; explicit native apply is separate.",
+    "Provider/target execution authority comes only from explicit host profiles; ordinary arguments cannot grant it.",
+    "Typed passive strategies have measured Windows scope; the 77 backend catalog entries are not 77 runtime certifications.",
+    "Proprietary JetBrains engines are not included; independently labeled LSP/DAP equivalents are implemented where supported.",
+    "Persistent provider processes are not retained: restart performs fresh request-scoped negotiation and never restarts an unowned TCP peer.",
+    "Some upstream option, source-language and provider-intent semantics remain measured acceptance gaps."
+  ],
+  "tools": [
+    {
+      "name": "execute_shell_command",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/cmd_tools.py#L27",
+      "arguments": "command: str, cwd: str | None=None, capture_stderr: bool=True, max_answer_chars: int=-1",
+      "facadeMethod": "shell.execute_shell_command",
+      "sessionOperation": null,
+      "status": "partial",
+      "behavior": "Runs an explicitly host-selected shell profile in the active project with bounded output/deadline.",
+      "boundaries": [
+        "Unavailable through pure adapter.",
+        "Trusted arbitrary Python may separately execute host code; facade shell policy is not an OS sandbox."
+      ]
+    },
+    {
+      "name": "open_dashboard",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/config_tools.py#L26",
+      "arguments": "",
+      "facadeMethod": "cfg.open_dashboard",
+      "sessionOperation": null,
+      "status": "unavailable",
+      "behavior": "Dashboard not implemented.",
+      "boundaries": []
+    },
+    {
+      "name": "activate_project",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/config_tools.py#L39",
+      "arguments": "project: str, session_id: str",
+      "facadeMethod": null,
+      "sessionOperation": "activate",
+      "status": "implemented_native",
+      "behavior": "Activates a host-registered project; arbitrary roots cannot grant authority.",
+      "boundaries": []
+    },
+    {
+      "name": "remove_project",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/config_tools.py#L58",
+      "arguments": "project_name: str",
+      "facadeMethod": null,
+      "sessionOperation": "removeProject",
+      "status": "implemented_native",
+      "behavior": "Removes a session registration without deleting source.",
+      "boundaries": []
+    },
+    {
+      "name": "get_current_config",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/config_tools.py#L73",
+      "arguments": "",
+      "facadeMethod": "cfg.get_current_config",
+      "sessionOperation": "configuration",
+      "status": "implemented_native",
+      "behavior": "Returns registered host/session configuration.",
+      "boundaries": []
+    },
+    {
+      "name": "read_file",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/file_tools.py#L45",
+      "arguments": "relative_path: str, start_line: int=0, end_line: int | None=None, max_answer_chars: int=-1",
+      "facadeMethod": "fs.read_file",
+      "sessionOperation": "fs.read",
+      "status": "partial",
+      "behavior": "Captured source query with native JSON results.",
+      "boundaries": [
+        "Capture policy defines visible source; uncaptured ignored files unavailable.",
+        "skip_ignored_files cannot widen capture scope; requested override handling remains an acceptance gap.",
+        "Positive max_answer_chars limits serialized native JSON Unicode characters; oversize results fail explicitly. Host/native byte budgets also apply.",
+        "Search regex uses Rust regex syntax."
+      ]
+    },
+    {
+      "name": "create_text_file",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/file_tools.py#L65",
+      "arguments": "relative_path: str, content: str",
+      "facadeMethod": "fs.create_text_file",
+      "sessionOperation": "edit.prepare",
+      "status": "partial",
+      "behavior": "Guarded create or whole-file replacement plan; originals unchanged.",
+      "boundaries": [
+        "Capture policy defines visible source; uncaptured ignored files unavailable.",
+        "skip_ignored_files cannot widen capture scope; requested override handling remains an acceptance gap.",
+        "Positive max_answer_chars limits serialized native JSON Unicode characters; oversize results fail explicitly. Host/native byte budgets also apply.",
+        "Search regex uses Rust regex syntax."
+      ]
+    },
+    {
+      "name": "list_dir",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/file_tools.py#L82",
+      "arguments": "relative_path: str, recursive: bool, skip_ignored_files: bool=False, max_answer_chars: int=-1",
+      "facadeMethod": "fs.list_dir",
+      "sessionOperation": "fs.list",
+      "status": "partial",
+      "behavior": "Captured source query; immutable observed-ignore filtering is applied before source reads, directory projection and pagination.",
+      "boundaries": [
+        "Capture policy defines visible source; uncaptured ignored files unavailable.",
+        "skip_ignored_files uses original observed capture outcomes only; list/find default false, search true. Only explicit host includeIgnoredDirs can capture ignored source, always read-only.",
+        "Positive max_answer_chars limits serialized native JSON Unicode characters; oversize results fail explicitly. Host/native byte budgets also apply.",
+        "Search regex uses Rust regex syntax."
+      ]
+    },
+    {
+      "name": "find_file",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/file_tools.py#L105",
+      "arguments": "file_mask: str, relative_path: str, skip_ignored_files: bool=False",
+      "facadeMethod": "fs.find_file",
+      "sessionOperation": "fs.glob",
+      "status": "partial",
+      "behavior": "Captured source query; immutable observed-ignore filtering is applied before source reads, directory projection and pagination.",
+      "boundaries": [
+        "Capture policy defines visible source; uncaptured ignored files unavailable.",
+        "skip_ignored_files uses original observed capture outcomes only; list/find default false, search true. Only explicit host includeIgnoredDirs can capture ignored source, always read-only.",
+        "Positive max_answer_chars limits serialized native JSON Unicode characters; oversize results fail explicitly. Host/native byte budgets also apply.",
+        "Search regex uses Rust regex syntax."
+      ]
+    },
+    {
+      "name": "replace_content",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/file_tools.py#L122",
+      "arguments": "relative_path: str, needle: str, repl: str, mode: Literal['literal', 'regex'], allow_multiple_occurrences: bool=False",
+      "facadeMethod": "edit.replace_content",
+      "sessionOperation": "edit.prepare",
+      "status": "partial",
+      "behavior": "Prepares an immutable source-hash-guarded edit plan. Facade line indices are zero-based.",
+      "boundaries": [
+        "Original source remains unchanged until separate explicit native application.",
+        "Replacement regex uses Rust regex syntax; Python-only expressions fail explicitly.",
+        "External/read-only/query-only contexts cannot prepare edits."
+      ]
+    },
+    {
+      "name": "replace_in_files",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/file_tools.py#L163",
+      "arguments": "needle: str, repl: str, mode: Literal['literal', 'regex'], relative_path: str='', paths_include_glob: str='', paths_exclude_glob: str='', dry_run: bool=False, occurrence_ids: list[str] | None=None, expected_count: int=-1, max_answer_chars: int=-1",
+      "facadeMethod": "edit.replace_in_files",
+      "sessionOperation": "edit.prepare",
+      "status": "partial",
+      "behavior": "Prepares an immutable source-hash-guarded edit plan. Facade line indices are zero-based.",
+      "boundaries": [
+        "Original source remains unchanged until separate explicit native application.",
+        "Replacement regex uses Rust regex syntax; Python-only expressions fail explicitly.",
+        "External/read-only/query-only contexts cannot prepare edits."
+      ]
+    },
+    {
+      "name": "delete_lines",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/file_tools.py#L240",
+      "arguments": "relative_path: str, start_line: int, end_line: int",
+      "facadeMethod": "edit.delete_lines",
+      "sessionOperation": "edit.prepare",
+      "status": "partial",
+      "behavior": "Prepares an immutable source-hash-guarded edit plan. Facade line indices are zero-based.",
+      "boundaries": [
+        "Original source remains unchanged until separate explicit native application.",
+        "Replacement regex uses Rust regex syntax; Python-only expressions fail explicitly.",
+        "External/read-only/query-only contexts cannot prepare edits."
+      ]
+    },
+    {
+      "name": "replace_lines",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/file_tools.py#L264",
+      "arguments": "relative_path: str, start_line: int, end_line: int, content: str",
+      "facadeMethod": "edit.replace_lines",
+      "sessionOperation": "edit.prepare",
+      "status": "partial",
+      "behavior": "Prepares an immutable source-hash-guarded edit plan. Facade line indices are zero-based.",
+      "boundaries": [
+        "Original source remains unchanged until separate explicit native application.",
+        "Replacement regex uses Rust regex syntax; Python-only expressions fail explicitly.",
+        "External/read-only/query-only contexts cannot prepare edits."
+      ]
+    },
+    {
+      "name": "insert_at_line",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/file_tools.py#L290",
+      "arguments": "relative_path: str, line: int, content: str",
+      "facadeMethod": "edit.insert_at_line",
+      "sessionOperation": "edit.prepare",
+      "status": "partial",
+      "behavior": "Prepares an immutable source-hash-guarded edit plan. Facade line indices are zero-based.",
+      "boundaries": [
+        "Original source remains unchanged until separate explicit native application.",
+        "Replacement regex uses Rust regex syntax; Python-only expressions fail explicitly.",
+        "External/read-only/query-only contexts cannot prepare edits."
+      ]
+    },
+    {
+      "name": "search_for_pattern",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/file_tools.py#L315",
+      "arguments": "substring_pattern: str, context_lines_before: int=0, context_lines_after: int=0, paths_include_glob: str='', paths_exclude_glob: str='', relative_path: str='', restrict_search_to_code_files: bool=False, skip_ignored_files: bool=True, multiline: bool=True, max_answer_chars: int=-1",
+      "facadeMethod": "fs.search_for_pattern",
+      "sessionOperation": "fs.search",
+      "status": "partial",
+      "behavior": "Captured source query; immutable observed-ignore filtering is applied before source reads, directory projection and pagination.",
+      "boundaries": [
+        "Capture policy defines visible source; uncaptured ignored files unavailable.",
+        "skip_ignored_files uses original observed capture outcomes only; list/find default false, search true. Only explicit host includeIgnoredDirs can capture ignored source, always read-only.",
+        "Positive max_answer_chars limits serialized native JSON Unicode characters; oversize results fail explicitly. Host/native byte budgets also apply.",
+        "Search regex uses Rust regex syntax."
+      ]
+    },
+    {
+      "name": "jet_brains_find_symbol",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/jetbrains_tools.py#L28",
+      "arguments": "name_path_pattern: str, depth: int=0, relative_path: str | None=None, include_body: bool=False, include_info: bool=False, search_deps: bool=False, max_matches: int=-1, max_answer_chars: int=-1",
+      "facadeMethod": "jb.find_symbol",
+      "sessionOperation": "symbols.find",
+      "status": "partial",
+      "behavior": "Source-bound symbols with stable source-order overload[i] paths, relative/absolute path matching and last-component substring or component wildcard matching; permitted-root match thresholds precede descendant expansion. Full bodies suppress depth/hover, root-only hover and pinned pagination remain source-bound. JB dependency selection includes only explicit host-captured read-only scope, with false/omitted excluding it before thresholds; wildcard-only JB patterns require overview. Native result budgets remain explicit; no proprietary engine claim.",
+      "boundaries": [
+        "Independent structural/standard LSP equivalent only; proprietary JetBrains engine is unavailable."
+      ]
+    },
+    {
+      "name": "jet_brains_move",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/jetbrains_tools.py#L122",
+      "arguments": "relative_path: str, name_path: str | None=None, target_relative_path: str | None=None, target_parent_name_path: str | None=None",
+      "facadeMethod": "jb.move",
+      "sessionOperation": null,
+      "status": "partial",
+      "behavior": "Captured-file moves treat target_relative_path as an explicit existing parent and preserve the original basename; omitted/null/exact-empty name selectors are supported. The facade checks scope, real host collisions and permissions before willRenameFiles; one source-checked plan includes provider pre-rename edits. Direct native move still accepts a final filename. Explicit host refactorIntentProfile:\"own_v1\" plus the registered versioned capability/private intent protocol admits one captured writable Rust function, struct, enum, trait, type alias or constant directly under a file or inline module. The destination is an existing captured writable Rust file, at fileTopLevel for absent/null parent or at one actual inline-module parentSymbol. Original-coordinate exact declaration deletion, unchanged insertion at an admitted complete-item boundary, attachment/owner/trivia preservation and scoped provider reference-edit effects are independently checked. Successful plans remain complete:false, commandsExecuted:false and referenceCompleteness:exact_declaration_and_ast_placement_only_not_exhaustive_compiler_reference_binding. Attached outer attributes/docstrings additionally require negotiated sourceAttachments:\"exact_text_v1\" and the separately checked sourceTextRange bundle, preserving original entity/name anchors. Other declaration kinds/languages, malformed or dangling syntax, impl/trait/descendant destinations, body-changing/wrapper/copy-only/resource/virtual-coordinate edits and ambiguous effects refuse. No exhaustive compiler reference binding/repair, proprietary IDE acceptance, directory-tree move or atomic multi-plan publication follows. Existing captured-file omitted/null/exact-empty parent/basename semantics and direct-native final-filename semantics remain distinct and unchanged.",
+      "boundaries": [
+        "Independent native/standard-LSP behavior and explicit host-selected own_v1 Rust named-declaration move and negotiated attachment-text equivalent only; no proprietary JetBrains engine or exhaustive compiler reference-binding certification."
+      ]
+    },
+    {
+      "name": "jet_brains_safe_delete",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/jetbrains_tools.py#L162",
+      "arguments": "relative_path: str, name_path: str | None=None, delete_even_if_used: bool=False, propagate: bool=False",
+      "facadeMethod": "jb.safe_delete",
+      "sessionOperation": null,
+      "status": "partial",
+      "behavior": "Nonempty symbol name_path retains source-bound independent deletion checks over captured candidates/unresolved usages and actual provider references before guarded plans. Forced symbol deletion reports remaining broken usages, with current language/provider limits. Omitted/null name_path selects a captured writable FILE only with explicit delete_even_if_used=true and absent/false propagate; exact-empty refuses. One source-bound deletion plan preserves callers/imports and original workspace. For this captured-file branch, no provider executes. usageCheck.performed=false, referencesRewritten=false, remainingUsagesMayBreak=true. Default-safe whole-file deletion, propagation and directories remain unsupported. Host permission, approval, verification and stale-source guards still govern apply.",
+      "boundaries": [
+        "Independent structural/standard LSP equivalent only; proprietary JetBrains engine is unavailable."
+      ]
+    },
+    {
+      "name": "jet_brains_inline_symbol",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/jetbrains_tools.py#L194",
+      "arguments": "name_path: str, relative_path: str, keep_definition: bool=False",
+      "facadeMethod": "jb.inline_symbol",
+      "sessionOperation": null,
+      "status": "partial",
+      "behavior": "Actual requested refactor.inline WorkspaceEdits, including negotiated lazy codeAction/resolve edits, prepare source-checked guarded plans. Auxiliary commands remain unexecuted; combined edit/command actions, keep_definition and unadvertised intent remain explicit gaps.",
+      "boundaries": [
+        "Independent structural/standard LSP equivalent only; proprietary JetBrains engine is unavailable."
+      ]
+    },
+    {
+      "name": "jet_brains_find_referencing_symbols",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/jetbrains_tools.py#L221",
+      "arguments": "name_path: str, relative_path: str, max_answer_chars: int=-1",
+      "facadeMethod": "jb.find_referencing_symbols",
+      "sessionOperation": "symbols.references",
+      "status": "partial",
+      "behavior": "Independent captured references/calls with source-bound caller symbols/evidence and serialized Unicode answer bounds; not proprietary IDE reference analysis.",
+      "boundaries": [
+        "Independent structural/standard LSP equivalent only; proprietary JetBrains engine is unavailable."
+      ]
+    },
+    {
+      "name": "jet_brains_get_symbols_overview",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/jetbrains_tools.py#L253",
+      "arguments": "relative_path: str, depth: int=-1, max_answer_chars: int=-1, include_file_documentation: bool=False",
+      "facadeMethod": "jb.get_symbols_overview",
+      "sessionOperation": "symbols.find",
+      "status": "partial",
+      "behavior": "Independent hierarchy overview with language-specific depth defaults, serialized Unicode answer bounds and exact leading grammar comments/Python module docstrings. Not proprietary IDE documentation inference.",
+      "boundaries": [
+        "Independent structural/standard LSP equivalent only; proprietary JetBrains engine is unavailable."
+      ]
+    },
+    {
+      "name": "jet_brains_type_hierarchy",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/jetbrains_tools.py#L286",
+      "arguments": "name_path: str, relative_path: str, hierarchy_type: Literal['super', 'sub', 'both']='both', depth: int | None=1, max_answer_chars: int=-1",
+      "facadeMethod": "jb.get_type_hierarchy",
+      "sessionOperation": null,
+      "status": "partial",
+      "behavior": "Standard registered LSP super/subtype traversal with opaque item preservation and bounded recursion; proprietary engine parity not certified.",
+      "boundaries": [
+        "Independent structural/standard LSP equivalent only; proprietary JetBrains engine is unavailable."
+      ]
+    },
+    {
+      "name": "jet_brains_find_declaration",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/jetbrains_tools.py#L315",
+      "arguments": "relative_path: str, regex: str, include_body: bool=False",
+      "facadeMethod": "jb.find_declaration",
+      "sessionOperation": null,
+      "status": "partial",
+      "behavior": "Independent CPython-regex plus host-selected standard LSP declaration equivalent, including uniquely mapped full captured bodies. No proprietary JetBrains engine is included; pure adapter explicitly requires the authorized worker.",
+      "boundaries": [
+        "Independent structural/standard LSP equivalent only; proprietary JetBrains engine is unavailable."
+      ]
+    },
+    {
+      "name": "jet_brains_find_implementations",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/jetbrains_tools.py#L337",
+      "arguments": "relative_path: str, name_path: str",
+      "facadeMethod": "jb.find_implementations",
+      "sessionOperation": null,
+      "status": "partial",
+      "behavior": "Independent host-selected LSP implementation query with source-bound implemented-symbol kind filters and optional pinned hover; no proprietary IDE engine claim.",
+      "boundaries": [
+        "Independent structural/standard LSP equivalent only; proprietary JetBrains engine is unavailable."
+      ]
+    },
+    {
+      "name": "jet_brains_rename",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/jetbrains_tools.py#L352",
+      "arguments": "relative_path: str, new_name: str, name_path: str | None=None, rename_in_comments: bool=False, rename_in_text_occurrences: bool=False",
+      "facadeMethod": "jb.rename",
+      "sessionOperation": "edit.prepare",
+      "status": "partial",
+      "behavior": "Nonempty symbol name_path retains source-bound rename through registered standard LSP and guarded plans, with current language/provider limits. Omitted/null name_path selects a captured writable FILE; exact-empty is refused. new_name is one canonical portable basename, retaining the parent and exactly the supplied extension. Absent/false occurrence flags accepted; true/null/nonboolean refused before provider dispatch. Existing willRenameFiles yields one guarded plan with source/snapshot/epoch checks. Directories, occupied/uncaptured destinations, aliases and unauthorized scopes refuse. Provider reference discovery/exclusions and proprietary IDE parity remain uncertified.",
+      "boundaries": [
+        "Independent structural/standard LSP equivalent only; proprietary JetBrains engine is unavailable."
+      ]
+    },
+    {
+      "name": "jet_brains_debug",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/jetbrains_tools.py#L381",
+      "arguments": "expression: str, repl_key: str='default'",
+      "facadeMethod": "jb.debug_eval",
+      "sessionOperation": null,
+      "status": "partial",
+      "behavior": "Independent persistent DAP evaluation requires separately host-authorized adapter, target and evaluation profiles, verified stopped frames and captured source hashes. Real isolated debugpy Windows launch/evaluation/disconnect gate passed; generic attach and all debug adapters are not certified.",
+      "boundaries": [
+        "Independent structural/standard LSP equivalent only; proprietary JetBrains engine is unavailable."
+      ]
+    },
+    {
+      "name": "jet_brains_run_inspections",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/jetbrains_tools.py#L406",
+      "arguments": "relative_path: str, min_severity: str | None=None, inspection_names: list[str] | None=None, start_line: int | None=None, end_line: int | None=None, max_answer_chars: int=-1",
+      "facadeMethod": "jb.run_inspections",
+      "sessionOperation": null,
+      "status": "partial",
+      "behavior": "Independent actual provider diagnostics with source-bound severity, code/name and line filters; explicitly not a proprietary inspection engine.",
+      "boundaries": [
+        "Independent structural/standard LSP equivalent only; proprietary JetBrains engine is unavailable."
+      ]
+    },
+    {
+      "name": "jet_brains_list_inspections",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/jetbrains_tools.py#L441",
+      "arguments": "language: str | None=None, group_path_contains: str | None=None, max_answer_chars: int=-1",
+      "facadeMethod": "jb.list_inspections",
+      "sessionOperation": null,
+      "status": "partial",
+      "behavior": "Independent declared standard LSP code-action kind registry with captured source/profile bindings and language/group filters; not an invented proprietary inspection catalog.",
+      "boundaries": [
+        "Independent structural/standard LSP equivalent only; proprietary JetBrains engine is unavailable."
+      ]
+    },
+    {
+      "name": "write_memory",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/memory_tools.py#L24",
+      "arguments": "memory_name: str, content: str, max_chars: int=-1",
+      "facadeMethod": "mem.write_memory",
+      "sessionOperation": "notes.write",
+      "status": "implemented_native",
+      "behavior": "Immutable named-note revisions, transactional heads/CAS guards, policy enforcement.",
+      "boundaries": [
+        "global/ prefix selects only host-registered global notes store.",
+        "Default and unqualified topic listings merge project and host-registered global notes with qualified names; registered backend failures propagate.",
+        "Cross-namespace rename unavailable; max_chars enforced before writes."
+      ]
+    },
+    {
+      "name": "read_memory",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/memory_tools.py#L45",
+      "arguments": "memory_name: str",
+      "facadeMethod": "mem.read_memory",
+      "sessionOperation": "notes.read",
+      "status": "implemented_native",
+      "behavior": "Immutable named-note revisions, transactional heads/CAS guards, policy enforcement.",
+      "boundaries": [
+        "global/ prefix selects only host-registered global notes store.",
+        "Default and unqualified topic listings merge project and host-registered global notes with qualified names; registered backend failures propagate.",
+        "Cross-namespace rename unavailable; max_chars enforced before writes."
+      ]
+    },
+    {
+      "name": "list_memories",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/memory_tools.py#L57",
+      "arguments": "topic: str=''",
+      "facadeMethod": "mem.list_memories",
+      "sessionOperation": "notes.list",
+      "status": "implemented_native",
+      "behavior": "Bounded deterministic merged project and host-registered global notes with qualified global/ names, exact scope/revision identities and topic filtering. Explicit global/ topic selects only that namespace; registered backend failures propagate rather than returning partial success.",
+      "boundaries": [
+        "global/ prefix selects only host-registered global notes store.",
+        "Default and unqualified topic listings merge project and host-registered global notes with qualified names; registered backend failures propagate.",
+        "Cross-namespace rename unavailable; max_chars enforced before writes."
+      ]
+    },
+    {
+      "name": "delete_memory",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/memory_tools.py#L69",
+      "arguments": "memory_name: str",
+      "facadeMethod": "mem.delete_memory",
+      "sessionOperation": "notes.delete",
+      "status": "implemented_native",
+      "behavior": "Immutable named-note revisions, transactional heads/CAS guards, policy enforcement.",
+      "boundaries": [
+        "global/ prefix selects only host-registered global notes store.",
+        "Default and unqualified topic listings merge project and host-registered global notes with qualified names; registered backend failures propagate.",
+        "Cross-namespace rename unavailable; max_chars enforced before writes."
+      ]
+    },
+    {
+      "name": "rename_memory",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/memory_tools.py#L81",
+      "arguments": "old_name: str, new_name: str",
+      "facadeMethod": "mem.rename_memory",
+      "sessionOperation": "notes.rename",
+      "status": "implemented_native",
+      "behavior": "Immutable named-note revisions, transactional heads/CAS guards, policy enforcement.",
+      "boundaries": [
+        "global/ prefix selects only host-registered global notes store.",
+        "Default and unqualified topic listings merge project and host-registered global notes with qualified names; registered backend failures propagate.",
+        "Cross-namespace rename unavailable; max_chars enforced before writes."
+      ]
+    },
+    {
+      "name": "edit_memory",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/memory_tools.py#L96",
+      "arguments": "memory_name: str, needle: str, repl: str, mode: Literal['literal', 'regex'], allow_multiple_occurrences: bool=False",
+      "facadeMethod": "mem.edit_memory",
+      "sessionOperation": "notes.edit",
+      "status": "implemented_native",
+      "behavior": "Immutable named-note revisions, transactional heads/CAS guards, policy enforcement.",
+      "boundaries": [
+        "global/ prefix selects only host-registered global notes store.",
+        "Default and unqualified topic listings merge project and host-registered global notes with qualified names; registered backend failures propagate.",
+        "Cross-namespace rename unavailable; max_chars enforced before writes."
+      ]
+    },
+    {
+      "name": "list_queryable_projects",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/query_project_tools.py#L10",
+      "arguments": "symbol_access: bool=True",
+      "facadeMethod": "ext.list_projects",
+      "sessionOperation": "listProjects",
+      "status": "partial",
+      "behavior": "Only explicitly host-registered projects are listed. Strict symbol_access booleans select native source-symbol-query API availability (all native registrations support this API); per-project metadata explicitly leaves semantic provider readiness unprobed. No extra project discovery, activation or execution authority.",
+      "boundaries": []
+    },
+    {
+      "name": "query_project",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/query_project_tools.py#L41",
+      "arguments": "project_name: str, tool_name: str, tool_params_json: str",
+      "facadeMethod": null,
+      "sessionOperation": "queryProject",
+      "status": "implemented_native",
+      "behavior": "Approved native source/status tools query a registered external project without active-project mutation.",
+      "boundaries": [
+        "External contexts are query-only."
+      ]
+    },
+    {
+      "name": "serena_repl",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/repl_tools.py#L12",
+      "arguments": "session_id: str, code: str",
+      "facadeMethod": null,
+      "sessionOperation": null,
+      "status": "implemented_native",
+      "behavior": "Persistent trusted Python cells compose declared facade methods and approved native session calls.",
+      "boundaries": [
+        "50-name inventory does not mean complete semantic implementation.",
+        "Trusted host execution; osSandbox=false."
+      ]
+    },
+    {
+      "name": "restart_language_server",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/symbol_tools.py#L35",
+      "arguments": "",
+      "facadeMethod": "lsp.restart_language_server",
+      "sessionOperation": null,
+      "status": "partial",
+      "behavior": "Genuine fresh provider initialization, negotiated health and owned shutdown. Operational generation advances only after all checks pass; immutable artifacts remain intact; reports request-scoped lifecycle and zero persistent processes restarted.",
+      "boundaries": []
+    },
+    {
+      "name": "get_symbols_overview",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/symbol_tools.py#L45",
+      "arguments": "relative_path: str, depth: int=-1, max_answer_chars: int=-1",
+      "facadeMethod": "lsp.get_symbols_overview",
+      "sessionOperation": "symbols.find",
+      "status": "partial",
+      "behavior": "Bounded structural hierarchy overview with Java/Kotlin default depth1 and other-language depth0; explicit depth filters descendants and serialized Unicode answer bounds are enforced.",
+      "boundaries": []
+    },
+    {
+      "name": "find_symbol",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/symbol_tools.py#L73",
+      "arguments": "name_path_pattern: str, depth: int=0, relative_path: str='', include_body: bool=False, include_info: bool=False, include_kinds: list[int]=[], exclude_kinds: list[int]=[], substring_matching: bool=False, max_matches: int=-1, max_answer_chars: int=-1",
+      "facadeMethod": "lsp.find_symbol",
+      "sessionOperation": "symbols.find",
+      "status": "partial",
+      "behavior": "Source-bound symbols with stable source-order overload[i] paths, relative/absolute path matching and last-component substring or component wildcard matching; permitted-root match thresholds precede descendant expansion. Full bodies suppress depth/hover, root-only hover and pinned pagination remain source-bound. JB dependency selection includes only explicit host-captured read-only scope, with false/omitted excluding it before thresholds; wildcard-only JB patterns require overview. Native result budgets remain explicit; no proprietary engine claim.",
+      "boundaries": []
+    },
+    {
+      "name": "find_referencing_symbols",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/symbol_tools.py#L158",
+      "arguments": "name_path: str, relative_path: str, include_kinds: list[int]=[], exclude_kinds: list[int]=[], max_answer_chars: int=-1",
+      "facadeMethod": "lsp.find_referencing_symbols",
+      "sessionOperation": "symbols.references",
+      "status": "partial",
+      "behavior": "Captured references/calls retain source evidence and containing caller symbols with snapshot/hash; numeric kind filters select the referencing container, not the referenced target.",
+      "boundaries": []
+    },
+    {
+      "name": "find_implementations",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/symbol_tools.py#L197",
+      "arguments": "name_path: str, relative_path: str, include_info: bool=False, include_kinds: list[int]=[], exclude_kinds: list[int]=[], max_answer_chars: int=-1",
+      "facadeMethod": "lsp.find_implementations",
+      "sessionOperation": null,
+      "status": "partial",
+      "behavior": "Actual host-selected implementation locations retain exact snapshot/hash/UTF8 proofs; standard numeric kind filters select the implemented source symbol and optional hover is pinned to that same implementation. Ambiguous or unclassified targets fail filtered requests explicitly.",
+      "boundaries": []
+    },
+    {
+      "name": "find_declaration",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/symbol_tools.py#L238",
+      "arguments": "relative_path: str, regex: str, containing_symbol_name_path: str | None=None, include_body: bool=False, include_info: bool=False",
+      "facadeMethod": "lsp.find_declaration",
+      "sessionOperation": null,
+      "status": "partial",
+      "behavior": "Authorized persistent worker uses exact CPython regex semantics and passes verified snapshot/hash/UTF8 positions to the selected LSP. Optional full bodies require unique canonical source-entity mapping; optional hover remains pinned. Pure adapter explicitly requires the worker.",
+      "boundaries": []
+    },
+    {
+      "name": "get_diagnostics_for_file",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/symbol_tools.py#L279",
+      "arguments": "relative_path: str, start_line: int=0, end_line: int=-1, min_severity: int=4, max_answer_chars: int=-1",
+      "facadeMethod": "lsp.get_diagnostics_for_file",
+      "sessionOperation": null,
+      "status": "partial",
+      "behavior": "Actual host-selected diagnostics are pinned to captured source and filtered by severity and zero-based inclusive line bounds; invalid ranges fail before provider queries.",
+      "boundaries": []
+    },
+    {
+      "name": "get_diagnostics_for_symbol",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/symbol_tools.py#L313",
+      "arguments": "name_path: str, reference_file: str='', check_symbol_references: bool=False, min_severity: int=4, max_answer_chars: int=-1",
+      "facadeMethod": "lsp.get_diagnostics_for_symbol",
+      "sessionOperation": null,
+      "status": "partial",
+      "behavior": "Actual source-pinned provider diagnostics include the selected symbol and optionally whole captured referencing symbols, as requested by the public contract. Container ranges/hashes/UTF8 and bounded source admission are verified; exhaustive compiler analysis is not claimed.",
+      "boundaries": []
+    },
+    {
+      "name": "replace_symbol_body",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/symbol_tools.py#L352",
+      "arguments": "name_path: str, relative_path: str, body: str",
+      "facadeMethod": "edit.replace_symbol_body",
+      "sessionOperation": "edit.prepare",
+      "status": "partial",
+      "behavior": "Prepares an immutable source-hash-guarded edit plan. Facade line indices are zero-based.",
+      "boundaries": [
+        "Original source remains unchanged until separate explicit native application.",
+        "Replacement regex uses Rust regex syntax; Python-only expressions fail explicitly.",
+        "External/read-only/query-only contexts cannot prepare edits."
+      ]
+    },
+    {
+      "name": "insert_after_symbol",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/symbol_tools.py#L380",
+      "arguments": "name_path: str, relative_path: str, body: str",
+      "facadeMethod": "edit.insert_after_symbol",
+      "sessionOperation": "edit.prepare",
+      "status": "partial",
+      "behavior": "Prepares an immutable source-hash-guarded edit plan. Facade line indices are zero-based.",
+      "boundaries": [
+        "Original source remains unchanged until separate explicit native application.",
+        "Replacement regex uses Rust regex syntax; Python-only expressions fail explicitly.",
+        "External/read-only/query-only contexts cannot prepare edits."
+      ]
+    },
+    {
+      "name": "insert_before_symbol",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/symbol_tools.py#L405",
+      "arguments": "name_path: str, relative_path: str, body: str",
+      "facadeMethod": "edit.insert_before_symbol",
+      "sessionOperation": "edit.prepare",
+      "status": "partial",
+      "behavior": "Prepares an immutable source-hash-guarded edit plan. Facade line indices are zero-based.",
+      "boundaries": [
+        "Original source remains unchanged until separate explicit native application.",
+        "Replacement regex uses Rust regex syntax; Python-only expressions fail explicitly.",
+        "External/read-only/query-only contexts cannot prepare edits."
+      ]
+    },
+    {
+      "name": "rename_symbol",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/symbol_tools.py#L430",
+      "arguments": "name_path: str, relative_path: str, new_name: str",
+      "facadeMethod": "lsp.rename_symbol",
+      "sessionOperation": "edit.prepare",
+      "status": "partial",
+      "behavior": "Registered provider semantic rename returns immutable source-guarded plans; originals unchanged until explicit native apply.",
+      "boundaries": []
+    },
+    {
+      "name": "safe_delete_symbol",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/symbol_tools.py#L455",
+      "arguments": "name_path_pattern: str, relative_path: str",
+      "facadeMethod": "lsp.safe_delete_symbol",
+      "sessionOperation": null,
+      "status": "partial",
+      "behavior": "Independent source-bound symbol deletion prepares a guarded plan only after captured and actual provider usage checks. Candidate/unresolved/foreign/stale/budget-exceeding sources fail.",
+      "boundaries": []
+    },
+    {
+      "name": "onboarding",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/workflow_tools.py#L10",
+      "arguments": "",
+      "facadeMethod": "mem.onboarding",
+      "sessionOperation": "onboarding",
+      "status": "implemented_native",
+      "behavior": "Native project onboarding state and source-bound metadata.",
+      "boundaries": []
+    },
+    {
+      "name": "initial_instructions",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/workflow_tools.py#L28",
+      "arguments": "",
+      "facadeMethod": null,
+      "sessionOperation": "initialInstructions",
+      "status": "implemented_native",
+      "behavior": "Native session context, modes, guarded workflow instructions.",
+      "boundaries": []
+    },
+    {
+      "name": "serena_info",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/workflow_tools.py#L43",
+      "arguments": "topic: str",
+      "facadeMethod": null,
+      "sessionOperation": "configuration",
+      "status": "partial",
+      "behavior": "Native runtime/session capability metadata; exact upstream info formatting not reproduced.",
+      "boundaries": []
+    }
+  ],
+  "facades": [
+    {
+      "method": "cfg.get_current_config",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/cfg_api.py#L21",
+      "status": "implemented_native",
+      "toolNames": [
+        "get_current_config"
+      ],
+      "boundary": null
+    },
+    {
+      "method": "cfg.open_dashboard",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/cfg_api.py#L30",
+      "status": "unavailable",
+      "toolNames": [
+        "open_dashboard"
+      ],
+      "boundary": null
+    },
+    {
+      "method": "edit.replace_content",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/edit_api.py#L88",
+      "status": "partial",
+      "toolNames": [
+        "replace_content"
+      ],
+      "boundary": null
+    },
+    {
+      "method": "edit.replace_in_files",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/edit_api.py#L126",
+      "status": "partial",
+      "toolNames": [
+        "replace_in_files"
+      ],
+      "boundary": null
+    },
+    {
+      "method": "edit.delete_lines",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/edit_api.py#L204",
+      "status": "partial",
+      "toolNames": [
+        "delete_lines"
+      ],
+      "boundary": null
+    },
+    {
+      "method": "edit.replace_lines",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/edit_api.py#L219",
+      "status": "partial",
+      "toolNames": [
+        "replace_lines"
+      ],
+      "boundary": null
+    },
+    {
+      "method": "edit.insert_at_line",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/edit_api.py#L236",
+      "status": "partial",
+      "toolNames": [
+        "insert_at_line"
+      ],
+      "boundary": null
+    },
+    {
+      "method": "edit.replace_symbol_body",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/edit_api.py#L259",
+      "status": "partial",
+      "toolNames": [
+        "replace_symbol_body"
+      ],
+      "boundary": null
+    },
+    {
+      "method": "edit.insert_after_symbol",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/edit_api.py#L278",
+      "status": "partial",
+      "toolNames": [
+        "insert_after_symbol"
+      ],
+      "boundary": null
+    },
+    {
+      "method": "edit.insert_before_symbol",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/edit_api.py#L294",
+      "status": "partial",
+      "toolNames": [
+        "insert_before_symbol"
+      ],
+      "boundary": null
+    },
+    {
+      "method": "ext.list_projects",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/ext_api.py#L65",
+      "status": "partial",
+      "toolNames": [
+        "list_queryable_projects"
+      ],
+      "boundary": null,
+      "behavior": "Only explicitly host-registered projects are listed. Strict symbol_access booleans select native source-symbol-query API availability (all native registrations support this API); per-project metadata explicitly leaves semantic provider readiness unprobed. No extra project discovery, activation or execution authority."
+    },
+    {
+      "method": "ext.read_project_context",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/ext_api.py#L84",
+      "status": "partial",
+      "toolNames": [],
+      "boundary": "Native external project status; upstream prose context formatting remains partial."
+    },
+    {
+      "method": "ext.project_context",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/ext_api.py#L101",
+      "status": "implemented_native",
+      "toolNames": [],
+      "boundary": "Python context manager constructs query-only external facade; pure Rust adapter requires worker."
+    },
+    {
+      "method": "fs.read_file",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/fs_api.py#L181",
+      "status": "partial",
+      "toolNames": [
+        "read_file"
+      ],
+      "boundary": null
+    },
+    {
+      "method": "fs.create_text_file",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/fs_api.py#L202",
+      "status": "partial",
+      "toolNames": [
+        "create_text_file"
+      ],
+      "boundary": null
+    },
+    {
+      "method": "fs.list_dir",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/fs_api.py#L228",
+      "status": "partial",
+      "toolNames": [
+        "list_dir"
+      ],
+      "boundary": null
+    },
+    {
+      "method": "fs.find_file",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/fs_api.py#L248",
+      "status": "partial",
+      "toolNames": [
+        "find_file"
+      ],
+      "boundary": null
+    },
+    {
+      "method": "fs.search_for_pattern",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/fs_api.py#L269",
+      "status": "partial",
+      "toolNames": [
+        "search_for_pattern"
+      ],
+      "boundary": null,
+      "behavior": "Captured-source regex search retains exact hashes/UTF8 occurrence/context, multiline/glob filters and native result budgets. Code-only selection uses proven captured language metadata and host overrides before source reads/matching/pagination, excluding text/config/markdown, without expanding capture or claiming provider certification. Reading uncaptured ignored files remains a separate host-scope acceptance gap."
+    },
+    {
+      "method": "jb.find_symbol",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/jb_api.py#L201",
+      "status": "partial",
+      "toolNames": [
+        "jet_brains_find_symbol"
+      ],
+      "boundary": null,
+      "behavior": "Source-bound symbols with stable source-order overload[i] paths, relative/absolute path matching and last-component substring or component wildcard matching; permitted-root match thresholds precede descendant expansion. Full bodies suppress depth/hover, root-only hover and pinned pagination remain source-bound. JB dependency selection includes only explicit host-captured read-only scope, with false/omitted excluding it before thresholds; wildcard-only JB patterns require overview. Native result budgets remain explicit; no proprietary engine claim."
+    },
+    {
+      "method": "jb.find_referencing_symbols",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/jb_api.py#L285",
+      "status": "partial",
+      "toolNames": [
+        "jet_brains_find_referencing_symbols"
+      ],
+      "boundary": null,
+      "behavior": "Independent captured references/calls with source-bound caller symbols/evidence and serialized Unicode answer bounds; not proprietary IDE reference analysis."
+    },
+    {
+      "method": "jb.get_symbols_overview",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/jb_api.py#L317",
+      "status": "partial",
+      "toolNames": [
+        "jet_brains_get_symbols_overview"
+      ],
+      "boundary": null,
+      "behavior": "Independent hierarchy overview with language-specific depth defaults, serialized Unicode answer bounds and exact leading grammar comments/Python module docstrings. Not proprietary IDE documentation inference."
+    },
+    {
+      "method": "jb.get_type_hierarchy",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/jb_api.py#L363",
+      "status": "partial",
+      "toolNames": [
+        "jet_brains_type_hierarchy"
+      ],
+      "boundary": null
+    },
+    {
+      "method": "jb.find_declaration",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/jb_api.py#L400",
+      "status": "partial",
+      "toolNames": [
+        "jet_brains_find_declaration"
+      ],
+      "boundary": null,
+      "behavior": "Independent CPython-regex plus host-selected standard LSP declaration equivalent, including uniquely mapped full captured bodies. No proprietary JetBrains engine is included; pure adapter explicitly requires the authorized worker."
+    },
+    {
+      "method": "jb.find_implementations",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/jb_api.py#L423",
+      "status": "partial",
+      "toolNames": [
+        "jet_brains_find_implementations"
+      ],
+      "boundary": null,
+      "behavior": "Independent host-selected LSP implementation query with source-bound implemented-symbol kind filters and optional pinned hover; no proprietary IDE engine claim."
+    },
+    {
+      "method": "jb.rename",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/jb_api.py#L438",
+      "status": "partial",
+      "toolNames": [
+        "jet_brains_rename"
+      ],
+      "boundary": null,
+      "behavior": "Nonempty symbol name_path retains source-bound rename through registered standard LSP and guarded plans, with current language/provider limits. Omitted/null name_path selects a captured writable FILE; exact-empty is refused. new_name is one canonical portable basename, retaining the parent and exactly the supplied extension. Absent/false occurrence flags accepted; true/null/nonboolean refused before provider dispatch. Existing willRenameFiles yields one guarded plan with source/snapshot/epoch checks. Directories, occupied/uncaptured destinations, aliases and unauthorized scopes refuse. Provider reference discovery/exclusions and proprietary IDE parity remain uncertified."
+    },
+    {
+      "method": "jb.move",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/jb_api.py#L470",
+      "status": "partial",
+      "toolNames": [
+        "jet_brains_move"
+      ],
+      "boundary": null,
+      "behavior": "Captured-file moves treat target_relative_path as an explicit existing parent and preserve the original basename; omitted/null/exact-empty name selectors are supported. The facade checks scope, real host collisions and permissions before willRenameFiles; one source-checked plan includes provider pre-rename edits. Direct native move still accepts a final filename. Explicit host refactorIntentProfile:\"own_v1\" plus the registered versioned capability/private intent protocol admits one captured writable Rust function, struct, enum, trait, type alias or constant directly under a file or inline module. The destination is an existing captured writable Rust file, at fileTopLevel for absent/null parent or at one actual inline-module parentSymbol. Original-coordinate exact declaration deletion, unchanged insertion at an admitted complete-item boundary, attachment/owner/trivia preservation and scoped provider reference-edit effects are independently checked. Successful plans remain complete:false, commandsExecuted:false and referenceCompleteness:exact_declaration_and_ast_placement_only_not_exhaustive_compiler_reference_binding. Attached outer attributes/docstrings additionally require negotiated sourceAttachments:\"exact_text_v1\" and the separately checked sourceTextRange bundle, preserving original entity/name anchors. Other declaration kinds/languages, malformed or dangling syntax, impl/trait/descendant destinations, body-changing/wrapper/copy-only/resource/virtual-coordinate edits and ambiguous effects refuse. No exhaustive compiler reference binding/repair, proprietary IDE acceptance, directory-tree move or atomic multi-plan publication follows. Existing captured-file omitted/null/exact-empty parent/basename semantics and direct-native final-filename semantics remain distinct and unchanged."
+    },
+    {
+      "method": "jb.safe_delete",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/jb_api.py#L512",
+      "status": "partial",
+      "toolNames": [
+        "jet_brains_safe_delete"
+      ],
+      "boundary": null,
+      "behavior": "Nonempty symbol name_path retains source-bound independent deletion checks over captured candidates/unresolved usages and actual provider references before guarded plans. Forced symbol deletion reports remaining broken usages, with current language/provider limits. Omitted/null name_path selects a captured writable FILE only with explicit delete_even_if_used=true and absent/false propagate; exact-empty refuses. One source-bound deletion plan preserves callers/imports and original workspace. For this captured-file branch, no provider executes. usageCheck.performed=false, referencesRewritten=false, remainingUsagesMayBreak=true. Default-safe whole-file deletion, propagation and directories remain unsupported. Host permission, approval, verification and stale-source guards still govern apply."
+    },
+    {
+      "method": "jb.inline_symbol",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/jb_api.py#L540",
+      "status": "partial",
+      "toolNames": [
+        "jet_brains_inline_symbol"
+      ],
+      "boundary": null,
+      "behavior": "Actual requested refactor.inline WorkspaceEdits, including negotiated lazy codeAction/resolve edits, prepare source-checked guarded plans. Auxiliary commands remain unexecuted; combined edit/command actions, keep_definition and unadvertised intent remain explicit gaps."
+    },
+    {
+      "method": "jb.run_inspections",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/jb_api.py#L561",
+      "status": "partial",
+      "toolNames": [
+        "jet_brains_run_inspections"
+      ],
+      "boundary": null,
+      "behavior": "Independent actual provider diagnostics with source-bound severity, code/name and line filters; explicitly not a proprietary inspection engine."
+    },
+    {
+      "method": "jb.list_inspections",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/jb_api.py#L596",
+      "status": "partial",
+      "toolNames": [
+        "jet_brains_list_inspections"
+      ],
+      "boundary": null,
+      "behavior": "Independent declared standard LSP code-action kind registry with captured source/profile bindings and language/group filters; not an invented proprietary inspection catalog."
+    },
+    {
+      "method": "jb.debug_eval_info",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/jb_api.py#L616",
+      "status": "implemented_native",
+      "toolNames": [],
+      "boundary": "Proprietary debugger evaluation metadata unavailable.",
+      "behavior": "Independent DAP profile/runtime status does not launch processes or expose host command/configuration/environment secrets."
+    },
+    {
+      "method": "jb.debug_eval",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/jb_api.py#L625",
+      "status": "partial",
+      "toolNames": [
+        "jet_brains_debug"
+      ],
+      "boundary": null,
+      "behavior": "Independent persistent DAP evaluation requires separately host-authorized adapter, target and evaluation profiles, verified stopped frames and captured source hashes. Real isolated debugpy Windows launch/evaluation/disconnect gate passed; generic attach and all debug adapters are not certified."
+    },
+    {
+      "method": "lsp.restart_language_server",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/lsp_api.py#L382",
+      "status": "partial",
+      "toolNames": [
+        "restart_language_server"
+      ],
+      "boundary": null,
+      "behavior": "Genuine fresh provider initialization, negotiated health and owned shutdown. Operational generation advances only after all checks pass; immutable artifacts remain intact; reports request-scoped lifecycle and zero persistent processes restarted."
+    },
+    {
+      "method": "lsp.get_symbols_overview",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/lsp_api.py#L396",
+      "status": "partial",
+      "toolNames": [
+        "get_symbols_overview"
+      ],
+      "boundary": null,
+      "behavior": "Bounded structural hierarchy overview with Java/Kotlin default depth1 and other-language depth0; explicit depth filters descendants and serialized Unicode answer bounds are enforced."
+    },
+    {
+      "method": "lsp.find_symbol",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/lsp_api.py#L440",
+      "status": "partial",
+      "toolNames": [
+        "find_symbol"
+      ],
+      "boundary": null,
+      "behavior": "Source-bound symbols with stable source-order overload[i] paths, relative/absolute path matching and last-component substring or component wildcard matching; permitted-root match thresholds precede descendant expansion. Full bodies suppress depth/hover, root-only hover and pinned pagination remain source-bound. JB dependency selection includes only explicit host-captured read-only scope, with false/omitted excluding it before thresholds; wildcard-only JB patterns require overview. Native result budgets remain explicit; no proprietary engine claim."
+    },
+    {
+      "method": "lsp.find_referencing_symbols",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/lsp_api.py#L531",
+      "status": "partial",
+      "toolNames": [
+        "find_referencing_symbols"
+      ],
+      "boundary": null,
+      "behavior": "Captured references/calls retain source evidence and containing caller symbols with snapshot/hash; numeric kind filters select the referencing container, not the referenced target."
+    },
+    {
+      "method": "lsp.find_implementations",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/lsp_api.py#L567",
+      "status": "partial",
+      "toolNames": [
+        "find_implementations"
+      ],
+      "boundary": null,
+      "behavior": "Actual host-selected implementation locations retain exact snapshot/hash/UTF8 proofs; standard numeric kind filters select the implemented source symbol and optional hover is pinned to that same implementation. Ambiguous or unclassified targets fail filtered requests explicitly."
+    },
+    {
+      "method": "lsp.find_declaration",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/lsp_api.py#L603",
+      "status": "partial",
+      "toolNames": [
+        "find_declaration"
+      ],
+      "boundary": null,
+      "behavior": "Authorized persistent worker uses exact CPython regex semantics and passes verified snapshot/hash/UTF8 positions to the selected LSP. Optional full bodies require unique canonical source-entity mapping; optional hover remains pinned. Pure adapter explicitly requires the worker."
+    },
+    {
+      "method": "lsp.get_diagnostics_for_file",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/lsp_api.py#L659",
+      "status": "partial",
+      "toolNames": [
+        "get_diagnostics_for_file"
+      ],
+      "boundary": null,
+      "behavior": "Actual host-selected diagnostics are pinned to captured source and filtered by severity and zero-based inclusive line bounds; invalid ranges fail before provider queries."
+    },
+    {
+      "method": "lsp.get_diagnostics_for_symbol",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/lsp_api.py#L694",
+      "status": "partial",
+      "toolNames": [
+        "get_diagnostics_for_symbol"
+      ],
+      "boundary": null,
+      "behavior": "Actual source-pinned provider diagnostics include the selected symbol and optionally whole captured referencing symbols, as requested by the public contract. Container ranges/hashes/UTF8 and bounded source admission are verified; exhaustive compiler analysis is not claimed."
+    },
+    {
+      "method": "lsp.rename_symbol",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/lsp_api.py#L738",
+      "status": "partial",
+      "toolNames": [
+        "rename_symbol"
+      ],
+      "boundary": null
+    },
+    {
+      "method": "lsp.safe_delete_symbol",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/lsp_api.py#L754",
+      "status": "partial",
+      "toolNames": [
+        "safe_delete_symbol"
+      ],
+      "boundary": null,
+      "behavior": "Independent source-bound symbol deletion prepares a guarded plan only after captured and actual provider usage checks. Candidate/unresolved/foreign/stale/budget-exceeding sources fail."
+    },
+    {
+      "method": "mem.list_memories",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/mem_api.py#L69",
+      "status": "implemented_native",
+      "toolNames": [
+        "list_memories"
+      ],
+      "boundary": null,
+      "behavior": "Bounded deterministic merged project and host-registered global notes with qualified global/ names, exact scope/revision identities and topic filtering. Explicit global/ topic selects only that namespace; registered backend failures propagate rather than returning partial success."
+    },
+    {
+      "method": "mem.read_memory",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/mem_api.py#L79",
+      "status": "implemented_native",
+      "toolNames": [
+        "read_memory"
+      ],
+      "boundary": null
+    },
+    {
+      "method": "mem.write_memory",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/mem_api.py#L89",
+      "status": "implemented_native",
+      "toolNames": [
+        "write_memory"
+      ],
+      "boundary": null
+    },
+    {
+      "method": "mem.edit_memory",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/mem_api.py#L112",
+      "status": "implemented_native",
+      "toolNames": [
+        "edit_memory"
+      ],
+      "boundary": null
+    },
+    {
+      "method": "mem.rename_memory",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/mem_api.py#L139",
+      "status": "implemented_native",
+      "toolNames": [
+        "rename_memory"
+      ],
+      "boundary": null
+    },
+    {
+      "method": "mem.delete_memory",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/mem_api.py#L158",
+      "status": "implemented_native",
+      "toolNames": [
+        "delete_memory"
+      ],
+      "boundary": null
+    },
+    {
+      "method": "mem.onboarding",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/mem_api.py#L168",
+      "status": "implemented_native",
+      "toolNames": [
+        "onboarding"
+      ],
+      "boundary": null
+    },
+    {
+      "method": "shell.execute_shell_command",
+      "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/shell_api.py#L59",
+      "status": "partial",
+      "toolNames": [
+        "execute_shell_command"
+      ],
+      "boundary": null
+    }
+  ]
+}

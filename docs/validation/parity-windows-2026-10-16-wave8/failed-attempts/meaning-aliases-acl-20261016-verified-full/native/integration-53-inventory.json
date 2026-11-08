@@ -1,0 +1,31 @@
+{
+  "host_credentials": {
+    "executable": "E:\\Yoke-Build-Cache\\meaning-aliases-20261016\\debug\\deps\\host_credentials-d3ecb384a1a8a4e4.exe",
+    "ignored": [
+      "actual_github_credential_round_trip_is_create_only_and_keeps_secrets_out_of_metadata",
+      "actual_tls_and_service_token_never_export_private_material_or_overwrite_entries"
+    ],
+    "registered": [
+      "actual_github_credential_round_trip_is_create_only_and_keeps_secrets_out_of_metadata",
+      "actual_tls_and_service_token_never_export_private_material_or_overwrite_entries",
+      "github_token_admission_rejects_invalid_bytes_without_exposing_them",
+      "host_credential_names_cannot_access_unrelated_accounts",
+      "model_token_admission_rejects_header_injection_and_oversize_without_exposure"
+    ]
+  },
+  "host_install": {
+    "executable": "E:\\Yoke-Build-Cache\\meaning-aliases-20261016\\debug\\deps\\host_install-ecb3efabd0fd83d7.exe",
+    "ignored": [],
+    "registered": [
+      "dry_run_is_deterministic_and_creates_no_source_engine_or_host_state",
+      "every_target_and_host_binding_is_checked_before_first_write",
+      "install_and_uninstall_preserve_human_bom_crlf_and_original_empty_presence",
+      "internal_volume_guid_binding_launches_the_real_binary_and_is_not_a_user_path_grant",
+      "private_state_never_contains_unrelated_human_config_or_policy_contents",
+      "receipt_ownership_is_required_and_serialized_plans_cannot_widen_paths",
+      "state_and_target_aliases_bounds_invalid_utf8_and_deadlines_fail_closed",
+      "uninstall_preserves_foreign_appends_and_refuses_changes_inside_owned_block",
+      "windows_existing_writer_and_hardlink_alias_are_refused_before_other_targets_change"
+    ]
+  }
+}

@@ -1,0 +1,11 @@
+   Compiling serde_json v1.0.154
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 39s
+     Running tests\json_float_roundtrip.rs (target\debug\deps\json_float_roundtrip-c412d8e09b187995.exe)
+
+running 2 tests
+test exact_float_parsing_keeps_unique_keys_finite_values_and_protocol_budgets ... ok
+test persisted_finite_float_values_roundtrip_exact_bits_and_canonical_bytes ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+

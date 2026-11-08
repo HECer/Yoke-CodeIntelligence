@@ -1,0 +1,19 @@
+    Finished `test` profile [unoptimized] target(s) in 0.91s
+     Running unittests src\lib.rs (target\debug\deps\yoke-35b101204e4eb110.exe)
+
+running 1 test
+host-output-capacity prefix_ms=776
+host-output-capacity remaining_prepare_ms=7989
+host-output-capacity profile={"elapsedMicros":30014966,"inclusiveSpans":[{"calls":49,"inclusiveMicros":17289590,"maxMicros":532283,"phase":"load"},{"calls":49,"inclusiveMicros":5301313,"maxMicros":157316,"phase":"loadNames"},{"calls":5479,"inclusiveMicros":7413600,"maxMicros":5107,"phase":"eventRead"},{"calls":49,"inclusiveMicros":1121004,"maxMicros":28633,"phase":"planRead"},{"calls":5478,"inclusiveMicros":1768225,"maxMicros":18329,"phase":"eventValidate"},{"calls":48,"inclusiveMicros":121420,"maxMicros":6246,"phase":"chain"},{"calls":48,"inclusiveMicros":29271854,"maxMicros":882950,"phase":"append"},{"calls":0,"inclusiveMicros":0,"maxMicros":0,"phase":"prepare"},{"calls":5689,"inclusiveMicros":9429631,"maxMicros":20707,"phase":"metadata"},{"calls":103,"inclusiveMicros":10847459,"maxMicros":170330,"phase":"names"},{"calls":50,"inclusiveMicros":10414138,"maxMicros":303996,"phase":"reserve"},{"calls":48,"inclusiveMicros":10805264,"maxMicros":313456,"phase":"immutable"},{"calls":128,"inclusiveMicros":15193,"maxMicros":425,"phase":"sourceSecurity"},{"calls":0,"inclusiveMicros":0,"maxMicros":0,"phase":"freshSecurity"}]}
+host-output-capacity recover_ms=30015 success=false
+Error: Host installation recovery required; journal 434299b6045b11b706aa8ac678eff4c098ceabe38499f7b7e4a37f4fa1aa99c2. Request deadline exceeded. Matching originals and foreign files are preserved
+test host_install::output_recovery_tests::sixteen_root_v2_history_reserves_only_remaining_output_work ... FAILED
+
+failures:
+
+failures:
+    host_install::output_recovery_tests::sixteen_root_v2_history_reserves_only_remaining_output_work
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 163 filtered out; finished in 38.87s
+
+error: test failed, to rerun pass `--lib`

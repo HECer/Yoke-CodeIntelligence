@@ -1,0 +1,268 @@
+{
+  "accepted": true,
+  "actualGroups": {
+    "collection_registry_access": {
+      "executable": "target\\debug\\deps\\collection_registry_access-95b2fe4353a0916e.exe",
+      "failed": 0,
+      "filtered": 0,
+      "ignored": 0,
+      "measured": 0,
+      "passed": 7,
+      "rows": {
+        "foreign_metadata_requires_fresh_current_grants_for_each_inspection": "ok",
+        "native_and_checked_view_metadata_keep_distinct_kinds_and_reject_unsafe_legacy_presentation": "ok",
+        "read_only_native_archive_survives_original_source_deletion_without_writes": "ok",
+        "readonly_guard_excludes_independent_writers_and_refuses_uncheckpointed_wal": "ok",
+        "readonly_uri_preserves_unicode_spaces_and_literal_uri_characters": "ok",
+        "stale_and_absent_cas_never_replace_existing_binding": "ok",
+        "unknown_registry_open_does_not_create_state": "ok"
+      }
+    },
+    "graph_view": {
+      "executable": "target\\debug\\deps\\graph_view-97c800a70b6f82cc.exe",
+      "failed": 0,
+      "filtered": 0,
+      "ignored": 0,
+      "measured": 0,
+      "passed": 11,
+      "rows": {
+        "captured_readonly_dependency_proof_allows_view_and_collection_reads": "ok",
+        "context_omits_environment_values_and_clips_unicode_at_byte_budget": "ok",
+        "default_view_exposes_structural_relationships_without_replacing_canonical_graph": "ok",
+        "newly_derived_view_omits_legacy_config_file_signature_values_without_rewriting_history": "ok",
+        "registered_view_rejects_corrupt_cas_and_foreign_overlay_scope": "ok",
+        "selected_overlay_inputs_have_an_aggregate_byte_budget": "ok",
+        "selected_structural_artifacts_reject_forged_node_scope_lines_and_schema": "ok",
+        "semantic_and_structural_overlays_have_distinct_namespaces_and_provider_trust": "ok",
+        "source_bound_view_exports_all_seven_formats": "ok",
+        "source_view_remains_historical_and_rejects_forged_scope_options_and_deadlines": "ok",
+        "view_find_trace_context_and_export_preserve_source_and_parallel_calls": "ok"
+      }
+    },
+    "meaning_view_archives": {
+      "executable": "target\\debug\\deps\\meaning_view_archives-51ea5f08bcf57128.exe",
+      "failed": 0,
+      "filtered": 0,
+      "ignored": 0,
+      "measured": 0,
+      "passed": 9,
+      "rows": {
+        "archive_replay_rejects_publicly_resealed_source_view_and_meaning_changes": "ok",
+        "complete_wire_and_distinct_source_limits_are_admitted_without_store_side_effects": "ok",
+        "missing_historical_uncited_file_and_wrong_same_path_bytes_are_not_repaired_from_live_state": "ok",
+        "portable_archive_replays_both_epochs_without_a_store_live_tree_or_worker": "ok",
+        "portable_bridge_requires_complete_raw_closure_and_rejects_foreign_or_unpaired_sidecars": "ok",
+        "portable_transport_keeps_task_totals_current_attempt_usage_and_original_unknown_response_distinct": "ok",
+        "portable_wire_rejects_unknown_nested_properties_duplicate_keys_and_unknown_profiles": "ok",
+        "published_id_preparation_returns_exact_checked_transport_without_load_or_publication": "ok",
+        "replay_preserves_typed_claim_ids_ordered_roles_exact_quotes_and_unknown_receipts": "ok"
+      }
+    },
+    "protocol_connection": {
+      "executable": "target\\debug\\deps\\protocol_connection-6f45346f06f41a07.exe",
+      "failed": 0,
+      "filtered": 0,
+      "ignored": 0,
+      "measured": 0,
+      "passed": 5,
+      "rows": {
+        "host_selected_profiles_keep_their_public_surface_across_messages": "ok",
+        "incomplete_stdio_frames_are_rejected_before_dispatch_or_publication": "ok",
+        "legal_request_ids_and_escaped_source_fit_the_complete_response_envelope": "ok",
+        "owned_transport_state_retains_initialization_and_refuses_profile_switches": "ok",
+        "separate_transport_messages_preserve_initialization_and_profile_state": "ok"
+      }
+    },
+    "registry_replay_review": {
+      "executable": "target\\debug\\deps\\registry_replay_review-8390e9e4e28b3782.exe",
+      "failed": 0,
+      "filtered": 0,
+      "ignored": 0,
+      "measured": 0,
+      "passed": 8,
+      "rows": {
+        "historical4_keeps_its_identity_and_reports_unreplayed_claims": "ok",
+        "native8_relabel_is_rejected_after_origin_deleted": "ok",
+        "native8_retarget_is_rejected_after_origin_deleted": "ok",
+        "native9_archive_selects_proven_epoch_without_global_activation": "ok",
+        "producer_labels_cannot_change_a_proven_capture_epoch": "ok",
+        "unchanged_native8_and_view8_remain_standalone": "ok",
+        "view8_relabel_is_rejected_after_origin_deleted": "ok",
+        "view8_retarget_is_rejected_after_origin_deleted": "ok"
+      }
+    },
+    "selected_view_analysis": {
+      "executable": "target\\debug\\deps\\selected_view_analysis-4bdd1f0c8eb0e5b6.exe",
+      "failed": 0,
+      "filtered": 0,
+      "ignored": 0,
+      "measured": 0,
+      "passed": 11,
+      "rows": {
+        "canonical_report_bytes_and_registration_match_frozen_golden": "ok",
+        "existing_graphify_community_tools_assign_default_view_overlay_nodes": "ok",
+        "existing_graphify_hubs_include_parallel_citations_and_count_self_loops_twice": "ok",
+        "existing_graphify_hubs_preserve_file_level_manifest_source_precision": "ok",
+        "explicit_selected_analysis_and_resources_replay_historic_views_and_reject_unsupported_scope": "ok",
+        "selected_report_keeps_multiple_source_bindings_without_choosing_a_fabricated_exact_anchor": "ok",
+        "selected_report_preparation_validation_and_admission_have_no_publication_side_effects": "ok",
+        "selected_report_preserves_provider_claims_and_every_original_anchor_family": "ok",
+        "selected_report_publication_rechecks_cas_after_preparation": "ok",
+        "selected_report_resource_admission_precedes_publication_of_a_large_formatted_body": "ok",
+        "selected_report_retention_replays_exact_bytes_and_rejects_scope_and_cas_tampering": "ok"
+      }
+    }
+  },
+  "artifactProvenanceInferredFromDepMetadata": false,
+  "artifactSha256": {
+    "cleaned-before.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "h18-00-cleaned.json": "ae0557a00bda3ea93dfdad3d8b9a9137bc2294b877c2e60e3b28b616f43e7700",
+    "h18-00.log": "4c7339fe4c0ac4dd908b475845ef2a6cebf14ca3a415bd8334211214e012df8d",
+    "h18-01-cleaned.json": "a97a6519c3f21fdca61989d6f33689b598b974f28f7d188c812c920432be3b1d",
+    "h18-01.log": "db14b183af2d799c82f9fb3102073f71d25fdb8d99bebd58be0ff5faf1fb2a0b",
+    "h18-02-cleaned.json": "b57f36223408a1f682f62ef09957c3738d9942e976a773593cf780e56cebf32c",
+    "h18-02.log": "2feab0c2f32293a64a0a47399d2e0850c883b998f38270246b2ade924d0b674e",
+    "source-after.json": "11f688628aa77bf3f50c440cd954aa49e0588800aeabb838bc17d09efe9ef30f",
+    "source-before.json": "11f688628aa77bf3f50c440cd954aa49e0588800aeabb838bc17d09efe9ef30f"
+  },
+  "cacheOriginQuarantineInvokedByWrapper": false,
+  "checkedAtUtc": "2026-10-16T13:12:52.658210+00:00",
+  "commonHelperSha256": "035eb4e6f0a513b5c6bc271803640678feca1c73b8015167ad7602de9b013751",
+  "exitCode": 0,
+  "expectedGroups": 6,
+  "expectedPassed": 51,
+  "failed": 0,
+  "frozenRunnerSha256": "b51bbffbddd07be0aa6ef019fc950d772c628d77b3567f646d7a837726aa3d15",
+  "groups": 6,
+  "ignored": 0,
+  "imageGateOriginsReviewed": [
+    {
+      "name": "R3-public35",
+      "receiptSha256": "cece652d2ac3ff49e8c3089ef9a5bab7b1a91531920eb7fee7d11d879bc65c5c",
+      "role": "R3"
+    },
+    {
+      "name": "R3-private21",
+      "receiptSha256": "877442e99e391a16d6154ce134fa7cbb97ddf89a10c7269999bfcfc08f71fa1c",
+      "role": "R3"
+    },
+    {
+      "name": "R5-public49-library-role",
+      "receiptSha256": "3db419a69e82fec428c68ee2ecce87d7908a574c95bce837c041464eab592734",
+      "role": "R5-library"
+    },
+    {
+      "name": "R5-public49-CLI-role",
+      "receiptSha256": "3db419a69e82fec428c68ee2ecce87d7908a574c95bce837c041464eab592734",
+      "role": "R5-CLI"
+    },
+    {
+      "name": "R5-private4",
+      "receiptSha256": "ac8ab17593fe04ef577376f57c2b084dc58ca484a8d53ec65dfaef8793e38e9e",
+      "role": "R5-library"
+    },
+    {
+      "name": "R5-legacy-MeaningArchive-CLI10",
+      "receiptSha256": "9eb1a60010d3ff7b55cf584cb61c41c6a49c7ed47f214bb083c5a501b22816c8",
+      "role": "R5-CLI"
+    }
+  ],
+  "interpretation": "All six original targets and all 51 names must freshly pass. Three sequential two-target commands retain the original parameters and use only frozen-runner exact-leaf cleanup; no inherited or full-acceptance credit.",
+  "normalCacheOriginReceiptSha256": "63af1804a375766d48d445685fc29ed7dfe3add0854cbe5a58b5a35740d65496",
+  "normalLibSha256": "b44900a1eebc861109252301092696257c0c174dd8f4bbce96ffd467a3ec8c16",
+  "normalMainSha256": "c114e0f1f8509f970d22a167259498f8798f32a43113ed61792844f6c488af43",
+  "origin": "fresh_execution",
+  "passed": 51,
+  "promotionManifestSha256": "4ede4e32b6671a4af17d65ea4edb9c733b2d1b16e25a80c923a519750b81bcdd",
+  "promotionReceiptSha256": "efb050a3cd75fbbe291ed4d387652b72d3f5d894b461ce08b3c623ac46d98104",
+  "results": [
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--no-fail-fast",
+        "--test",
+        "selected_view_analysis",
+        "--test",
+        "protocol_connection",
+        "--",
+        "--test-threads=4"
+      ],
+      "exitCode": 0,
+      "label": "h18-00",
+      "origin": "fresh_execution",
+      "rawSha256": "4c7339fe4c0ac4dd908b475845ef2a6cebf14ca3a415bd8334211214e012df8d",
+      "targets": [
+        "selected_view_analysis",
+        "protocol_connection"
+      ]
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--no-fail-fast",
+        "--test",
+        "meaning_view_archives",
+        "--test",
+        "registry_replay_review",
+        "--",
+        "--test-threads=4"
+      ],
+      "exitCode": 0,
+      "label": "h18-01",
+      "origin": "fresh_execution",
+      "rawSha256": "db14b183af2d799c82f9fb3102073f71d25fdb8d99bebd58be0ff5faf1fb2a0b",
+      "targets": [
+        "meaning_view_archives",
+        "registry_replay_review"
+      ]
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--no-fail-fast",
+        "--test",
+        "collection_registry_access",
+        "--test",
+        "graph_view",
+        "--",
+        "--test-threads=4"
+      ],
+      "exitCode": 0,
+      "label": "h18-02",
+      "origin": "fresh_execution",
+      "rawSha256": "2feab0c2f32293a64a0a47399d2e0850c883b998f38270246b2ade924d0b674e",
+      "targets": [
+        "collection_registry_access",
+        "graph_view"
+      ]
+    }
+  ],
+  "reviewedContextPath": "target/parity-validation-20261015/next-git-impact-details/revisions/combined-context-prep-v1/actual-contexts/combined-r3-r5-20261016-1315.json",
+  "reviewedContextSha256": "6475705a81b2dbc053082b17d0a8445617b4a0724c8f565277601b897c17a88b",
+  "scope": "combined_normal_H18_six_old_targets",
+  "seconds": 238.687,
+  "sourceChanges": [],
+  "sourceFilesAfter": 2419,
+  "sourceFilesBefore": 2419,
+  "sourceManifestSha256": "11f688628aa77bf3f50c440cd954aa49e0588800aeabb838bc17d09efe9ef30f",
+  "tag": "combined-r3-r5-20261016-1315-h18",
+  "tempRoot": "D:\\Yoke-Test-Scratch\\combined-r3-r5-20261016-1315-h18",
+  "testNameOracleSha256": "0c21b1e45653b00393243efeb8ffcef5c1741b863f2283ad739fc2aa2e59b7d2",
+  "validationErrors": [],
+  "wrapperSha256": "bfb42228fd8a8711366d945acb8ccfd0a0660c457547962dafda8cdca10f3ab3"
+}

@@ -1,0 +1,148 @@
+{
+  "schema": 1,
+  "scope": "Windows development native package, actual bundled extension host and separate desktop visual fixture",
+  "runtimeSourceCommit": "f8b02d4eb0145de95f108e12df51786d368b6ef3",
+  "packagingSourceCommit": "e89ae42cbb925a9e0cf6f36d9d451f34d0ac6f6e",
+  "guardTests": {
+    "passed": 62,
+    "failed": 0,
+    "skipped": 0,
+    "sourceAnd68DependencyFilesUnchanged": true,
+    "naturalTreeExit": true
+  },
+  "package": {
+    "owner": "local-native-package-f8-runtime-e89-packager-v3",
+    "schema": 3,
+    "sourceCommit": "e89ae42cbb925a9e0cf6f36d9d451f34d0ac6f6e",
+    "runId": "native-vsix-f8-e89-r2",
+    "producerRunId": "release-cli-compiler-transaction-f8-r1",
+    "versionRunId": "release-cli-compiler-version-f8-r1",
+    "fetchMissingLicenses": true,
+    "codeExecutableMetadata": {
+      "path": "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yc-ab5b6c783f90\\Code.exe",
+      "fileIdentity": [
+        5078471845122615367,
+        3377699723830539
+      ],
+      "bytes": 238249784,
+      "mtimeNs": 1792983372184243300,
+      "links": 1,
+      "noReparseAncestors": true,
+      "imageBytesRead": false
+    },
+    "runtimeSourceCommit": "f8b02d4eb0145de95f108e12df51786d368b6ef3",
+    "packagingSourceCommit": "e89ae42cbb925a9e0cf6f36d9d451f34d0ac6f6e",
+    "runtimeRoot": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-d1694160",
+    "packagingRoot": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677",
+    "exactHeadBuild": false,
+    "currentPlatformAcceptance": false,
+    "pairedAuthoredSourceQualified": true,
+    "pairedDependencyGraphQualified": true,
+    "completed": true,
+    "nativeImageReadAttempted": true,
+    "nativeImageRead": true,
+    "stagedImageCreated": true,
+    "matchingVersionReceiptAdmitted": true,
+    "nativeArchiveQualified": true,
+    "nativeVsixQualified": true,
+    "derivedBundledHostQualified": true,
+    "visualAcceptance": false,
+    "releaseQualification": false,
+    "wholeProjectComplete": false,
+    "sourceInputsUnchanged": true,
+    "protectedMetadataUnchanged": true,
+    "phase": "complete",
+    "failureCode": null,
+    "nativeImageBytes": 142702080,
+    "selectedWindowsBinaryByteLimit": 160000000,
+    "generalNativeEntryByteLimit": 128000000,
+    "nativeSha256": "b81483cf4024fdca8647ec22000e9be64486b642caa0e63b7cf6b19ba02be1e5",
+    "nativeArchive": {
+      "sha256": "839649a0e9344e1a0402e2bee8c5df7fa536f8764ad005e65abdd10de2b3fa78",
+      "bytes": 32690604,
+      "members": 1337,
+      "dependencyCount": 316,
+      "licenseTextCount": 557,
+      "binarySha256": "b81483cf4024fdca8647ec22000e9be64486b642caa0e63b7cf6b19ba02be1e5",
+      "target": "x86_64-pc-windows-msvc",
+      "version": "0.5.0"
+    },
+    "nativeVsix": {
+      "sha256": "92e5cccb8e2a1569bea686da133c88deb02a00a56407b3162c96f7af153a3c31",
+      "bytes": 32767397,
+      "members": 1342,
+      "version": "0.5.0",
+      "platform": "win32-x64",
+      "nativeOnly": true,
+      "binarySha256": "b81483cf4024fdca8647ec22000e9be64486b642caa0e63b7cf6b19ba02be1e5"
+    },
+    "originalHostLauncherUnchangedEvidence": false,
+    "derivedLauncherSha256": "6e71f3e6faa38fd15c9d3f033435e71e9ed20eb6cfc167b270520f5b92f6e1e8",
+    "bundledRuntime": true,
+    "treeExitedBeforeCleanup": true,
+    "packagingSourceCount": 783
+  },
+  "visual": {
+    "completed": true,
+    "runtimeSourceCommit": "f8b02d4eb0145de95f108e12df51786d368b6ef3",
+    "packagingSourceCommit": "e89ae42cbb925a9e0cf6f36d9d451f34d0ac6f6e",
+    "exactHeadBuild": false,
+    "currentPlatformAcceptance": false,
+    "releaseQualification": false,
+    "wholeProjectComplete": false,
+    "visualInspection": true,
+    "functionalPackageRun": "native-vsix-f8-e89-r2",
+    "phase": "complete",
+    "nativeImageReadAttempted": true,
+    "nativeImageRead": true,
+    "operator": "codex actual-image inspection",
+    "screenshots": [
+      {
+        "path": "visual-snapshot.png",
+        "sha256": "f17cfd87665fa8668aa0f294b0cf9d20c11d94455a65d89a6341ab8b17c55db4"
+      },
+      {
+        "path": "visual-source.png",
+        "sha256": "dc5f178f8330a913ef1a1009d9c79f04191083820648c4dd9d9f0d405a673e77"
+      }
+    ],
+    "host": {
+      "kind": "actual-vscode-extension-host",
+      "passed": true,
+      "runtime": "rust",
+      "bundledRuntime": true,
+      "vscodeVersion": "1.143.1",
+      "unsavedSourceBound": true,
+      "workspaceExecutableIgnored": true,
+      "protectedOpenBufferExcluded": true,
+      "savedSourceUnchanged": true
+    },
+    "treeExitedBeforeCleanup": true,
+    "nativeVsixSha256": "92e5cccb8e2a1569bea686da133c88deb02a00a56407b3162c96f7af153a3c31",
+    "nativeBinarySha256": "b81483cf4024fdca8647ec22000e9be64486b642caa0e63b7cf6b19ba02be1e5"
+  },
+  "failuresRetained": {
+    "guardR1": "62 tests:61 pass,1 setup error because isolated USERPROFILE absent; fixture corrected, all62 rerun",
+    "packageR1": "No PowerShell7 on PATH; whole result remains incomplete, outputs not adopted",
+    "visualR1": "90-second operator acknowledgement expired; whole result failed with natural Job exit",
+    "uiHelper": "WindowsPowerShell5 Restricted refused ps1 execution; no policy change, no IEX or alternate-script interpreter; individual documented Orca UI actions used"
+  },
+  "privacy": {
+    "nativeBinaryPayloadsExcluded": true,
+    "privateHistoryExcluded": true,
+    "localReadyAckNonceAndRawUIStatesExcluded": true,
+    "visualWrapperFixedChannelConstantsRedacted": true
+  },
+  "visualScope": "Two actual images inspected: generated overlay JSON and dirty main.rs/editor_unsaved_symbol; own viewport panels closed; saved source unchanged. Separate desktop fixture, no mobile/dashboard acceptance.",
+  "externalToolBoundary": "Official portable Code1.143.1 and PowerShell7.6.6 ZIPs; no global install/PATH/policy change. PowerShell selected only for child environment. Vendor tools/caches remain trusted, not independently attested.",
+  "remaining": [
+    "exact-current-head build and same-source whole-platform acceptance",
+    "macOS strict256MiB address-space capability and original history timing gate",
+    "live owner retirement/archive purge and broader recovery/accessibility",
+    "353 full-contract flags and77 runtime/vendor qualifications",
+    "approved Google live export and configured production App",
+    "main integration and HECer/Code-Intelligence publication"
+  ],
+  "releaseQualification": false,
+  "wholeProjectComplete": false
+}

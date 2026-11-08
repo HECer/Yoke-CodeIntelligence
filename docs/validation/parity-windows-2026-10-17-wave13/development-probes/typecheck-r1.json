@@ -1,0 +1,23 @@
+{
+  "label": "typecheck",
+  "command": [
+    "npm.cmd",
+    "run",
+    "typecheck"
+  ],
+  "exitCode": 0,
+  "environment": {
+    "CARGO_TARGET_DIR": "E:\\Yoke-Build-Cache\\outcome-learning-20261017",
+    "CARGO_HOME": "E:/Yoke-Build-Cache/cargo-home-yoke-20261017",
+    "CARGO_NET_OFFLINE": "true",
+    "TEMP": "E:\\Yoke-Build-Cache\\outcome-learning-20261017\\temp",
+    "TMP": "E:\\Yoke-Build-Cache\\outcome-learning-20261017\\temp",
+    "RTK_SUPPRESS_HOOK_WARNING": "1"
+  },
+  "sourceBefore": "7de284896cab937e23e8b779b31498443f8cd816c0e8b04324a9ec93be470080",
+  "sourceAfter": "7de284896cab937e23e8b779b31498443f8cd816c0e8b04324a9ec93be470080",
+  "sourceChanges": [],
+  "log": "typecheck-r1.log",
+  "logSha256": "ca76bbbc554c0e3ab10606a9d43f484df25001ba560b45987878ba20a5bd47a5",
+  "interpretation": "Separate scoped development; no full parity or integrated acceptance claim."
+}

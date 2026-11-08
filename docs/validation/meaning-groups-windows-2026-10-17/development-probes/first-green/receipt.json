@@ -1,0 +1,51 @@
+{
+  "checkedAtUtc": "2026-10-17T00:49:55.440274+00:00",
+  "label": "first-green",
+  "command": [
+    "cargo",
+    "test",
+    "--workspace",
+    "--locked",
+    "--offline",
+    "-j",
+    "1",
+    "--no-fail-fast",
+    "--lib",
+    "--test",
+    "meaning_cli",
+    "meaning_group",
+    "--",
+    "--test-threads=1"
+  ],
+  "exitCode": 0,
+  "seconds": 942.828,
+  "sourceBefore": {
+    "native/src/lib.rs": "ae910707d4d7fa1cde5d992b4859ee615bd1e62b4d130cfc1bd66909c135fdd2",
+    "native/src/meaning_groups.rs": "1c870a9c56f3247af3366f0671f1a7eba8364bd949c531a516419b942dd11adf",
+    "native/src/meaning_groups_tests.rs": "666705e05b8c49eafbb4d7293e2df990f27c2e3086ab896acc141f0347e62bed",
+    "native/src/meaning_cli.rs": "e381edd6b88ce023a019392b72b8356c41123f81af66869520ce9f3f96e05749",
+    "native/tests/meaning_cli.rs": "b9acce104e88e251ec73d7ded82c85c9836677b79f159cf7f57068dafe4a4c25"
+  },
+  "sourceAfter": {
+    "native/src/lib.rs": "ae910707d4d7fa1cde5d992b4859ee615bd1e62b4d130cfc1bd66909c135fdd2",
+    "native/src/meaning_groups.rs": "1c870a9c56f3247af3366f0671f1a7eba8364bd949c531a516419b942dd11adf",
+    "native/src/meaning_groups_tests.rs": "666705e05b8c49eafbb4d7293e2df990f27c2e3086ab896acc141f0347e62bed",
+    "native/src/meaning_cli.rs": "e381edd6b88ce023a019392b72b8356c41123f81af66869520ce9f3f96e05749",
+    "native/tests/meaning_cli.rs": "b9acce104e88e251ec73d7ded82c85c9836677b79f159cf7f57068dafe4a4c25"
+  },
+  "sourceUnchanged": true,
+  "logSha256": "ebabb0ee2858cf4f38b097c8fc63ad8b5265ae2d1e724fe729d08f135c18055e",
+  "rustTestSummaries": [
+    [
+      10,
+      0,
+      0
+    ],
+    [
+      3,
+      0,
+      0
+    ]
+  ],
+  "interpretation": "Scoped probe only. Not a new full-project acceptance and not additive to Wave8 totals."
+}

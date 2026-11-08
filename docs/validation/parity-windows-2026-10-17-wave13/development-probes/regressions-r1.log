@@ -1,0 +1,163 @@
+   Compiling yoke-code-intelligence v0.5.0 (E:\Yoke-Worktrees\outcome-learning-20261017\native)
+    Finished `test` profile [unoptimized] target(s) in 38.93s
+     Running tests\decision_records.rs (E:\Yoke-Build-Cache\outcome-learning-20261017\debug\deps\decision_records-2d40982098120ac5.exe)
+
+running 13 tests
+test authored_markdown_cannot_create_active_links ... ok
+test bundle_roundtrip_is_deterministic_strict_and_never_overwrites_markdown ... ok
+test explicit_import_cannot_roll_back_or_replace_an_existing_revision_lineage ... ok
+test bundles_refuse_foreign_sources_unknown_entries_duplicate_json_and_invalid_utf8 ... ok
+test hostile_schema_paths_dates_bounds_and_foreign_snapshots_are_rejected_without_state ... ok
+test import_cas_is_atomic_across_multiple_keys_and_includes_revision_history ... ok
+test missing_candidate_files_are_inconclusive_and_absence_is_file_scoped ... ok
+test large_hostile_markdown_can_be_imported_without_losing_original_bytes ... ok
+test personal_storage_is_explicit_and_durably_host_pinned ... ok
+test retention_keeps_all_source_revisions_and_rejects_head_alias_tampering ... ok
+test revisions_require_exact_cas_and_preserve_authored_attribution_and_originals ... ok
+test source_bound_literal_checks_show_utf8_byte_evidence_and_truthful_limits ... ok
+test windows_junction_parents_cannot_redirect_import_or_export ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.74s
+
+     Running tests\graph_view.rs (E:\Yoke-Build-Cache\outcome-learning-20261017\debug\deps\graph_view-97c800a70b6f82cc.exe)
+
+running 11 tests
+test captured_readonly_dependency_proof_allows_view_and_collection_reads ... ok
+test context_omits_environment_values_and_clips_unicode_at_byte_budget ... ok
+test default_view_exposes_structural_relationships_without_replacing_canonical_graph ... ok
+test newly_derived_view_omits_legacy_config_file_signature_values_without_rewriting_history ... ok
+test registered_view_rejects_corrupt_cas_and_foreign_overlay_scope ... ok
+test selected_structural_artifacts_reject_forged_node_scope_lines_and_schema ... ok
+test semantic_and_structural_overlays_have_distinct_namespaces_and_provider_trust ... ok
+test source_bound_view_exports_all_seven_formats ... ok
+test source_view_remains_historical_and_rejects_forged_scope_options_and_deadlines ... ok
+test view_find_trace_context_and_export_preserve_source_and_parallel_calls ... ok
+test selected_overlay_inputs_have_an_aggregate_byte_budget ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.58s
+
+     Running tests\knowledge.rs (E:\Yoke-Build-Cache\outcome-learning-20261017\debug\deps\knowledge-cbfc45c540800951.exe)
+
+running 13 tests
+test corrupt_local_corpus_counts_and_nonunit_coordinates_are_rejected ... ok
+test forged_snapshot_and_corrupt_persisted_vectors_fail_closed ... ok
+test knowledge_refuses_unanchored_paths_secrets_and_scope_escalation ... ok
+test lcov_import_binds_line_hits_and_rejects_incomplete_or_forged_records ... ok
+test overflowing_persisted_idf_cannot_be_misreported_as_no_lexical_matches ... ok
+test expanded_memory_size_is_rejected_without_poisoning_recall_or_supersession ... ok
+test rejected_supersession_preserves_original_and_expired_deadlines_do_not_write ... ok
+test remembered_source_hashes_report_changed_deleted_and_superseded_knowledge ... ok
+test runtime_import_preserves_one_execution_and_refuses_parent_cycles ... ok
+test sarif_import_maps_utf16_unicode_regions_to_source_bytes_and_refuses_escape ... ok
+test source_bound_external_vectors_normalize_and_reject_forged_or_invalid_vectors ... ok
+test sparse_tfidf_retrieval_matches_unicode_and_camelcase_without_model_execution ... ok
+test vector_import_rejects_mixed_dimensions_duplicates_and_partial_persistence ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.66s
+
+     Running tests\knowledge_cli.rs (E:\Yoke-Build-Cache\outcome-learning-20261017\debug\deps\knowledge_cli-cd250fcd9ca5d2aa.exe)
+
+running 2 tests
+test native_context_includes_labeled_source_knowledge_only_when_requested ... ok
+test cli_builds_vectors_and_mcp_queries_them_without_a_model_or_source_writes ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.08s
+
+     Running tests\maintenance.rs (E:\Yoke-Build-Cache\outcome-learning-20261017\debug\deps\maintenance-112cf785bcf63746.exe)
+
+running 12 tests
+test blob_links_are_refused_and_external_targets_are_preserved ... ok
+test all_generic_records_and_history_preserve_workflow_editor_vector_and_media_roots ... ok
+test corrupt_unknown_record_refuses_collection_before_any_blob_moves ... ok
+test dry_run_distinguishes_unreferenced_blobs_from_age_eligible_candidates ... ok
+test dry_run_counts_orphans_without_mutating_source_or_state_files ... ok
+test expired_deadlines_and_irreversible_purge_requests_leave_orphans_intact ... ok
+test foreign_store_client_blocks_mutation_until_its_lifecycle_lease_closes ... ok
+test interrupted_quarantine_restores_originals_before_a_new_mark ... ok
+test later_blob_hash_failure_restores_earlier_moves_and_rolls_back_metadata ... ok
+test malformed_snapshot_shape_is_refused_before_an_orphan_is_moved ... ok
+test opaque_record_ids_and_map_keys_are_conservative_blob_roots ... ok
+test raw_sqlite_writer_contention_does_not_extend_failed_maintenance_cleanup ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.66s
+
+     Running tests\mixed_view_cli.rs (E:\Yoke-Build-Cache\outcome-learning-20261017\debug\deps\mixed_view_cli-ffc3fea888a9b7f2.exe)
+
+running 15 tests
+test artifact_registration_bytes_participate_in_the_exact_aggregate_metadata_budget ... ok
+test every_explicit_source_and_document_pin_is_checked_before_results_or_writes ... ok
+test exact_aggregate_source_reservation_refuses_before_corrupt_source_access_and_sorts_documents ... ok
+test exact_mixed_output_and_capacity_refusals_never_publish_partial_results ... ok
+test global_mixed_pagination_and_case_match_oracles_are_independent_of_source_spaces ... ok
+test later_document_pin_denial_precedes_any_bulk_native_source_read ... ok
+test malformed_mixed_selection_and_query_are_rejected_before_missing_store_initialization ... ok
+test mixed_find_replays_code_docx_and_xlsx_without_live_files_or_writes ... ok
+test mixed_library_capability_retains_frozen_bytes_after_transaction_rollback_and_cas_loss ... ok
+test mixed_library_search_admission_bounds_bytes_before_whitespace_normalization ... ok
+test mixed_load_and_query_honor_expired_and_shared_cancelled_deadlines_without_writes ... ok
+test mixed_read_global_capture_and_execution_flags_refuse_with_actual_valid_parents ... ok
+test historical_receipt_scope_is_retained_but_never_searched_as_current_source ... ok
+test mixed_typed_reads_preserve_utf8_and_xml_origins_and_refuse_container_offsets ... ok
+test mixed_source_provenance_retains_exact_meaning_packets_coverage_and_search_scope_roles ... ok
+
+test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.17s
+
+     Running tests\notes.rs (E:\Yoke-Build-Cache\outcome-learning-20261017\debug\deps\notes-662e2c807df93ad8.exe)
+
+running 15 tests
+test authored_revision_timestamp_uses_unix_milliseconds ... ok
+test edited_note_keeps_historical_anchor_and_reports_changed_source ... ok
+test global_address_namespace_is_reserved_and_reference_boundaries_are_exact ... ok
+test global_note_policy_matches_its_canonical_global_namespace ... ok
+test global_storage_is_host_selected_and_missing_or_ignored_notes_do_not_leak ... ok
+test hidden_and_read_only_references_do_not_leak_or_block_renames ... ok
+test host_note_policy_defaults_read_only_and_rejects_unknown_authority_fields ... ok
+test maximally_encoded_accepted_note_remains_readable_after_commit ... ok
+test memory_reference_left_boundaries_exclude_larger_uri_schemes_and_identifiers ... ok
+test named_note_crud_retains_authored_scope_revisions_and_exact_source ... ok
+test regex_edits_count_guard_and_read_only_policy_do_not_partially_mutate_notes ... ok
+test regex_gap_growth_fails_before_remaining_budget_underflow_and_keeps_the_revision ... ok
+test rename_rewrites_exact_mem_references_atomically_except_read_only_notes ... ok
+test full_retired_head_quota_rejects_publication_atomically_and_allows_reuse ... ok
+test retired_heads_remain_bounded_without_consuming_active_note_content_quota ... ok
+
+test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 7.37s
+
+     Running tests\retention.rs (E:\Yoke-Build-Cache\outcome-learning-20261017\debug\deps\retention-c9716eb52673495e.exe)
+
+running 16 tests
+test future_opaque_json_artifact_schema_is_not_inferred_to_be_dependency_free ... ok
+test committed_retirement_can_feed_conservative_cas_quarantine_and_purge_without_losing_receipts ... ok
+test labeled_uncommitted_history_journal_restores_missing_rows_without_changing_current_source ... ok
+test labeled_uncommitted_history_journal_restores_only_hash_bound_rows ... ok
+test missing_history_age_and_corrupt_metadata_never_become_retirement_permission ... ok
+test multiply_linked_quarantine_content_is_unknown_physical_reclamation_and_is_preserved ... ok
+test newly_rooted_quarantine_and_tampered_plan_refuse_purge_without_deleting_bytes ... ok
+test opaque_published_artifacts_defer_history ... ok
+test partial_purge_reports_actual_removed_bytes_and_can_resume_only_its_exact_intent ... ok
+test purge_reclaims_only_exact_committed_unreachable_quarantine_bytes_after_confirmation ... ok
+test reviewed_history_retirement_removes_only_unrooted_rows_and_preserves_original_source ... ok
+test source_bindings_inside_published_json_artifacts_protect_history ... ok
+test stale_plan_and_concurrent_client_leave_history_intact ... ok
+test pin_and_every_source_bound_workflow_record_protect_history ... ok
+test unknown_nested_snapshot_fields_defer_history ... ok
+test unknown_record_blocks_retirement_even_without_explicit_hash_fields ... ok
+
+test result: ok. 16 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.55s
+
+     Running tests\view_comparison_cli.rs (E:\Yoke-Build-Cache\outcome-learning-20261017\debug\deps\view_comparison_cli-e184ff915382ff28.exe)
+
+running 10 tests
+test compare_views_cli_exact_output_limit_includes_its_single_newline ... ok
+test compare_views_cli_keeps_all_five_input_pins_binding ... ok
+test compare_views_cli_refuses_missing_or_incomplete_stores_without_initializing_them ... ok
+test compare_views_cli_reads_a_checkpointed_store_after_its_last_writer_closed ... ok
+test compare_views_cli_rejects_bad_host_json_before_creating_source_state ... ok
+test compare_views_cli_replays_history_and_preserves_directed_parallel_changes_without_publication ... ok
+test compare_views_cli_rejects_execution_and_capture_options_before_host_file_access ... ok
+test compare_views_cli_uses_only_explicit_one_to_one_primary_file_continuity ... ok
+test compare_views_cli_whole_result_budgets_refuse_without_artifact_fallback ... ok
+test compare_views_cli_zero_capacities_refuse_without_output_or_store_creation ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.17s
+

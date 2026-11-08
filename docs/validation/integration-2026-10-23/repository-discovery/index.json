@@ -1,0 +1,824 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-23",
+  "timezone": "Europe/Berlin",
+  "sourceCommit": "7cad977573625138314394f63f29e4a5b1a5fa9e",
+  "parentCommit": "544bc800d0d83ce61a336e0dbec22f8f6a7d22f3",
+  "frozenInputs": 1082,
+  "productionGitBlobs": {
+    "native/src/lib.rs": "dd0d360904bd02d5b18465c7933651f4893c8117",
+    "native/src/main.rs": "74b232740d6d4e11dbeec0cfbae2a23e5494e2fd",
+    "native/src/repository_discovery.rs": "c8d86fa1baf819c6c62ce02f7c03f600a926c1f8",
+    "native/src/repository_discovery_cli.rs": "6e24ca1b479494eee09e0b5970af2db9dbc20328",
+    "native/tests/repository_discovery.rs": "77740b11ebdc85e24b08eedcf6c20658e718dbe9",
+    "native/tests/repository_discovery_cli.rs": "61619e0b56d023294a4d1a64288639ad60cb5cb5"
+  },
+  "cliSha256": "286f2aadd70b74eaa8593ec14251f708ca98fcb870cbbaf62f815f33e5cac935",
+  "publishedReferenceCliSha256": "b386daa7cc05cabbddc36cf41ac020d29bf1cecd30db05c64f650e510a3dbf66",
+  "nativeGroups": [
+    {
+      "group": "ignored_directory_identity",
+      "passed": 15,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "group": "lib",
+      "passed": 574,
+      "failed": 0,
+      "ignored": 7
+    },
+    {
+      "group": "project_session",
+      "passed": 6,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "group": "repository_discovery",
+      "passed": 8,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "group": "repository_discovery_cli",
+      "passed": 2,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "group": "session_startup_project",
+      "passed": 8,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "group": "store_read_only",
+      "passed": 7,
+      "failed": 0,
+      "ignored": 0
+    }
+  ],
+  "nativePassed": 620,
+  "nativeFailed": 0,
+  "nativeExistingIgnored": 7,
+  "newIntegrationFunctions": 10,
+  "typescriptPassed": 260,
+  "typescriptExistingSkipped": 3,
+  "allTargetClippyWarningsDenied": true,
+  "buildPassed": true,
+  "typecheckPassed": true,
+  "formatRoots": 351,
+  "cargoFmtAllWindowsOs206Retained": true,
+  "finalQualification": "repository-discovery-qualified1",
+  "finalNativeTrial": "repository-discovery-live3",
+  "priorOwnedSetupAndCompatibilityCalls": 11,
+  "newOwnedDiscoveryTrialCalls": 16,
+  "actualOwnedProcessCalls": 27,
+  "allOwnedTrialJobsEmpty": true,
+  "fixtureBytesAndDirectoriesUnchangedAfterDiscovery": true,
+  "oldAndNewWarmIndexDataExact": true,
+  "variableByteMetricsIndependentlyRevalidated": true,
+  "sourceOrGitContentReadByDiscovery": false,
+  "gitInvokedByDiscovery": false,
+  "automaticRegistration": false,
+  "original353InventoryLedgerAndSummaryChanged": false,
+  "wholeNativeRerun": false,
+  "fullContractCertification": false,
+  "archive": {
+    "path": "raw.zip",
+    "bytes": 197835,
+    "sha256": "887e4d4ffff6a235baa6e5beffe2f4d256513bf642ee37985c15c0f1a683cb15",
+    "members": [
+      {
+        "path": "repository-discovery-live1/controller.py",
+        "bytes": 7581,
+        "sha256": "5e20fc3c0b54e828a17198469a0955eb25a6e6fa090a227dd087c77aa6a5d1ca"
+      },
+      {
+        "path": "repository-discovery-live1/preparation-failure.json",
+        "bytes": 268,
+        "sha256": "729ca6bda15545791b618901c109334ed0c6aecb230fef7a54c462940f6c51ad"
+      },
+      {
+        "path": "repository-discovery-live2/controller.py",
+        "bytes": 7616,
+        "sha256": "32228981b8941c9144f246c8b290704c442f60e86ce9eb9eacf0c7a8b4946ee1"
+      },
+      {
+        "path": "repository-discovery-live2/current-warm-index.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-live2/current-warm-index.stdout",
+        "bytes": 1427,
+        "sha256": "3ab6bf4c6bd8b23bac560bafb53e736617be59964f1efc3e7f5f1c0d9864f2ba"
+      },
+      {
+        "path": "repository-discovery-live2/failed-result-audit.json",
+        "bytes": 534,
+        "sha256": "8cc29ba0531fa862904e8f94790b7f6e039461e4ec35393d57f9559350c92b31"
+      },
+      {
+        "path": "repository-discovery-live2/git-commit-owned.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-live2/git-commit-owned.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-live2/git-init-nested.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-live2/git-init-nested.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-live2/git-init-primary.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-live2/git-init-primary.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-live2/git-linked-worktree.stderr",
+        "bytes": 43,
+        "sha256": "400eabcb0af0c2c13e4cabec9852da53c201824391cea8b0619c8aa42a6d4320"
+      },
+      {
+        "path": "repository-discovery-live2/git-linked-worktree.stdout",
+        "bytes": 42,
+        "sha256": "85652ef8de6f313abef8991ad6f899185a176f019bdfefa2879ed5bc340f103b"
+      },
+      {
+        "path": "repository-discovery-live2/git-stage-owned.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-live2/git-stage-owned.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-live2/mklink-junction.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-live2/mklink-junction.stdout",
+        "bytes": 223,
+        "sha256": "267e09500a0197bbc0ae43bca74d6680288a7817a621530d5e3e991090357be1"
+      },
+      {
+        "path": "repository-discovery-live2/mklink-marker-.git.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-live2/mklink-marker-.git.stdout",
+        "bytes": 231,
+        "sha256": "51fb5c8a5bf9a22e1e9be1be982a086832eacc7d19b80cc14b42deae51122cf4"
+      },
+      {
+        "path": "repository-discovery-live2/progress.json",
+        "bytes": 6327,
+        "sha256": "f63fffb9fa217c6fb29cbf4f489b5ae99b13f8c2e203d1c271cdd94af47cd382"
+      },
+      {
+        "path": "repository-discovery-live2/published-default-index.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-live2/published-default-index.stdout",
+        "bytes": 1427,
+        "sha256": "7c23860b2d4fb284f980de8894a3cc578345790ca099c710d9c12c0824111f9c"
+      },
+      {
+        "path": "repository-discovery-live2/published-warm-index-repeat.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-live2/published-warm-index-repeat.stdout",
+        "bytes": 1426,
+        "sha256": "dac8d9daf95576fd931e758f74d82cdbda4ec500f650552abddbf22149f44aac"
+      },
+      {
+        "path": "repository-discovery-live2/published-warm-index.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-live2/published-warm-index.stdout",
+        "bytes": 1426,
+        "sha256": "a12e4eccbada30065fe69fece0719010341e090293d3179cdd0b4ce59d1ee5bc"
+      },
+      {
+        "path": "repository-discovery-live2/result.json",
+        "bytes": 663,
+        "sha256": "aae6026b42787dce98fbca7f2dd7329290519015ce7e147be7134f759edf0cc7"
+      },
+      {
+        "path": "repository-discovery-live3/controller.py",
+        "bytes": 6801,
+        "sha256": "4e589a26ae62d253910daf47c6033ae52aef1d33e270e2099d2e8b4b642aebef"
+      },
+      {
+        "path": "repository-discovery-live3/depth-zero.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-live3/depth-zero.stdout",
+        "bytes": 791,
+        "sha256": "648ab18e9211c06ffbbcf8b76b82d2abd8ba11446798246f3c441df0eb39027b"
+      },
+      {
+        "path": "repository-discovery-live3/discover-owned-real-repositories.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-live3/discover-owned-real-repositories.stdout",
+        "bytes": 924,
+        "sha256": "04fb78ea0bc227e68c688ecce512530476bc3944426d1f02699684efe84d35b5"
+      },
+      {
+        "path": "repository-discovery-live3/fixture-before.json",
+        "bytes": 6513,
+        "sha256": "1254840fb78cc8c1d9f0d89ef4f095d5fd8bf661715321b6374ac7cf561ae62d"
+      },
+      {
+        "path": "repository-discovery-live3/prior-default-index-audit.json",
+        "bytes": 288,
+        "sha256": "36d8580185f0b8204ff0aa8f6d1dda9e3f071e93da3926d863bdd0b84c100c1f"
+      },
+      {
+        "path": "repository-discovery-live3/progress.json",
+        "bytes": 9141,
+        "sha256": "6644f13c958d0c364945ce30e688e7765582fb3d548e736cdb3e06010c0812a8"
+      },
+      {
+        "path": "repository-discovery-live3/published-command-unavailable.stderr",
+        "bytes": 178,
+        "sha256": "928a3f66218c4b947e797e051d7117c1c7ed5e72f51e01a4cdb1cea1a7025b9b"
+      },
+      {
+        "path": "repository-discovery-live3/published-command-unavailable.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-live3/refuse-candidates.stderr",
+        "bytes": 45,
+        "sha256": "f6580a30453b0c66d704039a3a9ff1882596ffd20f0ef273f29859690bdd03b7"
+      },
+      {
+        "path": "repository-discovery-live3/refuse-candidates.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-live3/refuse-config.stderr",
+        "bytes": 94,
+        "sha256": "a9d9fa51d145492bc8d9392f70dffe617d04c97ce3c825f66a5d363e41f1bac8"
+      },
+      {
+        "path": "repository-discovery-live3/refuse-config.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-live3/refuse-deadline.stderr",
+        "bytes": 42,
+        "sha256": "a791b0f2bd40cc10ccdf4e15989412a7c4a337305baef0758a3239853c3f2c49"
+      },
+      {
+        "path": "repository-discovery-live3/refuse-deadline.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-live3/refuse-directories.stderr",
+        "bytes": 45,
+        "sha256": "f6580a30453b0c66d704039a3a9ff1882596ffd20f0ef273f29859690bdd03b7"
+      },
+      {
+        "path": "repository-discovery-live3/refuse-directories.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-live3/refuse-entries.stderr",
+        "bytes": 45,
+        "sha256": "f6580a30453b0c66d704039a3a9ff1882596ffd20f0ef273f29859690bdd03b7"
+      },
+      {
+        "path": "repository-discovery-live3/refuse-entries.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-live3/refuse-escape-select.stderr",
+        "bytes": 32,
+        "sha256": "5f4839055acf7958edf2ef29b29ba7a83dc58b9ca41b724ccbb3adba690052f9"
+      },
+      {
+        "path": "repository-discovery-live3/refuse-escape-select.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-live3/refuse-junction-root.stderr",
+        "bytes": 45,
+        "sha256": "4d809e80faa8cdec83d41a4dbd405d4374a0b075d3943dcd2d9404bfd4bed61f"
+      },
+      {
+        "path": "repository-discovery-live3/refuse-junction-root.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-live3/refuse-output.stderr",
+        "bytes": 45,
+        "sha256": "f6580a30453b0c66d704039a3a9ff1882596ffd20f0ef273f29859690bdd03b7"
+      },
+      {
+        "path": "repository-discovery-live3/refuse-output.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-live3/refuse-provider-grant.stderr",
+        "bytes": 94,
+        "sha256": "a9d9fa51d145492bc8d9392f70dffe617d04c97ce3c825f66a5d363e41f1bac8"
+      },
+      {
+        "path": "repository-discovery-live3/refuse-provider-grant.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-live3/refuse-source-grant.stderr",
+        "bytes": 94,
+        "sha256": "a9d9fa51d145492bc8d9392f70dffe617d04c97ce3c825f66a5d363e41f1bac8"
+      },
+      {
+        "path": "repository-discovery-live3/refuse-source-grant.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-live3/refuse-unknown-select.stderr",
+        "bytes": 47,
+        "sha256": "d200336e8bf1abff9343c62328f9536ff465637dbfa909d65686edde8b73e971"
+      },
+      {
+        "path": "repository-discovery-live3/refuse-unknown-select.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-live3/repeat-discovery.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-live3/repeat-discovery.stdout",
+        "bytes": 924,
+        "sha256": "04fb78ea0bc227e68c688ecce512530476bc3944426d1f02699684efe84d35b5"
+      },
+      {
+        "path": "repository-discovery-live3/report.json",
+        "bytes": 924,
+        "sha256": "04fb78ea0bc227e68c688ecce512530476bc3944426d1f02699684efe84d35b5"
+      },
+      {
+        "path": "repository-discovery-live3/result.json",
+        "bytes": 719,
+        "sha256": "44bd19ae8af79b81895699af3562af495af36664751dca620263d9819871501d"
+      },
+      {
+        "path": "repository-discovery-live3/select-nested.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-live3/select-nested.stdout",
+        "bytes": 332,
+        "sha256": "18ba4fe4a161478c01c7168f2617d17b0bc0869d78eb64b303932bf34f248694"
+      },
+      {
+        "path": "repository-discovery-qualified1/cargo-build.stderr",
+        "bytes": 172,
+        "sha256": "150d0548431846598a2ade7e590c92731c1cff1031f198a86d02d065362530e0"
+      },
+      {
+        "path": "repository-discovery-qualified1/cargo-build.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-qualified1/cargo-clippy.stderr",
+        "bytes": 172,
+        "sha256": "6f0872b06882baf5b563c7f31586bda6d4bf132eaf42b74a08e4bb8347dacbf9"
+      },
+      {
+        "path": "repository-discovery-qualified1/cargo-clippy.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-qualified1/cargo-fmt-all.stderr",
+        "bytes": 826,
+        "sha256": "83ff7c86ea6b852d35f71c74489f0b803e58f15987fb3150348da43f68fa3980"
+      },
+      {
+        "path": "repository-discovery-qualified1/cargo-fmt-all.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-qualified1/cargo-metadata.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-qualified1/cargo-metadata.stdout",
+        "bytes": 103735,
+        "sha256": "51572bc905f08ef68c5e2b542500e0bb4b01c99f68f34497f0be17c2d6a803ec"
+      },
+      {
+        "path": "repository-discovery-qualified1/cargo-test-ignored_directory_identity.stderr",
+        "bytes": 290,
+        "sha256": "4c282d5f2febec8bda7d1b210480ecd1beb28eea9e744b40b2a9f7b8b1e21a3a"
+      },
+      {
+        "path": "repository-discovery-qualified1/cargo-test-ignored_directory_identity.stdout",
+        "bytes": 1463,
+        "sha256": "7e0a4fe16f2f36e8e4e25ecfb15a2ebd939840a44f8cb9710ea3077e2efec6c8"
+      },
+      {
+        "path": "repository-discovery-qualified1/cargo-test-lib.stderr",
+        "bytes": 253,
+        "sha256": "6cbdc59946a66f8ee025deb5394e01f2b9f37c81a7b060762ed16f0e36cfc6c6"
+      },
+      {
+        "path": "repository-discovery-qualified1/cargo-test-lib.stdout",
+        "bytes": 66781,
+        "sha256": "4b00d2fa10962c47cb8ee52c6c52c9571860915dfc73ae6b4fce99494a5229a3"
+      },
+      {
+        "path": "repository-discovery-qualified1/cargo-test-project_session.stderr",
+        "bytes": 267,
+        "sha256": "d0dcdc485d243bb3c72dc6277465c0cc19bc0db754e5b9390a0492d00f3961d1"
+      },
+      {
+        "path": "repository-discovery-qualified1/cargo-test-project_session.stdout",
+        "bytes": 582,
+        "sha256": "aceb2bf0ee094ddcc0b24add1a15769fbedd7f16435cbeb3d668ad5ead895bb2"
+      },
+      {
+        "path": "repository-discovery-qualified1/cargo-test-repository_discovery.stderr",
+        "bytes": 278,
+        "sha256": "e73eda01e439585a85a378173cd9c41f4816d2521def6f2c9f63821f334d37b4"
+      },
+      {
+        "path": "repository-discovery-qualified1/cargo-test-repository_discovery.stdout",
+        "bytes": 719,
+        "sha256": "7260eb0002df8d4abcb190465a3728e8bf5b733046fdbd697859a16d0683f001"
+      },
+      {
+        "path": "repository-discovery-qualified1/cargo-test-repository_discovery_cli.stderr",
+        "bytes": 285,
+        "sha256": "6575eba6dac0f30c3ebe2f463cdb58494b5e6469d718b67ef22d3ecfe64ab504"
+      },
+      {
+        "path": "repository-discovery-qualified1/cargo-test-repository_discovery_cli.stdout",
+        "bytes": 278,
+        "sha256": "d7f609d49163fdc8fe0dccb277fac3574d0eb2a9f78916b37ba5692f060eec6f"
+      },
+      {
+        "path": "repository-discovery-qualified1/cargo-test-session_startup_project.stderr",
+        "bytes": 283,
+        "sha256": "b777c60cb61ff8ab3bacdce5d0072280864672928997da9a524a251cbd244b12"
+      },
+      {
+        "path": "repository-discovery-qualified1/cargo-test-session_startup_project.stdout",
+        "bytes": 808,
+        "sha256": "b75ef89d1becda76ab967e7209823ac297f62bb5145378a949dcd7106c5c0ace"
+      },
+      {
+        "path": "repository-discovery-qualified1/cargo-test-store_read_only.stderr",
+        "bytes": 267,
+        "sha256": "3c25e6718e96c7bafb74bbe2299bbdc090848b5a4875695326734f412beb9e7c"
+      },
+      {
+        "path": "repository-discovery-qualified1/cargo-test-store_read_only.stdout",
+        "bytes": 764,
+        "sha256": "5d4a14ae343be0f75e3e99cb052b4cb77660dd1c1302c5a24383f6377c630b93"
+      },
+      {
+        "path": "repository-discovery-qualified1/controller.py",
+        "bytes": 4130,
+        "sha256": "995973e94ca883a4b92b7d8c9edf91523c0f9cf5bac13b19be51c49a93b48cce"
+      },
+      {
+        "path": "repository-discovery-qualified1/format-roots.json",
+        "bytes": 37708,
+        "sha256": "1592cb05226ab6514a3fcecf6d88aa48e2890c0cef35d0e9ea300b2f8b51bb30"
+      },
+      {
+        "path": "repository-discovery-qualified1/npm-test.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-qualified1/npm-test.stdout",
+        "bytes": 25133,
+        "sha256": "a987793c4cd9a5b8f36b07edff6cd6ab16fb0b6c4b423ffbb4687970fa49398c"
+      },
+      {
+        "path": "repository-discovery-qualified1/npm-typecheck.stderr",
+        "bytes": 209,
+        "sha256": "0c5e2568b4c79c13debcc497cf347b98e7a01e636ae2bed42cf3faa742048c94"
+      },
+      {
+        "path": "repository-discovery-qualified1/npm-typecheck.stdout",
+        "bytes": 77,
+        "sha256": "ca76bbbc554c0e3ab10606a9d43f484df25001ba560b45987878ba20a5bd47a5"
+      },
+      {
+        "path": "repository-discovery-qualified1/progress.json",
+        "bytes": 51709,
+        "sha256": "f5c1da196ba887a19ec0b7b0f440f3dc3357c699a21fd6a42de8320d985ea3e7"
+      },
+      {
+        "path": "repository-discovery-qualified1/result.json",
+        "bytes": 418,
+        "sha256": "8096ac8c77333495fe1bb3f987d6c4ae8be05ae4b3be07919c21dcaf9d352ea7"
+      },
+      {
+        "path": "repository-discovery-qualified1/rustfmt-changed.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-qualified1/rustfmt-changed.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-qualified1/rustfmt-roots-000.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-qualified1/rustfmt-roots-000.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-qualified1/rustfmt-roots-020.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-qualified1/rustfmt-roots-020.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-qualified1/rustfmt-roots-040.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-qualified1/rustfmt-roots-040.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-qualified1/rustfmt-roots-060.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-qualified1/rustfmt-roots-060.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-qualified1/rustfmt-roots-080.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-qualified1/rustfmt-roots-080.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-qualified1/rustfmt-roots-100.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-qualified1/rustfmt-roots-100.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-qualified1/rustfmt-roots-120.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-qualified1/rustfmt-roots-120.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-qualified1/rustfmt-roots-140.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-qualified1/rustfmt-roots-140.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-qualified1/rustfmt-roots-160.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-qualified1/rustfmt-roots-160.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-qualified1/rustfmt-roots-180.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-qualified1/rustfmt-roots-180.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-qualified1/rustfmt-roots-200.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-qualified1/rustfmt-roots-200.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-qualified1/rustfmt-roots-220.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-qualified1/rustfmt-roots-220.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-qualified1/rustfmt-roots-240.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-qualified1/rustfmt-roots-240.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-qualified1/rustfmt-roots-260.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-qualified1/rustfmt-roots-260.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-qualified1/rustfmt-roots-280.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-qualified1/rustfmt-roots-280.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-qualified1/rustfmt-roots-300.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-qualified1/rustfmt-roots-300.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-qualified1/rustfmt-roots-320.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-qualified1/rustfmt-roots-320.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-qualified1/rustfmt-roots-340.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-qualified1/rustfmt-roots-340.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-qualified1/source-before.json",
+        "bytes": 116234,
+        "sha256": "9180409ab1cc645a7c96cc01c897c9a22bc65b33a00890461abcc6020fd5bb79"
+      },
+      {
+        "path": "repository-discovery-test1/cargo-test-repository_discovery.stderr",
+        "bytes": 278,
+        "sha256": "c2df8f83c310090d8030092eba6ce2665440279041c55c9aabafb313d4bd6383"
+      },
+      {
+        "path": "repository-discovery-test1/cargo-test-repository_discovery.stdout",
+        "bytes": 634,
+        "sha256": "a775ad1d56342288378d95c6074471416d987d237ba20844fb5242dc17bd5d9a"
+      },
+      {
+        "path": "repository-discovery-test1/cargo-test-repository_discovery_cli.stderr",
+        "bytes": 285,
+        "sha256": "0bc928a30637e1623d7a33b37d74563f9c3ad2d6a1e7374be0ddef27b291e469"
+      },
+      {
+        "path": "repository-discovery-test1/cargo-test-repository_discovery_cli.stdout",
+        "bytes": 278,
+        "sha256": "e3c9abd75c0a9fc1721050220e5b8da748be54c0a81b45df0d63a1477ec47746"
+      },
+      {
+        "path": "repository-discovery-test1/controller.py",
+        "bytes": 2807,
+        "sha256": "83fde859fdaa26952e6ebf78ccfe923e670c4aec81db7a252497dd98a295d78e"
+      },
+      {
+        "path": "repository-discovery-test1/progress.json",
+        "bytes": 1484,
+        "sha256": "df0e53eaf3ccbacdcab133c5dc65c0eb406d7f5de7cf55fbc10aa93b5a70f2c8"
+      },
+      {
+        "path": "repository-discovery-test1/result.json",
+        "bytes": 247,
+        "sha256": "6db5855d437da1a0fcde71493aa8983034165e44b89c44f0e4a0117337db07ee"
+      },
+      {
+        "path": "repository-discovery-test1/rustfmt-changed.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-test1/rustfmt-changed.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "repository-discovery-test1/source-before.json",
+        "bytes": 116234,
+        "sha256": "ed6c90fd24c7cc502c32cfb681be539c73110b28ce3755ec8b4dcf7ae5ef7390"
+      }
+    ]
+  },
+  "archiveExclusions": [
+    "External fixture homes and executable images are not copied",
+    "No personal configuration, tokens or unrelated repositories are collected"
+  ]
+}

@@ -1,0 +1,11 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 3.28s
+     Running tests\codex_host_cli.rs (target\debug\deps\codex_host_cli-30e493c532153888.exe)
+
+running 3 tests
+test branded_write_grants_and_foreign_source_flags_refuse_before_state_or_configuration ... ok
+test closed_adapter_selection_refuses_unknown_profile_extra_grants_and_duplicate_roots ... ok
+test lost_stdout_retains_codex_receipt_identity_and_installed_configuration ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.56s
+

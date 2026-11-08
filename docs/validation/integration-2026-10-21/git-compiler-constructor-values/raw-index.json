@@ -1,0 +1,527 @@
+{
+  "zipSha256": "62ecd06d4e15d2033030b0e8f4e9684fa658cd4100d4037b027b121293ce99a4",
+  "rawBytes": 1315660,
+  "zipBytes": 307177,
+  "members": [
+    {
+      "path": "git-compiler-constructor-value-audit/compiler-audit.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "git-compiler-constructor-value-audit/compiler-audit.stdout",
+      "bytes": 42491,
+      "sha256": "aa82a948f0213e9081cb2abc57485b7ee73d61121a59d51844ab28d5cd84c63d"
+    },
+    {
+      "path": "git-compiler-constructor-value-audit/controller.py",
+      "bytes": 3074,
+      "sha256": "80e211ca0f54b5f58cc67aaf97bf023e0b85e1474b6d57a47e499648027f695f"
+    },
+    {
+      "path": "git-compiler-constructor-value-audit/git-add.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "git-compiler-constructor-value-audit/git-add.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "git-compiler-constructor-value-audit/git-analyze.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "git-compiler-constructor-value-audit/git-analyze.stdout",
+      "bytes": 6438,
+      "sha256": "adf8b1aa84827c9a567ccff2c38c86da559bd23f4420764ebe4648ea24505bc8"
+    },
+    {
+      "path": "git-compiler-constructor-value-audit/git-commit.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "git-compiler-constructor-value-audit/git-commit.stdout",
+      "bytes": 186,
+      "sha256": "d6614c0a8bcfee7237579fb08d9b8536cee39eb5372cbacbade32f70ea1b6097"
+    },
+    {
+      "path": "git-compiler-constructor-value-audit/git-head.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "git-compiler-constructor-value-audit/git-head.stdout",
+      "bytes": 41,
+      "sha256": "a9e717b21fdc13153043f0bc0d0cf02df3139c249a817925c3dbfb222b868c63"
+    },
+    {
+      "path": "git-compiler-constructor-value-audit/git-init.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "git-compiler-constructor-value-audit/git-init.stdout",
+      "bytes": 119,
+      "sha256": "7fe2c874769e6dfa175d40ea9fe6d7c107c16c9804e2c41f266e52cfa1f51ca6"
+    },
+    {
+      "path": "git-compiler-constructor-value-audit/progress.json",
+      "bytes": 3947,
+      "sha256": "20c20fb6cab67fe2744a3d2f37778d5bd7392a6009ffef60a001c1274fb400f0"
+    },
+    {
+      "path": "git-compiler-constructor-value-audit/result.json",
+      "bytes": 4710,
+      "sha256": "ac812bbdda8f534fe39e13b3bcc1cbbb64506cd66c667bc169addf03be2b9c60"
+    },
+    {
+      "path": "git-compiler-constructor-values-r1/actual-cli.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "git-compiler-constructor-values-r1/actual-cli.stdout",
+      "bytes": 8106,
+      "sha256": "15e8f4252f97d416d213fa3c6d98c2bb5f3ff80868effdc4d0902162196e4fe9"
+    },
+    {
+      "path": "git-compiler-constructor-values-r1/build.stderr",
+      "bytes": 60,
+      "sha256": "bb76d746acf8827d33e2ea465a2a7e5fa1c6a4d49d77f76f98461f0764efb480"
+    },
+    {
+      "path": "git-compiler-constructor-values-r1/build.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "git-compiler-constructor-values-r1/class-value-green.stderr",
+      "bytes": 678,
+      "sha256": "2ff482480dc4b1d31ef79a888a65eb7259acda20c11d2b1489ff07b7086a6870"
+    },
+    {
+      "path": "git-compiler-constructor-values-r1/class-value-green.stdout",
+      "bytes": 289,
+      "sha256": "62ec16c17950290c7dfafc98e79bc6204259974124ac607a8914a14d67a56e3b"
+    },
+    {
+      "path": "git-compiler-constructor-values-r1/clippy.stderr",
+      "bytes": 172,
+      "sha256": "c94b8c7c36a0e472bb7d2ba77acd4dd91ec87cf7c9f2743cf8bb14d1fd57a021"
+    },
+    {
+      "path": "git-compiler-constructor-values-r1/clippy.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "git-compiler-constructor-values-r1/controller.py",
+      "bytes": 3703,
+      "sha256": "64853d90bd91d7b1fecbd2886f89fd21e122fe1512aef9b7f37ccbc6000da298"
+    },
+    {
+      "path": "git-compiler-constructor-values-r1/fmt.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "git-compiler-constructor-values-r1/fmt.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "git-compiler-constructor-values-r1/git_affected_details-cleanup.json",
+      "bytes": 356,
+      "sha256": "487ad8ee6d3c6bc41b4260d3f2a97e09b7fce0f34e52af50f6527b2f786f8ddc"
+    },
+    {
+      "path": "git-compiler-constructor-values-r1/git_affected_details.stderr",
+      "bytes": 277,
+      "sha256": "6a19ed2c58a904b08f82bb099e6078dd62a31b71da1c6108ddcadd5122bc8692"
+    },
+    {
+      "path": "git-compiler-constructor-values-r1/git_affected_details.stdout",
+      "bytes": 1198,
+      "sha256": "e1942c7bd59cccb46e660b54587e1ba1514f6c6dc0ac2e44ca69cf876acd8773"
+    },
+    {
+      "path": "git-compiler-constructor-values-r1/git_affected_qualification-cleanup.json",
+      "bytes": 368,
+      "sha256": "9542e43de89a4d6cdf8d8e2f639bc3cabe35268831cf07eb181275120858a2cb"
+    },
+    {
+      "path": "git-compiler-constructor-values-r1/git_affected_qualification.stderr",
+      "bytes": 289,
+      "sha256": "5fe27838f56accbebea0e090bbb7c470673a56d054b4902aafd10980f8e8f6ef"
+    },
+    {
+      "path": "git-compiler-constructor-values-r1/git_affected_qualification.stdout",
+      "bytes": 430,
+      "sha256": "d533e29dd69f284f7b5a1227b1ded88fd8342279ce61ea545983ad00f89fb0b5"
+    },
+    {
+      "path": "git-compiler-constructor-values-r1/git_compiler_affected-cleanup.json",
+      "bytes": 358,
+      "sha256": "a5a30e86db0d9cefe5a2536237e690203737fc36d43752769b20a9a79ee3d338"
+    },
+    {
+      "path": "git-compiler-constructor-values-r1/git_compiler_affected.stderr",
+      "bytes": 280,
+      "sha256": "20f4dd45450613dcdda002b529930b33db30a1d1ed0c85257f24266912729992"
+    },
+    {
+      "path": "git-compiler-constructor-values-r1/git_compiler_affected.stdout",
+      "bytes": 1274,
+      "sha256": "d405ec3bef47919d4a2e719ac970c692e9d649ca4ef6eccae7aece45d00ee00e"
+    },
+    {
+      "path": "git-compiler-constructor-values-r1/git_impact_details-cleanup.json",
+      "bytes": 352,
+      "sha256": "fca5dba913ff006a793eb5aa3403ddc7976bd00b78d662250da6cfabebaf0152"
+    },
+    {
+      "path": "git-compiler-constructor-values-r1/git_impact_details.stderr",
+      "bytes": 273,
+      "sha256": "1105c306ce18daa59126ee9c04202ad5a0b6cde0c2c7477df60f9178fe4ee1d4"
+    },
+    {
+      "path": "git-compiler-constructor-values-r1/git_impact_details.stdout",
+      "bytes": 2599,
+      "sha256": "24fb9a9ed4d9f7759f19841a9c489085598515d0fed3895016b258ad45a0961c"
+    },
+    {
+      "path": "git-compiler-constructor-values-r1/javascript-syntax.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "git-compiler-constructor-values-r1/javascript-syntax.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "git-compiler-constructor-values-r1/npm-tests.stderr",
+      "bytes": 198,
+      "sha256": "bbc4d35239676184ccfbb9082fb652fdb8bad4d05b7ab394fdda5154eec6e27b"
+    },
+    {
+      "path": "git-compiler-constructor-values-r1/npm-tests.stdout",
+      "bytes": 24827,
+      "sha256": "434fd9a257cd43cc4e8ff9e87afe4242a3fbeb86a852a0372b24c839d85c6fae"
+    },
+    {
+      "path": "git-compiler-constructor-values-r1/projects-cleanup.json",
+      "bytes": 330,
+      "sha256": "605fe1b925c7babd4f58aec34559fd872ea5593926e9fd47e0af01b9f90a46a8"
+    },
+    {
+      "path": "git-compiler-constructor-values-r1/projects.stderr",
+      "bytes": 253,
+      "sha256": "04cec037a2b1651d53ee26f80b0cfa6e7f77173b78e6f3db63563be91af5df16"
+    },
+    {
+      "path": "git-compiler-constructor-values-r1/projects.stdout",
+      "bytes": 727,
+      "sha256": "5246ec64d7b78c56c640718b72eda1880bfd229a7e31cfc9d801cc7cf63f087f"
+    },
+    {
+      "path": "git-compiler-constructor-values-r1/results.json",
+      "bytes": 3379,
+      "sha256": "f04b069b9752b5d8f6c99f70078d970afb2276ce2b04772c675010a2138e427b"
+    },
+    {
+      "path": "git-compiler-constructor-values-r1/source-before.json",
+      "bytes": 108626,
+      "sha256": "dce30039e656c786ed56d58a36d127c1dffaffdc483114a59674bf0a747f907d"
+    },
+    {
+      "path": "git-compiler-constructor-values-r1/source-runtime.js",
+      "bytes": 25672,
+      "sha256": "423b957bffaa4a41f26e4316b65440b5509b1dfca0df8a4015dd9c765b9e2ce9"
+    },
+    {
+      "path": "git-compiler-constructor-values-r1/typecheck.stderr",
+      "bytes": 101,
+      "sha256": "30ef9ce16cf042ab6f160e0a76c1fbfe22f02a3c3a3659ee62863ffc1efdbfdf"
+    },
+    {
+      "path": "git-compiler-constructor-values-r1/typecheck.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "git-compiler-constructor-values-green/controller.py",
+      "bytes": 4128,
+      "sha256": "25df8b050ee4ffdf219bcd7046bf8bad3ebb4a989b2ceb06e871dc7408610ebe"
+    },
+    {
+      "path": "git-compiler-constructor-values-green/progress.json",
+      "bytes": 361,
+      "sha256": "b722c65420e45c57039f16048a3d8b4069e2b0abedfefe82f13c1dd5acb98cf5"
+    },
+    {
+      "path": "git-compiler-constructor-values-green/same-report-green.stderr",
+      "bytes": 3055,
+      "sha256": "2de8844c80a51cc2c002fa084fd8be7995ed7cca8a448656200baa851f4464bb"
+    },
+    {
+      "path": "git-compiler-constructor-values-green/same-report-green.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "git-compiler-constructor-values-green-r2/controller.py",
+      "bytes": 4243,
+      "sha256": "95966db1034d4292432db78a7674a8d264c4f0dbf959cc8c651abd88c3376b32"
+    },
+    {
+      "path": "git-compiler-constructor-values-green-r2/progress.json",
+      "bytes": 1798,
+      "sha256": "d66e8bc6ab7fb53e6b112a2cfff95eb574814c6ab2aa71ca039d980f39eb0323"
+    },
+    {
+      "path": "git-compiler-constructor-values-green-r2/result.json",
+      "bytes": 2348,
+      "sha256": "b29aebf51a94c13c367390e4df14d1e8579b227b79b252e33afb9a2736aba7b9"
+    },
+    {
+      "path": "git-compiler-constructor-values-green-r2/same-report-green-repeat.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "git-compiler-constructor-values-green-r2/same-report-green-repeat.stdout",
+      "bytes": 46442,
+      "sha256": "97e1cb23bb97110a491a9d8e066396cea078ddeb7ca8397e6add1328e1c8d086"
+    },
+    {
+      "path": "git-compiler-constructor-values-green-r2/same-report-green.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "git-compiler-constructor-values-green-r2/same-report-green.stdout",
+      "bytes": 46442,
+      "sha256": "97e1cb23bb97110a491a9d8e066396cea078ddeb7ca8397e6add1328e1c8d086"
+    },
+    {
+      "path": "git-compiler-constructor-values-controls-r2/class-value-green.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "git-compiler-constructor-values-controls-r2/class-value-green.stdout",
+      "bytes": 1858,
+      "sha256": "c14955bdebfc27389cfb1fdeaf981d997c21dd34ed165873a3f534d48cbb3c5e"
+    },
+    {
+      "path": "git-compiler-constructor-values-controls-r2/controller.py",
+      "bytes": 1615,
+      "sha256": "45f13a54091a4fd69e7c7853e974fe57cbd4f9841d4954d65f1299eeb9b227f4"
+    },
+    {
+      "path": "git-compiler-constructor-values-controls-r2/legacy-compiler.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "git-compiler-constructor-values-controls-r2/legacy-compiler.stdout",
+      "bytes": 826,
+      "sha256": "3744635e50f1935da507f070813600cc7f01f7b89feae982beed4f32554dc963"
+    },
+    {
+      "path": "git-compiler-constructor-values-controls-r2/result.json",
+      "bytes": 712,
+      "sha256": "1574f5496df74a3f529a011be2595ab2ae886ca2e88f8b427b02a10296aa7076"
+    },
+    {
+      "path": "git-compiler-constructor-values-controls-r2/results.json",
+      "bytes": 498,
+      "sha256": "d54b271052b41f269b69604b5baef35f87456e61f4db3198c1040e9fb9487c12"
+    },
+    {
+      "path": "git-compiler-constructor-values-controls-r2/source-before.json",
+      "bytes": 108626,
+      "sha256": "dce30039e656c786ed56d58a36d127c1dffaffdc483114a59674bf0a747f907d"
+    },
+    {
+      "path": "git-compiler-constructor-values-cli-final/budget-converge-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "git-compiler-constructor-values-cli-final/budget-converge-0.stdout",
+      "bytes": 137173,
+      "sha256": "5732935546f02d82216b2460494b2a3d9a0b66787e25d9728c3833f2f2992759"
+    },
+    {
+      "path": "git-compiler-constructor-values-cli-final/budget-converge-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "git-compiler-constructor-values-cli-final/budget-converge-1.stdout",
+      "bytes": 137173,
+      "sha256": "e7a93ca9c1ea8c3abe1d6aba2c6dcd78e621e3546bc6a1f11c825d93ef1ddde8"
+    },
+    {
+      "path": "git-compiler-constructor-values-cli-final/captured-affected-after.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "git-compiler-constructor-values-cli-final/captured-affected-after.stdout",
+      "bytes": 94303,
+      "sha256": "12cb800e0bea13b025fb84eb24d0aa1c6f71120eb3711893d1fc011e1d279557"
+    },
+    {
+      "path": "git-compiler-constructor-values-cli-final/captured-affected-before.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "git-compiler-constructor-values-cli-final/captured-affected-before.stdout",
+      "bytes": 94303,
+      "sha256": "12cb800e0bea13b025fb84eb24d0aa1c6f71120eb3711893d1fc011e1d279557"
+    },
+    {
+      "path": "git-compiler-constructor-values-cli-final/compiler-affected-repeat.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "git-compiler-constructor-values-cli-final/compiler-affected-repeat.stdout",
+      "bytes": 137174,
+      "sha256": "335c8be924e5477d14e2ad859eff6409ebdffd79baaab893835da6666609a857"
+    },
+    {
+      "path": "git-compiler-constructor-values-cli-final/compiler-affected.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "git-compiler-constructor-values-cli-final/compiler-affected.stdout",
+      "bytes": 137174,
+      "sha256": "335c8be924e5477d14e2ad859eff6409ebdffd79baaab893835da6666609a857"
+    },
+    {
+      "path": "git-compiler-constructor-values-cli-final/controller.py",
+      "bytes": 7381,
+      "sha256": "57b0424a4229abfd1c783fe85b300947a3c519f44a683e323b5b0cb7db68d570"
+    },
+    {
+      "path": "git-compiler-constructor-values-cli-final/git-add.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "git-compiler-constructor-values-cli-final/git-add.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "git-compiler-constructor-values-cli-final/git-analyze.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "git-compiler-constructor-values-cli-final/git-analyze.stdout",
+      "bytes": 58919,
+      "sha256": "6b8b15ab613b3cc9cee90d65615540bb3d05de31baaf5f74309018e968f55bb8"
+    },
+    {
+      "path": "git-compiler-constructor-values-cli-final/git-commit.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "git-compiler-constructor-values-cli-final/git-commit.stdout",
+      "bytes": 168,
+      "sha256": "ba3af779af013719c6325870324c0def8749cb64c96fa055e576ef232407c07f"
+    },
+    {
+      "path": "git-compiler-constructor-values-cli-final/git-head.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "git-compiler-constructor-values-cli-final/git-head.stdout",
+      "bytes": 41,
+      "sha256": "33c749da6deffe7f706a46a432d00b17c3e526e50d282d50cea3fb3e84a71640"
+    },
+    {
+      "path": "git-compiler-constructor-values-cli-final/git-init.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "git-compiler-constructor-values-cli-final/git-init.stdout",
+      "bytes": 134,
+      "sha256": "1c3e2accab1fd8e082361d5fd375d38132b551d968772b16031df4f400ae1ca5"
+    },
+    {
+      "path": "git-compiler-constructor-values-cli-final/one-byte-short.stderr",
+      "bytes": 46,
+      "sha256": "232c8652efc76f51c5d010660520d29fa97d0550f94f1c11dd7e959bc86360b6"
+    },
+    {
+      "path": "git-compiler-constructor-values-cli-final/one-byte-short.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "git-compiler-constructor-values-cli-final/progress.json",
+      "bytes": 9827,
+      "sha256": "78d99478646a2dd71a59ebff039684835d44ba74ca7cf4c1d8ca00f88ed6bbe6"
+    },
+    {
+      "path": "git-compiler-constructor-values-cli-final/result.json",
+      "bytes": 11574,
+      "sha256": "b7fc989dff99fbc427ad186691827312225078c084e97e9601b717ab4cdbfb60"
+    },
+    {
+      "path": "git-compiler-constructor-values-cli-final/source-state-before.json",
+      "bytes": 3704,
+      "sha256": "90e825afb87fea470cbe8c82063ac472bb878cb2f7f5ccfc9e8f90078341d9b8"
+    },
+    {
+      "path": "git-compiler-constructor-values-cli-final/untrusted.stderr",
+      "bytes": 42,
+      "sha256": "c4a4c264d89702e583137395f9aa41454d6953f4be019a320cf60ba09293b1e0"
+    },
+    {
+      "path": "git-compiler-constructor-values-cli-final/untrusted.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "git-compiler-affected-legacy/after-constructor-values-final/controller.py",
+      "bytes": 1763,
+      "sha256": "0611cd20d755d8130ed876b219116bd60cda77d4047db08da2ac1e0bbcca3a62"
+    },
+    {
+      "path": "git-compiler-affected-legacy/after-constructor-values-final/legacy-after.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "git-compiler-affected-legacy/after-constructor-values-final/legacy-after.stdout",
+      "bytes": 13627,
+      "sha256": "8748e5588bfe84cd21ea5599102471a9b23e91edddfc3bd7de31da274282247f"
+    },
+    {
+      "path": "git-compiler-affected-legacy/after-constructor-values-final/progress.json",
+      "bytes": 861,
+      "sha256": "02fbb59bbf3f72a74918696996bd3f7d2459765fcd8cf3bf672fa1fe88bd891a"
+    },
+    {
+      "path": "git-compiler-affected-legacy/after-constructor-values-final/result.json",
+      "bytes": 1140,
+      "sha256": "fb6e6a9141a335f0b07ccc75a1613c274c6f41420295411ddf33d829744b74eb"
+    }
+  ]
+}

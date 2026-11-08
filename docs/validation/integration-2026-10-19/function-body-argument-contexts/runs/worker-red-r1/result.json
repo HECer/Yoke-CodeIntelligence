@@ -1,0 +1,46 @@
+{
+  "cases": [
+    {
+      "case": 0,
+      "language": "ts",
+      "exitCode": 1,
+      "error": "Body context has errors after expansion: [{\"config\":\"tsconfig.json\",\"code\":7006,\"severity\":\"error\",\"message\":\"Parameter 'n' implicitly has an 'any' type.\",\"path\":\"main.ts\",\"startByte\":66,\"endByte\":67,\"text\":\"n\"}]"
+    },
+    {
+      "case": 1,
+      "language": "ts",
+      "exitCode": 1,
+      "error": "Body context has errors after expansion: [{\"config\":\"tsconfig.json\",\"code\":7006,\"severity\":\"error\",\"message\":\"Parameter 'n' implicitly has an 'any' type.\",\"path\":\"main.ts\",\"startByte\":75,\"endByte\":76,\"text\":\"n\"}]"
+    },
+    {
+      "case": 2,
+      "language": "ts",
+      "exitCode": 1,
+      "error": "Body context has errors after expansion: [{\"config\":\"tsconfig.json\",\"code\":7006,\"severity\":\"error\",\"message\":\"Parameter 'n' implicitly has an 'any' type.\",\"path\":\"main.ts\",\"startByte\":71,\"endByte\":72,\"text\":\"n\"}]"
+    },
+    {
+      "case": 3,
+      "language": "ts",
+      "exitCode": 1,
+      "error": "Body context has errors after expansion: [{\"config\":\"tsconfig.json\",\"code\":7006,\"severity\":\"error\",\"message\":\"Parameter 'n' implicitly has an 'any' type.\",\"path\":\"main.ts\",\"startByte\":67,\"endByte\":68,\"text\":\"n\"},{\"config\":\"tsconfig.json\",\"code\":2322,\"severity\":\"error\",\"message\":\"Type '((n: any) => any)[]' is not assignable to type '[(n: number) => number]'.\\n  Target requires 1 element(s) but source may have fewer.\",\"path\":\"main.ts\",\"startByte\":84,\"endByte\":90,\"text\":\"values\"}]"
+    },
+    {
+      "case": 4,
+      "language": "ts",
+      "exitCode": 1,
+      "error": "Body context has errors after expansion: [{\"config\":\"tsconfig.json\",\"code\":7006,\"severity\":\"error\",\"message\":\"Parameter 'n' implicitly has an 'any' type.\",\"path\":\"main.ts\",\"startByte\":66,\"endByte\":67,\"text\":\"n\"}]"
+    },
+    {
+      "case": 5,
+      "language": "js",
+      "exitCode": 1,
+      "error": "Body context has errors after expansion: [{\"config\":\"tsconfig.json\",\"code\":7006,\"severity\":\"error\",\"message\":\"Parameter 'n' implicitly has an 'any' type.\",\"path\":\"main.js\",\"startByte\":83,\"endByte\":84,\"text\":\"n\"}]"
+    }
+  ],
+  "allChecksPassed": false,
+  "nativeAdmission": false,
+  "snapshotIdsSynthetic": true,
+  "analyzedCodeExecuted": false,
+  "ownedLiteralFixturesExecuted": true,
+  "diagnosticOnlyWorkerPatch": true
+}

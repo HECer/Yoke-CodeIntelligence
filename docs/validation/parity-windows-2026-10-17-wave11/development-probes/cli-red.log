@@ -1,0 +1,117 @@
+   Compiling yoke-code-intelligence v0.5.0 (E:\Yoke-Worktrees\meaning-join-20261017\native)
+    Finished `test` profile [unoptimized] target(s) in 4.67s
+     Running tests\meaning_join_cli.rs (E:/Yoke-Build-Cache/meaning-join-20261017\debug\deps\meaning_join_cli-6a666de6959ec2c0.exe)
+
+running 8 tests
+test join_capacities_and_exact_output_newline_refuse_the_whole_request_without_publication ... FAILED
+test join_host_admission_precedes_missing_or_incomplete_store_initialization ... FAILED
+test empty_join_groups_keep_equal_labels_and_cross_graph_references_distinct ... FAILED
+test join_global_capture_and_execution_flags_refuse_with_valid_registered_parents ... FAILED
+test checked_lookup_degrees_and_directed_trace_keep_selfloops_and_raw_slot_counts ... FAILED
+test join_order_and_host_member_order_do_not_change_projection_bytes_or_identity ... FAILED
+test join_refuses_forged_pins_unselected_members_and_tampered_parent_receipts ... FAILED
+test joined_graphs_retain_all_original_claims_directed_copies_slots_and_receipts_without_live_source ... FAILED
+
+failures:
+
+---- join_capacities_and_exact_output_newline_refuse_the_whole_request_without_publication stdout ----
+
+thread 'join_capacities_and_exact_output_newline_refuse_the_whole_request_without_publication' (29628) panicked at native\tests\meaning_join_cli.rs:88:5:
+stderr:error: unrecognized subcommand 'join'
+
+Usage: yoke.exe meaning [OPTIONS] <COMMAND>
+
+For more information, try '--help'.
+
+stdout:
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- join_host_admission_precedes_missing_or_incomplete_store_initialization stdout ----
+
+thread 'join_host_admission_precedes_missing_or_incomplete_store_initialization' (73136) panicked at native\tests\meaning_join_cli.rs:103:5:
+Expected meaning_join_, stderr:error: unrecognized subcommand 'join'
+
+Usage: yoke.exe meaning [OPTIONS] <COMMAND>
+
+For more information, try '--help'.
+
+
+---- empty_join_groups_keep_equal_labels_and_cross_graph_references_distinct stdout ----
+
+thread 'empty_join_groups_keep_equal_labels_and_cross_graph_references_distinct' (57048) panicked at native\tests\meaning_join_cli.rs:88:5:
+stderr:error: unrecognized subcommand 'join'
+
+Usage: yoke.exe meaning [OPTIONS] <COMMAND>
+
+For more information, try '--help'.
+
+stdout:
+
+---- join_global_capture_and_execution_flags_refuse_with_valid_registered_parents stdout ----
+
+thread 'join_global_capture_and_execution_flags_refuse_with_valid_registered_parents' (70432) panicked at native\tests\meaning_join_cli.rs:88:5:
+stderr:error: unrecognized subcommand 'join'
+
+Usage: yoke.exe meaning [OPTIONS] <COMMAND>
+
+For more information, try '--help'.
+
+stdout:
+
+---- checked_lookup_degrees_and_directed_trace_keep_selfloops_and_raw_slot_counts stdout ----
+
+thread 'checked_lookup_degrees_and_directed_trace_keep_selfloops_and_raw_slot_counts' (73984) panicked at native\tests\meaning_join_cli.rs:88:5:
+stderr:error: unrecognized subcommand 'join'
+
+Usage: yoke.exe meaning [OPTIONS] <COMMAND>
+
+For more information, try '--help'.
+
+stdout:
+
+---- join_order_and_host_member_order_do_not_change_projection_bytes_or_identity stdout ----
+
+thread 'join_order_and_host_member_order_do_not_change_projection_bytes_or_identity' (60468) panicked at native\tests\meaning_join_cli.rs:88:5:
+stderr:error: unrecognized subcommand 'join'
+
+Usage: yoke.exe meaning [OPTIONS] <COMMAND>
+
+For more information, try '--help'.
+
+stdout:
+
+---- join_refuses_forged_pins_unselected_members_and_tampered_parent_receipts stdout ----
+
+thread 'join_refuses_forged_pins_unselected_members_and_tampered_parent_receipts' (61660) panicked at native\tests\meaning_join_cli.rs:103:5:
+Expected meaning_join_, stderr:error: unrecognized subcommand 'join'
+
+Usage: yoke.exe meaning [OPTIONS] <COMMAND>
+
+For more information, try '--help'.
+
+
+---- joined_graphs_retain_all_original_claims_directed_copies_slots_and_receipts_without_live_source stdout ----
+
+thread 'joined_graphs_retain_all_original_claims_directed_copies_slots_and_receipts_without_live_source' (72164) panicked at native\tests\meaning_join_cli.rs:88:5:
+stderr:error: unrecognized subcommand 'join'
+
+Usage: yoke.exe meaning [OPTIONS] <COMMAND>
+
+For more information, try '--help'.
+
+stdout:
+
+
+failures:
+    checked_lookup_degrees_and_directed_trace_keep_selfloops_and_raw_slot_counts
+    empty_join_groups_keep_equal_labels_and_cross_graph_references_distinct
+    join_capacities_and_exact_output_newline_refuse_the_whole_request_without_publication
+    join_global_capture_and_execution_flags_refuse_with_valid_registered_parents
+    join_host_admission_precedes_missing_or_incomplete_store_initialization
+    join_order_and_host_member_order_do_not_change_projection_bytes_or_identity
+    join_refuses_forged_pins_unselected_members_and_tampered_parent_receipts
+    joined_graphs_retain_all_original_claims_directed_copies_slots_and_receipts_without_live_source
+
+test result: FAILED. 0 passed; 8 failed; 0 ignored; 0 measured; 0 filtered out; finished in 10.90s
+
+error: test failed, to rerun pass `--test meaning_join_cli`

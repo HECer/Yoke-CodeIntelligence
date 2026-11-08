@@ -1,0 +1,2037 @@
+{
+  "schemaVersion": 1,
+  "asOf": "2026-10-22",
+  "reviewSourceCommit": "b1d42e50ea5328207af9e594a77626d8a9cdc81f",
+  "scope": "Current native contract mapping for73 historical unreconciled rows and2 historical unavailable dashboard rows; not full pinned upstream behavior or runtime certification.",
+  "pinnedInventorySha256": "993eb15143bf61a1cf64c80ff53d491ee13f7faeecf2ff4b53a6975de9972c3e",
+  "historicalLedgerCanonicalSha256": "bc046d3df2e502b912c04f7b77f35e4d924ded9e38f0c8d20859c2831bea2cd8",
+  "historicalLedgerSummaryCanonicalSha256": "3e03caa4bc7b6755144bed2211d92f06bd69737fe7f3aef9581aea60d4ce0375",
+  "rows": [
+    {
+      "ref": "graphify:postgres_catalog",
+      "pointer": "/upstreams/graphify/capabilities/8",
+      "pinnedEntrySha256": "5c93942402da6fc18357e9cce886ca717ebde591244066d81ce609b1a9277e81",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "bounded_connector",
+      "nativeBehavior": "Explicit trusted PostgreSQL catalog capture is implemented with source-bound imported observations.",
+      "remainingBoundary": "Other servers/roles/versions, semantic truth and full upstream mixed-source equivalence remain open.",
+      "evidenceProfile": "postgres",
+      "fullContractCertification": false
+    },
+    {
+      "ref": "graphify:google_shortcuts",
+      "pointer": "/upstreams/graphify/capabilities/10",
+      "pinnedEntrySha256": "008cdfa3b2a5b6a8cf5ca69e415d2a023cf9ff47bd8783936427bbbf286fdd24",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "controlled_transports_live_open",
+      "nativeBehavior": "Trusted-gws and native fixed HTTP Docs/Sheets/Slides shortcut export are implemented with offline immutable replay.",
+      "remainingBoundary": "Authenticated Google live acceptance remains unavailable without an approved test document.",
+      "evidenceProfile": "google",
+      "fullContractCertification": false
+    },
+    {
+      "ref": "graphify:url_ingest",
+      "pointer": "/upstreams/graphify/capabilities/11",
+      "pinnedEntrySha256": "bd22fd7bcd8eceb35d63ba67891b6469dc29fe93896e5a3ab00334b383ccfaa1",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "bounded_anonymous_acquisition",
+      "nativeBehavior": "Explicit anonymous HTTP text/raw-HTML/PDF and shared-rate-coordinated arxiv metadata/PDF acquisition are implemented.",
+      "remainingBoundary": "Authenticated/social/video routes, article interpretation and semantic truth remain open.",
+      "evidenceProfile": "acquisition",
+      "fullContractCertification": false
+    },
+    {
+      "ref": "graphify:asr",
+      "pointer": "/upstreams/graphify/capabilities/12",
+      "pinnedEntrySha256": "ae9171ed007f47da9a97089481f0147c60d6c3fe7f1c6129c20fb7d3951cd2f8",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "not_implemented",
+      "nativeBehavior": "Native media inspection explicitly reports technical metadata without speech interpretation.",
+      "remainingBoundary": "No native faster-whisper/ASR adapter is implemented; metadata cannot substitute for transcription.",
+      "evidenceProfile": "media_boundary",
+      "fullContractCertification": false
+    },
+    {
+      "ref": "graphify:affected",
+      "pointer": "/upstreams/graphify/capabilities/18",
+      "pinnedEntrySha256": "7896a4f81029022db7bd96d497f138a197475d8eddd4bd6ad7b833efd542856e",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "bounded_impact_analysis",
+      "nativeBehavior": "Source-bound Git impact, areas, captured owners, compiler references/calls/source contracts and possible targets have distinct producers.",
+      "remainingBoundary": "Broader declaration/configuration/implicit effects, exhaustive quality and upstream report equivalence remain open.",
+      "evidenceProfile": "affected",
+      "fullContractCertification": false
+    },
+    {
+      "ref": "graphify:db_push",
+      "pointer": "/upstreams/graphify/capabilities/20",
+      "pinnedEntrySha256": "1e59457c9d399b037665862ae6bf3411a92b7acc3ad75fac95dbdcf683fbb16d",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "historical_live_connectors",
+      "nativeBehavior": "Native reviewed Neo4j QueryAPIv2/Cypher5 and FalkorDB publication preserve original directions/parallel evidence and CAS/no-resend recovery.",
+      "remainingBoundary": "Historical live versions are qualified only at their pinned source; current live, other versions, production/RBAC and mixed-source equivalence remain open.",
+      "evidenceProfile": "db",
+      "fullContractCertification": false
+    },
+    {
+      "ref": "graphify:git_lifecycle",
+      "pointer": "/upstreams/graphify/capabilities/23",
+      "pinnedEntrySha256": "d9c5323346a12c4de7a60c30951b8b2c59d6b5328dc6560f67f56267f7f8ade0",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "partial_native_lifecycle",
+      "nativeBehavior": "Explicit native watch/Git workflows and guarded host installation exist.",
+      "remainingBoundary": "Does not certify upstream automatic Git-hook behavior, nested repository lifecycle or all status/push freshness semantics.",
+      "evidenceProfile": "git_lifecycle",
+      "fullContractCertification": false
+    },
+    {
+      "ref": "graphify:diagnostics_benchmark",
+      "pointer": "/upstreams/graphify/capabilities/28",
+      "pinnedEntrySha256": "06d534da693c1cd8e38218a306b8c604356f3387436aa5c594fcc3516ad938d4",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "partial_local_benchmark",
+      "nativeBehavior": "An owned synthetic native benchmark example and bounded source/capability diagnostics exist.",
+      "remainingBoundary": "Full upstream diagnostics behavior, independent comparative correctness/performance and model-quality campaigns remain open.",
+      "evidenceProfile": "benchmark",
+      "fullContractCertification": false
+    },
+    {
+      "ref": "serena:configuration:layers",
+      "pointer": "/upstreams/serena/configuration/layers",
+      "pinnedEntrySha256": "d89ef0d3d07a0a634897d8e0b3020e179b189176740e3252bd75322f5cc1cdf4",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "bounded_layers",
+      "nativeBehavior": "The six named layers have explicit native selection/composition with provenance and persisted-state checks.",
+      "remainingBoundary": "Files are explicitly hash-selected; broader discovery/Jinja/client equivalence remains open.",
+      "evidenceProfile": "configuration",
+      "fullContractCertification": false
+    },
+    {
+      "ref": "serena:configuration:projectKeys",
+      "pointer": "/upstreams/serena/configuration/projectKeys",
+      "pinnedEntrySha256": "d2fab43b4b193c19a525c2613cfaf3d7f1c3551a69f33255b9cc2520f1f8de20",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "mixed_key_limits_indexed",
+      "nativeBehavior": "All25 pinned key names have explicit native handlers;21 have bounded native projections and4 accept restricted defaults only.",
+      "remainingBoundary": "This is key-level admission coverage, not full value/dialect/upstream equivalence.",
+      "evidenceProfile": "configuration",
+      "fullContractCertification": false
+    },
+    {
+      "ref": "serena:configuration:modeNames",
+      "pointer": "/upstreams/serena/configuration/modeNames",
+      "pinnedEntrySha256": "2b94e3edcab249e3a4997bbdec75f396fcc9abd7aaa37eb184af47993760df20",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "native_guidance_and_gates",
+      "nativeBehavior": "All9 names match the pinned sequence.",
+      "remainingBoundary": "Guidance does not prove model/client behavior, run benchmarks, activate projects or grant authority.",
+      "evidenceProfile": "steering",
+      "fullContractCertification": false
+    },
+    {
+      "ref": "serena:configuration:contextNames",
+      "pointer": "/upstreams/serena/configuration/contextNames",
+      "pinnedEntrySha256": "bde362974c79bd59b822369b826530d9fb44832057f1be142400d1062cbb87b9",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "native_guidance_and_exclusions",
+      "nativeBehavior": "All16 names match the pinned sequence.",
+      "remainingBoundary": "A context label is not a branded installation or full upstream prompt/Jinja/client qualification.",
+      "evidenceProfile": "steering",
+      "fullContractCertification": false
+    },
+    {
+      "ref": "serena:configuration:layers:0",
+      "pointer": "/upstreams/serena/configuration/layers/0",
+      "pinnedEntrySha256": "bcdbfb431ee78f60e176d975d79bc5b1442b6dd2d0afc27f2f7e34326cc1cb5b",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "bounded_layer",
+      "nativeBehavior": "The host global layer participates in the native host-owned steering resolution.",
+      "remainingBoundary": "Literal guidance and settings grant no source/runtime/write authority; automatic discovery is not implied.",
+      "evidenceProfile": "configuration",
+      "fullContractCertification": false
+    },
+    {
+      "ref": "serena:configuration:layers:1",
+      "pointer": "/upstreams/serena/configuration/layers/1",
+      "pinnedEntrySha256": "471cacee86a419f75111098ba664eeb1e7db51b9436a9821c23851df5ed52c15",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "bounded_layer",
+      "nativeBehavior": "The project layer participates in the native host-owned steering resolution.",
+      "remainingBoundary": "Literal guidance and settings grant no source/runtime/write authority; automatic discovery is not implied.",
+      "evidenceProfile": "configuration",
+      "fullContractCertification": false
+    },
+    {
+      "ref": "serena:configuration:layers:2",
+      "pointer": "/upstreams/serena/configuration/layers/2",
+      "pinnedEntrySha256": "405e5b42cb1fb119ab08768d340ea4fbc6f4d422f2c084e837100312914747df",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "bounded_layer",
+      "nativeBehavior": "The project-local layer participates in the native host-owned steering resolution.",
+      "remainingBoundary": "Literal guidance and settings grant no source/runtime/write authority; automatic discovery is not implied.",
+      "evidenceProfile": "configuration",
+      "fullContractCertification": false
+    },
+    {
+      "ref": "serena:configuration:layers:3",
+      "pointer": "/upstreams/serena/configuration/layers/3",
+      "pinnedEntrySha256": "de6c8b4ce47c840e76b68f62c0867b8c573191288cc0df0d3c6214b339dba929",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "bounded_layer",
+      "nativeBehavior": "The fixed startup context layer participates in the native host-owned steering resolution.",
+      "remainingBoundary": "Literal guidance and settings grant no source/runtime/write authority; automatic discovery is not implied.",
+      "evidenceProfile": "configuration",
+      "fullContractCertification": false
+    },
+    {
+      "ref": "serena:configuration:layers:4",
+      "pointer": "/upstreams/serena/configuration/layers/4",
+      "pinnedEntrySha256": "a97d35e418d9f58f5f9bb796fb84a25093436499bcbfa34237e9013d04dd7fad",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "bounded_layer",
+      "nativeBehavior": "The composable modes layer participates in the native host-owned steering resolution.",
+      "remainingBoundary": "Literal guidance and settings grant no source/runtime/write authority; automatic discovery is not implied.",
+      "evidenceProfile": "configuration",
+      "fullContractCertification": false
+    },
+    {
+      "ref": "serena:configuration:layers:5",
+      "pointer": "/upstreams/serena/configuration/layers/5",
+      "pinnedEntrySha256": "071ed5e9e01f128b1d2ea74b8f97331b9ca31e7c94ee97c654a19da4487b2cd0",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "bounded_layer",
+      "nativeBehavior": "The CLI layer participates in the native host-owned steering resolution.",
+      "remainingBoundary": "Literal guidance and settings grant no source/runtime/write authority; automatic discovery is not implied.",
+      "evidenceProfile": "configuration",
+      "fullContractCertification": false
+    },
+    {
+      "ref": "serena:configuration:projectKeys:0",
+      "pointer": "/upstreams/serena/configuration/projectKeys/0",
+      "pinnedEntrySha256": "0e6687ccef04339659f2145b67743378fef8e1321e8ce3f17227539220623df5",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "bounded_assertion",
+      "nativeBehavior": "Validated declared name is retained under the host-selected project binding.",
+      "remainingBoundary": "Does not rename or discover host registrations.",
+      "evidenceProfile": "configuration",
+      "fullContractCertification": false,
+      "handlerLine": 235,
+      "key": "project_name"
+    },
+    {
+      "ref": "serena:configuration:projectKeys:1",
+      "pointer": "/upstreams/serena/configuration/projectKeys/1",
+      "pinnedEntrySha256": "aed1b6ad2e7f5df68c343041a2a9a57744bedec41de4f354ff8d846529115297",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "bounded_selection",
+      "nativeBehavior": "Ordered explicitly registered host backends, declared-extension matching and first fallback.",
+      "remainingBoundary": "Does not install, trust or qualify all77 runtimes.",
+      "evidenceProfile": "lsp",
+      "fullContractCertification": false,
+      "handlerLine": 171,
+      "key": "language_servers"
+    },
+    {
+      "ref": "serena:configuration:projectKeys:2",
+      "pointer": "/upstreams/serena/configuration/projectKeys/2",
+      "pinnedEntrySha256": "02071f6af6a897c92c98c81ebd39a67f9d67cbf0f51ea346a773f967de8cb08b",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "restricted_default_only",
+      "nativeBehavior": "Null and recognized UTF-8 spellings confirm native UTF-8 behavior.",
+      "remainingBoundary": "Other encodings return source_encoding_unavailable; no transcoding.",
+      "evidenceProfile": "configuration",
+      "fullContractCertification": false,
+      "handlerLine": 104,
+      "key": "encoding"
+    },
+    {
+      "ref": "serena:configuration:projectKeys:3",
+      "pointer": "/upstreams/serena/configuration/projectKeys/3",
+      "pinnedEntrySha256": "a55cd1e69e8b6a34694db81f642eb41758f62a630fb06cd1b6b1d300d6a10701",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "bounded_source_policy",
+      "nativeBehavior": "Host-selected LF/CRLF/native formatting affects prepared after-bytes before verification.",
+      "remainingBoundary": "Original source/snapshot/evidence bytes and recovery remain authoritative.",
+      "evidenceProfile": "source_policy",
+      "fullContractCertification": false,
+      "handlerLine": 199,
+      "key": "line_ending"
+    },
+    {
+      "ref": "serena:configuration:projectKeys:4",
+      "pointer": "/upstreams/serena/configuration/projectKeys/4",
+      "pinnedEntrySha256": "3ffd17ed071a7e021ff0d9ccd24124a8f61424ebe7cc63f98d3435cc7142dff9",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "restricted_default_only",
+      "nativeBehavior": "Null/LSP confirm the native backend default.",
+      "remainingBoundary": "JetBrains backend selection returns unavailable; branded tools do not implement this setting.",
+      "evidenceProfile": "configuration",
+      "fullContractCertification": false,
+      "handlerLine": 132,
+      "key": "language_backend"
+    },
+    {
+      "ref": "serena:configuration:projectKeys:5",
+      "pointer": "/upstreams/serena/configuration/projectKeys/5",
+      "pinnedEntrySha256": "b4079d7c7da9966130dad323752d9f2dccc939309eb96eac42f49cfcdb64dbfe",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "bounded_fixed_interface",
+      "nativeBehavior": "Explicit host/global/CLI/startup-project selection binds fixed native/Serena discovery and adapters.",
+      "remainingBoundary": "Later project/mode changes cannot change interface or grant runtime/source authority.",
+      "evidenceProfile": "steering",
+      "fullContractCertification": false,
+      "handlerLine": 221,
+      "key": "agent_interface"
+    },
+    {
+      "ref": "serena:configuration:projectKeys:6",
+      "pointer": "/upstreams/serena/configuration/projectKeys/6",
+      "pinnedEntrySha256": "7662c471ef2a0e219b04305898deac0d942770c9cb14414332c434f6b6699b31",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "bounded_capture_policy",
+      "nativeBehavior": "Explicit selection controls analysis inclusion while retaining observed-ignore provenance.",
+      "remainingBoundary": "Ignored sources remain independently constrained for current source writes.",
+      "evidenceProfile": "source_policy",
+      "fullContractCertification": false,
+      "handlerLine": 164,
+      "key": "ignore_all_files_in_gitignore"
+    },
+    {
+      "ref": "serena:configuration:projectKeys:7",
+      "pointer": "/upstreams/serena/configuration/projectKeys/7",
+      "pinnedEntrySha256": "7524d0c5b6960d26e89fe9123778181db83e6ae594f13e87423d637fa71ff57c",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "bounded_capture_policy",
+      "nativeBehavior": "Ordered additive source exclusions bind capture and current write admission.",
+      "remainingBoundary": "Historical reads and recovery retain their original evidence and scope.",
+      "evidenceProfile": "source_policy",
+      "fullContractCertification": false,
+      "handlerLine": 194,
+      "key": "ignored_paths"
+    },
+    {
+      "ref": "serena:configuration:projectKeys:8",
+      "pointer": "/upstreams/serena/configuration/projectKeys/8",
+      "pinnedEntrySha256": "99d11117965d18c1d815b3572f82935b55cba683067984144b2979d730a14c8a",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "bounded_primary_policy",
+      "nativeBehavior": "Optional primary project source-read-only gate preserves independent secondary rights.",
+      "remainingBoundary": "Does not grant writes or replace global host permissions.",
+      "evidenceProfile": "source_policy",
+      "fullContractCertification": false,
+      "handlerLine": 228,
+      "key": "read_only"
+    },
+    {
+      "ref": "serena:configuration:projectKeys:9",
+      "pointer": "/upstreams/serena/configuration/projectKeys/9",
+      "pinnedEntrySha256": "4f201717fa42aecde591e1eac59a484e821decc559fc5d5660484c5a83815654",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "bounded_lsp_settings",
+      "nativeBehavior": "Host-authorized generic settings reach actual selected language-server processes.",
+      "remainingBoundary": "No YAML-selected executable registration or implicit source-execution authority.",
+      "evidenceProfile": "lsp",
+      "fullContractCertification": false,
+      "handlerLine": 154,
+      "key": "ls_specific_settings"
+    },
+    {
+      "ref": "serena:configuration:projectKeys:10",
+      "pointer": "/upstreams/serena/configuration/projectKeys/10",
+      "pinnedEntrySha256": "cbf364e7de4e49f255283fe39992c4268d28ed6f92183e7a0b76239aa5f0cab7",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "bounded_symbol_projection",
+      "nativeBehavior": "Captured-relative folders select an independent source-bound symbol projection and private LSP roots.",
+      "remainingBoundary": "Does not narrow full capture/source reads or prove reduced parsing cost.",
+      "evidenceProfile": "lsp",
+      "fullContractCertification": false,
+      "handlerLine": 180,
+      "key": "ls_workspace_folders"
+    },
+    {
+      "ref": "serena:configuration:projectKeys:11",
+      "pointer": "/upstreams/serena/configuration/projectKeys/11",
+      "pinnedEntrySha256": "7097fae65e67fc5accc74cc7846e2bd60b0e950ec124db4e364d68e9fdd1cbc8",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "bounded_semantic_roots",
+      "nativeBehavior": "Captured-relative additional folders extend selected private semantic context.",
+      "remainingBoundary": "External/foreign roots remain unavailable; capture membership is not widened.",
+      "evidenceProfile": "lsp",
+      "fullContractCertification": false,
+      "handlerLine": 140,
+      "key": "ls_additional_workspace_folders"
+    },
+    {
+      "ref": "serena:configuration:projectKeys:12",
+      "pointer": "/upstreams/serena/configuration/projectKeys/12",
+      "pinnedEntrySha256": "9706fa6eb3ba21ce0da08968b60ab896b70ff794cb2b925bf9aa7fedc1b1a5e6",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "bounded_steering",
+      "nativeBehavior": "Cumulative layer restrictions affect session discovery and dispatch with query alias identities.",
+      "remainingBoundary": "Independent native eight-tool serve and separately granted execution retain their own policies.",
+      "evidenceProfile": "steering",
+      "fullContractCertification": false,
+      "handlerLine": 206,
+      "key": "excluded_tools"
+    },
+    {
+      "ref": "serena:configuration:projectKeys:13",
+      "pointer": "/upstreams/serena/configuration/projectKeys/13",
+      "pinnedEntrySha256": "88ea66ae6471c62af0ff99b06b4dc67ad29cc7a14a40a7fda2519eef4e9b61c5",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "bounded_steering",
+      "nativeBehavior": "Explicit inclusions operate under fixed bases, exclusions and registered host policy.",
+      "remainingBoundary": "Public2026-10-22 optional-default policy is distinct from pinned4f metadata and runtime qualification.",
+      "evidenceProfile": "steering",
+      "fullContractCertification": false,
+      "handlerLine": 207,
+      "key": "included_optional_tools"
+    },
+    {
+      "ref": "serena:configuration:projectKeys:14",
+      "pointer": "/upstreams/serena/configuration/projectKeys/14",
+      "pinnedEntrySha256": "2d8f3750671e1834654b47b99102654a8fff99e60798039abefc5fc0a932a234",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "bounded_steering",
+      "nativeBehavior": "Nonempty host-selected bases bind provenance and current-state discovery/dispatch.",
+      "remainingBoundary": "A fixed catalog grants no source/runtime/write permission.",
+      "evidenceProfile": "steering",
+      "fullContractCertification": false,
+      "handlerLine": 208,
+      "key": "fixed_tools"
+    },
+    {
+      "ref": "serena:configuration:projectKeys:15",
+      "pointer": "/upstreams/serena/configuration/projectKeys/15",
+      "pinnedEntrySha256": "5501d8a780a428450755b3b24b0062652d9429186f5c0a5f4f69415c9179338b",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "bounded_steering",
+      "nativeBehavior": "Bounded native API group/method exclusions are checked at discovery and host callbacks.",
+      "remainingBoundary": "An explicitly authorized arbitrary REPL keeps independent execution authority.",
+      "evidenceProfile": "steering",
+      "fullContractCertification": false,
+      "handlerLine": 209,
+      "key": "excluded_apis"
+    },
+    {
+      "ref": "serena:configuration:projectKeys:16",
+      "pointer": "/upstreams/serena/configuration/projectKeys/16",
+      "pinnedEntrySha256": "1e29350d70f96a3d69e9d562e6b6f18818780def7658deb63a2b2bc6fdedca57",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "bounded_steering",
+      "nativeBehavior": "Explicit group exceptions expand into known native methods under current registered policy.",
+      "remainingBoundary": "Does not define unknown APIs or bypass runtime/source gates.",
+      "evidenceProfile": "steering",
+      "fullContractCertification": false,
+      "handlerLine": 210,
+      "key": "included_apis"
+    },
+    {
+      "ref": "serena:configuration:projectKeys:17",
+      "pointer": "/upstreams/serena/configuration/projectKeys/17",
+      "pinnedEntrySha256": "626bd39c484e7b7dff0bd025d020f8b2d9267000e0e4a80cb60cecb39d96e5e4",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "bounded_layered_modes",
+      "nativeBehavior": "Highest explicit host/project/local/CLI default selection resolves effective ordered modes.",
+      "remainingBoundary": "Native guidance/gates are not full upstream template or client behavior equivalence.",
+      "evidenceProfile": "steering",
+      "fullContractCertification": false,
+      "handlerLine": 213,
+      "key": "default_modes"
+    },
+    {
+      "ref": "serena:configuration:projectKeys:18",
+      "pointer": "/upstreams/serena/configuration/projectKeys/18",
+      "pinnedEntrySha256": "c0435392253f4b296416b010bea0f63d397c3517d00a68d66ed8edeae49dc6a2",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "bounded_layered_modes",
+      "nativeBehavior": "Layer additions compose with base and selected modes; null adds nothing from that layer.",
+      "remainingBoundary": "No implicit project activation, benchmark execution or new host grant.",
+      "evidenceProfile": "steering",
+      "fullContractCertification": false,
+      "handlerLine": 214,
+      "key": "added_modes"
+    },
+    {
+      "ref": "serena:configuration:projectKeys:19",
+      "pointer": "/upstreams/serena/configuration/projectKeys/19",
+      "pinnedEntrySha256": "0f3d7f70de9412f346a7891082b3c98ef767a6e0f0c98b7d3ab1333378338224",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "bounded_literal_prompt",
+      "nativeBehavior": "Explicit project initial prompt becomes an ordered literal host guidance fragment.",
+      "remainingBoundary": "Jinja template markers refuse; no evaluation or source-owned authority.",
+      "evidenceProfile": "configuration",
+      "fullContractCertification": false,
+      "handlerLine": 222,
+      "key": "initial_prompt"
+    },
+    {
+      "ref": "serena:configuration:projectKeys:20",
+      "pointer": "/upstreams/serena/configuration/projectKeys/20",
+      "pinnedEntrySha256": "17d73505580a1bc1d96cd882e40f088184ccda3c69beb29090d4a493f85b1c4c",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "bounded_soft_budget",
+      "nativeBehavior": "Finite per-project hover enrichment milliseconds bind identity and explicit partial metadata.",
+      "remainingBoundary": "Only subsequent optional hover work is bounded; zero retains outer-deadline behavior.",
+      "evidenceProfile": "symbol_budget",
+      "fullContractCertification": false,
+      "handlerLine": 190,
+      "key": "symbol_info_budget"
+    },
+    {
+      "ref": "serena:configuration:projectKeys:21",
+      "pointer": "/upstreams/serena/configuration/projectKeys/21",
+      "pinnedEntrySha256": "f474cc4ba7f966a4468828adc43f7567bef164d37ff660395f6bb8eb60fcdabe",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "bounded_note_policy",
+      "nativeBehavior": "Bounded native regex policies guard named-note mutations under current registered layers.",
+      "remainingBoundary": "Not a new filesystem/credential permission or full foreign regex dialect guarantee.",
+      "evidenceProfile": "steering",
+      "fullContractCertification": false,
+      "handlerLine": 211,
+      "key": "read_only_memory_patterns"
+    },
+    {
+      "ref": "serena:configuration:projectKeys:22",
+      "pointer": "/upstreams/serena/configuration/projectKeys/22",
+      "pinnedEntrySha256": "845272474fef8698e997d6228c52ccf2546e610d85c490a465a9295d8053809e",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "bounded_note_policy",
+      "nativeBehavior": "Bounded native regex policies constrain note listing, reads and mutations.",
+      "remainingBoundary": "Original immutable notes and independent host policies remain authoritative.",
+      "evidenceProfile": "steering",
+      "fullContractCertification": false,
+      "handlerLine": 212,
+      "key": "ignored_memory_patterns"
+    },
+    {
+      "ref": "serena:configuration:projectKeys:23",
+      "pointer": "/upstreams/serena/configuration/projectKeys/23",
+      "pinnedEntrySha256": "0a96faca841912bbe36f860c7c65eb956ad953d96fcf44d82b261e3dfad6eedb",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "restricted_default_only",
+      "nativeBehavior": "Null inactive setting is recognized without executing a command.",
+      "remainingBoundary": "Active or empty command strings return activation_command_unavailable.",
+      "evidenceProfile": "configuration",
+      "fullContractCertification": false,
+      "handlerLine": 116,
+      "key": "activation_command"
+    },
+    {
+      "ref": "serena:configuration:projectKeys:24",
+      "pointer": "/upstreams/serena/configuration/projectKeys/24",
+      "pinnedEntrySha256": "97cc7fdfb955001fc0b27a69aff3be7566ec2cccd4737e06d60cf29a65c397bc",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "restricted_default_only",
+      "nativeBehavior": "Null or integer180 confirm the inactive native default.",
+      "remainingBoundary": "Other values return activation_timeout_unavailable; no activation scheduler is implemented.",
+      "evidenceProfile": "configuration",
+      "fullContractCertification": false,
+      "handlerLine": 124,
+      "key": "activation_command_timeout"
+    },
+    {
+      "ref": "serena:configuration:modeNames:0",
+      "pointer": "/upstreams/serena/configuration/modeNames/0",
+      "pinnedEntrySha256": "7f466e0ffd69778ab788a556354063bf41871a438c516944c85b806d713a9615",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "native_guidance_and_gates",
+      "nativeBehavior": "Native benchmark guidance exists, with finite planning/no-memory/no-onboarding gates where defined.",
+      "remainingBoundary": "Guidance does not prove model/client behavior, run benchmarks, activate projects or grant authority.",
+      "evidenceProfile": "steering",
+      "fullContractCertification": false
+    },
+    {
+      "ref": "serena:configuration:modeNames:1",
+      "pointer": "/upstreams/serena/configuration/modeNames/1",
+      "pinnedEntrySha256": "f0f0cefee51a6c9d31906cbc3dedb418056e96b2626092bad98eb51f83b2f13e",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "native_guidance_and_gates",
+      "nativeBehavior": "Native editing guidance exists, with finite planning/no-memory/no-onboarding gates where defined.",
+      "remainingBoundary": "Guidance does not prove model/client behavior, run benchmarks, activate projects or grant authority.",
+      "evidenceProfile": "steering",
+      "fullContractCertification": false
+    },
+    {
+      "ref": "serena:configuration:modeNames:2",
+      "pointer": "/upstreams/serena/configuration/modeNames/2",
+      "pinnedEntrySha256": "52952090013362bfe1d2214e75411d5c76ba8d674803744fa9687d6c4b61c401",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "native_guidance_and_gates",
+      "nativeBehavior": "Native interactive guidance exists, with finite planning/no-memory/no-onboarding gates where defined.",
+      "remainingBoundary": "Guidance does not prove model/client behavior, run benchmarks, activate projects or grant authority.",
+      "evidenceProfile": "steering",
+      "fullContractCertification": false
+    },
+    {
+      "ref": "serena:configuration:modeNames:3",
+      "pointer": "/upstreams/serena/configuration/modeNames/3",
+      "pinnedEntrySha256": "8a34fac8d1554527485d1bb0f743ff0c6d487fafad9bb1be12fd8135a1a735e4",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "native_guidance_and_gates",
+      "nativeBehavior": "Native no-memories guidance exists, with finite planning/no-memory/no-onboarding gates where defined.",
+      "remainingBoundary": "Guidance does not prove model/client behavior, run benchmarks, activate projects or grant authority.",
+      "evidenceProfile": "steering",
+      "fullContractCertification": false
+    },
+    {
+      "ref": "serena:configuration:modeNames:4",
+      "pointer": "/upstreams/serena/configuration/modeNames/4",
+      "pinnedEntrySha256": "37ded00b0546107b16ed52d554ca0d748139074403421dae629082bf5e4d62da",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "native_guidance_and_gates",
+      "nativeBehavior": "Native no-onboarding guidance exists, with finite planning/no-memory/no-onboarding gates where defined.",
+      "remainingBoundary": "Guidance does not prove model/client behavior, run benchmarks, activate projects or grant authority.",
+      "evidenceProfile": "steering",
+      "fullContractCertification": false
+    },
+    {
+      "ref": "serena:configuration:modeNames:5",
+      "pointer": "/upstreams/serena/configuration/modeNames/5",
+      "pinnedEntrySha256": "d43835142e12ab52ad4ddd31568afff6945fd028692956db20f41caaa4b374c9",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "native_guidance_and_gates",
+      "nativeBehavior": "Native onboarding guidance exists, with finite planning/no-memory/no-onboarding gates where defined.",
+      "remainingBoundary": "Guidance does not prove model/client behavior, run benchmarks, activate projects or grant authority.",
+      "evidenceProfile": "steering",
+      "fullContractCertification": false
+    },
+    {
+      "ref": "serena:configuration:modeNames:6",
+      "pointer": "/upstreams/serena/configuration/modeNames/6",
+      "pinnedEntrySha256": "d7f167b9917331f7559971972d2ca4e9b21a003a6a0e246b372bccf996bbec6e",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "native_guidance_and_gates",
+      "nativeBehavior": "Native one-shot guidance exists, with finite planning/no-memory/no-onboarding gates where defined.",
+      "remainingBoundary": "Guidance does not prove model/client behavior, run benchmarks, activate projects or grant authority.",
+      "evidenceProfile": "steering",
+      "fullContractCertification": false
+    },
+    {
+      "ref": "serena:configuration:modeNames:7",
+      "pointer": "/upstreams/serena/configuration/modeNames/7",
+      "pinnedEntrySha256": "cb1e58d9479430bc60841495f8150f2534895ef34e547cc1fdf0739455c3f438",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "native_guidance_and_gates",
+      "nativeBehavior": "Native planning guidance exists, with finite planning/no-memory/no-onboarding gates where defined.",
+      "remainingBoundary": "Guidance does not prove model/client behavior, run benchmarks, activate projects or grant authority.",
+      "evidenceProfile": "steering",
+      "fullContractCertification": false
+    },
+    {
+      "ref": "serena:configuration:modeNames:8",
+      "pointer": "/upstreams/serena/configuration/modeNames/8",
+      "pinnedEntrySha256": "da8370a956017a90febbbc56881268ee0016f80392eaf8446909dfdaf95df869",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "native_guidance_and_gates",
+      "nativeBehavior": "Native query-projects guidance exists, with finite planning/no-memory/no-onboarding gates where defined.",
+      "remainingBoundary": "Guidance does not prove model/client behavior, run benchmarks, activate projects or grant authority.",
+      "evidenceProfile": "steering",
+      "fullContractCertification": false
+    },
+    {
+      "ref": "serena:configuration:contextNames:0",
+      "pointer": "/upstreams/serena/configuration/contextNames/0",
+      "pinnedEntrySha256": "7649b444a37e5ea51af536af65bdde29d549803a064bdd0707db6a00c9285673",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "native_guidance_and_exclusions",
+      "nativeBehavior": "Native agent guidance is defined; claude-code/ide/grok have explicit finite tool exclusions.",
+      "remainingBoundary": "A context label is not a branded installation or full upstream prompt/Jinja/client qualification.",
+      "evidenceProfile": "steering",
+      "fullContractCertification": false
+    },
+    {
+      "ref": "serena:configuration:contextNames:1",
+      "pointer": "/upstreams/serena/configuration/contextNames/1",
+      "pinnedEntrySha256": "6dea502f3ddeb927b81599ba8a64cd0c566a1cf955374e08a8a088220f5f6c7a",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "native_guidance_and_exclusions",
+      "nativeBehavior": "Native antigravity guidance is defined; claude-code/ide/grok have explicit finite tool exclusions.",
+      "remainingBoundary": "A context label is not a branded installation or full upstream prompt/Jinja/client qualification.",
+      "evidenceProfile": "steering",
+      "fullContractCertification": false
+    },
+    {
+      "ref": "serena:configuration:contextNames:2",
+      "pointer": "/upstreams/serena/configuration/contextNames/2",
+      "pinnedEntrySha256": "46f210355e129dd6aa0663dc3643f5bb7121a9ff693fad1944c8458c93907818",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "native_guidance_and_exclusions",
+      "nativeBehavior": "Native chatgpt guidance is defined; claude-code/ide/grok have explicit finite tool exclusions.",
+      "remainingBoundary": "A context label is not a branded installation or full upstream prompt/Jinja/client qualification.",
+      "evidenceProfile": "steering",
+      "fullContractCertification": false
+    },
+    {
+      "ref": "serena:configuration:contextNames:3",
+      "pointer": "/upstreams/serena/configuration/contextNames/3",
+      "pinnedEntrySha256": "d84da32b9aa10a02997143b5382fdeee9452575e1ab57bfc4b81380ff08d7bfe",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "native_guidance_and_exclusions",
+      "nativeBehavior": "Native claude-code guidance is defined; claude-code/ide/grok have explicit finite tool exclusions.",
+      "remainingBoundary": "A context label is not a branded installation or full upstream prompt/Jinja/client qualification.",
+      "evidenceProfile": "steering",
+      "fullContractCertification": false
+    },
+    {
+      "ref": "serena:configuration:contextNames:4",
+      "pointer": "/upstreams/serena/configuration/contextNames/4",
+      "pinnedEntrySha256": "7c1a7a0dffdfedb5f2fc8592618c4c806ea99963e0ad2dab66cd66fb2ac3866d",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "native_guidance_and_exclusions",
+      "nativeBehavior": "Native codebuddy guidance is defined; claude-code/ide/grok have explicit finite tool exclusions.",
+      "remainingBoundary": "A context label is not a branded installation or full upstream prompt/Jinja/client qualification.",
+      "evidenceProfile": "steering",
+      "fullContractCertification": false
+    },
+    {
+      "ref": "serena:configuration:contextNames:5",
+      "pointer": "/upstreams/serena/configuration/contextNames/5",
+      "pinnedEntrySha256": "08f6b585592467d20717e8abd8dd02b9fb430ba65eb4b745c373ce3001ef5dae",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "native_guidance_and_exclusions",
+      "nativeBehavior": "Native codex guidance is defined; claude-code/ide/grok have explicit finite tool exclusions.",
+      "remainingBoundary": "A context label is not a branded installation or full upstream prompt/Jinja/client qualification.",
+      "evidenceProfile": "steering",
+      "fullContractCertification": false
+    },
+    {
+      "ref": "serena:configuration:contextNames:6",
+      "pointer": "/upstreams/serena/configuration/contextNames/6",
+      "pinnedEntrySha256": "80e5448f90cb014cf5e989a22b13c5fa86daf373e513a207787b929452899a75",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "native_guidance_and_exclusions",
+      "nativeBehavior": "Native copilot-cli guidance is defined; claude-code/ide/grok have explicit finite tool exclusions.",
+      "remainingBoundary": "A context label is not a branded installation or full upstream prompt/Jinja/client qualification.",
+      "evidenceProfile": "steering",
+      "fullContractCertification": false
+    },
+    {
+      "ref": "serena:configuration:contextNames:7",
+      "pointer": "/upstreams/serena/configuration/contextNames/7",
+      "pinnedEntrySha256": "4a0f37aa4c14d5ba56439cc2d940f14e805a759803392cc5eeba715367a73cbc",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "native_guidance_and_exclusions",
+      "nativeBehavior": "Native desktop-app guidance is defined; claude-code/ide/grok have explicit finite tool exclusions.",
+      "remainingBoundary": "A context label is not a branded installation or full upstream prompt/Jinja/client qualification.",
+      "evidenceProfile": "steering",
+      "fullContractCertification": false
+    },
+    {
+      "ref": "serena:configuration:contextNames:8",
+      "pointer": "/upstreams/serena/configuration/contextNames/8",
+      "pinnedEntrySha256": "df0ceb7b02f1b9f1df015b8dd7093be6b49fd856a226986e223769addebbeb32",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "native_guidance_and_exclusions",
+      "nativeBehavior": "Native grok guidance is defined; claude-code/ide/grok have explicit finite tool exclusions.",
+      "remainingBoundary": "A context label is not a branded installation or full upstream prompt/Jinja/client qualification.",
+      "evidenceProfile": "steering",
+      "fullContractCertification": false
+    },
+    {
+      "ref": "serena:configuration:contextNames:9",
+      "pointer": "/upstreams/serena/configuration/contextNames/9",
+      "pinnedEntrySha256": "c2ef7a05b08000e6dea97a585212b6011e7711f3c768b2070eafcae89f20b682",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "native_guidance_and_exclusions",
+      "nativeBehavior": "Native ide guidance is defined; claude-code/ide/grok have explicit finite tool exclusions.",
+      "remainingBoundary": "A context label is not a branded installation or full upstream prompt/Jinja/client qualification.",
+      "evidenceProfile": "steering",
+      "fullContractCertification": false
+    },
+    {
+      "ref": "serena:configuration:contextNames:10",
+      "pointer": "/upstreams/serena/configuration/contextNames/10",
+      "pinnedEntrySha256": "02e2723bdb1d2cca8d93c7caa6a199da19e4b82160321b8b7bcdde5cfb4cd617",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "native_guidance_and_exclusions",
+      "nativeBehavior": "Native jb-ai-assistant guidance is defined; claude-code/ide/grok have explicit finite tool exclusions.",
+      "remainingBoundary": "A context label is not a branded installation or full upstream prompt/Jinja/client qualification.",
+      "evidenceProfile": "steering",
+      "fullContractCertification": false
+    },
+    {
+      "ref": "serena:configuration:contextNames:11",
+      "pointer": "/upstreams/serena/configuration/contextNames/11",
+      "pinnedEntrySha256": "579f327f4ee968886578c889f2375c84dbab6e58d253538732a82d896d6b5e04",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "native_guidance_and_exclusions",
+      "nativeBehavior": "Native jb-copilot-plugin guidance is defined; claude-code/ide/grok have explicit finite tool exclusions.",
+      "remainingBoundary": "A context label is not a branded installation or full upstream prompt/Jinja/client qualification.",
+      "evidenceProfile": "steering",
+      "fullContractCertification": false
+    },
+    {
+      "ref": "serena:configuration:contextNames:12",
+      "pointer": "/upstreams/serena/configuration/contextNames/12",
+      "pinnedEntrySha256": "7110587a1c9975c79d82d0018c0f8245e9f7e2857d5988cc12d343958fc59583",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "native_guidance_and_exclusions",
+      "nativeBehavior": "Native junie guidance is defined; claude-code/ide/grok have explicit finite tool exclusions.",
+      "remainingBoundary": "A context label is not a branded installation or full upstream prompt/Jinja/client qualification.",
+      "evidenceProfile": "steering",
+      "fullContractCertification": false
+    },
+    {
+      "ref": "serena:configuration:contextNames:13",
+      "pointer": "/upstreams/serena/configuration/contextNames/13",
+      "pinnedEntrySha256": "d7d5ce8d7d63d1c24894822fd4cc859376ceee799016150ea93e05c36263f4be",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "native_guidance_and_exclusions",
+      "nativeBehavior": "Native oaicompat-agent guidance is defined; claude-code/ide/grok have explicit finite tool exclusions.",
+      "remainingBoundary": "A context label is not a branded installation or full upstream prompt/Jinja/client qualification.",
+      "evidenceProfile": "steering",
+      "fullContractCertification": false
+    },
+    {
+      "ref": "serena:configuration:contextNames:14",
+      "pointer": "/upstreams/serena/configuration/contextNames/14",
+      "pinnedEntrySha256": "a4e7c64148e3949ad7571914e2b758d0d58d815c194f96c3e45d0bbdcdd8a375",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "native_guidance_and_exclusions",
+      "nativeBehavior": "Native vscode guidance is defined; claude-code/ide/grok have explicit finite tool exclusions.",
+      "remainingBoundary": "A context label is not a branded installation or full upstream prompt/Jinja/client qualification.",
+      "evidenceProfile": "steering",
+      "fullContractCertification": false
+    },
+    {
+      "ref": "serena:configuration:contextNames:15",
+      "pointer": "/upstreams/serena/configuration/contextNames/15",
+      "pinnedEntrySha256": "4ea69a1f1b5a67b224c8f2674d3afc69d9549c7d5d29199411f5fd652308d296",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "native_guidance_and_exclusions",
+      "nativeBehavior": "Native zcode guidance is defined; claude-code/ide/grok have explicit finite tool exclusions.",
+      "remainingBoundary": "A context label is not a branded installation or full upstream prompt/Jinja/client qualification.",
+      "evidenceProfile": "steering",
+      "fullContractCertification": false
+    },
+    {
+      "ref": "serena:repl:cfg.open_dashboard",
+      "pointer": "/upstreams/serena/replFacadeMethods/1",
+      "pinnedEntrySha256": "16a7b2582a8adccd1457c0bdd86614b683dc2924a471514f3d4a35be0a859c30",
+      "historicalAssessment": "explicitly_unavailable",
+      "currentAssessment": "implemented_read_only_ui",
+      "nativeBehavior": "The selected REPL facade reaches the same host-authorized read-only dashboard operation.",
+      "remainingBoundary": "Facade selection grants no listener, mutation, browser execution or independent permission by default.",
+      "evidenceProfile": "ui",
+      "fullContractCertification": false
+    },
+    {
+      "ref": "serena:tool:open_dashboard",
+      "pointer": "/upstreams/serena/tools/1",
+      "pinnedEntrySha256": "28de0f06bb89c8e36ce6a58cbd54a283bdefa08f3d2beeb2c0e6c0ac7e2b203a",
+      "historicalAssessment": "explicitly_unavailable",
+      "currentAssessment": "implemented_read_only_ui",
+      "nativeBehavior": "Explicit host-selected private loopback dashboard returns a capability URL and read-only session/activity data.",
+      "remainingBoundary": "No configuration/memory editing, raw logs, tray, automatic browser opening, MCP shutdown or full UI/accessibility equivalence.",
+      "evidenceProfile": "ui",
+      "fullContractCertification": false
+    },
+    {
+      "ref": "trail:Session cold-start mining",
+      "pointer": "/upstreams/trail/capabilities/28",
+      "pinnedEntrySha256": "defa4d185cce9673d9007590cff8dbfc89aeb250dfe0750cfafc054b3f94aae3",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "explicit_selected_transcript",
+      "nativeBehavior": "Literal and optional trusted-provider semantic mining operate on explicitly imported UTF-8 transcripts with exact original quotes.",
+      "remainingBoundary": "No automatic installed-agent history discovery, authenticated outcome truth or default model invocation.",
+      "evidenceProfile": "transcript",
+      "fullContractCertification": false
+    },
+    {
+      "ref": "trail:Prompt/edit/session hooks and statusline",
+      "pointer": "/upstreams/trail/capabilities/30",
+      "pinnedEntrySha256": "d2e1dbec98f5313e24f73b34ccd370a675aa2d1872e23d7d8ef82398531a0a75",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "partial_session_start_hook",
+      "nativeBehavior": "Generic/Codex/selected Cursor and Claude MCP profiles plus an explicit receipt-owned Claude SessionStart hook are implemented.",
+      "remainingBoundary": "Prompt/edit callbacks, statuslines, broader branded/interactive behavior and other releases/platforms remain open.",
+      "evidenceProfile": "hooks",
+      "fullContractCertification": false
+    },
+    {
+      "ref": "trail:Self-hosted GitHub App",
+      "pointer": "/upstreams/trail/capabilities/32",
+      "pinnedEntrySha256": "ac1597375ebaf420b52effcaaef90aaf883a1b3ccce3e25f0dd27925f5ed919c",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "implemented_contracts_live_open",
+      "nativeBehavior": "Owned native authenticated ingress, App queues/workers and guarded publication contracts exist.",
+      "remainingBoundary": "Configured production App installation/deployment and universal hosted/upstream equivalence remain open.",
+      "evidenceProfile": "app",
+      "fullContractCertification": false
+    },
+    {
+      "ref": "trail:History digest / brain onboarding",
+      "pointer": "/upstreams/trail/capabilities/33",
+      "pinnedEntrySha256": "cf0377eedfaaaf056f890f6dc02833122d04780a1c8f093492b62b9831bc802c",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "bounded_history_live_open",
+      "nativeBehavior": "Explicit historical source acquisition, persistent jobs and App-history/native revision handoff are implemented.",
+      "remainingBoundary": "Configured background production deployment, broad brain quality and authenticated upstream equivalence remain open.",
+      "evidenceProfile": "history",
+      "fullContractCertification": false
+    },
+    {
+      "ref": "trail:Cloud workspace/client/team UI",
+      "pointer": "/upstreams/trail/capabilities/34",
+      "pinnedEntrySha256": "5efcb5a166053402fb1dc7a16b9e7e88e8fe5c4510ad052b08559fda4d63817e",
+      "historicalAssessment": "unreconciled_review_required",
+      "currentAssessment": "not_implemented_hosted_service",
+      "nativeBehavior": "Local collections, sessions and selected client adapters exist as separate local contracts.",
+      "remainingBoundary": "The upstream cloud-workspace/team service and client UI require owned requirements and implementation; local features do not fulfill them.",
+      "evidenceProfile": "cloud_boundary",
+      "fullContractCertification": false
+    }
+  ],
+  "assessmentCounts": {
+    "bounded_connector": 1,
+    "controlled_transports_live_open": 1,
+    "bounded_anonymous_acquisition": 1,
+    "not_implemented": 1,
+    "bounded_impact_analysis": 1,
+    "historical_live_connectors": 1,
+    "partial_native_lifecycle": 1,
+    "partial_local_benchmark": 1,
+    "bounded_layers": 1,
+    "mixed_key_limits_indexed": 1,
+    "native_guidance_and_gates": 10,
+    "native_guidance_and_exclusions": 17,
+    "bounded_layer": 6,
+    "bounded_assertion": 1,
+    "bounded_selection": 1,
+    "restricted_default_only": 4,
+    "bounded_source_policy": 1,
+    "bounded_fixed_interface": 1,
+    "bounded_capture_policy": 2,
+    "bounded_primary_policy": 1,
+    "bounded_lsp_settings": 1,
+    "bounded_symbol_projection": 1,
+    "bounded_semantic_roots": 1,
+    "bounded_steering": 5,
+    "bounded_layered_modes": 2,
+    "bounded_literal_prompt": 1,
+    "bounded_soft_budget": 1,
+    "bounded_note_policy": 2,
+    "implemented_read_only_ui": 2,
+    "explicit_selected_transcript": 1,
+    "partial_session_start_hook": 1,
+    "implemented_contracts_live_open": 1,
+    "bounded_history_live_open": 1,
+    "not_implemented_hosted_service": 1
+  },
+  "evidenceProfiles": {
+    "configuration": {
+      "files": [
+        "native/src/session_config.rs",
+        "native/src/session_steering.rs",
+        "native/src/session_config_tests.rs",
+        "native/tests/session_config_cli.rs",
+        "native/tests/session_steering.rs",
+        "native/docs/session-config.md",
+        "native/docs/session-steering.md"
+      ],
+      "historicalValidationIndexes": [
+        "docs/validation/integration-2026-10-22/session-config-yaml/index.json",
+        "docs/validation/integration-2026-10-22/project-defaults/index.json"
+      ],
+      "indexPinsOnly": true,
+      "newRuntimeCertification": false
+    },
+    "ui": {
+      "files": [
+        "native/src/session_dashboard.rs",
+        "native/src/session_dashboard.html",
+        "native/tests/session_dashboard.rs",
+        "native/docs/session-dashboard.md"
+      ],
+      "historicalValidationIndexes": [
+        "docs/validation/integration-2026-10-22/dashboard/index.json",
+        "docs/validation/integration-2026-10-22/compiler-parameter-properties/index.json"
+      ],
+      "indexPinsOnly": true,
+      "newRuntimeCertification": false
+    },
+    "lsp": {
+      "files": [
+        "native/src/session_config.rs",
+        "native/src/session_steering.rs",
+        "native/src/session_config_tests.rs",
+        "native/tests/session_config_cli.rs",
+        "native/tests/session_steering.rs",
+        "native/docs/session-config.md",
+        "native/docs/session-steering.md",
+        "native/src/server_settings.rs",
+        "native/src/server_selection.rs",
+        "native/src/semantic_workspace.rs"
+      ],
+      "historicalValidationIndexes": [
+        "docs/validation/integration-2026-10-22/server-settings/index.json",
+        "docs/validation/integration-2026-10-22/server-selection/index.json",
+        "docs/validation/integration-2026-10-22/semantic-workspace/index.json",
+        "docs/validation/integration-2026-10-22/symbol-workspace-folders/index.json",
+        "docs/validation/integration-2026-10-22/symbol-workspace-routes/index.json"
+      ],
+      "indexPinsOnly": true,
+      "newRuntimeCertification": false
+    },
+    "source_policy": {
+      "files": [
+        "native/src/session_config.rs",
+        "native/src/session_steering.rs",
+        "native/src/session_config_tests.rs",
+        "native/tests/session_config_cli.rs",
+        "native/tests/session_steering.rs",
+        "native/docs/session-config.md",
+        "native/docs/session-steering.md",
+        "native/src/source_exclusions.rs",
+        "native/src/source_line_endings.rs"
+      ],
+      "historicalValidationIndexes": [
+        "docs/validation/integration-2026-10-22/source-exclusions/index.json",
+        "docs/validation/integration-2026-10-22/source-line-endings/index.json",
+        "docs/validation/integration-2026-10-22/session-primary-readonly/index.json",
+        "docs/validation/integration-2026-10-22/git-ignore-policy/index.json"
+      ],
+      "indexPinsOnly": true,
+      "newRuntimeCertification": false
+    },
+    "symbol_budget": {
+      "files": [
+        "native/src/session_config.rs",
+        "native/src/session_steering.rs",
+        "native/src/session_config_tests.rs",
+        "native/tests/session_config_cli.rs",
+        "native/tests/session_steering.rs",
+        "native/docs/session-config.md",
+        "native/docs/session-steering.md",
+        "native/src/symbol_info_budget.rs"
+      ],
+      "historicalValidationIndexes": [
+        "docs/validation/integration-2026-10-22/symbol-info-budget/index.json"
+      ],
+      "indexPinsOnly": true,
+      "newRuntimeCertification": false
+    },
+    "steering": {
+      "files": [
+        "native/src/session_config.rs",
+        "native/src/session_steering.rs",
+        "native/src/session_config_tests.rs",
+        "native/tests/session_config_cli.rs",
+        "native/tests/session_steering.rs",
+        "native/docs/session-config.md",
+        "native/docs/session-steering.md"
+      ],
+      "historicalValidationIndexes": [
+        "docs/validation/integration-2026-10-22/session-agent-interface/index.json",
+        "docs/validation/integration-2026-10-22/session-fixed-tools/index.json",
+        "docs/validation/integration-2026-10-22/session-inclusions/index.json",
+        "docs/validation/integration-2026-10-22/session-memory-patterns/index.json",
+        "docs/validation/integration-2026-10-22/session-optional-defaults/index.json"
+      ],
+      "indexPinsOnly": true,
+      "newRuntimeCertification": false
+    },
+    "postgres": {
+      "files": [
+        "native/src/postgres_catalog.rs",
+        "native/src/postgres_catalog_client.rs",
+        "native/tests/postgres_catalog.rs",
+        "native/tests/postgres_catalog_cli.rs",
+        "native/docs/postgres-catalog.md"
+      ],
+      "historicalValidationIndexes": [
+        "docs/validation/integration-2026-10-19/postgres-catalog/index.json"
+      ],
+      "indexPinsOnly": true,
+      "newRuntimeCertification": false
+    },
+    "google": {
+      "files": [
+        "native/src/google_workspace.rs",
+        "native/src/google_workspace_http.rs",
+        "native/tests/google_workspace_http_cli.rs",
+        "native/docs/google-workspace.md"
+      ],
+      "historicalValidationIndexes": [
+        "docs/validation/integration-2026-10-21/google-workspace/index.json",
+        "docs/validation/integration-2026-10-22/google-http-export/index.json"
+      ],
+      "indexPinsOnly": true,
+      "newRuntimeCertification": false
+    },
+    "acquisition": {
+      "files": [
+        "native/src/source_acquisition.rs",
+        "native/src/source_acquisition_http.rs",
+        "native/tests/source_acquisition.rs",
+        "native/tests/source_acquisition_http.rs",
+        "native/docs/source-acquisition.md"
+      ],
+      "historicalValidationIndexes": [
+        "docs/validation/integration-2026-10-19/source-acquisition/index.json",
+        "docs/validation/integration-2026-10-19/arxiv-source/index.json"
+      ],
+      "indexPinsOnly": true,
+      "newRuntimeCertification": false
+    },
+    "media_boundary": {
+      "files": [
+        "native/src/media.rs",
+        "native/tests/media.rs",
+        "native/docs/media.md"
+      ],
+      "historicalValidationIndexes": [],
+      "indexPinsOnly": true,
+      "newRuntimeCertification": false
+    },
+    "affected": {
+      "files": [
+        "native/src/git_compiler_affected.rs",
+        "native/src/compiler_hierarchy.rs",
+        "native/tests/git_compiler_affected.rs",
+        "native/docs/git-compiler-affected.md"
+      ],
+      "historicalValidationIndexes": [
+        "docs/validation/integration-2026-10-22/compiler-property-contracts/index.json",
+        "docs/validation/integration-2026-10-22/compiler-parameter-properties/index.json"
+      ],
+      "indexPinsOnly": true,
+      "newRuntimeCertification": false
+    },
+    "db": {
+      "files": [
+        "native/src/neo4j_publish.rs",
+        "native/src/falkor_publish.rs"
+      ],
+      "historicalValidationIndexes": [
+        "docs/validation/integration-2026-10-19/neo4j-publish/index.json",
+        "docs/validation/integration-2026-10-19/falkor-publish/index.json",
+        "docs/validation/integration-2026-10-22/status-db-reconciliation/index.json"
+      ],
+      "indexPinsOnly": true,
+      "newRuntimeCertification": false
+    },
+    "git_lifecycle": {
+      "files": [
+        "native/src/main.rs",
+        "native/src/git_workflows.rs",
+        "native/docs/git-workflows.md",
+        "native/docs/host-install.md"
+      ],
+      "historicalValidationIndexes": [],
+      "indexPinsOnly": true,
+      "newRuntimeCertification": false
+    },
+    "benchmark": {
+      "files": [
+        "native/examples/benchmark.rs",
+        "native/docs/contracts.md"
+      ],
+      "historicalValidationIndexes": [],
+      "indexPinsOnly": true,
+      "newRuntimeCertification": false
+    },
+    "transcript": {
+      "files": [
+        "native/src/knowledge_feedback_transcript.rs",
+        "native/src/transcript_semantic.rs",
+        "native/tests/transcript_semantic.rs",
+        "native/docs/semantic-transcript-candidates.md"
+      ],
+      "historicalValidationIndexes": [
+        "docs/validation/integration-2026-10-19/semantic-transcript/index.json"
+      ],
+      "indexPinsOnly": true,
+      "newRuntimeCertification": false
+    },
+    "hooks": {
+      "files": [
+        "native/src/host_install_adapter.rs",
+        "native/src/host_install_claude_hooks.rs",
+        "native/src/host_config_claude_hooks.rs",
+        "native/docs/claude-session-hooks.md",
+        "native/docs/host-install.md"
+      ],
+      "historicalValidationIndexes": [
+        "docs/validation/integration-2026-10-21/claude-session-hooks/index.json",
+        "docs/validation/integration-2026-10-21/json-mcp-hosts/index.json"
+      ],
+      "indexPinsOnly": true,
+      "newRuntimeCertification": false
+    },
+    "app": {
+      "files": [
+        "native/src/github_app.rs",
+        "native/src/github_app_ingress.rs",
+        "native/src/github_app_auth.rs",
+        "native/docs/github-app-ingress.md",
+        "native/docs/github-app-auth.md"
+      ],
+      "historicalValidationIndexes": [],
+      "indexPinsOnly": true,
+      "newRuntimeCertification": false
+    },
+    "history": {
+      "files": [
+        "native/src/github_app_worker_history.rs",
+        "native/src/github_app_digest_acquisition.rs",
+        "native/docs/app-history-integration.md",
+        "native/docs/digest-history-acquisition.md"
+      ],
+      "historicalValidationIndexes": [
+        "docs/validation/integration-2026-10-19/app-history-integration/index.json",
+        "docs/validation/integration-2026-10-19/digest-history-acquisition/index.json"
+      ],
+      "indexPinsOnly": true,
+      "newRuntimeCertification": false
+    },
+    "cloud_boundary": {
+      "files": [
+        "docs/REMAINING_WORK.md"
+      ],
+      "historicalValidationIndexes": [],
+      "indexPinsOnly": true,
+      "newRuntimeCertification": false
+    }
+  },
+  "pins": {
+    "docs/REMAINING_WORK.md": {
+      "gitBlobContentSha256": "f47c38a00601b6b4c82f30f46162dcb73edfd1991f811398f6f5c3cff2ed1063",
+      "workingContentSha256": "f47c38a00601b6b4c82f30f46162dcb73edfd1991f811398f6f5c3cff2ed1063",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": false
+    },
+    "native/docs/app-history-integration.md": {
+      "gitBlobContentSha256": "831bd120e7c61392438b7a8fc96ae28a789b55d811206c345471825171c79a2b",
+      "workingContentSha256": "8cff0ce4bf2be47b0935ac4621612b923ef17e53add9d10c0a07f33cfe0406b5",
+      "exactGitWorkingBytes": false,
+      "lineEndingsOnlyDifference": true,
+      "sameWorkingBytesAsQualifiedSource": true
+    },
+    "native/docs/claude-session-hooks.md": {
+      "gitBlobContentSha256": "0c71283e1134e99fa538fd681848d67854a9b9de561143474d65658f5391d14d",
+      "workingContentSha256": "0c71283e1134e99fa538fd681848d67854a9b9de561143474d65658f5391d14d",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": true
+    },
+    "native/docs/contracts.md": {
+      "gitBlobContentSha256": "184261966d3100d980fc53ad8e6fa53037af05c910f9176a896bc0fe7c9855b7",
+      "workingContentSha256": "e18a6f2a73df415909cb469137b0c5662a6d4803f040070a9bfbfd5979b039a8",
+      "exactGitWorkingBytes": false,
+      "lineEndingsOnlyDifference": true,
+      "sameWorkingBytesAsQualifiedSource": true
+    },
+    "native/docs/digest-history-acquisition.md": {
+      "gitBlobContentSha256": "10fb6492bf9948669b0b7c526d8a6763e3037741f6f5d1e93b91376d65bedc1c",
+      "workingContentSha256": "10fb6492bf9948669b0b7c526d8a6763e3037741f6f5d1e93b91376d65bedc1c",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": true
+    },
+    "native/docs/git-compiler-affected.md": {
+      "gitBlobContentSha256": "84b6ab764588477896c4b62497336f1ea579cd586e454c124876542aaee6be32",
+      "workingContentSha256": "84b6ab764588477896c4b62497336f1ea579cd586e454c124876542aaee6be32",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": false
+    },
+    "native/docs/git-workflows.md": {
+      "gitBlobContentSha256": "11855f23da3b0fb9c1bbec3209894500fe2e0681559f5311347d7675c1547743",
+      "workingContentSha256": "11855f23da3b0fb9c1bbec3209894500fe2e0681559f5311347d7675c1547743",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": true
+    },
+    "native/docs/github-app-auth.md": {
+      "gitBlobContentSha256": "fcccb1909514f16da814d622a98ff89e1d3a4aa9bce67b04bc3d2b8c56c2b2a5",
+      "workingContentSha256": "9a40a24bcedcf7b65d2990bcdeec9265e275bfdf380cb4228bcdd583bca298bf",
+      "exactGitWorkingBytes": false,
+      "lineEndingsOnlyDifference": true,
+      "sameWorkingBytesAsQualifiedSource": true
+    },
+    "native/docs/github-app-ingress.md": {
+      "gitBlobContentSha256": "46a059ae8d139336243ab7860f5c942572093bb07f1ac51e72d3e289974e2118",
+      "workingContentSha256": "a882a4940e63d2d99bd1ad66f0d2f526be35d5a915cc4cee223f782f08ea3087",
+      "exactGitWorkingBytes": false,
+      "lineEndingsOnlyDifference": true,
+      "sameWorkingBytesAsQualifiedSource": true
+    },
+    "native/docs/google-workspace.md": {
+      "gitBlobContentSha256": "20dd702fae9be495950e3ff9293ccc778e5a47ae3723b38be70bc9567e5166c8",
+      "workingContentSha256": "20dd702fae9be495950e3ff9293ccc778e5a47ae3723b38be70bc9567e5166c8",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": true
+    },
+    "native/docs/host-install.md": {
+      "gitBlobContentSha256": "8734fa78a7561935462b6090f8d51cbefc683856beb8771f3f22a884c7e5cf3a",
+      "workingContentSha256": "8734fa78a7561935462b6090f8d51cbefc683856beb8771f3f22a884c7e5cf3a",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": true
+    },
+    "native/docs/media.md": {
+      "gitBlobContentSha256": "a99850e6fc47e882d65d1e763c6f762a2c6f689c870cb15988af1fb457931aa1",
+      "workingContentSha256": "524142baf4ff70130f8cd277099ff39c641a71de04194098caa92832495d7e08",
+      "exactGitWorkingBytes": false,
+      "lineEndingsOnlyDifference": true,
+      "sameWorkingBytesAsQualifiedSource": true
+    },
+    "native/docs/postgres-catalog.md": {
+      "gitBlobContentSha256": "4fdf81353211d36d83c0a9ae51040845b8e218d16d0af97c0175cba18cc8d54d",
+      "workingContentSha256": "ac9c15ee0a8885a4a8d5540366b9bca6bd2ab9204af8323c46fa733e9f5ea98b",
+      "exactGitWorkingBytes": false,
+      "lineEndingsOnlyDifference": true,
+      "sameWorkingBytesAsQualifiedSource": true
+    },
+    "native/docs/semantic-transcript-candidates.md": {
+      "gitBlobContentSha256": "41eb99e8ff725dce1aa79f5686a3bb52b0dd98454910047a4bddf67d35c033d5",
+      "workingContentSha256": "af883e4b1d5b38bc2c9462480c6fb49754689ee2e9a9e75c1471a4f2bfb4de74",
+      "exactGitWorkingBytes": false,
+      "lineEndingsOnlyDifference": true,
+      "sameWorkingBytesAsQualifiedSource": true
+    },
+    "native/docs/session-config.md": {
+      "gitBlobContentSha256": "3833760076228ab773608c6420f0ff93bcad0bea51abb3de3f590766f2551543",
+      "workingContentSha256": "3833760076228ab773608c6420f0ff93bcad0bea51abb3de3f590766f2551543",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": true
+    },
+    "native/docs/session-dashboard.md": {
+      "gitBlobContentSha256": "73ce4d3e48c91ff3ac74b7b0aaee67d6b12bd71689e6f0e1e1f51177ef96fc67",
+      "workingContentSha256": "73ce4d3e48c91ff3ac74b7b0aaee67d6b12bd71689e6f0e1e1f51177ef96fc67",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": true
+    },
+    "native/docs/session-steering.md": {
+      "gitBlobContentSha256": "da452bd574a77baecdd59b68256f66655594f7a3aa464bc88cf754c04023e529",
+      "workingContentSha256": "da452bd574a77baecdd59b68256f66655594f7a3aa464bc88cf754c04023e529",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": true
+    },
+    "native/docs/source-acquisition.md": {
+      "gitBlobContentSha256": "98a3e018a5701daa936550c9ebdf3d11b41ef51aaa7e728d090b73328d8f65cb",
+      "workingContentSha256": "7150679173ba3f46fc0816b56dfabaf70fe602f39f7117ba093a39fda5520820",
+      "exactGitWorkingBytes": false,
+      "lineEndingsOnlyDifference": true,
+      "sameWorkingBytesAsQualifiedSource": true
+    },
+    "native/examples/benchmark.rs": {
+      "gitBlobContentSha256": "fec5ec9d4db29e0bd0038a393b76a4c01e18abec0e8197f747e1631e60ca9fc9",
+      "workingContentSha256": "43ddf4d818b21a4f054caeec6fcb645878e85830a31cda03b57e77927012ca1d",
+      "exactGitWorkingBytes": false,
+      "lineEndingsOnlyDifference": true,
+      "sameWorkingBytesAsQualifiedSource": true
+    },
+    "native/src/compiler_hierarchy.rs": {
+      "gitBlobContentSha256": "16451b03c83933fd2808da293f1ee6e5d39194dd72e12fa1f72895a9a9eaad02",
+      "workingContentSha256": "16451b03c83933fd2808da293f1ee6e5d39194dd72e12fa1f72895a9a9eaad02",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": true
+    },
+    "native/src/falkor_publish.rs": {
+      "gitBlobContentSha256": "e2ea35838cb5ba1a42bdd878cc129ca19a281956bb7ca89d6a41473f84b068ec",
+      "workingContentSha256": "90fefc8d3d632b5573eea1344d102088c5e783ead3aa0684dc308f876b138b7d",
+      "exactGitWorkingBytes": false,
+      "lineEndingsOnlyDifference": true,
+      "sameWorkingBytesAsQualifiedSource": true
+    },
+    "native/src/git_compiler_affected.rs": {
+      "gitBlobContentSha256": "4101429dc9eb558f208e9b8587f9e89de961da3dace08ce7707ceda70878c0de",
+      "workingContentSha256": "4101429dc9eb558f208e9b8587f9e89de961da3dace08ce7707ceda70878c0de",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": true
+    },
+    "native/src/git_workflows.rs": {
+      "gitBlobContentSha256": "d25108fd894b6ce33be1bda2686de9a4ff2be662ded4c82078ae5f4896bcc8b6",
+      "workingContentSha256": "d25108fd894b6ce33be1bda2686de9a4ff2be662ded4c82078ae5f4896bcc8b6",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": true
+    },
+    "native/src/github_app.rs": {
+      "gitBlobContentSha256": "0eb5bf274a01b980710131a6c983c78c0cf8d0d62f0021ef9bcf9fe7cc7c3ae7",
+      "workingContentSha256": "36042ca2b71a6c71357b27946de3a5de6e8e04d7a6149c558a5b8e8def70f0dd",
+      "exactGitWorkingBytes": false,
+      "lineEndingsOnlyDifference": true,
+      "sameWorkingBytesAsQualifiedSource": true
+    },
+    "native/src/github_app_auth.rs": {
+      "gitBlobContentSha256": "b7856217abd520d04f5b6b6a0e6b1c41117c2f01dad0ebf01365119cfa2bbf2a",
+      "workingContentSha256": "366f55fd43b5ac765953810bef8eb06657157f1a44d8a065229e800cd6188f9e",
+      "exactGitWorkingBytes": false,
+      "lineEndingsOnlyDifference": true,
+      "sameWorkingBytesAsQualifiedSource": true
+    },
+    "native/src/github_app_digest_acquisition.rs": {
+      "gitBlobContentSha256": "b6071f515822422e70e44f4e05332283aa49c5ec2ce91f9c2884c6feb75de5a2",
+      "workingContentSha256": "028df855bade7958b31e4fdbfe0ba009b3e5801a8ab9f60ccfaac20701202692",
+      "exactGitWorkingBytes": false,
+      "lineEndingsOnlyDifference": true,
+      "sameWorkingBytesAsQualifiedSource": true
+    },
+    "native/src/github_app_ingress.rs": {
+      "gitBlobContentSha256": "c933e8b7382ea22ae8decae7013c95ba33c94369e55f6d982ffbf465bf61ddff",
+      "workingContentSha256": "1c9d60785989a147dd47cb99e5915ea6082546b29fc1504b7dfc12c852739a55",
+      "exactGitWorkingBytes": false,
+      "lineEndingsOnlyDifference": true,
+      "sameWorkingBytesAsQualifiedSource": true
+    },
+    "native/src/github_app_worker_history.rs": {
+      "gitBlobContentSha256": "5eab74eee9545cea06515b669b9bb4389964935bd0c34cd03e35faba4d6775d6",
+      "workingContentSha256": "ca2bc443296dc9813f41513f4b5db28ae07ebf93fba4bf54e9cb943da95034d8",
+      "exactGitWorkingBytes": false,
+      "lineEndingsOnlyDifference": true,
+      "sameWorkingBytesAsQualifiedSource": true
+    },
+    "native/src/google_workspace.rs": {
+      "gitBlobContentSha256": "2d47e5e4186530bc0581eaec0b4aa06895fdacad202dc3e1787e39bf3c20bb6b",
+      "workingContentSha256": "2d47e5e4186530bc0581eaec0b4aa06895fdacad202dc3e1787e39bf3c20bb6b",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": true
+    },
+    "native/src/google_workspace_http.rs": {
+      "gitBlobContentSha256": "cc42cec0f53aec60041f489ccc4b38fb3cb2ac593b617c7a7c9d7f50849be66c",
+      "workingContentSha256": "cc42cec0f53aec60041f489ccc4b38fb3cb2ac593b617c7a7c9d7f50849be66c",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": true
+    },
+    "native/src/host_config_claude_hooks.rs": {
+      "gitBlobContentSha256": "81eeca9898b46d79a6949500442cbc9c7f89b80f26be3573806740438d288114",
+      "workingContentSha256": "81eeca9898b46d79a6949500442cbc9c7f89b80f26be3573806740438d288114",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": true
+    },
+    "native/src/host_install_adapter.rs": {
+      "gitBlobContentSha256": "b99c4b143e57558d9b80c0ade9a7a295249ec5ff08b0fba6e015d47fcadb68d1",
+      "workingContentSha256": "b99c4b143e57558d9b80c0ade9a7a295249ec5ff08b0fba6e015d47fcadb68d1",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": true
+    },
+    "native/src/host_install_claude_hooks.rs": {
+      "gitBlobContentSha256": "a6db6f648475b3fee98645e404c6d1b76272da5b2d1e2859878fd8d423bede9e",
+      "workingContentSha256": "a6db6f648475b3fee98645e404c6d1b76272da5b2d1e2859878fd8d423bede9e",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": true
+    },
+    "native/src/knowledge_feedback_transcript.rs": {
+      "gitBlobContentSha256": "2b884998f3f232b75985c1973d28751d5f89923cdf993c1a73d3ebcfa038261c",
+      "workingContentSha256": "e356063d5bc48fc423e88079e6e7aea765dd9f66af7775c4caf606b05f65b82e",
+      "exactGitWorkingBytes": false,
+      "lineEndingsOnlyDifference": true,
+      "sameWorkingBytesAsQualifiedSource": true
+    },
+    "native/src/main.rs": {
+      "gitBlobContentSha256": "0f3e9278f7248ebe91038f820495338637cc4155552d627e1fe7f6259834f899",
+      "workingContentSha256": "0f3e9278f7248ebe91038f820495338637cc4155552d627e1fe7f6259834f899",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": true
+    },
+    "native/src/media.rs": {
+      "gitBlobContentSha256": "d445fd18753ebe9b3593e7c73ed29629fb2091d8d7acef6a34629e9f004ba070",
+      "workingContentSha256": "5d2c623cc75ebca123a57e889928cb79f0eda1ca3de86f69cfb1e6602f164810",
+      "exactGitWorkingBytes": false,
+      "lineEndingsOnlyDifference": true,
+      "sameWorkingBytesAsQualifiedSource": true
+    },
+    "native/src/neo4j_publish.rs": {
+      "gitBlobContentSha256": "c5fa5bc32ceae872030feb7c4d00c874b9df1308cd066b946caa611cd7e11ea5",
+      "workingContentSha256": "1226959a15517438de6cf9cfd8bf17fc1d083ae00700725e779c954d9405b2ef",
+      "exactGitWorkingBytes": false,
+      "lineEndingsOnlyDifference": true,
+      "sameWorkingBytesAsQualifiedSource": true
+    },
+    "native/src/postgres_catalog.rs": {
+      "gitBlobContentSha256": "1e3196c7daa9ada00a9a302b858b6e9d6e9b6a99e9985ca0b8a6a0aa6b4b05e3",
+      "workingContentSha256": "99a279e82490dd70820294b9966731eb6a7429f2de90ce9f7b0bd69359c070f8",
+      "exactGitWorkingBytes": false,
+      "lineEndingsOnlyDifference": true,
+      "sameWorkingBytesAsQualifiedSource": true
+    },
+    "native/src/postgres_catalog_client.rs": {
+      "gitBlobContentSha256": "ee969cd4debead3d653cc66d2c4e4aea75b12c130d415e428fba25e3438376ed",
+      "workingContentSha256": "c02db6829c2a2a1602719108610bb07d1fb4297545a3e4f97c0b33c896f23e90",
+      "exactGitWorkingBytes": false,
+      "lineEndingsOnlyDifference": true,
+      "sameWorkingBytesAsQualifiedSource": true
+    },
+    "native/src/semantic_workspace.rs": {
+      "gitBlobContentSha256": "3494bd4bd4a849f0f5e57a58507ad66f10bfdcc78fc301f104810bb73bbd5aee",
+      "workingContentSha256": "3494bd4bd4a849f0f5e57a58507ad66f10bfdcc78fc301f104810bb73bbd5aee",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": true
+    },
+    "native/src/server_selection.rs": {
+      "gitBlobContentSha256": "43ee4c39dd4e95fe7399211e7e304fff02066d60ee0c95b0f57fa22d8be0570f",
+      "workingContentSha256": "43ee4c39dd4e95fe7399211e7e304fff02066d60ee0c95b0f57fa22d8be0570f",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": true
+    },
+    "native/src/server_settings.rs": {
+      "gitBlobContentSha256": "34f4eac8acf79a4b9a3f439484c3b5452579b755cc27569bf6b10a7412351649",
+      "workingContentSha256": "34f4eac8acf79a4b9a3f439484c3b5452579b755cc27569bf6b10a7412351649",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": true
+    },
+    "native/src/session_config.rs": {
+      "gitBlobContentSha256": "bc18e62a1cd0fe1fdfbacd53ac9b6ff286e1c2c84d8d116b8503e82eedbb2aaa",
+      "workingContentSha256": "bc18e62a1cd0fe1fdfbacd53ac9b6ff286e1c2c84d8d116b8503e82eedbb2aaa",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": true
+    },
+    "native/src/session_config_tests.rs": {
+      "gitBlobContentSha256": "737c5121c5e0421b20e0d2ad60e3b76d3de248a4bdf33bee74ec090fccfb11a4",
+      "workingContentSha256": "737c5121c5e0421b20e0d2ad60e3b76d3de248a4bdf33bee74ec090fccfb11a4",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": true
+    },
+    "native/src/session_dashboard.html": {
+      "gitBlobContentSha256": "2382f41b084802bdc05d64fe1a93d57e1ddf6a04b48321c08beebece44ecfdb1",
+      "workingContentSha256": "2382f41b084802bdc05d64fe1a93d57e1ddf6a04b48321c08beebece44ecfdb1",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": true
+    },
+    "native/src/session_dashboard.rs": {
+      "gitBlobContentSha256": "afd503d4b0216cd6319f0a0f5ef6e5c49973a3518edd0704afb17e9d475a7e4a",
+      "workingContentSha256": "afd503d4b0216cd6319f0a0f5ef6e5c49973a3518edd0704afb17e9d475a7e4a",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": true
+    },
+    "native/src/session_steering.rs": {
+      "gitBlobContentSha256": "5bf2075be93b80a79fca3a3406060fa01013aefafb90a296ed4423a227d44f3c",
+      "workingContentSha256": "5bf2075be93b80a79fca3a3406060fa01013aefafb90a296ed4423a227d44f3c",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": true
+    },
+    "native/src/source_acquisition.rs": {
+      "gitBlobContentSha256": "63b9c02c4a4df920d793883919130a852634c73493a38b0797a7630958b8323a",
+      "workingContentSha256": "e8b24e1132b04c1397ede165c4e3c24849cdbb2d0fe891b677499069a116513f",
+      "exactGitWorkingBytes": false,
+      "lineEndingsOnlyDifference": true,
+      "sameWorkingBytesAsQualifiedSource": true
+    },
+    "native/src/source_acquisition_http.rs": {
+      "gitBlobContentSha256": "5e63b0d2d3f79a95822f00d50fc7706b12e907858cecd24e0b4c3cd0120c36f7",
+      "workingContentSha256": "1e0ff7f815fe0004908bec68175b063bb69f9dfc3e38174e659165db9b36cc11",
+      "exactGitWorkingBytes": false,
+      "lineEndingsOnlyDifference": true,
+      "sameWorkingBytesAsQualifiedSource": true
+    },
+    "native/src/source_exclusions.rs": {
+      "gitBlobContentSha256": "e403f5650c81ad8957924591d24619d82334beb96c48a57affda00a4a5b390c1",
+      "workingContentSha256": "e403f5650c81ad8957924591d24619d82334beb96c48a57affda00a4a5b390c1",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": true
+    },
+    "native/src/source_line_endings.rs": {
+      "gitBlobContentSha256": "df94c6a4e3c4d307c200af21f88c7868b6c70b0e51462b89ff6e7db42808f4e8",
+      "workingContentSha256": "df94c6a4e3c4d307c200af21f88c7868b6c70b0e51462b89ff6e7db42808f4e8",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": true
+    },
+    "native/src/symbol_info_budget.rs": {
+      "gitBlobContentSha256": "401cf108041b810d36bd2cbab31f6754975d4b46dd4286b78a513ec76bad9de5",
+      "workingContentSha256": "401cf108041b810d36bd2cbab31f6754975d4b46dd4286b78a513ec76bad9de5",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": true
+    },
+    "native/src/transcript_semantic.rs": {
+      "gitBlobContentSha256": "2cb3cbfdb6a530e466bec07c837a1350f4ea593460e79ea006321cdb1aa9cf9b",
+      "workingContentSha256": "048451e89a48a1182356e763b970a3bacbeb6f725a471bb52d90a21d3bfa479c",
+      "exactGitWorkingBytes": false,
+      "lineEndingsOnlyDifference": true,
+      "sameWorkingBytesAsQualifiedSource": true
+    },
+    "native/tests/git_compiler_affected.rs": {
+      "gitBlobContentSha256": "7cc6f464227cc7466e5da99dd203237d0b6fd80f64384a303570e5d1123637be",
+      "workingContentSha256": "7cc6f464227cc7466e5da99dd203237d0b6fd80f64384a303570e5d1123637be",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": true
+    },
+    "native/tests/google_workspace_http_cli.rs": {
+      "gitBlobContentSha256": "95ec851c0895497fb01cbf872737906da2e06cffcea1d8a77da29abba85da765",
+      "workingContentSha256": "95ec851c0895497fb01cbf872737906da2e06cffcea1d8a77da29abba85da765",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": true
+    },
+    "native/tests/media.rs": {
+      "gitBlobContentSha256": "1324fe40913df0e5f26049ed39ac698edadf31accebe2a5a32bceccc82a0d5c7",
+      "workingContentSha256": "c39535cb7c709ef457025c3fd8417fa03bfc4a82e07141a4e99a84d46f5e710a",
+      "exactGitWorkingBytes": false,
+      "lineEndingsOnlyDifference": true,
+      "sameWorkingBytesAsQualifiedSource": true
+    },
+    "native/tests/postgres_catalog.rs": {
+      "gitBlobContentSha256": "f64465bf178ba5891429ca9578f9ad1ddc512cf6326e50cf900521f398701a81",
+      "workingContentSha256": "2c0a44443230aaf693ea33a8dcd26db11a881ec332f3ccc6309991b56a2be860",
+      "exactGitWorkingBytes": false,
+      "lineEndingsOnlyDifference": true,
+      "sameWorkingBytesAsQualifiedSource": true
+    },
+    "native/tests/postgres_catalog_cli.rs": {
+      "gitBlobContentSha256": "baf33afe3e7f0c7a983a97f1b0f8b6d9bb1aad7dce1a08a501557fedb8515a77",
+      "workingContentSha256": "8a3d293f44917b1f36e6867f6d1419ed9acfe1978399d4cd42e91cc6d24ef3e0",
+      "exactGitWorkingBytes": false,
+      "lineEndingsOnlyDifference": true,
+      "sameWorkingBytesAsQualifiedSource": true
+    },
+    "native/tests/session_config_cli.rs": {
+      "gitBlobContentSha256": "3d87b0352bdb27809f5419b59b65ecd98955d658146f597a22939ad7fd19c546",
+      "workingContentSha256": "3d87b0352bdb27809f5419b59b65ecd98955d658146f597a22939ad7fd19c546",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": true
+    },
+    "native/tests/session_dashboard.rs": {
+      "gitBlobContentSha256": "88778dc4b0410ecf2dfa72942e0b6a39cc05e022b6afa529820799ed071cf50d",
+      "workingContentSha256": "88778dc4b0410ecf2dfa72942e0b6a39cc05e022b6afa529820799ed071cf50d",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": true
+    },
+    "native/tests/session_steering.rs": {
+      "gitBlobContentSha256": "d8defadee956e2a2fd6b616f6ff5f546709d26573ffcfa4a156f4aa870944a17",
+      "workingContentSha256": "d8defadee956e2a2fd6b616f6ff5f546709d26573ffcfa4a156f4aa870944a17",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": true
+    },
+    "native/tests/source_acquisition.rs": {
+      "gitBlobContentSha256": "9f363137c47924637649a35dd3dee22fd0370dd027f2e9470873a60975d5c8c8",
+      "workingContentSha256": "a683dae0e4cf83c9a669cc5848df9ef162946bd3241f0dc455a374a461658651",
+      "exactGitWorkingBytes": false,
+      "lineEndingsOnlyDifference": true,
+      "sameWorkingBytesAsQualifiedSource": true
+    },
+    "native/tests/source_acquisition_http.rs": {
+      "gitBlobContentSha256": "ee249ad9505c637f8b41ba1a2e0b1cdac7fe6c7f8b3a93f9c2573f89bf4f9b2a",
+      "workingContentSha256": "79964a83c45db33fa42aea156f846c5b870c23b52893372876339835f51c9e98",
+      "exactGitWorkingBytes": false,
+      "lineEndingsOnlyDifference": true,
+      "sameWorkingBytesAsQualifiedSource": true
+    },
+    "native/tests/transcript_semantic.rs": {
+      "gitBlobContentSha256": "e86beb043c0bef9b379408ca6efd1690655a64ae958349ef5b5e733b09e3497a",
+      "workingContentSha256": "95c906778832771504eab69fb34d4ef295c38aeca5056ebe0483fd943d110e10",
+      "exactGitWorkingBytes": false,
+      "lineEndingsOnlyDifference": true,
+      "sameWorkingBytesAsQualifiedSource": true
+    },
+    "docs/validation/integration-2026-10-19/app-history-integration/index.json": {
+      "gitBlobContentSha256": "93f85a880a8f85f71f58890725ec4a28589a8f9a5789074efd56d2db16280ced",
+      "workingContentSha256": "93f85a880a8f85f71f58890725ec4a28589a8f9a5789074efd56d2db16280ced",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": false
+    },
+    "docs/validation/integration-2026-10-19/arxiv-source/index.json": {
+      "gitBlobContentSha256": "15fba6f3d714d918b61730065a097726fb76e3b15197f781ca230bea25e11630",
+      "workingContentSha256": "15fba6f3d714d918b61730065a097726fb76e3b15197f781ca230bea25e11630",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": false
+    },
+    "docs/validation/integration-2026-10-19/digest-history-acquisition/index.json": {
+      "gitBlobContentSha256": "1db76e7d3aaa6fbe0840092d5dcd114fa42740c8cbd9a8bff52aa2081581f30a",
+      "workingContentSha256": "1db76e7d3aaa6fbe0840092d5dcd114fa42740c8cbd9a8bff52aa2081581f30a",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": false
+    },
+    "docs/validation/integration-2026-10-19/falkor-publish/index.json": {
+      "gitBlobContentSha256": "83e6b4f33532ccba51a97c3305720f5479efd27f5868429a83c5366c24925427",
+      "workingContentSha256": "83e6b4f33532ccba51a97c3305720f5479efd27f5868429a83c5366c24925427",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": false
+    },
+    "docs/validation/integration-2026-10-19/neo4j-publish/index.json": {
+      "gitBlobContentSha256": "8f890efc2d9238a16882c09f84708a1db549f6c28a90e435b152c90a41b01f1e",
+      "workingContentSha256": "8f890efc2d9238a16882c09f84708a1db549f6c28a90e435b152c90a41b01f1e",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": false
+    },
+    "docs/validation/integration-2026-10-19/postgres-catalog/index.json": {
+      "gitBlobContentSha256": "86282f98f992f28f7dcc52a40ee85aa664bd3986ba5a8dce49470b4a118d7d96",
+      "workingContentSha256": "86282f98f992f28f7dcc52a40ee85aa664bd3986ba5a8dce49470b4a118d7d96",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": false
+    },
+    "docs/validation/integration-2026-10-19/semantic-transcript/index.json": {
+      "gitBlobContentSha256": "07d9ff269e918131e9d47191b2d7b505d6cb687387f512379e6ee893f85d0dd6",
+      "workingContentSha256": "07d9ff269e918131e9d47191b2d7b505d6cb687387f512379e6ee893f85d0dd6",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": false
+    },
+    "docs/validation/integration-2026-10-19/source-acquisition/index.json": {
+      "gitBlobContentSha256": "fce345e09a511584efe3daf644b43737328ca147fb4eada99794de4cd7f9aa97",
+      "workingContentSha256": "fce345e09a511584efe3daf644b43737328ca147fb4eada99794de4cd7f9aa97",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": false
+    },
+    "docs/validation/integration-2026-10-21/claude-session-hooks/index.json": {
+      "gitBlobContentSha256": "92a3833b34b85d6fe735521314d6f7fa6b4478a7f1c98ff46e233cfd4468b3c1",
+      "workingContentSha256": "92a3833b34b85d6fe735521314d6f7fa6b4478a7f1c98ff46e233cfd4468b3c1",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": false
+    },
+    "docs/validation/integration-2026-10-21/google-workspace/index.json": {
+      "gitBlobContentSha256": "9b7333cdfc0083a236a7e05cb2c8727dda5e59913ec4c18fe43bfea59fbf49c3",
+      "workingContentSha256": "9b7333cdfc0083a236a7e05cb2c8727dda5e59913ec4c18fe43bfea59fbf49c3",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": false
+    },
+    "docs/validation/integration-2026-10-21/json-mcp-hosts/index.json": {
+      "gitBlobContentSha256": "bf8419aa460aea32ff42b1dd8856b739ad8674a248ba94a205af13b2b4bf81e8",
+      "workingContentSha256": "bf8419aa460aea32ff42b1dd8856b739ad8674a248ba94a205af13b2b4bf81e8",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": false
+    },
+    "docs/validation/integration-2026-10-22/compiler-parameter-properties/index.json": {
+      "gitBlobContentSha256": "2a7433a4b0547086aba56bf186832205398dd2271b42a89b9132286d68a207b9",
+      "workingContentSha256": "2a7433a4b0547086aba56bf186832205398dd2271b42a89b9132286d68a207b9",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": false
+    },
+    "docs/validation/integration-2026-10-22/compiler-property-contracts/index.json": {
+      "gitBlobContentSha256": "0d88d3313e71c7b3bd0d1a6ad571bb85741579d0bebe1920baf4413d636cefbe",
+      "workingContentSha256": "0d88d3313e71c7b3bd0d1a6ad571bb85741579d0bebe1920baf4413d636cefbe",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": false
+    },
+    "docs/validation/integration-2026-10-22/dashboard/index.json": {
+      "gitBlobContentSha256": "f58acf48663b32084738b696d28b6519e284e24d2b0b6e5a778b7ef410786771",
+      "workingContentSha256": "f58acf48663b32084738b696d28b6519e284e24d2b0b6e5a778b7ef410786771",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": false
+    },
+    "docs/validation/integration-2026-10-22/git-ignore-policy/index.json": {
+      "gitBlobContentSha256": "8276cdeb5459e5cd84a89f05c6b7941067060913c2c7f93065dca886e8d24790",
+      "workingContentSha256": "8276cdeb5459e5cd84a89f05c6b7941067060913c2c7f93065dca886e8d24790",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": false
+    },
+    "docs/validation/integration-2026-10-22/google-http-export/index.json": {
+      "gitBlobContentSha256": "f71a1c9e945982a605956d453cd29400e414f256556da7ff8322ca60b0a52579",
+      "workingContentSha256": "f71a1c9e945982a605956d453cd29400e414f256556da7ff8322ca60b0a52579",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": false
+    },
+    "docs/validation/integration-2026-10-22/project-defaults/index.json": {
+      "gitBlobContentSha256": "3bd0cbff218b6c43afe6ebc17456aa6518ea82855749bbc7bba6d36baf38724c",
+      "workingContentSha256": "3bd0cbff218b6c43afe6ebc17456aa6518ea82855749bbc7bba6d36baf38724c",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": false
+    },
+    "docs/validation/integration-2026-10-22/semantic-workspace/index.json": {
+      "gitBlobContentSha256": "de9aa0a75dccbf3a318a84fd5bbfb5e299cef55d6947140770a22d5651979786",
+      "workingContentSha256": "de9aa0a75dccbf3a318a84fd5bbfb5e299cef55d6947140770a22d5651979786",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": false
+    },
+    "docs/validation/integration-2026-10-22/server-selection/index.json": {
+      "gitBlobContentSha256": "ae0f07559e7bd0e7c740f2c81f73b96c37ef9707d9c8902afb407be717e9f506",
+      "workingContentSha256": "ae0f07559e7bd0e7c740f2c81f73b96c37ef9707d9c8902afb407be717e9f506",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": false
+    },
+    "docs/validation/integration-2026-10-22/server-settings/index.json": {
+      "gitBlobContentSha256": "1578c4371c29e0c86d2df92b33f6c69ab2300cf47336e287173d89b817aec85c",
+      "workingContentSha256": "1578c4371c29e0c86d2df92b33f6c69ab2300cf47336e287173d89b817aec85c",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": false
+    },
+    "docs/validation/integration-2026-10-22/session-agent-interface/index.json": {
+      "gitBlobContentSha256": "6f89811bc7186e39dfd5033f6767610b82d55dc6ad898ce42beabc75d4cd3006",
+      "workingContentSha256": "6f89811bc7186e39dfd5033f6767610b82d55dc6ad898ce42beabc75d4cd3006",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": false
+    },
+    "docs/validation/integration-2026-10-22/session-config-yaml/index.json": {
+      "gitBlobContentSha256": "27158f9d0f683de7ad8aa9dd9af1d27ff2ad53c222bd83e82f23b3ae3373ca72",
+      "workingContentSha256": "27158f9d0f683de7ad8aa9dd9af1d27ff2ad53c222bd83e82f23b3ae3373ca72",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": false
+    },
+    "docs/validation/integration-2026-10-22/session-fixed-tools/index.json": {
+      "gitBlobContentSha256": "3e87762d88cf6739f196fdcbec20eb7a5f23780e8d253101e6bb3c7f7656a99b",
+      "workingContentSha256": "3e87762d88cf6739f196fdcbec20eb7a5f23780e8d253101e6bb3c7f7656a99b",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": false
+    },
+    "docs/validation/integration-2026-10-22/session-inclusions/index.json": {
+      "gitBlobContentSha256": "f612a852ecb3c4dff06592d0b039df569e8ba3badab1da0c2e82f53917a5c6f9",
+      "workingContentSha256": "f612a852ecb3c4dff06592d0b039df569e8ba3badab1da0c2e82f53917a5c6f9",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": false
+    },
+    "docs/validation/integration-2026-10-22/session-memory-patterns/index.json": {
+      "gitBlobContentSha256": "ef69155e79d55b04ce0a5b837418e9cd75f9bdcd71e94d8c4a51ff03f51a11de",
+      "workingContentSha256": "ef69155e79d55b04ce0a5b837418e9cd75f9bdcd71e94d8c4a51ff03f51a11de",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": false
+    },
+    "docs/validation/integration-2026-10-22/session-optional-defaults/index.json": {
+      "gitBlobContentSha256": "da65664c1f4145e9f5863e5274e333b3ab8e497b54b5dfc7635eaf6d77ff2fd7",
+      "workingContentSha256": "da65664c1f4145e9f5863e5274e333b3ab8e497b54b5dfc7635eaf6d77ff2fd7",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": false
+    },
+    "docs/validation/integration-2026-10-22/session-primary-readonly/index.json": {
+      "gitBlobContentSha256": "75076f54089e0e414bb8ede35d5b9803da9ca8df586ed821ab843b812b191787",
+      "workingContentSha256": "75076f54089e0e414bb8ede35d5b9803da9ca8df586ed821ab843b812b191787",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": false
+    },
+    "docs/validation/integration-2026-10-22/source-exclusions/index.json": {
+      "gitBlobContentSha256": "6cd8e7897f9e09440a2630b59a33d990da85fca9053955def374a1fb59fa7558",
+      "workingContentSha256": "6cd8e7897f9e09440a2630b59a33d990da85fca9053955def374a1fb59fa7558",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": false
+    },
+    "docs/validation/integration-2026-10-22/source-line-endings/index.json": {
+      "gitBlobContentSha256": "4cf4d841855245ee0d9a2c0e108dd8180e705de08a6ada71880559e5c6e8578e",
+      "workingContentSha256": "4cf4d841855245ee0d9a2c0e108dd8180e705de08a6ada71880559e5c6e8578e",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": false
+    },
+    "docs/validation/integration-2026-10-22/status-db-reconciliation/index.json": {
+      "gitBlobContentSha256": "61bf72957a36133b6e6e7cd8a533def0ab43d30e9ab346c444db52151530792d",
+      "workingContentSha256": "61bf72957a36133b6e6e7cd8a533def0ab43d30e9ab346c444db52151530792d",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": false
+    },
+    "docs/validation/integration-2026-10-22/symbol-info-budget/index.json": {
+      "gitBlobContentSha256": "80cfaf96fcc240d29a66148c1cfb33016f15d0afaa109d0e1088abdc57e321a9",
+      "workingContentSha256": "80cfaf96fcc240d29a66148c1cfb33016f15d0afaa109d0e1088abdc57e321a9",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": false
+    },
+    "docs/validation/integration-2026-10-22/symbol-workspace-folders/index.json": {
+      "gitBlobContentSha256": "2143130d73d22e43bb85468ab692f7684f3643cec0e5d870a5219e966965442e",
+      "workingContentSha256": "2143130d73d22e43bb85468ab692f7684f3643cec0e5d870a5219e966965442e",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": false
+    },
+    "docs/validation/integration-2026-10-22/symbol-workspace-routes/index.json": {
+      "gitBlobContentSha256": "e9fa8eb027c07035a0aac5bd0cd1293dba488b033b29b96987054460e4c5e623",
+      "workingContentSha256": "e9fa8eb027c07035a0aac5bd0cd1293dba488b033b29b96987054460e4c5e623",
+      "exactGitWorkingBytes": true,
+      "lineEndingsOnlyDifference": false,
+      "sameWorkingBytesAsQualifiedSource": false
+    }
+  },
+  "configurationCoverage": {
+    "projectKeyNames": 25,
+    "boundedProjections": 21,
+    "restrictedDefaultOnly": [
+      "encoding",
+      "language_backend",
+      "activation_command",
+      "activation_command_timeout"
+    ],
+    "modeNameSequenceExact": 9,
+    "contextNameSequenceExact": 16,
+    "guidanceOrNameCoverageIsNotFullBehaviorCertification": true
+  },
+  "existingSourceQualification": {
+    "sourceCommit": "a1e6d4076ad20df223bec2f1d32c8d60f06aba02",
+    "index": "docs/validation/integration-2026-10-22/compiler-parameter-properties/index.json",
+    "newProductTestsRunForThisReadOnlyMapping": false
+  },
+  "backendRuntimeIdsNotQualifiedByThisAudit": 77,
+  "originalInventoryAssessmentsChanged": false,
+  "fullStatusComplete": false,
+  "priorityScopeReview": [
+    {
+      "id": "R1",
+      "title": "Finish semantic refactoring intent contracts",
+      "documentedNativeContract": "Finite guarded refactor intents, compiler inline/body/move contracts and source-pinned actual Rust rename evidence exist.",
+      "remainingBoundary": "Broader declarations/languages/configurations, implicit effects, exhaustive references and IDE/runtime quality remain open.",
+      "existingCheckpointFields": [
+        "declarationAttachmentsCheckpoint",
+        "directoryMoveCheckpoint",
+        "fileUsageCheckpoint",
+        "functionBindingPropagationCheckpoint",
+        "functionPropagationCheckpoint",
+        "memberDecoratorCheckpoint",
+        "nativeSessionRefactorCheckpoint",
+        "pythonEmptySuiteCheckpoint",
+        "siblingDeclaratorsCheckpoint",
+        "symbolDeletionCheckpoint",
+        "wrappedCallPropagationCheckpoint",
+        "compilerInlineDevelopment",
+        "compilerMoveDevelopment",
+        "compilerMoveRepairsDevelopment",
+        "compilerMoveMissingImportsDevelopment",
+        "compilerFunctionBodyDevelopment",
+        "functionVarHoistingDevelopment",
+        "functionBodyTypeInferenceDevelopment",
+        "functionBodyCompletionDevelopment",
+        "functionBodyReturnContextDevelopment",
+        "functionBodyArgumentCaptureDevelopment",
+        "functionBodyCallerDocumentationDevelopment"
+      ],
+      "newRuntimeCertification": false
+    },
+    {
+      "id": "R2",
+      "title": "Source-bound meaning graphs, checked semantic identity and build state",
+      "documentedNativeContract": "Checked native claim/source replay, explicit semantic-identity adjudication and positive-clique quotient projection exist.",
+      "remainingBoundary": "Cross-history/workspace identity, broader survivor rules and independent semantic/model truth remain open.",
+      "existingCheckpointFields": [
+        "hostGroupingAddition",
+        "portableProjectionCheckpoint",
+        "semanticIdentityDevelopment"
+      ],
+      "newRuntimeCertification": false
+    },
+    {
+      "id": "R3",
+      "title": "Selected-View analytics residual: checked historical comparisons",
+      "documentedNativeContract": "Pinned pair-of-Views historical comparison is implemented through an explicit native CLI/library contract.",
+      "remainingBoundary": "Selected-analytics previousSnapshotId remains unavailable without both exact View selections; full upstream quality remains open.",
+      "existingCheckpointFields": [],
+      "newRuntimeCertification": false
+    },
+    {
+      "id": "R4",
+      "title": "Typed mixed source and processed-document views",
+      "documentedNativeContract": "Typed mixed preparation, checked compositions/claims and bounded processed-PDF/provider graphs exist.",
+      "remainingBoundary": "Broader Office/OCR/layout/analytics/identity and exhaustive external semantic quality remain open.",
+      "existingCheckpointFields": [
+        "meaningInputPreparationAddition",
+        "mixedCheckedCompositionAddition",
+        "mixedCheckedGraphQueryAddition",
+        "mixedInterpretationClaimAddition",
+        "mixedQueryAddition",
+        "mixedSemanticProviderAddition",
+        "processedPdfAddition"
+      ],
+      "newRuntimeCertification": false
+    },
+    {
+      "id": "R5",
+      "title": "Git impact attribution and richer affected analysis",
+      "documentedNativeContract": "Exact Git impact/areas/owners and method/property/constructor-parameter compiler contracts preserve original proofs and separate possible/runtime roles.",
+      "remainingBoundary": "Broader implicit/receiver/heritage/declaration effects, unobserved instances, pushed-ref freshness and exhaustive report/runtime quality remain open.",
+      "existingCheckpointFields": [
+        "capturedOwnersCheckpoint",
+        "compilerImpactCheckpoint"
+      ],
+      "newRuntimeCertification": false
+    },
+    {
+      "id": "R6",
+      "title": "Managed assistant and Git-hook installation lifecycle",
+      "documentedNativeContract": "Generic/Codex and selected Cursor/Claude JSON MCP profiles have bounded Windows configuration contracts. Actual selected Codex/Claude CLI and receipt-owned Claude SessionStart evidence retain their dated scope; Cursor/Desktop interactive behavior is not implied.",
+      "remainingBoundary": "Prompt/edit callbacks, statuslines, other branded releases/platforms, interactive/model behavior and universal recovery remain open.",
+      "existingCheckpointFields": [
+        "codexMcpCheckpoint",
+        "nativeSessionRefactorCheckpoint"
+      ],
+      "newRuntimeCertification": false
+    },
+    {
+      "id": "R7",
+      "title": "Explicit external-source acquisition and graph database connectors",
+      "documentedNativeContract": "PostgreSQL, anonymous HTTP/arxiv/PDF, controlled Google export and historical live Neo4j/FalkorDB publication are implemented.",
+      "remainingBoundary": "Authenticated Google live has no approved test document. ASR, authenticated/social/video routes, broader DB versions/RBAC/current live and full mixed-source quality remain open.",
+      "existingCheckpointFields": [
+        "arxivCheckpoint",
+        "falkorPublishCheckpoint",
+        "neo4jPublishCheckpoint",
+        "postgresCatalogCheckpoint",
+        "receivedHttpCheckpoint"
+      ],
+      "newRuntimeCertification": false
+    },
+    {
+      "id": "R8",
+      "title": "Self-hosted GitHub App and authorized review publication",
+      "documentedNativeContract": "Owned App ingress/queues/history, guarded receiver/publication and host-local declaration/interpretation checks exist.",
+      "remainingBoundary": "Configured production installation/deployment, independent remote source/CAS equality and full hosted/upstream truth remain open.",
+      "existingCheckpointFields": [
+        "appHistoryDevelopment",
+        "discussionDevelopment",
+        "historyAcquisitionDevelopment",
+        "historyJobDevelopment",
+        "ownedProcessCheckpoint",
+        "queryDevelopment",
+        "receiverDevelopment",
+        "serviceDevelopment",
+        "receiverSourceDevelopment",
+        "receiverInterpretationDevelopment"
+      ],
+      "newRuntimeCertification": false
+    },
+    {
+      "id": "R9",
+      "title": "Outcome and corroboration learning beyond authored currentness",
+      "documentedNativeContract": "Source-bound knowledge/plan/Meaning outcomes and explicit semantic transcript candidate jobs retain separate original proofs and accounting.",
+      "remainingBoundary": "Further object surfaces, authenticated corroboration, current applicability, actual execution and independent model quality remain open.",
+      "existingCheckpointFields": [
+        "knowledgeFeedbackAddition",
+        "planFeedbackCheckpoint",
+        "meaningFeedbackDevelopment",
+        "semanticTranscriptDevelopment"
+      ],
+      "newRuntimeCertification": false
+    }
+  ]
+}

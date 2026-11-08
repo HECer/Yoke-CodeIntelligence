@@ -1,0 +1,35 @@
+{
+  "checkedAtUtc": "2026-10-15T11:15:27.213327+00:00",
+  "phase": "clippy",
+  "sourceFiles": 574,
+  "sourceChanges": [],
+  "results": [
+    {
+      "label": "clippy",
+      "command": [
+        "cargo",
+        "clippy",
+        "--workspace",
+        "--all-targets",
+        "--locked",
+        "-j",
+        "2",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exitCode": 0,
+      "seconds": 68.953,
+      "logSha256": "75c462414e89cda8f6771d2644efc19dbd639f96b98c69d5c345b3cd28078437",
+      "groups": 0,
+      "passed": 0,
+      "failed": 0,
+      "ignored": 0
+    }
+  ],
+  "passed": 0,
+  "failed": 0,
+  "ignored": 0,
+  "accepted": true,
+  "tempRoot": "C:\\Users\\Public\\Yoke-Test-Scratch\\clippy-1114"
+}

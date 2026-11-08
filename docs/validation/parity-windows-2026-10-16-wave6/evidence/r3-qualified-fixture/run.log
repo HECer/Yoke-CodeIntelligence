@@ -1,0 +1,31 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+   Compiling yoke-r3-fixture-qualification v0.0.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\parity-validation-20261015\next-historical-view-comparison\revisions\execution-prep\qualification-harness)
+warning: unused import: `serde_json::json`
+ --> tests\support\meaning_comparison_fixture.rs:2:5
+  |
+2 | use serde_json::json;
+  |     ^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: field `graph` is never read
+  --> tests\support\meaning_comparison_fixture.rs:29:9
+   |
+23 | pub struct Fixture {
+   |            ------- field in this struct
+...
+29 |     pub graph: Graph,
+   |         ^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `yoke-r3-fixture-qualification` (test "historical_view_fixture_qualification") generated 2 warnings (run `cargo fix --test "historical_view_fixture_qualification" -p yoke-r3-fixture-qualification` to apply 1 suggestion)
+    Finished `test` profile [unoptimized] target(s) in 50.38s
+     Running tests\historical_view_fixture_qualification.rs (target\debug\deps\historical_view_fixture_qualification-a9228558dfe6e873.exe)
+
+running 2 tests
+test genuine_source_only_views_qualify_epoch8_and_epoch9_and_the_mutation_oracle ... ok
+test genuine_original_and_rebound_typed_archives_qualify_both_epochs_without_a_live_store ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.65s
+

@@ -1,0 +1,25 @@
+{
+  "status": "ignored documentation candidate; no normal docs changes; runtime acceptance pending",
+  "artifacts": {
+    "manifest-balanced-retrieval.md": {
+      "sha256": "870f0f507c147c79e991f0bdfcca5dee9d807bdc8c444b2ec9a572f34984dfde",
+      "bytes": 17112
+    },
+    "workflows-link.patch": {
+      "sha256": "e2fe124b4a660cd6182d38b6c3d12c42781b5ccad5ae94f3ab3b4d5a1c25dbc3",
+      "bytes": 2621
+    },
+    "REVIEW-NOTES.md": {
+      "sha256": "20332c2a7828761fd8b2f047d76e0a2332b3a0b5643258cf33229667ac601628",
+      "bytes": 2447
+    }
+  },
+  "unchangedNormalPins": {
+    "native/src/protocol.rs": "e395fcd26c64be8041abb1b41fff99d04fb55bef2744e0cff471920539388f8f",
+    "native/src/trail_adapter.rs": "61e230f3ac3e7df52c775d4a5c7846c511558ca582ed94f23a8663fa9b097be3",
+    "native/src/trail_envelope_tests.rs": "9ef3546863ef0ac4f91a97a0459f10133a9a6842da3541dd4ff214742e99c8cd",
+    "native/tests/monorepo_profiles.rs": "1947ff32b76c3ac94c0f825ca7558b1848943ec8b7a5f0178c04a3a64718359b",
+    "native/tests/monorepo_pre_feature_envelope.rs": "c1563216c4d2c78f26fadadc62ffd68a4ff5f391df3396e32485f17aa5014103"
+  },
+  "workflowsInputSha256": "b8378df0c2a56f3221438b4cf358ac1894a60ff8b66f6c580ffdaae80895bd4e"
+}

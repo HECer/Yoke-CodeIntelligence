@@ -1,0 +1,25 @@
+{
+  "checkedAtUtc": "2026-10-15T18:47:10.015789+00:00",
+  "scope": "focused_gate_not_frozen_suite",
+  "command": [
+    "cargo",
+    "test",
+    "--workspace",
+    "--locked",
+    "-j",
+    "2",
+    "--lib",
+    "lsp::refactor_intents::tests::",
+    "--",
+    "--test-threads=4"
+  ],
+  "exitCode": 101,
+  "seconds": 40.688,
+  "tempRoot": "D:\\Yoke-Test-Scratch\\wave4-owned-nested-schema-red",
+  "logSha256": "24604b328f5ea7fc68c160dd4d40ae4859a04534ab02a0d5f58aee876cd4eff3",
+  "groups": 1,
+  "passed": 3,
+  "failed": 2,
+  "ignored": 0,
+  "sourceChanges": []
+}

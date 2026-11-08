@@ -1,0 +1,22 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 13s
+     Running tests\github_discussions.rs (target\debug\deps\github_discussions-ecd057bb99c496f2.exe)
+
+running 14 tests
+test captures_all_channels_exact_unicode_reply_edges_and_rechecks_the_closed_head ... ok
+test changed_head_and_cross_pull_comment_never_become_a_capture ... ok
+test cli_permission_denials_do_not_create_source_state_or_read_missing_host_files ... ok
+test closed_listing_cannot_lose_its_state_filter_in_pagination ... ok
+test digest_replays_captured_source_and_keeps_discussion_claims_separate ... ok
+test cli_offline_digest_and_header_handoff_use_explicit_capture_and_fixture_grants ... ok
+test missing_text_grant_and_zero_budget_refuse_before_network ... ok
+test exact_output_capacity_never_silently_clips_discussion_observations ... ok
+test obvious_credential_text_and_unknown_schema_keys_never_echo_remote_values ... ok
+test partial_discovery_keeps_unacquired_pull_numbers_explicit ... ok
+test provider_null_description_is_known_absence_not_missing_page_coverage ... ok
+test replay_rejects_rehashed_coverage_and_text_claims ... ok
+test replay_rejects_rehashed_foreign_receipts_and_omitted_requested_pulls ... ok
+test source_associations_distinguish_verified_history_from_selected_immutable_captures ... ok
+
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.87s
+

@@ -1,0 +1,554 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 57.77s
+     Running unittests src\lib.rs (target\debug\deps\yoke-d0206a40818d4343.exe)
+
+running 404 tests
+test agent_repl::cleanup_proof_tests::lost_process_cleanup_proof_stays_typed_across_repeated_close ... ok
+test capture::analyzer_migration_tests::authentic_analyzer_seven_scope_survives_eight_without_relabeling ... ok
+test agent_repl::source_binding_tests::provider_queries_keep_the_symbol_snapshot_after_original_source_changes ... ok
+test capture::analyzer_migration_tests::released_analyzer_four_archives_preserve_unknown_vue_and_powershell_languages ... ok
+test capture::analyzer_migration_tests::authentic_analyzer_six_languages_survive_seven_with_exact_scope_proof ... ok
+test capture::archive_scope_tests::exact_native_archive_identity_denies_resealed_protected_members_and_future_fields ... ok
+test capture::archive_scope_tests::offline_dependency_and_derived_scope_proofs_require_exact_options_and_origin_chain ... ok
+test capture::deadline_cause_tests::expired_original_deadline_reports_expired_without_reset ... ok
+test capture::deadline_cause_tests::history_cleanup_failure_remains_typed_inside_a_spawn_io_error ... ok
+test capture::deadline_cause_tests::history_cleanup_failure_survives_host_cancellation ... ok
+test capture::archive_scope_tests::released_capture_and_overlay_receipts_remain_exact_offline_after_workspace_closes ... ok
+test capture::deadline_cause_tests::inherited_cancellation_is_observed_on_the_same_borrow_and_wins_over_expiry ... ok
+test capture::deadline_cause_tests::live_original_deadline_has_no_typed_failure_and_keeps_legacy_checks ... ok
+test capture::deadline_cause_tests::history_cleanup_failure_survives_host_deadline ... ok
+test capture::epoch_migration_tests::authentic_archived8_scope_proofs_remain_valid_for_a9_reader ... ok
+test changes::recovery_tests::expired_emergency_write_preserves_the_durable_recovery_identifier ... ok
+test capture::epoch_migration_tests::authentic_native8_scope_proofs_remain_valid_for_a9_reader ... ok
+test decision_records::tests::authored_decision_creates_a_source_bound_immutable_revision ... ok
+test editor_http::tests::an_expired_response_never_claims_the_operation_succeeded ... ok
+test editor_http::tests::backpressured_socket_writes_cannot_extend_the_response_deadline ... ok
+test git_workflows::affected_details::tests::both_side_identity_audit_precedes_base_observation_capacity ... ok
+test git_workflows::affected_details::tests::cancellation_during_canonical_encoding_returns_the_producers_deadline_class ... ok
+test git_workflows::affected_details::tests::cancellation_during_hierarchy_adjacency_returns_the_producers_deadline_class ... ok
+test git_workflows::affected_details::tests::cancellation_during_incoming_adjacency_returns_the_producers_deadline_class ... ok
+test git_workflows::affected_details::tests::cancellation_during_index_scan_returns_the_producers_deadline_class ... ok
+test git_workflows::affected_details::tests::cancellation_during_output_sort_returns_the_producers_deadline_class ... ok
+test git_workflows::affected_details::tests::cancellation_during_witness_comparison_returns_the_producers_deadline_class ... ok
+test git_workflows::affected_details::tests::complete_derived_edge_credit_counts_scan_hierarchy_and_each_incoming_examination ... ok
+test git_workflows::affected_details::tests::cross_root_original_members_keep_reasons_and_independent_state_credit ... ok
+test git_workflows::affected_details::tests::cycle_self_loop_and_parallel_edges_preserve_proof_separately_from_visited_states ... ok
+test git_workflows::affected_details::tests::eligibility_reasons_are_ordered_and_absent_parent_is_never_inferred ... ok
+test git_workflows::affected_details::tests::exact_source_proven_constructor_is_excluded_without_staticness_inference ... ok
+test git_workflows::affected_details::tests::full_sequence_lexicographic_diamond_is_independent_of_input_vector_order ... ok
+test git_workflows::affected_details::tests::global_duplicate_keys_and_ids_refuse_even_when_unreached_or_identical ... ok
+test git_workflows::affected_details::tests::identical_ids_on_two_sides_have_separate_index_and_walk_identity ... ok
+test git_workflows::affected_details::tests::incoming_visited_keys_include_the_expanded_walk_seed ... ok
+test git_workflows::affected_details::tests::joined_overloads_keep_unsupported_name_anchor_reason_without_owner_overloads ... ok
+test git_workflows::affected_details::tests::legacy_evidence_line_forms_project_to_one_exact_crlf_and_eof_range ... ok
+test git_workflows::affected_details::tests::new_proof_evidence_keeps_vector_order_and_repetition_with_unique_row_closure ... ok
+test git_workflows::affected_details::tests::no_change_index_work_includes_unresolved_and_irrelevant_observations ... ok
+test git_workflows::affected_details::tests::partial_misplaced_utf8_and_misspelled_names_are_input_corruption ... ok
+test git_workflows::affected_details::tests::resolved_parent_integrity_precedes_unsupported_language_or_kind ... ok
+test git_workflows::affected_details::tests::source_hash_cache_still_checks_second_path_manifest_size ... ok
+test git_workflows::affected_details::tests::twelve_level_diamond_charges_states_and_edges_without_enumerating_paths ... ok
+test git_workflows::history_read::tests::cancellation_during_contents_prevents_another_object_read ... ok
+test git_workflows::history_read::tests::information_capacity_is_checked_before_requesting_any_commit_contents ... ok
+test git_workflows::history_read::tests::misplaced_parent_headers_refuse_before_acquiring_unrelated_history ... ok
+test git_workflows::history_read::tests::object_information_and_contents_share_the_original_deadline ... ok
+test git_workflows::history_read::tests::partial_date_frontier_cannot_supply_a_fabricated_selection_under_the_visit_limit ... ok
+test git_workflows::history_read::tests::selection_and_visit_boundaries_never_probe_the_poisoned_ancestor ... ok
+test git_workflows::impact_details::checked_admission_tests::checked_sides_retain_proven_git_and_captured_working_tree_epochs_after_host_switch ... ok
+test debug_adapter::cleanup_tests::unjoined_worker_cleanup_failure_remains_sticky_after_worker_eventually_exits ... ok
+test git_workflows::impact_details::checked_admission_tests::consumer_encoding_failure_preserves_caller_transaction_savepoint_marker_and_exact_limit ... ok
+test git_workflows::impact_details::checked_admission_tests::each_whole_graph_vector_on_either_side_is_capacity_before_broken_early_source ... ok
+test git_workflows::impact_details::checked_admission_tests::graph_input_limits_keep_exact_zero_and_reject_only_values_above_fixed_maxima ... ok
+test git_workflows::impact_details::checked_admission_tests::equal_genuine_commit_snapshot_ids_keep_both_logical_side_member_obligations ... ok
+test git_workflows::impact_details::checked_admission_tests::owned_read_view_and_exact_sql_limit_survive_late_encoding_success_and_failure ... ok
+test git_workflows::impact_details::checked_admission_tests::real_capture_binding_corruption_refuses_before_additional_policy_and_graph_capacity ... ok
+test git_workflows::impact_details::checked_admission_tests::unchanged_unreached_head_additional_denial_precedes_inherited_source_load ... ok
+test git_workflows::impact_details::scope_tests::actual_invalid_head_capture_policy_refuses_before_extra_policy_observer ... ok
+test git_workflows::impact_details::scope_tests::both_real_side_policies_precede_inherited_load_source_cas_reads ... ok
+test git_workflows::impact_details::scope_tests::shared_host_cancellation_stops_pair_work_and_preserves_read_transaction_state ... ok
+test git_workflows::impact_details::scope_tests::candidate_capacity_is_admitted_before_any_large_cross_product_expansion ... ok
+test github_app::digest::history_boundary_tests::history_owned_process_tests::history_group_tests::dropping_the_owned_child_reaps_its_descendant_within_the_cleanup_budget ... ok
+test github_app::digest::history_boundary_tests::history_owned_process_tests::history_group_tests::explicit_termination_proves_the_owned_descendant_has_exited ... ok
+test github_app::digest::history_boundary_tests::history_owned_process_tests::cancellation_and_deadline_stop_owned_git_and_restore_the_same_store ... ok
+test github_app::digest::history_boundary_tests::history_owned_process_tests::history_group_tests::successful_capture_reaps_the_owned_null_stdio_descendant ... ok
+test github_app::digest::mapping::output_budget_tests::repeated_rows_charge_exact_escaped_json_and_refuse_without_a_partial_debit ... ok
+test github_app::digest::mapping::output_budget_tests::zero_capacity_and_expired_deadlines_never_admit_a_row ... ok
+test github_app::ingress::http::tests::tls_default_port_accepts_standard_authority_without_weakening_other_ports ... ok
+test github_app::pages::render::tests::escaped_expansion_and_complete_template_obey_the_same_exact_html_budget ... ok
+test github_app::pages::render::tests::hostile_data_round_trips_without_becoming_markup_or_script_syntax ... ok
+test github_app::pages::render::tests::windows_checkout_line_endings_match_the_browser_inline_csp_hash ... ok
+test graph_collections::reader_tests::canceled_and_expired_coordinated_admission_leave_the_directory_empty ... ok
+test graph_collections::reader_tests::coordinated_admission_never_creates_a_database_or_initializes_an_unknown_schema ... ok
+test graph_collections::reader_tests::coordinated_reader_pins_committed_wal_before_the_first_public_query ... ok
+test graph_collections::reader_tests::coordinated_reader_treats_unicode_and_uri_punctuation_as_path_bytes ... ok
+test graph_collections::reader_tests::coordinated_schema_reads_obey_the_host_lock_budget ... ok
+test graph_view::archive_by_id_order_tests::archive_by_id_preflight_covers_every_manifest_before_any_cas_read ... ok
+test graph_view::comparison_boundary_tests::error_oracle::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling ... ok
+test github_app::digest::history_boundary_tests::rejected_captured_source_never_invokes_a_history_runner ... ok
+test graph_view::comparison_boundary_tests::h15_original_rebound_full_union_has_an_exact_distinct_source_boundary_after_store_removal ... ok
+test graph_view::comparison_boundary_tests::h15_both_public_entrypoints_honor_real_inherited_cancellation_and_zero_deadline ... ok
+test graph_view::comparison_input_tests::error_redaction::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling ... ok
+test graph_view::comparison_input_tests::h07_pair_allows_the_first_authorized_side_then_denies_after_side_history_before_its_cas ... ok
+test graph_view::comparison_boundary_tests::h15_same_checked_archive_counts_proof_twice_but_full_union_source_hashes_once ... ok
+test graph_view::comparison_pin_tests::error_redaction::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling ... ok
+test graph_view::comparison_input_tests::h07_valid_current_scope_cannot_hide_a_late_original_scope_policy_denial_before_cas ... ok
+test graph_view::comparison_pin_tests::h03_all_five_requested_pin_fields_are_admitted_on_both_sides_before_any_cas ... ok
+test graph_view::comparison_pin_tests::h03_existing_source_views_state_oracle_and_windows_cas_tripwire_qualify_without_comparison ... ok
+test graph_view::comparison_pin_tests::h03_missing_registration_on_either_side_refuses_before_cas_without_lookup_fallback ... ok
+test graph_view::comparison_pin_tests::h03_matching_foreign_pins_wrong_store_and_mixed_workspaces_use_early_workspace_pin_refusal ... ok
+test graph_view::comparison_pin_tests::h03_registration_internal_view_id_binding_is_checked_separately_from_the_lookup_key ... ok
+test graph_view::comparison_raw_typed_tests::raw_sql_metadata_above_exact_typed_pair_budget_remains_a_read_only_positive ... ok
+test host_credentials::aws_session::tests::aws_chunks_roundtrip_larger_than_single_blob_and_are_create_only ... ok
+test host_credentials::aws_session::tests::aws_manifest_failure_leaves_only_unpublished_chunks_and_expired_deadline_writes_nothing ... ok
+test host_credentials::aws_session::tests::aws_manifest_rejects_missing_mixed_corrupt_and_expired_generation ... ok
+test host_credentials::aws_session::tests::aws_private_json_parser_accepts_exact_dto_and_refuses_ambiguity ... ok
+test host_credentials::aws_session::tests::interrupted_publication_and_changed_chunks_never_yield_session ... ok
+test host_install::io::namespace::tests::enumeration_limits_apply_to_real_entries_and_return_exact_metadata ... ok
+test host_install::io::namespace::tests::exclusive_creation_never_truncates_an_existing_leaf ... ok
+test host_install::io::namespace::tests::handle_enumeration_does_not_follow_a_retagged_parent ... ok
+test host_install::io::namespace::tests::handle_path_uses_a_stable_volume_anchor_and_original_physical_name ... ok
+test host_install::io::namespace::tests::invalid_leaves_and_expired_deadlines_never_create_entries ... ok
+test host_install::io::namespace::tests::namespace_lifecycle_armed_creation_never_escapes_a_retagged_held_parent ... ok
+test host_install::io::namespace::tests::namespace_lifecycle_armed_empty_creation_deletes_on_last_close ... ok
+test host_install::io::namespace::tests::namespace_lifecycle_exclusive_creation_preserves_foreign_file_and_directory ... ok
+test host_install::io::namespace::tests::namespace_lifecycle_expired_deadline_neither_creates_nor_disarms ... ok
+test host_install::io::namespace::tests::namespace_lifecycle_populated_retained_output_supports_existing_owned_cleanup ... ok
+test host_install::io::namespace::tests::namespace_lifecycle_retention_keeps_exact_identity_and_subsequent_bytes ... ok
+test host_install::io::namespace::tests::namespace_lifecycle_successful_clear_reports_retention_after_host_cancellation ... ok
+test host_install::io::namespace::tests::namespace_lifecycle_successful_create_returns_ownership_after_host_cancellation ... ok
+test host_install::io::namespace::tests::normal_directory_creation_and_entry_kind_checks_preserve_types ... ok
+test host_install::io::namespace::tests::normal_relative_creation_and_open_preserve_contents_and_created_outcome ... ok
+test host_install::io::namespace::tests::open_if_reports_creation_then_reuses_the_same_owned_lock ... ok
+test host_install::io::namespace::tests::retagged_held_parent_never_reads_a_foreign_leaf ... ok
+test host_install::io::namespace::tests::retagged_held_parent_never_redirects_directory_creation ... ok
+test host_install::io::namespace::tests::retagged_held_parent_never_redirects_file_creation ... ok
+test host_install::io::namespace::windows::contention_tests::enumeration_mutex_wait_observes_the_callers_deadline ... ok
+test host_install::io::tests::anchored_directory_creation_returns_a_live_guard_and_never_replaces ... ok
+test host_install::io::tests::anchored_directory_enumeration_is_bounded_and_returns_only_direct_children ... ok
+test host_install::io::tests::anchored_entry_information_reports_presence_type_and_length ... ok
+test host_install::io::tests::anchored_lock_opening_keeps_the_verified_exclusive_file_and_refuses_foreign_bytes ... ok
+test host_install::io::tests::bounded_reads_reject_oversize_without_mutation ... ok
+test host_install::io::tests::directory_attribute_access_can_retag_an_empty_guarded_directory ... ok
+test host_install::io::tests::directory_guard_pins_each_existing_ancestor ... ok
+test host_install::io::tests::executable_binding_streams_hardlinked_bytes_and_denies_alias_writers ... ok
+test host_install::io::tests::explicit_low_integrity_label_is_preserved_or_refused_before_human_bytes ... ok
+test host_install::io::tests::guarded_read_never_follows_retag_after_parent_guard_acquisition ... ok
+test host_install::io::tests::held_target_denies_external_writes_and_deletion ... ok
+test host_install::io::tests::legacy_explicit_ace_flags_survive_armed_and_prepared_output ... ok
+test host_install::io::tests::metadata_directory_byte_bounds_are_raw_bytes_and_empty_files_can_use_zero ... ok
+test host_install::io::tests::metadata_directory_entry_info_queries_current_size_on_every_pass ... ok
+test host_install::io::tests::metadata_directory_enumeration_preserves_count_bounds_and_direct_names ... ok
+test host_install::io::tests::metadata_directory_expired_calls_fail_without_mutation_or_empty_success ... ok
+test host_install::io::tests::metadata_directory_hardlinked_rows_are_refused_without_changing_either_name ... ok
+test host_install::io::tests::metadata_directory_held_parent_retag_never_enumerates_foreign_names ... ok
+test host_install::io::tests::metadata_directory_held_parent_retag_never_reads_a_foreign_row ... ok
+test host_install::io::tests::metadata_directory_held_parent_retag_never_stats_a_foreign_leaf ... ok
+test host_install::io::tests::metadata_directory_leaf_methods_refuse_noncanonical_or_multiple_components ... ok
+test host_install::io::tests::metadata_directory_names_reenumerate_added_and_removed_foreign_leaves ... ok
+test host_install::io::tests::metadata_directory_names_reject_non_utf8_leaf_names_without_silent_omission ... ok
+test host_install::io::tests::metadata_directory_read_bytes_observes_a_new_physical_file_at_the_same_leaf ... ok
+test host_install::io::tests::metadata_directory_read_bytes_rereads_changed_content_on_the_same_reader ... ok
+test host_install::io::tests::metadata_directory_read_rechecks_access_after_a_fixture_acl_revocation ... ok
+test host_install::io::tests::metadata_directory_read_refuses_a_preexisting_foreign_data_writer ... ok
+test host_install::io::tests::metadata_directory_reparse_child_is_an_error_not_missing_or_ordinary ... ok
+test host_install::io::tests::metadata_directory_rereads_bytes_changed_by_a_preexisting_writable_mapping ... ok
+test host_install::io::tests::metadata_directory_stat_remains_compatible_with_a_live_exclusive_state_lock ... ok
+test host_install::io::tests::multiply_linked_files_are_refused_and_prepare_never_overwrites ... ok
+test host_install::io::tests::no_replace_preserves_foreign_occupant_and_original_backup ... ok
+test host_install::io::tests::own_handle_rename_retains_identity_and_write_guard ... ok
+test host_install::io::tests::prepared_file_never_escapes_retag_after_parent_guard_acquisition ... ok
+test host_install::io::tests::prepared_output_keeps_guard_through_promotion_and_owned_delete ... ok
+test host_install::io::tests::prepared_output_preserves_dacl_entries_and_inheritance_control ... ok
+test host_install::io::tests::prepared_output_preserves_owner_and_nondefault_group_before_human_bytes ... ok
+test host_install::io::tests::raw_empty_single_link_state_lock_handle_is_accepted ... ok
+test host_install::io::tests::raw_hardlinked_state_lock_handle_is_refused ... ok
+test host_install::io::tests::raw_nonempty_state_lock_handle_is_refused ... ok
+test host_install::io::tests::raw_reparse_state_lock_handle_is_refused ... ok
+test host_install::io::tests::readonly_existing_target_is_refused_before_any_mutation ... ok
+test host_install::io::tests::readonly_guard_can_pin_running_executable ... ok
+test host_install::io::tests::staged_armed_output_is_empty_secured_guarded_and_deleted_on_drop ... ok
+test host_install::io::tests::staged_armed_output_rejects_wrong_registration_or_expired_retain_before_persistence ... ok
+test host_install::io::tests::staged_existing_occupant_and_replaced_registered_identity_are_preserved ... ok
+test host_install::io::tests::staged_registered_output_appends_raw_canonical_chunks_and_finishes_same_identity ... ok
+test host_install::io::tests::staged_registered_output_rechecks_security_and_full_hash_before_writes_or_cleanup ... ok
+test host_install::io::tests::staged_registered_prefix_reopens_without_truncation_and_discards_by_held_identity ... ok
+test host_install::io::tests::staged_registered_reopen_checks_original_security_before_any_mutation ... ok
+test host_install::io::tests::staged_registered_reopen_refuses_hardlinks_readonly_and_incomplete_finalization ... ok
+test host_install::io::tests::staged_registered_reopen_refuses_wrong_id_stage_hash_and_noncanonical_bytes ... ok
+test host_install::io::tests::staged_retains_owned_output_when_cancellation_arrives_after_disarm ... ok
+test host_install::output_recovery_tests::actual_allocating_kill_resumes_without_creating_unowned_output ... ok
+test host_install::output_recovery_tests::actual_allocating_process_exit_rolls_back_without_output ... ok
+test graph_view::comparison_pin_tests::h03_one_supplied_store_read_view_survives_a_foreign_second_registration_commit ... ok
+test host_install::output_recovery_tests::actual_apply_exposes_no_human_bytes_before_durable_output_identity ... ok
+test host_install::output_recovery_tests::actual_apply_post_prepared_kill_still_resumes_as_a_positive_harness_control ... ok
+test host_install::output_recovery_tests::actual_apply_pre_identity_kill_resumes_after_os_removes_unregistered_empty_output ... ok
+test host_install::output_recovery_tests::actual_apply_pre_identity_process_exit_rolls_back_without_unidentified_output ... ok
+test host_install::output_recovery_tests::actual_apply_rechecks_live_original_acl_before_moving_original ... ok
+test host_install::output_recovery_tests::actual_apply_rechecks_live_prepared_output_acl_before_moving_original ... ok
+test host_install::output_recovery_tests::actual_disarmed_process_exit_rolls_back_the_exact_empty_registered_object ... ok
+test host_install::output_recovery_tests::actual_disarmed_kill_resumes_the_exact_empty_registered_object ... ok
+test host_install::output_recovery_tests::actual_disarmed_recovery_preserves_a_replacement_empty_file ... ok
+test host_install::output_recovery_tests::actual_flushed_process_exit_rolls_back_before_prepared_identity_event ... ok
+test host_install::output_recovery_tests::actual_flushed_kill_resumes_before_prepared_identity_event ... ok
+test host_install::output_recovery_tests::actual_flushed_recovery_preserves_replacement_identical_canonical_bytes ... ok
+test host_install::output_recovery_tests::actual_partial_kill_resumes_a_raw_prefix_ending_inside_utf8 ... ok
+test host_install::output_recovery_tests::actual_partial_process_exit_rolls_back_the_same_raw_prefix_object ... ok
+test host_install::output_recovery_tests::actual_partial_recovery_preflights_second_root_before_first_append ... ok
+test host_install::output_recovery_tests::actual_partial_recovery_preserves_noncanonical_bytes_on_registered_identity ... ok
+test host_install::output_recovery_tests::actual_partial_recovery_preserves_replacement_identical_raw_prefix ... ok
+test host_install::output_recovery_tests::actual_populating_kill_resumes_the_exact_registered_object ... ok
+test host_install::output_recovery_tests::actual_populating_lineage_cannot_restart_when_registered_output_disappears ... ok
+test host_install::output_recovery_tests::actual_populating_process_exit_rolls_back_without_copying_human_bytes ... ok
+test host_install::output_recovery_tests::actual_pre_identity_crash_preserves_foreign_canonical_bytes_occupant ... ok
+test host_install::output_recovery_tests::actual_pre_identity_crash_preserves_foreign_empty_occupant ... ok
+test host_install::output_recovery_tests::actual_pre_identity_recovery_refuses_changed_original_acl_without_retry ... ok
+test host_install::output_recovery_tests::actual_prepared_recovery_refuses_acl_tampering_before_publication ... ok
+test host_install::output_recovery_tests::actual_registered_kill_resumes_with_a_new_bounded_attempt ... ok
+test host_install::output_recovery_tests::actual_registered_process_exit_rolls_back_after_os_removes_armed_output ... ok
+test host_install::output_recovery_tests::actual_registered_retry_limit_refuses_fourth_allocation_but_allows_rollback ... ok
+test host_install::output_recovery_tests::actual_retained_reader_blocks_prefix_recovery_without_mutating_state ... ok
+test host_install::output_recovery_tests::journal_scope_tests::scoped_journal_append_discovers_a_late_valid_same_sequence_fork ... ok
+test host_install::output_recovery_tests::journal_scope_tests::scoped_admission_recounts_a_new_oversized_orphan_after_prior_success ... ok
+test host_install::output_recovery_tests::output_recovery_worker ... ignored, spawned only with an explicitly selected parent-owned temp fixture
+test host_install::output_recovery_tests::journal_scope_tests::scoped_journal_append_rechecks_an_earlier_event_after_a_successful_load ... ok
+test host_install::output_recovery_tests::strict_v2_persisted_history_rejects_changed_or_removed_source_security ... ok
+test host_install::output_recovery_tests::strict_v2_rollback_rejects_an_output_identity_that_was_never_registered ... ok
+test host_install::tests::committed_cleanup_refuses_a_rehashed_noncanonical_foreign_backup ... ok
+test host_install::tests::constructed_backup_deletion_before_event_resumes_and_apply_replays ... ok
+test host_install::tests::constructed_mixed_prefix_foreign_suffix_refuses_all_recovery_before_writes ... ok
+test host_install::tests::constructed_mixed_three_root_prefix_resumes_every_original_and_output ... ok
+test host_install::tests::constructed_output_rename_before_event_resumes_and_replays_without_writes ... ok
+test host_install::tests::constructed_receipt_before_cleanup_event_blocks_rollback_and_resumes ... ok
+test host_install::tests::constructed_rollback_direction_replays_then_allows_a_new_install_history ... ok
+test host_install::tests::constructed_unjournaled_output_identity_is_preserved_and_refused ... ok
+test host_install::tests::explicit_initialization_recovery_repairs_only_an_empty_scaffold_and_replays ... ok
+test host_install::tests::foreign_occupant_blocks_resume_and_rollback_without_changing_original_backup ... ok
+test host_install::tests::initialization_recovery_preserves_and_refuses_foreign_contents ... ok
+test host_install::tests::initialization_recovery_refuses_a_hardlinked_lock_without_changing_either_name ... ok
+test host_install::tests::initialization_recovery_rejects_wrong_token_plan_and_authority_without_writes ... ok
+test host_install::tests::journal_progress_cannot_widen_beyond_the_authorized_target_set ... ok
+test host_install::tests::receipt_commit_does_not_disguise_pending_cleanup_as_successful_replay ... ok
+test host_install::tests::resume_after_original_rename_publishes_owned_output_and_finishes_cleanup ... ok
+test host_install::tests::rollback_after_original_rename_restores_same_original_and_releases_ownership ... ok
+test host_install::tests::rollback_refuses_a_rehashed_noncanonical_foreign_output_before_any_write ... ok
+test host_install::output_recovery_tests::sixteen_root_v2_history_reserves_only_remaining_output_work ... ok
+test host_install::tests::successful_receipt_replay_rejects_foreign_target_edits ... ok
+test host_install::tests::unknown_journal_phase_is_refused_before_it_can_accumulate_in_pending_results ... ok
+test lsp::refactor_intents::tests::owned_nested_schema_recognizes_existing_edit_and_resource_field_shapes ... ok
+test lsp::refactor_intents::tests::owned_nested_schema_refuses_unknown_fields_at_each_supported_shape ... ok
+test lsp::refactor_intents::tests::owned_response_applies_nested_schema_guard_before_returning_an_edit ... ok
+test lsp::refactor_intents::tests::request_id_changes_with_every_manifest_profile_analyzer_and_intent_binding ... ok
+test lsp::refactor_intents::tests::request_id_has_a_canonical_golden_and_ignores_actual_private_document_uris ... ok
+test lsp::uri_tests::an_outside_uri_is_rejected_lexically_before_a_filesystem_lookup ... ok
+test lsp::uri_tests::blocked_pipe_write_uses_300ms_deadline_after_confirmed_server_pause ... ok
+test lsp::uri_tests::grown_provider_copy_is_rejected_without_reading_unbounded_source ... ok
+test lsp::uri_tests::nonlocal_file_authorities_are_refused_without_target_lookup ... ok
+test lsp::uri_tests::react_documents_and_siblings_keep_their_ids_with_base_language_providers ... ok
+test lsp::uri_tests::react_fixture_uses_requested_document_and_equivalent_tilde_uri_spellings ... ok
+test lsp::uri_tests::slow_shutdown_uses_800ms_deadline_after_completed_protocol_response ... ok
+test maintenance::tests::expired_rollback_budget_preserves_quarantine_for_later_recovery ... ok
+test meaning_aliases::tests::canonical_pair_order_is_independent_of_materialized_concept_order ... ok
+test meaning_aliases::tests::capacities_refuse_the_complete_operation_instead_of_returning_a_top_k ... ok
+test meaning_aliases::tests::compatibility_normalization_preserves_accent_and_script_distinctions ... ok
+test meaning_aliases::tests::equal_native_ids_in_separate_packets_retain_qualified_proof ... ok
+test meaning_aliases::tests::explicit_alias_overlap_retains_which_provider_terms_matched ... ok
+test meaning_aliases::tests::invalid_host_limits_and_deadlines_are_refused ... ok
+test meaning_aliases::tests::normalization_expansion_refuses_instead_of_truncating_a_label ... ok
+test meaning_aliases::tests::normalized_aliases_propose_a_pair_without_merging_or_rewriting_source ... ok
+test meaning_aliases::tests::normalized_term_dedup_preserves_label_priority_and_exact_work_admission ... ok
+test meaning_aliases::tests::short_unrelated_names_and_empty_normalizations_do_not_get_fuzzy_matches ... ok
+test meaning_aliases::tests::transposed_letters_are_scored_without_becoming_identity_proof ... ok
+test meaning_aliases::tests::trigram_similarity_is_separate_from_normalized_equality ... ok
+test meaning_build::archive_preparation_order_tests::archive_scope_preflight_covers_every_manifest_before_any_cas_read ... ok
+test meaning_build::archive_scope_tests::archive_initial_graph_row_capacity_precedes_json_decode ... ok
+test meaning_build::archive_scope_tests::archive_initial_snapshot_and_graph_share_one_capacity_before_decode ... ok
+test meaning_build::archive_scope_tests::archive_initial_snapshot_row_capacity_precedes_json_decode ... ok
+test meaning_build::archive_scope_tests::frozen_source_index_many_members_reuse_one_bound_scope_without_timing_claim ... ok
+test meaning_build::archive_scope_tests::frozen_source_index_rechecks_complete_same_id_scope_on_every_bind ... ok
+test meaning_build::archive_scope_tests::frozen_source_index_refuses_conflicting_same_id_union_scope ... ok
+test meaning_build::archive_scope_tests::frozen_source_index_refuses_forged_same_path_hash_and_size_before_reader ... ok
+test meaning_build::archive_scope_tests::frozen_source_index_valid_member_and_duplicate_scope_are_admitted ... ok
+test meaning_groups::tests::grouping_canonicalizes_review_order_and_separates_policy_from_capacity ... ok
+test meaning_groups::tests::grouping_counts_original_records_and_slots_before_any_collapse ... ok
+test meaning_groups::tests::grouping_expired_deadline_refuses_before_projection ... ok
+test meaning_groups::tests::grouping_keeps_every_hyperedge_slot_role_position_and_original_reference ... ok
+test meaning_groups::tests::grouping_keeps_parallel_directed_relations_as_original_observations_and_selfloops ... ok
+test meaning_groups::tests::grouping_output_capacity_is_exact_including_a_real_zero_limit ... ok
+test meaning_groups::tests::grouping_packet_qualifies_colliding_concepts_relations_hyperedges_and_evidence ... ok
+test meaning_groups::tests::grouping_partitions_every_original_concept_without_changing_claims_or_evidence ... ok
+test meaning_groups::tests::grouping_refuses_duplicate_overlap_absent_refs_and_nonmember_representatives ... ok
+test meaning_groups::tests::grouping_refuses_invalid_version_graph_binding_and_rationale_without_echoing_values ... ok
+test meaning_groups::tests::grouping_representative_changes_policy_and_presentation_but_not_node_membership_ids ... ok
+test meaning_groups::tests::grouping_shared_host_cancellation_is_inherited_by_nested_deadlines ... ok
+test meaning_groups::tests::grouping_tagged_tuple_identities_follow_the_declared_byte_recipes ... ok
+test meaning_groups::tests::grouping_two_disjoint_groups_have_canonical_order_independent_of_review_order ... ok
+test meaning_groups::tests::grouping_zero_limits_admit_a_truly_empty_graph_and_review_only ... ok
+test meaning_join::query::tests::asymmetric_directions_and_depth_keep_exact_induced_parallel_observations ... ok
+test meaning_join::query::tests::hyperedges_never_create_directed_steps_or_return_partial_role_slots ... ok
+test meaning_join::query::tests::trace_capacity_refuses_before_clipping_and_preserves_the_checked_value ... ok
+test model_protocol::meaning_extract_tests::meaning_extract_accepts_no_claims_but_requires_exact_honest_unit_coverage ... ok
+test model_protocol::meaning_extract_tests::meaning_extract_admits_schema_one_operation_without_changing_envelope ... ok
+test model_protocol::meaning_extract_tests::meaning_extract_prepares_exact_sources_and_bounded_strict_output_schema ... ok
+test model_protocol::meaning_extract_tests::meaning_extract_rejects_forged_units_omissions_and_arbitrary_instructions ... ok
+test model_protocol::meaning_extract_tests::meaning_extract_rejects_unknown_anchor_fields_and_duplicate_result_fields ... ok
+test model_protocol::meaning_extract_tests::meaning_extract_validates_local_claims_and_own_support_on_every_edge ... ok
+test ollama::endpoint_tests::explicit_default_http_port_remains_host_selected ... ok
+test platform_credentials::creation_lock::tests::contaminated_and_nonfile_locks_are_refused_without_repair ... ok
+test platform_credentials::creation_lock::tests::creation_locks_serialize_and_time_out_without_secret_contents ... ok
+test process::windows_job::history_spawn_tests::a_later_wrapper_failure_proves_root_exit_before_returning_the_spawn_error ... ok
+test process::windows_job::history_spawn_tests::assignment_and_job_termination_refusals_still_reap_the_unassigned_root ... ok
+test process::windows_job::history_spawn_tests::assignment_failure_reaps_the_unassigned_suspended_root_and_its_owned_job ... ok
+test process::windows_job::history_spawn_tests::zero_cleanup_budget_requests_termination_and_refuses_exit_proof ... ok
+test retrieval::balanced::tests::canonical_arcs_keep_parallel_observations_and_two_self_loop_orientations ... ok
+test retrieval::balanced::tests::equal_fusion_ties_use_exact_root_then_entity_id_and_reject_nonfinite_scores ... ok
+test retrieval::balanced::tests::equal_scope_seeds_preserve_zero_mass_scopes_and_equalize_positive_scope_mass ... ok
+test retrieval::balanced::tests::graph_propagation_preserves_literal_parallel_degree_ratio_after_24_iterations ... ok
+test retrieval::balanced::tests::literal_document_32m_charges_overlapping_child_bodies_as_distinct_units ... ok
+test retrieval::balanced::tests::literal_fusion_prioritizes_local_rank_then_coverage_before_cross_scope_score ... ok
+test retrieval::balanced::tests::literal_remainder_has_protected_three_two_two_then_pools_one_whole_unit ... ok
+test retrieval::balanced::tests::literal_source_28m_schedule_defers_a_large_head_and_keeps_other_packages ... ok
+test retrieval::balanced::tests::local_bm25_matches_the_independent_31_document_literal_oracle ... ok
+test retrieval::balanced::tests::optional_metadata_256kb_cost_ceiling_admits_literal_62_rows_without_partial_rows ... ok
+test retrieval::balanced::tests::optional_metadata_count_caps_keep_literal_prefixes_and_all_omitted_counts ... ok
+test retrieval::balanced::tests::optional_metadata_respects_smaller_caller_remainder_in_diagnostic_first_order ... ok
+test retrieval::balanced::tests::per_file_rejections_are_exhaustive_even_beyond_the_final_limit ... ok
+test retrieval::balanced::tests::zero_cost_units_are_finite_and_an_oversized_head_cannot_block_a_later_unit ... ok
+test retrieval::balanced::tests::zero_graph_weight_or_zero_lexical_mass_skips_iterations_and_returns_zero_raw_graph_scores ... ok
+test retrieval::driver_tests::actual_auto_driver_saved_snapshot_propagates_later_marker_integrity_before_policy_fallback ... ok
+test retrieval::driver_tests::actual_auto_many_scopes_emit_literal_canonical_metadata_prefixes_and_omitted_counts ... ok
+test retrieval::driver_tests::actual_auto_output_ceiling_reserves_mandatory_whole_result_before_any_optional_prefix ... ok
+test retrieval::driver_tests::actual_global_after_probe_driver_honors_original_cancelled_run ... ok
+test retrieval::driver_tests::ready_global_filter_fallback_omits_balanced_only_scope_counts_with_exact_total ... ok
+test retrieval_capacity::tests::canonical_path_4096_utf8_bytes_is_existing_syntax_only_not_source_authority ... ok
+test retrieval_capacity::tests::genuine_saved_graph_uses_the_same_stream_identity_as_existing_model_identity ... ok
+test host_install::tests::state_capacity_reserves_the_next_receipt_and_journal_before_touching_targets ... ok
+test retrieval_capacity::tests::graph_stream_exact_64mb_matches_independent_literal_sha ... ok
+test retrieval_capacity::tests::graph_stream_plus_one_is_typed_capacity_during_serialization ... ok
+test retrieval_capacity::tests::real_observation_schema_proves_one_million_cannot_fit_the_graph_byte_ceiling ... ok
+test retrieval_capacity::tests::serializer_failure_is_internal_and_static_instead_of_policy_fallback ... ok
+test retrieval_input_tests::bounded_saved_and_cached_selection_keep_real_epoch8_and_epoch9_inputs ... ok
+test retrieval_input_tests::cached_retrieval_index_propagates_oversized_graph_instead_of_reanalysis ... ok
+test retrieval_input_tests::saved_retrieval_selection_rejects_oversized_graph_before_general_decode ... ok
+test retrieval_capacity::tests::graph_stream_stops_before_poison_tail_instead_of_buffering_the_whole_value ... ok
+test retrieval_saved_graph::schema_tests::decoded_escaped_duplicate_language_map_key_is_hard_even_when_values_are_equal ... ok
+test retrieval_saved_graph::schema_tests::current_native_epochs8_and9_keep_genuine_saved_graph_controls ... ok
+test retrieval_saved_graph::schema_tests::foreign_transaction_refusal_preserves_both_distinct_lower_host_limits ... ok
+test retrieval_saved_graph::schema_tests::strict_schema_corruption_reaches_real_auto_entry_as_hard_without_fallback ... ok
+test retrieval_saved_graph::schema_tests::same_value_duplicate_known_fields_at_graph_member_and_coverage_are_hard ... ok
+test retrieval_saved_graph::tests::cancellation_after_metadata_restores_limit_without_resetting_the_deadline ... ok
+test retrieval_saved_graph::tests::denied_payload_read_restores_limit_on_error_and_stays_typed_hard ... ok
+test retrieval_saved_graph::tests::malformed_saved_authority_is_hard_without_parser_contents_or_auto_fallback ... ok
+test retrieval_saved_graph::schema_tests::unknown_graph_entity_observation_evidence_and_coverage_fields_are_hard ... ok
+test retrieval_saved_graph::tests::metadata_and_payload_share_the_same_wal_read_snapshot ... ok
+test retrieval_saved_graph::tests::oversized_saved_row_refuses_before_raw_payload_read_and_auto_fallback ... ignored, qualified SQLite64MB row fixture:reserve>=512MB RAM/1GB disk; not executed
+test retrieval_saved_graph::tests::missing_saved_row_is_none_for_readers_and_source_integrity_for_verifier ... ok
+test retrieval_saved_graph::tests::valid_saved_graph_restores_the_exact_lower_host_sqlite_limit ... ok
+test retrieval_saved_graph::tests::transaction_from_another_store_connection_is_not_a_checked_read_for_this_store ... ok
+test retrieval_scopes::capacity_tests::genuine_4096_utf8_path_is_captured_and_4097_is_refused_by_existing_capture_boundary ... ignored, qualified Windows long-path job; creation/capture failure is setup failure, never skip-as-pass
+test retrieval_scopes::capacity_tests::genuine_one_million_observations_is_byte_dominated_then_plus_one_refuses_before_graph_loading ... ignored, optional very large job:qualify>=8GB RAM/12GB disk, no runtime guarantee; may hit earlier constructor limit
+test retrieval_saved_graph::tests::wrong_storage_type_is_hard_and_restores_host_limit ... ok
+test retrieval_scopes::capacity_tests::real_100k_files_pass_then_one_real_function_rejects_entity_100001_before_graph_reload ... ignored, qualified root job:100K real files, estimated<=2GB RAM/3GB disk; no SLA
+test retrieval_scopes::capacity_tests::real_graph_exact_64mb_passes_and_plus_one_refuses_before_saved_graph_loading ... ignored, qualified root job:64K real files/two64MB graphs, estimated<=2GB RAM/3GB disk
+test retrieval_scopes::capacity_tests::real_ownership_exact_16mb_passes_and_next_byte_refuses_before_body_scoring ... ignored, qualified root job:38277 real paths/two~53MB graphs, estimated<=2GB RAM/3GB disk
+test retrieval_scopes::capacity_tests::graph_read_tripwire_has_a_real_saved_positive_control ... ok
+test retrieval_scopes::tests::cached_document_cost_rejects_mid_utf8_boundaries_before_budget_admission ... ok
+test retrieval_scopes::tests::another_store_same_workspace_and_another_partition_handle_are_rejected ... ok
+test retrieval_scopes::tests::captured_npm_packages_have_distinct_path_ids_and_deepest_owners ... ok
+test retrieval_scopes::tests::cargo_root_exclude_default_members_and_path_dependencies_do_not_delete_scopes ... ok
+test retrieval_scopes::tests::captured_only_dirs_and_dependency_grants_are_not_expanded_by_markers ... ok
+test retrieval_scopes::tests::documents_keep_original_entity_ranges_and_overlaps_charge_again ... ok
+test retrieval_scopes::tests::duplicate_workspace_fields_cannot_hide_over_limit_raw_selector_arrays ... ok
+test retrieval_scopes::tests::expired_and_cancelled_runs_keep_typed_errors_without_new_deadline ... ok
+test retrieval_scopes::tests::full_snapshot_graph_and_persisted_scope_proof_are_bound ... ok
+test retrieval_scopes::tests::identical_cas_paths_charge_separately_and_cached_markers_are_not_double_charged ... ok
+test retrieval_scopes::tests::later_marker_integrity_error_beats_earlier_unsupported_source ... ok
+test retrieval_scopes::tests::malformed_source_cannot_hide_oversized_marker_preflight ... ok
+test retrieval_scopes::tests::exact_marker_and_aggregate_limits_pass_before_plus_one_refuses_predecode ... ok
+test retrieval_scopes::tests::marker_selectors_cannot_include_ignored_sources_without_captured_host_grant ... ok
+test retrieval_scopes::tests::missing_members_do_not_create_or_read_prospective_roots ... ok
+test retrieval_scopes::tests::manifest_source_syntax_duplicate_keys_and_schema_are_policy_outcomes ... ok
+test retrieval_scopes::tests::nearest_workspace_does_not_try_outer_membership ... ok
+test retrieval_scopes::tests::no_or_single_package_is_not_applicable_even_with_virtual_boundaries ... ok
+test retrieval_scopes::tests::p1_mixed_ecosystems_and_nested_virtual_barrier_have_seven_scopes ... ok
+test retrieval_scopes::tests::partition_cannot_bind_to_new_capture_and_live_changes_do_not_change_old_sources ... ok
+test retrieval_scopes::tests::partition_identity_is_budget_independent_and_probe_publishes_nothing ... ok
+test retrieval_scopes::tests::pnpm_negation_is_final_and_normalized_npm_duplicates_keep_both_bindings ... ok
+test retrieval_scopes::tests::raw_selector_aot_entries_debit_outer_items_but_not_descendant_lists ... ok
+test retrieval_scopes::tests::raw_selector_duplicate_cases_json_workspace_objects ... ok
+test retrieval_scopes::tests::raw_selector_duplicate_cases_toml ... ok
+test retrieval_scopes::tests::raw_selector_duplicate_cases_yaml ... ok
+test retrieval_scopes::tests::raw_selector_role_controls_cargo_quoted_dotted ... ok
+test retrieval_scopes::tests::raw_selector_role_controls_json ... ok
+test retrieval_scopes::tests::raw_selector_role_controls_toml ... ok
+test retrieval_scopes::tests::raw_selector_role_controls_yaml ... ok
+test retrieval_scopes::tests::raw_selectors_before_later_source_syntax_json ... ok
+test retrieval_scopes::tests::raw_selectors_before_later_source_syntax_toml ... ok
+test retrieval_scopes::tests::raw_selectors_before_later_source_syntax_yaml ... ok
+test retrieval_scopes::tests::raw_marker_1024_is_not_cas_deduplicated_and_1025_preflights ... ok
+test retrieval_scopes::tests::richer_selectors_yaml_features_and_unsupported_declarations_are_not_guessed ... ok
+test retrieval_scopes::tests::selector_name_depth_and_node_byte_boundaries_are_explicit ... ok
+test retrieval_scopes::tests::scopes_and_raw_duplicate_selectors_have_hard_capacity_ceilings ... ok
+test retrieval_scopes::tests::selectors_are_component_exact_final_double_star_and_case_sensitive ... ok
+test retrieval_scopes::tests::unnamed_npm_root_is_virtual_at_a_supported_cargo_workspace_boundary ... ok
+test retrieval_scopes::tests::unsupported_format_hints_are_distinct_from_supported_mixed_coverage ... ok
+test retrieval_scopes::tests::selector_work_exhaustion_is_capacity_while_the_same_smaller_policy_is_ready ... ok
+test retrieval_scopes::tests::wildcard_exclusion_of_actual_workspace_root_is_a_policy_conflict ... ok
+test skill_takeaways::tests::a_large_applied_receipt_prefix_cannot_hide_pending_journals ... ok
+test skill_takeaways::tests::expanded_yaml_frontmatter_is_rejected_before_alias_materialization ... ok
+test skill_takeaways::tests::manual_edit_after_observation_is_never_adopted_as_a_write_precondition ... ok
+test trail_adapter::envelope_tests::logical_envelope_counter_matches_escaped_utf8_at_the_exact_boundary ... ok
+test trail_adapter::envelope_tests::logical_envelope_counter_observes_cancellation_between_writes ... ok
+test trail_adapter::envelope_tests::logical_envelope_counter_refuses_a_large_body_without_exposing_content ... ok
+test trail_adapter::envelope_tests::logical_envelope_counter_uses_the_original_expired_deadline ... ok
+test verify::integrity_tests::oversized_copied_source_is_rejected_within_the_hash_budget ... ok
+test view_comparison::budget_tests::bounded_serializer_exact_bytes_and_next_byte_refuse_before_poison ... ok
+test view_comparison::budget_tests::bounded_typed_digest_preserves_released_serialization_order ... ok
+test view_comparison::budget_tests::canonical_value_conversion_is_preflighted_before_poison_serialize ... ok
+test view_comparison::budget_tests::recursive_rows_check_same_deadline_after_final_child_progress ... ok
+test view_comparison::budget_tests::recursive_rows_count_all_copies_and_cancel_only_after_completed_child_progress ... ok
+test view_comparison::budget_tests::serializer_cancellation_after_actual_progress_uses_same_inherited_deadline ... ok
+test retrieval_scopes::tests::unsupported_probe_spends_the_same_32m_ledger_as_fallback_source_reads ... ok
+
+test result: ok. 397 passed; 0 failed; 7 ignored; 0 measured; 0 filtered out; finished in 79.74s
+
+     Running tests\agent_repl.rs (target\debug\deps\agent_repl-167b64c63340d0c3.exe)
+
+running 21 tests
+test edits_are_guarded_plans_shell_is_separate_and_results_do_not_execute_repr ... ok
+test composite_rename_selects_the_captured_parent_file_provider_not_the_logical_ast_language ... ok
+test exception_rendering_never_reads_user_overridden_exception_properties ... ok
+test external_inspection_facades_query_only_registered_source_without_activating_or_preparing_plans ... ok
+test explicitly_selected_shell_runs_and_cell_errors_preserve_namespace ... ok
+test external_project_context_composes_read_queries_and_cannot_prepare_edits ... ok
+test facade_requested_options_are_enforced_or_rejected_without_silent_dropping ... ok
+test forged_worker_callback_authority_keys_are_rejected_and_worker_state_is_lost ... ok
+test independent_jb_declaration_uses_the_same_python_regex_and_guarded_provider_bridge ... ok
+test inspection_facades_are_source_bound_reads_in_planning_mode_with_honest_kind_registry ... ok
+test line_bulk_and_symbol_edits_are_source_checked_independent_immutable_plans ... ok
+test memory_facade_global_namespace_uses_only_the_registered_global_store ... ok
+test persistent_cells_compose_real_source_queries_and_source_bound_notes ... ok
+test pure_facade_has_no_python_shell_or_caller_selected_host_authority ... ok
+test provider_hierarchies_and_symbol_diagnostics_keep_exact_source_scope ... ok
+test semantic_refactoring_facades_check_modes_before_provider_queries_or_durable_plans ... ok
+test python_regex_declaration_and_semantic_implementations_preserve_snapshot_anchors ... ok
+test surrogate_dict_keys_are_normalized_without_losing_the_persistent_worker ... ok
+test semantic_rename_facade_only_prepares_registered_provider_guarded_plans ... ok
+test symbol_references_and_semantic_diagnostics_use_registered_source_provider ... ok
+test trust_output_and_deadline_failures_are_explicit_and_discard_worker_state ... ok
+
+test result: ok. 21 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.72s
+
+     Running tests\ignored_facades.rs (target\debug\deps\ignored_facades-bab6ae9f0bc7c054.exe)
+
+running 10 tests
+test captured_directory_membership_rejects_files_and_unknown_empty_scopes_without_live_reads ... ok
+test ignored_text_is_filtered_before_blob_reads_and_selected_code_paths ... ok
+test list_filters_observed_ignored_files_before_directory_projection ... ok
+test malformed_native_directory_arguments_fail_before_capture_publication ... ok
+test native_ignored_filter_is_strict_and_precedes_file_and_symbol_pagination ... ok
+test pinned_fs_facade_defaults_and_explicit_ignored_options_preserve_host_scope ... ok
+test public_directory_recursion_returns_every_captured_level_and_nonrecursive_keeps_first_level ... ok
+test public_external_directory_queries_share_ignored_scope_without_activation_and_honor_removal ... ok
+test querying_a_pinned_snapshot_keeps_original_ignore_outcomes_after_disk_policy_changes ... ok
+test deeply_nested_directory_projection_has_an_explicit_budget_and_can_be_refined ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.80s
+
+     Running tests\mcp_http.rs (target\debug\deps\mcp_http-7e7c4add6dff4ada.exe)
+
+running 18 tests
+test admission_caps_reject_declared_bodies_headers_deep_json_and_session_version_changes ... FAILED
+test already_started_runtime_initialization_expires_at_the_admitted_session_ttl ... ok
+test connection_close_reaches_eof_while_initialized_python_runtime_is_still_live ... ok
+test delete_rotation_revocation_and_shutdown_prove_each_owned_python_exit ... ok
+test explicit_browser_origin_preflight_and_auth_errors_preserve_exact_cors_scope ... ok
+test explicit_http_serena_runtime_persists_per_sid_and_rejects_foreign_session_labels ... ok
+test hostile_http_framing_origin_host_versions_and_json_are_rejected_before_sessions ... ok
+test http_python_cancellation_invalidates_lost_namespace_and_proves_process_exit ... ok
+test live_principal_rotation_and_host_profile_changes_invalidate_old_sessions ... ok
+test network_cancellation_interrupts_running_provider_and_shutdown_cleans_workers ... ok
+test queued_request_is_rechecked_after_current_principal_revocation ... ok
+test real_tcp_session_preserves_profile_initialization_and_closes_without_sse ... ok
+test real_tls_requires_pinned_trust_and_remote_binding_requires_explicit_tls ... ok
+test revoke_and_stop_cancel_runtime_during_initial_handshake ... ok
+test running_query_obeys_host_deadline_despite_client_timeout_and_returns_http_error ... ok
+test runtime_host_preflight_never_executes_and_other_profiles_cannot_attach_python ... ok
+test session_capacity_expiry_and_slow_connection_shutdown_are_bounded ... ok
+test stalled_runtime_initialization_obeys_ttl_and_shutdown_cancellation ... ok
+
+failures:
+
+---- admission_caps_reject_declared_bodies_headers_deep_json_and_session_version_changes stdout ----
+
+thread 'admission_caps_reject_declared_bodies_headers_deep_json_and_session_version_changes' (4436) panicked at native\tests\mcp_http.rs:52:14:
+HTTP response must arrive within the host deadline: Os { code: 10054, kind: ConnectionReset, message: "Eine vorhandene Verbindung wurde vom Remotehost geschlossen." }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    admission_caps_reject_declared_bodies_headers_deep_json_and_session_version_changes
+
+test result: FAILED. 17 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 23.17s
+
+error: test failed, to rerun pass `--test mcp_http`
+     Running tests\process.rs (target\debug\deps\process-2b0da15419d96306.exe)
+
+running 5 tests
+test capture_transfers_exact_unicode_bytes_and_independent_streams ... ok
+test output_overflow_is_a_failure_with_bounded_retained_bytes ... ok
+test source_selected_defaults_and_oversized_stdin_are_rejected_before_spawn ... ok
+test windows_host_fixture_does_not_allocate_a_console_window ... ok
+test descendant_held_stdio_cannot_extend_the_shared_deadline ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.51s
+
+     Running tests\project_session.rs (target\debug\deps\project_session-5b77cbd6248680ea.exe)
+
+running 6 tests
+test external_queries_cannot_publish_semantic_plans_through_find ... ok
+test external_project_queries_cannot_mutate_or_activate_query_only_roots ... ok
+test global_note_host_identity_is_bound_to_canonical_directory ... ok
+test modes_onboarding_and_named_notes_are_persistent_without_granting_execution ... ok
+test registered_projects_inherit_explicit_host_capture_and_provider_defaults ... ok
+test session_activation_and_resume_use_only_host_registered_projects ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.19s
+
+     Running tests\session_epoch_selection.rs (target\debug\deps\session_epoch_selection-3a76f94cf0fc1b02.exe)
+
+running 6 tests
+test mutable_engine_handles_cannot_silently_change_a_pinned_session_epoch ... ok
+test default_v8_preserves_the_original_session_record_and_can_resume_saved_bytes ... ok
+test same_epoch_resume_keeps_project_selection_and_cross_epoch_resume_cannot_mutate_records ... ok
+test session_v9_keeps_federation_receiver_receipts_and_current_grants_separate ... ok
+test session_v9_propagates_to_default_registered_readonly_and_query_only_projects ... ok
+test session_v9_reads_old_native_archives_without_recapture_or_registration_authority ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.42s
+
+     Running tests\session_mcp.rs (target\debug\deps\session_mcp-9b2b382af5ad9159.exe)
+
+running 3 tests
+test session_mcp_retrieval_uses_exact_source_bodies_and_rejects_authority_options ... ok
+test session_graph_tool_builds_an_explicit_source_bound_view ... ok
+test session_profile_exposes_persistent_steering_without_host_authority_arguments ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.09s
+
+     Running tests\session_review.rs (target\debug\deps\session_review-7dbdbd5b7cc8dfe1.exe)
+
+running 1 test
+test nested_native_failure_is_an_mcp_tool_error ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+     Running tests\session_root_aliases.rs (target\debug\deps\session_root_aliases-24647dcacdaf953d.exe)
+
+running 3 tests
+test aliases_are_rebuilt_from_current_host_input_and_never_restored_from_session_records ... ok
+test selected_root_alias_and_canonical_root_share_only_the_registered_query_scope ... ok
+test unicode_lowercase_expansion_cannot_turn_an_unregistered_root_into_a_selector ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.13s
+
+error: 1 target failed:
+    `--test mcp_http`

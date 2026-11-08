@@ -1,0 +1,17 @@
+    Finished `test` profile [unoptimized] target(s) in 0.70s
+     Running tests\epoch_cache_review.rs (target\debug\deps\epoch_cache_review-f4b7b79687aefe85.exe)
+
+running 1 test
+test cached_extraction_cannot_publish_past_the_exact_declared_source_size ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.11s
+
+     Running tests\epoch_producers.rs (target\debug\deps\epoch_producers-42d26cbc6208d4bd.exe)
+
+running 3 tests
+test ordinary_guarded_prepare_preserves_the_proven_base_epoch ... ok
+test ordinary_editor_capture_uses_the_explicit_host_epoch ... ok
+test mcp_prepare_uses_historical_source_policy_instead_of_new_capture_policy ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.35s
+

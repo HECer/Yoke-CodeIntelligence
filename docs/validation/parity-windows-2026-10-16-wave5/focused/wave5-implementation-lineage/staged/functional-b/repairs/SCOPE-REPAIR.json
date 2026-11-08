@@ -1,0 +1,13 @@
+{
+  "status": "ignored_repair_after_actual_deep_red_unexecuted",
+  "baseHash": "a6d93311b2528032b1699034ac0e0f15bad6bd9c738855a5dc14b3db37baf0ac",
+  "repairFile": "retrieval-scope-counts.rs",
+  "repairHash": "67797020046020af1add0598bf38db6309589c84eed6aaf1fca7790210b6d216",
+  "redLogHash": "cbc97eaca1f38f7aedf4ce7409221571fe68e8b45ff47a9c974a89936852ae09",
+  "redSelector": "retrieval::driver_tests::ready_global_filter_fallback_omits_balanced_only_scope_counts_with_exact_total",
+  "normalFilesUnchanged": true,
+  "inverseSingleBlockExact": true,
+  "legacyTailByteExact": true,
+  "rationale": "Only balanced modes have corpus scope counters. Global Ready fallback emits no scope summaries and retains pre-reserved exact known descriptor count; balanced counters require actual map entry. Partition, aggregate admission, diagnostics and checked bindings remain unchanged.",
+  "remaining": "Global sourceOmissions exact count repair awaits separate C actual deep RED."
+}

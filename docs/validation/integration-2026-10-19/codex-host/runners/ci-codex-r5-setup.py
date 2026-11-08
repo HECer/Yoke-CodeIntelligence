@@ -1,0 +1,2 @@
+from pathlib import Path
+p=Path(__file__).parent;s=(p/'ci-codex-adapter-check-r1.py').read_text(encoding='utf-8').replace('codex-host/r1','codex-host/r5').replace("'--lib','host_install'","'--test','codex_host_cli'").replace("if 'host_install' in name or name=='native/src/host_config.rs':", "if 'host_install' in name or 'host_output' in name or 'codex_host' in name or name=='native/src/host_config.rs':");(p/'ci-codex-adapter-check-r5.py').write_text(s,encoding='utf-8')

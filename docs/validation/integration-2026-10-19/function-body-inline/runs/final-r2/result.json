@@ -1,0 +1,107 @@
+{
+  "sourceUnchanged": true,
+  "inputs": 805,
+  "commands": [
+    {
+      "name": "native",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--no-fail-fast",
+        "--lib",
+        "--test",
+        "compiler_move",
+        "--test",
+        "compiler_inline",
+        "--test",
+        "compiler_inline_body",
+        "--test",
+        "projects",
+        "--test",
+        "project_session",
+        "--test",
+        "agent_repl",
+        "--test",
+        "semantic_refactor",
+        "--test",
+        "refactor_intents",
+        "--test",
+        "session_refactor",
+        "--test",
+        "symbol_move_own_v1",
+        "--test",
+        "symbol_move_effect_admission",
+        "--test",
+        "facade_file_move",
+        "--test",
+        "facade_directory_move",
+        "--",
+        "--test-threads=1"
+      ],
+      "exitCode": 0,
+      "seconds": 1033.5772930000094,
+      "totals": {
+        "passed": 668,
+        "failed": 0,
+        "ignored": 9
+      },
+      "groups": 14,
+      "failures": []
+    },
+    {
+      "name": "format",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "fmt",
+        "--all",
+        "--check"
+      ],
+      "exitCode": 0,
+      "seconds": 15.443580499995733
+    },
+    {
+      "name": "build",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "build",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--bin",
+        "yoke"
+      ],
+      "exitCode": 0,
+      "seconds": 17.168400399998063
+    },
+    {
+      "name": "clippy",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "clippy",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exitCode": 0,
+      "seconds": 121.96903320000274
+    }
+  ],
+  "allChecksPassed": true,
+  "wholeNativeRerun": false
+}

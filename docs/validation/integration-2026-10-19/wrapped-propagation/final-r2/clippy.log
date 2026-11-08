@@ -1,0 +1,31 @@
+    Checking yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+error: an array of `Range` that is only one element
+   --> native\src\semantic_propagated_delete_ast.rs:133:45
+    |
+133 |         let result = unchanged(&old, &new, &[0..end], &d);
+    |                                             ^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#single_range_in_vec_init
+    = note: `-D clippy::single-range-in-vec-init` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::single_range_in_vec_init)]`
+help: if you wanted a `Vec` that contains the entire range, try
+    |
+133 -         let result = unchanged(&old, &new, &[0..end], &d);
+133 +         let result = unchanged(&old, &new, &(0..end).collect::<std::vec::Vec<usize>>(), &d);
+    |
+
+error: an array of `Range` that is only one element
+   --> native\src\semantic_propagated_delete_ast.rs:135:41
+    |
+135 |             let removed = Removed::new(&[0..end]).unwrap();
+    |                                         ^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#single_range_in_vec_init
+help: if you wanted a `Vec` that contains the entire range, try
+    |
+135 -             let removed = Removed::new(&[0..end]).unwrap();
+135 +             let removed = Removed::new(&(0..end).collect::<std::vec::Vec<usize>>()).unwrap();
+    |
+
+error: could not compile `yoke-code-intelligence` (lib test) due to 2 previous errors
+warning: build failed, waiting for other jobs to finish...

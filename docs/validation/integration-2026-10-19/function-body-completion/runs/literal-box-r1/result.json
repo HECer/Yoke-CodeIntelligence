@@ -1,0 +1,129 @@
+{
+  "cases": [
+    {
+      "case": 0,
+      "exitCode": 0,
+      "error": "",
+      "beforeResultTypes": [
+        "number"
+      ],
+      "afterResultTypes": [
+        "number"
+      ],
+      "callerTypesExact": true
+    },
+    {
+      "case": 1,
+      "exitCode": 0,
+      "error": "",
+      "beforeResultTypes": [
+        "{ n: number; }"
+      ],
+      "afterResultTypes": [
+        "{ n: number; }"
+      ],
+      "callerTypesExact": true
+    },
+    {
+      "case": 2,
+      "exitCode": 0,
+      "error": "",
+      "beforeResultTypes": [
+        "3"
+      ],
+      "afterResultTypes": [
+        "3"
+      ],
+      "callerTypesExact": true
+    },
+    {
+      "case": 3,
+      "exitCode": 0,
+      "error": "",
+      "beforeResultTypes": [
+        "string"
+      ],
+      "afterResultTypes": [
+        "string"
+      ],
+      "callerTypesExact": true
+    },
+    {
+      "case": 4,
+      "exitCode": 0,
+      "error": "",
+      "beforeResultTypes": [
+        "number"
+      ],
+      "afterResultTypes": [
+        "number"
+      ],
+      "callerTypesExact": true
+    },
+    {
+      "case": 5,
+      "exitCode": 0,
+      "error": "",
+      "beforeResultTypes": [
+        "number"
+      ],
+      "afterResultTypes": [
+        "number"
+      ],
+      "callerTypesExact": true
+    },
+    {
+      "case": 6,
+      "exitCode": 0,
+      "error": "",
+      "beforeResultTypes": [
+        "number"
+      ],
+      "afterResultTypes": [
+        "number"
+      ],
+      "callerTypesExact": true
+    },
+    {
+      "case": 7,
+      "exitCode": 0,
+      "error": "",
+      "beforeResultTypes": [
+        "number"
+      ],
+      "afterResultTypes": [
+        "number"
+      ],
+      "callerTypesExact": true
+    },
+    {
+      "case": 8,
+      "exitCode": 0,
+      "error": "",
+      "beforeResultTypes": [
+        "Row"
+      ],
+      "afterResultTypes": [
+        "{ n: number; }"
+      ],
+      "callerTypesExact": false
+    },
+    {
+      "case": 9,
+      "exitCode": 0,
+      "error": "",
+      "beforeResultTypes": [
+        "3"
+      ],
+      "afterResultTypes": [
+        "3"
+      ],
+      "callerTypesExact": true
+    }
+  ],
+  "allChecksPassed": false,
+  "nativeAdmission": false,
+  "snapshotIdsSynthetic": true,
+  "analyzedCodeExecuted": false,
+  "prototypeWorkerPatch": true
+}

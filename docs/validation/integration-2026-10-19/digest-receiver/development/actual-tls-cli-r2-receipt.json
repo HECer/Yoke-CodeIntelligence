@@ -1,0 +1,17 @@
+{
+  "command": [
+    "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+    "test",
+    "--locked",
+    "-j2",
+    "--test",
+    "digest_receiver",
+    "actual_tls_receiver_and_sender_cli_recover_using_os_credentials_and_selected_ca",
+    "--",
+    "--exact",
+    "--ignored",
+    "--test-threads=1"
+  ],
+  "exitCode": 0,
+  "elapsedSeconds": 1.0203889000040363
+}

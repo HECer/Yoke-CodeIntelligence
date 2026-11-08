@@ -1,0 +1,33 @@
+{
+  "retrieval": {
+    "executable": "target\\debug\\deps\\retrieval-1eb097bf0ffff17d.exe",
+    "ignored": [],
+    "registered": [
+      "common_document_terms_cannot_amplify_unbounded_highlight_work",
+      "context_plan_find_references_read_select_preserves_exact_old_source",
+      "context_plan_rejects_execution_unknown_fields_and_over_budget_steps",
+      "document_fts_normalization_keeps_exact_diacritic_and_punctuation_evidence",
+      "identifier_components_and_document_body_are_retrievable_from_the_snapshot"
+    ]
+  },
+  "runtime": {
+    "executable": "target\\debug\\deps\\runtime-78dd1c087d67934d.exe",
+    "ignored": [],
+    "registered": [
+      "actual_debugger_pauses_steps_and_hits_hash_bound_unicode_breakpoints",
+      "deadline_and_output_bounds_terminate_sessions_without_source_writes",
+      "explicit_eval_and_repl_have_actual_module_global_semantics",
+      "inspecting_a_metaclass_does_not_call_its_equality_hook",
+      "modifying_copied_source_invalidates_runtime_evidence",
+      "ordinary_function_locals_use_intrinsic_frame_storage",
+      "program_exceptions_remain_program_outcomes_and_never_protocol_success",
+      "runtime_and_evaluation_authority_are_distinct_and_source_cannot_grant_them",
+      "stack_metadata_does_not_execute_string_subclass_hooks",
+      "stale_breakpoints_forged_snapshots_and_relative_interpreters_are_denied",
+      "unsupported_custom_locals_are_explicit_failed_operations_without_hooks",
+      "variable_inspection_bypasses_custom_dictionary_accessors",
+      "variable_inspection_does_not_execute_custom_repr",
+      "variable_inspection_does_not_execute_equality_of_non_string_global_keys"
+    ]
+  }
+}

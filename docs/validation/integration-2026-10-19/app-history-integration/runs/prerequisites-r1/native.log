@@ -1,0 +1,11 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+error[E0609]: no field `commit_id` on type `model::Snapshot`
+   --> native\src\github_app_worker_history.rs:220:25
+    |
+220 |             && snapshot.commit_id.as_deref() == Some(source.job().head_sha.as_str()),
+    |                         ^^^^^^^^^ unknown field
+    |
+    = note: available fields are: `id`, `workspace_id`, `kind`, `files`, `omissions`, `capture_consistency`
+
+For more information about this error, try `rustc --explain E0609`.
+error: could not compile `yoke-code-intelligence` (lib) due to 1 previous error

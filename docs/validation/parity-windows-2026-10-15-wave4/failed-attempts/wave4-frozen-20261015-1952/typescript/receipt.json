@@ -1,0 +1,80 @@
+{
+  "accepted": true,
+  "aclTempRoot": null,
+  "artifactSha256": {
+    "source-after.json": "4f4ab4202aa0f8e7afd86d82f771bf6196c1217fbf2e82deb8938a16ca9ff544",
+    "source-before.json": "4f4ab4202aa0f8e7afd86d82f771bf6196c1217fbf2e82deb8938a16ca9ff544",
+    "typecheck.log": "ca76bbbc554c0e3ab10606a9d43f484df25001ba560b45987878ba20a5bd47a5",
+    "typescript.log": "c2cf92d58a523cfa9638f0fc127c9623451c9e5695b35e0f39251a26226bac56"
+  },
+  "checkedAtUtc": "2026-10-15T19:56:14.789608+00:00",
+  "failed": 0,
+  "groups": 1,
+  "ignored": 3,
+  "interpretation": "Fresh execution only. Shared freeze required across all five phases; ignored test results are never relabeled as passing.",
+  "matrixCoverage": {},
+  "passed": 240,
+  "phase": "typescript",
+  "phases": [
+    "format",
+    "clippy",
+    "native",
+    "python",
+    "typescript"
+  ],
+  "results": [
+    {
+      "command": [
+        "npm.cmd",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0,
+      "failed": 0,
+      "groups": 0,
+      "ignored": 0,
+      "inventoryOnly": false,
+      "label": "typecheck",
+      "logSha256": "ca76bbbc554c0e3ab10606a9d43f484df25001ba560b45987878ba20a5bd47a5",
+      "origin": "fresh_execution",
+      "passed": 0,
+      "runnerSha256": "0d7ed0fa533d55c6518da3dfdc322d6e9e227361f1e88070edbaf2b7067ba45e",
+      "seconds": 3.078,
+      "sourceManifestSha256": "4f4ab4202aa0f8e7afd86d82f771bf6196c1217fbf2e82deb8938a16ca9ff544",
+      "tempRoot": "D:\\Yoke-Test-Scratch\\wave4-frozen-1952-typescript"
+    },
+    {
+      "command": [
+        "npm.cmd",
+        "test"
+      ],
+      "exitCode": 0,
+      "failed": 0,
+      "frameworkCounts": {
+        "cancelled": 0,
+        "fail": 0,
+        "pass": 240,
+        "skipped": 3,
+        "tests": 243,
+        "todo": 0
+      },
+      "groups": 1,
+      "ignored": 3,
+      "inventoryOnly": false,
+      "label": "typescript",
+      "logSha256": "c2cf92d58a523cfa9638f0fc127c9623451c9e5695b35e0f39251a26226bac56",
+      "origin": "fresh_execution",
+      "passed": 240,
+      "runnerSha256": "0d7ed0fa533d55c6518da3dfdc322d6e9e227361f1e88070edbaf2b7067ba45e",
+      "seconds": 182.062,
+      "sourceManifestSha256": "4f4ab4202aa0f8e7afd86d82f771bf6196c1217fbf2e82deb8938a16ca9ff544",
+      "tempRoot": "D:\\Yoke-Test-Scratch\\wave4-frozen-1952-typescript"
+    }
+  ],
+  "runnerSha256": "0d7ed0fa533d55c6518da3dfdc322d6e9e227361f1e88070edbaf2b7067ba45e",
+  "sourceChanges": [],
+  "sourceFiles": 1066,
+  "sourceManifestSha256": "4f4ab4202aa0f8e7afd86d82f771bf6196c1217fbf2e82deb8938a16ca9ff544",
+  "tempRoot": "D:\\Yoke-Test-Scratch\\wave4-frozen-1952-typescript",
+  "validationErrors": []
+}

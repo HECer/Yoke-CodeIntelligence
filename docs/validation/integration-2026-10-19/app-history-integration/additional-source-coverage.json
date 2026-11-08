@@ -1,0 +1,884 @@
+[
+  {
+    "phase": "debug-r1",
+    "sourcePath": "native/docs/github-app-workers.md",
+    "sha256": "1468e424904e4ca8eea868ed1cf9f8f57ff195f49448324767d2c87e87af0cef",
+    "rawArchivePath": "source-variants/1468e424904e4ca8eea868ed1cf9f8f57ff195f49448324767d2c87e87af0cef.md",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "debug-r1",
+    "sourcePath": "native/src/github_app_digest_acquisition.rs",
+    "sha256": "85b721b71d765333b9da7bd8e55056edddd92b7d5c9c706be1e8da0e99306b2e",
+    "rawArchivePath": null,
+    "origin": "hash-only; older raw variant was not captured"
+  },
+  {
+    "phase": "debug-r1",
+    "sourcePath": "native/src/github_app_worker_cli.rs",
+    "sha256": "ea4b7293280b2eb5e0ccdf660e1722f7b4928c7375e13b8c0ed2985d6c4b2f46",
+    "rawArchivePath": null,
+    "origin": "hash-only; older raw variant was not captured"
+  },
+  {
+    "phase": "debug-r2",
+    "sourcePath": "native/docs/github-app-workers.md",
+    "sha256": "1468e424904e4ca8eea868ed1cf9f8f57ff195f49448324767d2c87e87af0cef",
+    "rawArchivePath": "source-variants/1468e424904e4ca8eea868ed1cf9f8f57ff195f49448324767d2c87e87af0cef.md",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "debug-r2",
+    "sourcePath": "native/src/github_app_digest_acquisition.rs",
+    "sha256": "85b721b71d765333b9da7bd8e55056edddd92b7d5c9c706be1e8da0e99306b2e",
+    "rawArchivePath": null,
+    "origin": "hash-only; older raw variant was not captured"
+  },
+  {
+    "phase": "debug-r2",
+    "sourcePath": "native/src/github_app_worker_cli.rs",
+    "sha256": "ea4b7293280b2eb5e0ccdf660e1722f7b4928c7375e13b8c0ed2985d6c4b2f46",
+    "rawArchivePath": null,
+    "origin": "hash-only; older raw variant was not captured"
+  },
+  {
+    "phase": "debug-r2",
+    "sourcePath": "native/tests/github_app_history_bridge.rs",
+    "sha256": "3343515cea2504b183fa18ac732d1966c2af110e4ab4e707e2773f80c01526d4",
+    "rawArchivePath": null,
+    "origin": "hash-only; older raw variant was not captured"
+  },
+  {
+    "phase": "debug-r2",
+    "sourcePath": "native/tests/support/github_app_worker_history_fixture.rs",
+    "sha256": "745b646e26d0ed58ecab9249b8e86f491540302c0ccf62fa931186a18ce2f127",
+    "rawArchivePath": "source-variants/745b646e26d0ed58ecab9249b8e86f491540302c0ccf62fa931186a18ce2f127.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "feature-cli-r1",
+    "sourcePath": "native/docs/github-app-workers.md",
+    "sha256": "1468e424904e4ca8eea868ed1cf9f8f57ff195f49448324767d2c87e87af0cef",
+    "rawArchivePath": "source-variants/1468e424904e4ca8eea868ed1cf9f8f57ff195f49448324767d2c87e87af0cef.md",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "feature-cli-r1",
+    "sourcePath": "native/src/github_app_digest_acquisition.rs",
+    "sha256": "85b721b71d765333b9da7bd8e55056edddd92b7d5c9c706be1e8da0e99306b2e",
+    "rawArchivePath": null,
+    "origin": "hash-only; older raw variant was not captured"
+  },
+  {
+    "phase": "feature-cli-r1",
+    "sourcePath": "native/src/github_app_worker_cli.rs",
+    "sha256": "ea4b7293280b2eb5e0ccdf660e1722f7b4928c7375e13b8c0ed2985d6c4b2f46",
+    "rawArchivePath": null,
+    "origin": "hash-only; older raw variant was not captured"
+  },
+  {
+    "phase": "feature-driver-r1",
+    "sourcePath": "native/docs/github-app-workers.md",
+    "sha256": "1468e424904e4ca8eea868ed1cf9f8f57ff195f49448324767d2c87e87af0cef",
+    "rawArchivePath": "source-variants/1468e424904e4ca8eea868ed1cf9f8f57ff195f49448324767d2c87e87af0cef.md",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "feature-driver-r1",
+    "sourcePath": "native/src/github_app_digest_acquisition.rs",
+    "sha256": "028df855bade7958b31e4fdbfe0ba009b3e5801a8ab9f60ccfaac20701202692",
+    "rawArchivePath": "source-variants/028df855bade7958b31e4fdbfe0ba009b3e5801a8ab9f60ccfaac20701202692.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "feature-driver-r1",
+    "sourcePath": "native/src/github_app_worker_cli.rs",
+    "sha256": "6d309711a3b336f4a5d8d55edf8aecb1debef49a675cf4566ccf5844c390e63b",
+    "rawArchivePath": "source-variants/6d309711a3b336f4a5d8d55edf8aecb1debef49a675cf4566ccf5844c390e63b.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "feature-driver-r1",
+    "sourcePath": "native/tests/github_app_history_bridge.rs",
+    "sha256": "5e83fed7af90b7d2a5cfce7bcd51779707e198f708ad0e39508f7b503d2c894f",
+    "rawArchivePath": null,
+    "origin": "hash-only; older raw variant was not captured"
+  },
+  {
+    "phase": "feature-driver-r2",
+    "sourcePath": "native/docs/github-app-workers.md",
+    "sha256": "1468e424904e4ca8eea868ed1cf9f8f57ff195f49448324767d2c87e87af0cef",
+    "rawArchivePath": "source-variants/1468e424904e4ca8eea868ed1cf9f8f57ff195f49448324767d2c87e87af0cef.md",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "feature-driver-r2",
+    "sourcePath": "native/src/github_app_digest_acquisition.rs",
+    "sha256": "028df855bade7958b31e4fdbfe0ba009b3e5801a8ab9f60ccfaac20701202692",
+    "rawArchivePath": "source-variants/028df855bade7958b31e4fdbfe0ba009b3e5801a8ab9f60ccfaac20701202692.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "feature-driver-r2",
+    "sourcePath": "native/src/github_app_worker_cli.rs",
+    "sha256": "6d309711a3b336f4a5d8d55edf8aecb1debef49a675cf4566ccf5844c390e63b",
+    "rawArchivePath": "source-variants/6d309711a3b336f4a5d8d55edf8aecb1debef49a675cf4566ccf5844c390e63b.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "feature-driver-r2",
+    "sourcePath": "native/tests/github_app_history_bridge.rs",
+    "sha256": "5e83fed7af90b7d2a5cfce7bcd51779707e198f708ad0e39508f7b503d2c894f",
+    "rawArchivePath": null,
+    "origin": "hash-only; older raw variant was not captured"
+  },
+  {
+    "phase": "feature-r1",
+    "sourcePath": "native/docs/github-app-workers.md",
+    "sha256": "1468e424904e4ca8eea868ed1cf9f8f57ff195f49448324767d2c87e87af0cef",
+    "rawArchivePath": "source-variants/1468e424904e4ca8eea868ed1cf9f8f57ff195f49448324767d2c87e87af0cef.md",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "feature-r1",
+    "sourcePath": "native/src/github_app_digest_acquisition.rs",
+    "sha256": "85b721b71d765333b9da7bd8e55056edddd92b7d5c9c706be1e8da0e99306b2e",
+    "rawArchivePath": null,
+    "origin": "hash-only; older raw variant was not captured"
+  },
+  {
+    "phase": "feature-r1",
+    "sourcePath": "native/src/github_app_worker_cli.rs",
+    "sha256": "ea4b7293280b2eb5e0ccdf660e1722f7b4928c7375e13b8c0ed2985d6c4b2f46",
+    "rawArchivePath": null,
+    "origin": "hash-only; older raw variant was not captured"
+  },
+  {
+    "phase": "feature-r1",
+    "sourcePath": "native/tests/support/github_app_worker_history_fixture.rs",
+    "sha256": "af581123fbdc74996bd37337f7415dae4c06d7a9d8f5e2115792bd24cf847aa7",
+    "rawArchivePath": "source-variants/af581123fbdc74996bd37337f7415dae4c06d7a9d8f5e2115792bd24cf847aa7.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "feature-r2",
+    "sourcePath": "native/docs/github-app-workers.md",
+    "sha256": "1468e424904e4ca8eea868ed1cf9f8f57ff195f49448324767d2c87e87af0cef",
+    "rawArchivePath": "source-variants/1468e424904e4ca8eea868ed1cf9f8f57ff195f49448324767d2c87e87af0cef.md",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "feature-r2",
+    "sourcePath": "native/src/github_app_digest_acquisition.rs",
+    "sha256": "85b721b71d765333b9da7bd8e55056edddd92b7d5c9c706be1e8da0e99306b2e",
+    "rawArchivePath": null,
+    "origin": "hash-only; older raw variant was not captured"
+  },
+  {
+    "phase": "feature-r2",
+    "sourcePath": "native/src/github_app_worker_cli.rs",
+    "sha256": "ea4b7293280b2eb5e0ccdf660e1722f7b4928c7375e13b8c0ed2985d6c4b2f46",
+    "rawArchivePath": null,
+    "origin": "hash-only; older raw variant was not captured"
+  },
+  {
+    "phase": "feature-r3",
+    "sourcePath": "native/docs/github-app-workers.md",
+    "sha256": "1468e424904e4ca8eea868ed1cf9f8f57ff195f49448324767d2c87e87af0cef",
+    "rawArchivePath": "source-variants/1468e424904e4ca8eea868ed1cf9f8f57ff195f49448324767d2c87e87af0cef.md",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "feature-r3",
+    "sourcePath": "native/src/github_app_digest_acquisition.rs",
+    "sha256": "85b721b71d765333b9da7bd8e55056edddd92b7d5c9c706be1e8da0e99306b2e",
+    "rawArchivePath": null,
+    "origin": "hash-only; older raw variant was not captured"
+  },
+  {
+    "phase": "feature-r3",
+    "sourcePath": "native/src/github_app_worker_cli.rs",
+    "sha256": "ea4b7293280b2eb5e0ccdf660e1722f7b4928c7375e13b8c0ed2985d6c4b2f46",
+    "rawArchivePath": null,
+    "origin": "hash-only; older raw variant was not captured"
+  },
+  {
+    "phase": "feature-r3",
+    "sourcePath": "native/tests/github_app_history_bridge.rs",
+    "sha256": "3343515cea2504b183fa18ac732d1966c2af110e4ab4e707e2773f80c01526d4",
+    "rawArchivePath": null,
+    "origin": "hash-only; older raw variant was not captured"
+  },
+  {
+    "phase": "live-cli-r1",
+    "sourcePath": "native/README.md",
+    "sha256": "b27aa8fab2a641212b3603afa8551d48152aa2e6549ced03bcdd247084cbf529",
+    "rawArchivePath": "source-variants/b27aa8fab2a641212b3603afa8551d48152aa2e6549ced03bcdd247084cbf529.md",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "live-cli-r1",
+    "sourcePath": "native/docs/github-app-workers.md",
+    "sha256": "1468e424904e4ca8eea868ed1cf9f8f57ff195f49448324767d2c87e87af0cef",
+    "rawArchivePath": "source-variants/1468e424904e4ca8eea868ed1cf9f8f57ff195f49448324767d2c87e87af0cef.md",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "live-cli-r1",
+    "sourcePath": "native/src/github_app_digest_acquisition.rs",
+    "sha256": "028df855bade7958b31e4fdbfe0ba009b3e5801a8ab9f60ccfaac20701202692",
+    "rawArchivePath": "source-variants/028df855bade7958b31e4fdbfe0ba009b3e5801a8ab9f60ccfaac20701202692.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "live-cli-r1",
+    "sourcePath": "native/src/github_app_digest_history_jobs.rs",
+    "sha256": "5dbbfa335cbb808d9d4915de33c4e645cae1b7ec35bcfe174fa99f04490b73ee",
+    "rawArchivePath": "source-variants/5dbbfa335cbb808d9d4915de33c4e645cae1b7ec35bcfe174fa99f04490b73ee.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "live-cli-r1",
+    "sourcePath": "native/src/github_app_history_cli.rs",
+    "sha256": "b96c4faf98c02a4f5988a1d79f1e6463d1fb9de74da4aa8f72eb3e2de9ba445e",
+    "rawArchivePath": "source-variants/b96c4faf98c02a4f5988a1d79f1e6463d1fb9de74da4aa8f72eb3e2de9ba445e.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "live-cli-r1",
+    "sourcePath": "native/src/github_app_worker.rs",
+    "sha256": "6eb4eba068945cec55ef4bd3fa9deb0b5d4285421b6a5f9f42211b5f9bdad8fb",
+    "rawArchivePath": "source-variants/6eb4eba068945cec55ef4bd3fa9deb0b5d4285421b6a5f9f42211b5f9bdad8fb.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "live-cli-r1",
+    "sourcePath": "native/src/github_app_worker_cli.rs",
+    "sha256": "6d309711a3b336f4a5d8d55edf8aecb1debef49a675cf4566ccf5844c390e63b",
+    "rawArchivePath": "source-variants/6d309711a3b336f4a5d8d55edf8aecb1debef49a675cf4566ccf5844c390e63b.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "live-cli-r1",
+    "sourcePath": "native/src/github_app_worker_history.rs",
+    "sha256": "3ff1366cf623ff252d5c0e2705b3af0360c43ae8613dc199a2ad3e010d45c7f5",
+    "rawArchivePath": "source-variants/3ff1366cf623ff252d5c0e2705b3af0360c43ae8613dc199a2ad3e010d45c7f5.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "live-cli-r1",
+    "sourcePath": "native/src/main.rs",
+    "sha256": "336c051aca06890eb173adc7a958f7fb409c92f89a448c09c4eecad6fe492764",
+    "rawArchivePath": "source-variants/336c051aca06890eb173adc7a958f7fb409c92f89a448c09c4eecad6fe492764.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "live-cli-r1",
+    "sourcePath": "native/src/retention.rs",
+    "sha256": "9ee70abdfbeb679b27b85352650a2c61266f984b753bf439b5d9bfc4033c8f05",
+    "rawArchivePath": "source-variants/9ee70abdfbeb679b27b85352650a2c61266f984b753bf439b5d9bfc4033c8f05.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "live-cli-r1",
+    "sourcePath": "native/tests/github_app_history_bridge.rs",
+    "sha256": "5e83fed7af90b7d2a5cfce7bcd51779707e198f708ad0e39508f7b503d2c894f",
+    "rawArchivePath": null,
+    "origin": "hash-only; older raw variant was not captured"
+  },
+  {
+    "phase": "live-cli-r1",
+    "sourcePath": "native/tests/github_app_history_cli.rs",
+    "sha256": "8e3e5c498816bbb1d16342ec34a32746c9d210680dcd6ea4319c07eee629a114",
+    "rawArchivePath": "source-variants/8e3e5c498816bbb1d16342ec34a32746c9d210680dcd6ea4319c07eee629a114.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "live-cli-r1",
+    "sourcePath": "native/tests/support/github_app_worker_history_fixture.rs",
+    "sha256": "a832e2f0778d3f30090aebd4bffdd9c1c90fa4f7e4c971939c35a646588af1a7",
+    "rawArchivePath": "source-variants/a832e2f0778d3f30090aebd4bffdd9c1c90fa4f7e4c971939c35a646588af1a7.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "live-cli-r2",
+    "sourcePath": "native/README.md",
+    "sha256": "b27aa8fab2a641212b3603afa8551d48152aa2e6549ced03bcdd247084cbf529",
+    "rawArchivePath": "source-variants/b27aa8fab2a641212b3603afa8551d48152aa2e6549ced03bcdd247084cbf529.md",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "live-cli-r2",
+    "sourcePath": "native/docs/github-app-workers.md",
+    "sha256": "1468e424904e4ca8eea868ed1cf9f8f57ff195f49448324767d2c87e87af0cef",
+    "rawArchivePath": "source-variants/1468e424904e4ca8eea868ed1cf9f8f57ff195f49448324767d2c87e87af0cef.md",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "live-cli-r2",
+    "sourcePath": "native/src/github_app_digest_acquisition.rs",
+    "sha256": "028df855bade7958b31e4fdbfe0ba009b3e5801a8ab9f60ccfaac20701202692",
+    "rawArchivePath": "source-variants/028df855bade7958b31e4fdbfe0ba009b3e5801a8ab9f60ccfaac20701202692.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "live-cli-r2",
+    "sourcePath": "native/src/github_app_digest_history_jobs.rs",
+    "sha256": "5dbbfa335cbb808d9d4915de33c4e645cae1b7ec35bcfe174fa99f04490b73ee",
+    "rawArchivePath": "source-variants/5dbbfa335cbb808d9d4915de33c4e645cae1b7ec35bcfe174fa99f04490b73ee.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "live-cli-r2",
+    "sourcePath": "native/src/github_app_history_cli.rs",
+    "sha256": "b96c4faf98c02a4f5988a1d79f1e6463d1fb9de74da4aa8f72eb3e2de9ba445e",
+    "rawArchivePath": "source-variants/b96c4faf98c02a4f5988a1d79f1e6463d1fb9de74da4aa8f72eb3e2de9ba445e.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "live-cli-r2",
+    "sourcePath": "native/src/github_app_worker.rs",
+    "sha256": "6eb4eba068945cec55ef4bd3fa9deb0b5d4285421b6a5f9f42211b5f9bdad8fb",
+    "rawArchivePath": "source-variants/6eb4eba068945cec55ef4bd3fa9deb0b5d4285421b6a5f9f42211b5f9bdad8fb.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "live-cli-r2",
+    "sourcePath": "native/src/github_app_worker_cli.rs",
+    "sha256": "6d309711a3b336f4a5d8d55edf8aecb1debef49a675cf4566ccf5844c390e63b",
+    "rawArchivePath": "source-variants/6d309711a3b336f4a5d8d55edf8aecb1debef49a675cf4566ccf5844c390e63b.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "live-cli-r2",
+    "sourcePath": "native/src/github_app_worker_history.rs",
+    "sha256": "3ff1366cf623ff252d5c0e2705b3af0360c43ae8613dc199a2ad3e010d45c7f5",
+    "rawArchivePath": "source-variants/3ff1366cf623ff252d5c0e2705b3af0360c43ae8613dc199a2ad3e010d45c7f5.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "live-cli-r2",
+    "sourcePath": "native/src/main.rs",
+    "sha256": "336c051aca06890eb173adc7a958f7fb409c92f89a448c09c4eecad6fe492764",
+    "rawArchivePath": "source-variants/336c051aca06890eb173adc7a958f7fb409c92f89a448c09c4eecad6fe492764.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "live-cli-r2",
+    "sourcePath": "native/src/retention.rs",
+    "sha256": "9ee70abdfbeb679b27b85352650a2c61266f984b753bf439b5d9bfc4033c8f05",
+    "rawArchivePath": "source-variants/9ee70abdfbeb679b27b85352650a2c61266f984b753bf439b5d9bfc4033c8f05.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "live-cli-r2",
+    "sourcePath": "native/tests/github_app_history_bridge.rs",
+    "sha256": "72d820d9c8b529dda491fc0f2310cc7b88f0df2b4ed8e5f016e756bd38ea4e4e",
+    "rawArchivePath": "source-variants/72d820d9c8b529dda491fc0f2310cc7b88f0df2b4ed8e5f016e756bd38ea4e4e.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "live-cli-r2",
+    "sourcePath": "native/tests/github_app_history_cli.rs",
+    "sha256": "8e3e5c498816bbb1d16342ec34a32746c9d210680dcd6ea4319c07eee629a114",
+    "rawArchivePath": "source-variants/8e3e5c498816bbb1d16342ec34a32746c9d210680dcd6ea4319c07eee629a114.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "live-cli-r2",
+    "sourcePath": "native/tests/support/github_app_worker_history_fixture.rs",
+    "sha256": "5248e287e79085493a8c2ae8d2fe0d985c2d29ba092c982493c92daf8daec143",
+    "rawArchivePath": "source-variants/5248e287e79085493a8c2ae8d2fe0d985c2d29ba092c982493c92daf8daec143.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "live-cli-r3",
+    "sourcePath": "native/README.md",
+    "sha256": "1cdc5bc96dfe05d4f7d95acdbfb3495aa7b65713c4f55d4e01b458ce161aac28",
+    "rawArchivePath": "source-variants/1cdc5bc96dfe05d4f7d95acdbfb3495aa7b65713c4f55d4e01b458ce161aac28.md",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "live-cli-r3",
+    "sourcePath": "native/docs/app-history-integration.md",
+    "sha256": "831bd120e7c61392438b7a8fc96ae28a789b55d811206c345471825171c79a2b",
+    "rawArchivePath": "source-variants/831bd120e7c61392438b7a8fc96ae28a789b55d811206c345471825171c79a2b.md",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "live-cli-r3",
+    "sourcePath": "native/docs/github-app-workers.md",
+    "sha256": "a3a1b2169a74e3fc2e334d63771645a067e5ef3b0ae76a91bb2c53d924be4840",
+    "rawArchivePath": "source-variants/a3a1b2169a74e3fc2e334d63771645a067e5ef3b0ae76a91bb2c53d924be4840.md",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "live-cli-r3",
+    "sourcePath": "native/src/github_app_digest_acquisition.rs",
+    "sha256": "028df855bade7958b31e4fdbfe0ba009b3e5801a8ab9f60ccfaac20701202692",
+    "rawArchivePath": "source-variants/028df855bade7958b31e4fdbfe0ba009b3e5801a8ab9f60ccfaac20701202692.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "live-cli-r3",
+    "sourcePath": "native/src/github_app_digest_history_jobs.rs",
+    "sha256": "5dbbfa335cbb808d9d4915de33c4e645cae1b7ec35bcfe174fa99f04490b73ee",
+    "rawArchivePath": "source-variants/5dbbfa335cbb808d9d4915de33c4e645cae1b7ec35bcfe174fa99f04490b73ee.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "live-cli-r3",
+    "sourcePath": "native/src/github_app_history_cli.rs",
+    "sha256": "b96c4faf98c02a4f5988a1d79f1e6463d1fb9de74da4aa8f72eb3e2de9ba445e",
+    "rawArchivePath": "source-variants/b96c4faf98c02a4f5988a1d79f1e6463d1fb9de74da4aa8f72eb3e2de9ba445e.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "live-cli-r3",
+    "sourcePath": "native/src/github_app_worker.rs",
+    "sha256": "6eb4eba068945cec55ef4bd3fa9deb0b5d4285421b6a5f9f42211b5f9bdad8fb",
+    "rawArchivePath": "source-variants/6eb4eba068945cec55ef4bd3fa9deb0b5d4285421b6a5f9f42211b5f9bdad8fb.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "live-cli-r3",
+    "sourcePath": "native/src/github_app_worker_cli.rs",
+    "sha256": "6d309711a3b336f4a5d8d55edf8aecb1debef49a675cf4566ccf5844c390e63b",
+    "rawArchivePath": "source-variants/6d309711a3b336f4a5d8d55edf8aecb1debef49a675cf4566ccf5844c390e63b.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "live-cli-r3",
+    "sourcePath": "native/src/github_app_worker_history.rs",
+    "sha256": "5eab74eee9545cea06515b669b9bb4389964935bd0c34cd03e35faba4d6775d6",
+    "rawArchivePath": "source-variants/5eab74eee9545cea06515b669b9bb4389964935bd0c34cd03e35faba4d6775d6.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "live-cli-r3",
+    "sourcePath": "native/src/main.rs",
+    "sha256": "336c051aca06890eb173adc7a958f7fb409c92f89a448c09c4eecad6fe492764",
+    "rawArchivePath": "source-variants/336c051aca06890eb173adc7a958f7fb409c92f89a448c09c4eecad6fe492764.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "live-cli-r3",
+    "sourcePath": "native/src/retention.rs",
+    "sha256": "9ee70abdfbeb679b27b85352650a2c61266f984b753bf439b5d9bfc4033c8f05",
+    "rawArchivePath": "source-variants/9ee70abdfbeb679b27b85352650a2c61266f984b753bf439b5d9bfc4033c8f05.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "live-cli-r3",
+    "sourcePath": "native/tests/github_app_history_bridge.rs",
+    "sha256": "c4ef62b374085554d590ddfb3bab23e7f41c9745c477eb62267f5362fb0329ca",
+    "rawArchivePath": "source-variants/c4ef62b374085554d590ddfb3bab23e7f41c9745c477eb62267f5362fb0329ca.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "live-cli-r3",
+    "sourcePath": "native/tests/github_app_history_cli.rs",
+    "sha256": "8e3e5c498816bbb1d16342ec34a32746c9d210680dcd6ea4319c07eee629a114",
+    "rawArchivePath": "source-variants/8e3e5c498816bbb1d16342ec34a32746c9d210680dcd6ea4319c07eee629a114.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "live-cli-r3",
+    "sourcePath": "native/tests/support/github_app_worker_history_fixture.rs",
+    "sha256": "5248e287e79085493a8c2ae8d2fe0d985c2d29ba092c982493c92daf8daec143",
+    "rawArchivePath": "source-variants/5248e287e79085493a8c2ae8d2fe0d985c2d29ba092c982493c92daf8daec143.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "native-job-output-r4",
+    "sourcePath": "native/README.md",
+    "sha256": "1cdc5bc96dfe05d4f7d95acdbfb3495aa7b65713c4f55d4e01b458ce161aac28",
+    "rawArchivePath": "source-variants/1cdc5bc96dfe05d4f7d95acdbfb3495aa7b65713c4f55d4e01b458ce161aac28.md",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "native-job-output-r4",
+    "sourcePath": "native/docs/app-history-integration.md",
+    "sha256": "831bd120e7c61392438b7a8fc96ae28a789b55d811206c345471825171c79a2b",
+    "rawArchivePath": "source-variants/831bd120e7c61392438b7a8fc96ae28a789b55d811206c345471825171c79a2b.md",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "native-job-output-r4",
+    "sourcePath": "native/docs/github-app-workers.md",
+    "sha256": "a3a1b2169a74e3fc2e334d63771645a067e5ef3b0ae76a91bb2c53d924be4840",
+    "rawArchivePath": "source-variants/a3a1b2169a74e3fc2e334d63771645a067e5ef3b0ae76a91bb2c53d924be4840.md",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "native-job-output-r4",
+    "sourcePath": "native/src/github_app_digest_acquisition.rs",
+    "sha256": "028df855bade7958b31e4fdbfe0ba009b3e5801a8ab9f60ccfaac20701202692",
+    "rawArchivePath": "source-variants/028df855bade7958b31e4fdbfe0ba009b3e5801a8ab9f60ccfaac20701202692.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "native-job-output-r4",
+    "sourcePath": "native/src/github_app_digest_history_jobs.rs",
+    "sha256": "5dbbfa335cbb808d9d4915de33c4e645cae1b7ec35bcfe174fa99f04490b73ee",
+    "rawArchivePath": "source-variants/5dbbfa335cbb808d9d4915de33c4e645cae1b7ec35bcfe174fa99f04490b73ee.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "native-job-output-r4",
+    "sourcePath": "native/src/github_app_history_cli.rs",
+    "sha256": "b96c4faf98c02a4f5988a1d79f1e6463d1fb9de74da4aa8f72eb3e2de9ba445e",
+    "rawArchivePath": "source-variants/b96c4faf98c02a4f5988a1d79f1e6463d1fb9de74da4aa8f72eb3e2de9ba445e.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "native-job-output-r4",
+    "sourcePath": "native/src/github_app_worker.rs",
+    "sha256": "6eb4eba068945cec55ef4bd3fa9deb0b5d4285421b6a5f9f42211b5f9bdad8fb",
+    "rawArchivePath": "source-variants/6eb4eba068945cec55ef4bd3fa9deb0b5d4285421b6a5f9f42211b5f9bdad8fb.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "native-job-output-r4",
+    "sourcePath": "native/src/github_app_worker_cli.rs",
+    "sha256": "6d309711a3b336f4a5d8d55edf8aecb1debef49a675cf4566ccf5844c390e63b",
+    "rawArchivePath": "source-variants/6d309711a3b336f4a5d8d55edf8aecb1debef49a675cf4566ccf5844c390e63b.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "native-job-output-r4",
+    "sourcePath": "native/src/github_app_worker_history.rs",
+    "sha256": "5eab74eee9545cea06515b669b9bb4389964935bd0c34cd03e35faba4d6775d6",
+    "rawArchivePath": "source-variants/5eab74eee9545cea06515b669b9bb4389964935bd0c34cd03e35faba4d6775d6.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "native-job-output-r4",
+    "sourcePath": "native/src/main.rs",
+    "sha256": "336c051aca06890eb173adc7a958f7fb409c92f89a448c09c4eecad6fe492764",
+    "rawArchivePath": "source-variants/336c051aca06890eb173adc7a958f7fb409c92f89a448c09c4eecad6fe492764.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "native-job-output-r4",
+    "sourcePath": "native/src/retention.rs",
+    "sha256": "9ee70abdfbeb679b27b85352650a2c61266f984b753bf439b5d9bfc4033c8f05",
+    "rawArchivePath": "source-variants/9ee70abdfbeb679b27b85352650a2c61266f984b753bf439b5d9bfc4033c8f05.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "native-job-output-r4",
+    "sourcePath": "native/tests/github_app_history_bridge.rs",
+    "sha256": "c4ef62b374085554d590ddfb3bab23e7f41c9745c477eb62267f5362fb0329ca",
+    "rawArchivePath": "source-variants/c4ef62b374085554d590ddfb3bab23e7f41c9745c477eb62267f5362fb0329ca.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "native-job-output-r4",
+    "sourcePath": "native/tests/github_app_history_cli.rs",
+    "sha256": "8e3e5c498816bbb1d16342ec34a32746c9d210680dcd6ea4319c07eee629a114",
+    "rawArchivePath": "source-variants/8e3e5c498816bbb1d16342ec34a32746c9d210680dcd6ea4319c07eee629a114.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "native-job-output-r4",
+    "sourcePath": "native/tests/support/github_app_worker_history_fixture.rs",
+    "sha256": "5248e287e79085493a8c2ae8d2fe0d985c2d29ba092c982493c92daf8daec143",
+    "rawArchivePath": "source-variants/5248e287e79085493a8c2ae8d2fe0d985c2d29ba092c982493c92daf8daec143.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "native-job-output-r6",
+    "sourcePath": "native/README.md",
+    "sha256": "1cdc5bc96dfe05d4f7d95acdbfb3495aa7b65713c4f55d4e01b458ce161aac28",
+    "rawArchivePath": "source-variants/1cdc5bc96dfe05d4f7d95acdbfb3495aa7b65713c4f55d4e01b458ce161aac28.md",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "native-job-output-r6",
+    "sourcePath": "native/docs/app-history-integration.md",
+    "sha256": "831bd120e7c61392438b7a8fc96ae28a789b55d811206c345471825171c79a2b",
+    "rawArchivePath": "source-variants/831bd120e7c61392438b7a8fc96ae28a789b55d811206c345471825171c79a2b.md",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "native-job-output-r6",
+    "sourcePath": "native/docs/github-app-workers.md",
+    "sha256": "a3a1b2169a74e3fc2e334d63771645a067e5ef3b0ae76a91bb2c53d924be4840",
+    "rawArchivePath": "source-variants/a3a1b2169a74e3fc2e334d63771645a067e5ef3b0ae76a91bb2c53d924be4840.md",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "native-job-output-r6",
+    "sourcePath": "native/src/github_app_digest_acquisition.rs",
+    "sha256": "028df855bade7958b31e4fdbfe0ba009b3e5801a8ab9f60ccfaac20701202692",
+    "rawArchivePath": "source-variants/028df855bade7958b31e4fdbfe0ba009b3e5801a8ab9f60ccfaac20701202692.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "native-job-output-r6",
+    "sourcePath": "native/src/github_app_digest_history_jobs.rs",
+    "sha256": "5dbbfa335cbb808d9d4915de33c4e645cae1b7ec35bcfe174fa99f04490b73ee",
+    "rawArchivePath": "source-variants/5dbbfa335cbb808d9d4915de33c4e645cae1b7ec35bcfe174fa99f04490b73ee.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "native-job-output-r6",
+    "sourcePath": "native/src/github_app_history_cli.rs",
+    "sha256": "b96c4faf98c02a4f5988a1d79f1e6463d1fb9de74da4aa8f72eb3e2de9ba445e",
+    "rawArchivePath": "source-variants/b96c4faf98c02a4f5988a1d79f1e6463d1fb9de74da4aa8f72eb3e2de9ba445e.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "native-job-output-r6",
+    "sourcePath": "native/src/github_app_worker.rs",
+    "sha256": "6eb4eba068945cec55ef4bd3fa9deb0b5d4285421b6a5f9f42211b5f9bdad8fb",
+    "rawArchivePath": "source-variants/6eb4eba068945cec55ef4bd3fa9deb0b5d4285421b6a5f9f42211b5f9bdad8fb.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "native-job-output-r6",
+    "sourcePath": "native/src/github_app_worker_cli.rs",
+    "sha256": "6d309711a3b336f4a5d8d55edf8aecb1debef49a675cf4566ccf5844c390e63b",
+    "rawArchivePath": "source-variants/6d309711a3b336f4a5d8d55edf8aecb1debef49a675cf4566ccf5844c390e63b.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "native-job-output-r6",
+    "sourcePath": "native/src/github_app_worker_history.rs",
+    "sha256": "5eab74eee9545cea06515b669b9bb4389964935bd0c34cd03e35faba4d6775d6",
+    "rawArchivePath": "source-variants/5eab74eee9545cea06515b669b9bb4389964935bd0c34cd03e35faba4d6775d6.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "native-job-output-r6",
+    "sourcePath": "native/src/main.rs",
+    "sha256": "336c051aca06890eb173adc7a958f7fb409c92f89a448c09c4eecad6fe492764",
+    "rawArchivePath": "source-variants/336c051aca06890eb173adc7a958f7fb409c92f89a448c09c4eecad6fe492764.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "native-job-output-r6",
+    "sourcePath": "native/src/retention.rs",
+    "sha256": "9ee70abdfbeb679b27b85352650a2c61266f984b753bf439b5d9bfc4033c8f05",
+    "rawArchivePath": "source-variants/9ee70abdfbeb679b27b85352650a2c61266f984b753bf439b5d9bfc4033c8f05.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "native-job-output-r6",
+    "sourcePath": "native/tests/github_app_history_bridge.rs",
+    "sha256": "c4ef62b374085554d590ddfb3bab23e7f41c9745c477eb62267f5362fb0329ca",
+    "rawArchivePath": "source-variants/c4ef62b374085554d590ddfb3bab23e7f41c9745c477eb62267f5362fb0329ca.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "native-job-output-r6",
+    "sourcePath": "native/tests/github_app_history_cli.rs",
+    "sha256": "8e3e5c498816bbb1d16342ec34a32746c9d210680dcd6ea4319c07eee629a114",
+    "rawArchivePath": "source-variants/8e3e5c498816bbb1d16342ec34a32746c9d210680dcd6ea4319c07eee629a114.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "native-job-output-r6",
+    "sourcePath": "native/tests/support/github_app_worker_history_fixture.rs",
+    "sha256": "5248e287e79085493a8c2ae8d2fe0d985c2d29ba092c982493c92daf8daec143",
+    "rawArchivePath": "source-variants/5248e287e79085493a8c2ae8d2fe0d985c2d29ba092c982493c92daf8daec143.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "prerequisites-r1",
+    "sourcePath": "native/docs/github-app-workers.md",
+    "sha256": "1468e424904e4ca8eea868ed1cf9f8f57ff195f49448324767d2c87e87af0cef",
+    "rawArchivePath": "source-variants/1468e424904e4ca8eea868ed1cf9f8f57ff195f49448324767d2c87e87af0cef.md",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "prerequisites-r1",
+    "sourcePath": "native/src/github_app_digest_acquisition.rs",
+    "sha256": "85b721b71d765333b9da7bd8e55056edddd92b7d5c9c706be1e8da0e99306b2e",
+    "rawArchivePath": null,
+    "origin": "hash-only; older raw variant was not captured"
+  },
+  {
+    "phase": "prerequisites-r1",
+    "sourcePath": "native/src/github_app_worker_cli.rs",
+    "sha256": "ea4b7293280b2eb5e0ccdf660e1722f7b4928c7375e13b8c0ed2985d6c4b2f46",
+    "rawArchivePath": null,
+    "origin": "hash-only; older raw variant was not captured"
+  },
+  {
+    "phase": "prerequisites-r2",
+    "sourcePath": "native/docs/github-app-workers.md",
+    "sha256": "1468e424904e4ca8eea868ed1cf9f8f57ff195f49448324767d2c87e87af0cef",
+    "rawArchivePath": "source-variants/1468e424904e4ca8eea868ed1cf9f8f57ff195f49448324767d2c87e87af0cef.md",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "prerequisites-r2",
+    "sourcePath": "native/src/github_app_digest_acquisition.rs",
+    "sha256": "85b721b71d765333b9da7bd8e55056edddd92b7d5c9c706be1e8da0e99306b2e",
+    "rawArchivePath": null,
+    "origin": "hash-only; older raw variant was not captured"
+  },
+  {
+    "phase": "prerequisites-r2",
+    "sourcePath": "native/src/github_app_worker_cli.rs",
+    "sha256": "ea4b7293280b2eb5e0ccdf660e1722f7b4928c7375e13b8c0ed2985d6c4b2f46",
+    "rawArchivePath": null,
+    "origin": "hash-only; older raw variant was not captured"
+  },
+  {
+    "phase": "retained-r1",
+    "sourcePath": "native/src/github_app_digest_acquisition.rs",
+    "sha256": "028df855bade7958b31e4fdbfe0ba009b3e5801a8ab9f60ccfaac20701202692",
+    "rawArchivePath": "source-variants/028df855bade7958b31e4fdbfe0ba009b3e5801a8ab9f60ccfaac20701202692.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "retained-r1",
+    "sourcePath": "native/src/github_app_digest_history_jobs.rs",
+    "sha256": "5dbbfa335cbb808d9d4915de33c4e645cae1b7ec35bcfe174fa99f04490b73ee",
+    "rawArchivePath": "source-variants/5dbbfa335cbb808d9d4915de33c4e645cae1b7ec35bcfe174fa99f04490b73ee.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "retained-r1",
+    "sourcePath": "native/src/github_app_history_cli.rs",
+    "sha256": "b96c4faf98c02a4f5988a1d79f1e6463d1fb9de74da4aa8f72eb3e2de9ba445e",
+    "rawArchivePath": "source-variants/b96c4faf98c02a4f5988a1d79f1e6463d1fb9de74da4aa8f72eb3e2de9ba445e.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "retained-r1",
+    "sourcePath": "native/src/github_app_worker.rs",
+    "sha256": "6eb4eba068945cec55ef4bd3fa9deb0b5d4285421b6a5f9f42211b5f9bdad8fb",
+    "rawArchivePath": "source-variants/6eb4eba068945cec55ef4bd3fa9deb0b5d4285421b6a5f9f42211b5f9bdad8fb.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "retained-r1",
+    "sourcePath": "native/src/github_app_worker_cli.rs",
+    "sha256": "6d309711a3b336f4a5d8d55edf8aecb1debef49a675cf4566ccf5844c390e63b",
+    "rawArchivePath": "source-variants/6d309711a3b336f4a5d8d55edf8aecb1debef49a675cf4566ccf5844c390e63b.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "retained-r1",
+    "sourcePath": "native/src/github_app_worker_history.rs",
+    "sha256": "3ff1366cf623ff252d5c0e2705b3af0360c43ae8613dc199a2ad3e010d45c7f5",
+    "rawArchivePath": "source-variants/3ff1366cf623ff252d5c0e2705b3af0360c43ae8613dc199a2ad3e010d45c7f5.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "retained-r1",
+    "sourcePath": "native/src/main.rs",
+    "sha256": "336c051aca06890eb173adc7a958f7fb409c92f89a448c09c4eecad6fe492764",
+    "rawArchivePath": "source-variants/336c051aca06890eb173adc7a958f7fb409c92f89a448c09c4eecad6fe492764.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "retained-r1",
+    "sourcePath": "native/src/retention.rs",
+    "sha256": "9ee70abdfbeb679b27b85352650a2c61266f984b753bf439b5d9bfc4033c8f05",
+    "rawArchivePath": "source-variants/9ee70abdfbeb679b27b85352650a2c61266f984b753bf439b5d9bfc4033c8f05.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "retained-r1",
+    "sourcePath": "native/tests/github_app_history_bridge.rs",
+    "sha256": "72d820d9c8b529dda491fc0f2310cc7b88f0df2b4ed8e5f016e756bd38ea4e4e",
+    "rawArchivePath": "source-variants/72d820d9c8b529dda491fc0f2310cc7b88f0df2b4ed8e5f016e756bd38ea4e4e.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "retained-r1",
+    "sourcePath": "native/tests/github_app_history_cli.rs",
+    "sha256": "8e3e5c498816bbb1d16342ec34a32746c9d210680dcd6ea4319c07eee629a114",
+    "rawArchivePath": "source-variants/8e3e5c498816bbb1d16342ec34a32746c9d210680dcd6ea4319c07eee629a114.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "retained-r1",
+    "sourcePath": "native/tests/support/github_app_worker_history_fixture.rs",
+    "sha256": "5248e287e79085493a8c2ae8d2fe0d985c2d29ba092c982493c92daf8daec143",
+    "rawArchivePath": "source-variants/5248e287e79085493a8c2ae8d2fe0d985c2d29ba092c982493c92daf8daec143.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "retained-r2",
+    "sourcePath": "native/src/github_app_digest_acquisition.rs",
+    "sha256": "028df855bade7958b31e4fdbfe0ba009b3e5801a8ab9f60ccfaac20701202692",
+    "rawArchivePath": "source-variants/028df855bade7958b31e4fdbfe0ba009b3e5801a8ab9f60ccfaac20701202692.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "retained-r2",
+    "sourcePath": "native/src/github_app_digest_history_jobs.rs",
+    "sha256": "5dbbfa335cbb808d9d4915de33c4e645cae1b7ec35bcfe174fa99f04490b73ee",
+    "rawArchivePath": "source-variants/5dbbfa335cbb808d9d4915de33c4e645cae1b7ec35bcfe174fa99f04490b73ee.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "retained-r2",
+    "sourcePath": "native/src/github_app_history_cli.rs",
+    "sha256": "b96c4faf98c02a4f5988a1d79f1e6463d1fb9de74da4aa8f72eb3e2de9ba445e",
+    "rawArchivePath": "source-variants/b96c4faf98c02a4f5988a1d79f1e6463d1fb9de74da4aa8f72eb3e2de9ba445e.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "retained-r2",
+    "sourcePath": "native/src/github_app_worker.rs",
+    "sha256": "6eb4eba068945cec55ef4bd3fa9deb0b5d4285421b6a5f9f42211b5f9bdad8fb",
+    "rawArchivePath": "source-variants/6eb4eba068945cec55ef4bd3fa9deb0b5d4285421b6a5f9f42211b5f9bdad8fb.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "retained-r2",
+    "sourcePath": "native/src/github_app_worker_cli.rs",
+    "sha256": "6d309711a3b336f4a5d8d55edf8aecb1debef49a675cf4566ccf5844c390e63b",
+    "rawArchivePath": "source-variants/6d309711a3b336f4a5d8d55edf8aecb1debef49a675cf4566ccf5844c390e63b.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "retained-r2",
+    "sourcePath": "native/src/github_app_worker_history.rs",
+    "sha256": "5eab74eee9545cea06515b669b9bb4389964935bd0c34cd03e35faba4d6775d6",
+    "rawArchivePath": "source-variants/5eab74eee9545cea06515b669b9bb4389964935bd0c34cd03e35faba4d6775d6.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "retained-r2",
+    "sourcePath": "native/src/main.rs",
+    "sha256": "336c051aca06890eb173adc7a958f7fb409c92f89a448c09c4eecad6fe492764",
+    "rawArchivePath": "source-variants/336c051aca06890eb173adc7a958f7fb409c92f89a448c09c4eecad6fe492764.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "retained-r2",
+    "sourcePath": "native/src/retention.rs",
+    "sha256": "9ee70abdfbeb679b27b85352650a2c61266f984b753bf439b5d9bfc4033c8f05",
+    "rawArchivePath": "source-variants/9ee70abdfbeb679b27b85352650a2c61266f984b753bf439b5d9bfc4033c8f05.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "retained-r2",
+    "sourcePath": "native/tests/github_app_history_bridge.rs",
+    "sha256": "c4ef62b374085554d590ddfb3bab23e7f41c9745c477eb62267f5362fb0329ca",
+    "rawArchivePath": "source-variants/c4ef62b374085554d590ddfb3bab23e7f41c9745c477eb62267f5362fb0329ca.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "retained-r2",
+    "sourcePath": "native/tests/github_app_history_cli.rs",
+    "sha256": "8e3e5c498816bbb1d16342ec34a32746c9d210680dcd6ea4319c07eee629a114",
+    "rawArchivePath": "source-variants/8e3e5c498816bbb1d16342ec34a32746c9d210680dcd6ea4319c07eee629a114.rs",
+    "origin": "matching raw copy from another phase"
+  },
+  {
+    "phase": "retained-r2",
+    "sourcePath": "native/tests/support/github_app_worker_history_fixture.rs",
+    "sha256": "5248e287e79085493a8c2ae8d2fe0d985c2d29ba092c982493c92daf8daec143",
+    "rawArchivePath": "source-variants/5248e287e79085493a8c2ae8d2fe0d985c2d29ba092c982493c92daf8daec143.rs",
+    "origin": "matching raw copy from another phase"
+  }
+]

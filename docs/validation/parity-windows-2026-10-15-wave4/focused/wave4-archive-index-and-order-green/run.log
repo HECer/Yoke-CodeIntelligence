@@ -1,0 +1,21 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 57.39s
+     Running unittests src\lib.rs (target\debug\deps\yoke-35b101204e4eb110.exe)
+
+running 13 tests
+test capture::archive_scope_tests::exact_native_archive_identity_denies_resealed_protected_members_and_future_fields ... ok
+test capture::archive_scope_tests::released_capture_and_overlay_receipts_remain_exact_offline_after_workspace_closes ... ok
+test capture::archive_scope_tests::offline_dependency_and_derived_scope_proofs_require_exact_options_and_origin_chain ... ok
+test meaning_build::archive_scope_tests::archive_initial_graph_row_capacity_precedes_json_decode ... ok
+test meaning_build::archive_scope_tests::archive_initial_snapshot_and_graph_share_one_capacity_before_decode ... ok
+test meaning_build::archive_scope_tests::frozen_source_index_many_members_reuse_one_bound_scope_without_timing_claim ... ok
+test meaning_build::archive_scope_tests::frozen_source_index_rechecks_complete_same_id_scope_on_every_bind ... ok
+test meaning_build::archive_scope_tests::frozen_source_index_refuses_conflicting_same_id_union_scope ... ok
+test meaning_build::archive_scope_tests::frozen_source_index_refuses_forged_same_path_hash_and_size_before_reader ... ok
+test meaning_build::archive_scope_tests::frozen_source_index_valid_member_and_duplicate_scope_are_admitted ... ok
+test meaning_build::archive_scope_tests::archive_initial_snapshot_row_capacity_precedes_json_decode ... ok
+test graph_view::archive_by_id_order_tests::archive_by_id_preflight_covers_every_manifest_before_any_cas_read ... ok
+test meaning_build::archive_preparation_order_tests::archive_scope_preflight_covers_every_manifest_before_any_cas_read ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 151 filtered out; finished in 1.48s
+

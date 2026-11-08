@@ -1,0 +1,43 @@
+    Finished `test` profile [unoptimized] target(s) in 0.61s
+     Running tests\feedback_cli.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\feedback_cli-25e01215a6b90f09.exe)
+
+running 21 tests
+test a_resealed_event_record_cannot_invent_an_original_source_quote ... ok
+test an_authored_successor_requires_its_snapshot_in_the_explicit_checked_selection ... ok
+test an_observed_authored_successor_makes_the_old_knowledge_ineligible_without_claiming_truth ... ok
+test every_source_view_pin_and_original_quote_remain_binding_without_publication ... ok
+test exact_rank_input_source_pair_and_output_limits_admit_boundary_then_refuse_below ... ok
+test explicit_transcript_import_preserves_utf8_crlf_and_mining_never_creates_events ... ok
+test feedback_cli_records_one_source_bound_event_then_ranks_without_source_changes ... ok
+test feedback_host_flags_and_protected_inputs_refuse_before_missing_store_access ... ok
+test historical_meaning_receipts_remain_proofs_without_becoming_new_quote_authority ... ok
+test historical_ranking_uses_checked_snapshots_after_live_sources_change_or_disappear ... ok
+test identical_replay_is_idempotent_and_a_conflicting_sequence_cannot_rewrite_history ... ok
+test integer_decay_future_exclusion_and_label_corroboration_have_an_independent_numeric_oracle ... ok
+test mining_and_transcript_quote_tampering_fail_without_changing_any_state ... ok
+test output_admission_happens_before_transcript_sql_or_cas_publication ... ok
+test permission_and_strict_host_input_admission_precede_missing_workspace_creation ... ok
+test read_transactions_and_sqlite_limits_survive_both_success_and_refusal ... ok
+test resealed_successor_metadata_cannot_disable_knowledge_without_its_original_source_proof ... ok
+test retention_recognizes_transcript_roots_and_refuses_a_corrupt_feedback_registration ... ok
+test sequence_timestamps_are_monotone_even_when_events_arrive_out_of_order ... ok
+test windows_host_aliases_cannot_read_protected_files_or_alternate_streams ... FAILED
+test zero_resource_capacities_and_expired_or_cancelled_requests_publish_nothing ... ok
+
+failures:
+
+---- windows_host_aliases_cannot_read_protected_files_or_alternate_streams stdout ----
+
+thread 'windows_host_aliases_cannot_read_protected_files_or_alternate_streams' (5944) panicked at native\tests\feedback_cli.rs:1100:59:
+called `Result::unwrap()` on an `Err` value: Os { code: 1314, kind: Uncategorized, message: "Dem Client fehlt ein erforderliches Recht." }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    windows_host_aliases_cannot_read_protected_files_or_alternate_streams
+
+test result: FAILED. 20 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.86s
+
+error: test failed, to rerun pass `--test feedback_cli`
+error: 1 target failed:
+    `--test feedback_cli`

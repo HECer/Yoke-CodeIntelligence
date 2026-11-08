@@ -1,0 +1,55 @@
+{
+  "qualifiedSourceCommit": "caeecb8e3922e5434f955c49a33b54ec2709ffef",
+  "qualifiedInputCount": 1126,
+  "onlyDocumentationAndAdditiveReconciliationChangedAfterQualification": true,
+  "frozenInputChanges": [
+    {
+      "path": "README.md",
+      "qualifiedSha256": "7c4c392c71660742b08dfbb00d1ce3bc376f8db5ba3a5a9d1eefe24fa759cba8",
+      "postReviewSha256": "248b4821bcff600c4a36975cd16a9d61b4435ac3957e281cc7119ab72dab3ebf"
+    },
+    {
+      "path": "SECURITY.md",
+      "qualifiedSha256": "8907b233b46660cfe59fcf0d7259acab6ec16ebdf685bc1a367ea58594735387",
+      "postReviewSha256": "ed7f6e6ecaffd1eb7dadc4ae2eb4161e026b09d4ad5b2e1fa75ddf4b4567fdda"
+    },
+    {
+      "path": "docs/ARCHITECTURE.md",
+      "qualifiedSha256": "346b0158be4e4de113679f8b2423598eda9025beeea78c9ecf43f50cd72d8b2a",
+      "postReviewSha256": "80a5b2362486a83c3a3d5a899c7c90841519ae863b41dd2139c34429494e7a2c"
+    },
+    {
+      "path": "docs/REMAINING_WORK.md",
+      "qualifiedSha256": "2a5b1750f7875f2130e94709d90f0842388c9072b2b26de313527c2c1363542b",
+      "postReviewSha256": "78b188f39b998f7878644e12e15cda00ef514a8ac932a5414fa7c8c69e7d8a66"
+    },
+    {
+      "path": "docs/STATUS.md",
+      "qualifiedSha256": "fdf3f950ce32801fed3451c10eab2cd58de1735e91717b470685f75b527a63a3",
+      "postReviewSha256": "4773c5940e531720c4b489d9c475cc154d44ab628eb2880a3d77dc389f0c8229"
+    },
+    {
+      "path": "docs/parity/native-reconciliation-2026-10-15.json",
+      "qualifiedSha256": "0a2f882d7e3f830eb0653870da923319bc93ece6171ed877d9feec8c03c9868b",
+      "postReviewSha256": "c04f4899a8572b2a418b623ff6f37e7313d75473021ef062018206eb0315ff7b"
+    },
+    {
+      "path": "native/docs/session-config.md",
+      "qualifiedSha256": "341bcd10c882db764e8512f86e41ee1faaece05510b1169a7b62b38b400a4b64",
+      "postReviewSha256": "d168d986f929a156c4b35a8283367fe53473b4c18559a21ddb497215ace145a7"
+    },
+    {
+      "path": "native/docs/session-steering.md",
+      "qualifiedSha256": "604fe425481be6ab04c2878e038504df804e04a400fe9b58dd08e4ef14b91bce",
+      "postReviewSha256": "fdd1f247026036e816892b9b0771dbae75404af78d6a91468704b39ef072c370"
+    }
+  ],
+  "separatelyTrackedDocumentation": {
+    "native/docs/session-prompt-runtime.md": {
+      "beforeSha256": "fecf16e941e206ea6515b7841512128021e4b7f1573a261f216afa2e32b60d02",
+      "afterSha256": "10bb289c87137578f46db72f0e9b6995cd2054870789c90b45afd6314a3fc7b1"
+    }
+  },
+  "newMemoryContractSha256": "853c8307750bbb38ba5d6a882bbd3a4ba5e0e24e0c0e749d4da68c182160081f",
+  "previousReconciliationKeysAndValuesExact": true
+}

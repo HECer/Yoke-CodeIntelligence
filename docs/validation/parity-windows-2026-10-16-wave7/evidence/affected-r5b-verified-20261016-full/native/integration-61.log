@@ -1,0 +1,18 @@
+    Finished `test` profile [unoptimized] target(s) in 0.72s
+     Running tests\legacy_retrieval_oracle.rs (target\debug\deps\legacy_retrieval_oracle-c68f8fd262f61b26.exe)
+
+running 1 test
+test native_global_complete_json_matches_pre_feature_frozen_oracle ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.38s
+
+     Running tests\live.rs (target\debug\deps\live-d84dde654b404e7d.exe)
+
+running 4 tests
+test actual_python_server_cross_file_unicode_historical_navigation_and_rename ... ignored, requires YOKE_PYTHON_LSP pointing to an actual installed jedi-language-server executable
+test actual_rust_analyzer_definition_references_and_rename ... ignored, requires an actual installed rust-analyzer
+test actual_rust_analyzer_mcp_references_bind_immutable_snapshot ... ignored, requires an actual installed rust-analyzer
+test actual_typescript_server_cross_file_definition_and_rename ... ignored, requires YOKE_TS_LSP pointing to the real typescript-language-server CLI
+
+test result: ok. 0 passed; 0 failed; 4 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

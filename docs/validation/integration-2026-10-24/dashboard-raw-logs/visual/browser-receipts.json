@@ -1,0 +1,49 @@
+{
+  "first": {
+    "base64": "b3duZWQgcHJpdmF0ZSByb3RhdGVkIG1hcmtlcg0KPHNjcmlwdD53aW5kb3cudW50cnVzdGVkRXhlY3V0ZWQ9dHJ1ZTwvc2NyaXB0Pg0K/w==",
+    "bodyExcludedFromState": true,
+    "complete": true,
+    "encodingLossDisclosed": true,
+    "explicitOnly": true,
+    "range": "Raw bytes [0, 79) · 79 bytes · Initial size 79 · Size after read 79",
+    "readOnly": true,
+    "scriptTextInert": true,
+    "sourceSha256": "c22a62b72eeee5a0291daba8ca31db6d7746af5e828fae24d33a805d0e227563"
+  },
+  "second": {
+    "base64": "b3duZWQgcHJpdmF0ZSByb3RhdGVkIG1hcmtlcg0KPHNjcmlwdD53aW5kb3cudW50cnVzdGVkRXhlY3V0ZWQ9dHJ1ZTwvc2NyaXB0Pg0K/1VJIGV4cGxpY2l0IGFwcGVuZCBtYXJrZXINCg==",
+    "complete": true,
+    "explicitSecondReadObservedAppend": true,
+    "noAutomaticRereadAfterAppend": true,
+    "range": "Raw bytes [0, 106) · 106 bytes · Initial size 106 · Size after read 106",
+    "receipt": "Observation 31905b05f3011802b4598856877956bd070a358fc213b5f14abbbce23b8881ee · Opened generation 467a5b3c7a5b2847:da60370000001d000000000000000000 · SHA-256 e827eb1c1000e76d782dcf24cd344d3774dbf77c642271dcd392eea82ffa8cb4",
+    "separateObservationReceipt": true
+  },
+  "stale": {
+    "competingProjectChangeMarkedObservationStale": true,
+    "complete": true,
+    "previousBytesPreserved": true,
+    "sourceWritten": false,
+    "staleMessage": "Previously read observation. The project or Session changed; request a new window to read under the current authority."
+  },
+  "viewport": {
+    "capturedActualNativeDom": true,
+    "complete": true,
+    "documentWidth": 375,
+    "height": 844,
+    "logsVisible": true,
+    "nativeScreenshot": false,
+    "noHorizontalOverflow": true,
+    "staleObservationVisible": true,
+    "textReadOnly": true,
+    "width": 390
+  },
+  "nativeSnapshotErrors": [
+    "Preview automation snapshot timed out after 15000ms",
+    "Preview automation snapshot timed out after 15000ms"
+  ],
+  "renderReceipts": [
+    "{\"width\":390,\"contentHeight\":1694,\"capturedHeight\":1694,\"consoleMessages\":[],\"screenshot\":{\"mimeType\":\"image/png\",\"width\":390,\"height\":1694}}"
+  ],
+  "renderIsStaticCapturedNativeDom": true
+}

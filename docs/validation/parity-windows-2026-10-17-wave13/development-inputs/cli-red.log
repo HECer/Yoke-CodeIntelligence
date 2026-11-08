@@ -1,0 +1,22 @@
+test_explicit_source_bound_event_records_then_ranks_without_execution (__main__.FeedbackContract.test_explicit_source_bound_event_records_then_ranks_without_execution) ... FAIL
+
+======================================================================
+FAIL: test_explicit_source_bound_event_records_then_ranks_without_execution (__main__.FeedbackContract.test_explicit_source_bound_event_records_then_ranks_without_execution)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\Yoke-Build-Cache\outcome-learning-20261017\contract_red.py", line 49, in test_explicit_source_bound_event_records_then_ranks_without_execution
+    created = success('--allow-writes', 'feedback', 'record', '--input', str(event))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Yoke-Build-Cache\outcome-learning-20261017\contract_red.py", line 30, in success
+    self.assertEqual(result.returncode, 0, result.stderr.decode('utf-8', errors='replace'))
+AssertionError: 2 != 0 : error: unrecognized subcommand 'feedback'
+
+Usage: yoke.exe [OPTIONS] <COMMAND>
+
+For more information, try '--help'.
+
+
+----------------------------------------------------------------------
+Ran 1 test in 1.484s
+
+FAILED (failures=1)

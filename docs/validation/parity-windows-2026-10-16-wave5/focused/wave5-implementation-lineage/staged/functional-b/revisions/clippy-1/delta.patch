@@ -1,0 +1,94 @@
+--- native/src/retrieval.rs.before
++++ native/src/retrieval.rs.after
+@@ -151,12 +151,14 @@
+                 let (mut result, admission) = rank_global_checked(&mut run, &options)?;
+                 let metadata = scope_metadata(
+                     &run,
+-                    "auto",
+-                    "global",
+                     Some(&partition),
+-                    code,
+-                    Some(("query_filter", code)),
+-                    Some(eligible.len()),
++                    ScopeSelection {
++                        requested: "auto",
++                        effective: "global",
++                        reason: code,
++                        fallback: Some(("query_filter", code)),
++                        eligible: Some(eligible.len()),
++                    },
+                     Some(admission),
+                 );
+                 finish_metadata(&mut result, metadata, &run, Some(&partition), None, &[])?;
+@@ -632,12 +634,14 @@
+     let mut result = json!({"snapshotId":snapshot.id,"items":items,"candidateCount":fusion.positive_candidate_count,"balancedOut":fusion.per_file_rejected_count,"perFileRejectedCount":fusion.per_file_rejected_count,"limitOmittedCount":fusion.final_limit_omission_count,"perFileLimit":options.per_file,"graphWeight":options.graph_weight,"graphIterations":ranks.iterations,"ranking":"source_body_bm25_manifest_balanced_graph_v1","rankingSemantics":"heuristic_relevance_not_binding_or_runtime_proof","graphDirection":"bidirectional_captured_observations_parallel_arcs_preserved","graphSelfLoopConvention":"two_self_arcs_per_captured_self_loop","sourceBytes":admitted_source_bytes,"documentBytes":usage.document_bytes_charged(),"omittedDocumentCount":doc_plan.omitted.len(),"omittedPathCount":omissions.len(),"truncated":fusion.per_file_rejected_count>0 || fusion.final_limit_omission_count>0 || !omissions.is_empty() || !doc_plan.omitted.is_empty(),"complete":false});
+     let metadata = scope_metadata(
+         run,
+-        requested,
+-        "manifest_balanced_v1",
+         Some(partition),
+-        reason,
+-        None,
+-        Some(eligible.len()),
++        ScopeSelection {
++            requested,
++            effective: "manifest_balanced_v1",
++            reason,
++            fallback: None,
++            eligible: Some(eligible.len()),
++        },
+         Some(admission),
+     );
+     finish_metadata(
+@@ -667,12 +671,14 @@
+     let (mut result, admission) = rank_global_checked(run, options)?;
+     let mut metadata = scope_metadata(
+         run,
+-        "auto",
+-        "global",
+         None,
+-        fallback.code(),
+-        Some((kind, fallback.code())),
+-        None,
++        ScopeSelection {
++            requested: "auto",
++            effective: "global",
++            reason: fallback.code(),
++            fallback: Some((kind, fallback.code())),
++            eligible: None,
++        },
+         Some(admission),
+     );
+     metadata["actualPackageRootCount"] = json!(fallback.physical_package_count());
+@@ -900,16 +906,26 @@
+     ))
+ }
+ 
++struct ScopeSelection<'a> {
++    requested: &'a str,
++    effective: &'a str,
++    reason: &'a str,
++    fallback: Option<(&'a str, &'a str)>,
++    eligible: Option<usize>,
++}
+ fn scope_metadata(
+     run: &CheckedRetrievalRun<'_, '_, '_>,
+-    requested: &str,
+-    effective: &str,
+     partition: Option<&CheckedScopePartition<'_>>,
+-    reason: &str,
+-    fallback: Option<(&str, &str)>,
+-    eligible: Option<usize>,
++    selection: ScopeSelection<'_>,
+     admission: Option<Value>,
+ ) -> Value {
++    let ScopeSelection {
++        requested,
++        effective,
++        reason,
++        fallback,
++        eligible,
++    } = selection;
+     let usage = run.usage();
+     let mut metadata = json!({"schemaVersion":1,"requestedMode":requested,"effectiveMode":effective,"policy":scopes::POLICY,"partitionId":partition.map(CheckedScopePartition::id),"selectionReason":reason,"fallback":fallback.map(|(kind,code)| json!({"kind":kind,"code":code})),"actualPackageRootCount":partition.map(CheckedScopePartition::physical_package_count),"queryEligibleScopeCount":eligible,"probe":{"markerFilesChecked":usage.marker_files_checked(),"markerBytesCharged":usage.marker_bytes_charged(),"selectorWork":usage.selector_work()},"diagnostics":[],"omittedDiagnosticCount":0,"scopes":[],"omittedScopeSummaryCount":0,"declarationBindings":[],"omittedDeclarationBindingCount":0,"sourceOmissions":[],"omittedSourceOmissionCount":0});
+     if let Some(admission) = admission {

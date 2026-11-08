@@ -1,0 +1,1 @@
+if(void 0!==void 0){var phantom=function<T>(n:T):[typeof n]{throw new Error();};void phantom;}const collect=((...raw:unknown[])=>raw) as unknown as typeof phantom;const rawArgs=collect(()=>3);const arg=rawArgs[0];const result=arg;export const observed=[result.name,result()];

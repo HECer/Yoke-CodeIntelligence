@@ -1,0 +1,28 @@
+{
+  "checkedAtUtc": "2026-10-15T23:01:39.174775+00:00",
+  "scope": "focused_gate_not_frozen_suite",
+  "command": [
+    "cargo",
+    "test",
+    "-j",
+    "2",
+    "--manifest-path",
+    "native/Cargo.toml",
+    "--test",
+    "monorepo_profiles",
+    "--",
+    "--exact",
+    "invalid_native_modes_refuse_before_select_index_or_probe",
+    "--nocapture",
+    "--test-threads=4"
+  ],
+  "exitCode": 101,
+  "seconds": 6.437,
+  "tempRoot": "D:\\Yoke-Test-Scratch\\wave5-native-mode-stub-red",
+  "logSha256": "c48e984de59cf043ad6e4c9a6a9047bbb57ddcc4aafcf9fbfa0d56a09ca0a2bc",
+  "groups": 1,
+  "passed": 0,
+  "failed": 1,
+  "ignored": 0,
+  "sourceChanges": []
+}

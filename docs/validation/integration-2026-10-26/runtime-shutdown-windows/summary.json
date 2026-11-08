@@ -1,0 +1,257 @@
+{
+  "sourceCommit": "704b647d625dcc5f359386b20834d329ffb6cdf4",
+  "sourceTree": "00cc7bba60ce8464b39c33f527a9262831da85ac",
+  "version": "0.5.0",
+  "platform": "win32-x64",
+  "library": {
+    "passed": 773,
+    "failed": 0,
+    "ignored": 7,
+    "measured": 0,
+    "filteredOut": 0,
+    "suite": "lib",
+    "ignoredTests": [
+      "host_install::output_recovery_tests::output_recovery_worker",
+      "retrieval_saved_graph::tests::oversized_saved_row_refuses_before_raw_payload_read_and_auto_fallback",
+      "retrieval_scopes::capacity_tests::genuine_4096_utf8_path_is_captured_and_4097_is_refused_by_existing_capture_boundary",
+      "retrieval_scopes::capacity_tests::genuine_one_million_observations_is_byte_dominated_then_plus_one_refuses_before_graph_loading",
+      "retrieval_scopes::capacity_tests::real_100k_files_pass_then_one_real_function_rejects_entity_100001_before_graph_reload",
+      "retrieval_scopes::capacity_tests::real_graph_exact_64mb_passes_and_plus_one_refuses_before_saved_graph_loading",
+      "retrieval_scopes::capacity_tests::real_ownership_exact_16mb_passes_and_next_byte_refuses_before_body_scoring"
+    ],
+    "existingIgnoredPromoted": false,
+    "wholeHarness": true,
+    "testThreads": 1,
+    "summaryLineCountIncludingNestedOutput": 1
+  },
+  "cli": {
+    "passed": 16,
+    "failed": 0,
+    "ignored": 0,
+    "measured": 0,
+    "filteredOut": 0,
+    "suite": "cli",
+    "ignoredTests": [],
+    "existingIgnoredPromoted": false,
+    "wholeHarness": true,
+    "testThreads": 1,
+    "summaryLineCountIncludingNestedOutput": 1
+  },
+  "node": {
+    "typecheckExit": 0,
+    "passed": 260,
+    "failed": 0,
+    "originalSkipped": 3
+  },
+  "clippy": {
+    "exitCode": 0,
+    "warningsDenied": true,
+    "artifactObservationsMetadataOnly": 757
+  },
+  "guards": {
+    "unitEarlier809": 72,
+    "history704": 41,
+    "runtime704": 25,
+    "package704": 53,
+    "visual704": 21
+  },
+  "release": {
+    "runId": "release-cli-compiler-lld-704-r2",
+    "versionRunId": "release-cli-compiler-lld-version-704-r1",
+    "image": {
+      "path": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-704-r2\\owned-release-cli.exe",
+      "sha256": "e77a37583af956b82214b957b20f4563cf40a71939bcbbc614270307c0eafeba",
+      "fileIdentity": [
+        5078471845122615367,
+        1407374887298307
+      ],
+      "bytes": 142667776,
+      "mtimeNs": 1793007160089787000,
+      "links": 1,
+      "noReparseAncestors": true,
+      "writersAndDeletionDeniedThroughRecheck": true
+    },
+    "elapsedSeconds": 1138.4837142000033
+  },
+  "history": [
+    {
+      "variant": "native",
+      "packages": [
+        {
+          "frameSha256": "797cb92e9dea5097deddc76e9fb65db12319422be6db9b1cbd23cef167cdc23f",
+          "records": 28
+        },
+        {
+          "frameSha256": "a8191014ed83ec4243d27970a59cd0ffdb2c787fc053c43c77b2b05a44bdfcae",
+          "records": 14
+        }
+      ],
+      "originalRecordsReadBack": 42,
+      "bothSessionExitsBeforeCleanup": true,
+      "persistentRuntimeExitBeforeCleanup": false
+    },
+    {
+      "variant": "serena",
+      "packages": [
+        {
+          "frameSha256": "cd73112ba706eeb06419789fdcd379a1c35865a4b54df492660326429fa39b6b",
+          "records": 28
+        },
+        {
+          "frameSha256": "a71a14deeaa27dceeb749b220bd29a965095ea6b301370786191e05ce13b5f6a",
+          "records": 14
+        }
+      ],
+      "originalRecordsReadBack": 42,
+      "bothSessionExitsBeforeCleanup": true,
+      "persistentRuntimeExitBeforeCleanup": false
+    },
+    {
+      "variant": "persistent-python",
+      "packages": [
+        {
+          "frameSha256": "2bbb6488fa5f081e75119fc63fd45014f29fd4824ee546a26142921c31260853",
+          "records": 28
+        },
+        {
+          "frameSha256": "daba135dfd200182655e72bf6414883b0592d7e87629f80d73eb205749950b78",
+          "records": 14
+        }
+      ],
+      "originalRecordsReadBack": 42,
+      "bothSessionExitsBeforeCleanup": true,
+      "persistentRuntimeExitBeforeCleanup": true
+    }
+  ],
+  "runtimeCases": [
+    {
+      "caseIndex": 0,
+      "expectedFailureObserved": false,
+      "fixtureBytes": 86141,
+      "fixtureEntries": 11,
+      "originalOutputAssertionsObserved": true,
+      "rawExitCode": 0,
+      "rawJobCompleted": true,
+      "sourceUnchanged": true,
+      "treeExitedBeforeCleanup": true,
+      "userEventCount": 1
+    },
+    {
+      "caseIndex": 1,
+      "expectedFailureObserved": false,
+      "fixtureBytes": 86160,
+      "fixtureEntries": 11,
+      "originalOutputAssertionsObserved": true,
+      "rawExitCode": 0,
+      "rawJobCompleted": true,
+      "sourceUnchanged": true,
+      "treeExitedBeforeCleanup": true,
+      "userEventCount": 2
+    },
+    {
+      "caseIndex": 2,
+      "expectedFailureObserved": true,
+      "fixtureBytes": 86365,
+      "fixtureEntries": 11,
+      "originalOutputAssertionsObserved": true,
+      "rawExitCode": 1,
+      "rawJobCompleted": false,
+      "sourceUnchanged": true,
+      "treeExitedBeforeCleanup": true,
+      "userEventCount": 0
+    },
+    {
+      "caseIndex": 3,
+      "expectedFailureObserved": false,
+      "fixtureBytes": 86107,
+      "fixtureEntries": 11,
+      "originalOutputAssertionsObserved": true,
+      "rawExitCode": 0,
+      "rawJobCompleted": true,
+      "sourceUnchanged": true,
+      "treeExitedBeforeCleanup": true,
+      "userEventCount": 2
+    },
+    {
+      "caseIndex": 4,
+      "expectedFailureObserved": false,
+      "fixtureBytes": 86104,
+      "fixtureEntries": 11,
+      "originalOutputAssertionsObserved": true,
+      "rawExitCode": 0,
+      "rawJobCompleted": true,
+      "sourceUnchanged": true,
+      "treeExitedBeforeCleanup": true,
+      "userEventCount": 2
+    },
+    {
+      "caseIndex": 5,
+      "expectedFailureObserved": true,
+      "fixtureBytes": 86365,
+      "fixtureEntries": 11,
+      "originalOutputAssertionsObserved": true,
+      "rawExitCode": 1,
+      "rawJobCompleted": false,
+      "sourceUnchanged": true,
+      "treeExitedBeforeCleanup": true,
+      "userEventCount": 0
+    }
+  ],
+  "nativeArchive": {
+    "sha256": "85763b30c6873c058c264d9925982bc9736fd8189d06536c28998ee5d1878566",
+    "bytes": 32658235,
+    "members": 1339,
+    "dependencyCount": 316,
+    "licenseTextCount": 557,
+    "binarySha256": "e77a37583af956b82214b957b20f4563cf40a71939bcbbc614270307c0eafeba",
+    "target": "x86_64-pc-windows-msvc",
+    "version": "0.5.0"
+  },
+  "nativeVsix": {
+    "sha256": "1fbd084041d76a053ebe96a7a9ee2c9f5f102c33ca92a264c7adb9713c0c44e4",
+    "bytes": 32735128,
+    "members": 1344,
+    "version": "0.5.0",
+    "platform": "win32-x64",
+    "nativeOnly": true,
+    "binarySha256": "e77a37583af956b82214b957b20f4563cf40a71939bcbbc614270307c0eafeba"
+  },
+  "visual": {
+    "runId": "native-vsix-visual-lld-704-r2",
+    "host": {
+      "kind": "actual-vscode-extension-host",
+      "passed": true,
+      "runtime": "rust",
+      "bundledRuntime": true,
+      "vscodeVersion": "1.143.1",
+      "unsavedSourceBound": true,
+      "workspaceExecutableIgnored": true,
+      "protectedOpenBufferExcluded": true,
+      "savedSourceUnchanged": true
+    },
+    "screenshots": [
+      {
+        "path": "overlay-inspected.png",
+        "sha256": "50ec94a1ef844ad7a6b8774e58cbb54b5bbff4d0aabb7f36e96a78de108d9e10"
+      },
+      {
+        "path": "unsaved-source-inspected.png",
+        "sha256": "04acc77c49dd55332802316efdc308d945ef800ac1949d36a48a7056f6eabcbc"
+      }
+    ],
+    "inspectionValidatedSeconds": 58.7593306,
+    "treeExitedBeforeCleanup": true,
+    "inspectionIntervalProvenance": "Parent-observed from retained private monotonic channel; raw channel excluded from public export.",
+    "publicHostElapsedSeconds": 63.11969259999751
+  },
+  "packet": {
+    "files": 763,
+    "expandedBytes": 97138471,
+    "zipBytes": 7873045,
+    "sha256": "5c893d025facfca572537acb1125bc257dfbf724293e9e1eaa634d8daa10fbe9"
+  },
+  "fullPlatformAcceptance": false,
+  "releaseQualification": false,
+  "wholeProjectComplete": false,
+  "scope": "Local Windows development checkpoint. Native payloads, private frames/configuration/protocol/operator material omitted. Installed tools, external dependencies and caches remain trusted."
+}

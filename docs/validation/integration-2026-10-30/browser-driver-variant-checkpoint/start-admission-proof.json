@@ -1,0 +1,28 @@
+{
+  "baseline": "d6b9da55be23f3c7810292bc3412d67884b664cc",
+  "observations": [
+    {
+      "variant": "native",
+      "oldAccepted": true,
+      "correctedAccepted": true
+    },
+    {
+      "variant": "serena",
+      "oldAccepted": false,
+      "correctedAccepted": true
+    },
+    {
+      "variant": "persistent-python",
+      "oldAccepted": false,
+      "correctedAccepted": true
+    },
+    {
+      "variant": "http",
+      "oldAccepted": false,
+      "correctedAccepted": true
+    }
+  ],
+  "noBrowserNativeWorkerOrNetworkExecuted": true,
+  "allDriverBehaviorAfterConfigurationUnchangedExceptVariantReceiptAndExport": true,
+  "driverSha256": "89c83666d0ce24914a6c9519db564df2268c483c945c1b5e5fbc15ace1e12262"
+}

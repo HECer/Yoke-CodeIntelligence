@@ -1,0 +1,149 @@
+//! TEST/STUB draft only. No source access or ranking implementation is released.
+use crate::{capture::Deadline, retrieval_scopes::RetrievalHardError};
+use std::collections::BTreeMap;
+
+#[derive(Clone, Debug)]
+pub(super) struct AdmissionUnit {
+    pub scope_root: String,
+    pub path: String,
+    pub start_byte: usize,
+    pub end_byte: usize,
+    pub entity_id: String,
+    pub cost: usize,
+}
+#[derive(Debug)]
+pub(super) struct AdmissionPlan {
+    pub allowances: BTreeMap<String, usize>,
+    pub phase1: Vec<usize>,
+    pub phase2: Vec<usize>,
+    pub omitted: Vec<usize>,
+    pub used: usize,
+}
+pub(super) fn schedule_whole_units(
+    _units: &[AdmissionUnit],
+    _budget: usize,
+    _deadline: &Deadline,
+) -> Result<AdmissionPlan, RetrievalHardError> {
+    Err(RetrievalHardError::Internal("implementation_unavailable"))
+}
+
+#[derive(Clone, Debug)]
+pub(super) struct ScoredRow {
+    pub entity_id: String,
+    pub scope_root: String,
+    pub path: String,
+    pub score: f64,
+    pub query_coverage_count: usize,
+}
+#[derive(Debug, PartialEq, Eq)]
+pub(super) struct RankedIndex {
+    pub index: usize,
+    pub local_rank: usize,
+}
+#[derive(Debug)]
+pub(super) struct FusionPlan {
+    pub selected: Vec<RankedIndex>,
+    pub positive_candidate_count: usize,
+    pub per_file_rejected_count: usize,
+    pub final_limit_omission_count: usize,
+}
+pub(super) fn fuse_rows(
+    _rows: &[ScoredRow],
+    _per_file_limit: usize,
+    _limit: usize,
+    _deadline: &Deadline,
+) -> Result<FusionPlan, RetrievalHardError> {
+    Err(RetrievalHardError::Internal("implementation_unavailable"))
+}
+
+#[derive(Clone, Debug)]
+pub(super) struct LexicalDocument {
+    pub entity_id: String,
+    pub weighted_length: usize,
+    pub term_counts: Vec<u32>,
+}
+pub(super) fn scope_bm25(
+    _documents: &[LexicalDocument],
+    _deadline: &Deadline,
+) -> Result<BTreeMap<String, f64>, RetrievalHardError> {
+    Err(RetrievalHardError::Internal("implementation_unavailable"))
+}
+#[derive(Clone, Debug)]
+pub(super) struct LexicalMassRow {
+    pub entity_id: String,
+    pub scope_root: String,
+    pub bm25: f64,
+}
+pub(super) fn equal_scope_seeds(
+    _rows: &[LexicalMassRow],
+    _deadline: &Deadline,
+) -> Result<BTreeMap<String, f64>, RetrievalHardError> {
+    Err(RetrievalHardError::Internal("implementation_unavailable"))
+}
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord)]
+pub(super) enum Orientation {
+    Forward,
+    Reverse,
+}
+#[derive(Clone, Debug)]
+pub(super) struct ResolvedObservation {
+    pub observation_id: String,
+    pub source: String,
+    pub target: Option<String>,
+}
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub(super) struct CanonicalArc {
+    pub source: String,
+    pub target: String,
+    pub observation_id: String,
+    pub orientation: Orientation,
+}
+pub(super) fn canonical_arcs(
+    _vertices: &[String],
+    _observations: &[ResolvedObservation],
+    _deadline: &Deadline,
+) -> Result<Vec<CanonicalArc>, RetrievalHardError> {
+    Err(RetrievalHardError::Internal("implementation_unavailable"))
+}
+#[derive(Debug)]
+pub(super) struct GraphRanks {
+    pub ranks: BTreeMap<String, f64>,
+    pub iterations: usize,
+}
+pub(super) fn propagate(
+    _vertices: &[String],
+    _arcs: &[CanonicalArc],
+    _seeds: &BTreeMap<String, f64>,
+    _enabled: bool,
+    _deadline: &Deadline,
+) -> Result<GraphRanks, RetrievalHardError> {
+    Err(RetrievalHardError::Internal("implementation_unavailable"))
+}
+
+/// Serialization-cost rows only, never source descriptors or access grants.
+/// Caller reserves mandatory scope/result bytes and every omitted-count field.
+#[derive(Debug)]
+pub(super) struct MetadataCostRows {
+    pub diagnostics: Vec<usize>,
+    pub scopes: Vec<usize>,
+    pub declaration_bindings: Vec<usize>,
+    pub source_omissions: Vec<usize>,
+}
+#[derive(Debug)]
+pub(super) struct MetadataPrefixPlan {
+    pub kept: [usize; 4],
+    pub omitted: [usize; 4],
+    pub optional_bytes_used: usize,
+}
+pub(super) fn plan_optional_metadata(
+    _rows: &MetadataCostRows,
+    _available_optional_bytes: usize,
+    _deadline: &Deadline,
+) -> Result<MetadataPrefixPlan, RetrievalHardError> {
+    Err(RetrievalHardError::Internal("implementation_unavailable"))
+}
+
+#[cfg(test)]
+#[path = "retrieval_balanced_tests.rs"]
+mod tests;

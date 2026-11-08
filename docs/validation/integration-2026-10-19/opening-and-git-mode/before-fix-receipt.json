@@ -1,0 +1,14 @@
+{
+  "command": [
+    "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+    "test",
+    "--locked",
+    "-j2",
+    "--test",
+    "store_open_deadline",
+    "--",
+    "--test-threads=2"
+  ],
+  "exitCode": 101,
+  "elapsedSeconds": 8.441
+}

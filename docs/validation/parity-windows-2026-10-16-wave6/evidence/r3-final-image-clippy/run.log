@@ -1,0 +1,84 @@
+    Checking yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\r3-shadow-unavailable-v1\native)
+error: file is loaded as a module multiple times: `native\src\historical_fixture_state_internal.rs`
+  |
+  = help: replace all but one `mod` item with `use` items
+  = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#duplicate_mod
+  = note: `-D clippy::duplicate-mod` implied by `-D warnings`
+  = help: to override `-D warnings` add `#[allow(clippy::duplicate_mod)]`
+
+error: file is loaded as a module multiple times: `native\src\meaning_comparison_fixture_internal.rs`
+  |
+  = help: replace all but one `mod` item with `use` items
+  = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#duplicate_mod
+
+error: file is loaded as a module multiple times: `native\src\..\tests\support\comparison_error_redaction.rs`
+  |
+  = help: replace all but one `mod` item with `use` items
+  = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#duplicate_mod
+
+error: called `.err().expect()` on a `Result` value
+  --> native\src\graph_view_comparison_input_tests.rs:67:6
+   |
+67 |       .err()
+   |  ______^
+68 | |     .expect("Original scope deliberately denies after the current-policy positive control");
+   | |___________^ help: try: `expect_err`
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#err_expect
+   = note: `-D clippy::err-expect` implied by `-D warnings`
+   = help: to override `-D warnings` add `#[allow(clippy::err_expect)]`
+
+error: called `.err().expect()` on a `Result` value
+   --> native\src\graph_view_comparison_input_tests.rs:198:6
+    |
+198 |       .err()
+    |  ______^
+199 | |     .expect("The after side's historical policy deliberately denies this pair");
+    | |___________^ help: try: `expect_err`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#err_expect
+
+error: called `.err().expect()` on a `Result` value
+   --> native\src\graph_view_comparison_pin_tests.rs:226:10
+    |
+226 |           .err()
+    |  __________^
+227 | |         .expect("Actual Windows deny-share lock must reject a CAS read");
+    | |_______________^ help: try: `expect_err`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#err_expect
+
+error: called `.err().expect()` on a `Result` value
+   --> native\src\graph_view_comparison_boundary_tests.rs:135:24
+    |
+135 |     let error = result.err().expect("Exact one-below capacity was accepted");
+    |                        ^^^^^^^^^^^^ help: try: `expect_err`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#err_expect
+
+error: right-hand side of `&&` operator has no effect
+   --> native\src\graph_view_comparison_raw_typed_tests.rs:191:13
+    |
+191 |     assert!(target < MAX_FIXTURE_BYTES && target < MAX_RAW);
+    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+note: `if `target < MAX_FIXTURE_BYTES` evaluates to true, target < MAX_RAW` will always evaluate to true as well
+   --> native\src\graph_view_comparison_raw_typed_tests.rs:191:40
+    |
+191 |     assert!(target < MAX_FIXTURE_BYTES && target < MAX_RAW);
+    |                                        ^^^^^^^^^^^^^^^^^^^
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#redundant_comparisons
+    = note: `#[deny(clippy::redundant_comparisons)]` on by default
+
+error: called `.err().expect()` on a `Result` value
+   --> native\src\graph_view_comparison_raw_typed_tests.rs:407:6
+    |
+407 |       .err()
+    |  ______^
+408 | |     .expect("One below exact typed pair budget must refuse");
+    | |___________^ help: try: `expect_err`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#err_expect
+
+error: could not compile `yoke-code-intelligence` (lib test) due to 9 previous errors
+warning: build failed, waiting for other jobs to finish...

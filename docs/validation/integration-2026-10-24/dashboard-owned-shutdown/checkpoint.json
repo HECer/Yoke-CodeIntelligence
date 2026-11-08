@@ -1,0 +1,157 @@
+{
+  "project": "HECer/Yoke-CodeIntelligence",
+  "product": "Code Intelligence",
+  "version": "0.5.0",
+  "productCommit": "3bcea306547f641f294f018b09077183d5f4e646",
+  "productRemoteBlobsVerified": 11,
+  "sourceInputs": 1143,
+  "native": {
+    "groups": [
+      {
+        "target": "session_dashboard_management",
+        "passed": 22,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0,
+        "log": "validation\\integration-20261018\\dashboard-shutdown-20261024-2472bc87-qualified1\\whole-session_dashboard_management.stdout"
+      },
+      {
+        "target": "session_dashboard",
+        "passed": 13,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0,
+        "log": "validation\\integration-20261018\\dashboard-shutdown-20261024-2472bc87-qualified1\\whole-session_dashboard.stdout"
+      },
+      {
+        "target": "notes",
+        "passed": 15,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0,
+        "log": "validation\\integration-20261018\\dashboard-shutdown-20261024-2472bc87-qualified1\\whole-notes.stdout"
+      },
+      {
+        "target": "mcp_http",
+        "passed": 18,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0,
+        "log": "validation\\integration-20261018\\dashboard-shutdown-20261024-2472bc87-qualified1\\whole-mcp_http.stdout"
+      },
+      {
+        "target": "protocol_connection",
+        "passed": 5,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0,
+        "log": "validation\\integration-20261018\\dashboard-shutdown-20261024-2472bc87-qualified1\\whole-protocol_connection.stdout"
+      },
+      {
+        "target": "session_steering",
+        "passed": 12,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0,
+        "log": "validation\\integration-20261018\\dashboard-shutdown-20261024-2472bc87-qualified1\\whole-session_steering.stdout"
+      },
+      {
+        "target": "server_selection",
+        "passed": 8,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0,
+        "log": "validation\\integration-20261018\\dashboard-shutdown-20261024-2472bc87-qualified1\\whole-server_selection.stdout"
+      },
+      {
+        "target": "server_settings",
+        "passed": 8,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0,
+        "log": "validation\\integration-20261018\\dashboard-shutdown-20261024-2472bc87-qualified1\\whole-server_settings.stdout"
+      },
+      {
+        "target": "project_session",
+        "passed": 6,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0,
+        "log": "validation\\integration-20261018\\dashboard-shutdown-20261024-2472bc87-qualified1\\whole-project_session.stdout"
+      },
+      {
+        "target": "library",
+        "passed": 639,
+        "failed": 0,
+        "ignored": 7,
+        "measured": 0,
+        "filtered": 0,
+        "log": "validation\\integration-20261018\\dashboard-shutdown-20261024-2472bc87-qualified1\\whole-library.stdout"
+      },
+      {
+        "target": "main",
+        "passed": 6,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0,
+        "log": "validation\\integration-20261018\\dashboard-shutdown-20261024-2472bc87-qualified1\\whole-main.stdout"
+      }
+    ],
+    "totals": {
+      "passed": 752,
+      "failed": 0,
+      "ignored": 7,
+      "measured": 0,
+      "filtered": 0
+    },
+    "sourceInputs": 1143,
+    "sourceInputsExact": true,
+    "reusedGroupCount": 0,
+    "platform": "Windows",
+    "fullPlatformOrParityCertification": false
+  },
+  "cliSha256": "8d7f4166f8824a6bcd5025727eacbcbf856980a587581fef054ee1e90c3fcb6a",
+  "hostGrantAndTrustedOwnerBindingRequired": true,
+  "acknowledgementIsNotExitConfirmation": true,
+  "stdioExitBeforeStdinEof": true,
+  "httpServiceAndOtherSessionRemainAlive": true,
+  "capturedOwnedRuntimeExitHandlesProvedBeforeJobCleanup": true,
+  "allJobsEmpty": true,
+  "browserAcceptance": {
+    "acceptedClosing": true,
+    "allControlsQuiesced": true,
+    "cancelDidNotEndConnection": true,
+    "complete": true,
+    "confirmationRequired": true,
+    "dialogBackground": "rgb(255, 255, 255)",
+    "documentWidth": 375,
+    "draftPreservedCopyable": true,
+    "editorReadOnly": true,
+    "exitNotClaimedByUi": true,
+    "height": 844,
+    "nativeScreenshot": false,
+    "noHorizontalOverflow": true,
+    "reopenedConfirmationStayedOpen": true,
+    "width": 390,
+    "product": "Code Intelligence",
+    "version": "0.5.0",
+    "nativeDomStaticRerender": true,
+    "nativeTransportAndRuntimeExitProvedSeparately": true,
+    "screenshotFailure": "Preview automation snapshot timed out after 15000ms",
+    "combinedAsyncAutomationEvaluationFailed": true
+  },
+  "precedingFailuresPreserved": true,
+  "fullStatusComplete": false,
+  "mainMerged": false,
+  "released": false
+}

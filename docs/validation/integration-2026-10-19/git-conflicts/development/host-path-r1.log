@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\validation\integration-20261018\git-conflicts-development\git-conflicts-cli-path-gates.py", line 35, in <module>
+    bad.write_text(json.dumps(page).replace('"stage": 2','"stage": 2, "stage": 3'),encoding='utf-8');run('host-page-duplicate-key',page_file=bad)
+                                                                                                     ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\validation\integration-20261018\git-conflicts-development\git-conflicts-cli-path-gates.py", line 15, in run
+    assert r.returncode!=0 and not r.stdout and error in text,(label,r.returncode,text)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('host-page-duplicate-key', 1, 'yoke: Duplicate JSON key in host input\n')

@@ -1,0 +1,24 @@
+    Finished `test` profile [unoptimized] target(s) in 0.76s
+     Running tests\skill_takeaways_contract_review.rs (target\debug\deps\skill_takeaways_contract_review-28e43c35279ec703.exe)
+
+running 7 tests
+test confirmed_only_fold_with_no_ready_takeaways_keeps_version_revision_and_empty_sections ... ok
+test confirm_accepts_an_existing_takeaway_filename_suffix ... ok
+test confirm_accepts_the_known_absolute_takeaway_path_without_arbitrary_file_authority ... ok
+test folded_result_takeaways_report_the_same_version_as_the_published_state ... ok
+test unknown_confirm_and_fold_succeed_without_creating_a_skill_or_operation ... ok
+test unicode_lowercase_teacher_and_duplicate_confirmations_are_noops ... ok
+test show_orders_waiting_takeaways_by_newest_date_then_filename_and_renders_short_dates ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.24s
+
+     Running tests\skill_takeaways_review.rs (target\debug\deps\skill_takeaways_review-0d15ce095fce6336.exe)
+
+running 4 tests
+test deeply_nested_skill_frontmatter_is_admitted_before_yaml_materialization ... ok
+test malformed_recovery_is_rejected_before_any_prepared_publication ... ok
+test resealed_pending_operation_cannot_redirect_the_revision_to_another_skill ... ok
+test oversized_fold_is_rejected_before_publishing_an_unrecoverable_plan ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.79s
+

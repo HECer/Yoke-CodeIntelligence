@@ -1,0 +1,21 @@
+    Finished `test` profile [unoptimized] target(s) in 0.64s
+     Running tests\symbol_move_declarations.rs (E:/Yoke-Build-Cache/meaning-aliases-20261016\debug\deps\symbol_move_declarations-a99000b0174e1718.exe)
+
+running 1 test
+test transferred_bundles_accept_crlf_insertion_padding_without_changing_their_bytes ... FAILED
+
+failures:
+
+---- transferred_bundles_accept_crlf_insertion_padding_without_changing_their_bytes stdout ----
+
+thread 'transferred_bundles_accept_crlf_insertion_padding_without_changing_their_bytes' (60940) panicked at native\tests\symbol_move_declarations.rs:500:67:
+called `Result::unwrap()` on an `Err` value: Move effect rejected: exact declaration insertion required
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    transferred_bundles_accept_crlf_insertion_padding_without_changing_their_bytes
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 17 filtered out; finished in 0.46s
+
+error: test failed, to rerun pass `--test symbol_move_declarations`

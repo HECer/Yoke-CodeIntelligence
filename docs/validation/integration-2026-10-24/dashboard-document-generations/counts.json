@@ -1,0 +1,170 @@
+{
+  "totals": {
+    "passed": 810,
+    "failed": 0,
+    "ignored": 7,
+    "measured": 0,
+    "filtered": 0
+  },
+  "groups": [
+    {
+      "target": "library",
+      "counts": {
+        "passed": 678,
+        "failed": 0,
+        "ignored": 7,
+        "measured": 0,
+        "filtered": 0
+      },
+      "log": "whole-library.stdout",
+      "sha256": "0b8f5b206259ebabcfcc304d914c7ed352d775a0f90aa952458321105add7120"
+    },
+    {
+      "target": "session_dashboard_management",
+      "counts": {
+        "passed": 22,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0
+      },
+      "log": "whole-session_dashboard_management.stdout",
+      "sha256": "97a9298bebf5e17e8bbc6da2b0443c043af99e12cada7c496ef11b5900759bf6"
+    },
+    {
+      "target": "session_dashboard",
+      "counts": {
+        "passed": 13,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0
+      },
+      "log": "whole-session_dashboard.stdout",
+      "sha256": "f11bf602c64c83d36455647e5400a47f9a1246f00aeaf1ae6ced63c3509a7df9"
+    },
+    {
+      "target": "notes",
+      "counts": {
+        "passed": 15,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0
+      },
+      "log": "whole-notes.stdout",
+      "sha256": "11055ec80420fcd0b6a22d1b43994c338df376e680099f39ab041a6c6a381e9b"
+    },
+    {
+      "target": "mcp_http",
+      "counts": {
+        "passed": 18,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0
+      },
+      "log": "whole-mcp_http.stdout",
+      "sha256": "c973994845551287ea6f8f3416cabf2d97d0a0d1660547d33adc60f81067bd28"
+    },
+    {
+      "target": "protocol_connection",
+      "counts": {
+        "passed": 5,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0
+      },
+      "log": "whole-protocol_connection.stdout",
+      "sha256": "b6724fc36a3a258c1282a1c5e2aefd0dc2454cffc7e28365002e385a4291e8a4"
+    },
+    {
+      "target": "session_steering",
+      "counts": {
+        "passed": 12,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0
+      },
+      "log": "whole-session_steering.stdout",
+      "sha256": "3ab2ffdf3332f686642aab2baec8dce512e9db7b951f4181e141f18e8af7001f"
+    },
+    {
+      "target": "server_selection",
+      "counts": {
+        "passed": 8,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0
+      },
+      "log": "whole-server_selection.stdout",
+      "sha256": "9742be74bdcc7dfd6cf1dcbcd5e2be744ad3270ac2733314d71d0c027956e3f2"
+    },
+    {
+      "target": "server_settings",
+      "counts": {
+        "passed": 8,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0
+      },
+      "log": "whole-server_settings.stdout",
+      "sha256": "5700ed73c242ddf371b8525e77b50123981f2f05bd20e1fb2b483968b1692e20"
+    },
+    {
+      "target": "project_session",
+      "counts": {
+        "passed": 6,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0
+      },
+      "log": "whole-project_session.stdout",
+      "sha256": "4be233865ad3f24116fa7b21704d20731217e1e3fce103ec6dcb0c889909d03c"
+    },
+    {
+      "target": "retention",
+      "counts": {
+        "passed": 17,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0
+      },
+      "log": "whole-retention.stdout",
+      "sha256": "a7fa8a7d488c773b4a0112da3d20b0347f7ab3b68d098d8f9ac6cd0ca89194e3"
+    },
+    {
+      "target": "capture_changes",
+      "counts": {
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0
+      },
+      "log": "whole-capture_changes.stdout",
+      "sha256": "ab7e09ce7e139e50fc4ee4b90e6ab978192215f401669045c9a6bc757201263d"
+    },
+    {
+      "target": "main",
+      "counts": {
+        "passed": 7,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0
+      },
+      "log": "whole-main.stdout",
+      "sha256": "bbd51c210c41c31e6011425d79ac0f07ec9f7ee362ab088e048c4d6bb501b3f0"
+    }
+  ],
+  "reusedGroupCount": 1,
+  "resumedSameSourceWholeLibrary": true,
+  "reusedDifferentSourceGroupCount": 0
+}

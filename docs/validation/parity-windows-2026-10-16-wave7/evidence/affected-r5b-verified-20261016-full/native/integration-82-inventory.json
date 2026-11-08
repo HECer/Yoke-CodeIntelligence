@@ -1,0 +1,32 @@
+{
+  "monorepo_scopes": {
+    "executable": "target\\debug\\deps\\monorepo_scopes-cd55843ab8feea0c.exe",
+    "ignored": [],
+    "registered": [
+      "malformed_captured_manifest_is_explicit_policy_error_without_source_contents",
+      "public_partition_and_anchors_use_captured_bytes_after_live_tree_changes",
+      "public_scope_summaries_keep_one_share_per_physical_root_and_excluded_items"
+    ]
+  },
+  "notes": {
+    "executable": "target\\debug\\deps\\notes-662e2c807df93ad8.exe",
+    "ignored": [],
+    "registered": [
+      "authored_revision_timestamp_uses_unix_milliseconds",
+      "edited_note_keeps_historical_anchor_and_reports_changed_source",
+      "full_retired_head_quota_rejects_publication_atomically_and_allows_reuse",
+      "global_address_namespace_is_reserved_and_reference_boundaries_are_exact",
+      "global_note_policy_matches_its_canonical_global_namespace",
+      "global_storage_is_host_selected_and_missing_or_ignored_notes_do_not_leak",
+      "hidden_and_read_only_references_do_not_leak_or_block_renames",
+      "host_note_policy_defaults_read_only_and_rejects_unknown_authority_fields",
+      "maximally_encoded_accepted_note_remains_readable_after_commit",
+      "memory_reference_left_boundaries_exclude_larger_uri_schemes_and_identifiers",
+      "named_note_crud_retains_authored_scope_revisions_and_exact_source",
+      "regex_edits_count_guard_and_read_only_policy_do_not_partially_mutate_notes",
+      "regex_gap_growth_fails_before_remaining_budget_underflow_and_keeps_the_revision",
+      "rename_rewrites_exact_mem_references_atomically_except_read_only_notes",
+      "retired_heads_remain_bounded_without_consuming_active_note_content_quota"
+    ]
+  }
+}

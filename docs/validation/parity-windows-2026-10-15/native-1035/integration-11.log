@@ -1,0 +1,77 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 16.81s
+     Running tests\git_review.rs (target\debug\deps\git_review-08fe162b4872c36e.exe)
+
+running 6 tests
+test branch_overlap_includes_dependencies_authorized_by_the_captured_readonly_scope ... ok
+test committed_ignore_policy_is_applied_even_when_policy_files_are_outside_only_dirs ... ok
+test historical_author_metadata_cannot_publish_obvious_secret_values ... ok
+test ignored_parent_directories_cannot_be_reopened_by_their_unvisited_nested_policy ... ok
+test parent_cache_length_admission_does_not_materialize_oversized_sqlite_values ... ok
+test valid_committed_source_batches_are_partitioned_by_bytes_within_the_total_budget ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 45.97s
+
+     Running tests\git_workflows.rs (target\debug\deps\git_workflows-ae976841b230b5c4.exe)
+
+running 17 tests
+test historical_git_refuses_disk_ignored_capture_options_before_publication ... ok
+test historical_git_source_proof_rejects_missing_tree_membership ... ok
+test git_history_dependencies_require_captured_readonly_scope_proof ... ok
+test immutable_git_report_renderings_and_digests_remain_bound_after_live_changes ... ok
+test deleted_and_renamed_commit_sources_keep_base_symbols_and_exact_original_paths ... ok
+test missing_promisor_object_never_executes_remote_helper ... ok
+test local_branch_overlap_and_history_owners_are_actual_metadata_candidates ... ok
+test oversized_git_source_receipt_is_rejected_before_sqlite_cell_allocation ... ok
+test resealed_git_report_cannot_invent_impact_distance_or_omit_changes ... ok
+test impact_keeps_parallel_call_occurrences_and_absent_file_has_no_false_anchor ... ok
+test resealed_git_report_rejects_unknown_historical_metadata_fields ... ok
+test typed_git_records_and_exact_commit_artifacts_are_known_retention_roots ... ok
+test unicode_refs_resolve_to_exact_commit_without_argument_interpretation ... ok
+test unrelated_local_branch_is_reported_without_aborting_other_results ... ok
+test worktree_cache_seed_copies_verified_parser_entries_without_parent_state ... ok
+test working_diff_binds_git_base_and_native_source_and_incoming_impact ... ok
+test workflow_never_runs_repo_filters_fsmonitor_hooks_or_ref_options ... ok
+
+test result: ok. 17 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 34.22s
+
+     Running tests\github.rs (target\debug\deps\github-90e5b67e13489e9b.exe)
+
+running 12 tests
+test fixture_waits_for_delayed_complete_request_after_accept ... ok
+test invalid_operation_arguments_are_rejected_before_any_hosted_request ... ok
+test deletion_point_patch_has_a_valid_empty_source_line_range ... ok
+test explicit_loopback_http_reads_observed_ci_review_and_scope_without_commands ... ok
+test actual_http_redirect_foreign_pagination_and_response_caps_fail_closed ... ok
+test repositories_credentials_and_global_request_response_budgets_are_validated ... ok
+test missing_ci_and_global_request_exhaustion_never_report_green_or_invent_empty_coverage ... ok
+test nonmatching_working_source_never_claims_exact_pr_hunk_or_empty_impact ... ok
+test pr_hunks_bind_exact_local_unicode_blob_and_incoming_structural_candidates ... ok
+test typed_host_scope_defaults_deny_network_and_reject_url_or_token_fields ... ok
+test triage_excludes_stale_wrong_base_and_future_metadata_with_explicit_reasons ... ok
+test unchanged_patch_context_is_not_reported_as_changed_symbols ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.69s
+
+     Running tests\github_live.rs (target\debug\deps\github_live-4aa8058b7b5df6a5.exe)
+
+running 1 test
+test actual_public_github_https_preserves_scope_and_shared_request_budget ... ignored, Explicit anonymous public GitHub HTTPS read; requires YOKE_GITHUB_PUBLIC_READ=1
+
+test result: ok. 0 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\graph.rs (target\debug\deps\graph-2aaa35d28f1690cd.exe)
+
+running 1 test
+test community_partition_separates_dense_call_groups_despite_a_bridge ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.10s
+
+     Running tests\graph_archive_review.rs (target\debug\deps\graph_archive_review-34a08598b98b6c0e.exe)
+
+running 2 tests
+test collection_reregistration_caps_existing_source_sql_cells_before_length_reads ... ok
+test resealed_archives_cannot_reclassify_a_captured_file_as_protected_source ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.29s
+

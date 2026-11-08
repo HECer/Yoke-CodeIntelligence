@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\scripts\tests\test_host_history_live.py", line 176, in test_internal_worker_refuses_an_unassigned_job_before_native_read_or_execution
+    LIVE.worker(None)
+    ~~~~~~~~~~~^^^^^^
+  File "C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\scripts\host_history_live.py", line 628, in worker
+    process, thread, pid, _ = _winapi.CreateProcess(
+    ^^^^^^^^^^^
+  File "C:\Python314\Lib\unittest\mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\unittest\mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\unittest\mock.py", line 1241, in _execute_mock_call
+    raise effect
+AssertionError: Native must remain unread

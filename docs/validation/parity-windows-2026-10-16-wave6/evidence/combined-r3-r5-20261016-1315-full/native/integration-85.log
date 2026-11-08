@@ -1,0 +1,17 @@
+    Finished `test` profile [unoptimized] target(s) in 0.82s
+     Running tests\parity_source_review.rs (target\debug\deps\parity_source_review-223360b1f37f3121.exe)
+
+running 1 test
+test corrupted_oversized_cas_is_rejected_before_an_unbounded_source_buffer_allocation ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.11s
+
+     Running tests\parity_view_review.rs (target\debug\deps\parity_view_review-5885658842c4425e.exe)
+
+running 3 tests
+test resealed_view_cannot_invent_canonical_labels_or_parent_claims ... ok
+test resealed_view_cannot_remove_canonical_observations ... ok
+test resealed_view_cannot_relabel_a_selected_overlay_or_upgrade_its_precision ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.40s
+

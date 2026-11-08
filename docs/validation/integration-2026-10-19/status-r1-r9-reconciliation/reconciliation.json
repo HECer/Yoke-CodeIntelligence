@@ -1,0 +1,38 @@
+{
+  "sourceParent": "6181fcb01522de2e1d82b7aa6c22d72a1ab65f1b",
+  "runtimeInputsMatched": 753,
+  "rawEqual": 579,
+  "crlfOnly": 174,
+  "changedTrackerRows": [
+    "R2",
+    "R3",
+    "R8"
+  ],
+  "inventoryLedgerUnchanged": true,
+  "historicalInventoryUnchanged": true,
+  "ledgerSummaryUnchanged": true,
+  "noBehaviorChange": true,
+  "nativeOrTypescriptTestsRerun": false,
+  "pythonContracts": {
+    "command": [
+      "C:\\Python314\\python.exe",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "scripts/tests",
+      "-v"
+    ],
+    "exitCode": 0,
+    "passed": 17,
+    "seconds": 0.64
+  },
+  "documentHashesUnchangedDuringValidation": {
+    "docs/REMAINING_WORK.md": "c9cafea72602757a49076539016f61aeec2483fc76ffccc5bd57c22535a42406",
+    "docs/STATUS.md": "6ccff784e12538bc9d954e31cd4a681aaeb1242eebdcbf545caa8df1ef154862",
+    "docs/parity/native-reconciliation-2026-10-15.json": "491d4149da11eee6fa56f84470c2d7df91f079ff60cde6ae4c5c370f33e92842",
+    "native/docs/github-app-workers.md": "1468e424904e4ca8eea868ed1cf9f8f57ff195f49448324767d2c87e87af0cef"
+  },
+  "priorAttempt": "Initial recipe compared primary raw hashes with a differently materialized worktree and refused. No native/TypeScript test ran or failed; corrected proof compares raw bytes and explicitly records CRLF-only variants.",
+  "wholeGoalComplete": false
+}

@@ -1,0 +1,30 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 18s
+     Running tests\meaning_projection_portable.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\meaning_projection_portable-fc76200b5d18ca95.exe)
+
+running 7 tests
+test actual_exports_remain_data_after_source_store_and_provider_disappear ... ok
+test cli_reads_only_the_explicit_host_file_and_preserves_exact_bytes ... ok
+test damaged_membership_endpoints_roles_policy_and_evidence_refuse ... ok
+test degree_and_directed_traces_preserve_parallel_selfloops_and_ordered_slots ... FAILED
+test exported_authority_and_metadata_cannot_grant_replay_or_semantic_identity ... ok
+test independent_budgets_count_original_records_and_never_clip_output ... ok
+test malformed_wire_duplicate_keys_unicode_and_deadlines_are_bounded ... ok
+
+failures:
+
+---- degree_and_directed_traces_preserve_parallel_selfloops_and_ordered_slots stdout ----
+
+thread 'degree_and_directed_traces_preserve_parallel_selfloops_and_ordered_slots' (9080) panicked at native\tests\meaning_projection_portable.rs:219:13:
+assertion `left == right` failed
+  left: Array []
+ right: Array [Object {"record": Object {"description": String("__H12_DESCRIPTION_NOT_OUTPUT_540b__ one two 1"), "evidenceIds": Array [String("6704377027607163721d36a3402099c6b9ad5ea2913364dff367eb4620b6fea0"), String("36c99d6c5a3b49afd71e04ebc239ca3267c4a851ab1214b868f0d7592078d51d")], "id": String("1248440bded325986b66e506aed75efceb8bf8938de0be1a31a59edb2c074691"), "providerAttestation": String("unverified"), "relation": String("uses"), "resolution": String("inferred_concept"), "source": String("7d9b307847cbae13212fc653933d8766783aed44b9c7cdf9976f0241328de7ab"), "target": String("5f8777be52fa15209bc8db42d367e55b80b5f6625b88f761ab4b71d638bb5f13")}, "reference": Object {"packetIndex": Number(2), "relationId": String("1248440bded325986b66e506aed75efceb8bf8938de0be1a31a59edb2c074691")}, "source": String("80bdfc5a16fe53365f26ec2aa6a430f5b1bcf17e26c816ff9dd097522a854fcc"), "target": String("43169ad43fcd7b222f9e9a95c0dc7a7c4850e8e3ac86fa0c6647a80a2946a7ad")}, Object {"record": Object {"description": String("__H12_DESCRIPTION_NOT_OUTPUT_540b__ one two 0"), "evidenceIds": Array [String("6704377027607163721d36a3402099c6b9ad5ea2913364dff367eb4620b6fea0"), String("36c99d6c5a3b49afd71e04ebc239ca3267c4a851ab1214b868f0d7592078d51d")], "id": String("1999ccc06fe7c9b8d4f4a20bed5a00e087b63a738aab35d077684f0850ef8315"), "providerAttestation": String("unverified"), "relation": String("uses"), "resolution": String("inferred_concept"), "source": String("7d9b307847cbae13212fc653933d8766783aed44b9c7cdf9976f0241328de7ab"), "target": String("5f8777be52fa15209bc8db42d367e55b80b5f6625b88f761ab4b71d638bb5f13")}, "reference": Object {"packetIndex": Number(2), "relationId": String("1999ccc06fe7c9b8d4f4a20bed5a00e087b63a738aab35d077684f0850ef8315")}, "source": String("80bdfc5a16fe53365f26ec2aa6a430f5b1bcf17e26c816ff9dd097522a854fcc"), "target": String("43169ad43fcd7b222f9e9a95c0dc7a7c4850e8e3ac86fa0c6647a80a2946a7ad")}, Object {"record": Object {"description": String("__H12_DESCRIPTION_NOT_OUTPUT_540b__ one one 0"), "evidenceIds": Array [String("6704377027607163721d36a3402099c6b9ad5ea2913364dff367eb4620b6fea0"), String("36c99d6c5a3b49afd71e04ebc239ca3267c4a851ab1214b868f0d7592078d51d")], "id": String("55e7677c1f46c1cf14e61e06718ea9c046211925db46e56cd0494b2b416d076c"), "providerAttestation": String("unverified"), "relation": String("uses"), "resolution": String("inferred_concept"), "source": String("7d9b307847cbae13212fc653933d8766783aed44b9c7cdf9976f0241328de7ab"), "target": String("7d9b307847cbae13212fc653933d8766783aed44b9c7cdf9976f0241328de7ab")}, "reference": Object {"packetIndex": Number(2), "relationId": String("55e7677c1f46c1cf14e61e06718ea9c046211925db46e56cd0494b2b416d076c")}, "source": String("80bdfc5a16fe53365f26ec2aa6a430f5b1bcf17e26c816ff9dd097522a854fcc"), "target": String("80bdfc5a16fe53365f26ec2aa6a430f5b1bcf17e26c816ff9dd097522a854fcc")}, Object {"record": Object {"description": String("__H12_DESCRIPTION_NOT_OUTPUT_540b__ two one 0"), "evidenceIds": Array [String("6704377027607163721d36a3402099c6b9ad5ea2913364dff367eb4620b6fea0"), String("36c99d6c5a3b49afd71e04ebc239ca3267c4a851ab1214b868f0d7592078d51d")], "id": String("abf5d38fc175dd63c697e833520769839d1f3a46f8f67dd64e2c5718c0412ffc"), "providerAttestation": String("unverified"), "relation": String("uses"), "resolution": String("inferred_concept"), "source": String("5f8777be52fa15209bc8db42d367e55b80b5f6625b88f761ab4b71d638bb5f13"), "target": String("7d9b307847cbae13212fc653933d8766783aed44b9c7cdf9976f0241328de7ab")}, "reference": Object {"packetIndex": Number(2), "relationId": String("abf5d38fc175dd63c697e833520769839d1f3a46f8f67dd64e2c5718c0412ffc")}, "source": String("43169ad43fcd7b222f9e9a95c0dc7a7c4850e8e3ac86fa0c6647a80a2946a7ad"), "target": String("80bdfc5a16fe53365f26ec2aa6a430f5b1bcf17e26c816ff9dd097522a854fcc")}]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    degree_and_directed_traces_preserve_parallel_selfloops_and_ordered_slots
+
+test result: FAILED. 6 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.70s
+
+error: test failed, to rerun pass `--test meaning_projection_portable`

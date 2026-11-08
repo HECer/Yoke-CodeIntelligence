@@ -1,0 +1,23 @@
+    Blocking waiting for file lock on build directory
+    Checking yoke-code-intelligence v0.5.0 (E:\Yoke-Worktrees\mixed-document-view-20261017\native)
+error: duplicated attribute
+  --> native\tests\support\meaning_comparison_fixture.rs:4:10
+   |
+ 4 | #![allow(dead_code)] // Shared test targets intentionally use different fixture members.
+   |          ^^^^^^^^^
+   |
+note: first defined here
+  --> native\tests\mixed_view_cli.rs:17:9
+   |
+17 | #[allow(dead_code)]
+   |         ^^^^^^^^^
+help: remove this attribute
+  --> native\tests\support\meaning_comparison_fixture.rs:4:10
+   |
+ 4 | #![allow(dead_code)] // Shared test targets intentionally use different fixture members.
+   |          ^^^^^^^^^
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#duplicated_attributes
+   = note: `-D clippy::duplicated-attributes` implied by `-D warnings`
+   = help: to override `-D warnings` add `#[allow(clippy::duplicated_attributes)]`
+
+error: could not compile `yoke-code-intelligence` (test "mixed_view_cli") due to 1 previous error

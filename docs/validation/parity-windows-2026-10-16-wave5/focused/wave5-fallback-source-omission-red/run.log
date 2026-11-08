@@ -1,0 +1,112 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+warning: function `unavailable` is never used
+  --> native\src\retrieval_scopes.rs:73:4
+   |
+73 | fn unavailable<T>() -> RetrievalResult<T> {
+   |    ^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: field `transaction` is never read
+  --> native\src\retrieval_scopes.rs:92:5
+   |
+80 | pub(crate) struct CheckedRetrievalRun<'store, 'input, 'deadline> {
+   |                   ------------------- field in this struct
+...
+92 |     transaction: rusqlite::Transaction<'store>,
+   |     ^^^^^^^^^^^
+
+warning: method `declarations` is never used
+   --> native\src\retrieval_scopes.rs:299:19
+    |
+286 | impl CheckedScope {
+    | ----------------- method in this implementation
+...
+299 |     pub(crate) fn declarations(&self) -> impl Iterator<Item = &ManifestBinding> {
+    |                   ^^^^^^^^^^^^
+
+warning: field `cached` is never read
+   --> native\src\retrieval_scopes.rs:311:5
+    |
+308 | pub(crate) struct SourceCost {
+    |                   ---------- field in this struct
+...
+311 |     cached: bool,
+    |     ^^^^^^
+    |
+    = note: `SourceCost` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis
+
+warning: method `is_cached` is never used
+   --> native\src\retrieval_scopes.rs:320:19
+    |
+313 | impl SourceCost {
+    | --------------- method in this implementation
+...
+320 |     pub(crate) fn is_cached(self) -> bool {
+    |                   ^^^^^^^^^
+
+warning: method `path` is never used
+   --> native\src\retrieval_scopes.rs:333:19
+    |
+332 | impl VerifiedSource {
+    | ------------------- method in this implementation
+333 |     pub(crate) fn path(&self) -> &str {
+    |                   ^^^^
+
+warning: fields `entity`, `start`, and `end` are never read
+   --> native\src\retrieval_scopes.rs:344:5
+    |
+343 | pub(crate) struct VerifiedDocument<'input> {
+    |                   ---------------- fields in this struct
+344 |     entity: &'input Entity,
+    |     ^^^^^^
+345 |     source: VerifiedSource,
+346 |     start: usize,
+    |     ^^^^^
+347 |     end: usize,
+    |     ^^^
+
+warning: methods `entity` and `text` are never used
+   --> native\src\retrieval_scopes.rs:350:19
+    |
+349 | impl VerifiedDocument<'_> {
+    | ------------------------- methods in this implementation
+350 |     pub(crate) fn entity(&self) -> &Entity {
+    |                   ^^^^^^
+...
+356 |     pub(crate) fn text(&self) -> &str {
+    |                   ^^^^
+
+warning: methods `ownership_bytes` and `verified_path_count` are never used
+   --> native\src\retrieval_scopes.rs:391:19
+    |
+372 | impl RunUsage {
+    | ------------- methods in this implementation
+...
+391 |     pub(crate) fn ownership_bytes(self) -> usize {
+    |                   ^^^^^^^^^^^^^^^
+...
+394 |     pub(crate) fn verified_path_count(self) -> usize {
+    |                   ^^^^^^^^^^^^^^^^^^^
+
+warning: `yoke-code-intelligence` (lib) generated 9 warnings
+    Finished `test` profile [unoptimized] target(s) in 2m 14s
+     Running tests\monorepo_profiles.rs (target\debug\deps\monorepo_profiles-3140cc2d5d82f41f.exe)
+
+running 1 test
+
+thread 'malformed_manifest_fallback_keeps_the_four_megabytes_already_spent' (61604) panicked at native\tests\monorepo_profiles.rs:506:5:
+assertion `left == right` failed
+  left: Number(0)
+ right: 1
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test malformed_manifest_fallback_keeps_the_four_megabytes_already_spent ... FAILED
+
+failures:
+
+failures:
+    malformed_manifest_fallback_keeps_the_four_megabytes_already_spent
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 11 filtered out; finished in 14.34s
+
+error: test failed, to rerun pass `--test monorepo_profiles`

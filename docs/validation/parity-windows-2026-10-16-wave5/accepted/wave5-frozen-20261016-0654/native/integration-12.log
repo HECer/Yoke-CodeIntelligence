@@ -1,0 +1,20 @@
+    Finished `test` profile [unoptimized] target(s) in 0.78s
+     Running tests\collections_cli_review.rs (target\debug\deps\collections_cli_review-ed5442fa2c1097ed.exe)
+
+running 1 test
+test native_archived_source_reads_use_native_proof_without_foreign_authority ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.17s
+
+     Running tests\compatibility.rs (target\debug\deps\compatibility-aaf6d1ef7522c50c.exe)
+
+running 6 tests
+test public_debug_information_topic_is_explicit_and_does_not_execute_a_backend ... ok
+test compatibility_session_ids_cannot_select_another_host_session ... ok
+test public_external_project_queries_route_readonly_aliases_without_activation_or_edits ... ok
+test public_serena_mcp_profile_lists_contracts_and_routes_without_native_write_tools ... ok
+test serena_profile_inventories_all_public_tools_and_routes_authored_notes ... ok
+test public_contract_types_defaults_and_owned_python_runtime_are_enforced ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.55s
+

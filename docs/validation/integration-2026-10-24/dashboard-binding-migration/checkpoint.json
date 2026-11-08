@@ -1,0 +1,215 @@
+{
+  "project": "HECer/Yoke-CodeIntelligence",
+  "product": "Code Intelligence",
+  "version": "0.5.0",
+  "productCommit": "5bd0eadd88508b889520072ad53bc1b70ba58174",
+  "productRemoteBlobsVerified": 8,
+  "sourceInputs": 1152,
+  "native": {
+    "totals": {
+      "passed": 805,
+      "failed": 0,
+      "ignored": 7,
+      "measured": 0,
+      "filtered": 0
+    },
+    "groups": [
+      {
+        "target": "library",
+        "counts": {
+          "passed": 673,
+          "failed": 0,
+          "ignored": 7,
+          "measured": 0,
+          "filtered": 0
+        },
+        "log": "whole-library.stdout",
+        "sha256": "1dbd41819183c02ef0eed0f5c910191b7b7a7fc70bd0247c4b50ee0fae283a43"
+      },
+      {
+        "target": "session_dashboard_management",
+        "counts": {
+          "passed": 22,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0
+        },
+        "log": "whole-session_dashboard_management.stdout",
+        "sha256": "9faa83fa51f8933dc5e311ebc944d0f5c07e22012d6b9337df2eedc1bfdd3024"
+      },
+      {
+        "target": "session_dashboard",
+        "counts": {
+          "passed": 13,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0
+        },
+        "log": "whole-session_dashboard.stdout",
+        "sha256": "ab289dc37a4628290d766e6e1e6793405ed60950e317037df3e53f17fddc63f1"
+      },
+      {
+        "target": "notes",
+        "counts": {
+          "passed": 15,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0
+        },
+        "log": "whole-notes.stdout",
+        "sha256": "950b24975ef5e5660b893ef31e4c91b4485c5e0089b03dbd2d93bcbacb527123"
+      },
+      {
+        "target": "mcp_http",
+        "counts": {
+          "passed": 18,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0
+        },
+        "log": "whole-mcp_http.stdout",
+        "sha256": "4b3a11b623d65f6b0ca049eec9f59bebd18e7ed5a2079ce26ae69d5f9b7fe67b"
+      },
+      {
+        "target": "protocol_connection",
+        "counts": {
+          "passed": 5,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0
+        },
+        "log": "whole-protocol_connection.stdout",
+        "sha256": "8f41e61b82ad73a39ae998ae2e562d3bcb68e9bf3539aee8de6756ceb9d0b95a"
+      },
+      {
+        "target": "session_steering",
+        "counts": {
+          "passed": 12,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0
+        },
+        "log": "whole-session_steering.stdout",
+        "sha256": "6b72f90ebfd4fdfbd834dc3cc62665e072c538a23df07d3a42b71827249c70d9"
+      },
+      {
+        "target": "server_selection",
+        "counts": {
+          "passed": 8,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0
+        },
+        "log": "whole-server_selection.stdout",
+        "sha256": "024e11a87c4630b808845f42485da494386bc0adc0ad4ff316189ba88f561b49"
+      },
+      {
+        "target": "server_settings",
+        "counts": {
+          "passed": 8,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0
+        },
+        "log": "whole-server_settings.stdout",
+        "sha256": "4df4338dd8b7de20ec6d6b1e4d146b098b86768843ed403cb012849fa1e79270"
+      },
+      {
+        "target": "project_session",
+        "counts": {
+          "passed": 6,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0
+        },
+        "log": "whole-project_session.stdout",
+        "sha256": "c9d38f2bc662af4f4c1b4976c9277071487f80c861d568c4ab1c4c3776003bca"
+      },
+      {
+        "target": "retention",
+        "counts": {
+          "passed": 17,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0
+        },
+        "log": "whole-retention.stdout",
+        "sha256": "f5aec017dcaa50586c63758193f0b0892f1ead0e56da18071c4e11f194cc8510"
+      },
+      {
+        "target": "capture_changes",
+        "counts": {
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0
+        },
+        "log": "whole-capture_changes.stdout",
+        "sha256": "54446a6d028ec891f85a120ef30861bfd962c1883369568f55333fc0662109f0"
+      },
+      {
+        "target": "main",
+        "counts": {
+          "passed": 7,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0
+        },
+        "log": "whole-main.stdout",
+        "sha256": "834f4103ac1573d1b4bde56f5c2f1a8626a5f001c0d04a0f476dd3a7caa8b957"
+      }
+    ],
+    "reusedGroupCount": 1,
+    "resumedSameSourceWholeLibrary": true,
+    "reusedDifferentSourceGroupCount": 0
+  },
+  "cliSha256": "5ffab66ed573302a674104a41c7478cf1cb3f00cb68e1395675847e0b968233c",
+  "dualExplicitHostAuthorities": true,
+  "metadataOnlyBindingMigration": true,
+  "samePhysicalOwnerFileRetained": true,
+  "oldSelectionRetiredNewSelectionExplicit": true,
+  "standaloneUnboundOwnerDeletion": false,
+  "journalHistoryDeletion": false,
+  "currentProfileAutoReload": false,
+  "browserCanMigrateHostGrants": false,
+  "actualStdioVariants": 3,
+  "additionalOldRuntimeValue45Proof": true,
+  "httpSharedRetiredBindingProof": true,
+  "allJobsEmpty": true,
+  "browserAcceptance": {
+    "complete": true,
+    "product": "Code Intelligence",
+    "version": "0.5.0",
+    "actualNativeBrowser": true,
+    "explicitIncompleteMigrationBlocker": true,
+    "draftRetainedReadOnlyAndNoWriteAction": true,
+    "hostRecoveryExactConfigurationBytes": true,
+    "retiredAuthorityRemainsBlocked": true,
+    "freshNewHostWritesWithNewBinding": true,
+    "draftRetainedAfterOldOwningShutdown": true,
+    "nativeExitBeforeStdinEofAndRuntimeExitBeforeJobCleanup": true,
+    "actual390x844NoHorizontalOverflow": true,
+    "nativeScreenshotsClaimed": false,
+    "capturedNativeDomRerendersInspected": true,
+    "snapshotFailuresPreserved": 2,
+    "ownedTabClosed": true
+  },
+  "precedingFailuresPreserved": true,
+  "sameSourceLibraryContinuationCountedOnce": true,
+  "historicalResourceMainTestsExcluded": true,
+  "fullStatusComplete": false,
+  "mainMerged": false,
+  "released": false
+}

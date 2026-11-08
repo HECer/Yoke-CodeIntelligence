@@ -1,0 +1,25 @@
+{
+  "deadlines": {
+    "executable": "target\\debug\\deps\\deadlines-7e944d9e9fcce6f9.exe",
+    "ignored": [],
+    "registered": [
+      "snapshot_publication_rolls_back_when_document_indexing_expires"
+    ]
+  },
+  "debug_adapter": {
+    "executable": "target\\debug\\deps\\debug_adapter-b0106548c278352b.exe",
+    "ignored": [
+      "actual_windows_debugpy_persistent_evaluation_has_exact_captured_source"
+    ],
+    "registered": [
+      "active_debugger_evaluation_observes_host_cancellation_before_its_original_deadline",
+      "actual_windows_debugpy_persistent_evaluation_has_exact_captured_source",
+      "dap_accepts_no_configuration_phase_and_discovers_optional_stopped_thread_ids",
+      "invalid_evaluation_input_is_rejected_before_launching_an_authorized_target",
+      "persistent_dap_evaluates_only_stopped_source_bound_frames_and_closes_owned_target",
+      "reverse_launch_authority_and_foreign_stale_or_unstopped_frames_are_refused",
+      "runtime_and_evaluation_permissions_are_checked_before_adapter_or_target_start",
+      "session_facades_use_only_host_profiles_preserve_namespaces_and_reject_changed_source"
+    ]
+  }
+}

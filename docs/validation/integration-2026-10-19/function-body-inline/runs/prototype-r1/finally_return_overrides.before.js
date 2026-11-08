@@ -1,0 +1,1 @@
+const events=[];function helper(n){try{events.push('try');return n+1;}finally{events.push('finally');return n+2;}}const result=helper(3);globalThis.observed={result,events};

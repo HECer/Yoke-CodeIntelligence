@@ -1,0 +1,232 @@
+//! Pre-feature existing-public-API envelope regression; root owns execution.
+use serde_json::{Value, json};
+use std::{fs, path::Path};
+use yoke::{
+    Engine,
+    capture::Deadline,
+    project_session::{HostProfile, Session},
+};
+
+fn session(engine: Engine) -> Session {
+    Session::open(
+        engine,
+        HostProfile::default(),
+        Some("monorepo-profiles"),
+        &Deadline::new(180000),
+    )
+    .unwrap()
+}
+
+fn rpc(session: &mut Session, profile: &str, method: &str, params: Value) -> Value {
+    let mut connection = match profile {
+        "session" => yoke::protocol::Connection::session(session),
+        "trail" => yoke::protocol::Connection::trail(session),
+        "graft" => yoke::protocol::Connection::graft(session),
+        _ => panic!("owned test profile"),
+    };
+    connection
+        .message(br#"{"jsonrpc":"2.0","id":1,"method":"initialize"}"#)
+        .unwrap()
+        .unwrap();
+    connection
+        .message(
+            &serde_json::to_vec(&json!({"jsonrpc":"2.0","id":2,"method":method,"params":params}))
+                .unwrap(),
+        )
+        .unwrap()
+        .unwrap()
+}
+
+fn call(session: &mut Session, profile: &str, name: &str, args: Value) -> (Value, Value) {
+    let response = rpc(
+        session,
+        profile,
+        "tools/call",
+        json!({"name":name,"arguments":args}),
+    );
+    let content = response["result"]["content"][0]["text"]
+        .as_str()
+        .expect("tool envelope");
+    let body = serde_json::from_str(content).unwrap();
+    (response, body)
+}
+
+fn counts(engine: &Engine) -> (i64, i64, i64) {
+    let db = &engine.store.db;
+    (
+        db.query_row("SELECT COUNT(*) FROM snapshots", [], |r| r.get(0))
+            .unwrap(),
+        db.query_row(
+            "SELECT COUNT(*) FROM records WHERE kind IN ('plan','approval','receipt','artifact')",
+            [],
+            |r| r.get(0),
+        )
+        .unwrap(),
+        db.query_row("SELECT total_changes()", [], |r| r.get(0))
+            .unwrap(),
+    )
+}
+
+fn write(root: &Path, path: &str, text: &str) {
+    let path = root.join(path);
+    fs::create_dir_all(path.parent().unwrap()).unwrap();
+    fs::write(path, text).unwrap();
+}
+
+const LOGICAL_ENVELOPE_LIMIT: usize = 4_000_000;
+fn preview(value: &str, limit: usize) -> String {
+    value.chars().take(limit).collect()
+}
+fn artifact_count(engine: &Engine) -> i64 {
+    engine
+        .store
+        .db
+        .query_row(
+            "SELECT COUNT(*) FROM records WHERE kind='artifact'",
+            [],
+            |r| r.get(0),
+        )
+        .unwrap()
+}
+fn diagnostic(response: &Value, body: &Value, before: i64, after: i64, minimum: usize) -> Value {
+    json!({
+        "fullDefinitionControlsPassed":2,
+        "minimumLogicalEnvelopeBytes":minimum,
+        "logicalEnvelopeLimit":LOGICAL_ENVELOPE_LIMIT,
+        "toolIsError":response["result"]["isError"].as_bool(),
+        "status":body["status"].as_str().map(|s| preview(s,32)),
+        "resultTransport":body["data"]["resultTransport"].as_str().map(|s| preview(s,96)),
+        "itemCount":body["data"]["itemCount"].as_u64().or_else(|| body["data"]["items"].as_array().map(|v| v.len() as u64)),
+        "artifactPresent":body["data"]["artifactId"].is_string(),
+        "artifactCountBefore":before,
+        "artifactCountAfter":after,
+        "inlineJsonBytes":response["result"]["content"][0]["text"].as_str().map(str::len),
+        "errorMessagePreview":body["error"]["message"].as_str().map(|s| preview(s,240)),
+    })
+}
+
+#[test]
+fn full_definition_envelope_overflow_is_an_error_without_an_artifact_fallback() {
+    let root = tempfile::tempdir().unwrap();
+    for i in 0..2 {
+        let prefix = format!("fn payment_{i}() {{\n/* ");
+        let suffix = " */\n payment();\n}\n";
+        let source = format!(
+            "{prefix}{}{suffix}",
+            "x".repeat(2_000_000 - prefix.len() - suffix.len())
+        );
+        write(root.path(), &format!("code/{i}.rs"), &source);
+    }
+    let mut s = session(Engine::open(root.path()).unwrap());
+    let original_artifacts = artifact_count(&s.engine);
+    let mut encoded_full_body_bytes = 0usize;
+    let mut original_source_hashes = Vec::new();
+    for i in 0..2 {
+        let path = format!("code/{i}.rs");
+        let source = fs::read_to_string(root.path().join(&path)).unwrap();
+        let original_hash = yoke::model::hash(source.as_bytes());
+        original_source_hashes.push((path.clone(), original_hash.clone()));
+        assert_eq!(source.len(), 2_000_000);
+        let control = yoke::trail_adapter::invoke(
+            &mut s,
+            "trail_find_code",
+            &json!({"query":"payment","limit":1,"full":true,"in":path}),
+            &Deadline::new(180000),
+        )
+        .unwrap_or_else(|error| {
+            panic!(
+                "Existing full-definition control {i} failed: {}",
+                preview(&error.to_string(), 240)
+            )
+        });
+        let rows = control["items"].as_array().expect("control items");
+        assert_eq!(
+            rows.len(),
+            1,
+            "Each exact file must have one real definition"
+        );
+        let item = &rows[0];
+        assert_eq!(item["path"], path);
+        assert_eq!(item["name"], format!("payment_{i}"));
+        assert!(
+            item["contentHash"].as_str() == Some(original_hash.as_str()),
+            "Full definition hash differs for {path}"
+        );
+        assert_eq!(control["fullDefinitionRequested"], true);
+        assert_eq!(item["bodyMode"], "full_definition");
+        assert_eq!(item["bodyTruncated"], false);
+        assert_eq!(item["bodyStartByte"], item["startByte"]);
+        assert_eq!(item["bodyEndByte"], item["endByte"]);
+        let start = item["startByte"].as_u64().unwrap() as usize;
+        let end = item["endByte"].as_u64().unwrap() as usize;
+        assert_eq!((start, end), (0, source.len() - 1));
+        let text = item["body"].as_str().expect("full definition string");
+        assert!(
+            text.len() > 1_900_000,
+            "Excerpt output cannot satisfy full-definition controls"
+        );
+        assert!(
+            source.get(start..end) == Some(text),
+            "Full-definition bytes differ for {path}; actualBytes={}",
+            text.len()
+        );
+        encoded_full_body_bytes += serde_json::to_vec(text).unwrap().len();
+        assert_eq!(artifact_count(&s.engine), original_artifacts);
+    }
+    // Independent exact lower bound for two full body strings plus their minimal
+    // logical status/data/items envelope. The real result has further metadata.
+    let minimal = json!({"status":"ok","data":{"items":[{"body":""},{"body":""}]}});
+    let minimum_logical_envelope_bytes =
+        encoded_full_body_bytes + serde_json::to_vec(&minimal).unwrap().len() - 4;
+    assert!(
+        minimum_logical_envelope_bytes > LOGICAL_ENVELOPE_LIMIT,
+        "Fixture did not exceed the exact final envelope limit: minimumBytes={minimum_logical_envelope_bytes}"
+    );
+    let before = counts(&s.engine).1;
+    let (response, body) = call(
+        &mut s,
+        "trail",
+        "trail_find_code",
+        json!({"query":"payment","limit":2,"full":true}),
+    );
+    let after_artifacts = artifact_count(&s.engine);
+    let summary = diagnostic(
+        &response,
+        &body,
+        original_artifacts,
+        after_artifacts,
+        minimum_logical_envelope_bytes,
+    );
+    assert!(serde_json::to_vec(&summary).unwrap().len() < 2048);
+    // All diagnostic fields are bounded strings, counts or booleans; never body.
+    assert!(
+        response["result"]["isError"].as_bool() == Some(true),
+        "Expected causal compatibility_envelope output rejection; metadata={summary}"
+    );
+    assert!(
+        body["status"].as_str() == Some("error"),
+        "metadata={summary}"
+    );
+    assert!(
+        body["error"]["message"].as_str()
+            == Some("Manifest-balanced retrieval output_capacity: compatibility_envelope"),
+        "Unavailable or generic errors cannot satisfy final output admission; metadata={summary}"
+    );
+    assert_eq!(
+        after_artifacts, original_artifacts,
+        "Retrieval overflow published an artifact; metadata={summary}"
+    );
+    assert_eq!(
+        counts(&s.engine).1,
+        before,
+        "Overflow published a guarded change or artifact; metadata={summary}"
+    );
+    for (path, original_hash) in original_source_hashes {
+        let bytes = fs::read(root.path().join(&path)).unwrap();
+        assert_eq!(bytes.len(), 2_000_000);
+        assert!(
+            yoke::model::hash(&bytes) == original_hash,
+            "Original source changed for {path}"
+        );
+    }
+}

@@ -1,0 +1,29 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 2.66s
+     Running tests\store_cancellation.rs (target\debug\deps\store_cancellation-7e8ec3077ec5dbd3.exe)
+
+running 2 tests
+test sqlite_busy_wait_does_not_restart_the_budget_after_serialization ... FAILED
+test sqlite_busy_wait_observes_cancellation_before_the_long_operation_deadline ... FAILED
+
+failures:
+
+---- sqlite_busy_wait_does_not_restart_the_budget_after_serialization stdout ----
+
+thread 'sqlite_busy_wait_does_not_restart_the_budget_after_serialization' (8372) panicked at native\tests\store_cancellation.rs:198:5:
+Expired serialization was followed by a fresh SQLite busy wait: 632.1099ms
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- sqlite_busy_wait_observes_cancellation_before_the_long_operation_deadline stdout ----
+
+thread 'sqlite_busy_wait_observes_cancellation_before_the_long_operation_deadline' (10164) panicked at native\tests\store_cancellation.rs:154:9:
+SQLite retained the long busy timeout after actual cancellation: 2.2579239s
+
+
+failures:
+    sqlite_busy_wait_does_not_restart_the_budget_after_serialization
+    sqlite_busy_wait_observes_cancellation_before_the_long_operation_deadline
+
+test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 3 filtered out; finished in 2.37s
+
+error: test failed, to rerun pass `--test store_cancellation`

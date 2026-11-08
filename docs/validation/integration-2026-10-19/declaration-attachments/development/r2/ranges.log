@@ -1,0 +1,28 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+    Finished `test` profile [unoptimized] target(s) in 20.74s
+     Running tests\declaration_attachment_ranges.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\declaration_attachment_ranges-e414b327c4e988ad.exe)
+
+running 6 tests
+test python_empty_required_bodies_and_malformed_rust_attachments_refuse_without_publication ... ok
+test python_nested_declarations_leave_existing_body_statements_and_parent_decorators ... 
+thread 'python_nested_declarations_leave_existing_body_statements_and_parent_decorators' (32) panicked at native\tests\declaration_attachment_ranges.rs:21:33:
+module.py "@parent_decorator\nclass Parent:\n    @selected_decorator\n    def delete_me(self):\n        return 1\n    # retained comment\n    def retained(self):\n        return 2\n": Symbol deletion exact AST binding missing
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test python_stacked_decorators_function_class_bom_and_crlf_have_exact_ownership ... ok
+test rust_declaration_kinds_reuse_the_owned_attachment_boundary ... ok
+test rust_nested_items_and_trait_or_impl_methods_preserve_the_parent_and_siblings ... 
+thread 'rust_nested_items_and_trait_or_impl_methods_preserve_the_parent_and_siblings' (13256) panicked at native\tests\declaration_attachment_ranges.rs:21:33:
+module.rs "struct Parent; impl Parent { #[inline] fn delete_me() {} fn retained() {} }\n": Rust deletion exact AST binding missing
+FAILED
+test rust_outer_attributes_docs_and_intervening_comments_keep_their_own_declaration ... ok
+
+failures:
+
+failures:
+    python_nested_declarations_leave_existing_body_statements_and_parent_decorators
+    rust_nested_items_and_trait_or_impl_methods_preserve_the_parent_and_siblings
+
+test result: FAILED. 4 passed; 2 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.05s
+
+error: test failed, to rerun pass `--test declaration_attachment_ranges`

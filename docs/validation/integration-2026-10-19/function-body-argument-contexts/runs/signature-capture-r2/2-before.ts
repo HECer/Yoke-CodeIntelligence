@@ -1,0 +1,1 @@
+function helper(fn:(n:number)=>number):number{return fn(3);}const result=helper(n=>n+1);export const observed=result;

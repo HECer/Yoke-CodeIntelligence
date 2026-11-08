@@ -1,0 +1,23 @@
+    Finished `test` profile [unoptimized] target(s) in 0.74s
+     Running tests\registry_replay_review.rs (target\debug\deps\registry_replay_review-8390e9e4e28b3782.exe)
+
+running 8 tests
+test native9_archive_selects_proven_epoch_without_global_activation ... ok
+test historical4_keeps_its_identity_and_reports_unreplayed_claims ... ok
+test native8_relabel_is_rejected_after_origin_deleted ... ok
+test native8_retarget_is_rejected_after_origin_deleted ... ok
+test view8_retarget_is_rejected_after_origin_deleted ... ok
+test view8_relabel_is_rejected_after_origin_deleted ... ok
+test unchanged_native8_and_view8_remain_standalone ... ok
+test producer_labels_cannot_change_a_proven_capture_epoch ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.37s
+
+     Running tests\replacement.rs (target\debug\deps\replacement-4678ddb3fc91b625.exe)
+
+running 2 tests
+test capture_templates_preserve_numeric_named_unicode_escaped_and_missing_references ... ok
+test multiplicative_templates_are_rejected_with_bounded_memory_and_shared_deadline ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+

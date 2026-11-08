@@ -1,0 +1,58 @@
+{
+  "gitHead": "2c7a0947b09bc6025b614bafef0df3d16a7034f1",
+  "recordedAt": "2026-10-18T22:42:57.143054+00:00",
+  "checksPassed": true,
+  "sourceUnchanged": true,
+  "checks": [
+    {
+      "gate": "clippy",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "clippy",
+        "--workspace",
+        "--all-targets",
+        "--locked",
+        "--keep-going",
+        "-j2",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 1.807
+    },
+    {
+      "gate": "mcp-http",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j2",
+        "--test",
+        "mcp_http",
+        "--",
+        "--test-threads=2"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 22.434
+    },
+    {
+      "gate": "owned-bedrock-credential-tcp",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j2",
+        "--test",
+        "model_bedrock_cli_actual",
+        "--",
+        "--ignored",
+        "--test-threads=1"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 5.041
+    }
+  ],
+  "actualRemoteAwsValidated": false,
+  "bedrockScope": "Actual Windows owned temporary credentials and owned loopback TCP only; no AWS service or real model call"
+}

@@ -1,0 +1,29 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 58s
+     Running unittests src\lib.rs (target\debug\deps\yoke-35b101204e4eb110.exe)
+
+running 3 tests
+
+thread 'retrieval_scopes::tests::raw_selectors_before_later_source_syntax_yaml' (86920) panicked at native\src\retrieval_scopes_tests.rs:83:18:
+expected specific hard error, got success
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread 'retrieval_scopes::tests::raw_selectors_before_later_source_syntax_toml' (85532) panicked at native\src\retrieval_scopes_tests.rs:83:18:
+expected specific hard error, got success
+
+thread 'retrieval_scopes::tests::raw_selectors_before_later_source_syntax_json' (61812) panicked at native\src\retrieval_scopes_tests.rs:83:18:
+expected specific hard error, got success
+test retrieval_scopes::tests::raw_selectors_before_later_source_syntax_yaml ... FAILED
+test retrieval_scopes::tests::raw_selectors_before_later_source_syntax_toml ... FAILED
+test retrieval_scopes::tests::raw_selectors_before_later_source_syntax_json ... FAILED
+
+failures:
+
+failures:
+    retrieval_scopes::tests::raw_selectors_before_later_source_syntax_json
+    retrieval_scopes::tests::raw_selectors_before_later_source_syntax_toml
+    retrieval_scopes::tests::raw_selectors_before_later_source_syntax_yaml
+
+test result: FAILED. 0 passed; 3 failed; 0 ignored; 0 measured; 275 filtered out; finished in 1.06s
+
+error: test failed, to rerun pass `--lib`

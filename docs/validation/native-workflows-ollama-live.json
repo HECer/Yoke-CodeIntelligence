@@ -1,0 +1,88 @@
+{
+  "schema": 1,
+  "dateUtc": "2026-10-14",
+  "validationKind": "actual_local_embedding_inference",
+  "protocolFixture": false,
+  "runtime": {
+    "name": "Ollama",
+    "version": "0.40.3",
+    "hostExecutable": "C:/Users/HEC_e/AppData/Local/Programs/Ollama/ollama.exe",
+    "ownedPid": 65920,
+    "endpoint": "http://127.0.0.1:59197",
+    "hiddenWindowsProcess": true,
+    "ownedProcessTreeCleanup": "Windows JobObject KILL_ON_JOB_CLOSE",
+    "inheritedCredentialEnvironment": "cleared",
+    "gpuSelection": "disabled_for_cpu_inference"
+  },
+  "model": {
+    "name": "all-minilm:22m",
+    "capabilities": ["embedding"],
+    "format": "gguf",
+    "totalBytes": 45960996,
+    "maximumAuthorizedDownloadBytes": 1073741824,
+    "manifestDigest": "1b226e2802dbb772b5fc32a58f103ca1804ef7501331012de126ab22f67475ef",
+    "officialManifestUrl": "https://registry.ollama.ai/v2/library/all-minilm/manifests/22m",
+    "independentManifestHashMatchesInstalledDigest": true,
+    "license": "Apache-2.0",
+    "licenseDigest": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+    "licenseBytes": 11357,
+    "officialLicenseUrl": "https://registry.ollama.ai/v2/library/all-minilm/blobs/sha256:c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+    "independentLicenseHashVerified": true,
+    "modelDirectory": "C:/Users/HEC_e/AppData/Local/Temp/yoke-ollama-neural-gate-20261014-143952/models",
+    "weightsInsideRepositoryOrRelease": false
+  },
+  "checks": [
+    {
+      "name": "actual_local_installed_embedding_model_gate",
+      "command": "target/debug/deps/ollama-33449f70771d32c1.exe --ignored --exact actual_local_installed_embedding_model_gate --nocapture",
+      "environment": {
+        "YOKE_OLLAMA_ENDPOINT": "http://127.0.0.1:59197",
+        "YOKE_OLLAMA_MODEL": "all-minilm:22m",
+        "YOKE_OLLAMA_DIGEST": "1b226e2802dbb772b5fc32a58f103ca1804ef7501331012de126ab22f67475ef"
+      },
+      "passed": 1,
+      "failed": 0,
+      "filteredOut": 8,
+      "elapsedSeconds": 0.72,
+      "queryEmbeddingCount": 1
+    },
+    {
+      "name": "native_model_worker_stdio_actual_embedding",
+      "command": "target/debug/yoke.exe --timeout 120000 model-worker --endpoint http://127.0.0.1:59197 --model all-minilm:22m --digest 1b226e2802dbb772b5fc32a58f103ca1804ef7501331012de126ab22f67475ef",
+      "requestOperation": "embed_query",
+      "syntheticQuery": "invoice",
+      "queryEmbeddingCount": 1,
+      "dimension": 384,
+      "coordinatesFinite": true,
+      "vectorNonzero": true,
+      "modelDigestBinding": "exact",
+      "requestIdBinding": "exact",
+      "inputHashBinding": "exact",
+      "actualCostMicros": null,
+      "billing": "unknown",
+      "originalSourceWrites": false,
+      "exitCode": 0
+    }
+  ],
+  "cleanup": {
+    "ownedServerExitConfirmed": true,
+    "ownedProcessTreeJobClosed": true,
+    "ownedEndpointClosureConfirmed": true,
+    "existingUserOllamaIdentitySizeAndMtimeUnchanged": true,
+    "existingUserIdentityBytesReadCopiedOrLogged": false,
+    "existingUserModelJunctionTargetConfirmed": "Q:/Ollama/models",
+    "existingUserModelJunctionModified": false,
+    "actionsAgainstExistingDefaultServer": "none",
+    "preservationOfExternalServerRunningStateAsserted": false,
+    "serverStdoutCapBytes": 2000000,
+    "serverStderrCapBytes": 2000000,
+    "rawServerLogsOrPrivateMaterialStoredInEvidence": false
+  },
+  "limits": {
+    "neuralQualityEvaluated": false,
+    "actualSummaryRerankOrVisionEvaluated": false,
+    "actualBillingTruthVerified": false,
+    "coreAutomaticallyStartsServerOrPullsModel": false,
+    "testSetupExplicitlyHostAuthorized": true
+  }
+}

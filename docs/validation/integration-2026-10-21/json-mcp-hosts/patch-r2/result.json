@@ -1,0 +1,82 @@
+{
+  "checks": [
+    {
+      "name": "host_mcp_config",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--test",
+        "host_mcp_config",
+        "--",
+        "--test-threads=1"
+      ],
+      "exitCode": 0,
+      "seconds": 102.5700878999778,
+      "sourceUnchanged": true,
+      "totals": [
+        [
+          "4",
+          "0",
+          "0"
+        ]
+      ],
+      "deletedNewArtifacts": [
+        {
+          "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\host_mcp_config-c9107a97af37c0c1.exe",
+          "sha256": "603d89013646fd0465ef87197fd99a0337f16ee3d2a49e7a0197279248b59fab"
+        },
+        {
+          "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\host_mcp_config-c9107a97af37c0c1.pdb",
+          "sha256": "71bc229e710d00f3eee1890c8dab49fce5a51abad4854144941345f24aefa0fa"
+        }
+      ]
+    },
+    {
+      "name": "host_config",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--test",
+        "host_config",
+        "--",
+        "--test-threads=1"
+      ],
+      "exitCode": 0,
+      "seconds": 3.8421097999962512,
+      "sourceUnchanged": true,
+      "totals": [
+        [
+          "22",
+          "0",
+          "0"
+        ]
+      ],
+      "deletedNewArtifacts": [
+        {
+          "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\host_config-6f5b88c83ad58897.exe",
+          "sha256": "9fab0540b2ee82c9906427b1036f1c7178b71b7775e149425bad9e55c5b49286"
+        },
+        {
+          "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\host_config-6f5b88c83ad58897.pdb",
+          "sha256": "d8a1323870a9eb08ce954f08e3da83f5751dbccd0b463193b8358513b1c1582d"
+        }
+      ]
+    }
+  ],
+  "sourceUnchanged": true,
+  "allChecksPassed": true,
+  "scope": "pure JSON MCP ownership patch and legacy host configuration tests",
+  "clientProfilesImplemented": false
+}

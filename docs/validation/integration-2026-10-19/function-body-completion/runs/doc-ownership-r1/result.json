@@ -1,0 +1,246 @@
+{
+  "typescript": "5.8.3",
+  "cases": [
+    {
+      "source": "/** @param {number} n */\nfunction helper(n){return {value:n};}const result=helper(3);export const observed=result.value;",
+      "exported": false,
+      "fullStart": 0,
+      "start": 25,
+      "docs": [
+        "/** @param {number} n */"
+      ],
+      "copied": [
+        "/** @param {number} n */"
+      ],
+      "exact": true
+    },
+    {
+      "source": "/** first */\n/** @param {number} n */\nfunction helper(n){return {value:n};}const result=helper(3);export const observed=result.value;",
+      "exported": false,
+      "fullStart": 0,
+      "start": 38,
+      "docs": [
+        "/** first */",
+        "/** @param {number} n */"
+      ],
+      "copied": [
+        "/** first */",
+        "/** @param {number} n */"
+      ],
+      "exact": true
+    },
+    {
+      "source": "/** @param {number} n */\n/* between */\n/** @returns {{value:number}} */\nfunction helper(n){return {value:n};}const result=helper(3);export const observed=result.value;",
+      "exported": false,
+      "fullStart": 0,
+      "start": 72,
+      "docs": [
+        "/** @param {number} n */",
+        "/** @returns {{value:number}} */"
+      ],
+      "copied": [
+        "/** @param {number} n */",
+        "/** @returns {{value:number}} */"
+      ],
+      "exact": true
+    },
+    {
+      "source": "export const marker=1;/** @param {number} n */ function helper(n){return {value:n};}const result=helper(3);export const observed=result.value;",
+      "exported": false,
+      "fullStart": 22,
+      "start": 47,
+      "docs": [],
+      "copied": [
+        "/** @param {number} n */"
+      ],
+      "exact": false
+    },
+    {
+      "source": "export const marker=1; // line\n/** @param {number} n */\nfunction helper(n){return {value:n};}const result=helper(3);export const observed=result.value;",
+      "exported": false,
+      "fullStart": 22,
+      "start": 56,
+      "docs": [
+        "/** @param {number} n */"
+      ],
+      "copied": [
+        "/** @param {number} n */"
+      ],
+      "exact": true
+    },
+    {
+      "source": "/**/\n/** @param {number} n */\nfunction helper(n){return {value:n};}const result=helper(3);export const observed=result.value;",
+      "exported": false,
+      "fullStart": 0,
+      "start": 30,
+      "docs": [
+        "/** @param {number} n */"
+      ],
+      "copied": [
+        "/** @param {number} n */"
+      ],
+      "exact": true
+    },
+    {
+      "source": "/*** @param {number} n */\nfunction helper(n){return {value:n};}const result=helper(3);export const observed=result.value;",
+      "exported": false,
+      "fullStart": 0,
+      "start": 26,
+      "docs": [
+        "/*** @param {number} n */"
+      ],
+      "copied": [
+        "/*** @param {number} n */"
+      ],
+      "exact": true
+    },
+    {
+      "source": "/** @param {number} n */\n// ordinary\nfunction helper(n){return {value:n};}const result=helper(3);export const observed=result.value;",
+      "exported": false,
+      "fullStart": 0,
+      "start": 37,
+      "docs": [
+        "/** @param {number} n */"
+      ],
+      "copied": [
+        "/** @param {number} n */"
+      ],
+      "exact": true
+    },
+    {
+      "source": "/** @param {number} n */\n/* ordinary */\nfunction helper(n){return {value:n};}const result=helper(3);export const observed=result.value;",
+      "exported": false,
+      "fullStart": 0,
+      "start": 40,
+      "docs": [
+        "/** @param {number} n */"
+      ],
+      "copied": [
+        "/** @param {number} n */"
+      ],
+      "exact": true
+    },
+    {
+      "source": "/** @param {number} n */\nexport function helper(n){return {value:n};}const result=helper(3);export const observed=result.value;",
+      "exported": true,
+      "fullStart": 0,
+      "start": 25,
+      "docs": [
+        "/** @param {number} n */"
+      ],
+      "copied": [
+        "/** @param {number} n */"
+      ],
+      "exact": true
+    },
+    {
+      "source": "/** first */\n/** @param {number} n */\nexport function helper(n){return {value:n};}const result=helper(3);export const observed=result.value;",
+      "exported": true,
+      "fullStart": 0,
+      "start": 38,
+      "docs": [
+        "/** first */",
+        "/** @param {number} n */"
+      ],
+      "copied": [
+        "/** first */",
+        "/** @param {number} n */"
+      ],
+      "exact": true
+    },
+    {
+      "source": "/** @param {number} n */\n/* between */\n/** @returns {{value:number}} */\nexport function helper(n){return {value:n};}const result=helper(3);export const observed=result.value;",
+      "exported": true,
+      "fullStart": 0,
+      "start": 72,
+      "docs": [
+        "/** @param {number} n */",
+        "/** @returns {{value:number}} */"
+      ],
+      "copied": [
+        "/** @param {number} n */",
+        "/** @returns {{value:number}} */"
+      ],
+      "exact": true
+    },
+    {
+      "source": "export const marker=1;/** @param {number} n */ export function helper(n){return {value:n};}const result=helper(3);export const observed=result.value;",
+      "exported": true,
+      "fullStart": 22,
+      "start": 47,
+      "docs": [],
+      "copied": [
+        "/** @param {number} n */"
+      ],
+      "exact": false
+    },
+    {
+      "source": "export const marker=1; // line\n/** @param {number} n */\nexport function helper(n){return {value:n};}const result=helper(3);export const observed=result.value;",
+      "exported": true,
+      "fullStart": 22,
+      "start": 56,
+      "docs": [
+        "/** @param {number} n */"
+      ],
+      "copied": [
+        "/** @param {number} n */"
+      ],
+      "exact": true
+    },
+    {
+      "source": "/**/\n/** @param {number} n */\nexport function helper(n){return {value:n};}const result=helper(3);export const observed=result.value;",
+      "exported": true,
+      "fullStart": 0,
+      "start": 30,
+      "docs": [
+        "/** @param {number} n */"
+      ],
+      "copied": [
+        "/** @param {number} n */"
+      ],
+      "exact": true
+    },
+    {
+      "source": "/*** @param {number} n */\nexport function helper(n){return {value:n};}const result=helper(3);export const observed=result.value;",
+      "exported": true,
+      "fullStart": 0,
+      "start": 26,
+      "docs": [
+        "/*** @param {number} n */"
+      ],
+      "copied": [
+        "/*** @param {number} n */"
+      ],
+      "exact": true
+    },
+    {
+      "source": "/** @param {number} n */\n// ordinary\nexport function helper(n){return {value:n};}const result=helper(3);export const observed=result.value;",
+      "exported": true,
+      "fullStart": 0,
+      "start": 37,
+      "docs": [
+        "/** @param {number} n */"
+      ],
+      "copied": [
+        "/** @param {number} n */"
+      ],
+      "exact": true
+    },
+    {
+      "source": "/** @param {number} n */\n/* ordinary */\nexport function helper(n){return {value:n};}const result=helper(3);export const observed=result.value;",
+      "exported": true,
+      "fullStart": 0,
+      "start": 40,
+      "docs": [
+        "/** @param {number} n */"
+      ],
+      "copied": [
+        "/** @param {number} n */"
+      ],
+      "exact": true
+    }
+  ],
+  "discrepancies": 2,
+  "analyzedCodeExecuted": false,
+  "parseOnly": true
+}

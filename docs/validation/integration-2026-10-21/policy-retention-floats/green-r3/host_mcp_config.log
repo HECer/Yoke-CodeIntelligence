@@ -1,0 +1,12 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 3.04s
+     Running tests\host_mcp_config.rs (target\debug\deps\host_mcp_config-58c15043f671c0ae.exe)
+
+running 4 tests
+test created_document_and_parent_roundtrip_without_normalizing_foreign_json ... ok
+test foreign_servers_and_formatting_survive_entry_and_container_cleanup ... ok
+test receipt_scope_distinguishes_mirrored_bytes_and_rejects_changed_entries ... ok
+test strict_json_unicode_budgets_and_stale_patch_fail_without_fallback ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+

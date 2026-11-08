@@ -1,0 +1,44 @@
+{
+  "sourceCommit": "d64281c9cdd612b22c15966540dd0748e0fac586",
+  "runtimeCommit": "af5dc154232881b7b646d6892b87b3f3bf082bbc",
+  "parentCommit": "412103f80c9079097c95ab6a87184a5e1ea8bece",
+  "paths": [
+    "native/README.md",
+    "native/docs/semantic-refactor-intents.md",
+    "native/docs/symbol-deletion.md",
+    "native/src/changes_member_decorators.rs",
+    "native/src/changes_symbol_delete.rs",
+    "native/tests/member_decorators.rs",
+    "native/tests/symbol_delete_ranges.rs"
+  ],
+  "newCases": {
+    "unitAdmission": 1,
+    "defaultIntegration": 8,
+    "actualCompilerAndAst": 1,
+    "actualLanguageServerSafeDelete": 1
+  },
+  "nativeGroups": 12,
+  "nativeTotals": {
+    "passed": 577,
+    "failed": 0,
+    "ignored": 11
+  },
+  "nativeInputsMatched": 736,
+  "nativeBinarySha256": "5dcff4918c9a72d0344f2b9588bac6f7b7ec3d8a4d6eaf58de77628379c3c66d",
+  "actualTools": {
+    "node": "C:\\Program Files\\nodejs\\node.exe",
+    "nodeSha256": "ba4e6d110e8c1592a1ecd390f6b05f3da124b13871a5be62b341a07a853c6c32",
+    "nodeVersion": "v24.21.0",
+    "compiler": "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\typescript-5.8.3-lsp-5.1.3\\node_modules\\typescript\\lib\\tsc.js",
+    "compilerSha256": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983",
+    "compilerVersion": "Version 5.8.3",
+    "server": "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\typescript-5.8.3-lsp-5.1.3\\node_modules\\typescript-language-server\\lib\\cli.mjs",
+    "serverSha256": "3c2a7818315bd8399e56f461fe7da01c0f8f67a9c66108af0b655605b088dd77",
+    "serverVersion": "5.1.3",
+    "compilerLibrary": "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\typescript-5.8.3-lsp-5.1.3\\node_modules\\typescript\\lib\\typescript.js",
+    "compilerLibrarySha256": "dd17428736a07e1db1a138d8a14295ddb2699ba780ee15038acdd2c6da5373a0"
+  },
+  "actualExistingSiblingAndPythonPoliciesRevalidated": true,
+  "productionBinaryUnchangedSinceNativeTests": true,
+  "wholeNativeRerun": false
+}

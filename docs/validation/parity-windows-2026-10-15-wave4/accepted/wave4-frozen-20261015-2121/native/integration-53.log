@@ -1,0 +1,20 @@
+    Finished `test` profile [unoptimized] target(s) in 0.57s
+     Running tests\live.rs (target\debug\deps\live-d84dde654b404e7d.exe)
+
+running 4 tests
+test actual_python_server_cross_file_unicode_historical_navigation_and_rename ... ignored, requires YOKE_PYTHON_LSP pointing to an actual installed jedi-language-server executable
+test actual_rust_analyzer_definition_references_and_rename ... ignored, requires an actual installed rust-analyzer
+test actual_rust_analyzer_mcp_references_bind_immutable_snapshot ... ignored, requires an actual installed rust-analyzer
+test actual_typescript_server_cross_file_definition_and_rename ... ignored, requires YOKE_TS_LSP pointing to the real typescript-language-server CLI
+
+test result: ok. 0 passed; 0 failed; 4 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\live_enrichment.rs (target\debug\deps\live_enrichment-fe0b6210f3ac9031.exe)
+
+running 3 tests
+test actual_python_server_normalized_symbols_and_signature_help ... ignored, requires YOKE_PYTHON_LSP identifying the actual installed Jedi language-server
+test actual_rust_server_expanded_call_symbols_completion_signature_diagnostics_and_prepare_rename ... ignored, requires an actual installed rust-analyzer
+test actual_typescript_server_expanded_type_call_symbols_signature_and_published_diagnostics ... ignored, requires YOKE_TS_LSP identifying the actual installed TypeScript language-server CLI
+
+test result: ok. 0 passed; 0 failed; 3 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

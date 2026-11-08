@@ -1,0 +1,17 @@
+{
+  "command": [
+    "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+    "test",
+    "--locked",
+    "-j2",
+    "--test",
+    "github_app_digest_service",
+    "exact_approved_bytes_use_one_put_and_keep_captured_headers_and_receipt_scope",
+    "--",
+    "--exact",
+    "--nocapture",
+    "--test-threads=1"
+  ],
+  "exitCode": 3221226505,
+  "elapsedSeconds": 14.398325800000748
+}

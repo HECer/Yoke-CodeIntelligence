@@ -1,0 +1,26 @@
+{
+  "owner": "integration-20261026-compiler-transaction-v2",
+  "schema": 2,
+  "mode": "build",
+  "runId": "release-cli-compiler-transaction-e89-r1",
+  "sourceCommit": "e89ae42cbb925a9e0cf6f36d9d451f34d0ac6f6e",
+  "producerRunId": null,
+  "command": [
+    "C:\\Python314\\python.exe",
+    "-I",
+    "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\control-compiler-transaction\\compiler_transaction_worker.py",
+    "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-transaction\\release-cli-compiler-transaction-e89-r1\\worker-spec.json"
+  ],
+  "imagePath": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-transaction\\release-cli-compiler-transaction-e89-r1\\owned-release-cli.exe",
+  "selectedImageAbsentBeforeCommand": true,
+  "freshPrivateOutputRole": true,
+  "startAdmissionBytes": 4000000000,
+  "runtimeReserveBytes": 500000000,
+  "deadlineSeconds": 3600,
+  "outerDrainSeconds": 1,
+  "cleanupSeconds": 2,
+  "sourceDigest": "6099b50467bbf2ddac70cf9ab32508625ea85880aece3b362dde225fd61a8291",
+  "originalControlsDigest": "e234b29a1d6a1ad64923016f63039f6407b9dca1e5e11e8f66bbb4ef896e3c18",
+  "transactionControlsDigest": "bf303fc3af6f7a882c63ad10910a6a6fd42fcb72b2eb432311a0fbfcd65501ae",
+  "preparationInventoryIsSeparate": true
+}

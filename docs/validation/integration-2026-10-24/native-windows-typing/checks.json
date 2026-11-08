@@ -1,0 +1,22 @@
+{
+  "typecheck": {
+    "command": "npm run typecheck",
+    "exitCode": 0,
+    "rawSha256": "36a2fc6a9f2da5552f742b409d262fac36be5e6241a4a574bde82f58b9b18170",
+    "renderedSha256": "e594ac1ea6f48ec1037a0ed594541b346e13616fbcd42335d0c5ab7324066162",
+    "rendering": "UTF-8, normalized line endings and trailing whitespace; original PowerShell native stderr wrappers retained"
+  },
+  "npm-test": {
+    "command": "npm test",
+    "exitCode": 0,
+    "rawSha256": "042a4fee39b53920f844131ce406a778f7c6f4a4a81668d32b9bb2a95fc7ed37",
+    "renderedSha256": "948d7ee95087764003f294579fc5d839921d19183773b0ccfaf14cd6b75566ae",
+    "rendering": "UTF-8, normalized line endings and trailing whitespace; original PowerShell native stderr wrappers retained",
+    "total": 263,
+    "passed": 260,
+    "failed": 0,
+    "skipped": 3,
+    "durationMs": 53513.1824
+  },
+  "nativeTestsExecuted": 0
+}

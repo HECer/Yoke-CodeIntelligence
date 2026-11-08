@@ -1,0 +1,352 @@
+//! Actual private driver tests: saved snapshots, no adapter recapture or fake run.
+use super::*;
+use crate::{
+    Engine,
+    analysis::AnalyzerEpoch,
+    model::hash,
+    retrieval_scopes::{self, ProbeOutcome, RetrievalHardError},
+};
+use std::{
+    fs,
+    sync::{
+        Arc,
+        atomic::{AtomicBool, Ordering},
+    },
+};
+
+fn fixture() -> (tempfile::TempDir, Engine, Snapshot, Graph) {
+    let directory = tempfile::tempdir().unwrap();
+    for (path, text) in [
+        ("package.json", "{\"name\":"),
+        ("packages/a/package.json", "{\"name\":\"a\"}"),
+        ("packages/b/package.json", "{\"name\":\"b\"}"),
+        ("packages/a/main.rs", "fn payment_handler(){ payment(); }\n"),
+        ("packages/b/main.rs", "fn other(){ let unrelated=1; }\n"),
+    ] {
+        let target = directory.path().join(path);
+        fs::create_dir_all(target.parent().unwrap()).unwrap();
+        fs::write(target, text).unwrap();
+    }
+    let mut engine = Engine::open(directory.path()).unwrap();
+    engine.capture_epoch = AnalyzerEpoch::V9;
+    let (snapshot, graph, _, _) = engine.index(&Deadline::new(30000)).unwrap();
+    (directory, engine, snapshot, graph)
+}
+fn args() -> Value {
+    json!({"query":"payment","relativePath":"packages","pathGlob":"**/*.rs","graphWeight":0})
+}
+fn state(store: &Store) -> (i64, Vec<String>) {
+    let changes = store
+        .db
+        .query_row("SELECT total_changes()", [], |r| r.get(0))
+        .unwrap();
+    let mut names = fs::read_dir(store.dir.join("blobs"))
+        .unwrap()
+        .map(|e| e.unwrap().file_name().to_string_lossy().into_owned())
+        .collect::<Vec<_>>();
+    names.sort();
+    (changes, names)
+}
+#[test]
+fn actual_auto_driver_saved_snapshot_propagates_later_marker_integrity_before_policy_fallback() {
+    let (_directory, engine, snapshot, graph) = fixture();
+    let deadline = Deadline::new(30000);
+    // A canonical earlier marker is malformed source, while a later marker has a
+    // hard integrity failure. Native global is a genuine saved-corpus control.
+    let global = find(&engine.store, &snapshot, &graph, &args(), &deadline).unwrap();
+    assert_eq!(global["items"][0]["name"], "payment_handler");
+    let file = snapshot
+        .files
+        .iter()
+        .find(|f| f.path == "packages/b/package.json")
+        .unwrap();
+    let original = fs::read(engine.store.dir.join("blobs").join(&file.hash)).unwrap();
+    assert_eq!(hash(&original), file.hash);
+    let mut corrupt = original;
+    corrupt[0] = b'!';
+    assert_eq!(corrupt.len(), file.size);
+    fs::write(engine.store.dir.join("blobs").join(&file.hash), &corrupt).unwrap();
+    // The unchanged global path filters out marker files and remains usable.
+    // A catch-all auto fallback would therefore return success and fail below.
+    let after_corruption = find(&engine.store, &snapshot, &graph, &args(), &deadline).unwrap();
+    assert_eq!(
+        serde_json::to_vec(&after_corruption).unwrap(),
+        serde_json::to_vec(&global).unwrap()
+    );
+    let before = state(&engine.store);
+    // Deliberately invoke the ACTUAL private auto entry directly. No Engine.index,
+    // adapter, alternate test driver, or source-policy restart sits before it.
+    let error = find_compatibility_auto(
+        &engine.store,
+        &snapshot,
+        &graph,
+        &args(),
+        &deadline,
+        4_000_000,
+    )
+    .expect_err("Observed marker integrity must never become successful global fallback");
+    assert!(
+        matches!(
+            error.downcast_ref::<RetrievalHardError>(),
+            Some(RetrievalHardError::SourceIntegrity(_))
+        ),
+        "Wrong hard category or catch-all fallback: {error:#}"
+    );
+    assert_eq!(
+        state(&engine.store),
+        before,
+        "Scoring must neither recapture nor publish/retry a new corpus"
+    );
+    assert_eq!(
+        fs::read(engine.store.dir.join("blobs").join(&file.hash)).unwrap(),
+        corrupt
+    );
+}
+#[test]
+fn actual_global_after_probe_driver_honors_original_cancelled_run() {
+    let (_directory, engine, snapshot, graph) = fixture();
+    let cancel = Arc::new(AtomicBool::new(false));
+    let original = Deadline::new(30000);
+    let before_state = state(&engine.store);
+    Deadline::run_bounded(&original, cancel.clone(), || {
+        let deadline = Deadline::new(30000);
+        let options = checked_retrieval_options(&args(), &deadline)?;
+        let mut run =
+            retrieval_scopes::begin(&engine.store, &snapshot, &graph, &deadline, 4_000_000)?;
+        let fallback = match retrieval_scopes::probe(&mut run)? {
+            ProbeOutcome::UnsupportedPolicy(fallback) => fallback,
+            _ => anyhow::bail!(
+                "The genuine malformed marker must yield typed policy fallback before cancellation"
+            ),
+        };
+        assert_eq!(fallback.code(), "source_syntax");
+        assert_eq!(run.usage().marker_files_checked(), 3);
+        assert_eq!(run.usage().marker_bytes_charged(), 32);
+        assert!(std::ptr::eq(run.deadline(), &deadline));
+        let usage = run.usage();
+        cancel.store(true, Ordering::SeqCst);
+        let error = rank_global_after_probe(&mut run, &options, &fallback).expect_err(
+            "Cancellation AFTER successful probe must reach the actual B fallback driver",
+        );
+        assert!(
+            matches!(error, RetrievalHardError::Cancelled(_)),
+            "Fallback ignored/reclassified the original cancellation: {error:?}"
+        );
+        assert!(std::ptr::eq(run.deadline(), &deadline));
+        let after = run.usage();
+        assert_eq!(after.marker_files_checked(), usage.marker_files_checked());
+        assert_eq!(after.marker_bytes_charged(), usage.marker_bytes_charged());
+        assert_eq!(after.input_bytes_charged(), usage.input_bytes_charged());
+        assert_eq!(
+            after.body_input_bytes_charged(),
+            usage.body_input_bytes_charged()
+        );
+        assert_eq!(
+            after.document_bytes_charged(),
+            usage.document_bytes_charged()
+        );
+        cancel.store(false, Ordering::SeqCst);
+        Ok(())
+    })
+    .unwrap();
+    // The cancelled run has been dropped. Restore only the test receipt's DB
+    // progress handler so reading total_changes cannot itself be cancelled.
+    engine.store.set_deadline(&Deadline::new(30000)).unwrap();
+    assert_eq!(state(&engine.store), before_state);
+}
+
+fn many_scope_fixture() -> (tempfile::TempDir, Engine, Snapshot, Graph) {
+    let directory = tempfile::tempdir().unwrap();
+    let missing = (0..70)
+        .map(|i| format!("'missing{i:03}'"))
+        .collect::<Vec<_>>()
+        .join(",");
+    let root_cargo =
+        format!("[package]\nname='root-cargo'\n[workspace]\nmembers=['packages/*',{missing}]\n");
+    for (path, text) in [
+        ("Cargo.toml", root_cargo.as_str()),
+        (
+            "package.json",
+            "{\"name\":\"root-npm\",\"workspaces\":[\"packages/*\"]}",
+        ),
+        ("pnpm-workspace.yaml", "packages:\n  - 'packages/*'\n"),
+        ("root.rs", "fn root_scope(){ payment(); }\n"),
+    ] {
+        fs::write(directory.path().join(path), text).unwrap();
+    }
+    for i in 0..65 {
+        let root = directory.path().join(format!("packages/p{i:03}"));
+        fs::create_dir_all(&root).unwrap();
+        fs::write(
+            root.join("Cargo.toml"),
+            format!("[package]\nname='cargo-{i:03}'\n"),
+        )
+        .unwrap();
+        fs::write(
+            root.join("package.json"),
+            format!("{{\"name\":\"npm-{i:03}\"}}"),
+        )
+        .unwrap();
+        fs::write(
+            root.join("main.rs"),
+            format!("fn member_{i:03}(){{ payment(); }}\n"),
+        )
+        .unwrap();
+    }
+    let mut engine = Engine::open(directory.path()).unwrap();
+    engine.capture_epoch = AnalyzerEpoch::V9;
+    let (snapshot, graph, _, _) = engine.index(&Deadline::new(30000)).unwrap();
+    assert_eq!(
+        snapshot
+            .files
+            .iter()
+            .filter(|f| f.path.ends_with("/main.rs") || f.path == "root.rs")
+            .count(),
+        66
+    );
+    (directory, engine, snapshot, graph)
+}
+fn metadata_args() -> Value {
+    json!({"query":"payment","pathGlob":"**/*.rs","graphWeight":0,"limit":1,"includeBody":false})
+}
+#[test]
+fn actual_auto_many_scopes_emit_literal_canonical_metadata_prefixes_and_omitted_counts() {
+    let (_directory, engine, snapshot, graph) = many_scope_fixture();
+    let before = state(&engine.store);
+    let result = find_compatibility_auto(
+        &engine.store,
+        &snapshot,
+        &graph,
+        &metadata_args(),
+        &Deadline::new(30000),
+        4_000_000,
+    )
+    .unwrap();
+    assert_eq!(result["items"][0]["name"], "root_scope");
+    let scope = &result["retrievalScope"];
+    assert_eq!(scope["actualPackageRootCount"], 66);
+    assert_eq!(scope["queryEligibleScopeCount"], 66);
+    let roots = scope["scopes"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .map(|s| s["root"].as_str().unwrap().to_owned())
+        .collect::<Vec<_>>();
+    let expected = std::iter::once(".".to_owned())
+        .chain((0..63).map(|i| format!("packages/p{i:03}")))
+        .collect::<Vec<_>>();
+    assert_eq!(roots, expected);
+    assert_eq!(scope["omittedScopeSummaryCount"], 2);
+    let bindings = scope["declarationBindings"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .map(|b| b["path"].as_str().unwrap().to_owned())
+        .collect::<Vec<_>>();
+    let expected = ["Cargo.toml".to_owned(), "package.json".to_owned()]
+        .into_iter()
+        .chain((0..63).flat_map(|i| {
+            [
+                format!("packages/p{i:03}/Cargo.toml"),
+                format!("packages/p{i:03}/package.json"),
+            ]
+        }))
+        .collect::<Vec<_>>();
+    assert_eq!(bindings, expected);
+    assert_eq!(scope["omittedDeclarationBindingCount"], 5);
+    let diagnostics = scope["diagnostics"].as_array().unwrap();
+    assert_eq!(
+        diagnostics
+            .iter()
+            .map(|d| d["selector"].as_str().unwrap().to_owned())
+            .collect::<Vec<_>>(),
+        (0..64)
+            .map(|i| format!("missing{i:03}"))
+            .collect::<Vec<_>>()
+    );
+    assert!(
+        diagnostics
+            .iter()
+            .all(|d| d["path"] == "Cargo.toml" && d["code"] == "missing_member")
+    );
+    assert_eq!(scope["omittedDiagnosticCount"], 6);
+    assert!(serde_json::to_vec(scope).unwrap().len() <= 256_000);
+    assert_eq!(state(&engine.store), before);
+}
+#[test]
+fn actual_auto_output_ceiling_reserves_mandatory_whole_result_before_any_optional_prefix() {
+    let (_directory, engine, snapshot, graph) = many_scope_fixture();
+    let before = state(&engine.store);
+    let full = find_compatibility_auto(
+        &engine.store,
+        &snapshot,
+        &graph,
+        &metadata_args(),
+        &Deadline::new(30000),
+        4_000_000,
+    )
+    .unwrap();
+    let mut mandatory = full.clone();
+    for key in [
+        "diagnostics",
+        "scopes",
+        "declarationBindings",
+        "sourceOmissions",
+    ] {
+        mandatory["retrievalScope"][key] = json!([]);
+    }
+    for (key, count) in [
+        ("omittedDiagnosticCount", 70),
+        ("omittedScopeSummaryCount", 66),
+        ("omittedDeclarationBindingCount", 133),
+        ("omittedSourceOmissionCount", 0),
+    ] {
+        mandatory["retrievalScope"][key] = json!(count);
+    }
+    let exact = serde_json::to_vec(&mandatory).unwrap().len();
+    assert!(exact > 0 && exact < serde_json::to_vec(&full).unwrap().len());
+    let small = find_compatibility_auto(
+        &engine.store,
+        &snapshot,
+        &graph,
+        &metadata_args(),
+        &Deadline::new(30000),
+        exact,
+    )
+    .unwrap();
+    assert!(serde_json::to_vec(&small).unwrap().len() <= exact);
+    assert_eq!(small["items"], full["items"]);
+    assert_eq!(
+        small["retrievalScope"]["partitionId"],
+        full["retrievalScope"]["partitionId"]
+    );
+    for key in [
+        "diagnostics",
+        "scopes",
+        "declarationBindings",
+        "sourceOmissions",
+    ] {
+        assert!(
+            small["retrievalScope"][key].as_array().unwrap().is_empty(),
+            "{key}"
+        );
+    }
+    for (key, count) in [
+        ("omittedDiagnosticCount", 70),
+        ("omittedScopeSummaryCount", 66),
+        ("omittedDeclarationBindingCount", 133),
+        ("omittedSourceOmissionCount", 0),
+    ] {
+        assert_eq!(small["retrievalScope"][key], count, "{key}");
+    }
+    let error=find_compatibility_auto(&engine.store,&snapshot,&graph,&metadata_args(),&Deadline::new(30000),exact-1)
+        .expect_err("One byte below mandatory whole-result capacity must fail, never become an artifact or retry");
+    assert!(
+        matches!(
+            error.downcast_ref::<RetrievalHardError>(),
+            Some(RetrievalHardError::OutputCapacity(_))
+        ),
+        "{error:#}"
+    );
+    assert_eq!(state(&engine.store), before);
+}

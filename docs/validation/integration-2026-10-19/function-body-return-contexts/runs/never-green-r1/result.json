@@ -1,0 +1,35 @@
+{
+  "cases": [
+    {
+      "case": 0,
+      "language": "ts",
+      "exitCode": 1,
+      "error": "Body context has errors after expansion: [{\"config\":\"tsconfig.json\",\"code\":7027,\"severity\":\"error\",\"message\":\"Unreachable code detected.\",\"path\":\"main.ts\",\"startByte\":209,\"endByte\":229,\"text\":\"break __ci_inline_2;\"}]"
+    },
+    {
+      "case": 1,
+      "language": "ts",
+      "exitCode": 1,
+      "error": "Body context has errors after expansion: [{\"config\":\"tsconfig.json\",\"code\":7027,\"severity\":\"error\",\"message\":\"Unreachable code detected.\",\"path\":\"main.ts\",\"startByte\":207,\"endByte\":227,\"text\":\"break __ci_inline_2;\"}]"
+    },
+    {
+      "case": 2,
+      "language": "ts",
+      "exitCode": 1,
+      "error": "Body context has errors after expansion: [{\"config\":\"tsconfig.json\",\"code\":7027,\"severity\":\"error\",\"message\":\"Unreachable code detected.\",\"path\":\"main.ts\",\"startByte\":205,\"endByte\":225,\"text\":\"break __ci_inline_2;\"}]"
+    },
+    {
+      "case": 3,
+      "language": "ts",
+      "exitCode": 1,
+      "error": "Body context has errors after expansion: [{\"config\":\"tsconfig.json\",\"code\":7027,\"severity\":\"error\",\"message\":\"Unreachable code detected.\",\"path\":\"main.ts\",\"startByte\":174,\"endByte\":194,\"text\":\"break __ci_inline_2;\"}]"
+    }
+  ],
+  "allChecksPassed": false,
+  "nativeAdmission": false,
+  "snapshotIdsSynthetic": true,
+  "analyzedCodeExecuted": false,
+  "ownedLiteralFixturesExecuted": true,
+  "diagnosticOnlyWorkerPatch": false,
+  "prototypeBehaviorWorkerPatch": true
+}

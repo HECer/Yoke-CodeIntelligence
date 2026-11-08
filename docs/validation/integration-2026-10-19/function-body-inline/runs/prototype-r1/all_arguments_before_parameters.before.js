@@ -1,0 +1,1 @@
+let n=1;const events=[];function helper(n){events.push(n);return ()=>n;}const result=helper((events.push('first'),n), (events.push('extra'),n=3));globalThis.observed={value:result(),events,n};

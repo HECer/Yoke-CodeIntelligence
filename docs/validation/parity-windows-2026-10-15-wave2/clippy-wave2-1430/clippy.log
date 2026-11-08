@@ -1,0 +1,193 @@
+    Checking yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+error: manual implementation of `.is_multiple_of()`
+   --> native\src\host_install_namespace.rs:454:35
+    |
+454 |                     length > 0 && length % 2 == 0,
+    |                                   ^^^^^^^^^^^^^^^ help: replace with: `length.is_multiple_of(2)`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#manual_is_multiple_of
+    = note: `-D clippy::manual-is-multiple-of` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::manual_is_multiple_of)]`
+
+error: manual implementation of `.is_multiple_of()`
+   --> native\src\host_install_namespace.rs:464:25
+    |
+464 |                         next % 8 == 0
+    |                         ^^^^^^^^^^^^^ help: replace with: `next.is_multiple_of(8)`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#manual_is_multiple_of
+
+error: this `if` statement can be collapsed
+   --> native\src\host_install_recovery.rs:459:13
+    |
+459 | /             if let Some(output) = run.output.as_mut() {
+460 | |                 if !run.output_at_target {
+461 | |                     output.rename_no_replace(&target(selection, index)?, d)?;
+462 | |                     run.output_at_target = true;
+463 | |                 }
+464 | |             }
+    | |_____________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#collapsible_if
+    = note: `-D clippy::collapsible-if` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::collapsible_if)]`
+help: collapse nested if block
+    |
+459 ~             if let Some(output) = run.output.as_mut()
+460 ~                 && !run.output_at_target {
+461 |                     output.rename_no_replace(&target(selection, index)?, d)?;
+462 |                     run.output_at_target = true;
+463 ~                 }
+    |
+
+error: this `if` statement can be collapsed
+   --> native\src\host_install_recovery.rs:528:9
+    |
+528 | /         if let Some(original) = run.original.as_mut() {
+529 | |             if !run.original_at_target {
+530 | |                 original.rename_no_replace(&target(selection, index)?, d)?;
+531 | |                 run.original_at_target = true;
+...   |
+535 | |         }
+    | |_________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#collapsible_if
+help: collapse nested if block
+    |
+528 ~         if let Some(original) = run.original.as_mut()
+529 ~             && !run.original_at_target {
+530 |                 original.rename_no_replace(&target(selection, index)?, d)?;
+...
+533 |                 append_event(selection, journal, d)?;
+534 ~             }
+    |
+
+error: this `if` statement can be collapsed
+   --> native\src\host_install.rs:465:5
+    |
+465 | /     if let Some(current) = head(selection, d)? {
+466 | |         if current.plan_id == plan.id {
+467 | |             return committed_replay(selection, plan, &current, d);
+468 | |         }
+469 | |     }
+    | |_____^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#collapsible_if
+help: collapse nested if block
+    |
+465 ~     if let Some(current) = head(selection, d)?
+466 ~         && current.plan_id == plan.id {
+467 |             return committed_replay(selection, plan, &current, d);
+468 ~         }
+    |
+
+error: the loop variable `index` is used to index `runs`
+   --> native\src\host_install.rs:553:22
+    |
+553 |         for index in 0..plan.files.len() {
+    |                      ^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#needless_range_loop
+    = note: `-D clippy::needless-range-loop` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::needless_range_loop)]`
+help: consider using an iterator and enumerate()
+    |
+553 -         for index in 0..plan.files.len() {
+553 +         for (index, <item>) in runs.iter_mut().enumerate().take(plan.files.len()) {
+    |
+
+error: this `if` statement can be collapsed
+   --> native\src\host_install.rs:561:13
+    |
+561 | /             if let Some(original) = run.original.take() {
+562 | |                 if journal.files[index].stage != "cleaned" {
+563 | |                     original.delete_owned(d)?;
+564 | |                 }
+565 | |             }
+    | |_____________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#collapsible_if
+help: collapse nested if block
+    |
+561 ~             if let Some(original) = run.original.take()
+562 ~                 && journal.files[index].stage != "cleaned" {
+563 |                     original.delete_owned(d)?;
+564 ~                 }
+    |
+
+error: this `if` statement can be collapsed
+    --> native\src\host_install.rs:1537:5
+     |
+1537 | /     if let Some(receipt) = &previous {
+1538 | |         if receipt.plan_id == plan.id {
+1539 | |             return Ok(receipt.clone());
+1540 | |         }
+1541 | |     }
+     | |_____^
+     |
+     = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#collapsible_if
+help: collapse nested if block
+     |
+1537 ~     if let Some(receipt) = &previous
+1538 ~         && receipt.plan_id == plan.id {
+1539 |             return Ok(receipt.clone());
+1540 ~         }
+     |
+
+error: very complex type used. Consider factoring parts into `type` definitions
+   --> native\src\host_install_io.rs:206:39
+    |
+206 |         static BEFORE_NAMESPACE_OPEN: std::cell::RefCell<Option<Box<dyn FnOnce() -> Result<()>>>> =
+    |                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#type_complexity
+    = note: `-D clippy::type-complexity` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::type_complexity)]`
+
+error: unnecessary `map_err` on constructor `Err(_)`
+    --> native\src\host_install_io.rs:1576:24
+     |
+1576 |                   return Err(std::io::Error::last_os_error())
+     |  ________________________^
+1577 | |                     .map_err(anyhow::Error::from)
+     | |_________________________________________________^ help: try: `Err(anyhow::Error::from(std::io::Error::last_os_error()))`
+     |
+     = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#unnecessary_map_on_constructor
+     = note: `-D clippy::unnecessary-map-on-constructor` implied by `-D warnings`
+     = help: to override `-D warnings` add `#[allow(clippy::unnecessary_map_on_constructor)]`
+
+error: derefed type is same as origin
+    --> native\src\lsp.rs:3136:31
+     |
+3136 |         if let Some(staged) = staged.as_deref_mut() {
+     |                               ^^^^^^^^^^^^^^^^^^^^^ help: try: `staged`
+     |
+     = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#needless_option_as_deref
+     = note: `-D clippy::needless-option-as-deref` implied by `-D warnings`
+     = help: to override `-D warnings` add `#[allow(clippy::needless_option_as_deref)]`
+
+error: this `if` statement can be collapsed
+   --> native\src\meaning_build.rs:898:9
+    |
+898 | /         if let Some(id) = &p.attempt_id {
+899 | |             if let Ok(a) = ledger.attempt_status(id) {
+900 | |                 match a.state {
+901 | |                     AttemptState::Reserved => {
+...   |
+910 | |         }
+    | |_________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#collapsible_if
+help: collapse nested if block
+    |
+898 ~         if let Some(id) = &p.attempt_id
+899 ~             && let Ok(a) = ledger.attempt_status(id) {
+900 |                 match a.state {
+...
+908 |                 }
+909 ~             }
+    |
+
+error: could not compile `yoke-code-intelligence` (lib) due to 10 previous errors
+warning: build failed, waiting for other jobs to finish...
+error: could not compile `yoke-code-intelligence` (lib test) due to 12 previous errors

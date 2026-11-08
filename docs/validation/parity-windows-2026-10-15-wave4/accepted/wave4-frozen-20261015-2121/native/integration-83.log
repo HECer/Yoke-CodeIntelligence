@@ -1,0 +1,36 @@
+    Finished `test` profile [unoptimized] target(s) in 0.83s
+     Running tests\query_parity.rs (target\debug\deps\query_parity-fd60f1161151b971.exe)
+
+running 12 tests
+test body_retrieval_in_file_mode_never_returns_symbol_rows ... ok
+test clipped_single_line_context_keeps_the_match_and_exact_unicode_bytes ... ok
+test bulk_edit_selection_is_atomic_and_conflicting_modes_are_rejected ... ok
+test advertised_native_protocol_reaches_advanced_semantic_operations ... ok
+test exact_name_path_symbol_query_has_source_bound_body_and_depth ... ok
+test multiline_case_insensitive_search_exposes_exact_occurrences_and_symbol_owners ... ok
+test selected_occurrences_and_count_guards_prepare_an_atomic_reviewable_bulk_plan ... ok
+test relative_directory_scope_is_segment_aware_and_globs_are_explicit ... ok
+test task_words_inside_multiline_bodies_are_searchable_without_becoming_fact ... ok
+test public_engine_semantics_preserve_host_configuration_callbacks ... ok
+test text_search_pages_past_the_first_ten_thousand_occurrences ... ok
+test text_search_streams_the_captured_corpus_beyond_the_symbol_body_cache_budget ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.37s
+
+     Running tests\read_only_dependencies.rs (target\debug\deps\read_only_dependencies-652ca9b7d8ea27bc.exe)
+
+running 11 tests
+test dependency_sources_retain_file_size_binary_and_secret_content_omissions ... ok
+test an_unknown_capture_epoch_cannot_grant_dependency_source_authority ... ok
+test empty_dependency_option_preserves_version_one_identity_and_rejects_other_protected_scopes ... ok
+test authentic_legacy_overlay_receipt_proves_readonly_source_without_a_live_session ... ok
+test derived_dependency_members_require_exact_origin_proof_and_remain_virtual ... ok
+test explicit_readonly_dependency_capture_keeps_secret_state_and_size_protections ... ok
+test materialized_language_server_tree_reads_proven_dependency_members_only ... ok
+test editor_overlay_inherits_native_capture_scope_without_dependency_write_access ... ok
+test passive_provider_materialization_can_omit_exact_source_selectors_without_changing_capture ... ok
+test prospective_read_admission_is_scoped_metadata_and_cannot_read_uncaptured_bytes ... ok
+test real_git_ignored_dependencies_stay_ignored_under_the_readonly_host_scope ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.39s
+

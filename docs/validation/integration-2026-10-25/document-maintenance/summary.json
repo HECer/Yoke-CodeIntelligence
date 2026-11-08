@@ -1,0 +1,847 @@
+{
+  "schema": 1,
+  "application": "Code Intelligence",
+  "nativeVersion": "0.5.0",
+  "retainedTypeScriptVersion": "0.3.0",
+  "sourceCommit": "a27b5084dbb329d40b589a95a41085f3bca1ea50",
+  "platform": "x86_64-pc-windows-msvc",
+  "selectedSourceInputs": 1049,
+  "wholeNativeGroups": 2,
+  "nativePassed": 788,
+  "nativeFailed": 0,
+  "nativeExistingIgnored": 7,
+  "nativeFilteredOut": 0,
+  "ignoredNames": [
+    "test host_install::output_recovery_tests::output_recovery_worker ... ignored, spawned only with an explicitly selected parent-owned temp fixture",
+    "test retrieval_saved_graph::tests::oversized_saved_row_refuses_before_raw_payload_read_and_auto_fallback ... ignored, qualified SQLite64MB row fixture:reserve>=512MB RAM/1GB disk; not executed",
+    "test retrieval_scopes::capacity_tests::genuine_4096_utf8_path_is_captured_and_4097_is_refused_by_existing_capture_boundary ... ignored, qualified Windows long-path job; creation/capture failure is setup failure, never skip-as-pass",
+    "test retrieval_scopes::capacity_tests::genuine_one_million_observations_is_byte_dominated_then_plus_one_refuses_before_graph_loading ... ignored, optional very large job:qualify>=8GB RAM/12GB disk, no runtime guarantee; may hit earlier constructor limit",
+    "test retrieval_scopes::capacity_tests::real_100k_files_pass_then_one_real_function_rejects_entity_100001_before_graph_reload ... ignored, qualified root job:100K real files, estimated<=2GB RAM/3GB disk; no SLA",
+    "test retrieval_scopes::capacity_tests::real_graph_exact_64mb_passes_and_plus_one_refuses_before_saved_graph_loading ... ignored, qualified root job:64K real files/two64MB graphs, estimated<=2GB RAM/3GB disk",
+    "test retrieval_scopes::capacity_tests::real_ownership_exact_16mb_passes_and_next_byte_refuses_before_body_scoring ... ignored, qualified root job:38277 real paths/two~53MB graphs, estimated<=2GB RAM/3GB disk"
+  ],
+  "nativeRuns": [
+    {
+      "owner": "integration-20261025-maintenance-control-v1",
+      "schema": 1,
+      "runId": "build-lib-maintenance-r1",
+      "mode": "build",
+      "target": "lib",
+      "sourceCommit": "a27b5084dbb329d40b589a95a41085f3bca1ea50",
+      "completed": true,
+      "inputsUnchanged": true,
+      "nativeImageRead": true,
+      "testExecutionRequested": false,
+      "nativeImageReadAttempted": true,
+      "metadataOnly": false,
+      "qualification": "Selected tracked source bytes and private controls are mapped before/after. External dependency/tool binaries, caches, all environment values and the entire host are not frozen. No broader platform, hosted CI, release or universal acceptance is implied. The host must execute these controllers serially and exclude other target-directory producers.",
+      "serialMutexAbandoned": false,
+      "selectedSource": {
+        "path": "native/src/lib.rs",
+        "sha256": "41f1ce4c9b79c79f4f024567151e37d3c375d8b573ecfcf8adc3b31273353aae",
+        "bytes": 41005
+      },
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--lib",
+        "--no-run",
+        "--locked",
+        "-j1",
+        "--message-format=json"
+      ],
+      "commandOwnerCompleted": true,
+      "sourceInputCount": 1049,
+      "selectedArtifact": {
+        "reason": "compiler-artifact",
+        "package_id": "path+file:///C:/Users/Lomi/Documents/NN-Developed/Yoke-CodeIntelligence/native#yoke-code-intelligence@0.5.0",
+        "manifest_path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\native\\Cargo.toml",
+        "target": {
+          "kind": [
+            "lib"
+          ],
+          "crate_types": [
+            "lib"
+          ],
+          "name": "yoke",
+          "src_path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\native\\src\\lib.rs",
+          "edition": "2024",
+          "doc": true,
+          "doctest": true,
+          "test": true
+        },
+        "profile": {
+          "opt_level": "0",
+          "debuginfo": 0,
+          "debug_assertions": true,
+          "overflow_checks": true,
+          "test": true
+        },
+        "features": [],
+        "filenames": [
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\yoke-3731cc109f7cf153.exe",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\yoke-3731cc109f7cf153.pdb"
+        ],
+        "executable": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\yoke-3731cc109f7cf153.exe",
+        "fresh": false
+      },
+      "selectedImage": {
+        "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\yoke-3731cc109f7cf153.exe",
+        "sha256": "945e0791efd8be92d1a5f49d23a5e84dca10c4bfcf5bee550f17f2e13d754c8f",
+        "fileIdentity": [
+          5078471845122615367,
+          2814749770673045
+        ],
+        "bytes": 156222976,
+        "mtimeNs": 1792954562167062000,
+        "links": 1,
+        "noReparseAncestors": true,
+        "writersAndDeletionDeniedThroughRecheck": true
+      },
+      "freeAfter": 7895027712
+    },
+    {
+      "owner": "integration-20261025-maintenance-control-v1",
+      "schema": 1,
+      "runId": "test-lib-maintenance-r1",
+      "mode": "test",
+      "target": "lib",
+      "sourceCommit": "a27b5084dbb329d40b589a95a41085f3bca1ea50",
+      "completed": true,
+      "inputsUnchanged": true,
+      "nativeImageRead": true,
+      "testExecutionRequested": true,
+      "nativeImageReadAttempted": true,
+      "metadataOnly": false,
+      "qualification": "Selected tracked source bytes and private controls are mapped before/after. External dependency/tool binaries, caches, all environment values and the entire host are not frozen. No broader platform, hosted CI, release or universal acceptance is implied. The host must execute these controllers serially and exclude other target-directory producers.",
+      "serialMutexAbandoned": false,
+      "selectedSource": {
+        "path": "native/src/lib.rs",
+        "sha256": "41f1ce4c9b79c79f4f024567151e37d3c375d8b573ecfcf8adc3b31273353aae",
+        "bytes": 41005
+      },
+      "selectedArtifact": {
+        "reason": "compiler-artifact",
+        "package_id": "path+file:///C:/Users/Lomi/Documents/NN-Developed/Yoke-CodeIntelligence/native#yoke-code-intelligence@0.5.0",
+        "manifest_path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\native\\Cargo.toml",
+        "target": {
+          "kind": [
+            "lib"
+          ],
+          "crate_types": [
+            "lib"
+          ],
+          "name": "yoke",
+          "src_path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\native\\src\\lib.rs",
+          "edition": "2024",
+          "doc": true,
+          "doctest": true,
+          "test": true
+        },
+        "profile": {
+          "opt_level": "0",
+          "debuginfo": 0,
+          "debug_assertions": true,
+          "overflow_checks": true,
+          "test": true
+        },
+        "features": [],
+        "filenames": [
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\yoke-3731cc109f7cf153.exe",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\yoke-3731cc109f7cf153.pdb"
+        ],
+        "executable": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\yoke-3731cc109f7cf153.exe",
+        "fresh": false
+      },
+      "producerRunId": "build-lib-maintenance-r1",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\yoke-3731cc109f7cf153.exe",
+        "--test-threads=1",
+        "--nocapture"
+      ],
+      "commandOwnerCompleted": true,
+      "testImageResumed": true,
+      "sourceInputCount": 1049,
+      "selectedImage": {
+        "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\yoke-3731cc109f7cf153.exe",
+        "sha256": "945e0791efd8be92d1a5f49d23a5e84dca10c4bfcf5bee550f17f2e13d754c8f",
+        "fileIdentity": [
+          5078471845122615367,
+          2814749770673045
+        ],
+        "bytes": 156222976,
+        "mtimeNs": 1792954562167062000,
+        "links": 1,
+        "noReparseAncestors": true,
+        "writersAndDeletionDeniedThroughRecheck": true
+      },
+      "testSummary": {
+        "passed": 764,
+        "failed": 0,
+        "ignored": 7,
+        "measured": 0,
+        "filteredOut": 0,
+        "existingIgnoredPromoted": false,
+        "summaryLineCountIncludingNestedOutput": 1
+      },
+      "wholeGroupNoNameFilter": true,
+      "freeAfter": 7868219392
+    },
+    {
+      "owner": "integration-20261025-maintenance-control-v1",
+      "schema": 1,
+      "runId": "build-dashboard-maintenance-r1",
+      "mode": "build",
+      "target": "session_dashboard_management",
+      "sourceCommit": "a27b5084dbb329d40b589a95a41085f3bca1ea50",
+      "completed": true,
+      "inputsUnchanged": true,
+      "nativeImageRead": true,
+      "testExecutionRequested": false,
+      "nativeImageReadAttempted": true,
+      "metadataOnly": false,
+      "qualification": "Selected tracked source bytes and private controls are mapped before/after. External dependency/tool binaries, caches, all environment values and the entire host are not frozen. No broader platform, hosted CI, release or universal acceptance is implied. The host must execute these controllers serially and exclude other target-directory producers.",
+      "serialMutexAbandoned": false,
+      "selectedSource": {
+        "path": "native/tests/session_dashboard_management.rs",
+        "sha256": "5a461c49bea5b7cc015d35783b354ee77796fd0a7463fad8658c74d1d4c8996d",
+        "bytes": 56045
+      },
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--test",
+        "session_dashboard_management",
+        "--no-run",
+        "--locked",
+        "-j1",
+        "--message-format=json"
+      ],
+      "commandOwnerCompleted": true,
+      "sourceInputCount": 1049,
+      "selectedArtifact": {
+        "reason": "compiler-artifact",
+        "package_id": "path+file:///C:/Users/Lomi/Documents/NN-Developed/Yoke-CodeIntelligence/native#yoke-code-intelligence@0.5.0",
+        "manifest_path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\native\\Cargo.toml",
+        "target": {
+          "kind": [
+            "test"
+          ],
+          "crate_types": [
+            "bin"
+          ],
+          "name": "session_dashboard_management",
+          "src_path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\native\\tests\\session_dashboard_management.rs",
+          "edition": "2024",
+          "doc": false,
+          "doctest": false,
+          "test": true
+        },
+        "profile": {
+          "opt_level": "0",
+          "debuginfo": 0,
+          "debug_assertions": true,
+          "overflow_checks": true,
+          "test": true
+        },
+        "features": [],
+        "filenames": [
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\session_dashboard_management-b097c67f40ea3d45.exe",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\session_dashboard_management-b097c67f40ea3d45.pdb"
+        ],
+        "executable": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\session_dashboard_management-b097c67f40ea3d45.exe",
+        "fresh": false
+      },
+      "selectedImage": {
+        "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\session_dashboard_management-b097c67f40ea3d45.exe",
+        "sha256": "2f70aab16d3a03621214308e6c83d23f5da9afaa2db84fd43fb1b03ac85c9555",
+        "fileIdentity": [
+          5078471845122615367,
+          6192449491248355
+        ],
+        "bytes": 122391552,
+        "mtimeNs": 1792955213190690800,
+        "links": 1,
+        "noReparseAncestors": true,
+        "writersAndDeletionDeniedThroughRecheck": true
+      },
+      "freeAfter": 7241052160
+    },
+    {
+      "owner": "integration-20261025-maintenance-control-v1",
+      "schema": 1,
+      "runId": "test-dashboard-maintenance-r1",
+      "mode": "test",
+      "target": "session_dashboard_management",
+      "sourceCommit": "a27b5084dbb329d40b589a95a41085f3bca1ea50",
+      "completed": true,
+      "inputsUnchanged": true,
+      "nativeImageRead": true,
+      "testExecutionRequested": true,
+      "nativeImageReadAttempted": true,
+      "metadataOnly": false,
+      "qualification": "Selected tracked source bytes and private controls are mapped before/after. External dependency/tool binaries, caches, all environment values and the entire host are not frozen. No broader platform, hosted CI, release or universal acceptance is implied. The host must execute these controllers serially and exclude other target-directory producers.",
+      "serialMutexAbandoned": false,
+      "selectedSource": {
+        "path": "native/tests/session_dashboard_management.rs",
+        "sha256": "5a461c49bea5b7cc015d35783b354ee77796fd0a7463fad8658c74d1d4c8996d",
+        "bytes": 56045
+      },
+      "selectedArtifact": {
+        "reason": "compiler-artifact",
+        "package_id": "path+file:///C:/Users/Lomi/Documents/NN-Developed/Yoke-CodeIntelligence/native#yoke-code-intelligence@0.5.0",
+        "manifest_path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\native\\Cargo.toml",
+        "target": {
+          "kind": [
+            "test"
+          ],
+          "crate_types": [
+            "bin"
+          ],
+          "name": "session_dashboard_management",
+          "src_path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\native\\tests\\session_dashboard_management.rs",
+          "edition": "2024",
+          "doc": false,
+          "doctest": false,
+          "test": true
+        },
+        "profile": {
+          "opt_level": "0",
+          "debuginfo": 0,
+          "debug_assertions": true,
+          "overflow_checks": true,
+          "test": true
+        },
+        "features": [],
+        "filenames": [
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\session_dashboard_management-b097c67f40ea3d45.exe",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\session_dashboard_management-b097c67f40ea3d45.pdb"
+        ],
+        "executable": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\session_dashboard_management-b097c67f40ea3d45.exe",
+        "fresh": false
+      },
+      "producerRunId": "build-dashboard-maintenance-r1",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\session_dashboard_management-b097c67f40ea3d45.exe",
+        "--test-threads=1",
+        "--nocapture"
+      ],
+      "commandOwnerCompleted": true,
+      "testImageResumed": true,
+      "sourceInputCount": 1049,
+      "selectedImage": {
+        "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\session_dashboard_management-b097c67f40ea3d45.exe",
+        "sha256": "2f70aab16d3a03621214308e6c83d23f5da9afaa2db84fd43fb1b03ac85c9555",
+        "fileIdentity": [
+          5078471845122615367,
+          6192449491248355
+        ],
+        "bytes": 122391552,
+        "mtimeNs": 1792955213190690800,
+        "links": 1,
+        "noReparseAncestors": true,
+        "writersAndDeletionDeniedThroughRecheck": true
+      },
+      "testSummary": {
+        "passed": 24,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filteredOut": 0,
+        "existingIgnoredPromoted": false,
+        "summaryLineCountIncludingNestedOutput": 1
+      },
+      "wholeGroupNoNameFilter": true,
+      "freeAfter": 7217520640
+    },
+    {
+      "owner": "integration-20261025-platform-repairs-control-v1",
+      "schema": 1,
+      "runId": "clippy-maintenance-r5",
+      "mode": "clippy",
+      "target": null,
+      "sourceCommit": "a27b5084dbb329d40b589a95a41085f3bca1ea50",
+      "completed": true,
+      "inputsUnchanged": true,
+      "nativeImageRead": false,
+      "testExecutionRequested": false,
+      "nativeImageReadAttempted": false,
+      "metadataOnly": true,
+      "qualification": "Selected tracked source bytes and private controls are mapped before/after. External dependency/tool binaries, caches, all environment values and the entire host are not frozen. No broader platform, hosted CI, release or universal acceptance is implied. The host must execute these controllers serially and exclude other target-directory producers.",
+      "serialMutexAbandoned": false,
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "clippy",
+        "--workspace",
+        "--all-targets",
+        "--locked",
+        "--keep-going",
+        "-j2",
+        "--message-format=json",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "commandOwnerCompleted": true,
+      "sourceInputCount": 1049,
+      "freeAfter": 7910162432
+    }
+  ],
+  "mainCommandPhases": [
+    {
+      "run": "runs-maintenance/build-lib-maintenance-r1",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--lib",
+        "--no-run",
+        "--locked",
+        "-j1",
+        "--message-format=json"
+      ],
+      "deadlineSeconds": 1200,
+      "logCapBytes": 16000000,
+      "stdinClosed": true,
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "completed": true,
+      "treeExitedBeforeCleanup": true,
+      "minimumFreeObserved": 7507693568,
+      "cleanupErrors": [],
+      "streamEOF": [
+        true,
+        true
+      ],
+      "readerErrors": [
+        false,
+        false
+      ],
+      "pid": 37784,
+      "resumePreviousSuspendCount": 1,
+      "exitCode": 0,
+      "membersAtRootObservation": [
+        {
+          "pid": 39528,
+          "imageBytesRead": false,
+          "imageIdentityKnown": false,
+          "membershipConfirmed": true,
+          "imageQueryError": 5
+        }
+      ],
+      "rootExitedAtObservation": true,
+      "activeAtRootObservation": 1,
+      "originalDrainSeconds": 1,
+      "activeBeforeCleanup": 0,
+      "membersAfterOriginalDrain": [],
+      "cleanupSeconds": 2,
+      "activeAfterCleanup": 0,
+      "rootExitedAfterCleanup": true,
+      "elapsedSeconds": 119.01011090003885,
+      "capturedLogBytes": 384944,
+      "outputExceeded": false,
+      "cleanupUnproven": false
+    },
+    {
+      "run": "runs-maintenance/test-lib-maintenance-r1",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\yoke-3731cc109f7cf153.exe",
+        "--test-threads=1",
+        "--nocapture"
+      ],
+      "deadlineSeconds": 1200,
+      "logCapBytes": 16000000,
+      "stdinClosed": true,
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "completed": true,
+      "treeExitedBeforeCleanup": true,
+      "minimumFreeObserved": 7743717376,
+      "cleanupErrors": [],
+      "streamEOF": [
+        true,
+        true
+      ],
+      "readerErrors": [
+        false,
+        false
+      ],
+      "pid": 45448,
+      "resumePreviousSuspendCount": 1,
+      "exitCode": 0,
+      "membersAtRootObservation": [],
+      "rootExitedAtObservation": true,
+      "activeAtRootObservation": 0,
+      "originalDrainSeconds": 1,
+      "activeBeforeCleanup": 0,
+      "membersAfterOriginalDrain": [],
+      "cleanupSeconds": 2,
+      "activeAfterCleanup": 0,
+      "rootExitedAfterCleanup": true,
+      "elapsedSeconds": 341.71873070008587,
+      "capturedLogBytes": 108777,
+      "outputExceeded": false,
+      "cleanupUnproven": false
+    },
+    {
+      "run": "runs-maintenance/build-dashboard-maintenance-r1",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--test",
+        "session_dashboard_management",
+        "--no-run",
+        "--locked",
+        "-j1",
+        "--message-format=json"
+      ],
+      "deadlineSeconds": 1200,
+      "logCapBytes": 16000000,
+      "stdinClosed": true,
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "completed": true,
+      "treeExitedBeforeCleanup": true,
+      "minimumFreeObserved": 6832975872,
+      "cleanupErrors": [],
+      "streamEOF": [
+        true,
+        true
+      ],
+      "readerErrors": [
+        false,
+        false
+      ],
+      "pid": 68920,
+      "resumePreviousSuspendCount": 1,
+      "exitCode": 0,
+      "membersAtRootObservation": [
+        {
+          "pid": 65176,
+          "imageBytesRead": false,
+          "imageIdentityKnown": false,
+          "membershipConfirmed": true,
+          "imageQueryError": 5
+        }
+      ],
+      "rootExitedAtObservation": true,
+      "activeAtRootObservation": 1,
+      "originalDrainSeconds": 1,
+      "activeBeforeCleanup": 0,
+      "membersAfterOriginalDrain": [],
+      "cleanupSeconds": 2,
+      "activeAfterCleanup": 0,
+      "rootExitedAfterCleanup": true,
+      "elapsedSeconds": 159.10499749996234,
+      "capturedLogBytes": 386843,
+      "outputExceeded": false,
+      "cleanupUnproven": false
+    },
+    {
+      "run": "runs-maintenance/test-dashboard-maintenance-r1",
+      "command": [
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\session_dashboard_management-b097c67f40ea3d45.exe",
+        "--test-threads=1",
+        "--nocapture"
+      ],
+      "deadlineSeconds": 300,
+      "logCapBytes": 16000000,
+      "stdinClosed": true,
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "completed": true,
+      "treeExitedBeforeCleanup": true,
+      "minimumFreeObserved": 7225511936,
+      "cleanupErrors": [],
+      "streamEOF": [
+        true,
+        true
+      ],
+      "readerErrors": [
+        false,
+        false
+      ],
+      "pid": 65036,
+      "resumePreviousSuspendCount": 1,
+      "exitCode": 0,
+      "membersAtRootObservation": [],
+      "rootExitedAtObservation": true,
+      "activeAtRootObservation": 0,
+      "originalDrainSeconds": 1,
+      "activeBeforeCleanup": 0,
+      "membersAfterOriginalDrain": [],
+      "cleanupSeconds": 2,
+      "activeAfterCleanup": 0,
+      "rootExitedAfterCleanup": true,
+      "elapsedSeconds": 8.73957460001111,
+      "capturedLogBytes": 2282,
+      "outputExceeded": false,
+      "cleanupUnproven": false
+    },
+    {
+      "run": "runs/clippy-maintenance-r5",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "clippy",
+        "--workspace",
+        "--all-targets",
+        "--locked",
+        "--keep-going",
+        "-j2",
+        "--message-format=json",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "deadlineSeconds": 1200,
+      "logCapBytes": 16000000,
+      "stdinClosed": true,
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "completed": true,
+      "treeExitedBeforeCleanup": true,
+      "minimumFreeObserved": 7914233856,
+      "cleanupErrors": [],
+      "streamEOF": [
+        true,
+        true
+      ],
+      "readerErrors": [
+        false,
+        false
+      ],
+      "pid": 65824,
+      "resumePreviousSuspendCount": 1,
+      "exitCode": 0,
+      "membersAtRootObservation": [
+        {
+          "pid": 70232,
+          "imageBytesRead": false,
+          "imageIdentityKnown": false,
+          "membershipConfirmed": true,
+          "imageQueryError": 5
+        }
+      ],
+      "rootExitedAtObservation": true,
+      "activeAtRootObservation": 1,
+      "originalDrainSeconds": 1,
+      "activeBeforeCleanup": 0,
+      "membersAfterOriginalDrain": [],
+      "cleanupSeconds": 2,
+      "activeAfterCleanup": 0,
+      "rootExitedAfterCleanup": true,
+      "elapsedSeconds": 66.13411500002258,
+      "capturedLogBytes": 649340,
+      "outputExceeded": false,
+      "cleanupUnproven": false
+    },
+    {
+      "run": "runs/node-maintenance-r2",
+      "command": [
+        "C:\\WINDOWS\\System32\\cmd.exe",
+        "/d",
+        "/c",
+        "npm run typecheck"
+      ],
+      "deadlineSeconds": 1200,
+      "logCapBytes": 16000000,
+      "stdinClosed": true,
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "completed": true,
+      "treeExitedBeforeCleanup": true,
+      "minimumFreeObserved": 7226822656,
+      "cleanupErrors": [],
+      "streamEOF": [
+        true,
+        true
+      ],
+      "readerErrors": [
+        false,
+        false
+      ],
+      "pid": 60068,
+      "resumePreviousSuspendCount": 1,
+      "exitCode": 0,
+      "membersAtRootObservation": [
+        {
+          "pid": 68576,
+          "imageBytesRead": false,
+          "imageIdentityKnown": false,
+          "membershipConfirmed": true,
+          "imagePathMetadata": "C:\\Windows\\System32\\conhost.exe"
+        }
+      ],
+      "rootExitedAtObservation": true,
+      "activeAtRootObservation": 1,
+      "originalDrainSeconds": 1,
+      "activeBeforeCleanup": 0,
+      "membersAfterOriginalDrain": [],
+      "cleanupSeconds": 2,
+      "activeAfterCleanup": 0,
+      "rootExitedAfterCleanup": true,
+      "elapsedSeconds": 4.624747300054878,
+      "capturedLogBytes": 101,
+      "outputExceeded": false,
+      "cleanupUnproven": false
+    },
+    {
+      "run": "runs/node-maintenance-r2",
+      "command": [
+        "C:\\WINDOWS\\System32\\cmd.exe",
+        "/d",
+        "/c",
+        "npm test"
+      ],
+      "deadlineSeconds": 1200,
+      "logCapBytes": 16000000,
+      "stdinClosed": true,
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "completed": true,
+      "treeExitedBeforeCleanup": true,
+      "minimumFreeObserved": 7195979776,
+      "cleanupErrors": [],
+      "streamEOF": [
+        true,
+        true
+      ],
+      "readerErrors": [
+        false,
+        false
+      ],
+      "pid": 38328,
+      "resumePreviousSuspendCount": 1,
+      "exitCode": 0,
+      "membersAtRootObservation": [
+        {
+          "pid": 62092,
+          "imageBytesRead": false,
+          "imageIdentityKnown": false,
+          "membershipConfirmed": true,
+          "imagePathMetadata": "C:\\Windows\\System32\\conhost.exe"
+        }
+      ],
+      "rootExitedAtObservation": true,
+      "activeAtRootObservation": 1,
+      "originalDrainSeconds": 1,
+      "activeBeforeCleanup": 0,
+      "membersAfterOriginalDrain": [],
+      "cleanupSeconds": 2,
+      "activeAfterCleanup": 0,
+      "rootExitedAfterCleanup": true,
+      "elapsedSeconds": 63.836839900002815,
+      "capturedLogBytes": 25045,
+      "outputExceeded": false,
+      "cleanupUnproven": false
+    },
+    {
+      "run": "runs/format-maintenance-r1",
+      "command": [
+        "C:\\Python314\\python.exe",
+        "-B",
+        "scripts/native_fmt.py",
+        "--check"
+      ],
+      "deadlineSeconds": 1200,
+      "logCapBytes": 16000000,
+      "stdinClosed": true,
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "completed": true,
+      "treeExitedBeforeCleanup": true,
+      "minimumFreeObserved": 7203770368,
+      "cleanupErrors": [],
+      "streamEOF": [
+        true,
+        true
+      ],
+      "readerErrors": [
+        false,
+        false
+      ],
+      "pid": 59856,
+      "resumePreviousSuspendCount": 1,
+      "exitCode": 0,
+      "membersAtRootObservation": [
+        {
+          "pid": 46932,
+          "imageBytesRead": false,
+          "imageIdentityKnown": false,
+          "membershipConfirmed": true,
+          "imagePathMetadata": "C:\\Windows\\System32\\conhost.exe"
+        }
+      ],
+      "rootExitedAtObservation": true,
+      "activeAtRootObservation": 1,
+      "originalDrainSeconds": 1,
+      "activeBeforeCleanup": 0,
+      "membersAfterOriginalDrain": [],
+      "cleanupSeconds": 2,
+      "activeAfterCleanup": 0,
+      "rootExitedAfterCleanup": true,
+      "elapsedSeconds": 21.08657550008502,
+      "capturedLogBytes": 47658,
+      "outputExceeded": false,
+      "cleanupUnproven": false
+    }
+  ],
+  "otherChecksAtSource": {
+    "nodePassed": 260,
+    "nodeFailed": 0,
+    "nodeExistingSkipped": 3,
+    "typecheckExitCode": 0,
+    "pythonPassed": 130,
+    "pythonSkipped": 0,
+    "nativeFormatRoots": 368,
+    "nativeFormatFailed": 0,
+    "actionlintExitCode": 0
+  },
+  "laterUncommittedPatchChecks": {
+    "pythonPassed": 136,
+    "pythonSkipped": 0,
+    "nodePassed": 260,
+    "nodeFailed": 0,
+    "nodeExistingSkipped": 3,
+    "typecheckExitCode": 0,
+    "nativeFormatExitCode": 0,
+    "sourceChecks": "new-contention-source-checks/recovery-result.json",
+    "nativeCompileAndTestsExecuted": false
+  },
+  "hostedAtSource": {
+    "rustRun": 40226322738,
+    "linuxShards": "8/8 success",
+    "linuxAcceptanceJob": 121271308230,
+    "linuxAcceptanceConclusion": "success",
+    "windowsAcceptance": "failed coverage after shard failures",
+    "macosAcceptance": "failed coverage after shard failures"
+  },
+  "isolatedReleaseAttempt": {
+    "completed": false,
+    "stopReason": "disk-reserve",
+    "minimumFreeObserved": 340082688,
+    "nativeImageRead": false,
+    "activeBeforeCleanup": 4,
+    "activeAfterCleanup": 0,
+    "rootExitedAfterCleanup": true,
+    "artifactAdopted": false
+  },
+  "archive": {
+    "members": 396,
+    "expandedBytes": 55941317,
+    "bytes": 4701155,
+    "sha256": "9a36d2914d17e0493a2ef36949699110787b6506b94c4989984e00e1810ddb4f"
+  },
+  "scope": {
+    "newDashboardContentionFixNativeAccepted": false,
+    "allNativeGroupsLocallyExecuted": false,
+    "windowsHostedAccepted": false,
+    "macosHostedAccepted": false,
+    "historyCliSessionsAccepted": false,
+    "desktopMobileVisuallyAccepted": false,
+    "bundledRuntimeVsixAccepted": false,
+    "mainMerged": false,
+    "releaseQualified": false,
+    "fullStatusComplete": false,
+    "userDataMaintenancePerformed": false
+  }
+}

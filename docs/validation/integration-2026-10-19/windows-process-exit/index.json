@@ -1,0 +1,801 @@
+{
+  "schemaVersion": 1,
+  "kind": "native_windows_owned_member_exit_proof",
+  "asOf": "2026-10-19T21:55:10.874788+00:00",
+  "sourceCommit": "ec0479d4591e8ea3afa415dcb01df8ff2a05a6e7",
+  "runtimeCommit": "2c3faf504cafec91adab201edaa87d5ff731af80",
+  "parentCommit": "7237a6c54b217df7be61afa8044786a1c7e75406",
+  "paths": [
+    "native/src/github_app_digest_history_process_tests.rs",
+    "native/src/process_windows_job.rs",
+    "native/src/process_windows_job_tests.rs"
+  ],
+  "runtimeCodeChanged": true,
+  "newCases": 2,
+  "nativeGroups": [
+    [
+      439,
+      0,
+      7
+    ],
+    [
+      5,
+      0,
+      0
+    ],
+    [
+      3,
+      0,
+      0
+    ],
+    [
+      4,
+      0,
+      0
+    ],
+    [
+      16,
+      0,
+      0
+    ],
+    [
+      12,
+      1,
+      0
+    ],
+    [
+      16,
+      0,
+      0
+    ],
+    [
+      3,
+      0,
+      1
+    ],
+    [
+      3,
+      0,
+      0
+    ],
+    [
+      8,
+      0,
+      0
+    ],
+    [
+      4,
+      0,
+      0
+    ],
+    [
+      7,
+      0,
+      0
+    ],
+    [
+      5,
+      0,
+      0
+    ],
+    [
+      4,
+      0,
+      0
+    ],
+    [
+      5,
+      0,
+      0
+    ]
+  ],
+  "nativeTotals": {
+    "passed": 534,
+    "failed": 1,
+    "ignored": 8
+  },
+  "failedCases": [
+    "media_cannot_bypass_source_scope_links_ignore_or_protected_paths"
+  ],
+  "existingExitTimeAndSqlRestorationAssertionsRetained": true,
+  "maxObservedMembersPerCleanup": 4096,
+  "pidBasedTermination": false,
+  "sameBinaryPriorCaseRepeats": 8,
+  "temporaryTracePriorCaseRepeats": 4,
+  "kernelCauseCertified": false,
+  "wholeNativeRerun": false,
+  "nativeInputs": 694,
+  "integratedInputs": 700,
+  "baselineBinarySha256": "1b29b64868b96c055e8e03841dc42f16b6145c6db672ba3761c14ead30af45b3",
+  "baselineBinaryUnchanged": true,
+  "sameBinaryRepeatsAreNonadditive": true,
+  "actualWindowsPostgres": {
+    "liveClientCapture": true,
+    "serverVersion": "postgres (PostgreSQL) 18.6",
+    "nodeCount": 7,
+    "foreignKeyCount": 3,
+    "serverStopped": true,
+    "offlineTraceAfterStop": true,
+    "archiveHash": "40126043aed9cd77fd09c566aab38ce5854d31b4b5d3dad049e436073d0088c5",
+    "binaryHash": "ce0647576cbec34c0876d696b95f32bcb0368ec0a1ed39742ccb64d45d6c0a2a",
+    "tlsScramValidated": true,
+    "unicodePasswordViaPrivateStdin": true,
+    "lostStdoutPreservedArtifactAndIdentity": true,
+    "skippedScramRefused": true,
+    "liveRowQuotaRefused": true,
+    "tlsHostnameMismatchRefused": true,
+    "ambientConfigurationIgnored": true,
+    "ownedFixtureCredentialsRemoved": 3,
+    "sourceUnchanged": true,
+    "inputs": 694
+  },
+  "actualFrozenPdfWorker": {
+    "nativeFrozenPdfWorker": true,
+    "publicFixture": "historical captured W3 dummy PDF; no reacquisition",
+    "inputArchiveHash": "ef86ecc4b91290a6367f75b0504886f63627822c912b28f0041b541c6714f66a",
+    "inputUnchanged": true,
+    "bodyHash": "3df79d34abbca99308e79cb94461c1893582604d68329a41fd4bec1885e6adb4",
+    "workerTextMatched": true,
+    "networkConnections": 0,
+    "sourceUnchanged": true,
+    "inputs": 694,
+    "binaryHash": "ce0647576cbec34c0876d696b95f32bcb0368ec0a1ed39742ccb64d45d6c0a2a"
+  },
+  "priorEvidenceReadme": {
+    "bytes": 24682,
+    "sha256": "880d01826d9b2cfabf92cdd1c2cabb954c740bc1b1389359e9638ebd0dd04ce1"
+  },
+  "priorFailure": {
+    "checkpoint": "7237a6c54b217df7be61afa8044786a1c7e75406",
+    "path": "docs/validation/integration-2026-10-19/arxiv-source/r4/native.log",
+    "case": "github_app::digest::history_boundary_tests::history_owned_process_tests::cancellation_and_deadline_stop_owned_git_and_restore_the_same_store"
+  },
+  "primaryReferences": [
+    "https://learn.microsoft.com/en-us/windows/win32/api/jobapi2/nf-jobapi2-terminatejobobject",
+    "https://learn.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-jobobject_basic_process_id_list",
+    "https://learn.microsoft.com/en-us/windows/win32/procthread/terminating-a-process",
+    "https://learn.microsoft.com/en-us/windows/win32/procthread/nested-jobs"
+  ],
+  "notes": [
+    "The original arxivR4 failure was followed by an arxiv final pass and8same-binary serial passes. These observations did not establish a cause. Diagnostic-onlyR2 then reproduces real RED3pass/1fail: a held process handle is nonsignaled at normal deadline return, cleanupUnproven=false, elapsed1962ms. This retained RED motivated an additional exit proof, not relaxed assertions.",
+    "Temporary cfg(test) tracing observes3/4job members before termination and empty accounting at successful return. R3targeted15cases and4trace-case repeats pass. These attempts are nonadditive and do not certify a kernel-level scheduling cause or an early-resume/nested-accounting theory. Temporary tracing is absent from final source.",
+    "Windows cleanup captures up to4096 OS-reported nested-job member synchronization handles before requesting asynchronous termination. Success requires the original root handle, every captured member handle and empty job accounting within the same existing cleanup budget. Missing/incomplete/over-capacity/over-budget membership or unavailable synchronization refuses proof. Termination is still requested if capture refuses; unassigned suspended roots retain their separately owned termination path.",
+    "Member OpenProcess requests SYNCHRONIZE only. Termination remains confined to the independently owned job or its separately retained unassigned root; there is no PID-based kill. A recycled PID can only cause conservative waiting/unproven cleanup. This finite observation/OS proof is not a sandbox, a claim about every historical transient process or a hard preemption guarantee for arbitrary kernel API stalls.",
+    "Two new real Windows contracts verify that a terminate-only job handle cannot turn unavailable member-query proof into success and that termination is still requested, and that a parallel unrelated owned fixture process remains alive. Original root/descendant liveness, zero-budget/fallible-spawn guards, deadline/cancellation and SQLite/blob/source restoration assertions remain. The test now reports role/PID/phase/elapsed/original error chain and typed cleanup status on failure.",
+    "R4targeted17/0/0 and alltargetClippy-Dwarnings/format pass. Final15selectednativegroups preserve the unchanged media Windows symlink setupOS1314 failure. Mandatory integrated Python17/typecheck/TypeScript260+3skip pass with frozen input proofs. Newcases2; baseline8 andtrace4 are not added to case totals. No whole-native rerun is claimed.",
+    "Actual Windows PostgreSQL18.6 TLSverify-full/SCRAM/channel-binding capture, Unicode private password pipe, quota/name/client-hash/auth refusals, lost stdout identity and offline traversal after server stop pass with the new native binary. All3owned fixture credentials are removed and password scanning passes. Frozen historical W3PDF native-worker text/replay passes without network reacquisition. Provider protocol code/dependencies are unchanged.",
+    "Earlier OS1314/OS32/whole-native and platform qualification boundaries remain. The historical inventory/ledger identities and preceding evidence README/PR body are preserved; full upstream/non-Windows/main/release certification is not implied."
+  ],
+  "artifacts": [
+    {
+      "path": "baseline/iteration-1.log",
+      "bytes": 267,
+      "sha256": "b2233317d5a5b2c8f9db7008813e0b5fc6acb7b8aa2894714f72dbf905f00f29"
+    },
+    {
+      "path": "baseline/iteration-2.log",
+      "bytes": 267,
+      "sha256": "6e9c2d67009b7bd961312a5d7552a10e811c97a0fad620ee31e112d98ec83080"
+    },
+    {
+      "path": "baseline/iteration-3.log",
+      "bytes": 267,
+      "sha256": "2b64e7d655552ea660d2d0548cba92df2f402cf4038433b6851953ed4cf6574e"
+    },
+    {
+      "path": "baseline/iteration-4.log",
+      "bytes": 267,
+      "sha256": "f27d7a0c38e2174c421d581522eade3e1574d8d25f6e45288c902712fbc3c002"
+    },
+    {
+      "path": "baseline/iteration-5.log",
+      "bytes": 267,
+      "sha256": "578ca3b179f38fc11933c1f1844a56cb7d24e9ecfc3f50e7007f71ebdb3f4901"
+    },
+    {
+      "path": "baseline/iteration-6.log",
+      "bytes": 267,
+      "sha256": "9191c01dec793973cab5af76098c5b523792493b4658ded45a541c3f4f07205b"
+    },
+    {
+      "path": "baseline/iteration-7.log",
+      "bytes": 267,
+      "sha256": "40528883cba0744925128d38c1a39a51cd093026eebdbdc27691028544cc531a"
+    },
+    {
+      "path": "baseline/iteration-8.log",
+      "bytes": 267,
+      "sha256": "aadd0a94ec480baafa438c390f182b3ba06c55ed38f2debb0a5f5f1c8454ca7e"
+    },
+    {
+      "path": "baseline/result.json",
+      "bytes": 3969,
+      "sha256": "ce7fa1704438a3256b0b9b0243215118b2bbcd1ea3229b0b85b5271232f0ba56"
+    },
+    {
+      "path": "baseline/source-after.json",
+      "bytes": 74976,
+      "sha256": "89307ebafc0e33f3b2bb3ec48700d3971588730ba07b7493856c9a035f174b43"
+    },
+    {
+      "path": "baseline/source-before.json",
+      "bytes": 74976,
+      "sha256": "89307ebafc0e33f3b2bb3ec48700d3971588730ba07b7493856c9a035f174b43"
+    },
+    {
+      "path": "final/native.log",
+      "bytes": 63633,
+      "sha256": "eb1d2bf418a841a468c8dffb7439e7bd4086a64f8053492e3e52668e2f7775d2"
+    },
+    {
+      "path": "final/result.json",
+      "bytes": 1177,
+      "sha256": "b6e7f77d3a844ad004eaaf3f29dee6282899f7094130dac87ce11ecc15140d5e"
+    },
+    {
+      "path": "final/source/native/src/arxiv_rate.rs",
+      "bytes": 17998,
+      "sha256": "24902e9273339e4909cfd3a308d52e2f6c34333f540eeab3dbe9a096fb7fe064"
+    },
+    {
+      "path": "final/source/native/src/arxiv_source.rs",
+      "bytes": 16860,
+      "sha256": "4822c7730a9d57b68ead850b7b412a83daaefdef50452d5bd36c3ac9144749d5"
+    },
+    {
+      "path": "final/source/native/src/github_app_digest_history_process_tests.rs",
+      "bytes": 11439,
+      "sha256": "fadc270b457762c9c52d6a27698825ef200ef7d8d05161fefce2157f7b278644"
+    },
+    {
+      "path": "final/source/native/src/lib.rs",
+      "bytes": 33419,
+      "sha256": "1c1037cab079bf582c9d26a5d6cd1d995c67dafaf43fb332acf454002788e904"
+    },
+    {
+      "path": "final/source/native/src/process_windows_job.rs",
+      "bytes": 12643,
+      "sha256": "766df9f9f1301c93b93b9e8cf26ec34f4fc766c3edf04f467e089edce933bce6"
+    },
+    {
+      "path": "final/source/native/src/process_windows_job_tests.rs",
+      "bytes": 9106,
+      "sha256": "28365233f06743de7b485418c7b39e04b2ae8b4719af3ede500e7926bf559a95"
+    },
+    {
+      "path": "final/source/native/src/source_acquisition_cli.rs",
+      "bytes": 9909,
+      "sha256": "6f68f3c36eeee3d2d42162b0741ca7f8c122a96bef9a71cd75e202e2e82839fe"
+    },
+    {
+      "path": "final/source/native/src/source_acquisition_http.rs",
+      "bytes": 10680,
+      "sha256": "5e63b0d2d3f79a95822f00d50fc7706b12e907858cecd24e0b4c3cd0120c36f7"
+    },
+    {
+      "path": "final/source/native/tests/arxiv_source.rs",
+      "bytes": 6335,
+      "sha256": "4613d8804098edd18ed78b13a10d758495a2a8ebf0607258ab2162f5bbbbd84a"
+    },
+    {
+      "path": "final/source/native/tests/arxiv_source_cli.rs",
+      "bytes": 6862,
+      "sha256": "ba93cb053326133bac7730af33a48d03f599c24489adbc3996b48365a7bbf987"
+    },
+    {
+      "path": "final/source/native/tests/arxiv_source_http.rs",
+      "bytes": 7627,
+      "sha256": "cc5e90802f9df1ce9fbbda09a8d3cb7f258c51c993694170d80574d7d3d17205"
+    },
+    {
+      "path": "final/source-after.json",
+      "bytes": 74976,
+      "sha256": "ec647ed01834a2d92c2f9c97c15128113de7e93f776eae3be7f3e0d5fc19256d"
+    },
+    {
+      "path": "final/source-before.json",
+      "bytes": 74976,
+      "sha256": "ec647ed01834a2d92c2f9c97c15128113de7e93f776eae3be7f3e0d5fc19256d"
+    },
+    {
+      "path": "final-source/native/src/github_app_digest_history_process_tests.rs",
+      "bytes": 11439,
+      "sha256": "fadc270b457762c9c52d6a27698825ef200ef7d8d05161fefce2157f7b278644"
+    },
+    {
+      "path": "final-source/native/src/process_windows_job.rs",
+      "bytes": 12643,
+      "sha256": "766df9f9f1301c93b93b9e8cf26ec34f4fc766c3edf04f467e089edce933bce6"
+    },
+    {
+      "path": "final-source/native/src/process_windows_job_tests.rs",
+      "bytes": 9106,
+      "sha256": "28365233f06743de7b485418c7b39e04b2ae8b4719af3ede500e7926bf559a95"
+    },
+    {
+      "path": "frozen-tracker.json",
+      "bytes": 515558,
+      "sha256": "b760b2dc12ba5d410b79fa075dcae22615a870a5dc9cde5ff48fe0255957b9ee"
+    },
+    {
+      "path": "inactive-cache-cleanup-v2.jsonl",
+      "bytes": 5115,
+      "sha256": "b6df743e3148b1f3ce6e4ad4b1f2d547a1d31590903926687bb780fb0dcaf989"
+    },
+    {
+      "path": "integrated/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "integrated/python-contracts.log",
+      "bytes": 2845,
+      "sha256": "c0e6130dadc0e16da598f2dfeafe0659a4c3cdc1cf38254f9cf961eb9d8a4c03"
+    },
+    {
+      "path": "integrated/result.json",
+      "bytes": 1053,
+      "sha256": "356ac2efea4866fab60bbb1093969c76850017561f18422e6ffe7fe6409f8073"
+    },
+    {
+      "path": "integrated/source-after.json",
+      "bytes": 74935,
+      "sha256": "5fefcdeb716bb79a02a8174b0fc1087a3dc67b5c412a1489d5527b02d27ef9eb"
+    },
+    {
+      "path": "integrated/source-before.json",
+      "bytes": 74935,
+      "sha256": "5fefcdeb716bb79a02a8174b0fc1087a3dc67b5c412a1489d5527b02d27ef9eb"
+    },
+    {
+      "path": "integrated/source-materialization.json",
+      "bytes": 196825,
+      "sha256": "44f31123f478df75b7c78b23b127642b73647692cb03f8430a87ed80dc5b2e15"
+    },
+    {
+      "path": "integrated/tests.log",
+      "bytes": 25055,
+      "sha256": "e7f8d711970039b257df40bcf67413de9b50958b91b1f8168041598bea316256"
+    },
+    {
+      "path": "integrated/typecheck.log",
+      "bytes": 101,
+      "sha256": "30ef9ce16cf042ab6f160e0a76c1fbfe22f02a3c3a3659ee62863ffc1efdbfdf"
+    },
+    {
+      "path": "live-pdf/native.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "live-pdf/native.stdout",
+      "bytes": 923,
+      "sha256": "68e6e15edc040d023256190618f4eb849911d0582ec5d2b6c82a3daa8cfae3a3"
+    },
+    {
+      "path": "live-pdf/result.json",
+      "bytes": 503,
+      "sha256": "5b0219cff59c2c9fd6ae6f492744e7196cac8467ead4f05b9a040b2479d1a088"
+    },
+    {
+      "path": "live-pg-tls/capture.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "live-pg-tls/capture.stdout",
+      "bytes": 421,
+      "sha256": "7cbb32ab930ed07297bb17846ab45209170e6ff0ff0fd9543895c4fa3d29ec44"
+    },
+    {
+      "path": "live-pg-tls/catalog.json",
+      "bytes": 4454,
+      "sha256": "40126043aed9cd77fd09c566aab38ce5854d31b4b5d3dad049e436073d0088c5"
+    },
+    {
+      "path": "live-pg-tls/credential-import.json",
+      "bytes": 168,
+      "sha256": "2cd5e1d692d9110464180be7562da8eb98fe9a027e24984bffa5d07184689ab9"
+    },
+    {
+      "path": "live-pg-tls/denied-client-hash.stderr",
+      "bytes": 44,
+      "sha256": "5de180d3127bbb335df7f399c433981230546e2e08ff1f5a0a44fbb7a727aab6"
+    },
+    {
+      "path": "live-pg-tls/denied-client-hash.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "live-pg-tls/denied-existing-output.stderr",
+      "bytes": 95,
+      "sha256": "4fef80a08ead9456e3af3270d81cecc0066f231245f50b699aa0ad43354f0716"
+    },
+    {
+      "path": "live-pg-tls/denied-existing-output.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "live-pg-tls/denied-missing-credential.stderr",
+      "bytes": 46,
+      "sha256": "1f0a3382b7cf549c0ada4b5ea46b08dc426f4c5d6e0869262d3a99d09ce2418c"
+    },
+    {
+      "path": "live-pg-tls/denied-missing-credential.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "live-pg-tls/denied-no-permissions.stderr",
+      "bytes": 48,
+      "sha256": "a7db5fb0448ce5bb84ba280c2fe2bb1d636311b18479bf7cb337bb50d007ef3a"
+    },
+    {
+      "path": "live-pg-tls/denied-no-permissions.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "live-pg-tls/denied-row-quota.stderr",
+      "bytes": 41,
+      "sha256": "061f81f8b34bef8b70c2c7f63d870d975866a1381d8f65c9d02258d69cde2e55"
+    },
+    {
+      "path": "live-pg-tls/denied-row-quota.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "live-pg-tls/denied-server-skipped-scram.stderr",
+      "bytes": 37,
+      "sha256": "3b704182aeb114c09201d34e2ce00496aafcf5a4edd57d61b74e24e33dffcc6b"
+    },
+    {
+      "path": "live-pg-tls/denied-server-skipped-scram.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "live-pg-tls/denied-tls-hostname.stderr",
+      "bytes": 37,
+      "sha256": "3b704182aeb114c09201d34e2ce00496aafcf5a4edd57d61b74e24e33dffcc6b"
+    },
+    {
+      "path": "live-pg-tls/denied-tls-hostname.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "live-pg-tls/initdb.log",
+      "bytes": 1019,
+      "sha256": "ef4f8c4fadf4ea16b53136f19a1b06feebf62f77ac889c2e6abb5992058d6c8a"
+    },
+    {
+      "path": "live-pg-tls/lost-delivery-catalog.json",
+      "bytes": 4454,
+      "sha256": "40126043aed9cd77fd09c566aab38ce5854d31b4b5d3dad049e436073d0088c5"
+    },
+    {
+      "path": "live-pg-tls/lost-delivery.stderr",
+      "bytes": 209,
+      "sha256": "1d87fd9e601663e4772efe358bdb6724739e0010c1b50382c66d79b81309de0e"
+    },
+    {
+      "path": "live-pg-tls/no-scram-credential.json",
+      "bytes": 168,
+      "sha256": "b44b3d54105de6fa396889d6fe229c39aab252afae486a83cdb6f233cac843f9"
+    },
+    {
+      "path": "live-pg-tls/read.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "live-pg-tls/read.stdout",
+      "bytes": 8563,
+      "sha256": "3aa861c8419b8b7d9ad0227a3e3ad877476b2870dec71a844bd4d274e5d658c8"
+    },
+    {
+      "path": "live-pg-tls/result.json",
+      "bytes": 713,
+      "sha256": "a578a57350822379fff96b411c911e9fbfb85baf83ebea9a6bfb9eaf241be2b6"
+    },
+    {
+      "path": "live-pg-tls/root.pem",
+      "bytes": 630,
+      "sha256": "9a3449d467925b099df93e86d73a4605b493ce140125a02e9ffe81ef3e569f5a"
+    },
+    {
+      "path": "live-pg-tls/seed.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "live-pg-tls/server.log",
+      "bytes": 1312,
+      "sha256": "1ce9ef7b71e9cfd7f0cb14fc08f17762b5162892e847a2a6ededdd19b92a3ad9"
+    },
+    {
+      "path": "live-pg-tls/server.pem",
+      "bytes": 594,
+      "sha256": "16755d15e7d28aa4ed60fb0cee2878d41d6a622e20e9667857af0ef6ee5e0332"
+    },
+    {
+      "path": "live-pg-tls/source-after.json",
+      "bytes": 74976,
+      "sha256": "ec647ed01834a2d92c2f9c97c15128113de7e93f776eae3be7f3e0d5fc19256d"
+    },
+    {
+      "path": "live-pg-tls/source-before.json",
+      "bytes": 74976,
+      "sha256": "ec647ed01834a2d92c2f9c97c15128113de7e93f776eae3be7f3e0d5fc19256d"
+    },
+    {
+      "path": "live-pg-tls/stop.log",
+      "bytes": 58,
+      "sha256": "3589d2bd01f8295cc7c9ec3f5e07625fcd347ccb6f33f2d80edafe5f5217c1fb"
+    },
+    {
+      "path": "live-pg-tls/trace-server-stopped.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "live-pg-tls/trace-server-stopped.stdout",
+      "bytes": 1848,
+      "sha256": "a3cf5f035036d2b58c89543cf17b823c0eadb6ae019435f411af3b4c4b5f2c06"
+    },
+    {
+      "path": "live-pg-tls/wrong-name-credential.json",
+      "bytes": 168,
+      "sha256": "a874548b765511e4474e1a66268ab2b29b022e91ab9cdb32f8a9f2cb63a1743d"
+    },
+    {
+      "path": "probe/iteration-1.log",
+      "bytes": 3334,
+      "sha256": "5d0a7ef1a51f58945eb552b48e9c5c4b9ed0076f5eb0f6740650bf0982121768"
+    },
+    {
+      "path": "probe/iteration-2.log",
+      "bytes": 3335,
+      "sha256": "baf4ca6d8dc07e61c5e6719c0dd1d5e6612792647de8706ff932bc375110ad41"
+    },
+    {
+      "path": "probe/iteration-3.log",
+      "bytes": 3334,
+      "sha256": "58b46e2d63422442ea60dbaf08b95e15ae222414b2ecd973ffd5eaed4a73d591"
+    },
+    {
+      "path": "probe/iteration-4.log",
+      "bytes": 3335,
+      "sha256": "1ef2ee4bf292710e079683004a1314164c77589807ff1b4f8735d7aa6bed2c91"
+    },
+    {
+      "path": "probe/result.json",
+      "bytes": 815,
+      "sha256": "a941dd267efed9c8f3657b6b03ec1862980be5e770fa71d39f2a35af416985c8"
+    },
+    {
+      "path": "r2/check-0.log",
+      "bytes": 2132,
+      "sha256": "d0e08e2e0e3f83235989d82409b3d7817d514c8c07b1997926d0a793dca85736"
+    },
+    {
+      "path": "r2/result.json",
+      "bytes": 559,
+      "sha256": "139c403056bb6c03324c7d62cb6cb292dcec7d57432ecb4ca27e8e0553253abe"
+    },
+    {
+      "path": "r2/source/native/src/github_app_digest_history_process_tests.rs",
+      "bytes": 11376,
+      "sha256": "0813be25cee17965712935349c3e779201191fe0a00c1b36416a2eaaee5ad954"
+    },
+    {
+      "path": "r2/source-after.json",
+      "bytes": 74976,
+      "sha256": "d2625a51f60b21a1dcf38b69cb71d11f50c0c18e38a66c783c233dcd76de58f1"
+    },
+    {
+      "path": "r2/source-before.json",
+      "bytes": 74976,
+      "sha256": "d2625a51f60b21a1dcf38b69cb71d11f50c0c18e38a66c783c233dcd76de58f1"
+    },
+    {
+      "path": "r3/check-0.log",
+      "bytes": 1083,
+      "sha256": "cf40869c2f2acc93b4d5a5de1ab36b7743c43f9f0488eaa5debe3f7035e0e1af"
+    },
+    {
+      "path": "r3/check-1.log",
+      "bytes": 817,
+      "sha256": "349346c4a68eacc7eda9a137453044bff983a8fee96a630dd82f60626d611fdc"
+    },
+    {
+      "path": "r3/check-2.log",
+      "bytes": 930,
+      "sha256": "4a1c79414930ba18087fb267681ca00df75d139740f0537f88f8e6d31d0d303e"
+    },
+    {
+      "path": "r3/check-3.log",
+      "bytes": 168,
+      "sha256": "e72c5a37d395f78e51fd64716808ff30c058895728d18ff423fa10bbe0119287"
+    },
+    {
+      "path": "r3/check-4.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "r3/result.json",
+      "bytes": 2098,
+      "sha256": "c3fc12d1e05a0cd4aeadb21e2d51964ce0f7c02a04c6c595c3242f3147d11318"
+    },
+    {
+      "path": "r3/source/native/src/github_app_digest_history_process_tests.rs",
+      "bytes": 11439,
+      "sha256": "fadc270b457762c9c52d6a27698825ef200ef7d8d05161fefce2157f7b278644"
+    },
+    {
+      "path": "r3/source/native/src/process_windows_job.rs",
+      "bytes": 10848,
+      "sha256": "b62ed0cf5ff27ca4230cb0cab2dda9b428fa94c55cf7343ad4883f100c5c5f0c"
+    },
+    {
+      "path": "r3/source-after.json",
+      "bytes": 74976,
+      "sha256": "940c476e10fd61277d8f4adf496be981cd4fede7f2a012420cae9583512e8d88"
+    },
+    {
+      "path": "r3/source-before.json",
+      "bytes": 74976,
+      "sha256": "940c476e10fd61277d8f4adf496be981cd4fede7f2a012420cae9583512e8d88"
+    },
+    {
+      "path": "r4/check-0.log",
+      "bytes": 1083,
+      "sha256": "24045309b6bd181ca0b111c48b1a3b3d792302cd6308fa1b1309cd5ad3c146b8"
+    },
+    {
+      "path": "r4/check-1.log",
+      "bytes": 1065,
+      "sha256": "7835e783f214b7f06a5349525614bcf177f0bdc05f1ed057526b879f834f5372"
+    },
+    {
+      "path": "r4/check-2.log",
+      "bytes": 930,
+      "sha256": "1822f8188c455538176776602d9e56a79bb05d621a152e1a5acd925850943fc8"
+    },
+    {
+      "path": "r4/check-3.log",
+      "bytes": 168,
+      "sha256": "c91d9875ad18e6e102e76df39964ef2739281f16a99d26014832bc63beef172a"
+    },
+    {
+      "path": "r4/check-4.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "r4/result.json",
+      "bytes": 2099,
+      "sha256": "c64daff99e83ff88a59024932a10e17f8f28ca709a502da3ce86ed16dd0a7a27"
+    },
+    {
+      "path": "r4/source/native/src/github_app_digest_history_process_tests.rs",
+      "bytes": 11439,
+      "sha256": "fadc270b457762c9c52d6a27698825ef200ef7d8d05161fefce2157f7b278644"
+    },
+    {
+      "path": "r4/source/native/src/process_windows_job.rs",
+      "bytes": 12643,
+      "sha256": "766df9f9f1301c93b93b9e8cf26ec34f4fc766c3edf04f467e089edce933bce6"
+    },
+    {
+      "path": "r4/source/native/src/process_windows_job_tests.rs",
+      "bytes": 9106,
+      "sha256": "28365233f06743de7b485418c7b39e04b2ae8b4719af3ede500e7926bf559a95"
+    },
+    {
+      "path": "r4/source-after.json",
+      "bytes": 74976,
+      "sha256": "ec647ed01834a2d92c2f9c97c15128113de7e93f776eae3be7f3e0d5fc19256d"
+    },
+    {
+      "path": "r4/source-before.json",
+      "bytes": 74976,
+      "sha256": "ec647ed01834a2d92c2f9c97c15128113de7e93f776eae3be7f3e0d5fc19256d"
+    },
+    {
+      "path": "runners/ci-process-exit-baseline.py",
+      "bytes": 2256,
+      "sha256": "9bc1c20465b036eb9165fafb0788fb7fa7668c47558bc6f2c28fb9239a60cf3d"
+    },
+    {
+      "path": "runners/ci-process-exit-check.py",
+      "bytes": 2145,
+      "sha256": "331e9a15992f75ecb83cbce428e242f74a9b7f2b4797b9ed5dc8608fe9623800"
+    },
+    {
+      "path": "runners/ci-process-exit-fix.py",
+      "bytes": 1167,
+      "sha256": "31ff06a86d0d960e024b892766e2ce90fa475b37411964b9eb4e378cc954ac0d"
+    },
+    {
+      "path": "runners/ci-process-exit-members.rs",
+      "bytes": 4712,
+      "sha256": "6528aded4d654b0fdf5588d27bac07968dc175cf89d8e3f41a195d53159a7746"
+    },
+    {
+      "path": "runners/ci-process-exit-probe.py",
+      "bytes": 1823,
+      "sha256": "7b3e399a466663da6ab6e7118a22c7e7b2236ec0fa9cf501a484bfacb82c3830"
+    },
+    {
+      "path": "runners/ci-process-exit-r3.py",
+      "bytes": 2145,
+      "sha256": "c7ccdd8c7f15f6d10e090b8299478fa03c99819d8a27a60503beb18f7c11ed46"
+    },
+    {
+      "path": "runners/ci-process-exit-r4.py",
+      "bytes": 2145,
+      "sha256": "297223a358c10967c5b4231ba26d9d81f5c3914d215d14ad412f8545ea71062e"
+    },
+    {
+      "path": "runners/ci-process-member-cache.ps1",
+      "bytes": 3381,
+      "sha256": "de172ed49f4a12ece961a9fc07163167526a6017f73e751b3525b13f33ac5556"
+    },
+    {
+      "path": "runners/ci-process-member-check.py",
+      "bytes": 2844,
+      "sha256": "c633c72a50a78069e372299605feb3b064495b7f3c5a7a1263cfbd0b54089a80"
+    },
+    {
+      "path": "runners/ci-process-member-commit.py",
+      "bytes": 3852,
+      "sha256": "15abe653d0be718b0addd5f37d653c9fc74fda69c0e5b50f24c938cf7dc387b5"
+    },
+    {
+      "path": "runners/ci-process-member-docs.py",
+      "bytes": 6748,
+      "sha256": "84f912ce4ad1d99214917eef2369eb3238d9463929f5db10022cbd6d77485828"
+    },
+    {
+      "path": "runners/ci-process-member-integrated.py",
+      "bytes": 3196,
+      "sha256": "3d896565686ed025a06934092c7ec588278f33a4c1a459b5c58eb7006e22fcbb"
+    },
+    {
+      "path": "runners/ci-process-member-live-pdf.py",
+      "bytes": 1910,
+      "sha256": "9c0a02e1bbf34889ec5ec0f084eb69dff57a4c27c9390e3dff2b53c8913fea90"
+    },
+    {
+      "path": "runners/ci-process-member-live-pg.py",
+      "bytes": 11831,
+      "sha256": "290d5c1a64c293ab484664df77ea086686d73b999f0e17190648857f39bc8b76"
+    },
+    {
+      "path": "runners/ci-process-member-pr.py",
+      "bytes": 4719,
+      "sha256": "fe78959d2196586141b7133a478686ebd3f388d95984e0ec0bfbd9efd8390382"
+    },
+    {
+      "path": "runners/ci-process-member-preserve.py",
+      "bytes": 6716,
+      "sha256": "63aecbcd8e0e86d48b49ef5e0cb418ebf386c19e7af3ea574e2e86bc7a47657d"
+    },
+    {
+      "path": "runners/ci-process-member-stage.py",
+      "bytes": 2675,
+      "sha256": "b0bf78b3705ec78982a19f4565d3693aee9f9f75cbbb3a7e0f6f784155a034ef"
+    },
+    {
+      "path": "source-integration.json",
+      "bytes": 1565,
+      "sha256": "001170382a05dbcd7be71a01708f7d233c8249cf331ce38cdedd66ce47307e07"
+    }
+  ]
+}

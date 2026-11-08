@@ -1,0 +1,12 @@
+warning: failed to save last-use data
+This may prevent cargo from accurately tracking what is being used in its global cache. This information is used for automatically removing unused data in the cache.
+
+database or disk is full
+
+Caused by:
+  Error code 13: database or disk is full
+    Finished `test` profile [unoptimized] target(s) in 0.67s
+     Running tests\media.rs (target\debug\deps\media-96dd54905e72b0ab.exe)
+0 tests, 0 benchmarks
+     Running tests\model_bedrock.rs (target\debug\deps\model_bedrock-f9c29e631b53577c.exe)
+0 tests, 0 benchmarks

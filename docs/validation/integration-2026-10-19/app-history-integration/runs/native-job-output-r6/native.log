@@ -1,0 +1,18 @@
+
+running 13 tests
+test branched_clock_skew_and_equal_dates_checkpoint_partial_frontiers_before_selecting ... ok
+test cli_denials_precede_host_files_and_never_initialize_missing_store ... ok
+test corrupt_or_unrelated_proof_and_reordered_or_missing_visits_never_resume ... ok
+test cumulative_capture_and_source_limits_do_not_reset_between_batches ... ok
+test default_permission_caller_transaction_and_durability_refuse_before_progress ... ok
+test history_over_mapping_limit_resumes_after_real_store_restart_and_never_changes_checkout_or_latest ... ok
+test lost_ack_stale_revision_pause_resume_cancel_and_current_grants ... ok
+test missing_git_object_and_sql_lock_deadline_leave_the_checkpoint_unchanged ... ok
+test object_proof_and_parent_limits_are_cumulative_across_restartable_steps ... ok
+test output_and_late_sql_failure_roll_back_job_and_all_new_captures ... ok
+test real_cli_creates_runs_resumes_and_reads_existing_state_without_a_signing_key ... ok
+test swapped_valid_local_capture_references_cannot_supply_another_commits_mapping ... ok
+test typed_retention_keeps_head_origin_and_every_recorded_capture_but_refuses_forgery ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 57.12s
+

@@ -1,0 +1,76 @@
+[
+  {
+    "gate": "r2-native",
+    "command": [
+      "cargo",
+      "test",
+      "--locked",
+      "-j2",
+      "--lib",
+      "--test",
+      "digest_receiver",
+      "--",
+      "--test-threads=2"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 173.826,
+    "recordedAt": "2026-10-19T05:59:11.166695+00:00",
+    "resultGroups": [
+      {
+        "passed": 406,
+        "failed": 0,
+        "ignored": 7
+      },
+      {
+        "passed": 23,
+        "failed": 0,
+        "ignored": 1
+      }
+    ]
+  },
+  {
+    "gate": "r2-actual-tls-cli",
+    "command": [
+      "cargo",
+      "test",
+      "--locked",
+      "-j2",
+      "--test",
+      "digest_receiver",
+      "actual_tls_receiver_and_sender_cli_recover_using_os_credentials_and_selected_ca",
+      "--",
+      "--exact",
+      "--ignored",
+      "--test-threads=1"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 8.165,
+    "recordedAt": "2026-10-19T05:59:19.332812+00:00",
+    "resultGroups": [
+      {
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0
+      }
+    ]
+  },
+  {
+    "gate": "r2-clippy",
+    "command": [
+      "cargo",
+      "clippy",
+      "--workspace",
+      "--all-targets",
+      "--locked",
+      "--keep-going",
+      "-j2",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 87.739,
+    "recordedAt": "2026-10-19T06:00:47.072494+00:00",
+    "resultGroups": []
+  }
+]

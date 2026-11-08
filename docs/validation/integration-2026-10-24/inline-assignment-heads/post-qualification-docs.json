@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "productCommit": "23ef82b71bbee2ef30a9d00151ef51fbb7e3f261",
+  "change": "Clarify that generated syntax adds no explicit base/key/old-value evaluation; no universal statement about reflective global binding resolution",
+  "productionOrTestCodeChanged": false,
+  "qualificationSourceHashesRemainAtRecordedCheckpoint": true,
+  "postQualificationDocumentHashes": {
+    "native/docs/compiler-inline.md": "fc519a6660d7ab9ec9517911e2c1ac46645e8d38c3f6da1bab2d8b8a97bbf684",
+    "docs/validation/integration-2026-10-24/inline-assignment-heads/README.md": "dd18e8bcab1a9778715e66b9f08dd97818c6b3872d310a7e73af375586349e5c"
+  },
+  "additionalOwnedDiagnostics": {
+    "ambientProxyPrototypeCandidate": "No divergence observed in VM/CommonJS or actual Node ES module children; not a proven defect or broad runtime qualification",
+    "nativeAdmission": false
+  }
+}

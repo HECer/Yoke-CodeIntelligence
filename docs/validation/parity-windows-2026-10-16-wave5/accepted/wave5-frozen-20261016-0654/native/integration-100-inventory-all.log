@@ -1,0 +1,16 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 2.95s
+     Running tests\skills_cli.rs (target\debug\deps\skills_cli-091e7a1a8e0b53d0.exe)
+cli_rejects_untrusted_roots_and_source_options_before_initializing_state: test
+folding_the_library_preflights_every_revision_before_changing_the_first_skill: test
+host_cli_observes_missing_revision_guards_and_preserves_explicit_stale_guards: test
+public_cli_preserves_authored_history_through_confirm_fold_and_publish: test
+small_output_budget_retains_the_complete_mutation_receipt_in_the_personal_store: test
+
+5 tests, 0 benchmarks
+     Running tests\store_cancellation.rs (target\debug\deps\store_cancellation-a0db40c66b27d046.exe)
+active_sql_is_interrupted_by_inherited_host_cancellation: test
+cancelled_store_refuses_new_publication_until_deadline_is_replaced: test
+sqlite_lock_contention_retains_a_finite_timeout_and_atomic_recovery: test
+
+3 tests, 0 benchmarks

@@ -1,0 +1,540 @@
+{
+  "schemaVersion": 1,
+  "kind": "native-immutable-compiler-move-repairs",
+  "sourceCommit": "275c321bd8baa25bdaac5828612ded5230c8fe76",
+  "baseIntegration": "99febf08db9016f4382c2425c80eedc6dcdd8630",
+  "scope": [
+    "Source-only direct named reexport and fresh import-alias repair",
+    "Native origin/reference/shape and original-byte piece reconstruction",
+    "Complete-result static binding/API/source/verification gates preserved",
+    "Scoped Windows development evidence; full STATUS remains incomplete"
+  ],
+  "finalPhase": "final-r1",
+  "retainedPhase": "retained-r1",
+  "phases": [
+    {
+      "phase": "compile-r1",
+      "resultPath": "runs/compile-r1/result.json",
+      "allChecksPassed": true,
+      "inputs": 797
+    },
+    {
+      "phase": "feature-r1",
+      "resultPath": "runs/feature-r1/result.json",
+      "allChecksPassed": false,
+      "inputs": 797
+    },
+    {
+      "phase": "feature-r2",
+      "resultPath": "runs/feature-r2/result.json",
+      "allChecksPassed": true,
+      "inputs": 798
+    },
+    {
+      "phase": "final-r1",
+      "resultPath": "runs/final-r1/result.json",
+      "allChecksPassed": true,
+      "inputs": 798
+    },
+    {
+      "phase": "legacy-stdlib-cli-r2",
+      "resultPath": "runs/legacy-stdlib-cli-r2/result.json",
+      "allChecksPassed": true,
+      "inputs": null
+    },
+    {
+      "phase": "lint-r1",
+      "resultPath": "runs/lint-r1/result.json",
+      "allChecksPassed": false,
+      "inputs": 798
+    },
+    {
+      "phase": "retained-r1",
+      "resultPath": "runs/retained-r1/result.json",
+      "allChecksPassed": true,
+      "inputs": 792
+    }
+  ],
+  "files": [
+    {
+      "path": "runs/compile-r1/check.log",
+      "bytes": 168,
+      "sha256": "d8e9dc53578fb0bf5965231434ff4aa39bb7808ca3da1b3aa3dcc7107421bdd4"
+    },
+    {
+      "path": "runs/compile-r1/result.json",
+      "bytes": 537,
+      "sha256": "5de1c63882278385aa5f413d2cd791fae13d5ca48629206b2214245d22b55883"
+    },
+    {
+      "path": "runs/compile-r1/runner.py",
+      "bytes": 3277,
+      "sha256": "3074b8fc4408784aeec139fa7416263cd8c5ba912863b37011a91208bb5947da"
+    },
+    {
+      "path": "runs/compile-r1/source/native/src/compiler_move.rs",
+      "bytes": 18982,
+      "sha256": "6cddb3f26dcaa53f77040d0f6f34acb2cbb9b49d90b9a0b8e3fe55351809388d"
+    },
+    {
+      "path": "runs/compile-r1/source/native/src/compiler_move_repairs.rs",
+      "bytes": 23072,
+      "sha256": "1f88bf2c764bb0cbb1ff6e1804788be9ce34235f3057f5c9792907aa0e7dede4"
+    },
+    {
+      "path": "runs/compile-r1/source/native/src/compiler_move_repairs_worker.cjs",
+      "bytes": 11565,
+      "sha256": "3d1a5cab4dd384908c75bda54c0b03a809308141b9a146d709ccb0d06d5591c4"
+    },
+    {
+      "path": "runs/compile-r1/source/native/src/compiler_move_worker.cjs",
+      "bytes": 12154,
+      "sha256": "c91337bc1c086d4a6edb1cd3e30a3ff0d2e8e7709664aefb60a3a2d4bef66880"
+    },
+    {
+      "path": "runs/compile-r1/source/native/src/projects.rs",
+      "bytes": 8807,
+      "sha256": "8b6ebe9d069290c8528c04877104a53563a9e484bd9c733225c9733de0be99a7"
+    },
+    {
+      "path": "runs/compile-r1/source-after.json",
+      "bytes": 86423,
+      "sha256": "7079d44c7f8cf337487ceea5b57e22662730af5ee7af7e0229678aae17837866"
+    },
+    {
+      "path": "runs/compile-r1/source-before.json",
+      "bytes": 86423,
+      "sha256": "7079d44c7f8cf337487ceea5b57e22662730af5ee7af7e0229678aae17837866"
+    },
+    {
+      "path": "runs/evidence.py",
+      "bytes": 6414,
+      "sha256": "4e1f501e54f284df2b7204e278be5233ed63f8714e731e540d5bb5ca0e557d3f"
+    },
+    {
+      "path": "runs/feature-r1/native.log",
+      "bytes": 2626,
+      "sha256": "c29b02c6705776f4756450d6730c04ab52ba71a77a1f803ae2fff33dcc9dc861"
+    },
+    {
+      "path": "runs/feature-r1/result.json",
+      "bytes": 879,
+      "sha256": "d35575c85889dbea0da8067f7042aa65da74ad5fc7ae2f8c745dbd07ecad47ab"
+    },
+    {
+      "path": "runs/feature-r1/runner.py",
+      "bytes": 3277,
+      "sha256": "3074b8fc4408784aeec139fa7416263cd8c5ba912863b37011a91208bb5947da"
+    },
+    {
+      "path": "runs/feature-r1/source/native/src/compiler_move.rs",
+      "bytes": 19175,
+      "sha256": "c05c0a698a529fda530b3d30ef9f3f914de40ee5ac02a63a4b19e21f2a74f685"
+    },
+    {
+      "path": "runs/feature-r1/source/native/src/compiler_move_ast.rs",
+      "bytes": 21800,
+      "sha256": "d708839de4748a158f4556a3c9eae7e314b5f98d220c811832633f8fad7e9637"
+    },
+    {
+      "path": "runs/feature-r1/source/native/src/compiler_move_repairs.rs",
+      "bytes": 23072,
+      "sha256": "1f88bf2c764bb0cbb1ff6e1804788be9ce34235f3057f5c9792907aa0e7dede4"
+    },
+    {
+      "path": "runs/feature-r1/source/native/src/compiler_move_repairs_worker.cjs",
+      "bytes": 11565,
+      "sha256": "3d1a5cab4dd384908c75bda54c0b03a809308141b9a146d709ccb0d06d5591c4"
+    },
+    {
+      "path": "runs/feature-r1/source/native/src/compiler_move_worker.cjs",
+      "bytes": 12154,
+      "sha256": "c91337bc1c086d4a6edb1cd3e30a3ff0d2e8e7709664aefb60a3a2d4bef66880"
+    },
+    {
+      "path": "runs/feature-r1/source/native/src/projects.rs",
+      "bytes": 8807,
+      "sha256": "8b6ebe9d069290c8528c04877104a53563a9e484bd9c733225c9733de0be99a7"
+    },
+    {
+      "path": "runs/feature-r1/source/native/tests/compiler_move.rs",
+      "bytes": 28807,
+      "sha256": "be35ac0ad754c2c7e00001f72b62a85408900a2bdecced5b7ff904637e603d62"
+    },
+    {
+      "path": "runs/feature-r1/source-after.json",
+      "bytes": 86423,
+      "sha256": "1d0358e18d357391a3a706ff9c7f799cfe71c569ec72eaf7fd846aa0a195c842"
+    },
+    {
+      "path": "runs/feature-r1/source-before.json",
+      "bytes": 86423,
+      "sha256": "1d0358e18d357391a3a706ff9c7f799cfe71c569ec72eaf7fd846aa0a195c842"
+    },
+    {
+      "path": "runs/feature-r2/native.log",
+      "bytes": 57919,
+      "sha256": "e8e709a665b72439b6355aafcf4014e414385ab0ca3217c6ab113ed6d29d37ba"
+    },
+    {
+      "path": "runs/feature-r2/result.json",
+      "bytes": 784,
+      "sha256": "873040edc134c29b86b79350e8871e8ff6d1d53d055466439d907b44044bf056"
+    },
+    {
+      "path": "runs/feature-r2/runner.py",
+      "bytes": 3277,
+      "sha256": "3074b8fc4408784aeec139fa7416263cd8c5ba912863b37011a91208bb5947da"
+    },
+    {
+      "path": "runs/feature-r2/source/native/src/compiler_move.rs",
+      "bytes": 19175,
+      "sha256": "c05c0a698a529fda530b3d30ef9f3f914de40ee5ac02a63a4b19e21f2a74f685"
+    },
+    {
+      "path": "runs/feature-r2/source/native/src/compiler_move_ast.rs",
+      "bytes": 21800,
+      "sha256": "d708839de4748a158f4556a3c9eae7e314b5f98d220c811832633f8fad7e9637"
+    },
+    {
+      "path": "runs/feature-r2/source/native/src/compiler_move_repair_tests.rs",
+      "bytes": 8262,
+      "sha256": "8bf0c4e7b151f54e816bba469902b8471b365f20da00fe8c37fe9ed379828b1d"
+    },
+    {
+      "path": "runs/feature-r2/source/native/src/compiler_move_repairs.rs",
+      "bytes": 25152,
+      "sha256": "831f577bfe671c6d7dcef2fe90099b4aef0f5372e62adb7af065ee01aa6ffb48"
+    },
+    {
+      "path": "runs/feature-r2/source/native/src/compiler_move_repairs_worker.cjs",
+      "bytes": 11692,
+      "sha256": "9be22c7593c13e2a62777b3671ae20617d796068212a1c507852252597f1d051"
+    },
+    {
+      "path": "runs/feature-r2/source/native/src/compiler_move_worker.cjs",
+      "bytes": 12154,
+      "sha256": "c91337bc1c086d4a6edb1cd3e30a3ff0d2e8e7709664aefb60a3a2d4bef66880"
+    },
+    {
+      "path": "runs/feature-r2/source/native/src/projects.rs",
+      "bytes": 8807,
+      "sha256": "8b6ebe9d069290c8528c04877104a53563a9e484bd9c733225c9733de0be99a7"
+    },
+    {
+      "path": "runs/feature-r2/source/native/tests/compiler_move.rs",
+      "bytes": 32754,
+      "sha256": "7ede431c15f67fdb6555111866cedad497a0411e1a352085d39c19be7d529549"
+    },
+    {
+      "path": "runs/feature-r2/source-after.json",
+      "bytes": 86538,
+      "sha256": "44d8187f83159126d1796727fb9265b966a08d4cb669a3e8ecb500015e7deec5"
+    },
+    {
+      "path": "runs/feature-r2/source-before.json",
+      "bytes": 86538,
+      "sha256": "44d8187f83159126d1796727fb9265b966a08d4cb669a3e8ecb500015e7deec5"
+    },
+    {
+      "path": "runs/final-r1/build.log",
+      "bytes": 60,
+      "sha256": "afb5e4c62a9a33554d8c9d5e5eb2459ac5468f91c2e743d623f39fa1355368a2"
+    },
+    {
+      "path": "runs/final-r1/clippy.log",
+      "bytes": 168,
+      "sha256": "21be2c40dfae7504aaa9b0ac304019265eccbc6531c1153cd82f169cc621dd91"
+    },
+    {
+      "path": "runs/final-r1/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "runs/final-r1/native.log",
+      "bytes": 74268,
+      "sha256": "0f4ccc0eee60ee31e6bda24101e64ed99f05c6880671e58d42556a2fffb12cd4"
+    },
+    {
+      "path": "runs/final-r1/result.json",
+      "bytes": 2423,
+      "sha256": "5066b1711d09558922d18f5e2a979c058d1e907733b619e1797439caf02c0b40"
+    },
+    {
+      "path": "runs/final-r1/runner.py",
+      "bytes": 3389,
+      "sha256": "4d5ec90c3f380b1c76693ba95a5803a56b57869db29c34ca4389d65a0b797e6f"
+    },
+    {
+      "path": "runs/final-r1/source/native/docs/compiler-move.md",
+      "bytes": 6287,
+      "sha256": "32e2fcbdca9fdee05045258c84785b82827ed53423d3aae05ccc8dfb60806aa2"
+    },
+    {
+      "path": "runs/final-r1/source/native/src/compiler_move.rs",
+      "bytes": 19175,
+      "sha256": "c05c0a698a529fda530b3d30ef9f3f914de40ee5ac02a63a4b19e21f2a74f685"
+    },
+    {
+      "path": "runs/final-r1/source/native/src/compiler_move_ast.rs",
+      "bytes": 21800,
+      "sha256": "d708839de4748a158f4556a3c9eae7e314b5f98d220c811832633f8fad7e9637"
+    },
+    {
+      "path": "runs/final-r1/source/native/src/compiler_move_repair_tests.rs",
+      "bytes": 8940,
+      "sha256": "5c0a329bb2739d83d70798f63e904c7a7a026c95dc8a278db139dda8df7209ab"
+    },
+    {
+      "path": "runs/final-r1/source/native/src/compiler_move_repairs.rs",
+      "bytes": 25152,
+      "sha256": "831f577bfe671c6d7dcef2fe90099b4aef0f5372e62adb7af065ee01aa6ffb48"
+    },
+    {
+      "path": "runs/final-r1/source/native/src/compiler_move_repairs_worker.cjs",
+      "bytes": 11709,
+      "sha256": "304d93c03246e9070fb37b35f7bf816d55b7f588a6301c362e06ff70430a3167"
+    },
+    {
+      "path": "runs/final-r1/source/native/src/compiler_move_worker.cjs",
+      "bytes": 12170,
+      "sha256": "2284555447200df176daee2c5854ca6a234c5f8dccde902eed7ae9d42d66e9b7"
+    },
+    {
+      "path": "runs/final-r1/source/native/src/projects.rs",
+      "bytes": 8807,
+      "sha256": "8b6ebe9d069290c8528c04877104a53563a9e484bd9c733225c9733de0be99a7"
+    },
+    {
+      "path": "runs/final-r1/source/native/tests/compiler_move.rs",
+      "bytes": 33916,
+      "sha256": "4b0bef469cf2a0411b4887fbf7b982c55910439eb54ef5db0f147628ecd8b2ae"
+    },
+    {
+      "path": "runs/final-r1/source-after.json",
+      "bytes": 86538,
+      "sha256": "9bdc47676f4c7b5306394f3a15f5047b23d33631d529a15623948f725363ae92"
+    },
+    {
+      "path": "runs/final-r1/source-before.json",
+      "bytes": 86538,
+      "sha256": "9bdc47676f4c7b5306394f3a15f5047b23d33631d529a15623948f725363ae92"
+    },
+    {
+      "path": "runs/legacy-stdlib-cli/failure.json",
+      "bytes": 197,
+      "sha256": "41d94ed2614011c5e1698f81d8fb734358a0ed609fc6c76332c3f12a738a7d44"
+    },
+    {
+      "path": "runs/legacy-stdlib-cli/prepare.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "runs/legacy-stdlib-cli/prepare.stdout",
+      "bytes": 9172,
+      "sha256": "6ea2bd014cceba2b0bf85df9f22acdf3754552d91b89db46cb7ae5d3ee67e8da"
+    },
+    {
+      "path": "runs/legacy-stdlib-cli/runner-failed.py",
+      "bytes": 2754,
+      "sha256": "f20519731ce89b4eaf55d102fbd20f06080bbcd3cd6628a93c9be0c44c349094"
+    },
+    {
+      "path": "runs/legacy-stdlib-cli-r2/prepare.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "runs/legacy-stdlib-cli-r2/prepare.stdout",
+      "bytes": 9172,
+      "sha256": "679c0cd628a4fc186239acca3f9366ee4088aa97ae31ff66882d650824ddeb7b"
+    },
+    {
+      "path": "runs/legacy-stdlib-cli-r2/prior-prepare.stdout",
+      "bytes": 9172,
+      "sha256": "acb936c249ef1e6212d17b6ee5223e350e9fa44b9b7f5e535ffbcd658b40271d"
+    },
+    {
+      "path": "runs/legacy-stdlib-cli-r2/result.json",
+      "bytes": 1447,
+      "sha256": "7b9c6d6d394c1f9316e602b0435a84010964c940aa5bfca4a2db2eebe9d4cf2a"
+    },
+    {
+      "path": "runs/legacy-stdlib-cli-r2/runner.py",
+      "bytes": 2994,
+      "sha256": "b8f496b1b03a75b6fbcab36a5caa8e5d31fa412014094a66d84b3016be91fa24"
+    },
+    {
+      "path": "runs/lint-r1/clippy.log",
+      "bytes": 1156,
+      "sha256": "44421bf93b82f022c56df8f98d3c8f6320df4ac2f830db9e728d5c42d2af0540"
+    },
+    {
+      "path": "runs/lint-r1/result.json",
+      "bytes": 592,
+      "sha256": "8dca7d65f3643ff499cda11d07a4bae7c5987aed9c2d6e46088415a666bdc03c"
+    },
+    {
+      "path": "runs/lint-r1/runner.py",
+      "bytes": 3389,
+      "sha256": "4d5ec90c3f380b1c76693ba95a5803a56b57869db29c34ca4389d65a0b797e6f"
+    },
+    {
+      "path": "runs/lint-r1/source/native/docs/compiler-move.md",
+      "bytes": 6287,
+      "sha256": "32e2fcbdca9fdee05045258c84785b82827ed53423d3aae05ccc8dfb60806aa2"
+    },
+    {
+      "path": "runs/lint-r1/source/native/src/compiler_move.rs",
+      "bytes": 19175,
+      "sha256": "c05c0a698a529fda530b3d30ef9f3f914de40ee5ac02a63a4b19e21f2a74f685"
+    },
+    {
+      "path": "runs/lint-r1/source/native/src/compiler_move_ast.rs",
+      "bytes": 21800,
+      "sha256": "d708839de4748a158f4556a3c9eae7e314b5f98d220c811832633f8fad7e9637"
+    },
+    {
+      "path": "runs/lint-r1/source/native/src/compiler_move_repair_tests.rs",
+      "bytes": 8936,
+      "sha256": "54f7cf1522a137ad212d5c412720c7e74bd522c66fe139e9443aa455b9d85c6a"
+    },
+    {
+      "path": "runs/lint-r1/source/native/src/compiler_move_repairs.rs",
+      "bytes": 25152,
+      "sha256": "831f577bfe671c6d7dcef2fe90099b4aef0f5372e62adb7af065ee01aa6ffb48"
+    },
+    {
+      "path": "runs/lint-r1/source/native/src/compiler_move_repairs_worker.cjs",
+      "bytes": 11709,
+      "sha256": "304d93c03246e9070fb37b35f7bf816d55b7f588a6301c362e06ff70430a3167"
+    },
+    {
+      "path": "runs/lint-r1/source/native/src/compiler_move_worker.cjs",
+      "bytes": 12170,
+      "sha256": "2284555447200df176daee2c5854ca6a234c5f8dccde902eed7ae9d42d66e9b7"
+    },
+    {
+      "path": "runs/lint-r1/source/native/src/projects.rs",
+      "bytes": 8807,
+      "sha256": "8b6ebe9d069290c8528c04877104a53563a9e484bd9c733225c9733de0be99a7"
+    },
+    {
+      "path": "runs/lint-r1/source/native/tests/compiler_move.rs",
+      "bytes": 33916,
+      "sha256": "4b0bef469cf2a0411b4887fbf7b982c55910439eb54ef5db0f147628ecd8b2ae"
+    },
+    {
+      "path": "runs/lint-r1/source-after.json",
+      "bytes": 86538,
+      "sha256": "4758923c375dea20f427ed7b2ed4a11072cc1a3d410138a9044e8d2075338342"
+    },
+    {
+      "path": "runs/lint-r1/source-before.json",
+      "bytes": 86538,
+      "sha256": "4758923c375dea20f427ed7b2ed4a11072cc1a3d410138a9044e8d2075338342"
+    },
+    {
+      "path": "runs/materialization.json",
+      "bytes": 248301,
+      "sha256": "61b3944eeb368a2cb034df578ff78293be801a8dee97306824eb965042ddca0d"
+    },
+    {
+      "path": "runs/metadata-proof.json",
+      "bytes": 285,
+      "sha256": "d3bee70a79d8c54ba152d5776aefe618bda9a588f95efc22c40e556931658850"
+    },
+    {
+      "path": "runs/metadata.py",
+      "bytes": 6779,
+      "sha256": "817cadbf7504cd683bdd75d6ec87b2614549b20866a736d5da4a56ffc2145a85"
+    },
+    {
+      "path": "runs/qualification.json",
+      "bytes": 6969,
+      "sha256": "c2331df9aaa12c36126d0be6a6675249c28c3d490543364caf3bb127e27e8bb9"
+    },
+    {
+      "path": "runs/retained-r1/python-contracts.log",
+      "bytes": 2845,
+      "sha256": "94c4a4276841dee1bb1b393c31f21d331b2a8cbfa7db8660f1e10fd5ab37bee5"
+    },
+    {
+      "path": "runs/retained-r1/result.json",
+      "bytes": 738,
+      "sha256": "b8cdbdb1a4999062dfec2cd8df39c8ae51d0415607c6754934bacd57c3c9b4a8"
+    },
+    {
+      "path": "runs/retained-r1/runner.py",
+      "bytes": 2181,
+      "sha256": "4e4f9e23aa974aec442d53058926330da1fc9c34433707c6425731791007c1a0"
+    },
+    {
+      "path": "runs/retained-r1/source-after.json",
+      "bytes": 85150,
+      "sha256": "5242d62651cf964cda474393a0e1e57b9e38f790c6e55e5f20b767f55845ff2c"
+    },
+    {
+      "path": "runs/retained-r1/source-before.json",
+      "bytes": 85150,
+      "sha256": "5242d62651cf964cda474393a0e1e57b9e38f790c6e55e5f20b767f55845ff2c"
+    },
+    {
+      "path": "runs/retained-r1/tests.log",
+      "bytes": 25027,
+      "sha256": "709f9a5544cc97180583d2cb1cecbf1f899f9f42213a5ff8209bbae106ad7cc3"
+    },
+    {
+      "path": "runs/retained-r1/typecheck.log",
+      "bytes": 101,
+      "sha256": "30ef9ce16cf042ab6f160e0a76c1fbfe22f02a3c3a3659ee62863ffc1efdbfdf"
+    },
+    {
+      "path": "runs/tools.json",
+      "bytes": 432,
+      "sha256": "7de877177cc9f395baa7c465fc04f4fcdf54af5c04324857d47b010dc9fdb84c"
+    },
+    {
+      "path": "runs/worker-r1/request.json",
+      "bytes": 1456,
+      "sha256": "e4e38d8a0930d4f9906e87a3459a363ff362e9afae9cf29489b85dab1075ad7f"
+    },
+    {
+      "path": "runs/worker-r1/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "runs/worker-r1/stdout.json",
+      "bytes": 19615,
+      "sha256": "1bf389a8f8e2e32132ae338d6fd7a27755a6cd8b294fa6ceb389683355aab1c0"
+    },
+    {
+      "path": "runs/worker-r1/worker.cjs",
+      "bytes": 46316,
+      "sha256": "9a9f1606bbcf485304698d5b019d7ee9257e463b5d96eb52bf153db6f2d27a44"
+    },
+    {
+      "path": "runs/worker-r2-private/request.json",
+      "bytes": 1389,
+      "sha256": "7671aee90b18f67f74f82b46c917b539199f2525b96fbb7e76e0ef1bff33e5c1"
+    },
+    {
+      "path": "runs/worker-r2-private/stderr.log",
+      "bytes": 1379,
+      "sha256": "0989a9bb47d6b2a576fa757330088e14934c7c29e24fd01bf6699fd428b2c58f"
+    },
+    {
+      "path": "runs/worker-r2-private/stdout.json",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "runs/worker-r2-private/worker.cjs",
+      "bytes": 46509,
+      "sha256": "bd05b1e4747e02f7357b62e2dbe4376db0e07fbf2b9318d6f26636410d1694e4"
+    }
+  ]
+}

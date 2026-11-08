@@ -1,0 +1,31 @@
+{
+  "live_enrichment": {
+    "executable": "E:\\Yoke-Build-Cache\\meaning-aliases-20261016\\debug\\deps\\live_enrichment-fe0b6210f3ac9031.exe",
+    "ignored": [
+      "actual_python_server_normalized_symbols_and_signature_help",
+      "actual_rust_server_expanded_call_symbols_completion_signature_diagnostics_and_prepare_rename",
+      "actual_typescript_server_expanded_type_call_symbols_signature_and_published_diagnostics"
+    ],
+    "registered": [
+      "actual_python_server_normalized_symbols_and_signature_help",
+      "actual_rust_server_expanded_call_symbols_completion_signature_diagnostics_and_prepare_rename",
+      "actual_typescript_server_expanded_type_call_symbols_signature_and_published_diagnostics"
+    ]
+  },
+  "lsp": {
+    "executable": "E:\\Yoke-Build-Cache\\meaning-aliases-20261016\\debug\\deps\\lsp-ad376eb03f90ca87.exe",
+    "ignored": [],
+    "registered": [
+      "host_registered_semantic_rename_uses_the_requested_mcp_snapshot",
+      "lsp_deadline_includes_a_server_that_refuses_to_read_didopen",
+      "lsp_shutdown_grace_uses_the_remaining_request_deadline",
+      "protocol_fixture_locations_bind_to_exact_immutable_source",
+      "protocol_fixture_rename_prepares_a_plan_without_touching_source",
+      "protocol_fixture_unsafe_workspace_edits_fail_closed",
+      "repeated_large_lsp_locations_remain_exact_anchors_with_bounded_body_bytes",
+      "semantic_calls_refuse_rebound_source_under_a_published_snapshot_id",
+      "semantic_location_link_selection_must_be_inside_its_target_range",
+      "semantic_positions_preserve_cr_crlf_lf_and_unicode_boundaries"
+    ]
+  }
+}

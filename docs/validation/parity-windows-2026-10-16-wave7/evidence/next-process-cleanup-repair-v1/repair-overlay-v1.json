@@ -1,0 +1,22 @@
+{
+  "changes": {
+    "src/core/process.ts": {
+      "after": "9468729193c4c2582458008ba185cbf012cc557f2d0832add80a0777124ecab8",
+      "before": "00c923dafca5beeb1bb4638250c973f3fad5a6b648baa507d260771673dab0e4"
+    },
+    "test/process-cleanup.test.mjs": {
+      "after": "5d1606bdd7c69ba34475f314c56cbdfba490606a89941d9daf09d81f80cff2b5",
+      "before": "05134d2c2ff4f8ac3503957f6254d43126a35adcf5f0399d4fd247f626f66f04"
+    },
+    "test/process-killer-failure.test.mjs": {
+      "after": "e82d4701f0d92a41a7a167c1a8861f05804e7dff2703707a7c81a0b67e4498b7",
+      "before": "ABSENT"
+    }
+  },
+  "firstFailedFullTag": "affected-r5b-20261016-full",
+  "newFullTag": "affected-r5b-process-20261016-full",
+  "rootExclusiveNormalCargoContextRetained": true,
+  "rustSourceChangesSincePromotion": [],
+  "sourceFiles": 2873,
+  "sourceManifestSha256": "d9b2112398d06212d977212518c2377f6ed2d8df89c359a9925b1b7999bbfa31"
+}

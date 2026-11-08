@@ -1,0 +1,36 @@
+warning: field `end` is never read
+   --> native\src\document_mixed_input.rs:234:9
+    |
+231 | pub(crate) struct DecodedSegment<'a> {
+    |                   -------------- field in this struct
+...
+234 |     pub end: usize,
+    |         ^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `yoke-code-intelligence` (lib) generated 1 warning
+   Compiling yoke-code-intelligence v0.5.0 (E:\Yoke-Worktrees\mixed-document-view-20261017\native)
+    Finished `test` profile [unoptimized] target(s) in 4.52s
+     Running tests\mixed_view_cli.rs (E:/Yoke-Build-Cache/mixed-document-view-20261017\debug\deps\mixed_view_cli-ffc3fea888a9b7f2.exe)
+
+running 1 test
+test artifact_registration_bytes_participate_in_the_exact_aggregate_metadata_budget ... FAILED
+
+failures:
+
+---- artifact_registration_bytes_participate_in_the_exact_aggregate_metadata_budget stdout ----
+
+thread 'artifact_registration_bytes_participate_in_the_exact_aggregate_metadata_budget' (60592) panicked at native\tests\mixed_view_cli.rs:513:5:
+assertion `left == right` failed
+  left: 39156
+ right: 43252
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    artifact_registration_bytes_participate_in_the_exact_aggregate_metadata_budget
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 8 filtered out; finished in 0.36s
+
+error: test failed, to rerun pass `--test mixed_view_cli`

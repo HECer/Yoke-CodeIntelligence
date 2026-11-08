@@ -1,0 +1,14 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+    Finished `test` profile [unoptimized] target(s) in 3.04s
+     Running tests\neo4j_publish_cli.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\neo4j_publish_cli-39229a678f78479b.exe)
+
+running 6 tests
+test an_open_private_stdin_pipe_cannot_extend_the_host_deadline ... ok
+test bootstrap_offline_inspection_and_closed_configuration_never_connect_or_initialize_source ... ok
+test credential_creation_lock_wait_uses_the_callers_original_deadline ... ok
+test host_grants_and_foreign_source_flags_refuse_before_config_reads_and_store_creation ... ok
+test lost_stdout_keeps_the_approved_journal_and_reports_its_plan_identity ... ok
+test prepare_uses_the_existing_saved_snapshot_and_preserves_source_bytes_after_disk_changes ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.44s
+

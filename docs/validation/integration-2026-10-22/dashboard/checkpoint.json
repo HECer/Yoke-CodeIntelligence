@@ -1,0 +1,172 @@
+{
+  "sourceCommit": "1191feddc0db55efe0c6d24292e5f0747f5148c7",
+  "cliSha256": "b83fa60bdcb1030f7f129261796c05ed70df3b6e72e9c33cad6c5aa5117e0eac",
+  "frozenInputs": 1065,
+  "rust": {
+    "cargoTargets": {
+      "session_dashboard": {
+        "passed": 13,
+        "failed": 0,
+        "ignored": 0
+      },
+      "session_steering": {
+        "passed": 12,
+        "failed": 0,
+        "ignored": 0
+      },
+      "session_agent_interface": {
+        "passed": 8,
+        "failed": 0,
+        "ignored": 0
+      },
+      "session_config_cli": {
+        "passed": 5,
+        "failed": 0,
+        "ignored": 0
+      },
+      "native-lib": {
+        "passed": 569,
+        "failed": 0,
+        "ignored": 7
+      },
+      "project_session": {
+        "passed": 6,
+        "failed": 0,
+        "ignored": 0
+      },
+      "session_optional_defaults": {
+        "passed": 8,
+        "failed": 0,
+        "ignored": 0
+      },
+      "protocol_connection": {
+        "passed": 5,
+        "failed": 0,
+        "ignored": 0
+      },
+      "mcp_http": {
+        "passed": 18,
+        "failed": 0,
+        "ignored": 0
+      },
+      "mcp_http_cli": {
+        "passed": 3,
+        "failed": 0,
+        "ignored": 1
+      },
+      "mcp_http_review": {
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0
+      },
+      "agent_repl": {
+        "passed": 22,
+        "failed": 0,
+        "ignored": 0
+      },
+      "agent_repl_lifecycle": {
+        "passed": 3,
+        "failed": 0,
+        "ignored": 0
+      },
+      "agent_repl_api_selection": {
+        "passed": 8,
+        "failed": 0,
+        "ignored": 0
+      },
+      "agent_facade_semantics": {
+        "passed": 4,
+        "failed": 0,
+        "ignored": 0
+      },
+      "session_mcp": {
+        "passed": 3,
+        "failed": 0,
+        "ignored": 0
+      },
+      "session_startup_project": {
+        "passed": 8,
+        "failed": 0,
+        "ignored": 0
+      },
+      "session_primary_read_only": {
+        "passed": 8,
+        "failed": 0,
+        "ignored": 0
+      },
+      "session_memory_patterns": {
+        "passed": 9,
+        "failed": 0,
+        "ignored": 0
+      },
+      "session_fixed_tools": {
+        "passed": 8,
+        "failed": 0,
+        "ignored": 0
+      },
+      "notes": {
+        "passed": 15,
+        "failed": 0,
+        "ignored": 0
+      }
+    },
+    "distinctPassed": 736,
+    "failed": 0,
+    "existingIgnored": 8,
+    "newDashboardFunctions": 13
+  },
+  "npm": {
+    "passed": 260,
+    "failed": 0,
+    "existingSkipped": 3
+  },
+  "formatTargetRoots": 346,
+  "cargoFormatAllWindowsOs206": true,
+  "allQualifiedJobsEmpty": true,
+  "originalTenSymlinkFixtureGitAndFrozenWorkingBytesUnchanged": true,
+  "visualReview": {
+    "reviewer": "codex@EVY-code-intelligence-root",
+    "method": "Actual PNGs inspected with view_image after live interactions in an isolated installed Chrome profile.",
+    "cliSha256": "c9bf0d958e8ed91f513112d310a710e22554c084b9fd4600151b52a849ad87ec",
+    "inspected": [
+      "desktop-overview-after.png",
+      "activity-running-after.png",
+      "activity-completed-failed-after.png",
+      "tools-filter-after.png",
+      "mobile-overview-after.png",
+      "mobile-configuration-after.png",
+      "mobile-activity-after.png"
+    ],
+    "beforeIssue": "Long project name expanded mobile layout viewport from requested390 to718 pixels.",
+    "after": "Desktop1440 and mobile390 document widths match viewport. Long project name wraps inside its panel. Desktop hierarchy, live running/completed/failed transitions, filtered tool cards and mobile configuration are readable. Mobile activity cells wrap within the narrow table; no page-level horizontal overflow.",
+    "liveObservations": {
+      "modeChange": "planning reduces selected public tools53 to38",
+      "runningOperation": "ci_find visible before actual provider response",
+      "failure": "Unknown operation shown only as other_operation, no caller text",
+      "boundedHistory": "30 finished operations,1 failed,10 evicted rows disclosed"
+    },
+    "limits": "This is desktop/mobile visual QA of the read-only native view, not complete accessibility, all browser, public dashboard parity or current whole Windows certification.",
+    "laterSourceChange": "Only the session_dashboard module declaration was moved into alphabetic order in lib.rs. Dashboard HTML and implementation/test bytes match the inspected visual build. Clippy, focused/build, full library/adjacent/typecheck/npm/default/SQL and format checks were rerun on corrected source."
+  },
+  "defaultAndSqlEvidence": {
+    "complete": true,
+    "sourceInputsUnchanged": true,
+    "allJobsEmpty": true,
+    "cliSha256": "b83fa60bdcb1030f7f129261796c05ed70df3b6e72e9c33cad6c5aa5117e0eac",
+    "frozenInputs": 1065,
+    "sameOldNewOwnedFixture": true,
+    "defaultConfigurationMcp53AndLiteralLspDataRawExact": true,
+    "onlyNativeRequestIdDurationExcludedAfterOldRepeatProof": true,
+    "wholeOriginalSqlExactBeforeNewBinding": true,
+    "originalSqlReconstructedRemovingOnlyNewSessionRowsAfterActualOpenClose": true,
+    "actualDashboardPrivateUrlValidatedThenRedacted": true,
+    "dashboardListenerClosedAfterActualHostExit": true,
+    "staleUpgradeDowngradeRefused": true,
+    "sourceGitHostOldImageBytesExact": true
+  },
+  "fullStatusComplete": false,
+  "fullNativeCurrentHeadCertified": false,
+  "systemSettingsChanged": false,
+  "originalInventoryAssessmentsUnchanged": true,
+  "rawMembers": 514
+}

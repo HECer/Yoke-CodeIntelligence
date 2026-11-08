@@ -1,0 +1,122 @@
+{
+  "sourceCommit": "02bdbf5352cef30431a476810969685466b18a6a",
+  "baseIntegration": "c834b5077f8ef9abc40f7d56da78e248f652ab25",
+  "guardPhase": "guard-r2",
+  "guardUnits": {
+    "passed": 12,
+    "failed": 0,
+    "ignored": 0
+  },
+  "guardIntegrations": {
+    "passed": 115,
+    "failed": 0,
+    "ignored": 2
+  },
+  "guardGroups": 8,
+  "nativeInputs": 809,
+  "retainedPhase": "retained-r6",
+  "retainedInputs": 803,
+  "newIntegrationFunctions": 2,
+  "newUnitFunctions": 1,
+  "nativePositiveScenarios": 31,
+  "consumerTypeShadowRefusalScenarios": 1,
+  "bodyCliGateScenarios": 12,
+  "newCliGateScenarios": 3,
+  "currentCliExecutableSha256": "64f50ed50203b6a7e4bebc30e8eaed2a202ceacf3b1c94df9ef30933ecd1df9b",
+  "countsAreNonadditive": true,
+  "metadataOnlyAfterFinalChecks": {
+    "baseCommit": "c834b5077f8ef9abc40f7d56da78e248f652ab25",
+    "changedR1Fields": [
+      "missingBehavior",
+      "suggestedScope",
+      "functionBodyReturnContextDevelopment"
+    ],
+    "allOtherDecodedDataPreserved": true,
+    "existingKeyOrderPreserved": true,
+    "trackerBeforeSha256": "1779b1dd41504cf4ffeefc311438b140d8c5f6d20ebf0334f2cc2a9f81f83eab",
+    "trackerAfterSha256": "7b433a12547b601eb18adaa7d5aa94c43bbb507a0d26154156315ffcee187d84",
+    "runtimeCodeChangedAfterFinalChecks": false,
+    "nativeInputsExact": 809,
+    "otherRetainedInputsExact": 802,
+    "documents": [
+      {
+        "path": "docs/STATUS.md",
+        "beforeSha256": "dab3f53786be0956b235fb695bc4a9cc60ae6c0c4f256abeab9cb615dd7e8ebc",
+        "afterSha256": "abafaa1f671df06cd8bf8a3292b454a269a50fb003241c9d3599167c6fadbc0a"
+      },
+      {
+        "path": "docs/REMAINING_WORK.md",
+        "beforeSha256": "90674fe358ae02415007b4eeef9f96e7894ed95abe65f740667e338cceba911b",
+        "afterSha256": "4ac13d23a06be3a8ba45c9a9cadcf64fa3ec3ec44687b07e64a0aa595ee8357f"
+      },
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "beforeSha256": "8ef1638889cb263e704b1357aee4c6296435a6b2d8db26428287e9b44bf6a154",
+        "afterSha256": "42ae23ffd21633854919f266025c050af4b2754023ab24e077ebf2a7dbfebf10"
+      }
+    ]
+  },
+  "unchangedSources": {
+    "native/src/analysis.rs": {
+      "currentSha256": "06b761e1e0b5e48d2892c9653bbe54f04dcb94f4eda1796701eb4cfc7f6f8050",
+      "baseGitSha256": "06b761e1e0b5e48d2892c9653bbe54f04dcb94f4eda1796701eb4cfc7f6f8050",
+      "match": "raw"
+    },
+    "native/src/model.rs": {
+      "currentSha256": "dbf4f3a895b6a2abf0ec7d75ca8914c8fd7d4d3c241e1a0e1977a953146398ed",
+      "baseGitSha256": "1a4eb3c9aa6ef9d9568d284b172c89eab296b74a420b20b9f44f5272da3c0bbd",
+      "match": "crlf-only"
+    },
+    "native/src/changes.rs": {
+      "currentSha256": "f1826e81498a8d47da2992e9af5fc8e612b43fb8507f8b41fdee1227fb2be77f",
+      "baseGitSha256": "f1826e81498a8d47da2992e9af5fc8e612b43fb8507f8b41fdee1227fb2be77f",
+      "match": "raw"
+    },
+    "native/src/changes_plan.rs": {
+      "currentSha256": "d7fe328ebd4758726b4da9801763e9d33a7bf2da62e96da9096def8f6e34e534",
+      "baseGitSha256": "bfe907bdc1f90521aa9e3410e531f9af32997eceff4a8d60dfb7d37b2d2dfd54",
+      "match": "crlf-only"
+    },
+    "native/src/agent_repl.rs": {
+      "currentSha256": "2d6600498bd092961258d2f7f93fa189e5a33f8d114bd8a4de5ec108ee00f361",
+      "baseGitSha256": "2d6600498bd092961258d2f7f93fa189e5a33f8d114bd8a4de5ec108ee00f361",
+      "match": "raw"
+    },
+    "native/src/project_session.rs": {
+      "currentSha256": "b97257603634a7610b7353fa473de7097474671f6b5e8e371c0afd16de0753a3",
+      "baseGitSha256": "b97257603634a7610b7353fa473de7097474671f6b5e8e371c0afd16de0753a3",
+      "match": "raw"
+    },
+    "native/src/compiler_inline_worker.cjs": {
+      "currentSha256": "a5c7b4bc952f82afc5fd9c0705d0dfee00e6395398e8ae23e3039f2039e38697",
+      "baseGitSha256": "a5c7b4bc952f82afc5fd9c0705d0dfee00e6395398e8ae23e3039f2039e38697",
+      "match": "raw"
+    },
+    "Cargo.toml": {
+      "currentSha256": "cf60054b3ffa7b43c4125891240fe7615e76fee9bc3b16f4bcb80f3bcb35adcd",
+      "baseGitSha256": "be77bbd32ce56936e815667a6b469196916e9b85fa302847dfe9187a44dc7e6b",
+      "match": "crlf-only"
+    },
+    "Cargo.lock": {
+      "currentSha256": "ab040125431d7de27dab371593c3e39f6fa9e9138c259532280b08a68b38edca",
+      "baseGitSha256": "ab040125431d7de27dab371593c3e39f6fa9e9138c259532280b08a68b38edca",
+      "match": "raw"
+    },
+    "native/Cargo.toml": {
+      "currentSha256": "8a0f755845dd751103b909866d1c3de0a094ece3e80fcbe63aabec5c958b1b9f",
+      "baseGitSha256": "0067e6cc425bd8d7f9ab96c472ea118ca41d85363dc425029d149311347dbfda",
+      "match": "crlf-only"
+    },
+    "native/tests/fixtures/postgres-catalog-response.jsonl": {
+      "currentSha256": "f67a05349a6cedf55222afd3bb3231c169d382dd4b078d76544daac517530b47",
+      "baseGitSha256": "f67a05349a6cedf55222afd3bb3231c169d382dd4b078d76544daac517530b47",
+      "match": "raw"
+    }
+  },
+  "wholeNativeRerun": false,
+  "fullWindowsCertified": false,
+  "otherPlatformsCertified": false,
+  "fullParityCertified": false,
+  "mainMerged": false,
+  "releasePerformed": false
+}

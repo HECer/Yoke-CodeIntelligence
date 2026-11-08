@@ -1,0 +1,2328 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-10-14",
+  "scope": {
+    "target": "Full observable functionality of the pinned public upstream contracts, independently implemented",
+    "priority": "Windows",
+    "deferred": [
+      "Linux runtime certification",
+      "macOS runtime certification"
+    ],
+    "boundaries": [
+      "No copied GPL Serena application code",
+      "Adapter declarations are not live server certification",
+      "Uninspectable hosted and proprietary implementations require explicit independent functional equivalents and honest availability",
+      "No inherited upstream performance or correctness claims"
+    ]
+  },
+  "upstreams": {
+    "trail": {
+      "revision": "3f10899e2fcee1fc990e8c11f27085016d79d0de",
+      "sourcePackageVersion": "0.22.0",
+      "repository": "https://github.com/trailhq/Trail-Code",
+      "publicTools": [
+        "find_code",
+        "find_all",
+        "trace_calls",
+        "file_api",
+        "repo_map",
+        "check_freshness"
+      ],
+      "capabilities": [
+        {
+          "name": "Structural source graph and deterministic default",
+          "upstreamSourcePaths": "graph/build.ts, extract.ts, generic.ts, types.ts",
+          "baseline05Boundary": "Present: immutable multilingual graphs with directed observations and exact bytes. Neither static implementation proves complete runtime behavior.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "Grammar breadth",
+          "upstreamSourcePaths": "extract.ts EXTENSIONS; generic.ts GENERIC_LANGS",
+          "baseline05Boundary": "Most languages present; .hh and .bb extension handling missing. A grammar count is not construct parity.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "Vue embedded scripts",
+          "upstreamSourcePaths": "graph/container.ts",
+          "baseline05Boundary": "Missing: native .vue is text. Upstream shifts every script block back to parent coordinates, disambiguates duplicate symbol IDs, and supports multiple scripts. Svelte/Astro are explicitly not implemented upstream.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "Language-specific symbols",
+          "upstreamSourcePaths": "extract.ts describeJava/Kotlin/Swift/Php/R",
+          "baseline05Boundary": "Partial: Yoke generic symbol handling misses many declarations, annotations, overloads, extension receivers, R S3/S4/R6 registration methods and mixin list methods.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "Typed receiver candidates",
+          "upstreamSourcePaths": "graph/bindings.ts, resolve.ts",
+          "baseline05Boundary": "Missing: Yoke resolves exact labels or unique same-file/global bare names. Trail syntax-local constructors, annotations, this/self/Go receivers and field typing provide scoped receiver candidates; still not universal compiler binding.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "Import/alias/module resolution",
+          "upstreamSourcePaths": "extract.ts importedSymbols/collectPhpImportedSymbols; resolve.ts",
+          "baseline05Boundary": "Partial: Yoke handles some relative file imports. Named imports, alias rebinding, import-qualified member selection, reexports and module/package binding need dedicated implementation.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "Non-call references",
+          "upstreamSourcePaths": "extract.ts references collection; types.ts Relation",
+          "baseline05Boundary": "Missing generally: Yoke lacks general identifier reference extraction. Contract-specific reference hints are separate.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "Extends versus implements",
+          "upstreamSourcePaths": "extract.ts type/interface handling; types.ts",
+          "baseline05Boundary": "Partial: Yoke uses combined inherits observations rather than consistently retaining extends/implements contracts.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "Semantic call enrichment",
+          "upstreamSourcePaths": "graph/lsp/enrich.ts, graph/lsp/client.ts, registry.ts",
+          "baseline05Boundary": "Missing: Yoke supports semantic navigation/rename but no prepareCallHierarchy/outgoingCalls/incomingCalls or source-bound semantic call graph import. Upstream selects Rust, clangd, gopls, pyright or TS server.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "Fresh queries, immutable history, caches",
+          "upstreamSourcePaths": "graph/refresh.ts, fingerprint.ts, extract-cache.ts",
+          "baseline05Boundary": "Present with stronger strict snapshots. Missing drift-only report, cheap opt-in metadata freshness mode and explicit historical no-refresh convenience. Whole-agent performance claims require a paired campaign.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "Working-tree/index scopes",
+          "upstreamSourcePaths": "cli.ts build flags; util/state.ts; graph/source-files.ts",
+          "baseline05Boundary": "Partial: source protects links/secrets/size and uses Git ignore. Missing explicit only-dir/include-dir and opt-in persisted initialized-submodule/nested-repo boundaries; preserve host authority and protected roots.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "Parent worktree cache seeding",
+          "upstreamSourcePaths": "graph/seed.ts, refresh.ts",
+          "baseline05Boundary": "Missing convenience: load verified cache from parent checkout and refresh current worktree. Never bypass snapshot identity or copy source-state authority unchecked.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "Task-word/body retrieval",
+          "upstreamSourcePaths": "ask/ask.ts, index-file.ts, file-rank.ts, graphrank.ts",
+          "baseline05Boundary": "Partial: Yoke symbol FTS indexes name/signature, not function bodies. Trail BM25, token coverage, file fusion, personalized PageRank and test de-ranking are inspectable ranking features, not quality guarantees.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "Balanced monorepo scopes",
+          "upstreamSourcePaths": "graph/scopes.ts, ask/fuse.ts, map.ts",
+          "baseline05Boundary": "Missing: markers plus pnpm/package workspaces, per-scope scoring/fusion prevent largest subproject overwhelming smaller scopes. Current Yoke path filtering is substring, not segment-aware.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "Multi-repo folder federation",
+          "upstreamSourcePaths": "graph/workspace.ts, workspace-cli.ts",
+          "baseline05Boundary": "Missing local workspace lifecycle: children get independent caches and prefixed result scopes. Yoke remote scoped source federation already exists but is a different workflow.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "File API / skeleton",
+          "upstreamSourcePaths": "ask/ask.ts skeleton; mcp/tools.ts",
+          "baseline05Boundary": "Partial: Yoke outline returns at most200 all-kind entities by substring path; signatures are first-line clipped240characters. Exact-file, multiline, body-free and paged file API is needed.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "Exhaustive regex grouped by symbol",
+          "upstreamSourcePaths": "search/grep.ts",
+          "baseline05Boundary": "Partial: Yoke literal/regex paging exists with exact bytes. Missing ignore-case field, innermost-symbol grouping, incoming-edge coupling rank and total searched-coverage accounting.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "Name-based caller tracing / closure",
+          "upstreamSourcePaths": "graph/traverse.ts, traverse-cli.ts",
+          "baseline05Boundary": "Partial: Yoke trace starts from entity IDs and max depth8/maxVisited1000. Add qualified-name/file lookup and budgeted closure with explicit truncation.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "Repo map and hubs",
+          "upstreamSourcePaths": "graph/map.ts",
+          "baseline05Boundary": "Missing directory/scoped orientation report; analytics/PageRank exist but do not supply this view.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "Passive linked Markdown context cache",
+          "upstreamSourcePaths": "graph/cards.ts, write.ts; context/node-file.ts",
+          "baseline05Boundary": "Missing: Yoke exports JSON/GraphML/HTML but not linked per-node/file Markdown cards preserving human note sections.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "Optional deep meaning build",
+          "upstreamSourcePaths": "context/build.ts; graph/enrich.ts; ai/summarize.ts, synthesize.ts, crux.ts",
+          "baseline05Boundary": "Partial: Yoke own providers produce selected source-bound summaries. Missing batched file summaries, architecture concepts/relations, exact source crux selection, per-body cache and pending/ready/stale coverage report. Source-bound neural inference is not correctness proof.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "Native OpenAI/Anthropic-compatible providers",
+          "upstreamSourcePaths": "ai/llm/factory.ts, openai.ts, anthropic.ts, litellm.ts, orcarouter.ts",
+          "baseline05Boundary": "Partial: Yoke general executable provider and Ollama are present; ready-to-use reviewed host-credential HTTP provider adapters/model catalog could replace upstream convenience. No automatic model call or API key in config.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "Git diff blast radius",
+          "upstreamSourcePaths": "blast/diff.ts, blast.ts, modules.ts, evidence.ts",
+          "baseline05Boundary": "Missing separate workflow: changed hunkâ†’containing symbolsâ†’incoming closure, base merge-base, deleted symbols, area classification and exact evidence quotes.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "Owner suggestions / reports",
+          "upstreamSourcePaths": "blast/owners.ts, render.ts, viz.ts, name.ts",
+          "baseline05Boundary": "Missing git-history ownership and text/markdown/Mermaid/JSON/HTML impact reports; optional cached model area names. Host-selected Git; never execute project hooks/config.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "Decision/preferences learning files",
+          "upstreamSourcePaths": "notes/notes.ts, home.ts, repo-trail.ts",
+          "baseline05Boundary": "Partial: Yoke immutable source-bound hypotheses/confirmed/dead-end/correction/rule and recall exist. Missing committed Markdown repo decisions, personal preferences/standing records, authors/date/touches/cost attribution and explicit import/export. Application knowledge must remain separate from central AgentMemory backend.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "Skill takeaway lifecycle",
+          "upstreamSourcePaths": "skills/skills.ts; cli.ts learn/skills",
+          "baseline05Boundary": "Missing hidden but implemented commands: learn; skills list/show/confirm/fold/publish. Structured current-version history and human confirmation are useful; never treat records as execution authority.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "Local decision check",
+          "upstreamSourcePaths": "check/local-check.ts; cli.ts teamCheckCommand",
+          "baseline05Boundary": "Missing deterministic changed-value/ruled-out-approach/follows checks with quoted diff/note evidence; result is bounded heuristic analysis, not universal semantic intent verification. Server-only approved brain rules are absent from open source.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "Team overlap report",
+          "upstreamSourcePaths": "notes/branches.ts, git-facts.ts; cli.ts localTeam",
+          "baseline05Boundary": "Missing cached recent pushed-branch changed-file overlaps, unmerged note reads and local team/week report. Fetch must remain separately authorized; current refs read-only can work offline.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "Session cold-start mining",
+          "upstreamSourcePaths": "notes/cold-start.ts",
+          "baseline05Boundary": "Missing explicit user-owned transcript import/mining flow; upstream invokes installed Claude/model under user's login. Do not inspect unrelated transcripts or assume consent from indexing.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "Agent installation / removal",
+          "upstreamSourcePaths": "hosts/registry.ts, plan.ts, init.ts, retract.ts, config-write.ts; claude/init.ts",
+          "baseline05Boundary": "Missing reversible dry-run managed-block installation, conflict-safe config merges and uninstall manifests. Source supports AGENTS, AdaL, Cursor, Gemini, Grok, Hermes, Antigravity, Copilot, Kiro, Windsurf plus Claude; Codex integration writes outside repo only when selected.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "Prompt/edit/session hooks and statusline",
+          "upstreamSourcePaths": "claude/hooks.ts, statusline.ts, sync-run.ts; hosts/codex-hooks.ts/cursor-hooks.ts",
+          "baseline05Boundary": "Missing real host hooks for source context, post-edit blast, lazy background map update, one-session learning reminder, team overlap and stats. Implement explicit installation, no default code/model execution.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "Offline viewer",
+          "upstreamSourcePaths": "viz/assemble.ts, export.ts, serve.ts; viewer/*",
+          "baseline05Boundary": "Present native offline graph HTML, direction/uncertainty/source escaping. Partial UI parity: code/context/outline tabs, verb chips and live rebuild reload need explicit product decision and actual browser evidence.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "Self-hosted GitHub App",
+          "upstreamSourcePaths": "app/server.ts, identity.ts, queue.ts, review*.ts, pages.ts; docs/github-app.md",
+          "baseline05Boundary": "Missing open-source workflow: HMAC webhookâ†’deduplicated/superseding bounded PR review workerâ†’update comment/capability page, health queue, optional disk-backed page lifecycle, no fork source execution. Current docs have stale persistence limitations; inspect actual pages.ts. No authorized deployment/message needed for development.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "History digest / brain onboarding",
+          "upstreamSourcePaths": "app/brain-build*.ts, history.ts; server.ts /brain/access /brain/build",
+          "baseline05Boundary": "Missing GitHub installation authorization/access check and bounded commit/closed-PR discussion/exported-symbol digest. Optional source-scrubbed handoff to own service. Hosted brain engine/API not in this repository.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "Cloud workspace/client/team UI",
+          "upstreamSourcePaths": "cloud/workspace.ts, workspace-sync.ts, diff.ts, nudge.ts; cli.ts login/workspace/team",
+          "baseline05Boundary": "Missing own hosted workspace lifecycle/team aggregation/activity sync. Open-source client exposes connect/claim/me/repos/learnings/activity/team; actual proprietary service implementation/approved rule engine cannot be audited here. README 'soon' contradicts client presence; report client as inspectable, service as external.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "Updater/anonymous telemetry",
+          "upstreamSourcePaths": "cli.ts upgrade/telemetry; telemetry/*",
+          "baseline05Boundary": "Absent by deliberate current design. Optional own update-check/package verification can replace convenience. Telemetry is not necessary for code intelligence; do not imitate upstream background egress without opt-in.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "Claimed savings and issue success",
+          "upstreamSourcePaths": "README benchmark sections; scripts/tests",
+          "baseline05Boundary": "Not a feature implementation or transferable result. Need exact paired model/tool/runtime task campaign, independent correctness checks and full accounting; cannot promise 46% tool calls/42%tokens/60%time merely from implementation.",
+          "state": "open",
+          "windowsAcceptance": []
+        }
+      ]
+    },
+    "serena": {
+      "revision": "4f2520efb128dd02e66a2302095bdbbb26ddd5a0",
+      "repository": "https://github.com/oraios/serena",
+      "tools": [
+        {
+          "name": "execute_shell_command",
+          "module": "cmd_tools.py",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/cmd_tools.py#L27",
+          "arguments": "command: str, cwd: str | None=None, capture_stderr: bool=True, max_answer_chars: int=-1",
+          "native05Status": "partial",
+          "native05Boundary": "Host-selected verification/process capture exists; general shell-string tool and REPL shell facade are absent.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "open_dashboard",
+          "module": "config_tools.py",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/config_tools.py#L26",
+          "arguments": "",
+          "native05Status": "missing",
+          "native05Boundary": "CLI workspace roots and status exist; persistent per-session project registration/activation, contexts/modes, dashboard configuration facade are absent.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "activate_project",
+          "module": "config_tools.py",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/config_tools.py#L39",
+          "arguments": "project: str, session_id: str",
+          "native05Status": "missing",
+          "native05Boundary": "CLI workspace roots and status exist; persistent per-session project registration/activation, contexts/modes, dashboard configuration facade are absent.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "remove_project",
+          "module": "config_tools.py",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/config_tools.py#L58",
+          "arguments": "project_name: str",
+          "native05Status": "missing",
+          "native05Boundary": "CLI workspace roots and status exist; persistent per-session project registration/activation, contexts/modes, dashboard configuration facade are absent.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "get_current_config",
+          "module": "config_tools.py",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/config_tools.py#L73",
+          "arguments": "",
+          "native05Status": "missing",
+          "native05Boundary": "CLI workspace roots and status exist; persistent per-session project registration/activation, contexts/modes, dashboard configuration facade are absent.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "read_file",
+          "module": "file_tools.py",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/file_tools.py#L45",
+          "arguments": "relative_path: str, start_line: int=0, end_line: int | None=None, max_answer_chars: int=-1",
+          "native05Status": "partial",
+          "native05Boundary": "Immutable source reads, literal/regex search and exact create/delete/replace plans exist. Directory/glob/contexual multiline APIs, line editors and stable occurrence-ID bulk replacement are absent.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "create_text_file",
+          "module": "file_tools.py",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/file_tools.py#L65",
+          "arguments": "relative_path: str, content: str",
+          "native05Status": "partial",
+          "native05Boundary": "Immutable source reads, literal/regex search and exact create/delete/replace plans exist. Directory/glob/contexual multiline APIs, line editors and stable occurrence-ID bulk replacement are absent.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "list_dir",
+          "module": "file_tools.py",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/file_tools.py#L82",
+          "arguments": "relative_path: str, recursive: bool, skip_ignored_files: bool=False, max_answer_chars: int=-1",
+          "native05Status": "partial",
+          "native05Boundary": "Immutable source reads, literal/regex search and exact create/delete/replace plans exist. Directory/glob/contexual multiline APIs, line editors and stable occurrence-ID bulk replacement are absent.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "find_file",
+          "module": "file_tools.py",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/file_tools.py#L105",
+          "arguments": "file_mask: str, relative_path: str, skip_ignored_files: bool=False",
+          "native05Status": "partial",
+          "native05Boundary": "Immutable source reads, literal/regex search and exact create/delete/replace plans exist. Directory/glob/contexual multiline APIs, line editors and stable occurrence-ID bulk replacement are absent.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "replace_content",
+          "module": "file_tools.py",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/file_tools.py#L122",
+          "arguments": "relative_path: str, needle: str, repl: str, mode: Literal['literal', 'regex'], allow_multiple_occurrences: bool=False",
+          "native05Status": "partial",
+          "native05Boundary": "Immutable source reads, literal/regex search and exact create/delete/replace plans exist. Directory/glob/contexual multiline APIs, line editors and stable occurrence-ID bulk replacement are absent.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "replace_in_files",
+          "module": "file_tools.py",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/file_tools.py#L163",
+          "arguments": "needle: str, repl: str, mode: Literal['literal', 'regex'], relative_path: str='', paths_include_glob: str='', paths_exclude_glob: str='', dry_run: bool=False, occurrence_ids: list[str] | None=None, expected_count: int=-1, max_answer_chars: int=-1",
+          "native05Status": "partial",
+          "native05Boundary": "Immutable source reads, literal/regex search and exact create/delete/replace plans exist. Directory/glob/contexual multiline APIs, line editors and stable occurrence-ID bulk replacement are absent.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "delete_lines",
+          "module": "file_tools.py",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/file_tools.py#L240",
+          "arguments": "relative_path: str, start_line: int, end_line: int",
+          "native05Status": "partial",
+          "native05Boundary": "Immutable source reads, literal/regex search and exact create/delete/replace plans exist. Directory/glob/contexual multiline APIs, line editors and stable occurrence-ID bulk replacement are absent.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "replace_lines",
+          "module": "file_tools.py",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/file_tools.py#L264",
+          "arguments": "relative_path: str, start_line: int, end_line: int, content: str",
+          "native05Status": "partial",
+          "native05Boundary": "Immutable source reads, literal/regex search and exact create/delete/replace plans exist. Directory/glob/contexual multiline APIs, line editors and stable occurrence-ID bulk replacement are absent.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "insert_at_line",
+          "module": "file_tools.py",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/file_tools.py#L290",
+          "arguments": "relative_path: str, line: int, content: str",
+          "native05Status": "partial",
+          "native05Boundary": "Immutable source reads, literal/regex search and exact create/delete/replace plans exist. Directory/glob/contexual multiline APIs, line editors and stable occurrence-ID bulk replacement are absent.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "search_for_pattern",
+          "module": "file_tools.py",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/file_tools.py#L315",
+          "arguments": "substring_pattern: str, context_lines_before: int=0, context_lines_after: int=0, paths_include_glob: str='', paths_exclude_glob: str='', relative_path: str='', restrict_search_to_code_files: bool=False, skip_ignored_files: bool=True, multiline: bool=True, max_answer_chars: int=-1",
+          "native05Status": "partial",
+          "native05Boundary": "Immutable source reads, literal/regex search and exact create/delete/replace plans exist. Directory/glob/contexual multiline APIs, line editors and stable occurrence-ID bulk replacement are absent.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "jet_brains_find_symbol",
+          "module": "jetbrains_tools.py",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/jetbrains_tools.py#L28",
+          "arguments": "name_path_pattern: str, depth: int=0, relative_path: str | None=None, include_body: bool=False, include_info: bool=False, search_deps: bool=False, max_matches: int=-1, max_answer_chars: int=-1",
+          "native05Status": "partial",
+          "native05Boundary": "Offset-based definition/declaration/implementation/references/hover and semantic symbol rename exist. Dependency lookup, type hierarchy, semantic move/inline/propagation, inspection catalog, all-language IDE debugging and file/directory semantic rename are absent.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "jet_brains_move",
+          "module": "jetbrains_tools.py",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/jetbrains_tools.py#L122",
+          "arguments": "relative_path: str, name_path: str | None=None, target_relative_path: str | None=None, target_parent_name_path: str | None=None",
+          "native05Status": "partial",
+          "native05Boundary": "Offset-based definition/declaration/implementation/references/hover and semantic symbol rename exist. Dependency lookup, type hierarchy, semantic move/inline/propagation, inspection catalog, all-language IDE debugging and file/directory semantic rename are absent.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "jet_brains_safe_delete",
+          "module": "jetbrains_tools.py",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/jetbrains_tools.py#L162",
+          "arguments": "relative_path: str, name_path: str | None=None, delete_even_if_used: bool=False, propagate: bool=False",
+          "native05Status": "partial",
+          "native05Boundary": "Offset-based definition/declaration/implementation/references/hover and semantic symbol rename exist. Dependency lookup, type hierarchy, semantic move/inline/propagation, inspection catalog, all-language IDE debugging and file/directory semantic rename are absent.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "jet_brains_inline_symbol",
+          "module": "jetbrains_tools.py",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/jetbrains_tools.py#L194",
+          "arguments": "name_path: str, relative_path: str, keep_definition: bool=False",
+          "native05Status": "partial",
+          "native05Boundary": "Offset-based definition/declaration/implementation/references/hover and semantic symbol rename exist. Dependency lookup, type hierarchy, semantic move/inline/propagation, inspection catalog, all-language IDE debugging and file/directory semantic rename are absent.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "jet_brains_find_referencing_symbols",
+          "module": "jetbrains_tools.py",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/jetbrains_tools.py#L221",
+          "arguments": "name_path: str, relative_path: str, max_answer_chars: int=-1",
+          "native05Status": "partial",
+          "native05Boundary": "Offset-based definition/declaration/implementation/references/hover and semantic symbol rename exist. Dependency lookup, type hierarchy, semantic move/inline/propagation, inspection catalog, all-language IDE debugging and file/directory semantic rename are absent.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "jet_brains_get_symbols_overview",
+          "module": "jetbrains_tools.py",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/jetbrains_tools.py#L253",
+          "arguments": "relative_path: str, depth: int=-1, max_answer_chars: int=-1, include_file_documentation: bool=False",
+          "native05Status": "partial",
+          "native05Boundary": "Offset-based definition/declaration/implementation/references/hover and semantic symbol rename exist. Dependency lookup, type hierarchy, semantic move/inline/propagation, inspection catalog, all-language IDE debugging and file/directory semantic rename are absent.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "jet_brains_type_hierarchy",
+          "module": "jetbrains_tools.py",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/jetbrains_tools.py#L286",
+          "arguments": "name_path: str, relative_path: str, hierarchy_type: Literal['super', 'sub', 'both']='both', depth: int | None=1, max_answer_chars: int=-1",
+          "native05Status": "partial",
+          "native05Boundary": "Offset-based definition/declaration/implementation/references/hover and semantic symbol rename exist. Dependency lookup, type hierarchy, semantic move/inline/propagation, inspection catalog, all-language IDE debugging and file/directory semantic rename are absent.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "jet_brains_find_declaration",
+          "module": "jetbrains_tools.py",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/jetbrains_tools.py#L315",
+          "arguments": "relative_path: str, regex: str, include_body: bool=False",
+          "native05Status": "partial",
+          "native05Boundary": "Offset-based definition/declaration/implementation/references/hover and semantic symbol rename exist. Dependency lookup, type hierarchy, semantic move/inline/propagation, inspection catalog, all-language IDE debugging and file/directory semantic rename are absent.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "jet_brains_find_implementations",
+          "module": "jetbrains_tools.py",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/jetbrains_tools.py#L337",
+          "arguments": "relative_path: str, name_path: str",
+          "native05Status": "partial",
+          "native05Boundary": "Offset-based definition/declaration/implementation/references/hover and semantic symbol rename exist. Dependency lookup, type hierarchy, semantic move/inline/propagation, inspection catalog, all-language IDE debugging and file/directory semantic rename are absent.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "jet_brains_rename",
+          "module": "jetbrains_tools.py",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/jetbrains_tools.py#L352",
+          "arguments": "relative_path: str, new_name: str, name_path: str | None=None, rename_in_comments: bool=False, rename_in_text_occurrences: bool=False",
+          "native05Status": "partial",
+          "native05Boundary": "Offset-based definition/declaration/implementation/references/hover and semantic symbol rename exist. Dependency lookup, type hierarchy, semantic move/inline/propagation, inspection catalog, all-language IDE debugging and file/directory semantic rename are absent.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "jet_brains_debug",
+          "module": "jetbrains_tools.py",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/jetbrains_tools.py#L381",
+          "arguments": "expression: str, repl_key: str='default'",
+          "native05Status": "partial",
+          "native05Boundary": "Offset-based definition/declaration/implementation/references/hover and semantic symbol rename exist. Dependency lookup, type hierarchy, semantic move/inline/propagation, inspection catalog, all-language IDE debugging and file/directory semantic rename are absent.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "jet_brains_run_inspections",
+          "module": "jetbrains_tools.py",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/jetbrains_tools.py#L406",
+          "arguments": "relative_path: str, min_severity: str | None=None, inspection_names: list[str] | None=None, start_line: int | None=None, end_line: int | None=None, max_answer_chars: int=-1",
+          "native05Status": "partial",
+          "native05Boundary": "Offset-based definition/declaration/implementation/references/hover and semantic symbol rename exist. Dependency lookup, type hierarchy, semantic move/inline/propagation, inspection catalog, all-language IDE debugging and file/directory semantic rename are absent.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "jet_brains_list_inspections",
+          "module": "jetbrains_tools.py",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/jetbrains_tools.py#L441",
+          "arguments": "language: str | None=None, group_path_contains: str | None=None, max_answer_chars: int=-1",
+          "native05Status": "partial",
+          "native05Boundary": "Offset-based definition/declaration/implementation/references/hover and semantic symbol rename exist. Dependency lookup, type hierarchy, semantic move/inline/propagation, inspection catalog, all-language IDE debugging and file/directory semantic rename are absent.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "write_memory",
+          "module": "memory_tools.py",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/memory_tools.py#L24",
+          "arguments": "memory_name: str, content: str, max_chars: int=-1",
+          "native05Status": "partial",
+          "native05Boundary": "Native source-bound authored record/supersession retrieval exists; named Markdown topic/global CRUD, editable portable documents, read-only/ignored name policies and mem-reference rewrites are absent.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "read_memory",
+          "module": "memory_tools.py",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/memory_tools.py#L45",
+          "arguments": "memory_name: str",
+          "native05Status": "partial",
+          "native05Boundary": "Native source-bound authored record/supersession retrieval exists; named Markdown topic/global CRUD, editable portable documents, read-only/ignored name policies and mem-reference rewrites are absent.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "list_memories",
+          "module": "memory_tools.py",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/memory_tools.py#L57",
+          "arguments": "topic: str=''",
+          "native05Status": "partial",
+          "native05Boundary": "Native source-bound authored record/supersession retrieval exists; named Markdown topic/global CRUD, editable portable documents, read-only/ignored name policies and mem-reference rewrites are absent.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "delete_memory",
+          "module": "memory_tools.py",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/memory_tools.py#L69",
+          "arguments": "memory_name: str",
+          "native05Status": "partial",
+          "native05Boundary": "Native source-bound authored record/supersession retrieval exists; named Markdown topic/global CRUD, editable portable documents, read-only/ignored name policies and mem-reference rewrites are absent.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "rename_memory",
+          "module": "memory_tools.py",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/memory_tools.py#L81",
+          "arguments": "old_name: str, new_name: str",
+          "native05Status": "partial",
+          "native05Boundary": "Native source-bound authored record/supersession retrieval exists; named Markdown topic/global CRUD, editable portable documents, read-only/ignored name policies and mem-reference rewrites are absent.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "edit_memory",
+          "module": "memory_tools.py",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/memory_tools.py#L96",
+          "arguments": "memory_name: str, needle: str, repl: str, mode: Literal['literal', 'regex'], allow_multiple_occurrences: bool=False",
+          "native05Status": "partial",
+          "native05Boundary": "Native source-bound authored record/supersession retrieval exists; named Markdown topic/global CRUD, editable portable documents, read-only/ignored name policies and mem-reference rewrites are absent.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "list_queryable_projects",
+          "module": "query_project_tools.py",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/query_project_tools.py#L10",
+          "arguments": "symbol_access: bool=True",
+          "native05Status": "partial",
+          "native05Boundary": "Source federation and per-CLI workspace roots exist; host registry and read-only cross-project session facade are absent.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "query_project",
+          "module": "query_project_tools.py",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/query_project_tools.py#L41",
+          "arguments": "project_name: str, tool_name: str, tool_params_json: str",
+          "native05Status": "partial",
+          "native05Boundary": "Source federation and per-CLI workspace roots exist; host registry and read-only cross-project session facade are absent.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "serena_repl",
+          "module": "repl_tools.py",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/repl_tools.py#L12",
+          "arguments": "session_id: str, code: str",
+          "native05Status": "partial",
+          "native05Boundary": "Bounded declarative context plans and persistent Python debugger sessions exist; persistent composable tool-programming REPL/session namespace/result types are absent.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "restart_language_server",
+          "module": "symbol_tools.py",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/symbol_tools.py#L35",
+          "arguments": "",
+          "native05Status": "partial",
+          "native05Boundary": "LSP navigation and raw document symbols, AST entity search and exact symbolic edit plans exist. Semantic name-path matching/overloads/filtering/body/info/reference-owner grouping, diagnostics, restart lifecycle and usage-checked safe delete are absent.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "get_symbols_overview",
+          "module": "symbol_tools.py",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/symbol_tools.py#L45",
+          "arguments": "relative_path: str, depth: int=-1, max_answer_chars: int=-1",
+          "native05Status": "partial",
+          "native05Boundary": "LSP navigation and raw document symbols, AST entity search and exact symbolic edit plans exist. Semantic name-path matching/overloads/filtering/body/info/reference-owner grouping, diagnostics, restart lifecycle and usage-checked safe delete are absent.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "find_symbol",
+          "module": "symbol_tools.py",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/symbol_tools.py#L73",
+          "arguments": "name_path_pattern: str, depth: int=0, relative_path: str='', include_body: bool=False, include_info: bool=False, include_kinds: list[int]=[], exclude_kinds: list[int]=[], substring_matching: bool=False, max_matches: int=-1, max_answer_chars: int=-1",
+          "native05Status": "partial",
+          "native05Boundary": "LSP navigation and raw document symbols, AST entity search and exact symbolic edit plans exist. Semantic name-path matching/overloads/filtering/body/info/reference-owner grouping, diagnostics, restart lifecycle and usage-checked safe delete are absent.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "find_referencing_symbols",
+          "module": "symbol_tools.py",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/symbol_tools.py#L158",
+          "arguments": "name_path: str, relative_path: str, include_kinds: list[int]=[], exclude_kinds: list[int]=[], max_answer_chars: int=-1",
+          "native05Status": "partial",
+          "native05Boundary": "LSP navigation and raw document symbols, AST entity search and exact symbolic edit plans exist. Semantic name-path matching/overloads/filtering/body/info/reference-owner grouping, diagnostics, restart lifecycle and usage-checked safe delete are absent.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "find_implementations",
+          "module": "symbol_tools.py",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/symbol_tools.py#L197",
+          "arguments": "name_path: str, relative_path: str, include_info: bool=False, include_kinds: list[int]=[], exclude_kinds: list[int]=[], max_answer_chars: int=-1",
+          "native05Status": "partial",
+          "native05Boundary": "LSP navigation and raw document symbols, AST entity search and exact symbolic edit plans exist. Semantic name-path matching/overloads/filtering/body/info/reference-owner grouping, diagnostics, restart lifecycle and usage-checked safe delete are absent.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "find_declaration",
+          "module": "symbol_tools.py",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/symbol_tools.py#L238",
+          "arguments": "relative_path: str, regex: str, containing_symbol_name_path: str | None=None, include_body: bool=False, include_info: bool=False",
+          "native05Status": "partial",
+          "native05Boundary": "LSP navigation and raw document symbols, AST entity search and exact symbolic edit plans exist. Semantic name-path matching/overloads/filtering/body/info/reference-owner grouping, diagnostics, restart lifecycle and usage-checked safe delete are absent.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "get_diagnostics_for_file",
+          "module": "symbol_tools.py",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/symbol_tools.py#L279",
+          "arguments": "relative_path: str, start_line: int=0, end_line: int=-1, min_severity: int=4, max_answer_chars: int=-1",
+          "native05Status": "partial",
+          "native05Boundary": "LSP navigation and raw document symbols, AST entity search and exact symbolic edit plans exist. Semantic name-path matching/overloads/filtering/body/info/reference-owner grouping, diagnostics, restart lifecycle and usage-checked safe delete are absent.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "get_diagnostics_for_symbol",
+          "module": "symbol_tools.py",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/symbol_tools.py#L313",
+          "arguments": "name_path: str, reference_file: str='', check_symbol_references: bool=False, min_severity: int=4, max_answer_chars: int=-1",
+          "native05Status": "partial",
+          "native05Boundary": "LSP navigation and raw document symbols, AST entity search and exact symbolic edit plans exist. Semantic name-path matching/overloads/filtering/body/info/reference-owner grouping, diagnostics, restart lifecycle and usage-checked safe delete are absent.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "replace_symbol_body",
+          "module": "symbol_tools.py",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/symbol_tools.py#L352",
+          "arguments": "name_path: str, relative_path: str, body: str",
+          "native05Status": "partial",
+          "native05Boundary": "LSP navigation and raw document symbols, AST entity search and exact symbolic edit plans exist. Semantic name-path matching/overloads/filtering/body/info/reference-owner grouping, diagnostics, restart lifecycle and usage-checked safe delete are absent.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "insert_after_symbol",
+          "module": "symbol_tools.py",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/symbol_tools.py#L380",
+          "arguments": "name_path: str, relative_path: str, body: str",
+          "native05Status": "partial",
+          "native05Boundary": "LSP navigation and raw document symbols, AST entity search and exact symbolic edit plans exist. Semantic name-path matching/overloads/filtering/body/info/reference-owner grouping, diagnostics, restart lifecycle and usage-checked safe delete are absent.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "insert_before_symbol",
+          "module": "symbol_tools.py",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/symbol_tools.py#L405",
+          "arguments": "name_path: str, relative_path: str, body: str",
+          "native05Status": "partial",
+          "native05Boundary": "LSP navigation and raw document symbols, AST entity search and exact symbolic edit plans exist. Semantic name-path matching/overloads/filtering/body/info/reference-owner grouping, diagnostics, restart lifecycle and usage-checked safe delete are absent.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "rename_symbol",
+          "module": "symbol_tools.py",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/symbol_tools.py#L430",
+          "arguments": "name_path: str, relative_path: str, new_name: str",
+          "native05Status": "partial",
+          "native05Boundary": "LSP navigation and raw document symbols, AST entity search and exact symbolic edit plans exist. Semantic name-path matching/overloads/filtering/body/info/reference-owner grouping, diagnostics, restart lifecycle and usage-checked safe delete are absent.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "safe_delete_symbol",
+          "module": "symbol_tools.py",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/symbol_tools.py#L455",
+          "arguments": "name_path_pattern: str, relative_path: str",
+          "native05Status": "partial",
+          "native05Boundary": "LSP navigation and raw document symbols, AST entity search and exact symbolic edit plans exist. Semantic name-path matching/overloads/filtering/body/info/reference-owner grouping, diagnostics, restart lifecycle and usage-checked safe delete are absent.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "onboarding",
+          "module": "workflow_tools.py",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/workflow_tools.py#L10",
+          "arguments": "",
+          "native05Status": "missing",
+          "native05Boundary": "Status and integration instructions exist; session ID, initial instructions/on-demand help and explicit project onboarding state are absent.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "initial_instructions",
+          "module": "workflow_tools.py",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/workflow_tools.py#L28",
+          "arguments": "",
+          "native05Status": "missing",
+          "native05Boundary": "Status and integration instructions exist; session ID, initial instructions/on-demand help and explicit project onboarding state are absent.",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "name": "serena_info",
+          "module": "workflow_tools.py",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/tools/workflow_tools.py#L43",
+          "arguments": "topic: str",
+          "native05Status": "missing",
+          "native05Boundary": "Status and integration instructions exist; session ID, initial instructions/on-demand help and explicit project onboarding state are absent.",
+          "state": "open",
+          "windowsAcceptance": []
+        }
+      ],
+      "replFacadeMethods": [
+        {
+          "facade": "cfg",
+          "method": "get_current_config",
+          "arguments": "",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/cfg_api.py#L21",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "facade": "cfg",
+          "method": "open_dashboard",
+          "arguments": "",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/cfg_api.py#L30",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "facade": "edit",
+          "method": "replace_content",
+          "arguments": "relative_path: str, needle: str, repl: str, mode: Literal['literal', 'regex'], allow_multiple_occurrences: bool=False",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/edit_api.py#L88",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "facade": "edit",
+          "method": "replace_in_files",
+          "arguments": "needle: str, repl: str, mode: Literal['literal', 'regex'], relative_path: str='', paths_include_glob: str='', paths_exclude_glob: str='', dry_run: bool=False, occurrence_ids: list[str] | None=None, expected_count: int=-1, max_answer_chars: int=-1",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/edit_api.py#L126",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "facade": "edit",
+          "method": "delete_lines",
+          "arguments": "relative_path: str, start_line: int, end_line: int",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/edit_api.py#L204",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "facade": "edit",
+          "method": "replace_lines",
+          "arguments": "relative_path: str, start_line: int, end_line: int, content: str",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/edit_api.py#L219",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "facade": "edit",
+          "method": "insert_at_line",
+          "arguments": "relative_path: str, line: int, content: str",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/edit_api.py#L236",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "facade": "edit",
+          "method": "replace_symbol_body",
+          "arguments": "name_path: str, relative_path: str, body: str",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/edit_api.py#L259",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "facade": "edit",
+          "method": "insert_after_symbol",
+          "arguments": "name_path: str, relative_path: str, body: str",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/edit_api.py#L278",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "facade": "edit",
+          "method": "insert_before_symbol",
+          "arguments": "name_path: str, relative_path: str, body: str",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/edit_api.py#L294",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "facade": "ext",
+          "method": "list_projects",
+          "arguments": "symbol_access: bool=True",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/ext_api.py#L65",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "facade": "ext",
+          "method": "read_project_context",
+          "arguments": "project_name: str",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/ext_api.py#L84",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "facade": "ext",
+          "method": "project_context",
+          "arguments": "project_name: str",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/ext_api.py#L101",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "facade": "fs",
+          "method": "read_file",
+          "arguments": "relative_path: str, start_line: int=0, end_line: int | None=None, max_answer_chars: int=-1",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/fs_api.py#L181",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "facade": "fs",
+          "method": "create_text_file",
+          "arguments": "relative_path: str, content: str",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/fs_api.py#L202",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "facade": "fs",
+          "method": "list_dir",
+          "arguments": "relative_path: str, recursive: bool, skip_ignored_files: bool=False, max_answer_chars: int=-1",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/fs_api.py#L228",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "facade": "fs",
+          "method": "find_file",
+          "arguments": "file_mask: str, relative_path: str, skip_ignored_files: bool=False",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/fs_api.py#L248",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "facade": "fs",
+          "method": "search_for_pattern",
+          "arguments": "substring_pattern: str, context_lines_before: int=0, context_lines_after: int=0, paths_include_glob: str='', paths_exclude_glob: str='', relative_path: str='', restrict_search_to_code_files: bool=False, skip_ignored_files: bool=True, multiline: bool=True, max_answer_chars: int=-1",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/fs_api.py#L269",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "facade": "jb",
+          "method": "find_symbol",
+          "arguments": "name_path_pattern: str, depth: int=0, relative_path: str | None=None, include_body: bool=False, include_info: bool=False, search_deps: bool=False, max_matches: int=-1, max_answer_chars: int=-1",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/jb_api.py#L201",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "facade": "jb",
+          "method": "find_referencing_symbols",
+          "arguments": "name_path: str, relative_path: str, max_answer_chars: int=-1",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/jb_api.py#L285",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "facade": "jb",
+          "method": "get_symbols_overview",
+          "arguments": "relative_path: str, depth: int=-1, max_answer_chars: int=-1, include_file_documentation: bool=False",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/jb_api.py#L317",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "facade": "jb",
+          "method": "get_type_hierarchy",
+          "arguments": "name_path: str, relative_path: str, hierarchy_type: Literal['super', 'sub', 'both']='both', depth: int | None=1, max_answer_chars: int=-1",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/jb_api.py#L363",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "facade": "jb",
+          "method": "find_declaration",
+          "arguments": "relative_path: str, regex: str, include_body: bool=False",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/jb_api.py#L400",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "facade": "jb",
+          "method": "find_implementations",
+          "arguments": "relative_path: str, name_path: str",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/jb_api.py#L423",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "facade": "jb",
+          "method": "rename",
+          "arguments": "relative_path: str, new_name: str, name_path: str | None=None, rename_in_comments: bool=False, rename_in_text_occurrences: bool=False",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/jb_api.py#L438",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "facade": "jb",
+          "method": "move",
+          "arguments": "relative_path: str, name_path: str | None=None, target_relative_path: str | None=None, target_parent_name_path: str | None=None",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/jb_api.py#L470",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "facade": "jb",
+          "method": "safe_delete",
+          "arguments": "relative_path: str, name_path: str | None=None, delete_even_if_used: bool=False, propagate: bool=False",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/jb_api.py#L512",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "facade": "jb",
+          "method": "inline_symbol",
+          "arguments": "name_path: str, relative_path: str, keep_definition: bool=False",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/jb_api.py#L540",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "facade": "jb",
+          "method": "run_inspections",
+          "arguments": "relative_path: str, min_severity: str | None=None, inspection_names: list[str] | None=None, start_line: int | None=None, end_line: int | None=None, max_answer_chars: int=-1",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/jb_api.py#L561",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "facade": "jb",
+          "method": "list_inspections",
+          "arguments": "language: str | None=None, group_path_contains: str | None=None, max_answer_chars: int=-1",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/jb_api.py#L596",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "facade": "jb",
+          "method": "debug_eval_info",
+          "arguments": "",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/jb_api.py#L616",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "facade": "jb",
+          "method": "debug_eval",
+          "arguments": "expression: str, repl_key: str='default'",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/jb_api.py#L625",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "facade": "lsp",
+          "method": "restart_language_server",
+          "arguments": "",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/lsp_api.py#L382",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "facade": "lsp",
+          "method": "get_symbols_overview",
+          "arguments": "relative_path: str, depth: int=-1, max_answer_chars: int=-1",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/lsp_api.py#L396",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "facade": "lsp",
+          "method": "find_symbol",
+          "arguments": "name_path_pattern: str, depth: int=0, relative_path: str='', include_body: bool=False, include_info: bool=False, include_kinds: Sequence[int]=(), exclude_kinds: Sequence[int]=(), substring_matching: bool=False, max_matches: int=-1, max_answer_chars: int=-1",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/lsp_api.py#L440",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "facade": "lsp",
+          "method": "find_referencing_symbols",
+          "arguments": "name_path: str, relative_path: str, include_kinds: Sequence[int]=(), exclude_kinds: Sequence[int]=(), max_answer_chars: int=-1",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/lsp_api.py#L531",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "facade": "lsp",
+          "method": "find_implementations",
+          "arguments": "name_path: str, relative_path: str, include_info: bool=False, include_kinds: Sequence[int]=(), exclude_kinds: Sequence[int]=(), max_answer_chars: int=-1",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/lsp_api.py#L567",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "facade": "lsp",
+          "method": "find_declaration",
+          "arguments": "relative_path: str, regex: str, containing_symbol_name_path: str | None=None, include_body: bool=False, include_info: bool=False",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/lsp_api.py#L603",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "facade": "lsp",
+          "method": "get_diagnostics_for_file",
+          "arguments": "relative_path: str, start_line: int=0, end_line: int=-1, min_severity: int=4, max_answer_chars: int=-1",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/lsp_api.py#L659",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "facade": "lsp",
+          "method": "get_diagnostics_for_symbol",
+          "arguments": "name_path: str, reference_file: str='', check_symbol_references: bool=False, min_severity: int=4, max_answer_chars: int=-1",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/lsp_api.py#L694",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "facade": "lsp",
+          "method": "rename_symbol",
+          "arguments": "name_path: str, relative_path: str, new_name: str",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/lsp_api.py#L738",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "facade": "lsp",
+          "method": "safe_delete_symbol",
+          "arguments": "name_path_pattern: str, relative_path: str",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/lsp_api.py#L754",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "facade": "mem",
+          "method": "list_memories",
+          "arguments": "topic: str=''",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/mem_api.py#L69",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "facade": "mem",
+          "method": "read_memory",
+          "arguments": "memory_name: str",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/mem_api.py#L79",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "facade": "mem",
+          "method": "write_memory",
+          "arguments": "memory_name: str, content: str, max_chars: int=-1",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/mem_api.py#L89",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "facade": "mem",
+          "method": "edit_memory",
+          "arguments": "memory_name: str, needle: str, repl: str, mode: Literal['literal', 'regex'], allow_multiple_occurrences: bool=False",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/mem_api.py#L112",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "facade": "mem",
+          "method": "rename_memory",
+          "arguments": "old_name: str, new_name: str",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/mem_api.py#L139",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "facade": "mem",
+          "method": "delete_memory",
+          "arguments": "memory_name: str",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/mem_api.py#L158",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "facade": "mem",
+          "method": "onboarding",
+          "arguments": "",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/mem_api.py#L168",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "facade": "shell",
+          "method": "execute_shell_command",
+          "arguments": "command: str, cwd: str | None=None, capture_stderr: bool=True, max_answer_chars: int=-1",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/serena/repl/api/shell_api.py#L59",
+          "state": "open",
+          "windowsAcceptance": []
+        }
+      ],
+      "languageServerIds": [
+        {
+          "id": "python",
+          "backendClass": "PyrightServer",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/pyright_server.py#L22",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "python_jedi",
+          "backendClass": "JediServer",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/jedi_server.py#L19",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": true,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "python_ty",
+          "backendClass": "TyLanguageServer",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/ty_server.py#L24",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "python_pyrefly",
+          "backendClass": "PyreflyLanguageServer",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/pyrefly_server.py#L41",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "python_basedpyright",
+          "backendClass": "BasedPyrightLanguageServer",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/basedpyright_server.py#L22",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "java",
+          "backendClass": "EclipseJDTLS",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/eclipse_jdtls.py#L102",
+          "upstreamStaticImplementationRequestEnabled": true,
+          "upstreamStaticImplementationRule": "True override",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "kotlin",
+          "backendClass": "KotlinLanguageServer",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/kotlin_language_server.py#L101",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "rust",
+          "backendClass": "RustAnalyzer",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/rust_analyzer.py#L30",
+          "upstreamStaticImplementationRequestEnabled": true,
+          "upstreamStaticImplementationRule": "True override",
+          "native05LiveProof": true,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "csharp",
+          "backendClass": "CSharpLanguageServer",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/csharp_language_server.py#L193",
+          "upstreamStaticImplementationRequestEnabled": true,
+          "upstreamStaticImplementationRule": "True override",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "csharp_omnisharp",
+          "backendClass": "OmniSharp",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/omnisharp.py#L66",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "typescript",
+          "backendClass": "TypeScriptLanguageServer",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/typescript_language_server.py#L106",
+          "upstreamStaticImplementationRequestEnabled": true,
+          "upstreamStaticImplementationRule": "True override",
+          "native05LiveProof": true,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "typescript_vts",
+          "backendClass": "VtsLanguageServer",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/vts_language_server.py#L32",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "vue",
+          "backendClass": "VueLanguageServer",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/vue_language_server.py#L153",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "svelte",
+          "backendClass": "SvelteLanguageServer",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/svelte_language_server.py#L168",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "astro",
+          "backendClass": "AstroLanguageServer",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/astro_language_server.py#L181",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "go",
+          "backendClass": "Gopls",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/gopls.py#L23",
+          "upstreamStaticImplementationRequestEnabled": true,
+          "upstreamStaticImplementationRule": "True override",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "ruby",
+          "backendClass": "RubyLsp",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/ruby_lsp.py#L33",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "ruby_solargraph",
+          "backendClass": "Solargraph",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/solargraph.py#L26",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "dart",
+          "backendClass": "DartLanguageServer",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/dart_language_server.py#L51",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "cpp",
+          "backendClass": "ClangdLanguageServer",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/clangd_language_server.py#L26",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "cpp_ccls",
+          "backendClass": "CCLS",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/ccls_language_server.py#L50",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "php",
+          "backendClass": "Intelephense",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/intelephense.py#L30",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "php_phpactor",
+          "backendClass": "PhpactorServer",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/phpactor.py#L41",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "php_phpantom",
+          "backendClass": "PHPantomServer",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/phpantom.py#L115",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "php_devsense",
+          "backendClass": "DevsensePHPLanguageServer",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/devsense_php_language_server.py#L29",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "perl",
+          "backendClass": "PerlLanguageServer",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/perl_language_server.py#L31",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "clojure",
+          "backendClass": "ClojureLSP",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/clojure_lsp.py#L86",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "elixir",
+          "backendClass": "ElixirTools",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/elixir_tools/elixir_tools.py#L45",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "elm",
+          "backendClass": "ElmLanguageServer",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/elm_language_server.py#L33",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "terraform",
+          "backendClass": "TerraformLS",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/terraform_ls.py#L50",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "swift",
+          "backendClass": "SourceKitLSP",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/sourcekit_lsp.py#L21",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "bash",
+          "backendClass": "BashLanguageServer",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/bash_language_server.py#L84",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "crystal",
+          "backendClass": "CrystalLanguageServer",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/crystal_language_server.py#L23",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "cue",
+          "backendClass": "CueLanguageServer",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/cue_language_server.py#L52",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "yaml",
+          "backendClass": "YamlLanguageServer",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/yaml_language_server.py#L26",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "json",
+          "backendClass": "JsonLanguageServer",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/json_language_server.py#L26",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "toml",
+          "backendClass": "TaploServer",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/taplo_server.py#L101",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "zig",
+          "backendClass": "ZigLanguageServer",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/zls.py#L23",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "nix",
+          "backendClass": "NixLanguageServer",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/nixd_ls.py#L32",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "lua",
+          "backendClass": "LuaLanguageServer",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/lua_ls.py#L65",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "lua_emmylua",
+          "backendClass": "EmmyLuaLanguageServer",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/emmylua_ls.py#L55",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "luau",
+          "backendClass": "LuauLanguageServer",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/luau_lsp.py#L82",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "erlang",
+          "backendClass": "ErlangLanguageServer",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/erlang_language_server.py#L61",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "ocaml",
+          "backendClass": "OcamlLanguageServer",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/ocaml_lsp_server.py#L28",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "al",
+          "backendClass": "ALLanguageServer",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/al_language_server.py#L59",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "rego",
+          "backendClass": "RegalLanguageServer",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/regal_server.py#L17",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "markdown",
+          "backendClass": "Marksman",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/marksman.py#L59",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "latex",
+          "backendClass": "TexlabLanguageServer",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/texlab_language_server.py#L38",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "r",
+          "backendClass": "RLanguageServer",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/r_language_server.py#L17",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "scala",
+          "backendClass": "ScalaLanguageServer",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/scala_language_server.py#L454",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "julia",
+          "backendClass": "JuliaLanguageServer",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/julia_server.py#L22",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "julia_fatou",
+          "backendClass": "FatouLanguageServer",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/fatou_language_server.py#L19",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "fortran",
+          "backendClass": "FortranLanguageServer",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/fortran_language_server.py#L29",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "haskell",
+          "backendClass": "HaskellLanguageServer",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/haskell_language_server.py#L22",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "haxe",
+          "backendClass": "HaxeLanguageServer",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/haxe_language_server.py#L48",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "lean4",
+          "backendClass": "Lean4LanguageServer",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/lean4_language_server.py#L20",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "fsharp",
+          "backendClass": "FSharpLanguageServer",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/fsharp_language_server.py#L41",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "powershell",
+          "backendClass": "PowerShellLanguageServer",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/powershell_language_server.py#L64",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "pascal",
+          "backendClass": "PascalLanguageServer",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/pascal_server.py#L102",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "groovy",
+          "backendClass": "GroovyLanguageServer",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/groovy_language_server.py#L63",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "matlab",
+          "backendClass": "MatlabLanguageServer",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/matlab_language_server.py#L78",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "hlsl",
+          "backendClass": "HlslLanguageServer",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/hlsl_language_server.py#L54",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "systemverilog",
+          "backendClass": "SystemVerilogLanguageServer",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/systemverilog_server.py#L23",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "solidity",
+          "backendClass": "SolidityLanguageServer",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/solidity_language_server.py#L36",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "ansible",
+          "backendClass": "AnsibleLanguageServer",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/ansible_language_server.py#L39",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "msl",
+          "backendClass": "MslLanguageServer",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/msl_language_server.py#L27",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "bsl",
+          "backendClass": "BSLLanguageServer",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/bsl_language_server.py#L103",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "ada",
+          "backendClass": "AdaLanguageServer",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/ada_language_server.py#L70",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "gdscript",
+          "backendClass": "GodotLanguageServer",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/godot_language_server.py#L30",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "qml",
+          "backendClass": "QmlLanguageServer",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/qml_language_server.py#L20",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "gleam",
+          "backendClass": "GleamLanguageServer",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/gleam_language_server.py#L37",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "nextflow",
+          "backendClass": "NextflowLanguageServer",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/nextflow_language_server.py#L68",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "wolfram",
+          "backendClass": "WolframLanguageServer",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/wolfram_language_server.py#L19",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "html",
+          "backendClass": "VsCodeHtmlLanguageServer",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/vscode_html_language_server.py#L41",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "scss",
+          "backendClass": "SomeSassLanguageServer",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/some_sass_language_server.py#L78",
+          "upstreamStaticImplementationRequestEnabled": false,
+          "upstreamStaticImplementationRule": "False inherited SolidLanguageServer default",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "angular",
+          "backendClass": "AngularLanguageServer",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/angular_language_server.py#L215",
+          "upstreamStaticImplementationRequestEnabled": true,
+          "upstreamStaticImplementationRule": "True override",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        },
+        {
+          "id": "deno",
+          "backendClass": "DenoLanguageServer",
+          "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/src/solidlsp/language_servers/deno_language_server.py#L19",
+          "upstreamStaticImplementationRequestEnabled": true,
+          "upstreamStaticImplementationRule": "True override",
+          "native05LiveProof": false,
+          "otherNative05Servers": "Host-command transport available; actual per-backend acceptance is not established."
+        }
+      ],
+      "configuration": {
+        "source": "https://github.com/oraios/serena/blob/4f2520efb128dd02e66a2302095bdbbb26ddd5a0/docs/02-usage/050_configuration.md",
+        "layers": [
+          "host global",
+          "project",
+          "project-local",
+          "fixed startup context",
+          "composable modes",
+          "CLI"
+        ],
+        "hostAuthority": "Repository declarations never authorize execution, unsafe path access or secrets in Yoke. Capability steering and host authorization must be separate.",
+        "projectKeys": [
+          "project_name",
+          "language_servers",
+          "encoding",
+          "line_ending",
+          "language_backend",
+          "agent_interface",
+          "ignore_all_files_in_gitignore",
+          "ignored_paths",
+          "read_only",
+          "ls_specific_settings",
+          "ls_workspace_folders",
+          "ls_additional_workspace_folders",
+          "excluded_tools",
+          "included_optional_tools",
+          "fixed_tools",
+          "excluded_apis",
+          "included_apis",
+          "default_modes",
+          "added_modes",
+          "initial_prompt",
+          "symbol_info_budget",
+          "read_only_memory_patterns",
+          "ignored_memory_patterns",
+          "activation_command",
+          "activation_command_timeout"
+        ],
+        "modeNames": [
+          "benchmark",
+          "editing",
+          "interactive",
+          "no-memories",
+          "no-onboarding",
+          "onboarding",
+          "one-shot",
+          "planning",
+          "query-projects"
+        ],
+        "contextNames": [
+          "agent",
+          "antigravity",
+          "chatgpt",
+          "claude-code",
+          "codebuddy",
+          "codex",
+          "copilot-cli",
+          "desktop-app",
+          "grok",
+          "ide",
+          "jb-ai-assistant",
+          "jb-copilot-plugin",
+          "junie",
+          "oaicompat-agent",
+          "vscode",
+          "zcode"
+        ]
+      },
+      "upstreamBoundaries": [
+        "Ansible 1.2.3 lacks document/workspace symbols, references and rename.",
+        "Crystalline lacks references and has limited definitions.",
+        "Shader language server lacks references.",
+        "EmmyLua cross-file references have a documented CRLF caveat.",
+        "Plain TypeScript monorepo references require a resolvable project-reference/declaration-map graph and may otherwise be silently partial.",
+        "Public README excludes Rider/CLion from paid JetBrains plugin support."
+      ]
+    },
+    "graphify": {
+      "revision": "fe085cedddde3a18554f8749b230bfe47f3dcce7",
+      "release": {
+        "tag": "v0.9.90",
+        "revision": "6996bcd3380adb02897c011847bd66350735459d"
+      },
+      "repository": "https://github.com/Graphify-Labs/graphify",
+      "capabilities": [
+        {
+          "id": "core_indexing",
+          "status": "implemented",
+          "source": "https://github.com/Graphify-Labs/graphify/blob/fe085cedddde3a18554f8749b230bfe47f3dcce7/graphify/extract.py",
+          "boundary": "Native capture/cache/parallel parser exists; not exact binary/schema compatibility",
+          "baseline05Status": "implemented",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "id": "languages",
+          "status": "partial",
+          "source": "https://github.com/Graphify-Labs/graphify/blob/fe085cedddde3a18554f8749b230bfe47f3dcce7/graphify/extract.py#L8380",
+          "boundary": "Missing PowerShell/Julia/ObjC/Fortran/Erlang/CommonLisp/Pascal/COBOL/VB.NET/Verilog/Terraform/Apex/DreamMaker/Robot; composite/framework formats separate",
+          "baseline05Status": "partial",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "id": "framework_resolution",
+          "status": "partial",
+          "source": "https://github.com/Graphify-Labs/graphify/blob/fe085cedddde3a18554f8749b230bfe47f3dcce7/graphify/extract.py",
+          "boundary": "Native name/relative-import candidates do not match dedicated receiver/type/alias/scope/dispatch/package resolution",
+          "baseline05Status": "partial",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "id": "language_overrides",
+          "status": "missing",
+          "source": "https://github.com/Graphify-Labs/graphify/blob/fe085cedddde3a18554f8749b230bfe47f3dcce7/graphify/rcfile.py",
+          "boundary": "Host-supplied extension/language config bound into cache identity",
+          "baseline05Status": "missing",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "id": "markdown",
+          "status": "partial",
+          "source": "https://github.com/Graphify-Labs/graphify/blob/fe085cedddde3a18554f8749b230bfe47f3dcce7/graphify/extractors/markdown.py",
+          "boundary": "Frontmatter/reference/wiki links/qualified mentions need separate coverage",
+          "baseline05Status": "partial",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "id": "manifest_dependencies",
+          "status": "missing",
+          "source": "https://github.com/Graphify-Labs/graphify/blob/fe085cedddde3a18554f8749b230bfe47f3dcce7/graphify/manifest_ingest.py",
+          "boundary": "apm.yml/pyproject.toml/Cargo.toml/go.mod/pom.xml package+depends_on",
+          "baseline05Status": "missing",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "id": "cargo_graph",
+          "status": "missing",
+          "source": "https://github.com/Graphify-Labs/graphify/blob/fe085cedddde3a18554f8749b230bfe47f3dcce7/graphify/cargo_introspect.py",
+          "boundary": "Workspace internal renamed/inherited dependencies",
+          "baseline05Status": "missing",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "id": "mcp_config_graph",
+          "status": "missing",
+          "source": "https://github.com/Graphify-Labs/graphify/blob/fe085cedddde3a18554f8749b230bfe47f3dcce7/graphify/mcp_ingest.py",
+          "boundary": "mcp_server/mcp_command/mcp_package/env NAME +requires_env",
+          "baseline05Status": "missing",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "id": "postgres_catalog",
+          "status": "missing",
+          "source": "https://github.com/Graphify-Labs/graphify/blob/fe085cedddde3a18554f8749b230bfe47f3dcce7/graphify/pg_introspect.py",
+          "boundary": "Actual read-only tables/views/routines/FK; columns explicitly not graphed upstream",
+          "baseline05Status": "missing",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "id": "office_documents",
+          "status": "missing",
+          "source": "https://github.com/Graphify-Labs/graphify/blob/fe085cedddde3a18554f8749b230bfe47f3dcce7/graphify/detect.py",
+          "boundary": "DOCX/XLSX content; native PDF text implemented but semantic overlay missing",
+          "baseline05Status": "missing",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "id": "google_shortcuts",
+          "status": "missing",
+          "source": "https://github.com/Graphify-Labs/graphify/blob/fe085cedddde3a18554f8749b230bfe47f3dcce7/graphify/google_workspace.py",
+          "boundary": "Explicit gws .gdoc/.gsheet/.gslides export",
+          "baseline05Status": "missing",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "id": "url_ingest",
+          "status": "missing",
+          "source": "https://github.com/Graphify-Labs/graphify/blob/fe085cedddde3a18554f8749b230bfe47f3dcce7/graphify/ingest.py",
+          "boundary": "Web/arxiv/PDF/tweet/video routes",
+          "baseline05Status": "missing",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "id": "asr",
+          "status": "missing",
+          "source": "https://github.com/Graphify-Labs/graphify/blob/fe085cedddde3a18554f8749b230bfe47f3dcce7/graphify/transcribe.py",
+          "boundary": "Actual CPU faster-whisper, yt-dlp optional; native metadata/supplied transcript not ASR",
+          "baseline05Status": "missing",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "id": "semantic_graph_hyperedges",
+          "status": "missing",
+          "source": "https://github.com/Graphify-Labs/graphify/blob/fe085cedddde3a18554f8749b230bfe47f3dcce7/graphify/llm.py",
+          "boundary": "Provider graph extraction, content slicing/cache/bounds/partial failures; source-bound inference overlay required",
+          "baseline05Status": "missing",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "id": "dedup",
+          "status": "missing",
+          "source": "https://github.com/Graphify-Labs/graphify/blob/fe085cedddde3a18554f8749b230bfe47f3dcce7/graphify/dedup.py",
+          "boundary": "Semantic aliases/normalization/MinHash/Jaro-Winkler/modeltiebreak with source scope",
+          "baseline05Status": "missing",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "id": "clustering",
+          "status": "partial",
+          "source": "https://github.com/Graphify-Labs/graphify/blob/fe085cedddde3a18554f8749b230bfe47f3dcce7/graphify/cluster.py",
+          "boundary": "Native Leiden exists; resolution/hub exclusion/uncertain weights/cohesion/stable labels missing",
+          "baseline05Status": "partial",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "id": "report_analytics",
+          "status": "partial",
+          "source": "https://github.com/Graphify-Labs/graphify/blob/fe085cedddde3a18554f8749b230bfe47f3dcce7/graphify/analyze.py",
+          "boundary": "Hubs/audit/surprises/questions/importcycles/stable diff/report missing; PageRank/components/cycles native",
+          "baseline05Status": "partial",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "id": "graph_query",
+          "status": "partial",
+          "source": "https://github.com/Graphify-Labs/graphify/blob/fe085cedddde3a18554f8749b230bfe47f3dcce7/graphify/serve.py",
+          "boundary": "DFS/seed scoring/context filtering/explain; native find/context/BFS/path partial equivalents",
+          "baseline05Status": "partial",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "id": "affected",
+          "status": "partial",
+          "source": "https://github.com/Graphify-Labs/graphify/blob/fe085cedddde3a18554f8749b230bfe47f3dcce7/graphify/affected.py",
+          "boundary": "Native reverse trace; upstream supertype/override seed expansion missing",
+          "baseline05Status": "partial",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "id": "exports",
+          "status": "partial",
+          "source": "https://github.com/Graphify-Labs/graphify/blob/fe085cedddde3a18554f8749b230bfe47f3dcce7/graphify/export.py",
+          "boundary": "Native JSON/GraphML/HTML; Cypher/SVG/Canvas/wiki/Obsidian/tree/callflow missing",
+          "baseline05Status": "partial",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "id": "db_push",
+          "status": "missing",
+          "source": "https://github.com/Graphify-Labs/graphify/blob/fe085cedddde3a18554f8749b230bfe47f3dcce7/graphify/exporters/graphdb.py",
+          "boundary": "Explicit Neo4j/FalkorDB upsert",
+          "baseline05Status": "missing",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "id": "interactive_graph",
+          "status": "partial",
+          "source": "https://github.com/Graphify-Labs/graphify/blob/fe085cedddde3a18554f8749b230bfe47f3dcce7/graphify/exporters/html.py",
+          "boundary": "Native simple select/search; upstream pan/zoom/drag/community controls",
+          "baseline05Status": "partial",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "id": "global_graph",
+          "status": "missing",
+          "source": "https://github.com/Graphify-Labs/graphify/blob/fe085cedddde3a18554f8749b230bfe47f3dcce7/graphify/global_graph.py",
+          "boundary": "Namespaced collection registry/replace/remove/join/cross-repo candidate links; federation currently source-only",
+          "baseline05Status": "missing",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "id": "git_lifecycle",
+          "status": "partial",
+          "source": "https://github.com/Graphify-Labs/graphify/blob/fe085cedddde3a18554f8749b230bfe47f3dcce7/graphify/hooks.py",
+          "boundary": "Native watch; managed postcommit/checkout/merge/union driver missing",
+          "baseline05Status": "partial",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "id": "pr_workflow",
+          "status": "missing",
+          "source": "https://github.com/Graphify-Labs/graphify/blob/fe085cedddde3a18554f8749b230bfe47f3dcce7/graphify/prs.py",
+          "boundary": "Read-only gh dataset/CI/review/worktrees/graphimpact/conflicts/triage",
+          "baseline05Status": "missing",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "id": "learning_overlay",
+          "status": "partial",
+          "source": "https://github.com/Graphify-Labs/graphify/blob/fe085cedddde3a18554f8749b230bfe47f3dcce7/graphify/reflect.py",
+          "boundary": "Native remember/recall/currentness; outcome decay/corroboration/lessons/scoring missing",
+          "baseline05Status": "partial",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "id": "agent_installations",
+          "status": "partial",
+          "source": "https://github.com/Graphify-Labs/graphify/blob/fe085cedddde3a18554f8749b230bfe47f3dcce7/graphify/install.py",
+          "boundary": "Native VSCode/MCP; multi-assistant installer/query-first hooks missing",
+          "baseline05Status": "partial",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "id": "mcp",
+          "status": "partial",
+          "source": "https://github.com/Graphify-Labs/graphify/blob/fe085cedddde3a18554f8749b230bfe47f3dcce7/graphify/serve.py#L2153",
+          "boundary": "10 tools/6 resources/project_path/StreamableHTTP; native8 default tools distinct",
+          "baseline05Status": "partial",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "id": "diagnostics_benchmark",
+          "status": "partial",
+          "source": "https://github.com/Graphify-Labs/graphify/blob/fe085cedddde3a18554f8749b230bfe47f3dcce7/graphify/diagnostics.py",
+          "boundary": "Parallel-arc collapse risk audit/token corpus benchmark; ownnative performance exists",
+          "baseline05Status": "partial",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "id": "provider_connectors",
+          "status": "partial",
+          "source": "https://github.com/Graphify-Labs/graphify/blob/fe085cedddde3a18554f8749b230bfe47f3dcce7/graphify/llm.py",
+          "boundary": "Generic native executable protocol/Ollama not bundled connectors for every hosted provider",
+          "baseline05Status": "partial",
+          "state": "open",
+          "windowsAcceptance": []
+        },
+        {
+          "id": "scip_prototype",
+          "status": "not_production_surface",
+          "source": "https://github.com/Graphify-Labs/graphify/blob/fe085cedddde3a18554f8749b230bfe47f3dcce7/graphify/scip_ingest.py#L1",
+          "boundary": "Explicit simplified skeleton NOT wired CLI and NOT full official SCIP protobuf",
+          "baseline05Status": "not_production_surface",
+          "state": "outside_public_production_scope",
+          "windowsAcceptance": []
+        },
+        {
+          "id": "cloud",
+          "status": "unverified_hosted_claims",
+          "source": "https://github.com/Graphify-Labs/graphify/blob/fe085cedddde3a18554f8749b230bfe47f3dcce7/README.md#L448",
+          "boundary": "Always-on SDLC/formal verification/Sentry/Jira/80% metrics are hosted claims; no public complete implementation/API",
+          "baseline05Status": "unverified_hosted_claims",
+          "state": "requires_independent_equivalent",
+          "windowsAcceptance": []
+        }
+      ],
+      "mcp": {
+        "tools": [
+          "query_graph",
+          "get_node",
+          "get_neighbors",
+          "get_community",
+          "god_nodes",
+          "graph_stats",
+          "shortest_path",
+          "list_prs",
+          "get_pr_impact",
+          "triage_prs"
+        ],
+        "resources": [
+          "graphify://report",
+          "graphify://stats",
+          "graphify://god-nodes",
+          "graphify://surprises",
+          "graphify://audit",
+          "graphify://questions"
+        ],
+        "allToolsOptionalProjectPath": true,
+        "transports": [
+          "stdio",
+          "Streamable HTTP JSON/SSE"
+        ]
+      }
+    }
+  }
+}

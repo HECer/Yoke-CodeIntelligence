@@ -1,0 +1,19 @@
+warning: failed to save last-use data
+This may prevent cargo from accurately tracking what is being used in its global cache. This information is used for automatically removing unused data in the cache.
+
+database or disk is full
+
+Caused by:
+  Error code 13: database or disk is full
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 3.08s
+     Running tests\model_http_review.rs (target\debug\deps\model_http_review-cbcd6667172ac33b.exe)
+credential_with_quote_and_backslash_is_rejected_after_json_unescaping: test
+present_malformed_tool_calls_cannot_be_treated_as_absent_tools: test
+unicode_escaped_credential_echo_is_rejected_after_decoding_model_text: test
+
+3 tests, 0 benchmarks
+     Running tests\model_identity.rs (target\debug\deps\model_identity-19f2f210e851753e.exe)
+large_identity_preserves_exact_released_json_bytes_without_a_second_corpus_buffer: test
+
+1 test, 0 benchmarks

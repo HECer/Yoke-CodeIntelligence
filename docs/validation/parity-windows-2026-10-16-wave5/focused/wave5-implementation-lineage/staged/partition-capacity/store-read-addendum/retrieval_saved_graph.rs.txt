@@ -1,0 +1,22 @@
+//! Ignored saved-authority read stub. Separate from immutable369292/18e8.
+//! Only the new checked retrieval Run may use this after root's causal release.
+
+use crate::{capture::Deadline, retrieval_scopes::RetrievalHardError, store::Store};
+use rusqlite::Transaction;
+
+// The transaction must belong to this exact Store connection. The expected
+// digest comes from the admitted supplied Graph's bounded stream, never JSON
+// request data. This verifies data only; no run/source authority is constructed.
+pub(crate) fn verify_saved_graph_in(
+    _store: &Store,
+    _read: &Transaction<'_>,
+    _snapshot_id: &str,
+    _expected_graph_fingerprint: &str,
+    _deadline: &Deadline,
+) -> Result<(), RetrievalHardError> {
+    Err(RetrievalHardError::Internal("implementation_unavailable"))
+}
+
+#[cfg(test)]
+#[path = "retrieval_saved_graph_tests.rs"]
+mod tests;

@@ -1,0 +1,38 @@
+    Finished `test` profile [unoptimized] target(s) in 0.90s
+     Running tests\trail_bodies.rs (target\debug\deps\trail_bodies-b68b4cc4940ea540.exe)
+
+running 4 tests
+test full_definitions_exceed_old_excerpt_limit_and_default_crux_has_eight_lines ... ok
+test find_all_returns_more_than_two_hundred_source_occurrences ... ok
+test public_file_api_returns_all_three_hundred_and_fifty_headers_in_one_projection ... ok
+test large_full_definition_results_are_published_as_readable_artifacts ... FAILED
+
+failures:
+
+---- large_full_definition_results_are_published_as_readable_artifacts stdout ----
+
+thread 'large_full_definition_results_are_published_as_readable_artifacts' (44140) panicked at native\tests\trail_bodies.rs:172:5:
+assertion `left == right` failed: {"id":2,"jsonrpc":"2.0","result":{"content":[{"text":"{\"data\":{},\"error\":{\"message\":\"Manifest-balanced retrieval output_capacity: compatibility_envelope\"},\"status\":\"error\"}","type":"text"}],"isError":true}}
+  left: Bool(true)
+ right: false
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    large_full_definition_results_are_published_as_readable_artifacts
+
+test result: FAILED. 3 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.86s
+
+error: test failed, to rerun pass `--test trail_bodies`
+     Running tests\trail_review.rs (target\debug\deps\trail_review-246e5c99a4fc09cd.exe)
+
+running 4 tests
+test trail_dependency_trace_excludes_source_containment_edges ... ok
+test trail_incoming_coupling_does_not_count_the_containing_file_as_a_dependency ... ok
+test trail_qualified_symbol_selection_matches_the_declared_container_suffix ... ok
+test trail_file_trace_seeds_the_files_symbols_for_incoming_dependency_closure ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.54s
+
+error: 1 target failed:
+    `--test trail_bodies`

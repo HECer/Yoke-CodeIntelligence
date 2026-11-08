@@ -1,0 +1,9 @@
+$ErrorActionPreference = 'Stop'
+Get-CimInstance Win32_Process |
+    Where-Object { $_.Name -match '^(cargo|rustc|rustfmt)\.exe$' -or ($_.Name -eq 'node.exe' -and $_.CommandLine -match 'Code-Intelligence|Yoke-Test-Scratch') } |
+    Select-Object Name, ProcessId, CommandLine |
+    ConvertTo-Json -Depth 3
+Get-CimInstance Win32_LogicalDisk |
+    Where-Object { $_.DeviceID -in @('C:', 'D:', 'G:') } |
+    Select-Object DeviceID, FreeSpace, Size |
+    ConvertTo-Json

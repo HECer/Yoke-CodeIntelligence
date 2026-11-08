@@ -1,0 +1,21 @@
+    Finished `test` profile [unoptimized] target(s) in 0.61s
+     Running unittests src\lib.rs (target\debug\deps\yoke-d0206a40818d4343.exe)
+
+running 1 test
+test lsp::uri_tests::react_documents_and_siblings_keep_their_ids_with_base_language_providers ... FAILED
+
+failures:
+
+---- lsp::uri_tests::react_documents_and_siblings_keep_their_ids_with_base_language_providers stdout ----
+
+thread 'lsp::uri_tests::react_documents_and_siblings_keep_their_ids_with_base_language_providers' (18956) panicked at native\src\lsp.rs:3464:14:
+called `Result::unwrap()` on an `Err` value: Language server returned an error: {"code":-32000,"message":"Fixture document languages or provider siblings differ"}
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    lsp::uri_tests::react_documents_and_siblings_keep_their_ids_with_base_language_providers
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 402 filtered out; finished in 0.20s
+
+error: test failed, to rerun pass `--lib`

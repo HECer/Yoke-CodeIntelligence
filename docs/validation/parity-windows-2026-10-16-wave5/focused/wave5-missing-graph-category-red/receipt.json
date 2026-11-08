@@ -1,0 +1,27 @@
+{
+  "checkedAtUtc": "2026-10-15T23:42:23.242719+00:00",
+  "scope": "focused_gate_not_frozen_suite",
+  "command": [
+    "cargo",
+    "test",
+    "-j",
+    "2",
+    "--manifest-path",
+    "native/Cargo.toml",
+    "--lib",
+    "retrieval_saved_graph::tests::missing_saved_row_is_none_for_readers_and_source_integrity_for_verifier",
+    "--",
+    "--exact",
+    "--nocapture",
+    "--test-threads=4"
+  ],
+  "exitCode": 101,
+  "seconds": 104.907,
+  "tempRoot": "D:\\Yoke-Test-Scratch\\wave5-missing-graph-category-red",
+  "logSha256": "e20d6774925ca8b2b17f5b6d8b576dd81aba62b951d55f6ee0dbe689a415816a",
+  "groups": 1,
+  "passed": 0,
+  "failed": 1,
+  "ignored": 0,
+  "sourceChanges": []
+}

@@ -1,0 +1,189 @@
+{
+  "kind": "exploratory_owned_function_body_runtime_prototype",
+  "compiler": "5.8.3",
+  "compilerSha256": "dd17428736a07e1db1a138d8a14295ddb2699ba780ee15038acdd2c6da5373a0",
+  "cases": [
+    {
+      "name": "argument_order_and_parameter_scope",
+      "before": "{\"result\":[10,2],\"events\":[9,2,9,2],\"n\":9}",
+      "after": "{\"result\":[10,2],\"events\":[9,2,9,2],\"n\":9}",
+      "frames": [
+        {
+          "statement": [
+            121,
+            156
+          ],
+          "call": [
+            134,
+            155
+          ],
+          "result": "__ci_inline_1",
+          "label": "__ci_inline_2",
+          "args": [
+            "__ci_inline_3",
+            "__ci_inline_4"
+          ],
+          "returns": 1
+        }
+      ]
+    },
+    {
+      "name": "all_arguments_before_parameters",
+      "before": "{\"value\":1,\"events\":[\"first\",\"extra\",1],\"n\":3}",
+      "after": "{\"value\":1,\"events\":[\"first\",\"extra\",1],\"n\":3}",
+      "frames": [
+        {
+          "statement": [
+            72,
+            146
+          ],
+          "call": [
+            85,
+            145
+          ],
+          "result": "__ci_inline_1",
+          "label": "__ci_inline_2",
+          "args": [
+            "__ci_inline_3",
+            "__ci_inline_4"
+          ],
+          "returns": 1
+        }
+      ]
+    },
+    {
+      "name": "finally_return_overrides",
+      "before": "{\"result\":5,\"events\":[\"try\",\"finally\"]}",
+      "after": "{\"result\":5,\"events\":[\"try\",\"finally\"]}",
+      "frames": [
+        {
+          "statement": [
+            114,
+            137
+          ],
+          "call": [
+            127,
+            136
+          ],
+          "result": "__ci_inline_1",
+          "label": "__ci_inline_2",
+          "args": [
+            "__ci_inline_3"
+          ],
+          "returns": 2
+        }
+      ]
+    },
+    {
+      "name": "finally_keeps_pending_value",
+      "before": "{\"result\":1,\"n\":7}",
+      "after": "{\"result\":1,\"n\":7}",
+      "frames": [
+        {
+          "statement": [
+            55,
+            78
+          ],
+          "call": [
+            68,
+            77
+          ],
+          "result": "__ci_inline_1",
+          "label": "__ci_inline_2",
+          "args": [
+            "__ci_inline_3"
+          ],
+          "returns": 1
+        }
+      ]
+    },
+    {
+      "name": "nested_function_returns_stay_local",
+      "before": "4",
+      "after": "4",
+      "frames": [
+        {
+          "statement": [
+            65,
+            88
+          ],
+          "call": [
+            78,
+            87
+          ],
+          "result": "__ci_inline_1",
+          "label": "__ci_inline_2",
+          "args": [
+            "__ci_inline_3"
+          ],
+          "returns": 1
+        }
+      ]
+    },
+    {
+      "name": "multiple_calls_and_early_exit",
+      "before": "{\"a\":2,\"events\":[2,0]}",
+      "after": "{\"a\":2,\"events\":[2,0]}",
+      "frames": [
+        {
+          "statement": [
+            82,
+            100
+          ],
+          "call": [
+            90,
+            99
+          ],
+          "result": "__ci_inline_1",
+          "label": "__ci_inline_2",
+          "args": [
+            "__ci_inline_3"
+          ],
+          "returns": 1
+        },
+        {
+          "statement": [
+            100,
+            118
+          ],
+          "call": [
+            108,
+            117
+          ],
+          "result": "__ci_inline_4",
+          "label": "__ci_inline_5",
+          "args": [
+            "__ci_inline_6"
+          ],
+          "returns": 1
+        }
+      ]
+    },
+    {
+      "name": "return_comma_and_comments",
+      "before": "{\"result\":5,\"events\":[3]}",
+      "after": "{\"result\":5,\"events\":[3]}",
+      "frames": [
+        {
+          "statement": [
+            84,
+            107
+          ],
+          "call": [
+            97,
+            106
+          ],
+          "result": "__ci_inline_1",
+          "label": "__ci_inline_2",
+          "args": [
+            "__ci_inline_3"
+          ],
+          "returns": 1
+        }
+      ]
+    }
+  ],
+  "nativeAdmission": false,
+  "productionIntegration": false,
+  "fullGoalComplete": false
+}

@@ -1,0 +1,120 @@
+{
+  "accepted": false,
+  "aclTempRoot": "C:\\Users\\Public\\Yoke-Test-Scratch\\wave3-frozen-1734-acl",
+  "artifactSha256": {
+    "cargo-metadata.log": "ae506acb3353737b27ab63031506e2e4f25e7fb6218b507a6c964e755a1277ab",
+    "cleaned-before.json": "45a8ead62f377f4893b2c850c9b533cde2b0e27c2a84055613c529410ae32f2f",
+    "library-inventory-all.log": "363f7bcb78db512e513e7c7cc42f342d278679eaeeb5e116f3389620ea3525d9",
+    "library-inventory-ignored.log": "fb00c0b2ee2a06dbdce9bd6b57a4b1841ab2ad1b7facb0c5b85f4c47b847f638",
+    "source-after.json": "6248aced85ca0400a82f758a765b99897c1479220f1cd07ce6c2616c7b3a4abf",
+    "source-before.json": "6248aced85ca0400a82f758a765b99897c1479220f1cd07ce6c2616c7b3a4abf",
+    "target-inventory.json": "c3f1e0f984a25140be49db7e6918d069615103a34fe4ec1cf8c19e6b325d5879"
+  },
+  "checkedAtUtc": "2026-10-15T17:35:25.961400+00:00",
+  "failed": 0,
+  "groups": 0,
+  "ignored": 0,
+  "interpretation": "Fresh execution only. Shared freeze required across all five phases; ignored test results are never relabeled as passing.",
+  "matrixCoverage": {},
+  "passed": 0,
+  "phase": "native",
+  "phases": [
+    "format",
+    "clippy",
+    "native",
+    "python",
+    "typescript"
+  ],
+  "results": [
+    {
+      "command": [
+        "cargo",
+        "metadata",
+        "--no-deps",
+        "--locked",
+        "--format-version",
+        "1"
+      ],
+      "exitCode": 0,
+      "failed": 0,
+      "groups": 0,
+      "ignored": 0,
+      "inventoryOnly": true,
+      "label": "cargo-metadata",
+      "logSha256": "ae506acb3353737b27ab63031506e2e4f25e7fb6218b507a6c964e755a1277ab",
+      "origin": "fresh_execution",
+      "passed": 0,
+      "runnerSha256": "fec205667564b2aa82bcc40f17b2c8378b9ffe8ce4ea90a077045b6837e2ec9f",
+      "seconds": 0.125,
+      "sourceManifestSha256": "6248aced85ca0400a82f758a765b99897c1479220f1cd07ce6c2616c7b3a4abf",
+      "tempRoot": "D:\\Yoke-Test-Scratch\\wave3-frozen-1734-native"
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--no-fail-fast",
+        "--lib",
+        "--",
+        "--list",
+        "--format",
+        "terse"
+      ],
+      "exitCode": 0,
+      "failed": 0,
+      "groups": 0,
+      "ignored": 0,
+      "inventoryOnly": true,
+      "label": "library-inventory-all",
+      "logSha256": "363f7bcb78db512e513e7c7cc42f342d278679eaeeb5e116f3389620ea3525d9",
+      "origin": "fresh_execution",
+      "passed": 0,
+      "runnerSha256": "fec205667564b2aa82bcc40f17b2c8378b9ffe8ce4ea90a077045b6837e2ec9f",
+      "seconds": 47.546,
+      "sourceManifestSha256": "6248aced85ca0400a82f758a765b99897c1479220f1cd07ce6c2616c7b3a4abf",
+      "tempRoot": "D:\\Yoke-Test-Scratch\\wave3-frozen-1734-native"
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--no-fail-fast",
+        "--lib",
+        "--",
+        "--ignored",
+        "--list",
+        "--format",
+        "terse"
+      ],
+      "exitCode": 0,
+      "failed": 0,
+      "groups": 0,
+      "ignored": 0,
+      "inventoryOnly": true,
+      "label": "library-inventory-ignored",
+      "logSha256": "fb00c0b2ee2a06dbdce9bd6b57a4b1841ab2ad1b7facb0c5b85f4c47b847f638",
+      "origin": "fresh_execution",
+      "passed": 0,
+      "runnerSha256": "fec205667564b2aa82bcc40f17b2c8378b9ffe8ce4ea90a077045b6837e2ec9f",
+      "seconds": 0.875,
+      "sourceManifestSha256": "6248aced85ca0400a82f758a765b99897c1479220f1cd07ce6c2616c7b3a4abf",
+      "tempRoot": "D:\\Yoke-Test-Scratch\\wave3-frozen-1734-native"
+    }
+  ],
+  "runnerSha256": "fec205667564b2aa82bcc40f17b2c8378b9ffe8ce4ea90a077045b6837e2ec9f",
+  "sourceChanges": [],
+  "sourceFiles": 803,
+  "sourceManifestSha256": "6248aced85ca0400a82f758a765b99897c1479220f1cd07ce6c2616c7b3a4abf",
+  "tempRoot": "D:\\Yoke-Test-Scratch\\wave3-frozen-1734-native",
+  "validationErrors": [
+    "RuntimeError: Unterminated Cargo harness output"
+  ]
+}

@@ -1,0 +1,167 @@
+{
+  "schema": "native_dashboard_documents_scoped_acceptance_v1",
+  "product": "Code Intelligence",
+  "version": "0.5.0",
+  "productCommit": "5e094c6dded5c0ab2965f5bfc74d42ff25ad886d",
+  "productRemoteBlobsVerified": 12,
+  "sourceInputs": 1138,
+  "sourceManifestSha256": "25e61a4507c4b55792632f479291b50b2d088238dc250979a68a51277f74de9b",
+  "rust": {
+    "groups": [
+      {
+        "group": "library",
+        "passed": 623,
+        "failed": 0,
+        "ignored": 7,
+        "filtered": 0,
+        "rawDirectory": "dashboard-documents-20261024-211f17f9-qualified3"
+      },
+      {
+        "group": "main",
+        "passed": 6,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0,
+        "rawDirectory": "dashboard-documents-20261024-211f17f9-qualified3"
+      },
+      {
+        "group": "session_dashboard_management",
+        "passed": 19,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0,
+        "rawDirectory": "dashboard-documents-20261024-211f17f9-qualified2"
+      },
+      {
+        "group": "session_dashboard",
+        "passed": 13,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0,
+        "rawDirectory": "dashboard-documents-20261024-211f17f9-qualified2"
+      },
+      {
+        "group": "notes",
+        "passed": 15,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0,
+        "rawDirectory": "dashboard-documents-20261024-211f17f9-qualified2"
+      },
+      {
+        "group": "mcp_http",
+        "passed": 18,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0,
+        "rawDirectory": "dashboard-documents-20261024-211f17f9-qualified2"
+      },
+      {
+        "group": "protocol_connection",
+        "passed": 5,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0,
+        "rawDirectory": "dashboard-documents-20261024-211f17f9-qualified2"
+      },
+      {
+        "group": "session_steering",
+        "passed": 12,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0,
+        "rawDirectory": "dashboard-documents-20261024-211f17f9-qualified2"
+      },
+      {
+        "group": "server_selection",
+        "passed": 8,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0,
+        "rawDirectory": "dashboard-documents-20261024-211f17f9-qualified2"
+      },
+      {
+        "group": "server_settings",
+        "passed": 8,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0,
+        "rawDirectory": "dashboard-documents-20261024-211f17f9-qualified2"
+      },
+      {
+        "group": "project_session",
+        "passed": 6,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0,
+        "rawDirectory": "dashboard-documents-20261024-211f17f9-qualified2"
+      }
+    ],
+    "passed": 733,
+    "failed": 0,
+    "ignored": 7,
+    "filtered": 0
+  },
+  "reusedExactIntegrationGroups": {
+    "count": 9,
+    "passed": 104,
+    "sourceInputsIdentical": true,
+    "failureAfterThoseGroups": "qualifier2 used native-relative manifest from native cwd; library tests had not started",
+    "qualified3LibraryMainAndCliRerun": true
+  },
+  "allTargetClippyWarningsDenied": true,
+  "formatCargoRoots": 368,
+  "typescriptTypecheck": true,
+  "typescriptPassed": 260,
+  "typescriptExistingSkips": 3,
+  "cliSha256": "b18eff3d4e2f088656ae636190ff22309a657a99212514a8898ab4c49f662579",
+  "actualStdioVariants": 3,
+  "persistentPythonState41Through44": true,
+  "actualIndependentHttpSessions": 2,
+  "sharedGlobalFileCasAndActorLocalPlans": true,
+  "actualNativeBrowserFileSaveAndStaleDraft": true,
+  "actualNativeBrowserProviderReorderDisableResetAndStaleDraft": true,
+  "nativeMobileViewport": {
+    "width": 390,
+    "height": 844,
+    "horizontalOverflow": false
+  },
+  "actualBrowserScreenshotsClaimed": false,
+  "nativeDomStaticRerendersInspected": true,
+  "separateSyntheticVisualWidths": [
+    1366,
+    390
+  ],
+  "globalFileWritesImplemented": true,
+  "projectFileReadsImplemented": true,
+  "projectFileWritesImplemented": false,
+  "guardedDocumentBackend": "windows_only",
+  "permanentOriginalWriteSelectionBinding": true,
+  "automaticWriteBindingMigration": false,
+  "structuredDocumentActivityLabels": "existing_other_operation_fallback",
+  "allOwnedJobsEmpty": true,
+  "allNewSyntheticCredentialsRemoved": true,
+  "existingCredentialsAccessed": false,
+  "systemOrPrivilegeSettingsChanged": false,
+  "manualDeletion": false,
+  "defaultModelCalls": false,
+  "analyzedSourceExecuted": false,
+  "rawArchive": {
+    "members": 519,
+    "archiveBytes": 2458289,
+    "archiveSha256": "9425e0148bfbbd52a6c906480e0dad8aa135a86b8f5da60f0502322cc183585b",
+    "allMembersReopenedAndExact": true,
+    "privateCapabilityFilesExcluded": true,
+    "precedingUnpublishedArchivePreserved": "28972ebb3b6c363063a2ad635ad9a02bc5231d0415441a75c8016aa5a208f894"
+  },
+  "originalInventory353Unchanged": true,
+  "originalUnreconciled73Unchanged": true,
+  "backendRuntimeUnknown77Unchanged": true,
+  "originalTenWindowsSymlinkPrerequisitesUnchanged": true,
+  "fullWindowsBaselineCertified": false,
+  "fullDashboardActionComplete": false,
+  "fullStatusComplete": false,
+  "universalRuntimeCertified": false,
+  "mainMerged": false,
+  "released": false
+}

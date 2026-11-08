@@ -1,0 +1,15 @@
+{
+  "command": [
+    "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+    "test",
+    "--locked",
+    "-j2",
+    "--test",
+    "store_cancellation",
+    "sqlite_busy_wait",
+    "--",
+    "--test-threads=2"
+  ],
+  "exitCode": 101,
+  "elapsedSeconds": 5.494
+}

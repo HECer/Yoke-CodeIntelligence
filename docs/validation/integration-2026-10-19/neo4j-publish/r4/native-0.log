@@ -1,0 +1,18 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+error[E0308]: `match` arms have incompatible types
+  --> native\src\neo4j_publish_journal.rs:80:37
+   |
+78 |           match c {
+   |           ------- `match` arms have incompatible types
+79 |               Component::ParentDir | Component::CurDir => valid(false)?,
+   |                                                           ------------- this is found to be of type `()`
+80 |               Component::Normal(n) => crate::paths::normalized_syntax(
+   |  _____________________________________^
+81 | |                 n.to_str()
+82 | |                     .ok_or_else(|| anyhow::anyhow!("neo4j_publish_journal_invalid"))?,
+83 | |             )
+84 | |             .map_err(|_| anyhow::anyhow!("neo4j_publish_journal_invalid"))?,
+   | |___________________________________________________________________________^ expected `()`, found `String`
+
+For more information about this error, try `rustc --explain E0308`.
+error: could not compile `yoke-code-intelligence` (lib test) due to 1 previous error

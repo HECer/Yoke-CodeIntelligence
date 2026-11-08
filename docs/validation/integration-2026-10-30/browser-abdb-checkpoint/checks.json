@@ -1,0 +1,83 @@
+{
+  "causal-red": {
+    "command": [
+      "node",
+      "--require",
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\validation\\browser-abdb-20261030\\baseline-preload.cjs",
+      "--test",
+      "--test-reporter=tap",
+      "--test-name-pattern=pending phase",
+      "scripts/tests/host_history_browser_protocol.test.cjs"
+    ],
+    "exitCode": 1,
+    "expectedExitCode": 1,
+    "elapsedSeconds": 0.18840479999198578,
+    "logBytes": 1409,
+    "logSha256": "d39cf2534d43234718dbfe7f0766efcd9d82d49eebc52921682927ad2fb37679",
+    "nativeYokeImagesReadOrExecuted": false
+  },
+  "node": {
+    "command": [
+      "node",
+      "--test",
+      "--test-reporter=tap",
+      "scripts/tests/host_history_browser_protocol.test.cjs"
+    ],
+    "exitCode": 0,
+    "expectedExitCode": 0,
+    "elapsedSeconds": 0.2763381999975536,
+    "logBytes": 3105,
+    "logSha256": "3f8a456c994a94d25bf7e9e8ba2d49c311b632acc31b8bae77b49874540069a8",
+    "nativeYokeImagesReadOrExecuted": false
+  },
+  "typecheck": {
+    "command": [
+      "npm.cmd",
+      "run",
+      "typecheck"
+    ],
+    "exitCode": 0,
+    "expectedExitCode": 0,
+    "elapsedSeconds": 2.644799600006081,
+    "logBytes": 101,
+    "logSha256": "30ef9ce16cf042ab6f160e0a76c1fbfe22f02a3c3a3659ee62863ffc1efdbfdf",
+    "nativeYokeImagesReadOrExecuted": false
+  },
+  "npm-test": {
+    "command": [
+      "npm.cmd",
+      "test"
+    ],
+    "exitCode": 0,
+    "expectedExitCode": 0,
+    "elapsedSeconds": 58.200614100001985,
+    "logBytes": 25675,
+    "logSha256": "466212d24159676606e41802a182affe7abee638da0c9b8cd4388639145ca52a",
+    "nativeYokeImagesReadOrExecuted": false,
+    "presentationFailure": "After recording npm exit 0 and the log hash, the local display helper failed to print a Unicode symbol through its CP1252 console. The retained npm log confirms 266 passed, zero failed, three skipped. The helper now selects UTF-8; npm was not rerun."
+  },
+  "python": {
+    "command": [
+      "python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "scripts/tests",
+      "-p",
+      "test_host_history*.py",
+      "-v"
+    ],
+    "exitCode": 0,
+    "expectedExitCode": 0,
+    "elapsedSeconds": 3.198957300017355,
+    "logBytes": 16396,
+    "logSha256": "601e8f03fff76860c9f48e0a550079777675bdc4f51acc5c37d3c544ae7b19b0",
+    "nativeYokeImagesReadOrExecuted": false
+  },
+  "selectedSourceSha256": {
+    "scripts/host_history_browser.cjs": "4bccbc1a74190666931e2d93567c7df6fe26f8ad75f799b1aa336f79ee28ced0",
+    "scripts/tests/host_history_browser_protocol.test.cjs": "fad1be134a5bf3457ee91258811de480ca6fe2297c9363d94ed54d6c30ed9cac"
+  },
+  "scope": "No local Yoke native build, test, worker, or native image/PDB payload access. Node protocol doubles and Python inert Job checks only; no new real browser execution."
+}

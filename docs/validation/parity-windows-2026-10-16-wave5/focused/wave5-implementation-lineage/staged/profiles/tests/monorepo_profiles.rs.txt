@@ -1,0 +1,600 @@
+//! STAGED ONLY: uncompiled profile-entry acceptance drafts; root owns execution.
+use serde_json::{Value, json};
+use std::{
+    fs,
+    path::Path,
+    sync::{Arc, atomic::AtomicBool},
+};
+use yoke::{
+    Engine,
+    analysis::AnalyzerEpoch,
+    capture::Deadline,
+    project_session::{HostProfile, Session},
+};
+
+// B owns this exact31-source helper and its eventual normal test destination.
+#[path = "support/monorepo_retrieval_fixture.rs"]
+mod corpus;
+
+fn session(engine: Engine) -> Session {
+    Session::open(
+        engine,
+        HostProfile::default(),
+        Some("monorepo-profiles"),
+        &Deadline::new(180000),
+    )
+    .unwrap()
+}
+fn rpc(session: &mut Session, profile: &str, method: &str, params: Value) -> Value {
+    let mut connection = match profile {
+        "session" => yoke::protocol::Connection::session(session),
+        "trail" => yoke::protocol::Connection::trail(session),
+        "graft" => yoke::protocol::Connection::graft(session),
+        _ => panic!("owned test profile"),
+    };
+    connection
+        .message(br#"{"jsonrpc":"2.0","id":1,"method":"initialize"}"#)
+        .unwrap()
+        .unwrap();
+    connection
+        .message(
+            &serde_json::to_vec(&json!({"jsonrpc":"2.0","id":2,"method":method,"params":params}))
+                .unwrap(),
+        )
+        .unwrap()
+        .unwrap()
+}
+fn call(session: &mut Session, profile: &str, name: &str, args: Value) -> (Value, Value) {
+    let response = rpc(
+        session,
+        profile,
+        "tools/call",
+        json!({"name":name,"arguments":args}),
+    );
+    let content = response["result"]["content"][0]["text"]
+        .as_str()
+        .expect("tool envelope");
+    let body = serde_json::from_str(content).unwrap();
+    (response, body)
+}
+fn names(value: &Value) -> Vec<&str> {
+    value["items"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .map(|row| row["name"].as_str().unwrap())
+        .collect()
+}
+fn counts(engine: &Engine) -> (i64, i64, i64) {
+    let db = &engine.store.db;
+    (
+        db.query_row("SELECT COUNT(*) FROM snapshots", [], |r| r.get(0))
+            .unwrap(),
+        db.query_row(
+            "SELECT COUNT(*) FROM records WHERE kind IN ('plan','approval','receipt','artifact')",
+            [],
+            |r| r.get(0),
+        )
+        .unwrap(),
+        db.query_row("SELECT total_changes()", [], |r| r.get(0))
+            .unwrap(),
+    )
+}
+fn write(root: &Path, path: &str, text: &str) {
+    let path = root.join(path);
+    fs::create_dir_all(path.parent().unwrap()).unwrap();
+    fs::write(path, text).unwrap();
+}
+fn anchored(session: &Session, value: &Value, full: bool) {
+    let snapshot = session
+        .engine
+        .store
+        .snapshot(value["snapshotId"].as_str().unwrap())
+        .unwrap();
+    for row in value["items"].as_array().unwrap() {
+        let path = row["path"].as_str().unwrap();
+        let (source, hash) = yoke::query::source(&session.engine.store, &snapshot, path).unwrap();
+        assert_eq!(row["contentHash"], hash);
+        let start = row["bodyStartByte"].as_u64().unwrap() as usize;
+        let end = row["bodyEndByte"].as_u64().unwrap() as usize;
+        assert_eq!(row["body"], &source[start..end]);
+        assert_eq!(
+            row["bodyMode"],
+            if full {
+                "full_definition"
+            } else {
+                "eight_line_crux"
+            }
+        );
+        if full {
+            assert_eq!(row["bodyStartByte"], row["startByte"]);
+            assert_eq!(row["bodyEndByte"], row["endByte"]);
+            assert_eq!(row["bodyTruncated"], false);
+        } else {
+            assert!(row["body"].as_str().unwrap().lines().count() <= 8);
+        }
+    }
+}
+
+#[test]
+fn native_eight_and_compatibility_six_tool_inventories_remain_exact() {
+    let native = yoke::protocol::tools();
+    let mut native_names: Vec<_> = native
+        .as_array()
+        .unwrap()
+        .iter()
+        .map(|v| v["name"].as_str().unwrap())
+        .collect();
+    native_names.sort_unstable();
+    assert_eq!(
+        native_names,
+        [
+            "ci_change_apply",
+            "ci_change_prepare",
+            "ci_context",
+            "ci_find",
+            "ci_read",
+            "ci_status",
+            "ci_trace",
+            "ci_verify"
+        ]
+    );
+    for prefix in ["trail", "graft"] {
+        let tools = yoke::trail_adapter::tools(prefix);
+        assert_eq!(tools.as_array().unwrap().len(), 6);
+        let expected = [
+            (
+                "find_code",
+                json!({"query":{"type":"string"},"limit":{"type":"number","default":5},"full":{"type":"boolean","default":false},"in":{"type":"string"}}),
+                json!(["query"]),
+            ),
+            (
+                "find_all",
+                json!({"pattern":{"type":"string"},"in":{"type":"string"},"ignore_case":{"type":"boolean","default":false},"fixed":{"type":"boolean","default":false}}),
+                json!(["pattern"]),
+            ),
+            (
+                "trace_calls",
+                json!({"symbol":{"type":"string"},"direction":{"enum":["in","out"],"default":"in"},"depth":{"anyOf":[{"type":"integer"},{"enum":["all"]}],"default":1},"in":{"type":"string"}}),
+                json!(["symbol"]),
+            ),
+            (
+                "file_api",
+                json!({"file":{"type":"string"}}),
+                json!(["file"]),
+            ),
+            (
+                "repo_map",
+                json!({"max_dirs":{"type":"number","default":16}}),
+                json!([]),
+            ),
+            ("check_freshness", json!({}), json!([])),
+        ];
+        for (tool, (name, properties, required)) in tools.as_array().unwrap().iter().zip(expected) {
+            assert_eq!(tool["name"], format!("{prefix}_{name}"));
+            assert_eq!(
+                tool["inputSchema"],
+                json!({"type":"object","properties":properties,"required":required,"additionalProperties":false})
+            );
+        }
+    }
+}
+
+#[test]
+fn session_scope_mode_schema_is_a_strict_native_enum_without_auto_or_new_tools() {
+    let root = tempfile::tempdir().unwrap();
+    let mut s = session(Engine::open(root.path()).unwrap());
+    let response = rpc(&mut s, "session", "tools/list", json!({}));
+    let tools = response["result"]["tools"].as_array().unwrap();
+    assert_eq!(tools.len(), 9); // Original eight minus2write tools plus3session tools.
+    let retrieve = tools.iter().find(|v| v["name"] == "ci_retrieve").unwrap();
+    assert_eq!(
+        retrieve["inputSchema"]["properties"]["scopeMode"],
+        json!({"type":"string","enum":["global","manifest_balanced_v1"]})
+    );
+    assert!(
+        !retrieve["inputSchema"]["required"]
+            .as_array()
+            .unwrap()
+            .contains(&json!("scopeMode"))
+    );
+    assert_eq!(counts(&s.engine).0, 0);
+}
+
+#[test]
+fn invalid_native_modes_refuse_before_select_index_or_probe() {
+    for mode in [
+        Value::Null,
+        json!(true),
+        json!(1),
+        json!({}),
+        json!([]),
+        json!("auto"),
+        json!("unknown"),
+    ] {
+        let root = tempfile::tempdir().unwrap();
+        write(root.path(), "main.rs", "fn payment() {}\n");
+        let mut s = session(Engine::open(root.path()).unwrap());
+        let before = counts(&s.engine);
+        let (response, body) = call(
+            &mut s,
+            "session",
+            "ci_retrieve",
+            json!({"query":"payment","scopeMode":mode}),
+        );
+        assert_eq!(response["result"]["isError"], true, "{body}");
+        assert_eq!(body["status"], "error");
+        assert_eq!(
+            body["error"]["message"],
+            "Manifest-balanced retrieval invalid_request: scope_mode",
+            "Invalid mode must reach its request taxonomy/code; an unavailable/internal stub is not valid mode admission"
+        );
+        assert_eq!(
+            counts(&s.engine),
+            before,
+            "Invalid mode reached select/index or published a probe result"
+        );
+    }
+}
+
+#[test]
+fn compatibility_auto_is_host_selected_and_not_a_new_public_argument() {
+    for prefix in ["trail", "graft"] {
+        let root = tempfile::tempdir().unwrap();
+        write(root.path(), "main.rs", "fn payment() {}\n");
+        let mut s = session(Engine::open(root.path()).unwrap());
+        let before = counts(&s.engine);
+        assert!(
+            yoke::trail_adapter::invoke(
+                &mut s,
+                &format!("{prefix}_find_code"),
+                &json!({"query":"payment","scopeMode":"auto"}),
+                &Deadline::new(30000),
+            )
+            .is_err()
+        );
+        assert_eq!(counts(&s.engine), before);
+    }
+}
+
+#[test]
+fn native_absent_and_global_keep_an_independent_literal_legacy_golden() {
+    for epoch in [AnalyzerEpoch::V8, AnalyzerEpoch::V9] {
+        let root = tempfile::tempdir().unwrap();
+        write(root.path(), "main.rs", "fn alpha() {}\n");
+        write(root.path(), "package.json", "{\"name\":");
+        let mut engine = Engine::open(root.path()).unwrap();
+        engine.capture_epoch = epoch;
+        let (snapshot, _, _, _) = engine.index(&Deadline::new(30000)).unwrap();
+        let mut s = session(engine);
+        // Hand-authored old result image:14sourcebytes,13declarationbytes, no
+        // matching terms, zero graph iterations. No scorer computes this oracle.
+        let golden = json!({"snapshotId":snapshot.id,"items":[],"candidateCount":0,"balancedOut":0,"perFileLimit":1,"graphWeight":0.0,"graphIterations":0,"ranking":"source_body_bm25_personalized_graph","rankingSemantics":"heuristic_relevance_not_binding_or_runtime_proof","graphDirection":"bidirectional_captured_observations_parallel_arcs_preserved","sourceBytes":14,"documentBytes":13,"omittedDocumentCount":0,"omittedPathCount":0,"omittedPaths":[],"truncated":false,"complete":false});
+        let before = counts(&s.engine);
+        for mode in [None, Some("global")] {
+            let mut args = json!({"snapshotId":snapshot.id,"query":"definitelyabsent","relativePath":"main.rs","limit":2,"perFileLimit":1,"graphWeight":0});
+            if let Some(mode) = mode {
+                args["scopeMode"] = json!(mode);
+            }
+            let (response, body) = call(&mut s, "session", "ci_retrieve", args);
+            assert_eq!(response["result"]["isError"], false, "{body}");
+            assert_eq!(
+                serde_json::to_vec(&body["data"]).unwrap(),
+                serde_json::to_vec(&golden).unwrap()
+            );
+            assert!(body["data"].get("retrievalScope").is_none());
+            assert_eq!(counts(&s.engine), before);
+        }
+    }
+}
+
+#[test]
+fn explicit_native_balanced_uses_the_saved_snapshot_despite_live_manifest_changes() {
+    let f = corpus::literal31();
+    let base = f.snapshot.id.clone();
+    write(
+        f.directory.path(),
+        "packages/small/package.json",
+        "broken live manifest",
+    );
+    let mut s = session(f.engine);
+    let before = counts(&s.engine);
+    let (response, body) = call(
+        &mut s,
+        "session",
+        "ci_retrieve",
+        json!({"snapshotId":base,"query":"payment","limit":2,"perFileLimit":200,"graphWeight":0,"relativePath":"packages","pathGlob":"**/*.rs","scopeMode":"manifest_balanced_v1"}),
+    );
+    assert_eq!(response["result"]["isError"], false, "{body}");
+    assert_eq!(names(&body["data"]), ["big_first", "small_only"]);
+    assert_eq!(
+        body["data"]["retrievalScope"]["requestedMode"],
+        "manifest_balanced_v1"
+    );
+    assert_eq!(
+        body["data"]["retrievalScope"]["effectiveMode"],
+        "manifest_balanced_v1"
+    );
+    assert_eq!(counts(&s.engine), before);
+}
+
+#[test]
+fn real_trail_and_graft_auto_select_the_small_package_and_keep_definition_conversion() {
+    for prefix in ["trail", "graft"] {
+        let f = corpus::literal31();
+        // Control uses actual adapter defaults, not a different graphWeight or corpus.
+        let control = yoke::retrieval::find(
+            &f.engine.store,
+            &f.snapshot,
+            &f.graph,
+            &json!({"query":"payment","limit":2,"relativePath":"packages","includeBody":true}),
+            &Deadline::new(30000),
+        )
+        .unwrap();
+        assert_eq!(names(&control), ["big_first", "big_second"]);
+        let mut s = session(f.engine);
+        for full in [false, true] {
+            let value = yoke::trail_adapter::invoke(
+                &mut s,
+                &format!("{prefix}_find_code"),
+                &json!({"query":"payment","limit":2,"in":"packages","full":full}),
+                &Deadline::new(30000),
+            )
+            .unwrap();
+            assert_eq!(names(&value), ["big_first", "small_only"]);
+            let scope = &value["retrievalScope"];
+            assert_eq!(scope["requestedMode"], "auto");
+            assert_eq!(scope["effectiveMode"], "manifest_balanced_v1");
+            assert_eq!(scope["selectionReason"], "usable_multi_package_query");
+            assert_eq!(scope["actualPackageRootCount"], 2);
+            assert_eq!(scope["queryEligibleScopeCount"], 2);
+            assert_eq!(value["items"][0]["localRank"], 1);
+            assert_eq!(value["items"][1]["localRank"], 1);
+            anchored(&s, &value, full);
+            assert!(s.engine.servers.is_empty());
+            assert_eq!(counts(&s.engine).1, 0); // Adapter index publication is allowed.
+        }
+    }
+}
+
+#[test]
+fn auto_fallback_is_observable_and_manifest_source_diagnostics_do_not_leak_bytes() {
+    for (marker, kind, reason) in [
+        (None, "not_applicable", "no_supported_package_roots"),
+        (
+            Some("{\"name\":\"single\"}"),
+            "not_applicable",
+            "single_actual_package_root",
+        ),
+        (
+            Some("{\"name\":\"raw_secret_untrusted\","),
+            "unsupported_policy",
+            "source_syntax",
+        ),
+    ] {
+        for prefix in ["trail", "graft"] {
+            let root = tempfile::tempdir().unwrap();
+            write(root.path(), "main.rs", "fn payment() {}\n");
+            if let Some(marker) = marker {
+                write(root.path(), "package.json", marker);
+            }
+            let mut s = session(Engine::open(root.path()).unwrap());
+            let value = yoke::trail_adapter::invoke(
+                &mut s,
+                &format!("{prefix}_find_code"),
+                &json!({"query":"payment","full":true}),
+                &Deadline::new(30000),
+            )
+            .unwrap();
+            assert_eq!(names(&value), ["payment"]);
+            anchored(&s, &value, true);
+            let scope = &value["retrievalScope"];
+            assert_eq!(scope["requestedMode"], "auto");
+            assert_eq!(scope["effectiveMode"], "global");
+            assert_eq!(scope["fallback"], json!({"kind":kind,"code":reason}));
+            assert_eq!(scope["selectionReason"], reason);
+            assert_eq!(scope["partitionId"], Value::Null);
+            assert_eq!(
+                scope["probe"]["markerBytesCharged"],
+                marker.map(str::len).unwrap_or(0)
+            );
+            assert!(
+                !serde_json::to_string(scope)
+                    .unwrap()
+                    .contains("raw_secret_untrusted")
+            );
+        }
+    }
+}
+
+#[test]
+fn ready_filter_fallback_retains_the_partition_and_does_not_replace_explicit_balanced() {
+    let f = corpus::literal31();
+    let base = f.snapshot.id.clone();
+    let mut s = session(f.engine);
+    for (filter, count, reason) in [
+        ("packages/small", 1, "query_single_eligible_scope"),
+        ("packages/missing", 0, "query_zero_eligible_scopes"),
+    ] {
+        let value = yoke::trail_adapter::invoke(
+            &mut s,
+            "trail_find_code",
+            &json!({"query":"payment","in":filter,"limit":2}),
+            &Deadline::new(30000),
+        )
+        .unwrap();
+        let scope = &value["retrievalScope"];
+        assert_eq!(scope["effectiveMode"], "global");
+        assert_eq!(scope["queryEligibleScopeCount"], count);
+        assert_eq!(
+            scope["fallback"],
+            json!({"kind":"query_filter","code":reason})
+        );
+        assert!(
+            scope["partitionId"]
+                .as_str()
+                .is_some_and(yoke::model::valid_id)
+        );
+        let (response, body) = call(
+            &mut s,
+            "session",
+            "ci_retrieve",
+            json!({"snapshotId":base,"query":"payment","relativePath":filter,"limit":2,"scopeMode":"manifest_balanced_v1"}),
+        );
+        assert_eq!(response["result"]["isError"], false, "{body}");
+        assert_eq!(
+            body["data"]["retrievalScope"]["effectiveMode"],
+            "manifest_balanced_v1"
+        );
+        assert_eq!(
+            body["data"]["items"].as_array().unwrap().len(),
+            count as usize
+        );
+    }
+}
+
+#[test]
+fn malformed_manifest_fallback_keeps_the_four_megabytes_already_spent() {
+    let root = tempfile::tempdir().unwrap();
+    for i in 0..4 {
+        let prefix = "{\"name\":";
+        let marker = format!("{prefix}{}", " ".repeat(1_000_000 - prefix.len()));
+        write(root.path(), &format!("manifests/{i}/package.json"), &marker);
+    }
+    for i in 0..8 {
+        let size = if i < 7 { 4_000_000 } else { 1_000_000 };
+        let prefix = format!("fn payment_{i:02}() {{}}\n//");
+        let text = format!("{prefix}{}", " ".repeat(size - prefix.len()));
+        write(root.path(), &format!("code/{i:02}.rs"), &text);
+    }
+    let mut engine = Engine::open(root.path()).unwrap();
+    let (snapshot, graph, _, _) = engine.index(&Deadline::new(180000)).unwrap();
+    let control = yoke::retrieval::find(
+        &engine.store,
+        &snapshot,
+        &graph,
+        &json!({"query":"payment","relativePath":"code","limit":2,"graphWeight":0}),
+        &Deadline::new(180000),
+    )
+    .unwrap();
+    assert_eq!(control["sourceBytes"], 29_000_000);
+    assert_eq!(control["omittedPaths"], json!([]));
+    let mut s = session(engine);
+    let value = yoke::trail_adapter::invoke(
+        &mut s,
+        "graft_find_code",
+        &json!({"query":"payment","in":"code","limit":2}),
+        &Deadline::new(180000),
+    )
+    .unwrap();
+    assert_eq!(
+        value["retrievalScope"]["fallback"],
+        json!({"kind":"unsupported_policy","code":"source_syntax"})
+    );
+    assert_eq!(
+        value["retrievalScope"]["probe"]["markerBytesCharged"],
+        4_000_000
+    );
+    assert_eq!(value["retrievalScope"]["probe"]["markerFilesChecked"], 4);
+    assert_eq!(value["sourceBytes"], 28_000_000);
+    assert_eq!(value["omittedPaths"], json!(["code/07.rs"]));
+    assert_eq!(
+        value["retrievalScope"]["admission"]["inputBytesCharged"],
+        32_000_000
+    );
+    assert_eq!(counts(&s.engine).1, 0);
+}
+
+#[test]
+fn corrupted_saved_marker_and_cancelled_host_deadline_never_return_a_fallback_success() {
+    let f = corpus::literal31();
+    let marker = f
+        .snapshot
+        .files
+        .iter()
+        .find(|row| row.path == "package.json")
+        .unwrap();
+    fs::write(
+        f.engine.store.dir.join("blobs").join(&marker.hash),
+        vec![b'!'; marker.size],
+    )
+    .unwrap();
+    let base = f.snapshot.id.clone();
+    let mut s = session(f.engine);
+    let before = counts(&s.engine).1;
+    let (response, body) = call(
+        &mut s,
+        "session",
+        "ci_retrieve",
+        json!({"snapshotId":base,"query":"payment","scopeMode":"manifest_balanced_v1"}),
+    );
+    assert_eq!(response["result"]["isError"], true, "{body}");
+    assert_eq!(body["status"], "error");
+    assert!(
+        body["error"]["message"]
+            .as_str()
+            .unwrap()
+            .contains("source_integrity:"),
+        "The corrupt captured marker must reach the hard integrity category, not unavailable/mode/policy failure: {body}"
+    );
+    assert!(body["data"].get("retrievalScope").is_none());
+    assert!(
+        yoke::trail_adapter::invoke(
+            &mut s,
+            "trail_find_code",
+            &json!({"query":"payment"}),
+            &Deadline::new(30000)
+        )
+        .is_err()
+    );
+    assert_eq!(counts(&s.engine).1, before);
+    let deadline = Deadline::new(30000);
+    let error = Deadline::run_bounded(&deadline, Arc::new(AtomicBool::new(true)), || {
+        yoke::trail_adapter::invoke(
+            &mut s,
+            "trail_find_code",
+            &json!({"query":"payment"}),
+            &Deadline::new(30000),
+        )
+    })
+    .unwrap_err();
+    assert!(error.to_string().contains("cancelled"));
+    assert_eq!(counts(&s.engine).1, before);
+}
+
+#[test]
+fn full_definition_envelope_overflow_is_an_error_without_an_artifact_fallback() {
+    let root = tempfile::tempdir().unwrap();
+    for i in 0..2 {
+        let prefix = format!("fn payment_{i}() {{\n/* ");
+        let suffix = " */\n payment();\n}\n";
+        let source = format!(
+            "{prefix}{}{suffix}",
+            "x".repeat(2_000_000 - prefix.len() - suffix.len())
+        );
+        write(root.path(), &format!("code/{i}.rs"), &source);
+    }
+    let mut s = session(Engine::open(root.path()).unwrap());
+    let before = counts(&s.engine).1;
+    let (response, body) = call(
+        &mut s,
+        "trail",
+        "trail_find_code",
+        json!({"query":"payment","limit":2,"full":true}),
+    );
+    assert_eq!(
+        response["result"]["isError"], true,
+        "Full definitions must reach hard final output admission: {body}"
+    );
+    assert!(
+        body["error"]["message"]
+            .as_str()
+            .unwrap()
+            .contains("compatibility_envelope")
+    );
+    assert_eq!(
+        counts(&s.engine).1,
+        before,
+        "No artifact or guarded-change publication on retrieval overflow"
+    );
+}

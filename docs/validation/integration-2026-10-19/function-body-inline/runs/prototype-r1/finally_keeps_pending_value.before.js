@@ -1,0 +1,1 @@
+let n=1;function helper(x){try{return n;}finally{n=7;}}const result=helper(3);globalThis.observed={result,n};

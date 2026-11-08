@@ -1,0 +1,12 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 4.23s
+     Running tests\parity_source_review.rs (target\debug\deps\parity_source_review-223360b1f37f3121.exe)
+corrupted_oversized_cas_is_rejected_before_an_unbounded_source_buffer_allocation: test
+
+1 test, 0 benchmarks
+     Running tests\parity_view_review.rs (target\debug\deps\parity_view_review-5885658842c4425e.exe)
+resealed_view_cannot_invent_canonical_labels_or_parent_claims: test
+resealed_view_cannot_relabel_a_selected_overlay_or_upgrade_its_precision: test
+resealed_view_cannot_remove_canonical_observations: test
+
+3 tests, 0 benchmarks

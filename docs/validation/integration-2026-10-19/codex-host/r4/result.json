@@ -1,0 +1,53 @@
+{
+  "sourceUnchanged": true,
+  "inputs": 727,
+  "commands": [
+    {
+      "name": "tests",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--lib",
+        "host_install",
+        "--",
+        "--test-threads=1"
+      ],
+      "exitCode": 0,
+      "seconds": 118.029440600003
+    },
+    {
+      "name": "contracts",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--no-fail-fast",
+        "--test",
+        "codex_host_cli",
+        "--test",
+        "host_install",
+        "--test",
+        "host_install_cli",
+        "--test",
+        "host_config",
+        "--test",
+        "host_output_disposition",
+        "--",
+        "--test-threads=1"
+      ],
+      "exitCode": 101,
+      "seconds": 89.16746490000514
+    }
+  ]
+}

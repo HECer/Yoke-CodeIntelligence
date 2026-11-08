@@ -1,0 +1,41 @@
+{
+  "sourceCommit": "74278c198740b6f81d8891c9d5245596f8ddc577",
+  "runtimeCommit": "896a54c1f13c75e9ab0c2bb047a58451d3991c01",
+  "parentCommit": "0b9cdecb4e91d2651ce660959440d00598c9e7f1",
+  "paths": [
+    "native/README.md",
+    "native/docs/agent-sessions.md",
+    "native/src/project_session.rs",
+    "native/src/protocol.rs",
+    "native/tests/session_refactor.rs"
+  ],
+  "newCases": {
+    "defaultIntegration": 9,
+    "actualNativeCliCompilerAndLanguageServer": 1
+  },
+  "nativeGroups": 15,
+  "nativeTotals": {
+    "passed": 577,
+    "failed": 0,
+    "ignored": 11
+  },
+  "nativeInputsMatched": 738,
+  "nativeBinarySha256": "fc5c4b7039cad2d4f376a7e38195998b33fe04dd6d8fc3b245e7fd3533b76022",
+  "nativeBinaryBytes": 159186432,
+  "actualCliExecutableHashMatchesFinalBinary": true,
+  "binaryHashObservedAt": "2026-10-20T04:43:12.784195+00:00",
+  "actualTools": {
+    "node": "C:\\Program Files\\nodejs\\node.exe",
+    "nodeSha256": "ba4e6d110e8c1592a1ecd390f6b05f3da124b13871a5be62b341a07a853c6c32",
+    "nodeVersion": "v24.21.0",
+    "compiler": "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\typescript-5.8.3-lsp-5.1.3\\node_modules\\typescript\\lib\\tsc.js",
+    "compilerSha256": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983",
+    "compilerVersion": "Version 5.8.3",
+    "server": "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\typescript-5.8.3-lsp-5.1.3\\node_modules\\typescript-language-server\\lib\\cli.mjs",
+    "serverSha256": "3c2a7818315bd8399e56f461fe7da01c0f8f67a9c66108af0b655605b088dd77",
+    "serverVersion": "5.1.3",
+    "compilerLibrary": "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\typescript-5.8.3-lsp-5.1.3\\node_modules\\typescript\\lib\\typescript.js",
+    "compilerLibrarySha256": "dd17428736a07e1db1a138d8a14295ddb2699ba780ee15038acdd2c6da5373a0"
+  },
+  "wholeNativeRerun": false
+}

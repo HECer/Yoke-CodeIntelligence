@@ -1,0 +1,96 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 54s
+     Running tests\meaning_build.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\meaning_build-8b52938d389474fe.exe)
+
+running 26 tests
+test accounted_overrun_blocks_later_reserved_send_and_never_publishes ... ok
+test altered_contract_and_provider_version_do_not_reuse_old_claims ... ok
+test body_selection_uses_full_body_and_invalidates_unchanged_signature_changes ... ok
+test cache_reuse_requires_the_original_completed_graph_registration ... ok
+test currency_scoped_cache_prevents_mixing_old_and_new_monetary_units ... ok
+test every_selected_source_budget_and_graph_sink_is_admitted_before_first_child ... ok
+test exact_snapshot_analyzer_epochs_have_separate_cache_namespaces ... ok
+test failed_status_counts_only_dispatched_attempts_and_reports_missing_unknown_receipts ... ok
+test fixed_cross_file_packet_preserves_relations_and_hyperedge_roles ... ok
+test forged_cache_origin_is_rejected_without_starting_worker ... ok
+test fully_bound_bill_is_accounted_even_when_provider_error_text_is_unsafe ... ok
+test immutable_response_preserves_provider_local_claim_keys_before_normalization ... ok
+test in_place_provider_script_change_invalidates_cache_even_when_command_is_unchanged ... ok
+test later_invalid_claim_accounts_bill_but_publishes_no_partial_graph_or_cache ... ok
+test malformed_or_unbound_replies_keep_sent_hold_and_cancel_only_unsent ... ok
+test malformed_provider_schema_does_not_echo_untrusted_field_values ... ok
+test no_claims_is_explicit_successful_coverage ... ok
+test oversized_source_is_rejected_as_complete_selection_before_worker ... ok
+test publication_failure_rolls_back_every_new_cache_pointer ... ok
+test publishes_source_bound_claims_then_reuses_receipts_with_zero_calls_or_reservations ... ok
+test query_matches_literal_quotes_and_backslashes_in_displayed_claim_text ... ok
+test retained_cache_value_must_match_the_validated_immutable_row ... ok
+test retained_graph_validates_original_receipt_and_rebound_snapshot_dependencies ... ok
+test unchanged_body_cache_rebinds_new_snapshot_and_changed_body_invalidates_it ... ok
+test unknown_billing_remains_reserved_after_valid_graph_publication ... ok
+test valid_bound_bill_is_preserved_when_worker_exits_unsuccessfully ... ok
+
+test result: ok. 26 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 14.46s
+
+     Running tests\meaning_retention_review.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\meaning_retention_review-0e94309b5497ea38.exe)
+
+running 3 tests
+test corrupted_job_cache_and_graph_rows_refuse_retirement_and_purge_before_deleting_history ... ok
+test original_and_rebound_meaning_roots_survive_retirement_quarantine_and_purge_with_controls ... ok
+test supplied_job_cache_and_graph_metadata_cannot_override_the_persisted_retention_proof ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.61s
+
+     Running tests\mixed_meaning_claims.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\mixed_meaning_claims-ed48d4fa6c0f6941.exe)
+
+running 5 tests
+test mixed_claims_cli_requires_checked_inputs_and_closed_data_before_store_initialization ... ok
+test mixed_claims_empty_coverage_is_explicit_and_exact_output_deadlines_remain_bounded ... ok
+test mixed_claims_preserve_parallel_directions_role_slots_and_exact_frozen_quote_spaces ... ok
+test mixed_claims_quotation_capacity_counts_distinct_unit_observations_without_deduplication ... ok
+test mixed_claims_refuse_foreign_supports_coverage_endpoints_roles_and_split_utf8 ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.25s
+
+     Running tests\mixed_meaning_provider.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\mixed_meaning_provider-7761ca0ba0193bdf.exe)
+
+running 8 tests
+test bound_invalid_fragment_error_or_usage_retains_reported_bill_without_graph_or_secret_echo ... FAILED
+test cli_build_requires_separate_trust_and_reads_replay_without_provider_configuration ... FAILED
+test explicit_mixed_provider_preserves_original_claims_and_replays_without_provider_or_live_files ... FAILED
+test saved_quote_tampering_refuses_both_source_load_and_retention_before_history_changes ... ok
+test status_preserves_caller_read_transaction_sqlite_limit_and_never_spawns_a_provider ... ok
+test trust_source_permission_and_capacity_refuse_before_accounting_or_process ... ok
+test unbound_reply_keeps_unknown_reservation_and_status_performs_no_retry ... ok
+test unknown_original_cost_is_not_upgraded_by_later_ledger_reconciliation ... ok
+
+failures:
+
+---- bound_invalid_fragment_error_or_usage_retains_reported_bill_without_graph_or_secret_echo stdout ----
+
+thread 'bound_invalid_fragment_error_or_usage_retains_reported_bill_without_graph_or_secret_echo' (27240) panicked at native\tests\mixed_meaning_provider.rs:200:67:
+called `Result::unwrap()` on an `Err` value: mixed_view_input_invalid
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- cli_build_requires_separate_trust_and_reads_replay_without_provider_configuration stdout ----
+
+thread 'cli_build_requires_separate_trust_and_reads_replay_without_provider_configuration' (25592) panicked at native\tests\mixed_meaning_provider.rs:480:5:
+yoke: mixed_view_parent_refused
+
+
+---- explicit_mixed_provider_preserves_original_claims_and_replays_without_provider_or_live_files stdout ----
+
+thread 'explicit_mixed_provider_preserves_original_claims_and_replays_without_provider_or_live_files' (26608) panicked at native\tests\mixed_meaning_provider.rs:167:63:
+called `Result::unwrap()` on an `Err` value: mixed_view_input_invalid
+
+
+failures:
+    bound_invalid_fragment_error_or_usage_retains_reported_bill_without_graph_or_secret_echo
+    cli_build_requires_separate_trust_and_reads_replay_without_provider_configuration
+    explicit_mixed_provider_preserves_original_claims_and_replays_without_provider_or_live_files
+
+test result: FAILED. 5 passed; 3 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.18s
+
+error: test failed, to rerun pass `--test mixed_meaning_provider`
+error: 1 target failed:
+    `--test mixed_meaning_provider`

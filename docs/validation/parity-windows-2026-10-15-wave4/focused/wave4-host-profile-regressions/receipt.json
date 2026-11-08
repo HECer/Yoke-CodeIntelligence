@@ -1,0 +1,28 @@
+{
+  "checkedAtUtc": "2026-10-15T18:30:00.283045+00:00",
+  "scope": "focused_gate_not_frozen_suite",
+  "command": [
+    "cargo",
+    "test",
+    "--workspace",
+    "--locked",
+    "-j",
+    "2",
+    "--no-fail-fast",
+    "--test",
+    "session_epoch_selection",
+    "--test",
+    "server_catalog",
+    "--",
+    "--test-threads=4"
+  ],
+  "exitCode": 0,
+  "seconds": 5.296,
+  "tempRoot": "D:\\Yoke-Test-Scratch\\wave4-host-profile-regressions",
+  "logSha256": "24b8dad2db5c2d03ccd6f927888eb0caa9d2de4db9a9d9b9de83af307b9b9f26",
+  "groups": 2,
+  "passed": 8,
+  "failed": 0,
+  "ignored": 0,
+  "sourceChanges": []
+}

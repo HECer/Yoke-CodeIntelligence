@@ -1,0 +1,54 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 54.46s
+     Running unittests src\lib.rs (target\debug\deps\yoke-35b101204e4eb110.exe)
+
+running 12 tests
+
+thread 'retrieval_scopes::tests::duplicate_workspace_fields_cannot_hide_over_limit_raw_selector_arrays' (6680) panicked at native\src\retrieval_scopes_tests.rs:83:18:
+expected specific hard error, got success
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test retrieval_scopes::tests::duplicate_workspace_fields_cannot_hide_over_limit_raw_selector_arrays ... FAILED
+
+thread 'retrieval_scopes::tests::raw_selector_duplicate_cases_json_workspace_objects' (42268) panicked at native\src\retrieval_scopes_tests.rs:83:18:
+expected specific hard error, got success
+test retrieval_scopes::tests::raw_selector_duplicate_cases_json_workspace_objects ... FAILED
+
+thread 'retrieval_scopes::tests::raw_selector_duplicate_cases_toml' (62268) panicked at native\src\retrieval_scopes_tests.rs:83:18:
+expected specific hard error, got success
+test retrieval_scopes::tests::raw_selector_duplicate_cases_toml ... FAILED
+
+thread 'retrieval_scopes::tests::raw_selector_duplicate_cases_yaml' (101228) panicked at native\src\retrieval_scopes_tests.rs:83:18:
+expected specific hard error, got success
+test retrieval_scopes::tests::raw_selector_duplicate_cases_yaml ... FAILED
+test retrieval_scopes::tests::raw_selector_role_controls_cargo_quoted_dotted ... ok
+test retrieval_scopes::tests::raw_selector_aot_entries_debit_outer_items_but_not_descendant_lists ... ok
+test retrieval_scopes::tests::raw_selector_role_controls_json ... ok
+test retrieval_scopes::tests::raw_selector_role_controls_toml ... ok
+
+thread 'retrieval_scopes::tests::raw_selectors_before_later_source_syntax_json' (102304) panicked at native\src\retrieval_scopes_tests.rs:83:18:
+expected specific hard error, got success
+test retrieval_scopes::tests::raw_selectors_before_later_source_syntax_json ... FAILED
+
+thread 'retrieval_scopes::tests::raw_selectors_before_later_source_syntax_toml' (43428) panicked at native\src\retrieval_scopes_tests.rs:83:18:
+expected specific hard error, got success
+test retrieval_scopes::tests::raw_selectors_before_later_source_syntax_toml ... FAILED
+
+thread 'retrieval_scopes::tests::raw_selectors_before_later_source_syntax_yaml' (79860) panicked at native\src\retrieval_scopes_tests.rs:83:18:
+expected specific hard error, got success
+test retrieval_scopes::tests::raw_selectors_before_later_source_syntax_yaml ... FAILED
+test retrieval_scopes::tests::raw_selector_role_controls_yaml ... ok
+
+failures:
+
+failures:
+    retrieval_scopes::tests::duplicate_workspace_fields_cannot_hide_over_limit_raw_selector_arrays
+    retrieval_scopes::tests::raw_selector_duplicate_cases_json_workspace_objects
+    retrieval_scopes::tests::raw_selector_duplicate_cases_toml
+    retrieval_scopes::tests::raw_selector_duplicate_cases_yaml
+    retrieval_scopes::tests::raw_selectors_before_later_source_syntax_json
+    retrieval_scopes::tests::raw_selectors_before_later_source_syntax_toml
+    retrieval_scopes::tests::raw_selectors_before_later_source_syntax_yaml
+
+test result: FAILED. 5 passed; 7 failed; 0 ignored; 0 measured; 274 filtered out; finished in 7.17s
+
+error: test failed, to rerun pass `--lib`

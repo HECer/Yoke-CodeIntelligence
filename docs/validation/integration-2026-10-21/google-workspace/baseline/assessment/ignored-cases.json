@@ -1,0 +1,267 @@
+[
+  {
+    "group": "lib",
+    "test": "host_install::output_recovery_tests::output_recovery_worker",
+    "reason": "spawned only with an explicitly selected parent-owned temp fixture"
+  },
+  {
+    "group": "lib",
+    "test": "retrieval_saved_graph::tests::oversized_saved_row_refuses_before_raw_payload_read_and_auto_fallback",
+    "reason": "qualified SQLite64MB row fixture:reserve>=512MB RAM/1GB disk; not executed"
+  },
+  {
+    "group": "lib",
+    "test": "retrieval_scopes::capacity_tests::genuine_4096_utf8_path_is_captured_and_4097_is_refused_by_existing_capture_boundary",
+    "reason": "qualified Windows long-path job; creation/capture failure is setup failure, never skip-as-pass"
+  },
+  {
+    "group": "lib",
+    "test": "retrieval_scopes::capacity_tests::genuine_one_million_observations_is_byte_dominated_then_plus_one_refuses_before_graph_loading",
+    "reason": "optional very large job:qualify>=8GB RAM/12GB disk, no runtime guarantee; may hit earlier constructor limit"
+  },
+  {
+    "group": "lib",
+    "test": "retrieval_scopes::capacity_tests::real_100k_files_pass_then_one_real_function_rejects_entity_100001_before_graph_reload",
+    "reason": "qualified root job:100K real files, estimated<=2GB RAM/3GB disk; no SLA"
+  },
+  {
+    "group": "lib",
+    "test": "retrieval_scopes::capacity_tests::real_graph_exact_64mb_passes_and_plus_one_refuses_before_saved_graph_loading",
+    "reason": "qualified root job:64K real files/two64MB graphs, estimated<=2GB RAM/3GB disk"
+  },
+  {
+    "group": "lib",
+    "test": "retrieval_scopes::capacity_tests::real_ownership_exact_16mb_passes_and_next_byte_refuses_before_body_scoring",
+    "reason": "qualified root job:38277 real paths/two~53MB graphs, estimated<=2GB RAM/3GB disk"
+  },
+  {
+    "group": "capture_analyzer8_fixture",
+    "test": "capture_authentic_analyzer8_before_migration",
+    "reason": "one-time authentic analyzer-8 capture; requires YOKE_CAPTURE_ANALYZER8_DIR"
+  },
+  {
+    "group": "capture_analyzer8_fixture",
+    "test": "capture_authentic_federation_receiver8_before_receipt_migration",
+    "reason": "authentic V1 receiver-8 archive capture; requires YOKE_CAPTURE_ANALYZER8_DIR"
+  },
+  {
+    "group": "container",
+    "test": "real_daemon_digest_pinned_offline_container_verification",
+    "reason": "Requires an explicitly supplied locally installed digest-pinned Linux image and live Docker daemon"
+  },
+  {
+    "group": "credentials",
+    "test": "windows_gate::windows_concurrent_generation_keeps_one_key",
+    "reason": "explicit Windows Credential Manager integration gate; tests concurrent creation and removes its random entry"
+  },
+  {
+    "group": "credentials",
+    "test": "windows_gate::windows_credential_roundtrip_refuses_overwrite",
+    "reason": "explicit Windows Credential Manager integration gate; creates and removes one random test entry"
+  },
+  {
+    "group": "debug_adapter",
+    "test": "actual_windows_debugpy_persistent_evaluation_has_exact_captured_source",
+    "reason": "requires host-selected absolute Python and actual isolated debugpy adapter paths"
+  },
+  {
+    "group": "declaration_attachments_live",
+    "test": "actual_python_ast_rejects_a_decorator_reattached_to_a_neighbor_after_deletion",
+    "reason": "requires YOKE_PYTHON selecting the actual installed Python compiler/stdlib AST"
+  },
+  {
+    "group": "declaration_attachments_live",
+    "test": "actual_rust_compiler_rejects_an_attribute_left_on_a_neighbor_after_deletion",
+    "reason": "requires YOKE_RUSTC selecting the actual installed Rust compiler"
+  },
+  {
+    "group": "digest_receiver",
+    "test": "actual_tls_receiver_and_sender_cli_recover_using_os_credentials_and_selected_ca",
+    "reason": "Requires actual Windows Credential Manager; creates/removes three unique TLS/token/signing credentials and starts only owned loopback CLI processes"
+  },
+  {
+    "group": "directory_move_live",
+    "test": "actual_rust_analyzer_folder_move_compiles_applies_and_recovers",
+    "reason": "requires YOKE_RUST_ANALYZER and YOKE_RUSTC selecting actual installed executables"
+  },
+  {
+    "group": "file_usage_live",
+    "test": "actual_typescript_and_javascript_unused_modules_are_checked_compiled_applied_and_recovered",
+    "reason": "requires YOKE_TS_LSP and YOKE_TSC selecting actual installed TypeScript tools"
+  },
+  {
+    "group": "github_app_digest_handoff",
+    "test": "actual_cli_send_status_and_lost_response_recovery_use_os_key_without_retry",
+    "reason": "Requires actual Windows per-user Credential Manager; creates and removes one unique signing credential"
+  },
+  {
+    "group": "github_app_history_bridge",
+    "test": "actual_cli_lost_stdout_status_pause_resume_and_run_use_the_owned_os_key",
+    "reason": "Requires an outer controller owning one temporary Windows signing credential"
+  },
+  {
+    "group": "github_app_publication",
+    "test": "page_lifecycle::http::native_listener_for_owned_browser_oracle",
+    "reason": "Explicit owned native listener for the T3 browser oracle; bounded by a stop marker and lifetime"
+  },
+  {
+    "group": "github_app_publication",
+    "test": "page_lifecycle::oracle::owned_cli_preview_store_retry_remove_and_readonly_service",
+    "reason": "Run with the outer Windows credential controller so guard termination cannot leak its owned key"
+  },
+  {
+    "group": "github_app_publication",
+    "test": "protected_pages::preview_exports_owned_native_html_for_browser_oracle",
+    "reason": "Exports one owned native HTML fixture for the explicitly selected browser oracle"
+  },
+  {
+    "group": "github_app_publication",
+    "test": "publication_cli_reads_completed_preview_and_historical_status_with_an_owned_os_key",
+    "reason": "Run through the outer owned credential controller, outside the guarded native job"
+  },
+  {
+    "group": "github_live",
+    "test": "actual_public_github_https_preserves_scope_and_shared_request_budget",
+    "reason": "Explicit anonymous public GitHub HTTPS read; requires YOKE_GITHUB_PUBLIC_READ=1"
+  },
+  {
+    "group": "host_credentials",
+    "test": "actual_github_credential_round_trip_is_create_only_and_keeps_secrets_out_of_metadata",
+    "reason": "Actual Windows Credential Manager; creates and removes only one unique Yoke GitHub fixture entry"
+  },
+  {
+    "group": "host_credentials",
+    "test": "actual_tls_and_service_token_never_export_private_material_or_overwrite_entries",
+    "reason": "Requires the actual Windows per-user Credential Manager; creates and removes only unique Yoke test entries"
+  },
+  {
+    "group": "host_output_disposition",
+    "test": "disposition_probe_worker",
+    "reason": "spawned only by owned-temp disposition capability tests"
+  },
+  {
+    "group": "live",
+    "test": "actual_python_server_cross_file_unicode_historical_navigation_and_rename",
+    "reason": "requires YOKE_PYTHON_LSP pointing to an actual installed jedi-language-server executable"
+  },
+  {
+    "group": "live",
+    "test": "actual_rust_analyzer_definition_references_and_rename",
+    "reason": "requires an actual installed rust-analyzer"
+  },
+  {
+    "group": "live",
+    "test": "actual_rust_analyzer_mcp_references_bind_immutable_snapshot",
+    "reason": "requires an actual installed rust-analyzer"
+  },
+  {
+    "group": "live",
+    "test": "actual_typescript_server_cross_file_definition_and_rename",
+    "reason": "requires YOKE_TS_LSP pointing to the real typescript-language-server CLI"
+  },
+  {
+    "group": "live_enrichment",
+    "test": "actual_python_server_normalized_symbols_and_signature_help",
+    "reason": "requires YOKE_PYTHON_LSP identifying the actual installed Jedi language-server"
+  },
+  {
+    "group": "live_enrichment",
+    "test": "actual_rust_server_expanded_call_symbols_completion_signature_diagnostics_and_prepare_rename",
+    "reason": "requires an actual installed rust-analyzer"
+  },
+  {
+    "group": "live_enrichment",
+    "test": "actual_typescript_server_expanded_type_call_symbols_signature_and_published_diagnostics",
+    "reason": "requires YOKE_TS_LSP identifying the actual installed TypeScript language-server CLI"
+  },
+  {
+    "group": "lsp_action_resolve",
+    "test": "actual_typescript_lazy_fix_all_preserves_the_unexecuted_auxiliary_command_boundary",
+    "reason": "requires YOKE_TS_LSP selecting the actual installed TypeScript language server"
+  },
+  {
+    "group": "lsp_source_execution",
+    "test": "actual_jedi_source_auto_import_module_does_not_execute_without_host_authority",
+    "reason": "requires YOKE_PYTHON_LSP identifying the actual installed Jedi language-server"
+  },
+  {
+    "group": "lsp_source_execution",
+    "test": "actual_rust_source_selected_rustc_requires_explicit_host_execution_authority",
+    "reason": "requires real installed rust-analyzer and an independently built harmless rustc probe"
+  },
+  {
+    "group": "mcp_http_cli",
+    "test": "actual_public_http_cli_resolves_credential_reference_and_authenticates",
+    "reason": "Actual Windows Credential Manager and own bounded loopback MCP CLI service"
+  },
+  {
+    "group": "member_decorators",
+    "test": "actual_language_server_safe_delete_uses_the_same_checked_member_decorator_plan",
+    "reason": "requires YOKE_NODE/YOKE_TS_LSP/YOKE_TSC selecting actual TypeScript language server and compiler"
+  },
+  {
+    "group": "member_decorators",
+    "test": "actual_typescript_compiler_and_ast_confirm_parent_and_neighbor_decorator_ownership",
+    "reason": "requires YOKE_NODE and YOKE_TSC selecting actual installed compiler/AST tools"
+  },
+  {
+    "group": "model_bedrock_cli_actual",
+    "test": "actual_cli_bedrock_batch_has_three_accounted_attempts_and_one_complete_corpus",
+    "reason": "Actual Windows credentials and three owned TCP Bedrock attempts; cleans only fake generation"
+  },
+  {
+    "group": "model_bedrock_cli_actual",
+    "test": "actual_cli_bedrock_summary_uses_chunked_session_and_one_accounted_attempt",
+    "reason": "Actual Windows Credential Manager and owned loopback HTTP; creates and removes one unique fake AWS credential generation"
+  },
+  {
+    "group": "model_http_cli",
+    "test": "actual_cli_http_summary_preserves_source_binding_and_unknown_billing",
+    "reason": "Actual Windows Credential Manager and owned loopback HTTP; creates and removes one unique fake credential"
+  },
+  {
+    "group": "ollama",
+    "test": "actual_local_installed_embedding_model_gate",
+    "reason": "Actual running local Ollama endpoint and explicitly selected installed embedding model digest required; never auto-start or pull"
+  },
+  {
+    "group": "propagated_delete_live",
+    "test": "actual_typescript_and_javascript_propagation_removes_uses_and_newly_unused_dependencies",
+    "reason": "requires YOKE_TS_LSP and YOKE_TSC selecting actual installed TypeScript tools"
+  },
+  {
+    "group": "propagated_delete_live",
+    "test": "actual_wrapped_propagation_preserves_compiler_approval_write_and_recovery_gates",
+    "reason": "requires YOKE_NODE, YOKE_TS_LSP and YOKE_TSC selecting actual installed tools"
+  },
+  {
+    "group": "python_empty_suite",
+    "test": "actual_python_ast_and_guarded_apply_recovery_validate_the_planned_pass",
+    "reason": "requires YOKE_PYTHON selecting actual Python for stdlib AST-only verification"
+  },
+  {
+    "group": "session_refactor",
+    "test": "actual_function_binding_policy_cli_compiles_ts_js_and_recovers_original_unicode_bytes",
+    "reason": "requires YOKE_NODE, YOKE_TS_LSP and YOKE_TSC selecting actual installed tools"
+  },
+  {
+    "group": "session_refactor",
+    "test": "actual_native_session_cli_preserves_compiler_approval_write_and_recovery_gates",
+    "reason": "requires YOKE_NODE, YOKE_TS_LSP and YOKE_TSC selecting actual installed tools"
+  },
+  {
+    "group": "sibling_declarators",
+    "test": "actual_typescript_compiles_preserved_ts_js_tsx_jsx_siblings_then_recovers_exact_source",
+    "reason": "requires YOKE_NODE and YOKE_TSC selecting actual Node/TypeScript compiler"
+  },
+  {
+    "group": "symbol_delete_live",
+    "test": "actual_typescript_and_javascript_exported_symbols_compile_after_delete_and_recover_exactly",
+    "reason": "requires YOKE_TS_LSP and YOKE_TSC selecting actual installed TypeScript tools"
+  },
+  {
+    "group": "workflow_cli",
+    "test": "actual_native_cli_tls_service_and_client_load_os_credentials",
+    "reason": "Actual native CLI TLS service/client and Windows credential store; creates/removes only unique test credentials"
+  }
+]

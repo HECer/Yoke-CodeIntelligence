@@ -1,0 +1,22 @@
+    Finished `test` profile [unoptimized] target(s) in 0.56s
+     Running tests\ignored_capture.rs (E:\Yoke-Build-Cache\meaning-aliases-20261016\debug\deps\ignored_capture-0d67016a001ac4c7.exe)
+
+running 15 tests
+test empty_ignored_option_preserves_released_nondefault_configured_capture_identity ... ok
+test empty_ignored_option_preserves_released_serialization_and_default_capture_identity ... ok
+test editor_ignored_prefix_updates_are_denied_before_buffer_revisions_change ... ok
+test derived_edits_outside_ignored_scope_keep_exact_old_classification_and_readonly_sources ... ok
+test host_ignored_option_never_relaxes_secret_internal_or_normalized_path_protection ... ok
+test host_optin_captures_ignored_sources_read_only_and_binds_complete_observed_outcomes ... ok
+test ignored_source_archives_retain_exact_capture_proof_after_original_store_is_gone ... ok
+test missing_future_reordered_and_incomplete_observed_proofs_never_fall_back_to_default_capture ... ok
+test observed_ignore_outcomes_are_immutable_when_current_ignore_files_change ... ok
+test retention_recognizes_only_the_exact_ignored_proof_kind_and_rejects_mutated_rows ... ok
+test ordinary_editor_overlays_preserve_ignored_source_classification_without_live_receipt_authority ... ok
+test windows_case_aliases_cannot_create_files_inside_host_readonly_ignored_prefixes ... ok
+test windows_short_name_aliases_cannot_create_files_inside_host_readonly_prefixes ... ok
+test readonly_ignored_edits_and_new_files_fail_before_any_durable_plan_or_snapshot ... ok
+test windows_short_name_aliases_do_not_grant_protected_writes_without_ignored_optin ... ok
+
+test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.13s
+

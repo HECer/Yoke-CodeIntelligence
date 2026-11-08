@@ -1,0 +1,87 @@
+{
+  "baseline": "4ea583e1ab64375afa1afbce4fdaae6e50720ee9",
+  "wholePython": {
+    "passed": 87,
+    "failed": 0,
+    "skipped": 0
+  },
+  "typecheckExit": 0,
+  "npmExit": 0,
+  "npm": {
+    "passed": 260,
+    "failed": 0,
+    "existingSkipped": 3
+  },
+  "nativeFmt": {
+    "roots": 368,
+    "failed": 0
+  },
+  "finalChangedRustFileCheckExit": 0,
+  "nativeProcessRegressionsAdded": {
+    "windows": 3,
+    "unix": 5,
+    "executedLocally": false
+  },
+  "nativeUnicodeAliasTestAdded": {
+    "functions": 1,
+    "executedLocally": false
+  },
+  "nativeCompilationOrExecutionAttemptedLocally": false,
+  "fullNativeBuildAdmissionBytes": 1200000000,
+  "freeBytesObserved": 1093328896,
+  "localFullNativeBuildAdmitted": false,
+  "cleanupBudgetMs": 2000,
+  "runtimePayloadWorkerExactToBaseline": true,
+  "cargoProfilesWorkflowScriptsTypescriptAndVsixSourceExactToBaseline": true,
+  "hostedAcceptanceVerified": false,
+  "macosMemoryFailuresResolved": false,
+  "fullStatusComplete": false,
+  "products": [
+    {
+      "path": "native/src/process.rs",
+      "sha256": "9f41b2a0c1009c35cb4717e50520842b514521c21a90c89c45d07cd567c72388",
+      "gitBlobSha": "0aff4be98a13887d872722a12fc08518ea8cab4d"
+    },
+    {
+      "path": "native/src/runtime.rs",
+      "sha256": "f99c6219d3631c9559105295486c456d893b62ba8762f53dab965b515c4d3029",
+      "gitBlobSha": "962ea2ead13f40b1d65391191e181a6c9d26fd79"
+    },
+    {
+      "path": "native/src/process_cleanup_tests.rs",
+      "sha256": "961037f206e6f3e44058f9a1b638a0afcf3fdc6ff4eb22294edb7f33844eca95",
+      "gitBlobSha": "a3ed56963a6e71c0506496a6a53afbb3a8ed8557"
+    },
+    {
+      "path": "native/tests/source_exclusions.rs",
+      "sha256": "9abf9d060994c438ad50334608bf0a4546df75cb418fd8788646359a0964a3e7",
+      "gitBlobSha": "0789864174b602b03490df01c1429cb4007dea73"
+    }
+  ],
+  "logs": [
+    {
+      "path": "python-all.txt",
+      "sha256": "76bf4c5968359b92df81cf74854a1b5783bb6d6ee5edccafd6d98ce8c196bb9c",
+      "originalSha256": "c587bdd0581d0bfd65b9fc80d9e9cc8bdf5723eb3e12066454afb9ad2d055397",
+      "originalEncoding": "utf-16"
+    },
+    {
+      "path": "native-fmt-final.txt",
+      "sha256": "49f385c37548415c5c3e7171ad0500e48bf2a935e8dc6414fc3556b9a673a0a0",
+      "originalSha256": "72783b69578f249abfe1450531bf6eb8c0beed2af00510f6fae7e2b34524326a",
+      "originalEncoding": "utf-16"
+    },
+    {
+      "path": "typecheck.txt",
+      "sha256": "1c8925f6af877323a294352b03fd4a4f254b018ab93576b8adea9c0a7f550a02",
+      "originalSha256": "c5651f6814b38dd05be8d84edaa142c2c93adc9e412909bf5e4f38965cbfa028",
+      "originalEncoding": "utf-16"
+    },
+    {
+      "path": "npm-test.txt",
+      "sha256": "c45ec57f3f14fa189f63ff44d9b7f155ba0b6d142601468c8f8ccc521d42095a",
+      "originalSha256": "c3662c96ec1e80b52a54809bfcf6fab81532c371f281465d064594a9bb835dff",
+      "originalEncoding": "utf-16"
+    }
+  ]
+}

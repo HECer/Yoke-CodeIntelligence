@@ -1,0 +1,232 @@
+{
+  "complete": true,
+  "sourceCommitBeforeFeature": "fc4427872f7a02521a9f0cc4908f220af302fa2d",
+  "groups": {
+    "test-session_config_templates": [
+      13,
+      0,
+      0,
+      0
+    ],
+    "test-session_config_discovery": [
+      12,
+      0,
+      0,
+      0
+    ],
+    "test-session_config_cli": [
+      5,
+      0,
+      0,
+      0
+    ],
+    "test-session_primary_read_only": [
+      8,
+      0,
+      0,
+      0
+    ],
+    "test-session_optional_defaults": [
+      8,
+      0,
+      0,
+      0
+    ],
+    "test-session_steering": [
+      12,
+      0,
+      0,
+      0
+    ],
+    "test-session_startup_project": [
+      8,
+      0,
+      0,
+      0
+    ],
+    "test-session_mcp": [
+      3,
+      0,
+      0,
+      0
+    ],
+    "test-session_memory_patterns": [
+      9,
+      0,
+      0,
+      0
+    ],
+    "test-server_catalog": [
+      2,
+      0,
+      0,
+      0
+    ],
+    "test-server_selection": [
+      8,
+      0,
+      0,
+      0
+    ],
+    "test-server_settings": [
+      8,
+      0,
+      0,
+      0
+    ],
+    "test-server_workspace_settings": [
+      7,
+      0,
+      0,
+      0
+    ],
+    "test-lsp_resource_settings": [
+      10,
+      0,
+      0,
+      0
+    ],
+    "test-source_line_endings": [
+      10,
+      0,
+      0,
+      0
+    ],
+    "test-source_exclusions": [
+      7,
+      0,
+      0,
+      0
+    ],
+    "test-project_session": [
+      6,
+      0,
+      0,
+      0
+    ],
+    "library-all": [
+      584,
+      0,
+      7,
+      0
+    ],
+    "main-all": [
+      2,
+      0,
+      0,
+      0
+    ]
+  },
+  "rustTotals": {
+    "passed": 722,
+    "failed": 0,
+    "existingIgnored": 7,
+    "filtered": 0
+  },
+  "wholeGroups": 19,
+  "addedFunctionsIncluded": 16,
+  "sourceInputs": 1115,
+  "sourceInputsUnchanged": true,
+  "currentCliSha256": "d06d1c80a4e178cb0bdb3793503d1d1ea6944ba6689d066ffa90180c1607c6ca",
+  "originalJobTestsGitBytesExactPrefix": {
+    "bytes": 10498,
+    "sha256": "da2f7414064fb4a3034af25e35e56c6949e37d373cc8280c97154764fb441c77"
+  },
+  "existingOwnedJobAttachCleanupMembershipBodyLfNormalizedExact": true,
+  "ownedJobProductionOriginalGitCrLfLines": 395,
+  "ownedJobProductionNowCrLfLines": 0,
+  "existingManagedChildCleanupAndDropBodyLfNormalizedExact": true,
+  "existingCapturePipesLoopAndCheckedCleanupBodyLfNormalizedExact": true,
+  "onlyDependencyAdded": {
+    "name": "minijinja",
+    "version": "3.0.3",
+    "source": "registry+https://github.com/rust-lang/crates.io-index",
+    "checksum": "90086695417a271bc96e6cb50618555614ca48fa3bb0d9aa96e3468b0f84431e",
+    "dependencies": [
+      "serde",
+      "unicase",
+      "unicode-ident"
+    ]
+  },
+  "allOtherLockPackagesExact": true,
+  "allOtherManifestDataExact": true,
+  "actualCli": {
+    "complete": true,
+    "allJobsEmpty": true,
+    "sourceInputs": 1115,
+    "sourceInputsUnchanged": true,
+    "currentCliSha256": "d06d1c80a4e178cb0bdb3793503d1d1ea6944ba6689d066ffa90180c1607c6ca",
+    "oldCliSha256": "57610cc05ed2ba2c3689cbf09e549dc2360bb960bec261fdf72e4fbc642d1db0",
+    "oldAndNewLiteralPlanRawBytesExact": true,
+    "repeatedRenderedPlanRawBytesExact": true,
+    "oldLiteralAndNewRenderedExportedProfilesByteExact": true,
+    "oldIndependentWarmRepeatAndNewRenderedProfileSessionMcpRawBytesExact": true,
+    "allOriginalNonemptySnapshotGraphRecordRowsExact": true,
+    "originalSourcesAndSelectionsExact": true,
+    "ownedParentProcessCalls": 10,
+    "modelCalls": 0,
+    "analyzedSourceExecuted": false,
+    "renderedGuidanceActuallyUsedInSession": true
+  },
+  "allJobsEmpty": true,
+  "fullWindowsOrHostedAcceptanceClaimed": false,
+  "sourceCommit": "e0c9ff6e29ba515e652768090947a996d4de27de",
+  "archive": {
+    "path": "raw-logs.zip",
+    "bytes": 1153374,
+    "sha256": "ef2e9a7ded4672f7557195da5bcc12364c9395562db5c05a2831165abc633f93",
+    "members": 340,
+    "everyDecompressedMemberReopenedAndVerified": true
+  },
+  "completeFormatRoots": 363,
+  "clippyAllTargetsWarningsDeniedPassed": true,
+  "pythonTestsPassed": 47,
+  "typecheckPassed": true,
+  "npm": {
+    "passed": 260,
+    "failed": 0,
+    "existingSkipped": 3
+  },
+  "actualAllocationProbe": [
+    {
+      "name": "small-repeat",
+      "exitCode": 0,
+      "stdoutBytes": 604,
+      "stderrBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "allocatorFailureText": false
+    },
+    {
+      "name": "large-repeat",
+      "exitCode": 1,
+      "stdoutBytes": 0,
+      "stderrBytes": 44,
+      "stderrSha256": "92e58aea4f34478a553a4572daed4900f77511b30a91f230a4c518f92107f3b8",
+      "allocatorFailureText": false
+    },
+    {
+      "name": "small-indent",
+      "exitCode": 0,
+      "stdoutBytes": 509,
+      "stderrBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "allocatorFailureText": false
+    },
+    {
+      "name": "large-indent",
+      "exitCode": 3221226505,
+      "stdoutBytes": 0,
+      "stderrBytes": 123,
+      "stderrSha256": "654127071a6ea527b4d212b374d35006bcef1f5508b1e8d8d795dcd2af2430f8",
+      "allocatorFailureText": true
+    }
+  ],
+  "allocationWorkerCallsOutsideRustFunctionTotals": 4,
+  "firstRepeatOnlyProbePreservedSeparately": true,
+  "firstDiskStop": "green1 owned Job stopped at 500MB guard before test execution; normal library and integration executable compiler-artifacts exist, no current CLI bin artifact accepted; old576 CLI unchanged; Jobs0 and inputs exact",
+  "storageRecovery": "26 then14 previously passed PDBs, with Cargo filenames, complete positive harness logs and exact executable hashes; during qualified1 a separate no-Cargo controller optimizes17 completed distinct-target PDBs. All size/SHA before-after equal; no deletion/protected/primary/unqualified executable optimization. Retry uses j1 with completed prerequisites and restored measured headroom.",
+  "bootstrapManifestFailure": "Duplicate existing libc target table corrected before dependency resolution; only MiniJinja added, all old packages unchanged.",
+  "intermediateResults": "green2 12 pass; green3 13 pass; neither added to final722. Qualified1 covers final source and all19 whole groups.",
+  "remaining": "Broader prompt catalogs and upstream-specific dynamic variables/helpers/Jinja conformance; arbitrary layouts/extensions/clients/quality; original353/73unreconciled/77runtime/R1-R9/current wholeWindows/hosted/canonicalVSIX/Google/main/release",
+  "fullStatusComplete": false
+}

@@ -1,0 +1,24 @@
+from pathlib import Path
+import os,subprocess,time,json,hashlib,datetime,re
+root=Path.cwd();out=root/'validation/integration-20261018/opening-and-git-mode/final';out.mkdir(exist_ok=False)
+env=os.environ.copy();cargo=str(Path.home()/'.cargo/bin/cargo.exe');env['PATH']=str(Path(cargo).parent)+os.pathsep+env['PATH']
+subprocess.run([cargo,'fmt','--all'],env=env,check=True)
+def save(n,v):(out/n).write_text(json.dumps(v,indent=2,ensure_ascii=False)+'\n',encoding='utf-8')
+def manifest():
+ names=subprocess.check_output(['git','ls-files','-c','-o','--exclude-standard','-z']).decode().split('\0')
+ return {n:hashlib.sha256((root/n).read_bytes()).hexdigest() for n in sorted(set(names)) if n and (root/n).is_file() and (n.startswith(('native/src/','native/tests/','src/','test/','workers/','scripts/')) or n in ['Cargo.toml','Cargo.lock','native/Cargo.toml','package.json','package-lock.json','tsconfig.json'])}
+before=manifest();save('source-before.json',before);receipts=[]
+def run(label,cmd,child_env=env):
+ print(json.dumps({'gate':label,'state':'running'}),flush=True);start=time.monotonic()
+ with (out/(label+'.log')).open('wb') as f:r=subprocess.run(cmd,env=child_env,stdout=f,stderr=subprocess.STDOUT,timeout=900)
+ log=(out/(label+'.log')).read_text(encoding='utf-8',errors='replace');groups=[dict(zip(['passed','failed','ignored'],map(int,m))) for m in re.findall(r'test result: \w+\. (\d+) passed; (\d+) failed; (\d+) ignored;',log)]
+ receipt={'gate':label,'command':cmd,'exitCode':r.returncode,'elapsedSeconds':round(time.monotonic()-start,3),'recordedAt':datetime.datetime.now(datetime.timezone.utc).isoformat(),'resultGroups':groups};receipts.append(receipt);save('receipts.json',receipts);print(json.dumps(receipt),flush=True)
+run('format',[cargo,'fmt','--all','--check'])
+run('opening-and-mapped-history',[cargo,'test','--locked','--no-fail-fast','-j2','--test','store_open_deadline','--test','github_app_digest_mapping','--','--test-threads=2'])
+targets=['store_cancellation','store_read_only','store_identity','store_review','deadline_scope','deadlines','ledger','ledger_admission_review','ledger_batches','ledger_batches_review','federation','federation_http','maintenance','github_app_digest','github_app_digest_cli']
+cmd=[cargo,'test','--locked','--no-fail-fast','-j2','--lib']
+for target in targets:cmd+=['--test',target]
+run('native-opening-regressions',cmd+['--','--test-threads=2'])
+run('clippy',[cargo,'clippy','--workspace','--all-targets','--locked','--keep-going','-j2','--','-D','warnings'])
+run('typescript-typecheck',['npm.cmd','run','typecheck']);run('typescript-tests',['npm.cmd','test'])
+after=manifest();save('source-after.json',after);summary={'allChecksPassed':all(r['exitCode']==0 for r in receipts),'sourceUnchanged':before==after,'checks':receipts,'scope':'Scoped Windows opening/deadline/Git mapping checks. Unix chmod branch requires actual hosted Unix validation; no emulation/certification. Symlink setup failures remain visible; no security fixture gated away.'};save('summary.json',summary);raise SystemExit(not(summary['allChecksPassed'] and summary['sourceUnchanged']))

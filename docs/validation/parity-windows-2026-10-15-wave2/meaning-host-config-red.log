@@ -1,0 +1,97 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 47s
+     Running tests\host_config.rs (target\debug\deps\host_config-7659402ec860ad5b.exe)
+
+running 8 tests
+test agents_empty_existing_file_round_trips_without_phantom_bytes ... FAILED
+test agents_and_patch_work_are_bounded_before_output ... ok
+test agents_install_update_remove_preserve_bom_unicode_and_crlf_bytes ... FAILED
+test agents_marker_presence_never_grants_ownership ... ok
+test agents_removal_preserves_later_human_prefix_and_append ... FAILED
+test agents_reject_changed_receipts_owned_bytes_duplicate_and_nested_markers ... FAILED
+test patch_application_checks_entire_input_fragments_ranges_and_output_hash ... FAILED
+test receipts_are_strict_serialized_data_and_do_not_include_human_prefix ... FAILED
+
+failures:
+
+---- agents_empty_existing_file_round_trips_without_phantom_bytes stdout ----
+
+thread 'agents_empty_existing_file_round_trips_without_phantom_bytes' (67084) panicked at native\tests\host_config.rs:38:86:
+called `Result::unwrap()` on an `Err` value: Managed host configuration edits are unavailable
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- agents_install_update_remove_preserve_bom_unicode_and_crlf_bytes stdout ----
+
+thread 'agents_install_update_remove_preserve_bom_unicode_and_crlf_bytes' (45996) panicked at native\tests\host_config.rs:11:117:
+called `Result::unwrap()` on an `Err` value: Managed host configuration edits are unavailable
+
+---- agents_removal_preserves_later_human_prefix_and_append stdout ----
+
+thread 'agents_removal_preserves_later_human_prefix_and_append' (84700) panicked at native\tests\host_config.rs:26:85:
+called `Result::unwrap()` on an `Err` value: Managed host configuration edits are unavailable
+
+---- agents_reject_changed_receipts_owned_bytes_duplicate_and_nested_markers stdout ----
+
+thread 'agents_reject_changed_receipts_owned_bytes_duplicate_and_nested_markers' (83568) panicked at native\tests\host_config.rs:55:85:
+called `Result::unwrap()` on an `Err` value: Managed host configuration edits are unavailable
+
+---- patch_application_checks_entire_input_fragments_ranges_and_output_hash stdout ----
+
+thread 'patch_application_checks_entire_input_fragments_ranges_and_output_hash' (83560) panicked at native\tests\host_config.rs:75:85:
+called `Result::unwrap()` on an `Err` value: Managed host configuration edits are unavailable
+
+---- receipts_are_strict_serialized_data_and_do_not_include_human_prefix stdout ----
+
+thread 'receipts_are_strict_serialized_data_and_do_not_include_human_prefix' (89584) panicked at native\tests\host_config.rs:100:97:
+called `Result::unwrap()` on an `Err` value: Managed host configuration edits are unavailable
+
+
+failures:
+    agents_empty_existing_file_round_trips_without_phantom_bytes
+    agents_install_update_remove_preserve_bom_unicode_and_crlf_bytes
+    agents_reject_changed_receipts_owned_bytes_duplicate_and_nested_markers
+    agents_removal_preserves_later_human_prefix_and_append
+    patch_application_checks_entire_input_fragments_ranges_and_output_hash
+    receipts_are_strict_serialized_data_and_do_not_include_human_prefix
+
+test result: FAILED. 2 passed; 6 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+error: test failed, to rerun pass `--test host_config`
+     Running tests\meaning_graph.rs (target\debug\deps\meaning_graph-6b84601965ba426b.exe)
+
+running 4 tests
+test exact_claim_dedup_remaps_endpoints_but_aliases_do_not_merge_distinct_concepts ... FAILED
+test empty_extraction_records_no_claims_without_claiming_semantic_completeness ... FAILED
+test model_concepts_relations_and_ordered_roles_keep_exact_source_and_inference_labels ... FAILED
+test utf8_support_escape_forged_source_identity_and_false_coverage_fail_closed ... ok
+
+failures:
+
+---- exact_claim_dedup_remaps_endpoints_but_aliases_do_not_merge_distinct_concepts stdout ----
+
+thread 'exact_claim_dedup_remaps_endpoints_but_aliases_do_not_merge_distinct_concepts' (49540) panicked at native\tests\meaning_graph.rs:41:59:
+called `Result::unwrap()` on an `Err` value: Meaning graph unavailable
+
+---- empty_extraction_records_no_claims_without_claiming_semantic_completeness stdout ----
+
+thread 'empty_extraction_records_no_claims_without_claiming_semantic_completeness' (80848) panicked at native\tests\meaning_graph.rs:65:74:
+called `Result::unwrap()` on an `Err` value: Meaning graph unavailable
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- model_concepts_relations_and_ordered_roles_keep_exact_source_and_inference_labels stdout ----
+
+thread 'model_concepts_relations_and_ordered_roles_keep_exact_source_and_inference_labels' (52144) panicked at native\tests\meaning_graph.rs:26:74:
+called `Result::unwrap()` on an `Err` value: Meaning graph unavailable
+
+
+failures:
+    empty_extraction_records_no_claims_without_claiming_semantic_completeness
+    exact_claim_dedup_remaps_endpoints_but_aliases_do_not_merge_distinct_concepts
+    model_concepts_relations_and_ordered_roles_keep_exact_source_and_inference_labels
+
+test result: FAILED. 1 passed; 3 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `--test meaning_graph`
+error: 2 targets failed:
+    `--test host_config`
+    `--test meaning_graph`

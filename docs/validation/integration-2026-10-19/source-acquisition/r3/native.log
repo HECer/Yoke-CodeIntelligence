@@ -1,0 +1,81 @@
+ Downloading crates ...
+  Downloaded rustls-native-certs v0.8.4
+  Downloaded schannel v0.1.29
+   Compiling windows-sys v0.61.2
+   Compiling socket2 v0.6.5
+   Compiling mio v1.2.4
+   Compiling anstyle-query v1.1.5
+   Compiling tokio v1.53.3
+   Compiling anstyle-wincon v3.0.11
+   Compiling winapi-util v0.1.11
+   Compiling same-file v1.0.6
+   Compiling anstream v1.0.0
+   Compiling clap_builder v4.6.7
+   Compiling aws-smithy-async v1.3.0
+   Compiling aws-smithy-runtime-api v1.19.0
+   Compiling hyper v1.12.0
+   Compiling hyper-util v0.1.21
+   Compiling tokio-rustls v0.26.6
+   Compiling tower v0.5.3
+   Compiling tower-http v0.6.11
+   Compiling hyper-rustls v0.27.10
+   Compiling aws-credential-types v1.3.0
+   Compiling aws-smithy-http v0.64.1
+   Compiling walkdir v2.5.0
+   Compiling rustls-platform-verifier v0.7.1
+   Compiling schannel v0.1.29
+   Compiling aws-sigv4 v1.6.0
+   Compiling rustls-native-certs v0.8.4
+   Compiling tempfile v3.27.0
+   Compiling reqwest v0.13.5
+   Compiling ignore v0.4.33
+   Compiling clap v4.6.7
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 44s
+     Running tests\source_acquisition.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\source_acquisition-06ff9ff9009be4d7.exe)
+
+running 5 tests
+test body_and_archive_quotas_are_independent_and_missing_interpretation_is_explicit ... ok
+test byte_ranges_preserve_multibyte_boundaries_and_never_replace_invalid_utf8 ... ok
+test forged_capture_claims_remain_data_and_mismatched_archive_bytes_are_refused ... ok
+test frozen_http_representation_preserves_unicode_and_crlf_without_source_or_fetch_authority ... ok
+test metadata_is_closed_and_noncanonical_credentialed_or_non_http_urls_are_invalid ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests\source_acquisition_cli.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\source_acquisition_cli-4e0753e46c8486b6.exe)
+
+running 4 tests
+test explicit_pdf_text_uses_the_native_bounded_worker_without_store_or_original_path ... ok
+test frozen_ranges_replay_without_a_workspace_and_source_flags_are_refused ... ok
+test host_permissions_and_existing_output_precede_config_or_network_effects ... ok
+test real_cli_capture_is_create_only_and_ignores_ambient_proxy_settings ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.45s
+
+     Running tests\source_acquisition_http.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\source_acquisition_http-764f2dd641f5f707.exe)
+
+running 5 tests
+test actual_loopback_get_and_chunked_representation_preserve_body_and_fixed_request_headers ... ok
+test host_permissions_address_binding_and_special_connector_admission_precede_connections ... ok
+test redirects_error_bodies_duplicate_headers_compression_and_truncated_bodies_are_refused ... ok
+test response_overflow_has_no_partial_success_and_deadline_or_host_cancel_closes_the_peer ... ok
+test tls_uses_explicit_roots_hostname_verification_and_literal_address_override_without_dns ... FAILED
+
+failures:
+
+---- tls_uses_explicit_roots_hostname_verification_and_literal_address_override_without_dns stdout ----
+
+thread 'tls_uses_explicit_roots_hostname_verification_and_literal_address_override_without_dns' (1500) panicked at native\tests\source_acquisition_http.rs:163:6:
+called `Result::unwrap()` on an `Err` value: source_acquisition_transport_failed
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    tls_uses_explicit_roots_hostname_verification_and_literal_address_override_without_dns
+
+test result: FAILED. 4 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.18s
+
+error: test failed, to rerun pass `--test source_acquisition_http`
+error: 1 target failed:
+    `--test source_acquisition_http`

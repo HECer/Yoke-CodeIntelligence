@@ -1,0 +1,89 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\r3-shadow-unavailable-v1\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 34s
+     Running tests\collection_registry_access.rs (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\debug\deps\collection_registry_access-95b2fe4353a0916e.exe)
+
+running 7 tests
+test readonly_guard_excludes_independent_writers_and_refuses_uncheckpointed_wal ... ok
+test readonly_uri_preserves_unicode_spaces_and_literal_uri_characters ... ok
+test read_only_native_archive_survives_original_source_deletion_without_writes ... ok
+test unknown_registry_open_does_not_create_state ... ok
+test native_and_checked_view_metadata_keep_distinct_kinds_and_reject_unsafe_legacy_presentation ... ok
+test stale_and_absent_cas_never_replace_existing_binding ... ok
+test foreign_metadata_requires_fresh_current_grants_for_each_inspection ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.96s
+
+     Running tests\graph_view.rs (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\debug\deps\graph_view-97c800a70b6f82cc.exe)
+
+running 11 tests
+test default_view_exposes_structural_relationships_without_replacing_canonical_graph ... ok
+test newly_derived_view_omits_legacy_config_file_signature_values_without_rewriting_history ... ok
+test context_omits_environment_values_and_clips_unicode_at_byte_budget ... ok
+test captured_readonly_dependency_proof_allows_view_and_collection_reads ... ok
+test registered_view_rejects_corrupt_cas_and_foreign_overlay_scope ... ok
+test selected_structural_artifacts_reject_forged_node_scope_lines_and_schema ... ok
+test semantic_and_structural_overlays_have_distinct_namespaces_and_provider_trust ... ok
+test source_view_remains_historical_and_rejects_forged_scope_options_and_deadlines ... ok
+test view_find_trace_context_and_export_preserve_source_and_parallel_calls ... ok
+test source_bound_view_exports_all_seven_formats ... ok
+test selected_overlay_inputs_have_an_aggregate_byte_budget ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.79s
+
+     Running tests\meaning_view_archives.rs (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\debug\deps\meaning_view_archives-51ea5f08bcf57128.exe)
+
+running 9 tests
+test missing_historical_uncited_file_and_wrong_same_path_bytes_are_not_repaired_from_live_state ... ok
+test complete_wire_and_distinct_source_limits_are_admitted_without_store_side_effects ... ok
+test archive_replay_rejects_publicly_resealed_source_view_and_meaning_changes ... ok
+test portable_archive_replays_both_epochs_without_a_store_live_tree_or_worker ... ok
+test portable_transport_keeps_task_totals_current_attempt_usage_and_original_unknown_response_distinct ... ok
+test portable_wire_rejects_unknown_nested_properties_duplicate_keys_and_unknown_profiles ... ok
+test portable_bridge_requires_complete_raw_closure_and_rejects_foreign_or_unpaired_sidecars ... ok
+test replay_preserves_typed_claim_ids_ordered_roles_exact_quotes_and_unknown_receipts ... ok
+test published_id_preparation_returns_exact_checked_transport_without_load_or_publication ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 10.63s
+
+     Running tests\protocol_connection.rs (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\debug\deps\protocol_connection-6f45346f06f41a07.exe)
+
+running 5 tests
+test owned_transport_state_retains_initialization_and_refuses_profile_switches ... ok
+test host_selected_profiles_keep_their_public_surface_across_messages ... ok
+test separate_transport_messages_preserve_initialization_and_profile_state ... ok
+test incomplete_stdio_frames_are_rejected_before_dispatch_or_publication ... ok
+test legal_request_ids_and_escaped_source_fit_the_complete_response_envelope ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.95s
+
+     Running tests\registry_replay_review.rs (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\debug\deps\registry_replay_review-8390e9e4e28b3782.exe)
+
+running 8 tests
+test native8_retarget_is_rejected_after_origin_deleted ... ok
+test native8_relabel_is_rejected_after_origin_deleted ... ok
+test native9_archive_selects_proven_epoch_without_global_activation ... ok
+test historical4_keeps_its_identity_and_reports_unreplayed_claims ... ok
+test view8_relabel_is_rejected_after_origin_deleted ... ok
+test view8_retarget_is_rejected_after_origin_deleted ... ok
+test unchanged_native8_and_view8_remain_standalone ... ok
+test producer_labels_cannot_change_a_proven_capture_epoch ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.71s
+
+     Running tests\selected_view_analysis.rs (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\debug\deps\selected_view_analysis-4bdd1f0c8eb0e5b6.exe)
+
+running 11 tests
+test canonical_report_bytes_and_registration_match_frozen_golden ... ok
+test existing_graphify_hubs_include_parallel_citations_and_count_self_loops_twice ... ok
+test existing_graphify_hubs_preserve_file_level_manifest_source_precision ... ok
+test existing_graphify_community_tools_assign_default_view_overlay_nodes ... ok
+test selected_report_keeps_multiple_source_bindings_without_choosing_a_fabricated_exact_anchor ... ok
+test selected_report_preparation_validation_and_admission_have_no_publication_side_effects ... ok
+test explicit_selected_analysis_and_resources_replay_historic_views_and_reject_unsupported_scope ... ok
+test selected_report_publication_rechecks_cas_after_preparation ... ok
+test selected_report_preserves_provider_claims_and_every_original_anchor_family ... ok
+test selected_report_retention_replays_exact_bytes_and_rejects_scope_and_cas_tampering ... ok
+test selected_report_resource_admission_precedes_publication_of_a_large_formatted_body ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 14.49s
+

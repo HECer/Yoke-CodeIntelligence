@@ -1,0 +1,381 @@
+{
+  "schema": "owned_history_browser_v1",
+  "product": "Code Intelligence",
+  "version": "0.5.0",
+  "nativeSha256": "ccf6b5c938d2a81cae0543b95386ae23f19824afbfc3198229d767140fe2c391",
+  "workerJobAdmission": {
+    "specificJobMembershipConfirmed": true,
+    "queryHandleClosedBeforeNativeRead": true
+  },
+  "result": {
+    "automationComplete": true,
+    "scope": "one native owning stdio Session dashboard; original host CLI",
+    "browserStart": {
+      "phase": "start",
+      "ok": true,
+      "engine": "Edg/155.0.4283.62",
+      "reportedBrowserVersions": [
+        "HeadlessChrome/155.0.0.0",
+        "Edg/155.0.0.0"
+      ],
+      "protocolVersion": "1.3",
+      "nodeVersion": "v24.22.1",
+      "trustedBrowserPath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+      "headless": true,
+      "freshProfile": true,
+      "cdpTransport": "inherited-pipes",
+      "visibleDesktopShellInteraction": false
+    },
+    "before": {
+      "phase": "before",
+      "ok": true,
+      "states": [
+        {
+          "screenshot": "desktop-before.png",
+          "screenshotSha256": "988f61e1c692161678b9b734863911990f1edb84013825b57ff808d6f146d2b0",
+          "screenshotBytes": 92440,
+          "dom": "desktop-before.dom.json",
+          "domSha256": "3fab7b0b6b4c699eecf2449b72d50de7fc37673506c44e63b4ddd65116d591e7",
+          "width": 1440,
+          "height": 1612,
+          "noHorizontalOverflow": true,
+          "actualScreenshotCapture": true,
+          "humanVisualReviewComplete": false
+        },
+        {
+          "screenshot": "mobile-before.png",
+          "screenshotSha256": "4f1420b18d6a433d5893bdb388a0cd3fc6f5a2546aa4d0906b21c4ef23830373",
+          "screenshotBytes": 81138,
+          "dom": "mobile-before.dom.json",
+          "domSha256": "26af253bb46a84e59660173444eb87794c2a1f88ab2fcffea9e4b7ef42a01dd5",
+          "width": 390,
+          "height": 2110,
+          "noHorizontalOverflow": true,
+          "actualScreenshotCapture": true,
+          "humanVisualReviewComplete": false
+        }
+      ],
+      "lastPlanId": "f2e412fe380b78e134f64c355149ac0fe40cc51bad1998a731503f2c06f374a7",
+      "servedDashboardSha256": "783736509ed93ecf342ae900ea36be49efa6dd5330f89f90898e22396160d168"
+    },
+    "pending": {
+      "phase": "pending",
+      "ok": true,
+      "states": [
+        {
+          "screenshot": "desktop-pending.png",
+          "screenshotSha256": "f9ae8ca18ee175fa0eb7396bfff22b86016c5d6da897ee3c00b380bbf6557021",
+          "screenshotBytes": 106291,
+          "dom": "desktop-pending.dom.json",
+          "domSha256": "29f3d51a8268af2bf28e346935bf44b5387b50049f8fa0af82223a451f430db1",
+          "width": 1440,
+          "height": 1796,
+          "noHorizontalOverflow": true,
+          "actualScreenshotCapture": true,
+          "humanVisualReviewComplete": false,
+          "serverComplete": false,
+          "blockedByHistoryArchive": true,
+          "supportedRecoveryActions": 0,
+          "exactDraftRetained": true
+        },
+        {
+          "screenshot": "mobile-pending.png",
+          "screenshotSha256": "f62f5300be70acfd0220ea0d01b9ecb1d718bfe96729395c8e1b1a932d5a6bfe",
+          "screenshotBytes": 93251,
+          "dom": "mobile-pending.dom.json",
+          "domSha256": "52470f3904e376f1fcfd47046281f48ac5a273ad7ed8c19cb097347ffacb4c4f",
+          "width": 390,
+          "height": 2347,
+          "noHorizontalOverflow": true,
+          "actualScreenshotCapture": true,
+          "humanVisualReviewComplete": false,
+          "serverComplete": false,
+          "blockedByHistoryArchive": true,
+          "supportedRecoveryActions": 0,
+          "exactDraftRetained": true
+        }
+      ],
+      "scriptErrors": 0,
+      "consoleErrors": 0
+    },
+    "saves": [
+      {
+        "viewport": "desktop",
+        "targetSha256": "e1d2ca43f2c86c5c235e3e7df63d84129d4d2e81b274a7b7c207ef9ac17e85b6",
+        "ownerSha256": "b5c7f009f2cba57af2d8d0585e4e2c5011bfd1226855b5a08bcd686a429cd75a",
+        "planId": "a4bc0e9866c90cdf57266bdce8d11e82859e3088c937a43f0ce5b0eca64ee46e",
+        "ownerGeneration": "53ca0b2734f2d90d5b7cb8059f3a71658a205889446b9ae57c71217a39f4ea97",
+        "browser": {
+          "phase": "after",
+          "ok": true,
+          "planId": "a4bc0e9866c90cdf57266bdce8d11e82859e3088c937a43f0ce5b0eca64ee46e",
+          "screenshot": "desktop-after.png",
+          "screenshotSha256": "7b6f2cd85f671b3bb82a1514571151b34927a3a2f6de2ec5ff452b44cc980195",
+          "screenshotBytes": 77136,
+          "dom": "desktop-after.dom.json",
+          "domSha256": "18db04ed13913722dd326530791e1bf229a67b1be489381f4f1e34eec5b03cd9",
+          "width": 1440,
+          "height": 1327,
+          "noHorizontalOverflow": true,
+          "actualScreenshotCapture": true,
+          "humanVisualReviewComplete": false,
+          "guardedSaveObserved": true,
+          "exactReadBackSha256": "e1d2ca43f2c86c5c235e3e7df63d84129d4d2e81b274a7b7c207ef9ac17e85b6",
+          "scriptErrors": 0,
+          "consoleErrors": 0
+        }
+      },
+      {
+        "viewport": "mobile",
+        "targetSha256": "da9355cf8bdfeb88a309adeee9db9c9887c1b8593e983b8fafebcdb3680aa8b7",
+        "ownerSha256": "b5c7f009f2cba57af2d8d0585e4e2c5011bfd1226855b5a08bcd686a429cd75a",
+        "planId": "ff1770a77e5576934f6846c496609b840daaf02596dbb87845da7134f7b2b7cc",
+        "ownerGeneration": "53ca0b2734f2d90d5b7cb8059f3a71658a205889446b9ae57c71217a39f4ea97",
+        "browser": {
+          "phase": "after",
+          "ok": true,
+          "planId": "ff1770a77e5576934f6846c496609b840daaf02596dbb87845da7134f7b2b7cc",
+          "screenshot": "mobile-after.png",
+          "screenshotSha256": "8a3bf5315dea30edd8303faabf1d4ab0c073ec0a3718034a747aebf34e582d3b",
+          "screenshotBytes": 65144,
+          "dom": "mobile-after.dom.json",
+          "domSha256": "3e8d87c28dfe6cc2658a15cc8f4b8fed461f4c52fa203bdb9510fce17a232750",
+          "width": 390,
+          "height": 1650,
+          "noHorizontalOverflow": true,
+          "actualScreenshotCapture": true,
+          "humanVisualReviewComplete": false,
+          "guardedSaveObserved": true,
+          "exactReadBackSha256": "da9355cf8bdfeb88a309adeee9db9c9887c1b8593e983b8fafebcdb3680aa8b7",
+          "scriptErrors": 0,
+          "consoleErrors": 0
+        }
+      }
+    ],
+    "archive": {
+      "sha256": "e8cfa06b452e14ca7e35a34008d16ae3a4957b5e176c029647fe510f850bc77f",
+      "records": [
+        {
+          "name": "yoke-doc-3f388b8eb2978bccd4cf97105e0d3e46fccf7dbde78d8740882c84500b7a591c-88594b5ba04ebfe0259d3074387e3afdc7aec9b52e0f20a3c0b9b26f30aeefa0.e0001.json",
+          "bytes": 439,
+          "sha256": "bdb4b26bb984983adc5706a2d0bc7f32e5e303c26dca59b66ea177d545c5f06c"
+        },
+        {
+          "name": "yoke-doc-3f388b8eb2978bccd4cf97105e0d3e46fccf7dbde78d8740882c84500b7a591c-88594b5ba04ebfe0259d3074387e3afdc7aec9b52e0f20a3c0b9b26f30aeefa0.e0002.json",
+          "bytes": 548,
+          "sha256": "0c0369de2fed25479d2f458fdede058624714b80b198f02c7019eb47cc21a096"
+        },
+        {
+          "name": "yoke-doc-3f388b8eb2978bccd4cf97105e0d3e46fccf7dbde78d8740882c84500b7a591c-88594b5ba04ebfe0259d3074387e3afdc7aec9b52e0f20a3c0b9b26f30aeefa0.e0003.json",
+          "bytes": 546,
+          "sha256": "bdcc71527ecb82118095e81507c7791fa3af13fe508a5102d1cab3df0c6eaacd"
+        },
+        {
+          "name": "yoke-doc-3f388b8eb2978bccd4cf97105e0d3e46fccf7dbde78d8740882c84500b7a591c-88594b5ba04ebfe0259d3074387e3afdc7aec9b52e0f20a3c0b9b26f30aeefa0.e0004.json",
+          "bytes": 547,
+          "sha256": "297c2a1f7cf85427511787cf093c55a98e38930463b1565c6d6ea79682594988"
+        },
+        {
+          "name": "yoke-doc-3f388b8eb2978bccd4cf97105e0d3e46fccf7dbde78d8740882c84500b7a591c-88594b5ba04ebfe0259d3074387e3afdc7aec9b52e0f20a3c0b9b26f30aeefa0.e0005.json",
+          "bytes": 547,
+          "sha256": "2ed784f59717572ded8f7b1d83f2c8db3b28f57fcf92e5df94e2d405d69eaa93"
+        },
+        {
+          "name": "yoke-doc-3f388b8eb2978bccd4cf97105e0d3e46fccf7dbde78d8740882c84500b7a591c-88594b5ba04ebfe0259d3074387e3afdc7aec9b52e0f20a3c0b9b26f30aeefa0.e0006.json",
+          "bytes": 547,
+          "sha256": "47f60cb2a9341c1c690e4f3b666e33df74c53aa81210996e8e379ca2ec0de304"
+        },
+        {
+          "name": "yoke-doc-3f388b8eb2978bccd4cf97105e0d3e46fccf7dbde78d8740882c84500b7a591c-88594b5ba04ebfe0259d3074387e3afdc7aec9b52e0f20a3c0b9b26f30aeefa0.plan.json",
+          "bytes": 1172,
+          "sha256": "691c396b2a081302142dbe194a8a21ad6744fe9885cb0ba8d60acc3d35e41fa4"
+        },
+        {
+          "name": "yoke-doc-3f388b8eb2978bccd4cf97105e0d3e46fccf7dbde78d8740882c84500b7a591c-afedd567d91d9d3dab9b953f56bdebb28976c40629fd4a9c48f9f06a10b2ea8e.e0001.json",
+          "bytes": 439,
+          "sha256": "acb25a0ddfcef4c9fbf9130278470b96eac177f77492aaf9183b4d9d65763745"
+        },
+        {
+          "name": "yoke-doc-3f388b8eb2978bccd4cf97105e0d3e46fccf7dbde78d8740882c84500b7a591c-afedd567d91d9d3dab9b953f56bdebb28976c40629fd4a9c48f9f06a10b2ea8e.e0002.json",
+          "bytes": 548,
+          "sha256": "d4559e97fe33607ec0113838bfa9def73e38222577d88f63afea74aca3bce566"
+        },
+        {
+          "name": "yoke-doc-3f388b8eb2978bccd4cf97105e0d3e46fccf7dbde78d8740882c84500b7a591c-afedd567d91d9d3dab9b953f56bdebb28976c40629fd4a9c48f9f06a10b2ea8e.e0003.json",
+          "bytes": 546,
+          "sha256": "c827759b711cf9d59ef2dc639586258873a1b3b5d590f8d65e91990955ce30c3"
+        },
+        {
+          "name": "yoke-doc-3f388b8eb2978bccd4cf97105e0d3e46fccf7dbde78d8740882c84500b7a591c-afedd567d91d9d3dab9b953f56bdebb28976c40629fd4a9c48f9f06a10b2ea8e.e0004.json",
+          "bytes": 547,
+          "sha256": "9bc1edf4b3355a3a38ddbd735c62592d6e67e1d6ec1be56f3984ee4373d68e01"
+        },
+        {
+          "name": "yoke-doc-3f388b8eb2978bccd4cf97105e0d3e46fccf7dbde78d8740882c84500b7a591c-afedd567d91d9d3dab9b953f56bdebb28976c40629fd4a9c48f9f06a10b2ea8e.e0005.json",
+          "bytes": 547,
+          "sha256": "777c95fd29e5595b41cb100021603de5bf15a75777b79f603c2029ff72306d21"
+        },
+        {
+          "name": "yoke-doc-3f388b8eb2978bccd4cf97105e0d3e46fccf7dbde78d8740882c84500b7a591c-afedd567d91d9d3dab9b953f56bdebb28976c40629fd4a9c48f9f06a10b2ea8e.e0006.json",
+          "bytes": 547,
+          "sha256": "3a3190eddd1887f796f8076a6fbb680800f1d379c6fa25e0c1b8b1c536374fe2"
+        },
+        {
+          "name": "yoke-doc-3f388b8eb2978bccd4cf97105e0d3e46fccf7dbde78d8740882c84500b7a591c-afedd567d91d9d3dab9b953f56bdebb28976c40629fd4a9c48f9f06a10b2ea8e.plan.json",
+          "bytes": 1172,
+          "sha256": "880e9bb024eb44906e05001a28a1dab88089cbbaf016bf309c308a3533993414"
+        }
+      ],
+      "allOriginalsReadBack": true
+    },
+    "blockedBothAuthorities": true,
+    "blockedActionsNoMutation": true,
+    "sourceUnchanged": true,
+    "browserExit": {
+      "phase": "close",
+      "ok": true,
+      "browserCloseRequested": true,
+      "browserExitCode": 0,
+      "cdpEOF": true,
+      "browserOutputEOF": true,
+      "scriptErrors": 0,
+      "consoleErrors": 0,
+      "screenshots": 6,
+      "visualReviewComplete": false,
+      "driverExitCode": 0,
+      "driverStdoutEOF": true,
+      "beforeForcedCleanup": true
+    },
+    "nativeExits": [
+      {
+        "nativeExitCode": 0,
+        "stdinWasStillOpen": true,
+        "beforeJobCleanup": true
+      },
+      {
+        "nativeExitCode": 0,
+        "stdinWasStillOpen": true,
+        "beforeJobCleanup": true
+      }
+    ],
+    "cli": [
+      {
+        "operation": "migration-plan",
+        "exitCode": 0,
+        "expectedSuccess": true
+      },
+      {
+        "operation": "migration-apply",
+        "exitCode": 0,
+        "expectedSuccess": true
+      },
+      {
+        "operation": "history-plan",
+        "exitCode": 0,
+        "expectedSuccess": true
+      },
+      {
+        "operation": "blocked-completion",
+        "exitCode": 1,
+        "expectedSuccess": false
+      },
+      {
+        "operation": "pending-inspect",
+        "exitCode": 0,
+        "expectedSuccess": true
+      },
+      {
+        "operation": "history-resume",
+        "exitCode": 0,
+        "expectedSuccess": true
+      },
+      {
+        "operation": "read-0",
+        "exitCode": 0,
+        "expectedSuccess": true
+      },
+      {
+        "operation": "read-1",
+        "exitCode": 0,
+        "expectedSuccess": true
+      },
+      {
+        "operation": "read-2",
+        "exitCode": 0,
+        "expectedSuccess": true
+      },
+      {
+        "operation": "read-3",
+        "exitCode": 0,
+        "expectedSuccess": true
+      },
+      {
+        "operation": "read-4",
+        "exitCode": 0,
+        "expectedSuccess": true
+      },
+      {
+        "operation": "read-5",
+        "exitCode": 0,
+        "expectedSuccess": true
+      },
+      {
+        "operation": "read-6",
+        "exitCode": 0,
+        "expectedSuccess": true
+      },
+      {
+        "operation": "read-7",
+        "exitCode": 0,
+        "expectedSuccess": true
+      },
+      {
+        "operation": "read-8",
+        "exitCode": 0,
+        "expectedSuccess": true
+      },
+      {
+        "operation": "read-9",
+        "exitCode": 0,
+        "expectedSuccess": true
+      },
+      {
+        "operation": "read-10",
+        "exitCode": 0,
+        "expectedSuccess": true
+      },
+      {
+        "operation": "read-11",
+        "exitCode": 0,
+        "expectedSuccess": true
+      },
+      {
+        "operation": "read-12",
+        "exitCode": 0,
+        "expectedSuccess": true
+      },
+      {
+        "operation": "read-13",
+        "exitCode": 0,
+        "expectedSuccess": true
+      }
+    ]
+  },
+  "producer": {
+    "ci": {
+      "GITHUB_SHA": "ed92e9f818ef5662f7c597bb4809f631bad15d0e",
+      "GITHUB_RUN_ID": "40995799274",
+      "GITHUB_RUN_ATTEMPT": "1"
+    },
+    "startedNs": 1793329928190907400,
+    "finishedNs": 1793331362774762400,
+    "nativeSize": 142929408,
+    "nativeMtimeNs": 1793331359678992800
+  },
+  "realInstalledHeadlessBrowser": true,
+  "visibleDesktopShellInteraction": false,
+  "visualReviewComplete": false,
+  "humanAcceptanceClaimed": false,
+  "allTransportsClaimed": false,
+  "releaseAcceptanceClaimed": false
+}

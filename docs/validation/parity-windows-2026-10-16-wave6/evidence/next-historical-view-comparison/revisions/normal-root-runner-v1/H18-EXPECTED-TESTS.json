@@ -1,0 +1,71 @@
+{
+  "historicalPassedCountsAreFreshCredit": false,
+  "historicalReceipt": "target/parity-validation-20261015/wave5-frozen-20261016-0654/native/receipt.json",
+  "historicalReceiptSha256": "9bb40f88d8974d8e9bdaf01722b926dfe4ff17ceb19cf31d103cf41c3e73c75e",
+  "scope": "historical_exact_test_names_for_future_fresh_H18_selection_only",
+  "targets": {
+    "collection_registry_access": [
+      "foreign_metadata_requires_fresh_current_grants_for_each_inspection",
+      "native_and_checked_view_metadata_keep_distinct_kinds_and_reject_unsafe_legacy_presentation",
+      "read_only_native_archive_survives_original_source_deletion_without_writes",
+      "readonly_guard_excludes_independent_writers_and_refuses_uncheckpointed_wal",
+      "readonly_uri_preserves_unicode_spaces_and_literal_uri_characters",
+      "stale_and_absent_cas_never_replace_existing_binding",
+      "unknown_registry_open_does_not_create_state"
+    ],
+    "graph_view": [
+      "captured_readonly_dependency_proof_allows_view_and_collection_reads",
+      "context_omits_environment_values_and_clips_unicode_at_byte_budget",
+      "default_view_exposes_structural_relationships_without_replacing_canonical_graph",
+      "newly_derived_view_omits_legacy_config_file_signature_values_without_rewriting_history",
+      "registered_view_rejects_corrupt_cas_and_foreign_overlay_scope",
+      "selected_overlay_inputs_have_an_aggregate_byte_budget",
+      "selected_structural_artifacts_reject_forged_node_scope_lines_and_schema",
+      "semantic_and_structural_overlays_have_distinct_namespaces_and_provider_trust",
+      "source_bound_view_exports_all_seven_formats",
+      "source_view_remains_historical_and_rejects_forged_scope_options_and_deadlines",
+      "view_find_trace_context_and_export_preserve_source_and_parallel_calls"
+    ],
+    "meaning_view_archives": [
+      "archive_replay_rejects_publicly_resealed_source_view_and_meaning_changes",
+      "complete_wire_and_distinct_source_limits_are_admitted_without_store_side_effects",
+      "missing_historical_uncited_file_and_wrong_same_path_bytes_are_not_repaired_from_live_state",
+      "portable_archive_replays_both_epochs_without_a_store_live_tree_or_worker",
+      "portable_bridge_requires_complete_raw_closure_and_rejects_foreign_or_unpaired_sidecars",
+      "portable_transport_keeps_task_totals_current_attempt_usage_and_original_unknown_response_distinct",
+      "portable_wire_rejects_unknown_nested_properties_duplicate_keys_and_unknown_profiles",
+      "published_id_preparation_returns_exact_checked_transport_without_load_or_publication",
+      "replay_preserves_typed_claim_ids_ordered_roles_exact_quotes_and_unknown_receipts"
+    ],
+    "protocol_connection": [
+      "host_selected_profiles_keep_their_public_surface_across_messages",
+      "incomplete_stdio_frames_are_rejected_before_dispatch_or_publication",
+      "legal_request_ids_and_escaped_source_fit_the_complete_response_envelope",
+      "owned_transport_state_retains_initialization_and_refuses_profile_switches",
+      "separate_transport_messages_preserve_initialization_and_profile_state"
+    ],
+    "registry_replay_review": [
+      "historical4_keeps_its_identity_and_reports_unreplayed_claims",
+      "native8_relabel_is_rejected_after_origin_deleted",
+      "native8_retarget_is_rejected_after_origin_deleted",
+      "native9_archive_selects_proven_epoch_without_global_activation",
+      "producer_labels_cannot_change_a_proven_capture_epoch",
+      "unchanged_native8_and_view8_remain_standalone",
+      "view8_relabel_is_rejected_after_origin_deleted",
+      "view8_retarget_is_rejected_after_origin_deleted"
+    ],
+    "selected_view_analysis": [
+      "canonical_report_bytes_and_registration_match_frozen_golden",
+      "existing_graphify_community_tools_assign_default_view_overlay_nodes",
+      "existing_graphify_hubs_include_parallel_citations_and_count_self_loops_twice",
+      "existing_graphify_hubs_preserve_file_level_manifest_source_precision",
+      "explicit_selected_analysis_and_resources_replay_historic_views_and_reject_unsupported_scope",
+      "selected_report_keeps_multiple_source_bindings_without_choosing_a_fabricated_exact_anchor",
+      "selected_report_preparation_validation_and_admission_have_no_publication_side_effects",
+      "selected_report_preserves_provider_claims_and_every_original_anchor_family",
+      "selected_report_publication_rechecks_cas_after_preparation",
+      "selected_report_resource_admission_precedes_publication_of_a_large_formatted_body",
+      "selected_report_retention_replays_exact_bytes_and_rejects_scope_and_cas_tampering"
+    ]
+  }
+}

@@ -1,0 +1,23 @@
+    Finished `test` profile [unoptimized] target(s) in 0.55s
+     Running tests\member_decorators.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\member_decorators-9731019157861c48.exe)
+
+running 1 test
+test concrete_method_decorators_belong_to_the_selected_member_not_its_neighbor ... FAILED
+
+failures:
+
+---- concrete_method_decorators_belong_to_the_selected_member_not_its_neighbor stdout ----
+
+thread 'concrete_method_decorators_belong_to_the_selected_member_not_its_neighbor' (13432) panicked at native\tests\member_decorators.rs:28:33:
+module.ts "\u{feff}// café 🦀\r\n@parent\r\nclass Parent {\r\n    // retained preceding\r\n    @first('🦀')\r\n    // owned bundle comment\r\n    @second\r\n    deleteMe() {}\r\n    // retained neighbor\r\n    kept() {}\r\n}\r\n": Decorated member deletion requires a checked decorator ownership range
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    concrete_method_decorators_belong_to_the_selected_member_not_its_neighbor
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+error: test failed, to rerun pass `--test member_decorators`
+error: 1 target failed:
+    `--test member_decorators`

@@ -1,0 +1,29 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 50s
+     Running tests\digest_receiver.rs (target\debug\deps\digest_receiver-db5bf7765f2a9c05.exe)
+
+running 21 tests
+test actual_tls_receiver_and_sender_cli_recover_using_os_credentials_and_selected_ca ... ignored, Requires actual Windows Credential Manager; creates/removes three unique TLS/token/signing credentials and starts only owned loopback CLI processes
+test ambiguous_framing_foreign_hosts_and_bearerless_puts_refuse_before_body_or_state ... ok
+test authentication_scope_revocation_and_absent_receipts_do_not_publish_or_disclose ... ok
+test caller_sql_durability_and_corrupted_accepted_bytes_refuse_before_binding ... ok
+test changed_wire_binding_and_rehashed_text_fields_cannot_enter_the_closed_handoff ... ok
+test detached_host_cancellation_remains_binding_after_start_returns ... ok
+test payload_capacity_and_expired_partial_body_do_not_commit_late_bytes ... ok
+test queries_preserve_duplicate_ordinals_parallel_directions_and_unverified_claims ... ok
+test query_all_selections_are_scoped_before_any_row_and_unknown_protocol_is_refused ... ok
+test actual_cli_default_denial_creates_no_state_or_listener ... ok
+test query_cli_default_denial_and_invalid_host_paths_never_initialize_state ... ok
+test query_exact_work_search_and_output_budgets_refuse_whole_results_and_preserve_sql_policy ... ok
+test query_native_client_filters_unicode_pages_and_replays_local_read_only_without_new_records ... ok
+test real_native_client_and_receiver_commit_one_intake_and_reconcile_local_failure ... ok
+test query_host_and_grant_permissions_default_deny_authentication_and_revocation_are_current ... ok
+test receipt_is_immutable_for_exact_repeats_and_survives_receiver_restart ... ok
+test received_snapshot_ids_never_pin_matching_local_capture_history ... ok
+test real_tls_accepts_selected_ca_and_refuses_wrong_trust_or_name_before_intake ... ok
+test receiver_capacity_and_sql_failure_never_return_a_false_acceptance ... ok
+test revocation_during_body_acquisition_precedes_any_record_commit ... ok
+test slow_partial_request_shutdown_and_initial_permissions_remain_bounded ... ok
+
+test result: ok. 20 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 2.31s
+

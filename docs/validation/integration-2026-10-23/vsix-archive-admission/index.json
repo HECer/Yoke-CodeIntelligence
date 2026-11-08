@@ -1,0 +1,355 @@
+{
+  "complete": true,
+  "baseCommit": "df52798bbf799245397ffacb163dbca0490705d6",
+  "qualifiedChanges": {
+    "scripts/package-vscode.py": {
+      "before": "51fd4b7b35d4c138df65ea3a4007ca401cdc2084ad7ed18e9ddf9d4ca8914922",
+      "after": "bcf29f6a9b3b626ab3ffb7858f76b808617486c9db2260a7c11c845d3e330edb"
+    },
+    "scripts/tests/test_package_vscode.py": {
+      "before": "0b80ae29405214f5f391edeb5e5f6730529f152ca1285dac33a991ceb97de47e",
+      "after": "2f21ca774a56e52bd1b78851d250c75dadc469f01e7b272272671be1d8f09383"
+    }
+  },
+  "frozenInputs": 1100,
+  "allJobsEmpty": true,
+  "sourceInputsUnchanged": true,
+  "pythonPassed": 35,
+  "npmPassed": 260,
+  "npmExistingSkipped": 3,
+  "typecheckPassed": true,
+  "originalThreePackagingTestsAstExact": true,
+  "protectedFailedOutputsMetadataExact": true,
+  "nativeCliSha256": "8d66415f2af983ff2d8639f6dc50324f3b5d6722631401454897e52c90f7925e",
+  "nativeEntryBudgetUnchanged": 128000000,
+  "nativeTotalBudget": 256000000,
+  "nativeArchiveBudget": 256000000,
+  "nativeManifestBudget": 1000000,
+  "nativeEntryCountBudget": 8192,
+  "nativeDirectoryBudget": 8000000,
+  "syntheticBinariesExecuted": false,
+  "canonicalVsixAccepted": false,
+  "releaseAccepted": false,
+  "fullStatusComplete": false,
+  "systemSettingsChanged": false,
+  "artifactDeletion": false,
+  "actualCli": {
+    "complete": true,
+    "syntheticFixtureOnly": true,
+    "syntheticBinariesExecuted": false,
+    "canonicalNativeVsixAccepted": false,
+    "allMembersReopenedAndSourceExact": true,
+    "archiveMembers": 299,
+    "archiveBytes": 4602971,
+    "archiveSha256": "e34e4ed63aa47b4c183d50fe6805434cb919e348482fea5912c88fc16208265a",
+    "platform": "linux-x64",
+    "nativeVersion": "0.5.0",
+    "retainedTypeScriptVersion": "0.3.0",
+    "unsafeArchiveRefusedBeforeOutput": true,
+    "existingOutputUnchanged": true,
+    "allJobsEmpty": true,
+    "sourceInputsUnchanged": true
+  },
+  "actualCliExpectedExitCodes": [
+    0,
+    1,
+    1
+  ],
+  "publishedOriginalPackagerFailsFinalRegressionTests": true,
+  "publishedOriginalThreeTestsPass": true,
+  "fullPublishedRedSummary": [
+    "Ran 14 tests in 0.688s",
+    "FAILED (failures=21, errors=2)"
+  ],
+  "qualifiedCodeCommit": "3c08fa3ffe669c4f642bf82972bea50d65b0706f",
+  "qualifiedCodeBlobsEqualTestedWorkingBytes": true,
+  "qualificationPhase": "vsix-archive-20261023-df52798b-qualified1",
+  "archive": {
+    "members": 70,
+    "bytes": 496270,
+    "sha256": "5f686ffa250dfd244007d837d10dbd4b516a960ae4d0a60eb87693dbc7ffcf3b",
+    "everyMemberReopened": true
+  },
+  "rawMembers": {
+    "vsix-archive-20261023-df52798b-checkpoint-audit1/result.json": {
+      "bytes": 2172,
+      "sha256": "59c9df0bcc034419fe80d60a6515ad5818dcfa2d6b94ec7618d8eef95fd54461"
+    },
+    "vsix-archive-20261023-df52798b-cli1/actual-cli-preserves-existing-output.stderr": {
+      "bytes": 43,
+      "sha256": "8b4bb907db149dfeb61927945d368a10f3d72b74aa6da55a6f9ec1d349b9193f"
+    },
+    "vsix-archive-20261023-df52798b-cli1/actual-cli-preserves-existing-output.stdout": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "vsix-archive-20261023-df52798b-cli1/actual-cli-refuses-unsafe-native.stderr": {
+      "bytes": 35,
+      "sha256": "b4e8e90ea937615385010f1e294898ae00d5d959477d8f3cb93e1609f86d77f1"
+    },
+    "vsix-archive-20261023-df52798b-cli1/actual-cli-refuses-unsafe-native.stdout": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "vsix-archive-20261023-df52798b-cli1/actual-cli-result.json": {
+      "bytes": 547,
+      "sha256": "a3825fa7f6f95b63c115cf9d268111195f6f7a74fbeda1d0446492dbfaaba957"
+    },
+    "vsix-archive-20261023-df52798b-cli1/actual-package-cli.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "vsix-archive-20261023-df52798b-cli1/actual-package-cli.stdout": {
+      "bytes": 91,
+      "sha256": "ec7b15a844aff5ef633c4fc7a54ffb2db6c0e18954110754f1b6fff9acb1a5c9"
+    },
+    "vsix-archive-20261023-df52798b-cli1/archive-members.json": {
+      "bytes": 49680,
+      "sha256": "16f04f3047f3e1e845ff7cc82b7115b87e1dbf047aff55af0f245e93b74c5918"
+    },
+    "vsix-archive-20261023-df52798b-cli1/controller-commands.jsonl": {
+      "bytes": 1681,
+      "sha256": "e7fe3261f74cbf6861f469e9cc7d4e1d404101352ea554104e0806a96e56dd7b"
+    },
+    "vsix-archive-20261023-df52798b-cli1/controller.py": {
+      "bytes": 6004,
+      "sha256": "e3bc05a833ec90df26e0dc409644612fbdd2ca7e75055eda376ece482fbc99d3"
+    },
+    "vsix-archive-20261023-df52798b-cli1/progress.json": {
+      "bytes": 2041,
+      "sha256": "a0a8c5cd9cf585af9d4fbe88a85be379bc48ac5ec4c208c2890773eac94ea63d"
+    },
+    "vsix-archive-20261023-df52798b-cli1/result.json": {
+      "bytes": 258,
+      "sha256": "ab71b8ed6a4ae744fab2c2f25a111701d57b3a95a6b598c038687af6d916f8f0"
+    },
+    "vsix-archive-20261023-df52798b-cli1/source-before.json": {
+      "bytes": 117183,
+      "sha256": "32962604217962e32ccb9197cbf7bab2c009e11dafd6be70b4201b407c6c6c69"
+    },
+    "vsix-archive-20261023-df52798b-final-audit1/controller.py": {
+      "bytes": 3261,
+      "sha256": "69d419cb15f4bad92838bc3273466cbd3334a4cbff4f9b0ae97e492aaeb53a30"
+    },
+    "vsix-archive-20261023-df52798b-final-audit1/result.json": {
+      "bytes": 1310,
+      "sha256": "5598b5b39fab07bf4bfa6e85f5726b7b1f284ed73ce9c0b46c9d015dce64083a"
+    },
+    "vsix-archive-20261023-df52798b-green1/controller-commands.jsonl": {
+      "bytes": 324,
+      "sha256": "25da5b34c491248cb9126edd6525e0afb96ef1b44bca546364fbca40d7a0fb23"
+    },
+    "vsix-archive-20261023-df52798b-green1/controller.py": {
+      "bytes": 2578,
+      "sha256": "e51eb60f0218d427ae4eed9d9c683d5223e6530c10d3e3705aa2e708e4329778"
+    },
+    "vsix-archive-20261023-df52798b-green1/progress.json": {
+      "bytes": 466,
+      "sha256": "2023fce563293fb5bea4bbd4d947f900d353429474360b6cdb128ed55b0b8e8e"
+    },
+    "vsix-archive-20261023-df52798b-green1/python-all.stderr": {
+      "bytes": 1546,
+      "sha256": "fd2edb658c6d1d80bfbaffaf78ab6caaab3b029c2d590b245cdc96d54c63e80e"
+    },
+    "vsix-archive-20261023-df52798b-green1/python-all.stdout": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "vsix-archive-20261023-df52798b-green1/result.json": {
+      "bytes": 258,
+      "sha256": "ead84273128727567b6de68b025305d18d104ca19558c30c63634c024c62f91a"
+    },
+    "vsix-archive-20261023-df52798b-green1/source-before.json": {
+      "bytes": 117183,
+      "sha256": "b1179bc311583123e2a565ba763c36df5cbacb00d536b88bf7b2fa078cf8cd72"
+    },
+    "vsix-archive-20261023-df52798b-green2/controller-commands.jsonl": {
+      "bytes": 324,
+      "sha256": "8312f8463a9a210f9888e3cf0f2192f62f08c14899a66b2f452c898e7ea6d31e"
+    },
+    "vsix-archive-20261023-df52798b-green2/controller.py": {
+      "bytes": 2578,
+      "sha256": "d36498b365b89fb8f4c99917041c199ee5e908fdc36278c721d95cf1bbdf426b"
+    },
+    "vsix-archive-20261023-df52798b-green2/progress.json": {
+      "bytes": 466,
+      "sha256": "bb0c09eba35cbee903c903e4eb43a64406463b4de1187bc28d97278488fa53d2"
+    },
+    "vsix-archive-20261023-df52798b-green2/python-all.stderr": {
+      "bytes": 4016,
+      "sha256": "91c1d4b004fc8b7efbd4e78ad13294c5200fa374a6035f03700348d8b9d49f9b"
+    },
+    "vsix-archive-20261023-df52798b-green2/python-all.stdout": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "vsix-archive-20261023-df52798b-green2/result.json": {
+      "bytes": 258,
+      "sha256": "ab71b8ed6a4ae744fab2c2f25a111701d57b3a95a6b598c038687af6d916f8f0"
+    },
+    "vsix-archive-20261023-df52798b-green2/source-before.json": {
+      "bytes": 117183,
+      "sha256": "d71c5511bbcf95da7f71a6ac930d5a954532c9ac580b77532a07ed6a720b9882"
+    },
+    "vsix-archive-20261023-df52798b-green3/controller-commands.jsonl": {
+      "bytes": 322,
+      "sha256": "1da64ef05aea682f5ac8a2d4045b745b613b99ea1ba9ae0ac2b4ff016847774b"
+    },
+    "vsix-archive-20261023-df52798b-green3/controller.py": {
+      "bytes": 2578,
+      "sha256": "e76bba8e2f2e8da79bdd7159501a1a91a465f7f2612b8a3d76590134d4f02642"
+    },
+    "vsix-archive-20261023-df52798b-green3/progress.json": {
+      "bytes": 464,
+      "sha256": "7f3f2c3af93eaeadcefa37266d937696f878e7886206925a43258fe5abc698f6"
+    },
+    "vsix-archive-20261023-df52798b-green3/python-all.stderr": {
+      "bytes": 1887,
+      "sha256": "4cc611f9e728252e26843d92910856f7c8db17c020b955dfb3fee190ebcfc33c"
+    },
+    "vsix-archive-20261023-df52798b-green3/python-all.stdout": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "vsix-archive-20261023-df52798b-green3/result.json": {
+      "bytes": 258,
+      "sha256": "ead84273128727567b6de68b025305d18d104ca19558c30c63634c024c62f91a"
+    },
+    "vsix-archive-20261023-df52798b-green3/source-before.json": {
+      "bytes": 117183,
+      "sha256": "528dcf10beab65ad1c4d5edb1e9aa8e336fc998a73e1ef1443c507eb6deb59aa"
+    },
+    "vsix-archive-20261023-df52798b-published-red1/controller-commands.jsonl": {
+      "bytes": 324,
+      "sha256": "362736692f3b0d4d5e0b2fc63d0d51885d811c0adc0b57ad25bedc1f02ae831e"
+    },
+    "vsix-archive-20261023-df52798b-published-red1/controller.py": {
+      "bytes": 3262,
+      "sha256": "2e8ccea813fd2dc3b58033b949ac979f090bccf3601333afffd4ae9f9c0c0046"
+    },
+    "vsix-archive-20261023-df52798b-published-red1/progress.json": {
+      "bytes": 466,
+      "sha256": "f80019861f49c70de1a33d4a94d59dc83f5af450fa3c857e9ac418091d09872a"
+    },
+    "vsix-archive-20261023-df52798b-published-red1/published-source-proof.json": {
+      "bytes": 293,
+      "sha256": "1bd48d854e549079fb1f7a933e0aaa5081c916e73a574f167a01974d939ec8d9"
+    },
+    "vsix-archive-20261023-df52798b-published-red1/python-all.stderr": {
+      "bytes": 33133,
+      "sha256": "95b356f92532aa007454c2aac7864bbd3472d24c1f76a62119df0f88e6dbec9c"
+    },
+    "vsix-archive-20261023-df52798b-published-red1/python-all.stdout": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "vsix-archive-20261023-df52798b-published-red1/result.json": {
+      "bytes": 258,
+      "sha256": "7df6f3031fa7f0c80b89b5b50eba0727c2d36fa24b88e87e360f4b9bf27befb4"
+    },
+    "vsix-archive-20261023-df52798b-published-red1/source-before.json": {
+      "bytes": 117183,
+      "sha256": "32962604217962e32ccb9197cbf7bab2c009e11dafd6be70b4201b407c6c6c69"
+    },
+    "vsix-archive-20261023-df52798b-qualified1/controller-commands.jsonl": {
+      "bytes": 871,
+      "sha256": "98f9ce08d458617017a90e309d3152d7bb93e40023a2ccd424db3579485d732c"
+    },
+    "vsix-archive-20261023-df52798b-qualified1/controller.py": {
+      "bytes": 2879,
+      "sha256": "81f435117573a41a01a60b3cfa2a4abf224ade1b441eef3f601cf7065a0f93e4"
+    },
+    "vsix-archive-20261023-df52798b-qualified1/npm-test.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "vsix-archive-20261023-df52798b-qualified1/npm-test.stdout": {
+      "bytes": 25093,
+      "sha256": "bc039a863e8c4714dd1fe1a6897799c5f64e481decf4eb7ec805df9c6e6dfde2"
+    },
+    "vsix-archive-20261023-df52798b-qualified1/npm-typecheck.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "vsix-archive-20261023-df52798b-qualified1/npm-typecheck.stdout": {
+      "bytes": 77,
+      "sha256": "ca76bbbc554c0e3ab10606a9d43f484df25001ba560b45987878ba20a5bd47a5"
+    },
+    "vsix-archive-20261023-df52798b-qualified1/progress.json": {
+      "bytes": 1196,
+      "sha256": "8bf1eee80f8fedd2835921b1c5777a50d2a5815ecf792b3fae16da9103a377d1"
+    },
+    "vsix-archive-20261023-df52798b-qualified1/python-all.stderr": {
+      "bytes": 6720,
+      "sha256": "72d323b3df0fc0fe4d7f1d11637f5d86bfde83cd748faf7e0086558e1d9574d0"
+    },
+    "vsix-archive-20261023-df52798b-qualified1/python-all.stdout": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "vsix-archive-20261023-df52798b-qualified1/result.json": {
+      "bytes": 321,
+      "sha256": "6f3c108d22dbcc4671af506e187e41a972b3d19493b8333a5e25d9281d4ec8d3"
+    },
+    "vsix-archive-20261023-df52798b-qualified1/source-before.json": {
+      "bytes": 117183,
+      "sha256": "32962604217962e32ccb9197cbf7bab2c009e11dafd6be70b4201b407c6c6c69"
+    },
+    "vsix-archive-20261023-df52798b-red1/controller-commands.jsonl": {
+      "bytes": 324,
+      "sha256": "54514b87db8d6238fc0f8ad79c713e738122ce024692c48234e80317fedf94fd"
+    },
+    "vsix-archive-20261023-df52798b-red1/controller.py": {
+      "bytes": 2576,
+      "sha256": "613c851bac3793db985f81319cf1472f1f24cd4681ed68401a9cafe395e7b5c8"
+    },
+    "vsix-archive-20261023-df52798b-red1/progress.json": {
+      "bytes": 466,
+      "sha256": "b6adf7304dea1b3b35b6568d69a304565db421b074ce06e23a35d908423acd28"
+    },
+    "vsix-archive-20261023-df52798b-red1/python-all.stderr": {
+      "bytes": 27592,
+      "sha256": "7b9e9c085d2a54f5337f86d9345a882f3e85f34fa18fd7396aa711caec167a20"
+    },
+    "vsix-archive-20261023-df52798b-red1/python-all.stdout": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "vsix-archive-20261023-df52798b-red1/result.json": {
+      "bytes": 258,
+      "sha256": "7df6f3031fa7f0c80b89b5b50eba0727c2d36fa24b88e87e360f4b9bf27befb4"
+    },
+    "vsix-archive-20261023-df52798b-red1/source-before.json": {
+      "bytes": 117183,
+      "sha256": "28eff4c909a201573efdf41dac9184de01b2b6cbe2947ee73335365631e6abce"
+    },
+    "vsix-archive-20261023-df52798b-red2/controller-commands.jsonl": {
+      "bytes": 324,
+      "sha256": "cc607dc87966101f357abd6d5627f694dcc0cb150f66d29934feab01b2bb8282"
+    },
+    "vsix-archive-20261023-df52798b-red2/controller.py": {
+      "bytes": 2576,
+      "sha256": "da3e1995728c53bf63663eb4ecb641bb5affaccaa24625ec437b1cdd7296e425"
+    },
+    "vsix-archive-20261023-df52798b-red2/progress.json": {
+      "bytes": 466,
+      "sha256": "0105b8be3d1549e815945adceff1d782029c2c3ff52840ec0d2eaa2eb8511427"
+    },
+    "vsix-archive-20261023-df52798b-red2/python-all.stderr": {
+      "bytes": 27592,
+      "sha256": "d4ef1154daf16ed3b36e4f246ea8e95e2aa1f8e2a129b0c13d92b8d253b90046"
+    },
+    "vsix-archive-20261023-df52798b-red2/python-all.stdout": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "vsix-archive-20261023-df52798b-red2/result.json": {
+      "bytes": 258,
+      "sha256": "7df6f3031fa7f0c80b89b5b50eba0727c2d36fa24b88e87e360f4b9bf27befb4"
+    },
+    "vsix-archive-20261023-df52798b-red2/source-before.json": {
+      "bytes": 117183,
+      "sha256": "146e49b9470cdd51d1f639d2cc1389ebf8246ce8201b014242a4d052d54474ca"
+    }
+  }
+}

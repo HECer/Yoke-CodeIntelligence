@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "kind": "separate_nonadditive_recovery_ssd_diagnostic",
+  "checkedAtUtc": "2026-10-17T17:40:44.351719+00:00",
+  "runnerSha256": "9b14b7e4c489ad98e923efad8b8c29ad2669e7a0b71060e686a5397f200f3022",
+  "command": [
+    "E:\\Yoke-Build-Cache\\meaning-aliases-20261016\\debug\\deps\\yoke-35b101204e4eb110.exe",
+    "--exact",
+    "host_install::output_recovery_tests::sixteen_root_v2_history_reserves_only_remaining_output_work",
+    "--test-threads=1"
+  ],
+  "exitCode": 0,
+  "executable": "E:\\Yoke-Build-Cache\\meaning-aliases-20261016\\debug\\deps\\yoke-35b101204e4eb110.exe",
+  "executableSha256": "9bb343e1047080890b317e370b2eaf75c79eb95d63d5a1259888d788826e6d0f",
+  "libraryInventorySha256": "24a1228f8177d6f76379caeb43dadca901dd4a912f0afcb2fcc31797def7148d",
+  "sourceManifestSha256": "47ecb688e6a3beb16f7a638a93b31f3725b05a948440bbcf44715081b2dee4ec",
+  "sourceChanges": [],
+  "tempRoot": "C:\\Users\\HEC_e\\AppData\\Local\\Temp\\yoke-recovery-ssd-diagnostic-20261017",
+  "seconds": 25.312,
+  "log": "recovery-ssd-exact-verified.log",
+  "logSha256": "9329d7af52bfd6fdd75b3dd37d62bbadaafd6834913759fc8e6fb287fa6ba000",
+  "contributesToAcceptedTotals": false
+}

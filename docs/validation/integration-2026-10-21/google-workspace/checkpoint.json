@@ -1,0 +1,355 @@
+{
+  "baseCommit": "6951ff94aee42e867329a2a042204c13c670b788",
+  "nativeScopedTotals": {
+    "passed": 33,
+    "failed": 0,
+    "ignored": 0
+  },
+  "selectedPassingChecks": [
+    {
+      "name": "fmt",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "exitCode": 0,
+      "seconds": 6.504425499995705,
+      "sourceUnchanged": true,
+      "totals": {
+        "passed": 0,
+        "failed": 0,
+        "ignored": 0
+      },
+      "deletedNewTestArtifacts": []
+    },
+    {
+      "name": "units",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--lib",
+        "google_workspace::",
+        "--",
+        "--test-threads=1"
+      ],
+      "exitCode": 0,
+      "seconds": 0.9867014999908861,
+      "sourceUnchanged": true,
+      "totals": {
+        "passed": 10,
+        "failed": 0,
+        "ignored": 0
+      },
+      "deletedNewTestArtifacts": []
+    },
+    {
+      "name": "google_workspace_cli",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--test",
+        "google_workspace_cli",
+        "--",
+        "--test-threads=1"
+      ],
+      "exitCode": 0,
+      "seconds": 5.244416200002888,
+      "sourceUnchanged": true,
+      "totals": {
+        "passed": 3,
+        "failed": 0,
+        "ignored": 0
+      },
+      "deletedNewTestArtifacts": [
+        {
+          "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\google_workspace_cli-ffeb63a663969375.exe",
+          "bytes": 94999552,
+          "sha256": "8e0bc916a9f335b85d850803ae2d451e21d7695f8ba48941e28d769ce6cc7126"
+        },
+        {
+          "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\google_workspace_cli-ffeb63a663969375.pdb",
+          "bytes": 6795264,
+          "sha256": "9be3c67b59eb55131e1713c3ecacbfc1297491e66c5ce564042526731c3bc8d1"
+        }
+      ]
+    },
+    {
+      "name": "source_acquisition_cli",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--test",
+        "source_acquisition_cli",
+        "--",
+        "--test-threads=1"
+      ],
+      "exitCode": 0,
+      "seconds": 4.345435900002485,
+      "sourceUnchanged": true,
+      "totals": {
+        "passed": 4,
+        "failed": 0,
+        "ignored": 0
+      },
+      "deletedNewTestArtifacts": [
+        {
+          "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\source_acquisition_cli-4e0753e46c8486b6.exe",
+          "bytes": 95182848,
+          "sha256": "45dd4a1fca1318b818991dda541182e4a6c8df1281a207f95b14e4b695a82e35"
+        },
+        {
+          "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\source_acquisition_cli-4e0753e46c8486b6.pdb",
+          "bytes": 6942720,
+          "sha256": "678163fa1fe7d7292d78e0ae3ba3f33ed97767099ca6de2ea1cc8bd7d4936489"
+        }
+      ]
+    },
+    {
+      "name": "source_acquisition_http",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--test",
+        "source_acquisition_http",
+        "--",
+        "--test-threads=1"
+      ],
+      "exitCode": 0,
+      "seconds": 4.581045800005086,
+      "sourceUnchanged": true,
+      "totals": {
+        "passed": 5,
+        "failed": 0,
+        "ignored": 0
+      },
+      "deletedNewTestArtifacts": [
+        {
+          "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\source_acquisition_http-764f2dd641f5f707.exe",
+          "bytes": 100555264,
+          "sha256": "4dcb83e7a2ba95786d6e1798dd334ce067a78d1a7c23e896cb9d7f3cfe55acb7"
+        },
+        {
+          "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\source_acquisition_http-764f2dd641f5f707.pdb",
+          "bytes": 11128832,
+          "sha256": "89074de8afb252b4474c802bd813821425a1112145b85c12ca674ea91fb450fd"
+        }
+      ]
+    },
+    {
+      "name": "source_acquisition",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--test",
+        "source_acquisition",
+        "--",
+        "--test-threads=1"
+      ],
+      "exitCode": 0,
+      "seconds": 3.872087899973849,
+      "sourceUnchanged": true,
+      "totals": {
+        "passed": 5,
+        "failed": 0,
+        "ignored": 0
+      },
+      "deletedNewTestArtifacts": [
+        {
+          "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\source_acquisition-06ff9ff9009be4d7.exe",
+          "bytes": 95026176,
+          "sha256": "6aaa457bb57ae705a7d78cdf7091be12a428c15ba7c50f95e895512ea8f65fc9"
+        },
+        {
+          "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\source_acquisition-06ff9ff9009be4d7.pdb",
+          "bytes": 6762496,
+          "sha256": "966fff20cebdb04155eda34bc5721ad844792a2afcfe7d0e13da4b38daf1f10f"
+        }
+      ]
+    },
+    {
+      "name": "arxiv_source",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--test",
+        "arxiv_source",
+        "--",
+        "--test-threads=1"
+      ],
+      "exitCode": 0,
+      "seconds": 3.9166713999875356,
+      "sourceUnchanged": true,
+      "totals": {
+        "passed": 5,
+        "failed": 0,
+        "ignored": 0
+      },
+      "deletedNewTestArtifacts": [
+        {
+          "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\arxiv_source-6ba7d8be364be02a.exe",
+          "bytes": 95008768,
+          "sha256": "f2c2a836921105ab12a0e2517905289d794da5121088c7e6f4d7f538ee8c9aa8"
+        },
+        {
+          "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\arxiv_source-6ba7d8be364be02a.pdb",
+          "bytes": 6787072,
+          "sha256": "94dd919bd9ef72c9412d97d533d85bed2e2c17bc86e0e4daaa4b4e4e20727a20"
+        }
+      ]
+    },
+    {
+      "name": "google_workspace_process",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--test",
+        "google_workspace_process",
+        "--",
+        "--test-threads=1"
+      ],
+      "exitCode": 0,
+      "seconds": 6.441638899996178,
+      "sourceUnchanged": true,
+      "totals": {
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0
+      },
+      "deletedNewTestArtifacts": [
+        {
+          "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\google_workspace_process-fa4e405b3aa72d5d.exe",
+          "bytes": 96022528,
+          "sha256": "19c4613068575b2a1b1e72547a196f8423e8c3f68d260c1e0746e8869a35492b"
+        },
+        {
+          "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\google_workspace_process-fa4e405b3aa72d5d.pdb",
+          "bytes": 7680000,
+          "sha256": "24185c6896622ff7589925a958e1f0380c24c64f1d485205104291e1376ffa4b"
+        }
+      ]
+    },
+    {
+      "name": "clippy",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "clippy",
+        "--workspace",
+        "--all-targets",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exitCode": 0,
+      "seconds": 50.85581400000956,
+      "sourceUnchanged": true,
+      "totals": {
+        "passed": 0,
+        "failed": 0,
+        "ignored": 0
+      },
+      "deletedNewTestArtifacts": []
+    }
+  ],
+  "r2ToR3ChangedOnly": [
+    "native/tests/google_workspace_process.rs"
+  ],
+  "r2ToR3Correction": "Remove one needless borrow in the owned test fixture; exact byte reconstruction verified.",
+  "runtimeInputsUnchangedAfterFinalValidation": true,
+  "metadataOnlyAfterValidation": [
+    "native/docs/google-workspace.md"
+  ],
+  "retainedTypecheck": {
+    "command": "npm.cmd run typecheck",
+    "observedExitCode": 0,
+    "evidence": "Actual tool transcript; no reconstructed stdout log."
+  },
+  "retainedTests": {
+    "command": "npm.cmd test",
+    "observedExitCode": 0,
+    "passed": 260,
+    "skipped": 3,
+    "log": "retained/npm-test-r2.log"
+  },
+  "initialSparseRetainedRun": "Failed because benchmarks/extensions were absent; checkout extended before complete successful rerun.",
+  "baselineTotals": {
+    "passed": 2904,
+    "failed": 10,
+    "ignored": 53
+  },
+  "baselineAll310GroupsAttempted": true,
+  "alternateDigestHistory": {
+    "passed": 13,
+    "failed": 0,
+    "standardCargoTest": false,
+    "onlyOutputSuffixChanged": true
+  },
+  "cliSha256": "989c2bbce725aa22dbfd2efdfd5bb341994e5dffb29d56515fa3068eb96fedaf",
+  "gwsAdcGuard": {
+    "executableSha256": "82ad48dd28564be969174aaef3e3f99816f959bf2519eeeb4ab77d84f9fa9c67",
+    "version": "0.22.5",
+    "exitCode": 2,
+    "seconds": 0.720503100019414,
+    "selectedConfigurationInitiallyEmpty": true,
+    "explicitAdcGuardAbsent": true,
+    "missingExplicitAdcRefusalObserved": true,
+    "exportCreated": false,
+    "authenticatedGoogleExportValidated": false,
+    "credentialsInspectedOrCopied": false,
+    "modelCallsRequested": 0,
+    "allChecksPassed": true
+  },
+  "resourceKeyTransportAvailable": false,
+  "liveGoogleExportValidated": false,
+  "fullWindowsCertified": false,
+  "fullStatusCertified": false
+}

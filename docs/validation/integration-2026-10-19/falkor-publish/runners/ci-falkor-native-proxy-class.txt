@@ -1,0 +1,42 @@
+    import socketserver,threading,concurrent.futures
+    proxy_events=[];drop_next={'armed':False};race={'armed':False};barrier=threading.Barrier(2)
+    def frame(peer,depth=0):
+     assert depth<=16
+     line=bytearray()
+     while not line.endswith(b'\r\n'):
+      b=peer.recv(1)
+      if not b:raise EOFError('Owned proxy peer closed')
+      line+=b;assert len(line)<=4096
+     raw=bytes(line);kind=raw[:1];body=raw[1:-2]
+     if kind in (b'+',b'-'):return raw,body
+     if kind==b':':return raw,int(body)
+     if kind==b'$':
+      n=int(body)
+      if n==-1:return raw,None
+      assert 0<=n<=32_000_000;data=bytearray()
+      while len(data)<n+2:
+       chunk=peer.recv(min(n+2-len(data),65536))
+       if not chunk:raise EOFError('Owned proxy peer closed')
+       data+=chunk
+      assert data[-2:]==b'\r\n';return raw+data,bytes(data[:-2])
+     assert kind==b'*';n=int(body)
+     if n==-1:return raw,None
+     assert 0<=n<=100000;items=[]
+     for _ in range(n):
+      child,value=frame(peer,depth+1);raw+=child;items.append(value);assert len(raw)<=32_000_000
+     return raw,items
+    class Proxy(socketserver.BaseRequestHandler):
+     def handle(self):
+      self.request.settimeout(30)
+      with socket.create_connection(('127.0.0.1',port),timeout=30) as upstream:
+       while True:
+        try:wire,parts=frame(self.request)
+        except (EOFError,OSError):return
+        publication=parts[0]==b'GRAPH.QUERY' and b'MATCH (scope:YokeNativeScope' in parts[2] and b'SET scope.lockCounter=' in parts[2]
+        if publication and race['armed']:barrier.wait(timeout=20)
+        upstream.sendall(wire);response,_=frame(upstream);dropped=publication and drop_next['armed'];proxy_events.append({'command':parts[0].decode('ascii'),'publication':publication,'responseHash':sha(response),'upstreamError':response.startswith(b'-'),'droppedAfterUpstreamResponse':dropped})
+        if dropped:
+         drop_next['armed']=False;assert not response.startswith(b'-');self.request.shutdown(socket.SHUT_RDWR);return
+        self.request.sendall(response)
+    class ProxyServer(socketserver.ThreadingTCPServer):daemon_threads=True
+    proxy=ProxyServer(('127.0.0.1',0),Proxy);proxy_port=proxy.server_address[1];proxy_thread=threading.Thread(target=proxy.serve_forever,daemon=True);proxy_thread.start()

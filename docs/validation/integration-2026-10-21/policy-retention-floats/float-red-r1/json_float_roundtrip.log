@@ -1,0 +1,25 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 15.26s
+     Running tests\json_float_roundtrip.rs (target\debug\deps\json_float_roundtrip-6ffbf70adf9330ee.exe)
+
+running 2 tests
+test exact_float_parsing_keeps_unique_keys_finite_values_and_protocol_budgets ... ok
+test persisted_finite_float_values_roundtrip_exact_bits_and_canonical_bytes ... FAILED
+
+failures:
+
+---- persisted_finite_float_values_roundtrip_exact_bits_and_canonical_bytes stdout ----
+
+thread 'persisted_finite_float_values_roundtrip_exact_bits_and_canonical_bytes' (31588) panicked at native\tests\json_float_roundtrip.rs:29:9:
+assertion `left == right` failed: {"label":"source 🌍\r\n","weight":-1.1819158364087053e-285}
+  left: 9567474173865971427
+ right: 9567474173865971428
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    persisted_finite_float_values_roundtrip_exact_bits_and_canonical_bytes
+
+test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `--test json_float_roundtrip`

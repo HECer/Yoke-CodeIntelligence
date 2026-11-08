@@ -1,0 +1,51 @@
+{
+  "verifiedAt": "2026-10-19T19:59:21.194108+00:00",
+  "nativeImplementation": false,
+  "requests": [
+    {
+      "name": "web",
+      "url": "https://example.com/",
+      "status": 200,
+      "finalUrl": "https://example.com/",
+      "contentType": "text/html; charset=utf-8",
+      "bytes": 577,
+      "sha256": "25ddf2c883e0d1958ea971d279a7e4f0fd446724ee3db7db19dadabd4a62e484",
+      "resolvedAddresses": [
+        "104.20.23.154",
+        "172.66.147.243",
+        "2606:4700:10::6814:179a",
+        "2606:4700:10::ac42:93f3"
+      ],
+      "seconds": 0.1190541999967536,
+      "success": true
+    },
+    {
+      "name": "arxiv",
+      "url": "https://export.arxiv.org/api/query?id_list=2301.00001&start=0&max_results=1",
+      "success": false,
+      "errorType": "TimeoutError",
+      "status": null,
+      "resolvedAddresses": [
+        "199.232.191.42"
+      ],
+      "seconds": 15.061743700003717
+    },
+    {
+      "name": "pdf",
+      "url": "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+      "status": 200,
+      "finalUrl": "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+      "contentType": "application/pdf; qs=0.001",
+      "bytes": 13264,
+      "sha256": "3df79d34abbca99308e79cb94461c1893582604d68329a41fd4bec1885e6adb4",
+      "resolvedAddresses": [
+        "104.18.22.19",
+        "104.18.23.19",
+        "2606:4700::6812:1613",
+        "2606:4700::6812:1713"
+      ],
+      "seconds": 0.09369499998865649,
+      "success": true
+    }
+  ]
+}

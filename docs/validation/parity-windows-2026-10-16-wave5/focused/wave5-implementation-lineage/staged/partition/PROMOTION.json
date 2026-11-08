@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "status": "ignored_draft_root_release_required",
+  "owner": "A_host_cli_review",
+  "parentAction": "act_mv9ccqo6_7d510f9b5700",
+  "action": "act_mv9zp176_d848c4d9031d",
+  "normalEditsAuthorized": false,
+  "cargoOrNodeExecuted": false,
+  "files": [
+    {
+      "draft": "retrieval_scopes.rs",
+      "destination": "native/src/retrieval_scopes.rs",
+      "kind": "required_sealed_types_and_explicitly_unavailable_stubs",
+      "dependency": "root declares crate-private mod retrieval_scopes in native/src/lib.rs"
+    },
+    {
+      "draft": "retrieval_scopes_tests.rs",
+      "destination": "native/src/retrieval_scopes_tests.rs",
+      "kind": "28_private_real_capture_test_drafts",
+      "dependency": "loaded only by retrieval_scopes.rs cfg(test) path"
+    },
+    {
+      "draft": "monorepo_scopes.rs",
+      "destination": "native/tests/monorepo_scopes.rs",
+      "kind": "3_public_scope_anchor_policy_privacy_test_drafts",
+      "dependency": "B strict scopeMode dispatcher and actual retrievalScope output"
+    }
+  ],
+  "orderedGates": [
+    {
+      "order": 0,
+      "gate": "root finishes current recovery/process repairs and frozen full wave acceptance",
+      "release": "no next-wave normal promotion before explicit root release"
+    },
+    {
+      "order": 1,
+      "gate": "B legacy oracle against original retrieval.rs",
+      "requiredEvidence": "actual successful31-source global control and complete old result digest before any new-mode stub promotion"
+    },
+    {
+      "order": 2,
+      "gate": "coherent root promotion of A/B/C tests and unavailable types/stubs",
+      "command": "cargo test --manifest-path native/Cargo.toml --lib retrieval_scopes::tests::captured_npm_packages_have_distinct_path_ids_and_deepest_owners -- --exact",
+      "expectedInitialFailure": "Internal implementation_unavailable at begin",
+      "scopeOfEvidence": "constructor/partition unavailable, not a deep ownership or authority RED"
+    },
+    {
+      "order": 3,
+      "gate": "root releases bounded constructor/probe implementation after actual causal RED",
+      "requiredEvidence": "same positive test reaches real marker/ownership assertions; pure getter success alone is insufficient"
+    },
+    {
+      "order": 4,
+      "gate": "root runs full private partition target and records each actual assertion",
+      "command": "cargo test --manifest-path native/Cargo.toml --lib retrieval_scopes::tests",
+      "requiredEvidence": "real fixture/setup success before a failure is credited to deep schema, membership, capacity or authority guard; keep assertions unchanged"
+    },
+    {
+      "order": 5,
+      "gate": "fill guard proof gaps with production-coupled exact-boundary tests and real integration controls",
+      "requiredEvidence": "100000 paths/entities,1000000 observations,64000000 graph JSON bytes,4096 canonical path bytes and16000000 ownership bytes exact/+1; no forged unpublished source proof or Snapshot.size"
+    },
+    {
+      "order": 6,
+      "gate": "B ranking/source/document and C profile/auto drivers reach output",
+      "command": "cargo test --manifest-path native/Cargo.toml --test monorepo_scopes",
+      "requiredEvidence": "three real public results, exact original anchors/bindings, malformed-source static policy error without secret source text"
+    },
+    {
+      "order": 7,
+      "gate": "independent implementation review and frozen full Windows acceptance",
+      "requiredEvidence": "all resource guards wired before reads/allocations; hard errors never fallback; shared cache/ledger/deadline no reset; no partition/scorer publication; native absent/global byte oracle unchanged"
+    }
+  ],
+  "futureCapacityFixtures": {
+    "rule": "Test a production preallocation/counting guard with literal exact/+1 inputs, then independently check its connection to genuine captured input. A count-only row never grants source access.",
+    "graphAndSnapshotCounts": "Private bounded guard may accept count data but full begin still validates exact persisted source bindings. Use a real large Engine capture or an existing owned graph constructor for integration; a caller-mutated graph only proves Authority.",
+    "graphJson": "Counting writer must stop before64000001 without building a full JSON Value/string; literal writer-boundary test plus actual Graph stream call-site review.",
+    "canonicalPath": "4096UTF8 exact/+1 is a pure canonical-path validator case; Windows filesystem long-path availability is a separate qualified fixture condition, never a silent skip-as-pass.",
+    "ownershipMap": "Use checked_add charge path_utf8+owner_root_utf8+32 before insertion; pure exact16000000/+1/overflow tests plus real fixture usage sum and nearest-ancestor lookup review.",
+    "deadlineClassification": "Current public Deadline::check returns anyhow text and cancelled() is private. Functional implementation needs a narrow typed read-only status/check boundary or equivalent existing typed cause; no substring classification is authorized."
+  },
+  "uncertified": [
+    "all staged Rust is uncompiled and all tests are unexecuted",
+    "large-capacity gaps are not yet actual test receipts",
+    "exact upstream marker precedence, ordering, quality and performance",
+    "broader package ecosystems and Linux/macOS runtime",
+    "all original353 full-contract certifications remain false"
+  ]
+}

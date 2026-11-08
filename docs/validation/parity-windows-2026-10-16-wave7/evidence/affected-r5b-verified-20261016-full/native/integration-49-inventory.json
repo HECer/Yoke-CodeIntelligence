@@ -1,0 +1,23 @@
+{
+  "historical_view_boundaries": {
+    "executable": "target\\debug\\deps\\historical_view_boundaries-f5d82ba0450ad0f8.exe",
+    "ignored": [],
+    "registered": [
+      "error_oracle::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling",
+      "h06_genuine_primary_controls_precede_malformed_and_nonbijective_declarations",
+      "h06_historical_union_membership_does_not_satisfy_current_primary_binding",
+      "h06_one_hundred_real_primary_declarations_pass_and_one_hundred_one_refuse",
+      "h14_each_of_the_five_genuine_capture_option_fields_is_a_compatibility_boundary",
+      "h14_individually_valid_epoch8_and_epoch9_refuse_cross_epoch_in_both_orders",
+      "h14_normalized_options_replay_identically_including_both_empty_optional_fields"
+    ]
+  },
+  "historical_view_budget_options": {
+    "executable": "target\\debug\\deps\\historical_view_budget_options-0bd7ee08ae66cb3e.exe",
+    "ignored": [],
+    "registered": [
+      "explicit_budgets_above_defaults_are_admitted_and_reported_without_clamping",
+      "zero_budgets_refuse_positive_work_instead_of_meaning_unlimited"
+    ]
+  }
+}

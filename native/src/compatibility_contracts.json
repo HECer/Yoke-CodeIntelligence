@@ -1,0 +1,1611 @@
+{
+  "schemaVersion": 1,
+  "upstreamRevision": "4f2520efb128dd02e66a2302095bdbbb26ddd5a0",
+  "tools": [
+    {
+      "name": "execute_shell_command",
+      "description": "Runs an explicitly host-selected shell profile in the active project with bounded output/deadline. Independent native adapter; edits produce guarded plans. Availability depends on host configuration.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "command": {
+            "type": "string"
+          },
+          "cwd": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "capture_stderr": {
+            "type": "boolean",
+            "default": true
+          },
+          "max_answer_chars": {
+            "type": "integer",
+            "default": -1
+          }
+        },
+        "required": [
+          "command"
+        ],
+        "additionalProperties": false
+      },
+      "facadeMethod": "shell.execute_shell_command",
+      "sessionOperation": null
+    },
+    {
+      "name": "open_dashboard",
+      "description": "Dashboard not implemented. Independent native adapter; edits produce guarded plans. Availability depends on host configuration.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": false
+      },
+      "facadeMethod": "cfg.open_dashboard",
+      "sessionOperation": null
+    },
+    {
+      "name": "activate_project",
+      "description": "Activates a host-registered project; arbitrary roots cannot grant authority. Independent native adapter; edits produce guarded plans. Availability depends on host configuration.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "project": {
+            "type": "string"
+          },
+          "session_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "project",
+          "session_id"
+        ],
+        "additionalProperties": false
+      },
+      "facadeMethod": null,
+      "sessionOperation": "activate"
+    },
+    {
+      "name": "remove_project",
+      "description": "Removes a session registration without deleting source. Independent native adapter; edits produce guarded plans. Availability depends on host configuration.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "project_name": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "project_name"
+        ],
+        "additionalProperties": false
+      },
+      "facadeMethod": null,
+      "sessionOperation": "removeProject"
+    },
+    {
+      "name": "get_current_config",
+      "description": "Returns registered host/session configuration. Independent native adapter; edits produce guarded plans. Availability depends on host configuration.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": false
+      },
+      "facadeMethod": "cfg.get_current_config",
+      "sessionOperation": "configuration"
+    },
+    {
+      "name": "read_file",
+      "description": "Captured source query with native JSON results. Independent native adapter; edits produce guarded plans. Availability depends on host configuration.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "relative_path": {
+            "type": "string"
+          },
+          "start_line": {
+            "type": "integer",
+            "default": 0
+          },
+          "end_line": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "max_answer_chars": {
+            "type": "integer",
+            "default": -1
+          }
+        },
+        "required": [
+          "relative_path"
+        ],
+        "additionalProperties": false
+      },
+      "facadeMethod": "fs.read_file",
+      "sessionOperation": "fs.read"
+    },
+    {
+      "name": "create_text_file",
+      "description": "Guarded create or whole-file replacement plan; originals unchanged. Independent native adapter; edits produce guarded plans. Availability depends on host configuration.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "relative_path": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "relative_path",
+          "content"
+        ],
+        "additionalProperties": false
+      },
+      "facadeMethod": "fs.create_text_file",
+      "sessionOperation": "edit.prepare"
+    },
+    {
+      "name": "list_dir",
+      "description": "Captured source query with native JSON results. Independent native adapter; edits produce guarded plans. Availability depends on host configuration.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "relative_path": {
+            "type": "string"
+          },
+          "recursive": {
+            "type": "boolean"
+          },
+          "skip_ignored_files": {
+            "type": "boolean",
+            "default": false
+          },
+          "max_answer_chars": {
+            "type": "integer",
+            "default": -1
+          }
+        },
+        "required": [
+          "relative_path",
+          "recursive"
+        ],
+        "additionalProperties": false
+      },
+      "facadeMethod": "fs.list_dir",
+      "sessionOperation": "fs.list"
+    },
+    {
+      "name": "find_file",
+      "description": "Captured source query with native JSON results. Independent native adapter; edits produce guarded plans. Availability depends on host configuration.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "file_mask": {
+            "type": "string"
+          },
+          "relative_path": {
+            "type": "string"
+          },
+          "skip_ignored_files": {
+            "type": "boolean",
+            "default": false
+          }
+        },
+        "required": [
+          "file_mask",
+          "relative_path"
+        ],
+        "additionalProperties": false
+      },
+      "facadeMethod": "fs.find_file",
+      "sessionOperation": "fs.glob"
+    },
+    {
+      "name": "replace_content",
+      "description": "Prepares an immutable source-hash-guarded edit plan. Facade line indices are zero-based. Independent native adapter; edits produce guarded plans. Availability depends on host configuration.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "relative_path": {
+            "type": "string"
+          },
+          "needle": {
+            "type": "string"
+          },
+          "repl": {
+            "type": "string"
+          },
+          "mode": {
+            "enum": [
+              "literal",
+              "regex"
+            ]
+          },
+          "allow_multiple_occurrences": {
+            "type": "boolean",
+            "default": false
+          }
+        },
+        "required": [
+          "relative_path",
+          "needle",
+          "repl",
+          "mode"
+        ],
+        "additionalProperties": false
+      },
+      "facadeMethod": "edit.replace_content",
+      "sessionOperation": "edit.prepare"
+    },
+    {
+      "name": "replace_in_files",
+      "description": "Prepares an immutable source-hash-guarded edit plan. Facade line indices are zero-based. Independent native adapter; edits produce guarded plans. Availability depends on host configuration.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "needle": {
+            "type": "string"
+          },
+          "repl": {
+            "type": "string"
+          },
+          "mode": {
+            "enum": [
+              "literal",
+              "regex"
+            ]
+          },
+          "relative_path": {
+            "type": "string",
+            "default": ""
+          },
+          "paths_include_glob": {
+            "type": "string",
+            "default": ""
+          },
+          "paths_exclude_glob": {
+            "type": "string",
+            "default": ""
+          },
+          "dry_run": {
+            "type": "boolean",
+            "default": false
+          },
+          "occurrence_ids": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "expected_count": {
+            "type": "integer",
+            "default": -1
+          },
+          "max_answer_chars": {
+            "type": "integer",
+            "default": -1
+          }
+        },
+        "required": [
+          "needle",
+          "repl",
+          "mode"
+        ],
+        "additionalProperties": false
+      },
+      "facadeMethod": "edit.replace_in_files",
+      "sessionOperation": "edit.prepare"
+    },
+    {
+      "name": "delete_lines",
+      "description": "Prepares an immutable source-hash-guarded edit plan. Facade line indices are zero-based. Independent native adapter; edits produce guarded plans. Availability depends on host configuration.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "relative_path": {
+            "type": "string"
+          },
+          "start_line": {
+            "type": "integer"
+          },
+          "end_line": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "relative_path",
+          "start_line",
+          "end_line"
+        ],
+        "additionalProperties": false
+      },
+      "facadeMethod": "edit.delete_lines",
+      "sessionOperation": "edit.prepare"
+    },
+    {
+      "name": "replace_lines",
+      "description": "Prepares an immutable source-hash-guarded edit plan. Facade line indices are zero-based. Independent native adapter; edits produce guarded plans. Availability depends on host configuration.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "relative_path": {
+            "type": "string"
+          },
+          "start_line": {
+            "type": "integer"
+          },
+          "end_line": {
+            "type": "integer"
+          },
+          "content": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "relative_path",
+          "start_line",
+          "end_line",
+          "content"
+        ],
+        "additionalProperties": false
+      },
+      "facadeMethod": "edit.replace_lines",
+      "sessionOperation": "edit.prepare"
+    },
+    {
+      "name": "insert_at_line",
+      "description": "Prepares an immutable source-hash-guarded edit plan. Facade line indices are zero-based. Independent native adapter; edits produce guarded plans. Availability depends on host configuration.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "relative_path": {
+            "type": "string"
+          },
+          "line": {
+            "type": "integer"
+          },
+          "content": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "relative_path",
+          "line",
+          "content"
+        ],
+        "additionalProperties": false
+      },
+      "facadeMethod": "edit.insert_at_line",
+      "sessionOperation": "edit.prepare"
+    },
+    {
+      "name": "search_for_pattern",
+      "description": "Captured source query with native JSON results. Independent native adapter; edits produce guarded plans. Availability depends on host configuration.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "substring_pattern": {
+            "type": "string"
+          },
+          "context_lines_before": {
+            "type": "integer",
+            "default": 0
+          },
+          "context_lines_after": {
+            "type": "integer",
+            "default": 0
+          },
+          "paths_include_glob": {
+            "type": "string",
+            "default": ""
+          },
+          "paths_exclude_glob": {
+            "type": "string",
+            "default": ""
+          },
+          "relative_path": {
+            "type": "string",
+            "default": ""
+          },
+          "restrict_search_to_code_files": {
+            "type": "boolean",
+            "default": false
+          },
+          "skip_ignored_files": {
+            "type": "boolean",
+            "default": true
+          },
+          "multiline": {
+            "type": "boolean",
+            "default": true
+          },
+          "max_answer_chars": {
+            "type": "integer",
+            "default": -1
+          }
+        },
+        "required": [
+          "substring_pattern"
+        ],
+        "additionalProperties": false
+      },
+      "facadeMethod": "fs.search_for_pattern",
+      "sessionOperation": "fs.search"
+    },
+    {
+      "name": "jet_brains_find_symbol",
+      "description": "Structural name paths/kinds/bodies are exact captured facts; requested hover, dependency enrichment, and custom max_answer_chars bounds are unavailable. Independent native adapter; edits produce guarded plans. Availability depends on host configuration.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "name_path_pattern": {
+            "type": "string"
+          },
+          "depth": {
+            "type": "integer",
+            "default": 0
+          },
+          "relative_path": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "include_body": {
+            "type": "boolean",
+            "default": false
+          },
+          "include_info": {
+            "type": "boolean",
+            "default": false
+          },
+          "search_deps": {
+            "type": "boolean",
+            "default": false
+          },
+          "max_matches": {
+            "type": "integer",
+            "default": -1
+          },
+          "max_answer_chars": {
+            "type": "integer",
+            "default": -1
+          }
+        },
+        "required": [
+          "name_path_pattern"
+        ],
+        "additionalProperties": false
+      },
+      "facadeMethod": "jb.find_symbol",
+      "sessionOperation": "symbols.find"
+    },
+    {
+      "name": "jet_brains_move",
+      "description": "Provider move refactoring is not implemented. Independent native adapter; edits produce guarded plans. Availability depends on host configuration.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "relative_path": {
+            "type": "string"
+          },
+          "name_path": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "target_relative_path": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "target_parent_name_path": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          }
+        },
+        "required": [
+          "relative_path"
+        ],
+        "additionalProperties": false
+      },
+      "facadeMethod": "jb.move",
+      "sessionOperation": null
+    },
+    {
+      "name": "jet_brains_safe_delete",
+      "description": "Bounded symbol deletion checks captured and registered-provider usages before preparing a guarded plan. Omitted/null name_path supports captured-file deletion only with explicit delete_even_if_used=true and propagate=false; file usages are neither checked nor rewritten. Default-safe file deletion, directory deletion and propagation remain unavailable. Independent native adapter; edits produce guarded plans. Availability depends on host configuration.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "relative_path": {
+            "type": "string"
+          },
+          "name_path": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "delete_even_if_used": {
+            "type": "boolean",
+            "default": false
+          },
+          "propagate": {
+            "type": "boolean",
+            "default": false
+          }
+        },
+        "required": [
+          "relative_path"
+        ],
+        "additionalProperties": false
+      },
+      "facadeMethod": "jb.safe_delete",
+      "sessionOperation": null
+    },
+    {
+      "name": "jet_brains_inline_symbol",
+      "description": "Provider inline refactoring is not implemented. Independent native adapter; edits produce guarded plans. Availability depends on host configuration.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "name_path": {
+            "type": "string"
+          },
+          "relative_path": {
+            "type": "string"
+          },
+          "keep_definition": {
+            "type": "boolean",
+            "default": false
+          }
+        },
+        "required": [
+          "name_path",
+          "relative_path"
+        ],
+        "additionalProperties": false
+      },
+      "facadeMethod": "jb.inline_symbol",
+      "sessionOperation": null
+    },
+    {
+      "name": "jet_brains_find_referencing_symbols",
+      "description": "Incoming captured references/calls; heuristic resolution is not exhaustive compiler proof. Provider kind filtering remains an acceptance gap. Independent native adapter; edits produce guarded plans. Availability depends on host configuration.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "name_path": {
+            "type": "string"
+          },
+          "relative_path": {
+            "type": "string"
+          },
+          "max_answer_chars": {
+            "type": "integer",
+            "default": -1
+          }
+        },
+        "required": [
+          "name_path",
+          "relative_path"
+        ],
+        "additionalProperties": false
+      },
+      "facadeMethod": "jb.find_referencing_symbols",
+      "sessionOperation": "symbols.references"
+    },
+    {
+      "name": "jet_brains_get_symbols_overview",
+      "description": "Bounded structural overview (native depth/results); requested file documentation and custom max_answer_chars bounds are unavailable. Independent native adapter; edits produce guarded plans. Availability depends on host configuration.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "relative_path": {
+            "type": "string"
+          },
+          "depth": {
+            "type": "integer",
+            "default": -1
+          },
+          "max_answer_chars": {
+            "type": "integer",
+            "default": -1
+          },
+          "include_file_documentation": {
+            "type": "boolean",
+            "default": false
+          }
+        },
+        "required": [
+          "relative_path"
+        ],
+        "additionalProperties": false
+      },
+      "facadeMethod": "jb.get_symbols_overview",
+      "sessionOperation": "symbols.find"
+    },
+    {
+      "name": "jet_brains_type_hierarchy",
+      "description": "Standard registered LSP super/subtype traversal with opaque item preservation and bounded recursion; proprietary engine parity not certified. Independent native adapter; edits produce guarded plans. Availability depends on host configuration.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "name_path": {
+            "type": "string"
+          },
+          "relative_path": {
+            "type": "string"
+          },
+          "hierarchy_type": {
+            "enum": [
+              "super",
+              "sub",
+              "both"
+            ],
+            "default": "both"
+          },
+          "depth": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": 1
+          },
+          "max_answer_chars": {
+            "type": "integer",
+            "default": -1
+          }
+        },
+        "required": [
+          "name_path",
+          "relative_path"
+        ],
+        "additionalProperties": false
+      },
+      "facadeMethod": "jb.get_type_hierarchy",
+      "sessionOperation": null
+    },
+    {
+      "name": "jet_brains_find_declaration",
+      "description": "JetBrains declaration facade remains unimplemented; lsp.find_declaration worker behavior is separate. Independent native adapter; edits produce guarded plans. Availability depends on host configuration.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "relative_path": {
+            "type": "string"
+          },
+          "regex": {
+            "type": "string"
+          },
+          "include_body": {
+            "type": "boolean",
+            "default": false
+          }
+        },
+        "required": [
+          "relative_path",
+          "regex"
+        ],
+        "additionalProperties": false
+      },
+      "facadeMethod": "jb.find_declaration",
+      "sessionOperation": null
+    },
+    {
+      "name": "jet_brains_find_implementations",
+      "description": "Registered standard LSP implementation query pinned to the selected symbol snapshot. Kind/hover enrichment unavailable. Independent native adapter; edits produce guarded plans. Availability depends on host configuration.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "relative_path": {
+            "type": "string"
+          },
+          "name_path": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "relative_path",
+          "name_path"
+        ],
+        "additionalProperties": false
+      },
+      "facadeMethod": "jb.find_implementations",
+      "sessionOperation": null
+    },
+    {
+      "name": "jet_brains_rename",
+      "description": "Symbol rename through registered standard LSP creates a guarded plan; bounded native symbol comment/text options depend on source syntax. Omitted/null name_path renames a captured file within its current parent; true file occurrence options and directory rename remain unavailable. Independent native adapter; edits produce guarded plans. Availability depends on host configuration.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "relative_path": {
+            "type": "string"
+          },
+          "new_name": {
+            "type": "string"
+          },
+          "name_path": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "rename_in_comments": {
+            "type": "boolean",
+            "default": false
+          },
+          "rename_in_text_occurrences": {
+            "type": "boolean",
+            "default": false
+          }
+        },
+        "required": [
+          "relative_path",
+          "new_name"
+        ],
+        "additionalProperties": false
+      },
+      "facadeMethod": "jb.rename",
+      "sessionOperation": "edit.prepare"
+    },
+    {
+      "name": "jet_brains_debug",
+      "description": "Live proprietary debugger evaluation is not implemented. Independent native adapter; edits produce guarded plans. Availability depends on host configuration.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "expression": {
+            "type": "string"
+          },
+          "repl_key": {
+            "type": "string",
+            "default": "default"
+          }
+        },
+        "required": [
+          "expression"
+        ],
+        "additionalProperties": false
+      },
+      "facadeMethod": "jb.debug_eval",
+      "sessionOperation": null
+    },
+    {
+      "name": "jet_brains_run_inspections",
+      "description": "Proprietary inspection engine is not implemented. Independent native adapter; edits produce guarded plans. Availability depends on host configuration.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "relative_path": {
+            "type": "string"
+          },
+          "min_severity": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "inspection_names": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "start_line": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "end_line": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "max_answer_chars": {
+            "type": "integer",
+            "default": -1
+          }
+        },
+        "required": [
+          "relative_path"
+        ],
+        "additionalProperties": false
+      },
+      "facadeMethod": "jb.run_inspections",
+      "sessionOperation": null
+    },
+    {
+      "name": "jet_brains_list_inspections",
+      "description": "Proprietary inspection registry is not implemented. Independent native adapter; edits produce guarded plans. Availability depends on host configuration.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "language": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "group_path_contains": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "max_answer_chars": {
+            "type": "integer",
+            "default": -1
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "facadeMethod": "jb.list_inspections",
+      "sessionOperation": null
+    },
+    {
+      "name": "write_memory",
+      "description": "Immutable named-note revisions, transactional heads/CAS guards, policy enforcement. Independent native adapter; edits produce guarded plans. Availability depends on host configuration.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "memory_name": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          },
+          "max_chars": {
+            "type": "integer",
+            "default": -1
+          }
+        },
+        "required": [
+          "memory_name",
+          "content"
+        ],
+        "additionalProperties": false
+      },
+      "facadeMethod": "mem.write_memory",
+      "sessionOperation": "notes.write"
+    },
+    {
+      "name": "read_memory",
+      "description": "Immutable named-note revisions, transactional heads/CAS guards, policy enforcement. Independent native adapter; edits produce guarded plans. Availability depends on host configuration.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "memory_name": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "memory_name"
+        ],
+        "additionalProperties": false
+      },
+      "facadeMethod": "mem.read_memory",
+      "sessionOperation": "notes.read"
+    },
+    {
+      "name": "list_memories",
+      "description": "Immutable named-note revisions, transactional heads/CAS guards, policy enforcement. Independent native adapter; edits produce guarded plans. Availability depends on host configuration.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "topic": {
+            "type": "string",
+            "default": ""
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "facadeMethod": "mem.list_memories",
+      "sessionOperation": "notes.list"
+    },
+    {
+      "name": "delete_memory",
+      "description": "Immutable named-note revisions, transactional heads/CAS guards, policy enforcement. Independent native adapter; edits produce guarded plans. Availability depends on host configuration.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "memory_name": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "memory_name"
+        ],
+        "additionalProperties": false
+      },
+      "facadeMethod": "mem.delete_memory",
+      "sessionOperation": "notes.delete"
+    },
+    {
+      "name": "rename_memory",
+      "description": "Immutable named-note revisions, transactional heads/CAS guards, policy enforcement. Independent native adapter; edits produce guarded plans. Availability depends on host configuration.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "old_name": {
+            "type": "string"
+          },
+          "new_name": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "old_name",
+          "new_name"
+        ],
+        "additionalProperties": false
+      },
+      "facadeMethod": "mem.rename_memory",
+      "sessionOperation": "notes.rename"
+    },
+    {
+      "name": "edit_memory",
+      "description": "Immutable named-note revisions, transactional heads/CAS guards, policy enforcement. Independent native adapter; edits produce guarded plans. Availability depends on host configuration.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "memory_name": {
+            "type": "string"
+          },
+          "needle": {
+            "type": "string"
+          },
+          "repl": {
+            "type": "string"
+          },
+          "mode": {
+            "enum": [
+              "literal",
+              "regex"
+            ]
+          },
+          "allow_multiple_occurrences": {
+            "type": "boolean",
+            "default": false
+          }
+        },
+        "required": [
+          "memory_name",
+          "needle",
+          "repl",
+          "mode"
+        ],
+        "additionalProperties": false
+      },
+      "facadeMethod": "mem.edit_memory",
+      "sessionOperation": "notes.edit"
+    },
+    {
+      "name": "list_queryable_projects",
+      "description": "Returns registered project metadata; symbol_access capability filtering remains an acceptance gap. Independent native adapter; edits produce guarded plans. Availability depends on host configuration.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "symbol_access": {
+            "type": "boolean",
+            "default": true
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "facadeMethod": "ext.list_projects",
+      "sessionOperation": "listProjects"
+    },
+    {
+      "name": "query_project",
+      "description": "Approved native source/status tools query a registered external project without active-project mutation. Independent native adapter; edits produce guarded plans. Availability depends on host configuration.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "project_name": {
+            "type": "string"
+          },
+          "tool_name": {
+            "type": "string"
+          },
+          "tool_params_json": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "project_name",
+          "tool_name",
+          "tool_params_json"
+        ],
+        "additionalProperties": false
+      },
+      "facadeMethod": null,
+      "sessionOperation": "queryProject"
+    },
+    {
+      "name": "serena_repl",
+      "description": "Persistent trusted Python cells compose declared facade methods and approved native session calls. Independent native adapter; edits produce guarded plans. Availability depends on host configuration.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "session_id": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "session_id",
+          "code"
+        ],
+        "additionalProperties": false
+      },
+      "facadeMethod": null,
+      "sessionOperation": null
+    },
+    {
+      "name": "restart_language_server",
+      "description": "Persistent provider restart lifecycle is not implemented. Independent native adapter; edits produce guarded plans. Availability depends on host configuration.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": false
+      },
+      "facadeMethod": "lsp.restart_language_server",
+      "sessionOperation": null
+    },
+    {
+      "name": "get_symbols_overview",
+      "description": "Bounded structural overview (native depth/results); requested file documentation and custom max_answer_chars bounds are unavailable. Independent native adapter; edits produce guarded plans. Availability depends on host configuration.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "relative_path": {
+            "type": "string"
+          },
+          "depth": {
+            "type": "integer",
+            "default": -1
+          },
+          "max_answer_chars": {
+            "type": "integer",
+            "default": -1
+          }
+        },
+        "required": [
+          "relative_path"
+        ],
+        "additionalProperties": false
+      },
+      "facadeMethod": "lsp.get_symbols_overview",
+      "sessionOperation": "symbols.find"
+    },
+    {
+      "name": "find_symbol",
+      "description": "Structural name paths/kinds/bodies are exact captured facts; requested hover, dependency enrichment, and custom max_answer_chars bounds are unavailable. Independent native adapter; edits produce guarded plans. Availability depends on host configuration.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "name_path_pattern": {
+            "type": "string"
+          },
+          "depth": {
+            "type": "integer",
+            "default": 0
+          },
+          "relative_path": {
+            "type": "string",
+            "default": ""
+          },
+          "include_body": {
+            "type": "boolean",
+            "default": false
+          },
+          "include_info": {
+            "type": "boolean",
+            "default": false
+          },
+          "include_kinds": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "default": []
+          },
+          "exclude_kinds": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "default": []
+          },
+          "substring_matching": {
+            "type": "boolean",
+            "default": false
+          },
+          "max_matches": {
+            "type": "integer",
+            "default": -1
+          },
+          "max_answer_chars": {
+            "type": "integer",
+            "default": -1
+          }
+        },
+        "required": [
+          "name_path_pattern"
+        ],
+        "additionalProperties": false
+      },
+      "facadeMethod": "lsp.find_symbol",
+      "sessionOperation": "symbols.find"
+    },
+    {
+      "name": "find_referencing_symbols",
+      "description": "Incoming captured references/calls; heuristic resolution is not exhaustive compiler proof. Provider kind filtering remains an acceptance gap. Independent native adapter; edits produce guarded plans. Availability depends on host configuration.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "name_path": {
+            "type": "string"
+          },
+          "relative_path": {
+            "type": "string"
+          },
+          "include_kinds": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "default": []
+          },
+          "exclude_kinds": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "default": []
+          },
+          "max_answer_chars": {
+            "type": "integer",
+            "default": -1
+          }
+        },
+        "required": [
+          "name_path",
+          "relative_path"
+        ],
+        "additionalProperties": false
+      },
+      "facadeMethod": "lsp.find_referencing_symbols",
+      "sessionOperation": "symbols.references"
+    },
+    {
+      "name": "find_implementations",
+      "description": "Registered standard LSP implementation query pinned to the selected symbol snapshot. Kind/hover enrichment unavailable. Independent native adapter; edits produce guarded plans. Availability depends on host configuration.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "name_path": {
+            "type": "string"
+          },
+          "relative_path": {
+            "type": "string"
+          },
+          "include_info": {
+            "type": "boolean",
+            "default": false
+          },
+          "include_kinds": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "default": []
+          },
+          "exclude_kinds": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "default": []
+          },
+          "max_answer_chars": {
+            "type": "integer",
+            "default": -1
+          }
+        },
+        "required": [
+          "name_path",
+          "relative_path"
+        ],
+        "additionalProperties": false
+      },
+      "facadeMethod": "lsp.find_implementations",
+      "sessionOperation": null
+    },
+    {
+      "name": "find_declaration",
+      "description": "Authorized persistent Python worker runs MULTILINE/DOTALL regex including lookbehind/named captures; exactly one capture/occurrence, then source-pinned registered LSP declaration. Pure adapter requires worker. Independent native adapter; edits produce guarded plans. Availability depends on host configuration.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "relative_path": {
+            "type": "string"
+          },
+          "regex": {
+            "type": "string"
+          },
+          "containing_symbol_name_path": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "include_body": {
+            "type": "boolean",
+            "default": false
+          },
+          "include_info": {
+            "type": "boolean",
+            "default": false
+          }
+        },
+        "required": [
+          "relative_path",
+          "regex"
+        ],
+        "additionalProperties": false
+      },
+      "facadeMethod": "lsp.find_declaration",
+      "sessionOperation": null
+    },
+    {
+      "name": "get_diagnostics_for_file",
+      "description": "Registered LSP pull or exact-version push diagnostics. Nondefault facade line restrictions unavailable; native LSP options are separate. Independent native adapter; edits produce guarded plans. Availability depends on host configuration.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "relative_path": {
+            "type": "string"
+          },
+          "start_line": {
+            "type": "integer",
+            "default": 0
+          },
+          "end_line": {
+            "type": "integer",
+            "default": -1
+          },
+          "min_severity": {
+            "type": "integer",
+            "default": 4
+          },
+          "max_answer_chars": {
+            "type": "integer",
+            "default": -1
+          }
+        },
+        "required": [
+          "relative_path"
+        ],
+        "additionalProperties": false
+      },
+      "facadeMethod": "lsp.get_diagnostics_for_file",
+      "sessionOperation": null
+    },
+    {
+      "name": "get_diagnostics_for_symbol",
+      "description": "Registered diagnostics pinned and filtered to symbol body. Cross-reference diagnostics unavailable. Independent native adapter; edits produce guarded plans. Availability depends on host configuration.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "name_path": {
+            "type": "string"
+          },
+          "reference_file": {
+            "type": "string",
+            "default": ""
+          },
+          "check_symbol_references": {
+            "type": "boolean",
+            "default": false
+          },
+          "min_severity": {
+            "type": "integer",
+            "default": 4
+          },
+          "max_answer_chars": {
+            "type": "integer",
+            "default": -1
+          }
+        },
+        "required": [
+          "name_path"
+        ],
+        "additionalProperties": false
+      },
+      "facadeMethod": "lsp.get_diagnostics_for_symbol",
+      "sessionOperation": null
+    },
+    {
+      "name": "replace_symbol_body",
+      "description": "Prepares an immutable source-hash-guarded edit plan. Facade line indices are zero-based. Independent native adapter; edits produce guarded plans. Availability depends on host configuration.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "name_path": {
+            "type": "string"
+          },
+          "relative_path": {
+            "type": "string"
+          },
+          "body": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name_path",
+          "relative_path",
+          "body"
+        ],
+        "additionalProperties": false
+      },
+      "facadeMethod": "edit.replace_symbol_body",
+      "sessionOperation": "edit.prepare"
+    },
+    {
+      "name": "insert_after_symbol",
+      "description": "Prepares an immutable source-hash-guarded edit plan. Facade line indices are zero-based. Independent native adapter; edits produce guarded plans. Availability depends on host configuration.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "name_path": {
+            "type": "string"
+          },
+          "relative_path": {
+            "type": "string"
+          },
+          "body": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name_path",
+          "relative_path",
+          "body"
+        ],
+        "additionalProperties": false
+      },
+      "facadeMethod": "edit.insert_after_symbol",
+      "sessionOperation": "edit.prepare"
+    },
+    {
+      "name": "insert_before_symbol",
+      "description": "Prepares an immutable source-hash-guarded edit plan. Facade line indices are zero-based. Independent native adapter; edits produce guarded plans. Availability depends on host configuration.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "name_path": {
+            "type": "string"
+          },
+          "relative_path": {
+            "type": "string"
+          },
+          "body": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name_path",
+          "relative_path",
+          "body"
+        ],
+        "additionalProperties": false
+      },
+      "facadeMethod": "edit.insert_before_symbol",
+      "sessionOperation": "edit.prepare"
+    },
+    {
+      "name": "rename_symbol",
+      "description": "Registered provider semantic rename returns immutable source-guarded plans; originals unchanged until explicit native apply. Independent native adapter; edits produce guarded plans. Availability depends on host configuration.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "name_path": {
+            "type": "string"
+          },
+          "relative_path": {
+            "type": "string"
+          },
+          "new_name": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name_path",
+          "relative_path",
+          "new_name"
+        ],
+        "additionalProperties": false
+      },
+      "facadeMethod": "lsp.rename_symbol",
+      "sessionOperation": "edit.prepare"
+    },
+    {
+      "name": "safe_delete_symbol",
+      "description": "Semantic safe-delete is not implemented. Independent native adapter; edits produce guarded plans. Availability depends on host configuration.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "name_path_pattern": {
+            "type": "string"
+          },
+          "relative_path": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name_path_pattern",
+          "relative_path"
+        ],
+        "additionalProperties": false
+      },
+      "facadeMethod": "lsp.safe_delete_symbol",
+      "sessionOperation": null
+    },
+    {
+      "name": "onboarding",
+      "description": "Native project onboarding state and source-bound metadata. Independent native adapter; edits produce guarded plans. Availability depends on host configuration.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": false
+      },
+      "facadeMethod": "mem.onboarding",
+      "sessionOperation": "onboarding"
+    },
+    {
+      "name": "initial_instructions",
+      "description": "Native session context, modes, guarded workflow instructions. Independent native adapter; edits produce guarded plans. Availability depends on host configuration.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": false
+      },
+      "facadeMethod": null,
+      "sessionOperation": "initialInstructions"
+    },
+    {
+      "name": "serena_info",
+      "description": "Native runtime/session capability metadata; exact upstream info formatting not reproduced. Independent native adapter; edits produce guarded plans. Availability depends on host configuration.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "topic": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "topic"
+        ],
+        "additionalProperties": false
+      },
+      "facadeMethod": null,
+      "sessionOperation": "configuration"
+    }
+  ]
+}

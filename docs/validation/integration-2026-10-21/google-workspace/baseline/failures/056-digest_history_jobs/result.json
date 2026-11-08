@@ -1,0 +1,30 @@
+{
+  "group": "digest_history_jobs",
+  "index": 56,
+  "freeBytesBefore": 3704725504,
+  "commands": [
+    {
+      "name": "compile",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--test",
+        "digest_history_jobs",
+        "--no-run",
+        "--message-format=json-render-diagnostics"
+      ],
+      "exitCode": 101,
+      "seconds": 1.735614799981704
+    }
+  ],
+  "deletedNewTestArtifacts": [],
+  "testExecutables": [],
+  "allChecksPassed": false,
+  "sourceUnchanged": true
+}

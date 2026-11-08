@@ -1,0 +1,314 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-19T02:59:07.073169+00:00",
+  "parentCommit": "36d7def4ea057bce03b80c3a5439a97ec914ff9e",
+  "accepted": false,
+  "allLocalChecksPassed": false,
+  "nativeTotals": {
+    "passed": 573,
+    "failed": 2,
+    "ignored": 7
+  },
+  "nativeResultGroups": 17,
+  "summary": {
+    "allChecksPassed": false,
+    "sourceUnchanged": true,
+    "checks": [
+      {
+        "gate": "format",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "fmt",
+          "--all",
+          "--check"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 4.443,
+        "recordedAt": "2026-10-19T02:52:30.827805+00:00",
+        "resultGroups": []
+      },
+      {
+        "gate": "native-store-and-publication",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "test",
+          "--locked",
+          "--no-fail-fast",
+          "-j2",
+          "--lib",
+          "--test",
+          "store_cancellation",
+          "--test",
+          "store_read_only",
+          "--test",
+          "store_identity",
+          "--test",
+          "store_review",
+          "--test",
+          "ledger",
+          "--test",
+          "ledger_admission_review",
+          "--test",
+          "ledger_batches",
+          "--test",
+          "ledger_batches_review",
+          "--test",
+          "federation",
+          "--test",
+          "federation_http",
+          "--test",
+          "federation_receipt_bounds",
+          "--test",
+          "federation_epochs",
+          "--test",
+          "maintenance",
+          "--test",
+          "github_app_digest",
+          "--test",
+          "github_app_digest_cli",
+          "--test",
+          "github_app_digest_mapping",
+          "--",
+          "--test-threads=2"
+        ],
+        "exitCode": 101,
+        "elapsedSeconds": 227.323,
+        "recordedAt": "2026-10-19T02:56:18.150895+00:00",
+        "resultGroups": [
+          {
+            "passed": 403,
+            "failed": 0,
+            "ignored": 7
+          },
+          {
+            "passed": 12,
+            "failed": 1,
+            "ignored": 0
+          },
+          {
+            "passed": 7,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 16,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 35,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 38,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 13,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 5,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 6,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 3,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 11,
+            "failed": 1,
+            "ignored": 0
+          },
+          {
+            "passed": 9,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 4,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 7,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          }
+        ]
+      },
+      {
+        "gate": "clippy",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "clippy",
+          "--workspace",
+          "--all-targets",
+          "--locked",
+          "--keep-going",
+          "-j2",
+          "--",
+          "-D",
+          "warnings"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 79.068,
+        "recordedAt": "2026-10-19T02:57:37.219777+00:00",
+        "resultGroups": []
+      },
+      {
+        "gate": "typescript-typecheck",
+        "command": [
+          "npm.cmd",
+          "run",
+          "typecheck"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 4.519,
+        "recordedAt": "2026-10-19T02:57:41.739690+00:00",
+        "resultGroups": []
+      },
+      {
+        "gate": "typescript-tests",
+        "command": [
+          "npm.cmd",
+          "test"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 58.035,
+        "recordedAt": "2026-10-19T02:58:39.775414+00:00",
+        "resultGroups": []
+      }
+    ],
+    "scope": "Scoped Windows Store/ledger/federation/maintenance/digest checks. No whole-native/platform acceptance. Any setup failures remain recorded; no fixture is gated away."
+  },
+  "findings": [
+    "Original real SQLite regressions fail before correction: lock cancellation waits 2.2579239s after its signal; expired serialization is followed by 632.1099ms of additional lock waiting. A separate uncontended record publication cancels during serialization yet is admitted before correction.",
+    "Connection-owned SQLite client data now holds the policy. Callback lookup uses the owning connection, not a Store address; removal/closure fails closed. No global/thread-local callback dispatch, SQL from callbacks, dependency upgrade or automatic transaction retry.",
+    "Checked Store lock waits consult actual monotonic time and the original host cancellation flags before and after each requested <=2ms sleep. Ledger admission keeps that policy. Generic record/create/replace/delete check again after serialization.",
+    "Nine integration tests cover real locked cancellation, serialization exhaustion, three uncontended cancelled record mutations, ledger accounting recovery, brief lock success with exact Unicode data and moving a connection out of a dropped Store to another thread. A library test removes and reinstalls the registration.",
+    "All 17 selected native result groups execute with no-fail-fast. The only two failures are unchanged real symlink fixture creation OS1314 in federation and maintenance; no security test is bypassed.",
+    "Original red/initial-green logs are development traces. The final unchanged-source manifest is the authoritative final validation input set. Constructor schema setup, other raw SQLite connections, hosted platform acceptance and broader STATUS/R1-R9 remain separate gates."
+  ],
+  "references": [
+    "https://sqlite.org/c3ref/busy_handler.html",
+    "https://sqlite.org/c3ref/get_clientdata.html"
+  ],
+  "artifacts": [
+    {
+      "path": "before-fix-receipt.json",
+      "bytes": 267,
+      "sha256": "eda344579006d5af6872e4d1288754862588805e62019da52a39561613c96b37"
+    },
+    {
+      "path": "before-fix.log",
+      "bytes": 1479,
+      "sha256": "ab0c37423d9449f7e576be6e8670dd703ee7902fdf939570833f518cd46705e3"
+    },
+    {
+      "path": "final/clippy.log",
+      "bytes": 172,
+      "sha256": "da70a0219c05c21c72aba20e508cbe222af9a18667fc2bf13a9ae877574c8c4a"
+    },
+    {
+      "path": "final/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "final/native-store-and-publication.log",
+      "bytes": 66504,
+      "sha256": "4e10c22c4ca66309f9e977f217b2a8cfaba85b7ee247ac247f18b52cba986690"
+    },
+    {
+      "path": "final/receipts.json",
+      "bytes": 3743,
+      "sha256": "d1244b248b65c2dd76295f043f1a047366a50c364ace50829784182fe8e6b764"
+    },
+    {
+      "path": "final/source-after.json",
+      "bytes": 66038,
+      "sha256": "b766e139bf8851456673e1506ed7e7f9851e7779e08828ced77e65abe4c6604e"
+    },
+    {
+      "path": "final/source-before.json",
+      "bytes": 66038,
+      "sha256": "b766e139bf8851456673e1506ed7e7f9851e7779e08828ced77e65abe4c6604e"
+    },
+    {
+      "path": "final/summary.json",
+      "bytes": 4380,
+      "sha256": "d775a16841991f27bcbb1c467772f3bfc92261ee66cc55d5bc3c5173529fa4a2"
+    },
+    {
+      "path": "final/typescript-tests.log",
+      "bytes": 25029,
+      "sha256": "318b18149988c30a7f80bd2e4ae1c9ef0c414128a9425bb09f8ce62ef712f57a"
+    },
+    {
+      "path": "final/typescript-typecheck.log",
+      "bytes": 101,
+      "sha256": "30ef9ce16cf042ab6f160e0a76c1fbfe22f02a3c3a3659ee62863ffc1efdbfdf"
+    },
+    {
+      "path": "initial-green-receipt.json",
+      "bytes": 241,
+      "sha256": "31b11c23c20153af040efe4ac37787ac8bc535c93a9e605e771c70d37e282d73"
+    },
+    {
+      "path": "initial-green.log",
+      "bytes": 1075,
+      "sha256": "64baebcb1a9e5174c822dd60f92d99584d2d1444bdbdb3ab7b2d6d166b78a7dd"
+    },
+    {
+      "path": "publication-before-fix-receipt.json",
+      "bytes": 277,
+      "sha256": "00bb0deb6090a72cac2dbffd92ddd101df433d3319ee635b682848cfd746fb50"
+    },
+    {
+      "path": "publication-before-fix.log",
+      "bytes": 1011,
+      "sha256": "9789727f5a251970eb309ee2441e7d5cf27ae9342cd594bdc6449fd93407ac7c"
+    },
+    {
+      "path": "run-local-validation.py",
+      "bytes": 2948,
+      "sha256": "acd1c5b49d8ca8ea87e8dbd8aebe2426e1d738a58f80917d4c8361c5382be2e5"
+    },
+    {
+      "path": "runtime-change.patch",
+      "bytes": 13320,
+      "sha256": "2e610d0deb3fff9d51f5ff1093c01922b2df0bde61906f7f581e3a74dc1de0dd"
+    },
+    {
+      "path": "store_busy.rs",
+      "bytes": 5045,
+      "sha256": "d2dc2a2dfd17d8707d07bc385c5a081ecbca0578adddc28a96bf88015a7a5f14"
+    }
+  ]
+}

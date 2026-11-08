@@ -1,0 +1,25 @@
+    Finished `test` profile [unoptimized] target(s) in 1.00s
+     Running tests\collection_registry_access.rs (target\debug\deps\collection_registry_access-95b2fe4353a0916e.exe)
+
+running 7 tests
+test readonly_guard_excludes_independent_writers_and_refuses_uncheckpointed_wal ... ok
+test readonly_uri_preserves_unicode_spaces_and_literal_uri_characters ... ok
+test read_only_native_archive_survives_original_source_deletion_without_writes ... ok
+test unknown_registry_open_does_not_create_state ... ok
+test native_and_checked_view_metadata_keep_distinct_kinds_and_reject_unsafe_legacy_presentation ... ok
+test stale_and_absent_cas_never_replace_existing_binding ... ok
+test foreign_metadata_requires_fresh_current_grants_for_each_inspection ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.78s
+
+     Running tests\collections_cli.rs (target\debug\deps\collections_cli-5195854edf0b580c.exe)
+
+running 5 tests
+test collection_registration_requires_separate_authority_before_creating_any_state ... ok
+test unknown_collection_cli_registry_does_not_create_files ... ok
+test archived_collection_cli_queries_without_opening_a_source_project ... ok
+test collection_cli_registration_is_create_only_or_exact_compare_and_swap ... ok
+test foreign_collection_cli_reloads_current_host_grants_and_keeps_source_only_distinct ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.06s
+

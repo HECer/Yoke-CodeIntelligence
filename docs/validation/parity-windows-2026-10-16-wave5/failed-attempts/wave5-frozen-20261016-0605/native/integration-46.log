@@ -1,0 +1,35 @@
+    Finished `test` profile [unoptimized] target(s) in 1.06s
+     Running tests\host_install_cli.rs (target\debug\deps\host_install_cli-580c103695fa8de9.exe)
+
+running 11 tests
+test host_install_cli_initialization_permission_precedes_selection_and_plan_reads ... ok
+test host_install_cli_initialization_refuses_foreign_scaffold_bytes_without_disclosing_them ... ok
+test host_install_cli_initialization_admits_a_valid_output_budget_before_writing_state ... ok
+test host_install_cli_initialization_output_failure_identifies_its_durable_result ... ok
+test host_install_cli_initialization_repairs_an_owned_scaffold_and_replays_without_source_changes ... ok
+test host_install_cli_planning_and_status_are_pure_and_keep_human_text_private ... ok
+test host_install_cli_rejects_ambiguous_selection_and_small_write_output_before_mutation ... ok
+test host_install_cli_write_permission_precedes_selection_or_plan_reads ... ok
+test host_install_cli_valid_output_budget_is_admitted_before_any_host_state_or_file_write ... ok
+test host_install_cli_output_failure_identifies_the_committed_result_and_can_be_retried ... ok
+test host_install_cli_installs_and_uninstalls_only_its_owned_fragment ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.47s
+
+     Running tests\host_output_disposition.rs (target\debug\deps\host_output_disposition-9c7bbb14919ba5e0.exe)
+
+running 11 tests
+test armed_empty_output_is_deleted_after_real_process_exit ... ok
+test disposition_probe_worker ... ignored, spawned only by owned-temp disposition capability tests
+test armed_empty_output_is_deleted_after_real_process_kill ... ok
+test disarmed_output_can_be_explicitly_deleted_by_extended_delete_on_the_same_handle ... ok
+test disarmed_output_can_be_explicitly_deleted_by_legacy_boolean_on_the_same_handle ... ok
+test extended_zero_flags_are_characterized_after_exit_and_kill ... ok
+test legacy_false_does_not_disarm_creation_time_delete_on_close ... ok
+test required_same_handle_disarm_preserves_subsequent_bytes_after_real_process_exit ... ok
+test required_same_handle_disarm_survives_real_process_exit ... ok
+test required_same_handle_disarm_preserves_subsequent_bytes_after_real_process_kill ... ok
+test required_same_handle_disarm_survives_real_process_kill ... ok
+
+test result: ok. 10 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.09s
+

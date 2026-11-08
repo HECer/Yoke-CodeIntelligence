@@ -1,0 +1,985 @@
+{
+  "schemaVersion": 1,
+  "kind": "mixed_meaning_composition_validation_v1",
+  "sourceCommit": "789d50bb0d9a72a3ab97a1cc9f7e8eab91493203",
+  "runtimeCommit": "6702727d303cf6088a8b03702cfc76fddc434ec3",
+  "parentCommit": "87be1a19ae1556099352fc7400034fdd109acae6",
+  "finalNative": {
+    "sourceUnchanged": true,
+    "inputs": 752,
+    "commands": [
+      {
+        "name": "native",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "test",
+          "--workspace",
+          "--locked",
+          "-j",
+          "2",
+          "--target-dir",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+          "--no-fail-fast",
+          "--lib",
+          "--test",
+          "mixed_meaning_composition",
+          "--test",
+          "mixed_meaning_queries",
+          "--test",
+          "mixed_meaning_provider",
+          "--test",
+          "mixed_meaning_claims",
+          "--test",
+          "mixed_view_cli",
+          "--test",
+          "mixed_pdf_view",
+          "--test",
+          "document_graph",
+          "--test",
+          "document_graph_review",
+          "--test",
+          "derived_graph_mixed_budget",
+          "--test",
+          "view_comparison_cli",
+          "--test",
+          "historical_view_comparison",
+          "--test",
+          "meaning_build",
+          "--test",
+          "meaning_graph",
+          "--test",
+          "meaning_protocol",
+          "--test",
+          "meaning_view",
+          "--test",
+          "meaning_join_cli",
+          "--test",
+          "meaning_retention_review",
+          "--test",
+          "agent_documentation",
+          "--test",
+          "protocol_connection",
+          "--",
+          "--test-threads=1"
+        ],
+        "exitCode": 0,
+        "seconds": 433.43303709998145,
+        "totals": {
+          "passed": 630,
+          "failed": 0,
+          "ignored": 7
+        },
+        "groups": 20,
+        "failures": []
+      },
+      {
+        "name": "format",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "fmt",
+          "--all",
+          "--check"
+        ],
+        "exitCode": 0,
+        "seconds": 5.174398300005123
+      },
+      {
+        "name": "build",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "build",
+          "--workspace",
+          "--locked",
+          "-j",
+          "2",
+          "--target-dir",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+          "--bin",
+          "yoke"
+        ],
+        "exitCode": 0,
+        "seconds": 0.5899270999943838
+      },
+      {
+        "name": "clippy",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "clippy",
+          "--workspace",
+          "--locked",
+          "-j",
+          "2",
+          "--target-dir",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+          "--all-targets",
+          "--",
+          "-D",
+          "warnings"
+        ],
+        "exitCode": 0,
+        "seconds": 93.08338139997795
+      }
+    ],
+    "allChecksPassed": true,
+    "wholeNativeRerun": false
+  },
+  "integrated": {
+    "sourceUnchanged": true,
+    "frozenInputs": 754,
+    "commands": [
+      {
+        "name": "format",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "fmt",
+          "--all",
+          "--check"
+        ],
+        "exitCode": 0,
+        "seconds": 5.11
+      },
+      {
+        "name": "python-contracts",
+        "command": [
+          "C:\\Python314\\python.exe",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "scripts/tests",
+          "-v"
+        ],
+        "exitCode": 0,
+        "seconds": 0.95
+      },
+      {
+        "name": "typecheck",
+        "command": [
+          "npm.cmd",
+          "run",
+          "typecheck"
+        ],
+        "exitCode": 0,
+        "seconds": 4.18
+      },
+      {
+        "name": "tests",
+        "command": [
+          "npm.cmd",
+          "test"
+        ],
+        "exitCode": 0,
+        "seconds": 56.34
+      }
+    ],
+    "allChecksPassed": true,
+    "wholeNativeRerun": false
+  },
+  "newDefaultCases": 8,
+  "initialResult": {
+    "sourceUnchanged": true,
+    "inputs": 751,
+    "commands": [
+      {
+        "name": "native",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "test",
+          "--workspace",
+          "--locked",
+          "-j",
+          "2",
+          "--target-dir",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+          "--no-fail-fast",
+          "--test",
+          "mixed_meaning_composition",
+          "--test",
+          "mixed_meaning_queries",
+          "--test",
+          "mixed_meaning_provider",
+          "--",
+          "--test-threads=1"
+        ],
+        "exitCode": 101,
+        "seconds": 109.91851069999393,
+        "totals": {
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0
+        },
+        "groups": 0,
+        "failures": []
+      }
+    ],
+    "allChecksPassed": false,
+    "wholeNativeRerun": false
+  },
+  "initialExecutedGroups": 0,
+  "greenResult": {
+    "sourceUnchanged": true,
+    "inputs": 752,
+    "commands": [
+      {
+        "name": "native",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "test",
+          "--workspace",
+          "--locked",
+          "-j",
+          "2",
+          "--target-dir",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+          "--no-fail-fast",
+          "--test",
+          "mixed_meaning_composition",
+          "--test",
+          "mixed_meaning_queries",
+          "--test",
+          "mixed_meaning_provider",
+          "--",
+          "--test-threads=1"
+        ],
+        "exitCode": 0,
+        "seconds": 46.38681019999785,
+        "totals": {
+          "passed": 27,
+          "failed": 0,
+          "ignored": 0
+        },
+        "groups": 3,
+        "failures": []
+      }
+    ],
+    "allChecksPassed": true,
+    "wholeNativeRerun": false
+  },
+  "sourceVariants": [
+    {
+      "phase": "feature-r1",
+      "path": "native/README.md",
+      "sha256": "46fc22cb2f043ebc117cc31b25eee37dd152e1321d7a35e9c70abca217a57367",
+      "origin": "original_phase_capture"
+    },
+    {
+      "phase": "feature-r1",
+      "path": "native/docs/mixed-meaning-queries.md",
+      "sha256": "00efd526a552feafc88cf0adcabe463384b457d241b4c80379cf65f20c419781",
+      "origin": "original_phase_capture"
+    },
+    {
+      "phase": "feature-r1",
+      "path": "native/src/mixed_meaning_cli.rs",
+      "sha256": "cd16b207a105939eaf977beb1689e7552d57f0385716eb2bc6ab247d8293905e",
+      "origin": "original_phase_capture"
+    },
+    {
+      "phase": "feature-r1",
+      "path": "native/src/mixed_meaning_composition.rs",
+      "sha256": "1f4a228c31716e8d9a036a54fd2329672a6adc782095ec4d1c9bb704b0c034e9",
+      "origin": "original_phase_capture"
+    },
+    {
+      "phase": "feature-r1",
+      "path": "native/src/mixed_meaning_provider.rs",
+      "sha256": "a92bd23cbcd91e44bbfe16e2caf6660a17cf31f7344a7bf403a760041438f79d",
+      "origin": "original_phase_capture"
+    },
+    {
+      "phase": "feature-r1",
+      "path": "native/src/mixed_meaning_query.rs",
+      "sha256": "b2264ea5aa1a3169cb0685e21441da004123ab3b2bbef88e38f70294a43041d9",
+      "origin": "original_phase_capture"
+    },
+    {
+      "phase": "feature-r1",
+      "path": "native/tests/mixed_meaning_composition.rs",
+      "sha256": "0c0ee030ea3bdef602c0b5aa4c5a867d5a5610352da1539962618c670627a95c",
+      "origin": "original_phase_capture"
+    },
+    {
+      "phase": "green-r1",
+      "path": "native/README.md",
+      "sha256": "b27aa8fab2a641212b3603afa8551d48152aa2e6549ced03bcdd247084cbf529",
+      "origin": "original_phase_capture"
+    },
+    {
+      "phase": "green-r1",
+      "path": "native/docs/mixed-meaning-composition.md",
+      "sha256": "7db534c9abdf8900ffc954955518e7fbb6996bb65945b4f1ed0d514d75b7ea1a",
+      "origin": "original_phase_capture"
+    },
+    {
+      "phase": "green-r1",
+      "path": "native/docs/mixed-meaning-queries.md",
+      "sha256": "d39bdfdab8b944082ad3b70c300c36319528b279d096a7e3161e3fefd45b5b94",
+      "origin": "original_phase_capture"
+    },
+    {
+      "phase": "green-r1",
+      "path": "native/src/mixed_meaning_cli.rs",
+      "sha256": "cd16b207a105939eaf977beb1689e7552d57f0385716eb2bc6ab247d8293905e",
+      "origin": "original_phase_capture"
+    },
+    {
+      "phase": "green-r1",
+      "path": "native/src/mixed_meaning_composition.rs",
+      "sha256": "1f4a228c31716e8d9a036a54fd2329672a6adc782095ec4d1c9bb704b0c034e9",
+      "origin": "original_phase_capture"
+    },
+    {
+      "phase": "green-r1",
+      "path": "native/src/mixed_meaning_provider.rs",
+      "sha256": "a92bd23cbcd91e44bbfe16e2caf6660a17cf31f7344a7bf403a760041438f79d",
+      "origin": "original_phase_capture"
+    },
+    {
+      "phase": "green-r1",
+      "path": "native/src/mixed_meaning_query.rs",
+      "sha256": "b2264ea5aa1a3169cb0685e21441da004123ab3b2bbef88e38f70294a43041d9",
+      "origin": "original_phase_capture"
+    },
+    {
+      "phase": "green-r1",
+      "path": "native/tests/mixed_meaning_composition.rs",
+      "sha256": "87f720f5ae304bff5ec1445d799b6ffff90d3ba2b535c9850fba2ee79a08f62a",
+      "origin": "original_phase_capture"
+    },
+    {
+      "phase": "final",
+      "path": "native/README.md",
+      "sha256": "b27aa8fab2a641212b3603afa8551d48152aa2e6549ced03bcdd247084cbf529",
+      "origin": "original_phase_capture"
+    },
+    {
+      "phase": "final",
+      "path": "native/docs/mixed-meaning-composition.md",
+      "sha256": "7db534c9abdf8900ffc954955518e7fbb6996bb65945b4f1ed0d514d75b7ea1a",
+      "origin": "original_phase_capture"
+    },
+    {
+      "phase": "final",
+      "path": "native/docs/mixed-meaning-queries.md",
+      "sha256": "d39bdfdab8b944082ad3b70c300c36319528b279d096a7e3161e3fefd45b5b94",
+      "origin": "original_phase_capture"
+    },
+    {
+      "phase": "final",
+      "path": "native/src/mixed_meaning_cli.rs",
+      "sha256": "cd16b207a105939eaf977beb1689e7552d57f0385716eb2bc6ab247d8293905e",
+      "origin": "original_phase_capture"
+    },
+    {
+      "phase": "final",
+      "path": "native/src/mixed_meaning_composition.rs",
+      "sha256": "1f4a228c31716e8d9a036a54fd2329672a6adc782095ec4d1c9bb704b0c034e9",
+      "origin": "original_phase_capture"
+    },
+    {
+      "phase": "final",
+      "path": "native/src/mixed_meaning_provider.rs",
+      "sha256": "a92bd23cbcd91e44bbfe16e2caf6660a17cf31f7344a7bf403a760041438f79d",
+      "origin": "original_phase_capture"
+    },
+    {
+      "phase": "final",
+      "path": "native/src/mixed_meaning_query.rs",
+      "sha256": "b2264ea5aa1a3169cb0685e21441da004123ab3b2bbef88e38f70294a43041d9",
+      "origin": "original_phase_capture"
+    },
+    {
+      "phase": "final",
+      "path": "native/tests/mixed_meaning_composition.rs",
+      "sha256": "87f720f5ae304bff5ec1445d799b6ffff90d3ba2b535c9850fba2ee79a08f62a",
+      "origin": "original_phase_capture"
+    }
+  ],
+  "nativeBinarySha256": "6704584c5144157ef8298fb9f0a192bc5b27d7944505705649bbe265c98705ff",
+  "nativeBinaryBytes": 160629248,
+  "wholeNativeRerun": false,
+  "fullR4Complete": false,
+  "mainOrReleaseVerified": false,
+  "artifacts": [
+    {
+      "path": "feature-r1/native.log",
+      "bytes": 1046,
+      "sha256": "6504ded2f083c9cf8681149748ddaad3e56848d5240496a25978eada135c6ef6"
+    },
+    {
+      "path": "feature-r1/result.json",
+      "bytes": 887,
+      "sha256": "6f052ba29b6f7895a7c4e63b78cd97905c515a8ca5d5cb1fa7de89afea76e77e"
+    },
+    {
+      "path": "feature-r1/runner.py",
+      "bytes": 4819,
+      "sha256": "6f3b8e3c56dfb99601f273924bcac0d74f9d55137a510633b0fd44104cd786fa"
+    },
+    {
+      "path": "feature-r1/source/native/docs/mixed-meaning-queries.md",
+      "bytes": 4166,
+      "sha256": "00efd526a552feafc88cf0adcabe463384b457d241b4c80379cf65f20c419781"
+    },
+    {
+      "path": "feature-r1/source/native/README.md",
+      "bytes": 27310,
+      "sha256": "46fc22cb2f043ebc117cc31b25eee37dd152e1321d7a35e9c70abca217a57367"
+    },
+    {
+      "path": "feature-r1/source/native/src/main.rs",
+      "bytes": 179329,
+      "sha256": "05a104205a2eb65cdaade2814c2cad5ab428b84283ee5fdd4e26c7dca4bf9b51"
+    },
+    {
+      "path": "feature-r1/source/native/src/meaning_build.rs",
+      "bytes": 131772,
+      "sha256": "4320a56acc1822fc5140960c6fb98df6f6d4c96d47b564a4d408543f6b6b3463"
+    },
+    {
+      "path": "feature-r1/source/native/src/meaning_graph.rs",
+      "bytes": 18983,
+      "sha256": "abb9065655a90c5d5a2fbfdb51d863d496342136c5405e73becf67ff3b87d71d"
+    },
+    {
+      "path": "feature-r1/source/native/src/mixed_meaning_claims.rs",
+      "bytes": 8265,
+      "sha256": "3876d0bb8ff734bbcd1d884e939c896112d71b34779ae5c3960d2eebc4ea406d"
+    },
+    {
+      "path": "feature-r1/source/native/src/mixed_meaning_cli.rs",
+      "bytes": 14687,
+      "sha256": "cd16b207a105939eaf977beb1689e7552d57f0385716eb2bc6ab247d8293905e"
+    },
+    {
+      "path": "feature-r1/source/native/src/mixed_meaning_composition.rs",
+      "bytes": 15091,
+      "sha256": "1f4a228c31716e8d9a036a54fd2329672a6adc782095ec4d1c9bb704b0c034e9"
+    },
+    {
+      "path": "feature-r1/source/native/src/mixed_meaning_input.rs",
+      "bytes": 9904,
+      "sha256": "bebf516e57a7ac606291b4491446458da042cb47b717201cb37ebca128293a5c"
+    },
+    {
+      "path": "feature-r1/source/native/src/mixed_meaning_provider.rs",
+      "bytes": 48417,
+      "sha256": "a92bd23cbcd91e44bbfe16e2caf6660a17cf31f7344a7bf403a760041438f79d"
+    },
+    {
+      "path": "feature-r1/source/native/src/mixed_meaning_query.rs",
+      "bytes": 9116,
+      "sha256": "b2264ea5aa1a3169cb0685e21441da004123ab3b2bbef88e38f70294a43041d9"
+    },
+    {
+      "path": "feature-r1/source/native/src/mixed_view.rs",
+      "bytes": 12672,
+      "sha256": "99a9b6abd653feadf4c2c918833f46ee2cf17e8e694be23d131b9aac41665464"
+    },
+    {
+      "path": "feature-r1/source/native/src/mixed_view_cli.rs",
+      "bytes": 6877,
+      "sha256": "28c75a27233246388753f9e8475a45276bbdc1b153cc6eb62c406f4a3b3417b6"
+    },
+    {
+      "path": "feature-r1/source/native/src/retention.rs",
+      "bytes": 81369,
+      "sha256": "9402fa9a875350dd0534b90a2abd19d82a5987aef09b9fa19fb64a90f41500ed"
+    },
+    {
+      "path": "feature-r1/source/native/tests/decision_retention.rs",
+      "bytes": 3127,
+      "sha256": "e1a4c1390de62d18de8163bcfa423a13cf1e22c9d9da4f75c073607c8e67267f"
+    },
+    {
+      "path": "feature-r1/source/native/tests/meaning_build.rs",
+      "bytes": 20986,
+      "sha256": "91d604c038add216a284733b7da28abd596a2ad07f5b43838c2f667f74940fb7"
+    },
+    {
+      "path": "feature-r1/source/native/tests/meaning_graph.rs",
+      "bytes": 11336,
+      "sha256": "3e5c6b3222476e0962b1c83de046f5a2f6edf81ff98a5b8792f6f09b4b56996f"
+    },
+    {
+      "path": "feature-r1/source/native/tests/mixed_meaning_claims.rs",
+      "bytes": 15154,
+      "sha256": "ad116f831655fc1701bfa5cc9f0e505fc64cc879b0940c95bcab8718d01d3d42"
+    },
+    {
+      "path": "feature-r1/source/native/tests/mixed_meaning_composition.rs",
+      "bytes": 20817,
+      "sha256": "0c0ee030ea3bdef602c0b5aa4c5a867d5a5610352da1539962618c670627a95c"
+    },
+    {
+      "path": "feature-r1/source/native/tests/mixed_meaning_provider.rs",
+      "bytes": 26251,
+      "sha256": "15c331069672ae10d5c1182945d1cec6e6d3f3dc204a37b2d3409f332a83151d"
+    },
+    {
+      "path": "feature-r1/source/native/tests/mixed_meaning_queries.rs",
+      "bytes": 17028,
+      "sha256": "2fb8388c9a7c3b20c1a3f5ef88fecc413245ce03fc6ae6ccd9370ebee401af2d"
+    },
+    {
+      "path": "feature-r1/source/native/tests/mixed_pdf_view.rs",
+      "bytes": 19950,
+      "sha256": "a563e4c402e882a67390b294c54af27387856625344f95a2d2e7758b5a1316f0"
+    },
+    {
+      "path": "feature-r1/source/native/tests/mixed_view_cli.rs",
+      "bytes": 42529,
+      "sha256": "c89bd152184ff4348dc79dd01346211a06110ba6d0a958a59a61ecd5e56f71f0"
+    },
+    {
+      "path": "feature-r1/source/native/tests/parity_retention.rs",
+      "bytes": 14268,
+      "sha256": "56e1daf79691b0d2869dd210f7942a9aae4c80d9f3dd807885aa9f49585d8ac2"
+    },
+    {
+      "path": "feature-r1/source/native/tests/retention.rs",
+      "bytes": 15382,
+      "sha256": "1085b0ebe348f13ed5a84b154bbdc7aef2d3447051a267b5df2359c3a4798068"
+    },
+    {
+      "path": "feature-r1/source-after.json",
+      "bytes": 81235,
+      "sha256": "b197f68b175a680bbdc8ef4eb39b82908954d25b1fbab0b803cb7f31a35a6714"
+    },
+    {
+      "path": "feature-r1/source-before.json",
+      "bytes": 81235,
+      "sha256": "b197f68b175a680bbdc8ef4eb39b82908954d25b1fbab0b803cb7f31a35a6714"
+    },
+    {
+      "path": "final/build.log",
+      "bytes": 60,
+      "sha256": "1c8d1f786821918fdcf1365da4e2279f678760ad63fee273a38ff82977f19ffb"
+    },
+    {
+      "path": "final/clippy.log",
+      "bytes": 168,
+      "sha256": "ba1706fbf30b04e38472608d3eaa21cff4ae401baca4040f395576b1b9cb28e0"
+    },
+    {
+      "path": "final/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "final/native.log",
+      "bytes": 74113,
+      "sha256": "8d5d4f5d5163c064ac3199dc54a043786de9f5f12e72160e3bb70ceaefaabb35"
+    },
+    {
+      "path": "final/result.json",
+      "bytes": 2809,
+      "sha256": "6a480d60ce356c07c3c67a8b2ebd622d21ab95b18df47207856e9c0b092deae1"
+    },
+    {
+      "path": "final/runner.py",
+      "bytes": 4819,
+      "sha256": "6f3b8e3c56dfb99601f273924bcac0d74f9d55137a510633b0fd44104cd786fa"
+    },
+    {
+      "path": "final/source/native/docs/mixed-meaning-composition.md",
+      "bytes": 5163,
+      "sha256": "7db534c9abdf8900ffc954955518e7fbb6996bb65945b4f1ed0d514d75b7ea1a"
+    },
+    {
+      "path": "final/source/native/docs/mixed-meaning-queries.md",
+      "bytes": 4395,
+      "sha256": "d39bdfdab8b944082ad3b70c300c36319528b279d096a7e3161e3fefd45b5b94"
+    },
+    {
+      "path": "final/source/native/README.md",
+      "bytes": 27617,
+      "sha256": "b27aa8fab2a641212b3603afa8551d48152aa2e6549ced03bcdd247084cbf529"
+    },
+    {
+      "path": "final/source/native/src/main.rs",
+      "bytes": 179329,
+      "sha256": "05a104205a2eb65cdaade2814c2cad5ab428b84283ee5fdd4e26c7dca4bf9b51"
+    },
+    {
+      "path": "final/source/native/src/meaning_build.rs",
+      "bytes": 131772,
+      "sha256": "4320a56acc1822fc5140960c6fb98df6f6d4c96d47b564a4d408543f6b6b3463"
+    },
+    {
+      "path": "final/source/native/src/meaning_graph.rs",
+      "bytes": 18983,
+      "sha256": "abb9065655a90c5d5a2fbfdb51d863d496342136c5405e73becf67ff3b87d71d"
+    },
+    {
+      "path": "final/source/native/src/mixed_meaning_claims.rs",
+      "bytes": 8265,
+      "sha256": "3876d0bb8ff734bbcd1d884e939c896112d71b34779ae5c3960d2eebc4ea406d"
+    },
+    {
+      "path": "final/source/native/src/mixed_meaning_cli.rs",
+      "bytes": 14687,
+      "sha256": "cd16b207a105939eaf977beb1689e7552d57f0385716eb2bc6ab247d8293905e"
+    },
+    {
+      "path": "final/source/native/src/mixed_meaning_composition.rs",
+      "bytes": 15091,
+      "sha256": "1f4a228c31716e8d9a036a54fd2329672a6adc782095ec4d1c9bb704b0c034e9"
+    },
+    {
+      "path": "final/source/native/src/mixed_meaning_input.rs",
+      "bytes": 9904,
+      "sha256": "bebf516e57a7ac606291b4491446458da042cb47b717201cb37ebca128293a5c"
+    },
+    {
+      "path": "final/source/native/src/mixed_meaning_provider.rs",
+      "bytes": 48417,
+      "sha256": "a92bd23cbcd91e44bbfe16e2caf6660a17cf31f7344a7bf403a760041438f79d"
+    },
+    {
+      "path": "final/source/native/src/mixed_meaning_query.rs",
+      "bytes": 9116,
+      "sha256": "b2264ea5aa1a3169cb0685e21441da004123ab3b2bbef88e38f70294a43041d9"
+    },
+    {
+      "path": "final/source/native/src/mixed_view.rs",
+      "bytes": 12672,
+      "sha256": "99a9b6abd653feadf4c2c918833f46ee2cf17e8e694be23d131b9aac41665464"
+    },
+    {
+      "path": "final/source/native/src/mixed_view_cli.rs",
+      "bytes": 6877,
+      "sha256": "28c75a27233246388753f9e8475a45276bbdc1b153cc6eb62c406f4a3b3417b6"
+    },
+    {
+      "path": "final/source/native/src/retention.rs",
+      "bytes": 81369,
+      "sha256": "9402fa9a875350dd0534b90a2abd19d82a5987aef09b9fa19fb64a90f41500ed"
+    },
+    {
+      "path": "final/source/native/tests/decision_retention.rs",
+      "bytes": 3127,
+      "sha256": "e1a4c1390de62d18de8163bcfa423a13cf1e22c9d9da4f75c073607c8e67267f"
+    },
+    {
+      "path": "final/source/native/tests/meaning_build.rs",
+      "bytes": 20986,
+      "sha256": "91d604c038add216a284733b7da28abd596a2ad07f5b43838c2f667f74940fb7"
+    },
+    {
+      "path": "final/source/native/tests/meaning_graph.rs",
+      "bytes": 11336,
+      "sha256": "3e5c6b3222476e0962b1c83de046f5a2f6edf81ff98a5b8792f6f09b4b56996f"
+    },
+    {
+      "path": "final/source/native/tests/mixed_meaning_claims.rs",
+      "bytes": 15154,
+      "sha256": "ad116f831655fc1701bfa5cc9f0e505fc64cc879b0940c95bcab8718d01d3d42"
+    },
+    {
+      "path": "final/source/native/tests/mixed_meaning_composition.rs",
+      "bytes": 20850,
+      "sha256": "87f720f5ae304bff5ec1445d799b6ffff90d3ba2b535c9850fba2ee79a08f62a"
+    },
+    {
+      "path": "final/source/native/tests/mixed_meaning_provider.rs",
+      "bytes": 26251,
+      "sha256": "15c331069672ae10d5c1182945d1cec6e6d3f3dc204a37b2d3409f332a83151d"
+    },
+    {
+      "path": "final/source/native/tests/mixed_meaning_queries.rs",
+      "bytes": 17028,
+      "sha256": "2fb8388c9a7c3b20c1a3f5ef88fecc413245ce03fc6ae6ccd9370ebee401af2d"
+    },
+    {
+      "path": "final/source/native/tests/mixed_pdf_view.rs",
+      "bytes": 19950,
+      "sha256": "a563e4c402e882a67390b294c54af27387856625344f95a2d2e7758b5a1316f0"
+    },
+    {
+      "path": "final/source/native/tests/mixed_view_cli.rs",
+      "bytes": 42529,
+      "sha256": "c89bd152184ff4348dc79dd01346211a06110ba6d0a958a59a61ecd5e56f71f0"
+    },
+    {
+      "path": "final/source/native/tests/parity_retention.rs",
+      "bytes": 14268,
+      "sha256": "56e1daf79691b0d2869dd210f7942a9aae4c80d9f3dd807885aa9f49585d8ac2"
+    },
+    {
+      "path": "final/source/native/tests/retention.rs",
+      "bytes": 15382,
+      "sha256": "1085b0ebe348f13ed5a84b154bbdc7aef2d3447051a267b5df2359c3a4798068"
+    },
+    {
+      "path": "final/source-after.json",
+      "bytes": 81350,
+      "sha256": "0cb571cd7f4238d3f0a2c1f0a06b67b40fb453e902ab08990c2475572195606f"
+    },
+    {
+      "path": "final/source-before.json",
+      "bytes": 81350,
+      "sha256": "0cb571cd7f4238d3f0a2c1f0a06b67b40fb453e902ab08990c2475572195606f"
+    },
+    {
+      "path": "frozen-tracker.json",
+      "bytes": 579555,
+      "sha256": "1e97f8aec94a2d3edabc68c551b3f75d216f74a60577a822fbd36b12180ad26f"
+    },
+    {
+      "path": "green-r1/native.log",
+      "bytes": 3607,
+      "sha256": "b9d75860eb781ca7b1a9cc805489522b78e3c3f8cff334aeb523a713f1df69fa"
+    },
+    {
+      "path": "green-r1/result.json",
+      "bytes": 884,
+      "sha256": "6d438bc76c402da67a40ef233a89574639c2da33e8b41989d258db4ade628ce8"
+    },
+    {
+      "path": "green-r1/runner.py",
+      "bytes": 4819,
+      "sha256": "6f3b8e3c56dfb99601f273924bcac0d74f9d55137a510633b0fd44104cd786fa"
+    },
+    {
+      "path": "green-r1/source/native/docs/mixed-meaning-composition.md",
+      "bytes": 5163,
+      "sha256": "7db534c9abdf8900ffc954955518e7fbb6996bb65945b4f1ed0d514d75b7ea1a"
+    },
+    {
+      "path": "green-r1/source/native/docs/mixed-meaning-queries.md",
+      "bytes": 4395,
+      "sha256": "d39bdfdab8b944082ad3b70c300c36319528b279d096a7e3161e3fefd45b5b94"
+    },
+    {
+      "path": "green-r1/source/native/README.md",
+      "bytes": 27617,
+      "sha256": "b27aa8fab2a641212b3603afa8551d48152aa2e6549ced03bcdd247084cbf529"
+    },
+    {
+      "path": "green-r1/source/native/src/main.rs",
+      "bytes": 179329,
+      "sha256": "05a104205a2eb65cdaade2814c2cad5ab428b84283ee5fdd4e26c7dca4bf9b51"
+    },
+    {
+      "path": "green-r1/source/native/src/meaning_build.rs",
+      "bytes": 131772,
+      "sha256": "4320a56acc1822fc5140960c6fb98df6f6d4c96d47b564a4d408543f6b6b3463"
+    },
+    {
+      "path": "green-r1/source/native/src/meaning_graph.rs",
+      "bytes": 18983,
+      "sha256": "abb9065655a90c5d5a2fbfdb51d863d496342136c5405e73becf67ff3b87d71d"
+    },
+    {
+      "path": "green-r1/source/native/src/mixed_meaning_claims.rs",
+      "bytes": 8265,
+      "sha256": "3876d0bb8ff734bbcd1d884e939c896112d71b34779ae5c3960d2eebc4ea406d"
+    },
+    {
+      "path": "green-r1/source/native/src/mixed_meaning_cli.rs",
+      "bytes": 14687,
+      "sha256": "cd16b207a105939eaf977beb1689e7552d57f0385716eb2bc6ab247d8293905e"
+    },
+    {
+      "path": "green-r1/source/native/src/mixed_meaning_composition.rs",
+      "bytes": 15091,
+      "sha256": "1f4a228c31716e8d9a036a54fd2329672a6adc782095ec4d1c9bb704b0c034e9"
+    },
+    {
+      "path": "green-r1/source/native/src/mixed_meaning_input.rs",
+      "bytes": 9904,
+      "sha256": "bebf516e57a7ac606291b4491446458da042cb47b717201cb37ebca128293a5c"
+    },
+    {
+      "path": "green-r1/source/native/src/mixed_meaning_provider.rs",
+      "bytes": 48417,
+      "sha256": "a92bd23cbcd91e44bbfe16e2caf6660a17cf31f7344a7bf403a760041438f79d"
+    },
+    {
+      "path": "green-r1/source/native/src/mixed_meaning_query.rs",
+      "bytes": 9116,
+      "sha256": "b2264ea5aa1a3169cb0685e21441da004123ab3b2bbef88e38f70294a43041d9"
+    },
+    {
+      "path": "green-r1/source/native/src/mixed_view.rs",
+      "bytes": 12672,
+      "sha256": "99a9b6abd653feadf4c2c918833f46ee2cf17e8e694be23d131b9aac41665464"
+    },
+    {
+      "path": "green-r1/source/native/src/mixed_view_cli.rs",
+      "bytes": 6877,
+      "sha256": "28c75a27233246388753f9e8475a45276bbdc1b153cc6eb62c406f4a3b3417b6"
+    },
+    {
+      "path": "green-r1/source/native/src/retention.rs",
+      "bytes": 81369,
+      "sha256": "9402fa9a875350dd0534b90a2abd19d82a5987aef09b9fa19fb64a90f41500ed"
+    },
+    {
+      "path": "green-r1/source/native/tests/decision_retention.rs",
+      "bytes": 3127,
+      "sha256": "e1a4c1390de62d18de8163bcfa423a13cf1e22c9d9da4f75c073607c8e67267f"
+    },
+    {
+      "path": "green-r1/source/native/tests/meaning_build.rs",
+      "bytes": 20986,
+      "sha256": "91d604c038add216a284733b7da28abd596a2ad07f5b43838c2f667f74940fb7"
+    },
+    {
+      "path": "green-r1/source/native/tests/meaning_graph.rs",
+      "bytes": 11336,
+      "sha256": "3e5c6b3222476e0962b1c83de046f5a2f6edf81ff98a5b8792f6f09b4b56996f"
+    },
+    {
+      "path": "green-r1/source/native/tests/mixed_meaning_claims.rs",
+      "bytes": 15154,
+      "sha256": "ad116f831655fc1701bfa5cc9f0e505fc64cc879b0940c95bcab8718d01d3d42"
+    },
+    {
+      "path": "green-r1/source/native/tests/mixed_meaning_composition.rs",
+      "bytes": 20850,
+      "sha256": "87f720f5ae304bff5ec1445d799b6ffff90d3ba2b535c9850fba2ee79a08f62a"
+    },
+    {
+      "path": "green-r1/source/native/tests/mixed_meaning_provider.rs",
+      "bytes": 26251,
+      "sha256": "15c331069672ae10d5c1182945d1cec6e6d3f3dc204a37b2d3409f332a83151d"
+    },
+    {
+      "path": "green-r1/source/native/tests/mixed_meaning_queries.rs",
+      "bytes": 17028,
+      "sha256": "2fb8388c9a7c3b20c1a3f5ef88fecc413245ce03fc6ae6ccd9370ebee401af2d"
+    },
+    {
+      "path": "green-r1/source/native/tests/mixed_pdf_view.rs",
+      "bytes": 19950,
+      "sha256": "a563e4c402e882a67390b294c54af27387856625344f95a2d2e7758b5a1316f0"
+    },
+    {
+      "path": "green-r1/source/native/tests/mixed_view_cli.rs",
+      "bytes": 42529,
+      "sha256": "c89bd152184ff4348dc79dd01346211a06110ba6d0a958a59a61ecd5e56f71f0"
+    },
+    {
+      "path": "green-r1/source/native/tests/parity_retention.rs",
+      "bytes": 14268,
+      "sha256": "56e1daf79691b0d2869dd210f7942a9aae4c80d9f3dd807885aa9f49585d8ac2"
+    },
+    {
+      "path": "green-r1/source/native/tests/retention.rs",
+      "bytes": 15382,
+      "sha256": "1085b0ebe348f13ed5a84b154bbdc7aef2d3447051a267b5df2359c3a4798068"
+    },
+    {
+      "path": "green-r1/source-after.json",
+      "bytes": 81350,
+      "sha256": "0cb571cd7f4238d3f0a2c1f0a06b67b40fb453e902ab08990c2475572195606f"
+    },
+    {
+      "path": "green-r1/source-before.json",
+      "bytes": 81350,
+      "sha256": "0cb571cd7f4238d3f0a2c1f0a06b67b40fb453e902ab08990c2475572195606f"
+    },
+    {
+      "path": "integrated/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "integrated/python-contracts.log",
+      "bytes": 2845,
+      "sha256": "94c4a4276841dee1bb1b393c31f21d331b2a8cbfa7db8660f1e10fd5ab37bee5"
+    },
+    {
+      "path": "integrated/result.json",
+      "bytes": 958,
+      "sha256": "a03d821f3c40ce37b132021c7ad0c05d1b73363d92c8a727aa9369f0d9714f6d"
+    },
+    {
+      "path": "integrated/source-after.json",
+      "bytes": 80861,
+      "sha256": "47eaed4023d016992f3096fada572acb8a5491b0c9e7e7b30d41343bd4ea7772"
+    },
+    {
+      "path": "integrated/source-before.json",
+      "bytes": 80861,
+      "sha256": "47eaed4023d016992f3096fada572acb8a5491b0c9e7e7b30d41343bd4ea7772"
+    },
+    {
+      "path": "integrated/tests.log",
+      "bytes": 25035,
+      "sha256": "f250ac6ca3cd6e161c1241316f9d2d76906429685e87d4a7f41443f1e2bb4c77"
+    },
+    {
+      "path": "integrated/typecheck.log",
+      "bytes": 101,
+      "sha256": "30ef9ce16cf042ab6f160e0a76c1fbfe22f02a3c3a3659ee62863ffc1efdbfdf"
+    },
+    {
+      "path": "prior-pr-body.md",
+      "bytes": 6943,
+      "sha256": "e5d70ac85918c665df8173de98bcf28e7f1ca00fe2a00c9275052b9f03231e9d"
+    },
+    {
+      "path": "runners/ci-composition-check.py",
+      "bytes": 4819,
+      "sha256": "6f3b8e3c56dfb99601f273924bcac0d74f9d55137a510633b0fd44104cd786fa"
+    },
+    {
+      "path": "runners/ci-composition-doc-spacing.py",
+      "bytes": 246,
+      "sha256": "485678a32f5e11f4e1f0b61cf954f346b04547f321a5504398a32208c5e1af1d"
+    },
+    {
+      "path": "runners/ci-composition-integrate.py",
+      "bytes": 3904,
+      "sha256": "fb5186baf2b1f5cbe49b34c18085a763fe99cd0a9ee0c6aa53502be3e85f9f94"
+    },
+    {
+      "path": "runners/ci-composition-integrated.py",
+      "bytes": 2202,
+      "sha256": "fbf4b7fe6a54bec40e859441b6059b1340e89c467f2a9675d7c24f38ca7912ef"
+    },
+    {
+      "path": "runners/ci-composition-integration-setup.py",
+      "bytes": 1432,
+      "sha256": "b298d8b0c31648290d6d564836186d9b0ff503dfceed6002d34180478bc7002a"
+    },
+    {
+      "path": "runners/ci-composition-publish-setup.py",
+      "bytes": 3228,
+      "sha256": "b0f0be8229a7f555047c6e60cda4158fbfa3ccb7a116fbf921baabb6347ecbd2"
+    },
+    {
+      "path": "runners/ci-composition-publish.py",
+      "bytes": 6265,
+      "sha256": "619f0b73cd630bc970cb368dfe1424a5e5c38957911f6be686d5698e745c95ed"
+    },
+    {
+      "path": "runners/ci-composition-record.py",
+      "bytes": 11633,
+      "sha256": "ab69947f1761ed880c04046a2a405173f748ef932f45350c2fa84afa3a2d4d58"
+    },
+    {
+      "path": "runners/ci-composition-setup.py",
+      "bytes": 1728,
+      "sha256": "2616cedc0cf3d3e16a24f2aada1d41b93610752011883b13c5298e184ab1299d"
+    },
+    {
+      "path": "source-completeness.json",
+      "bytes": 4842,
+      "sha256": "7a4302b9f6d03ebc5ddac6e36a15fed8a02ec329ce4dacd849989a55d7a8f58f"
+    },
+    {
+      "path": "source-integration.json",
+      "bytes": 1040,
+      "sha256": "153b1ddcba3cc8bf708087d1a58b17bd2741f44213466abcce5b788250334fb5"
+    },
+    {
+      "path": "source-materialization.json",
+      "bytes": 214717,
+      "sha256": "ada9b54ccbc63907e9faec4981e244a6a15c16263fd087a1aade26f0c8813c23"
+    }
+  ]
+}

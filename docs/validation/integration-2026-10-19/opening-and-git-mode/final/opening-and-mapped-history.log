@@ -1,0 +1,34 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 06s
+     Running tests\github_app_digest_mapping.rs (target\debug\deps\github_app_digest_mapping-b7be9e3358d19ca1.exe)
+
+running 13 tests
+test a_path_still_present_in_git_but_outside_the_new_capture_is_unavailable_not_deleted ... ok
+test actual_cli_maps_only_explicit_selectors_and_honors_exact_output_capacity ... ok
+test caller_transactions_are_refused_without_commit_or_rollback ... ok
+test corrupt_additional_proofs_and_cancelled_work_restore_the_callers_sql_policy ... ok
+test aggregate_source_metadata_ast_and_export_budgets_cannot_reset_per_snapshot ... ok
+test duplicate_declarations_preserve_every_original_candidate_without_a_forced_identity ... ok
+test mapped_cli_never_turns_its_selection_flag_into_digest_history_or_git_permission ... ok
+test exact_git_file_relations_and_qualified_symbol_candidates_keep_original_anchors ... ok
+test missing_captures_are_explicit_and_legacy_history_does_not_infer_them ... ok
+test revoked_grants_invalid_duplicate_and_head_selectors_are_rejected_before_git_execution ... ok
+test relation_work_and_commit_proof_limits_refuse_without_partial_results ... ok
+test sha256_git_objects_and_mixed_supported_capture_epochs_retain_their_provenance ... ok
+test unrelated_commits_disk_sources_and_ambiguous_captures_never_enter_the_history ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 14.61s
+
+     Running tests\store_open_deadline.rs (target\debug\deps\store_open_deadline-a670cd1a22e863ae.exe)
+
+running 7 tests
+test cancelled_open_refuses_before_creating_state ... ok
+test opening_schema_wait_observes_host_cancellation ... ok
+test opening_client_admission_and_lease_waits_observe_host_cancellation ... ok
+test opening_schema_wait_uses_the_inherited_absolute_deadline ... ok
+test opening_succeeds_after_brief_schema_contention_without_replacing_identity_or_data ... ok
+test zero_and_unrepresentable_open_budgets_refuse_before_creating_state ... ok
+test successful_open_does_not_leave_its_setup_deadline_on_later_operations ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.84s
+

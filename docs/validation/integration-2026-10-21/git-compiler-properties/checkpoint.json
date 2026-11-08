@@ -1,0 +1,728 @@
+{
+  "sourceCommit": "5798f7e70e3a3ee209a5d178b91fd5ad5a18314d",
+  "currentScopedRustTotals": {
+    "git_compiler_affected": {
+      "passed": 22,
+      "failed": 0,
+      "ignored": 0
+    },
+    "projects": {
+      "passed": 7,
+      "failed": 0,
+      "ignored": 0
+    },
+    "git_affected_details": {
+      "passed": 12,
+      "failed": 0,
+      "ignored": 0
+    },
+    "git_affected_qualification": {
+      "passed": 3,
+      "failed": 0,
+      "ignored": 0
+    },
+    "git_impact_details": {
+      "passed": 29,
+      "failed": 0,
+      "ignored": 0
+    }
+  },
+  "currentDistinctRustFunctions": 73,
+  "queryFunctions": 22,
+  "newPropertyFunctions": 5,
+  "frozenRepositoryInputs": 1014,
+  "retainedTypeScript": {
+    "passed": 260,
+    "skipped": 3
+  },
+  "finalRows": [
+    {
+      "name": "javascript-syntax",
+      "argv": [
+        "C:\\Program Files\\nodejs\\node.exe",
+        "--check",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\validation\\integration-20261018\\git-compiler-properties-r4\\source-runtime.js"
+      ],
+      "exitCode": 0,
+      "seconds": 0.2
+    },
+    {
+      "name": "property-forgery-focus",
+      "argv": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j",
+        "2",
+        "--test",
+        "git_compiler_affected",
+        "forged_property_effects_instances_and_initializer_proofs_refuse_without_state_changes",
+        "--",
+        "--exact",
+        "--test-threads=1"
+      ],
+      "exitCode": 0,
+      "seconds": 20.065
+    },
+    {
+      "name": "git_compiler_affected",
+      "argv": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j",
+        "2",
+        "--test",
+        "git_compiler_affected",
+        "--",
+        "--test-threads=1"
+      ],
+      "exitCode": 0,
+      "seconds": 97.139
+    },
+    {
+      "name": "projects",
+      "argv": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j",
+        "2",
+        "--test",
+        "projects",
+        "--",
+        "--test-threads=1"
+      ],
+      "exitCode": 0,
+      "seconds": 24.632
+    },
+    {
+      "name": "git_affected_details",
+      "argv": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j",
+        "2",
+        "--test",
+        "git_affected_details",
+        "--",
+        "--test-threads=1"
+      ],
+      "exitCode": 0,
+      "seconds": 17.535
+    },
+    {
+      "name": "git_affected_qualification",
+      "argv": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j",
+        "2",
+        "--test",
+        "git_affected_qualification",
+        "--",
+        "--test-threads=1"
+      ],
+      "exitCode": 0,
+      "seconds": 7.315
+    },
+    {
+      "name": "git_impact_details",
+      "argv": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "-j",
+        "2",
+        "--test",
+        "git_impact_details",
+        "--",
+        "--test-threads=1"
+      ],
+      "exitCode": 0,
+      "seconds": 35.397
+    },
+    {
+      "name": "clippy",
+      "argv": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "clippy",
+        "--locked",
+        "--all-targets",
+        "-j",
+        "2",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exitCode": 0,
+      "seconds": 143.897
+    },
+    {
+      "name": "build",
+      "argv": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "build",
+        "--locked",
+        "-j",
+        "2",
+        "--bin",
+        "yoke"
+      ],
+      "exitCode": 0,
+      "seconds": 11.008
+    },
+    {
+      "name": "fmt",
+      "argv": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "fmt",
+        "--all",
+        "--check"
+      ],
+      "exitCode": 0,
+      "seconds": 7.346
+    },
+    {
+      "name": "typecheck",
+      "argv": [
+        "cmd.exe",
+        "/d",
+        "/c",
+        "npm.cmd run typecheck"
+      ],
+      "exitCode": 0,
+      "seconds": 5.334
+    },
+    {
+      "name": "npm-tests",
+      "argv": [
+        "cmd.exe",
+        "/d",
+        "/c",
+        "npm.cmd test"
+      ],
+      "exitCode": 0,
+      "seconds": 65.42
+    },
+    {
+      "name": "actual-cli",
+      "argv": [
+        "C:\\Python314\\python.exe",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\ci-properties-cli-final.py"
+      ],
+      "exitCode": 0,
+      "seconds": 21.914
+    },
+    {
+      "name": "class-value-green",
+      "argv": [
+        "C:\\Python314\\python.exe",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\ci-properties-class-value-regression.py"
+      ],
+      "exitCode": 0,
+      "seconds": 6.824
+    },
+    {
+      "name": "legacy-compiler",
+      "argv": [
+        "C:\\Python314\\python.exe",
+        "C:\\Users\\Lomi\\AppData\\Local\\Temp\\ci-git-compiler-legacy-after.py",
+        "after-properties-final"
+      ],
+      "exitCode": 0,
+      "seconds": 1.992
+    }
+  ],
+  "actualCliAndSameInputProviderComparison": {
+    "complete": true,
+    "fixtureRoot": "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-compiler-properties-cli-d2lbjr3q\\source",
+    "cliSha256": "1d6e25dee252a19b4d9726390e34a7460ca118610cdc4f666a67bd374f5789a0",
+    "nodeSha256": "ba4e6d110e8c1592a1ecd390f6b05f3da124b13871a5be62b341a07a853c6c32",
+    "compilerSha256": "dd17428736a07e1db1a138d8a14295ddb2699ba780ee15038acdd2c6da5373a0",
+    "reportId": "b7067ade0fa26ef8a489b0d6e6919c266b0112cb789496afb43041562246e9f3",
+    "resultId": "7b1c5ea1a4b68523c62f103e78205d68a2f87e5b21103677abb98d444679985b",
+    "repeatRawBytesExact": true,
+    "parallelPropertyProofs": 2,
+    "getterSeparatedFromReturnedFunctionCall": true,
+    "numberWitnessesRejected": true,
+    "oldProviderCommit": "02954d9471f11519ef121c605f576a30c43aedfe",
+    "oldProviderWorkerSha256": "47b729515403e63c2e222a291870a39563f5cc7c61967fd115119450c2db3c22",
+    "oldProviderSameCapturedSourcePassed": true,
+    "oldProviderPropertyTargets": 0,
+    "allOldNodesRelationFactsAndInstancesPreserved": true,
+    "exactEnvelopeBytes": 117489,
+    "oneByteShortAndUntrustedRefusedWithoutStdout": true,
+    "legacyCapturedAffectedRawBytesExact": true,
+    "allOwnedSourceGitStoreBytesUnchanged": true,
+    "analyzedSourceExecuted": false,
+    "commands": [
+      {
+        "name": "git-init",
+        "command": [
+          "C:\\Program Files\\Git\\cmd\\git.EXE",
+          "-c",
+          "init.templateDir=",
+          "-c",
+          "core.autocrlf=false",
+          "-c",
+          "core.hooksPath=",
+          "-c",
+          "user.name=Owned CLI fixture",
+          "-c",
+          "user.email=owned@example.invalid",
+          "init",
+          "-b",
+          "main"
+        ],
+        "startedSuspended": true,
+        "assignedBeforeResume": true,
+        "pid": 37552,
+        "exitCode": 0,
+        "activeAtParentExit": 1,
+        "activeAfterCleanup": 0,
+        "seconds": 0.044
+      },
+      {
+        "name": "git-add",
+        "command": [
+          "C:\\Program Files\\Git\\cmd\\git.EXE",
+          "-c",
+          "init.templateDir=",
+          "-c",
+          "core.autocrlf=false",
+          "-c",
+          "core.hooksPath=",
+          "-c",
+          "user.name=Owned CLI fixture",
+          "-c",
+          "user.email=owned@example.invalid",
+          "add",
+          "--all"
+        ],
+        "startedSuspended": true,
+        "assignedBeforeResume": true,
+        "pid": 16880,
+        "exitCode": 0,
+        "activeAtParentExit": 1,
+        "activeAfterCleanup": 0,
+        "seconds": 0.055
+      },
+      {
+        "name": "git-commit",
+        "command": [
+          "C:\\Program Files\\Git\\cmd\\git.EXE",
+          "-c",
+          "init.templateDir=",
+          "-c",
+          "core.autocrlf=false",
+          "-c",
+          "core.hooksPath=",
+          "-c",
+          "user.name=Owned CLI fixture",
+          "-c",
+          "user.email=owned@example.invalid",
+          "commit",
+          "-m",
+          "owned property baseline"
+        ],
+        "startedSuspended": true,
+        "assignedBeforeResume": true,
+        "pid": 32324,
+        "exitCode": 0,
+        "activeAtParentExit": 1,
+        "activeAfterCleanup": 0,
+        "seconds": 0.068
+      },
+      {
+        "name": "git-head",
+        "command": [
+          "C:\\Program Files\\Git\\cmd\\git.EXE",
+          "-c",
+          "init.templateDir=",
+          "-c",
+          "core.autocrlf=false",
+          "-c",
+          "core.hooksPath=",
+          "-c",
+          "user.name=Owned CLI fixture",
+          "-c",
+          "user.email=owned@example.invalid",
+          "rev-parse",
+          "HEAD"
+        ],
+        "startedSuspended": true,
+        "assignedBeforeResume": true,
+        "pid": 23680,
+        "exitCode": 0,
+        "activeAtParentExit": 1,
+        "activeAfterCleanup": 0,
+        "seconds": 0.037
+      },
+      {
+        "name": "git-analyze",
+        "command": [
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+          "--root",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-compiler-properties-cli-d2lbjr3q\\source",
+          "--max-bytes",
+          "4000000",
+          "--timeout",
+          "60000",
+          "git",
+          "analyze",
+          "--git",
+          "C:\\Program Files\\Git\\cmd\\git.EXE",
+          "--trust-git",
+          "--options",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-compiler-properties-cli-d2lbjr3q\\options.json"
+        ],
+        "startedSuspended": true,
+        "assignedBeforeResume": true,
+        "pid": 34492,
+        "exitCode": 0,
+        "activeAtParentExit": 0,
+        "activeAfterCleanup": 0,
+        "seconds": 0.521
+      },
+      {
+        "name": "captured-affected-before",
+        "command": [
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+          "--root",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-compiler-properties-cli-d2lbjr3q\\source",
+          "--timeout",
+          "60000",
+          "--max-bytes",
+          "4000000",
+          "git",
+          "affected",
+          "b7067ade0fa26ef8a489b0d6e6919c266b0112cb789496afb43041562246e9f3"
+        ],
+        "startedSuspended": true,
+        "assignedBeforeResume": true,
+        "pid": 31316,
+        "exitCode": 0,
+        "activeAtParentExit": 0,
+        "activeAfterCleanup": 0,
+        "seconds": 0.09
+      },
+      {
+        "name": "properties",
+        "command": [
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+          "--root",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-compiler-properties-cli-d2lbjr3q\\source",
+          "--timeout",
+          "60000",
+          "--max-bytes",
+          "4000000",
+          "git",
+          "compiler-affected",
+          "b7067ade0fa26ef8a489b0d6e6919c266b0112cb789496afb43041562246e9f3",
+          "--node",
+          "C:\\Program Files\\nodejs\\node.exe",
+          "--typescript",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\node_modules\\typescript\\lib\\typescript.js",
+          "--trust-compiler"
+        ],
+        "startedSuspended": true,
+        "assignedBeforeResume": true,
+        "pid": 38952,
+        "exitCode": 0,
+        "activeAtParentExit": 0,
+        "activeAfterCleanup": 0,
+        "seconds": 3.06
+      },
+      {
+        "name": "properties-repeat",
+        "command": [
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+          "--root",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-compiler-properties-cli-d2lbjr3q\\source",
+          "--timeout",
+          "60000",
+          "--max-bytes",
+          "4000000",
+          "git",
+          "compiler-affected",
+          "b7067ade0fa26ef8a489b0d6e6919c266b0112cb789496afb43041562246e9f3",
+          "--node",
+          "C:\\Program Files\\nodejs\\node.exe",
+          "--typescript",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\node_modules\\typescript\\lib\\typescript.js",
+          "--trust-compiler"
+        ],
+        "startedSuspended": true,
+        "assignedBeforeResume": true,
+        "pid": 37072,
+        "exitCode": 0,
+        "activeAtParentExit": 0,
+        "activeAfterCleanup": 0,
+        "seconds": 3.029
+      },
+      {
+        "name": "old-provider",
+        "command": [
+          "C:\\Program Files\\nodejs\\node.exe",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-compiler-properties-cli-d2lbjr3q\\old-provider-driver.cjs"
+        ],
+        "startedSuspended": true,
+        "assignedBeforeResume": true,
+        "pid": 26072,
+        "exitCode": 0,
+        "activeAtParentExit": 1,
+        "activeAfterCleanup": 0,
+        "seconds": 1.46
+      },
+      {
+        "name": "new-provider",
+        "command": [
+          "C:\\Program Files\\nodejs\\node.exe",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-compiler-properties-cli-d2lbjr3q\\new-provider-driver.cjs"
+        ],
+        "startedSuspended": true,
+        "assignedBeforeResume": true,
+        "pid": 32608,
+        "exitCode": 0,
+        "activeAtParentExit": 1,
+        "activeAfterCleanup": 0,
+        "seconds": 1.603
+      },
+      {
+        "name": "budget-0",
+        "command": [
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+          "--root",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-compiler-properties-cli-d2lbjr3q\\source",
+          "--timeout",
+          "60000",
+          "--max-bytes",
+          "117490",
+          "git",
+          "compiler-affected",
+          "b7067ade0fa26ef8a489b0d6e6919c266b0112cb789496afb43041562246e9f3",
+          "--node",
+          "C:\\Program Files\\nodejs\\node.exe",
+          "--typescript",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\node_modules\\typescript\\lib\\typescript.js",
+          "--trust-compiler"
+        ],
+        "startedSuspended": true,
+        "assignedBeforeResume": true,
+        "pid": 34612,
+        "exitCode": 0,
+        "activeAtParentExit": 0,
+        "activeAfterCleanup": 0,
+        "seconds": 3.058
+      },
+      {
+        "name": "budget-1",
+        "command": [
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+          "--root",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-compiler-properties-cli-d2lbjr3q\\source",
+          "--timeout",
+          "60000",
+          "--max-bytes",
+          "117489",
+          "git",
+          "compiler-affected",
+          "b7067ade0fa26ef8a489b0d6e6919c266b0112cb789496afb43041562246e9f3",
+          "--node",
+          "C:\\Program Files\\nodejs\\node.exe",
+          "--typescript",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\node_modules\\typescript\\lib\\typescript.js",
+          "--trust-compiler"
+        ],
+        "startedSuspended": true,
+        "assignedBeforeResume": true,
+        "pid": 33408,
+        "exitCode": 0,
+        "activeAtParentExit": 0,
+        "activeAfterCleanup": 0,
+        "seconds": 3.341
+      },
+      {
+        "name": "one-byte-short",
+        "command": [
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+          "--root",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-compiler-properties-cli-d2lbjr3q\\source",
+          "--timeout",
+          "60000",
+          "--max-bytes",
+          "117488",
+          "git",
+          "compiler-affected",
+          "b7067ade0fa26ef8a489b0d6e6919c266b0112cb789496afb43041562246e9f3",
+          "--node",
+          "C:\\Program Files\\nodejs\\node.exe",
+          "--typescript",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\node_modules\\typescript\\lib\\typescript.js",
+          "--trust-compiler"
+        ],
+        "startedSuspended": true,
+        "assignedBeforeResume": true,
+        "pid": 41348,
+        "exitCode": 1,
+        "activeAtParentExit": 0,
+        "activeAfterCleanup": 0,
+        "seconds": 3.113
+      },
+      {
+        "name": "untrusted",
+        "command": [
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+          "--root",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-compiler-properties-cli-d2lbjr3q\\source",
+          "--timeout",
+          "60000",
+          "--max-bytes",
+          "4000000",
+          "git",
+          "compiler-affected",
+          "b7067ade0fa26ef8a489b0d6e6919c266b0112cb789496afb43041562246e9f3",
+          "--node",
+          "C:\\Program Files\\nodejs\\node.exe",
+          "--typescript",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\node_modules\\typescript\\lib\\typescript.js"
+        ],
+        "startedSuspended": true,
+        "assignedBeforeResume": true,
+        "pid": 38372,
+        "exitCode": 1,
+        "activeAtParentExit": 1,
+        "activeAfterCleanup": 0,
+        "seconds": 0.03
+      },
+      {
+        "name": "captured-affected-after",
+        "command": [
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+          "--root",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-compiler-properties-cli-d2lbjr3q\\source",
+          "--timeout",
+          "60000",
+          "--max-bytes",
+          "4000000",
+          "git",
+          "affected",
+          "b7067ade0fa26ef8a489b0d6e6919c266b0112cb789496afb43041562246e9f3"
+        ],
+        "startedSuspended": true,
+        "assignedBeforeResume": true,
+        "pid": 9764,
+        "exitCode": 0,
+        "activeAtParentExit": 0,
+        "activeAfterCleanup": 0,
+        "seconds": 0.087
+      }
+    ]
+  },
+  "priorClassValueFactsPreserved": {
+    "complete": true,
+    "cliSha256": "1d6e25dee252a19b4d9726390e34a7460ca118610cdc4f666a67bd374f5789a0",
+    "sameOriginalReportAndAllPriorSeedMappingsPreserved": true,
+    "allPriorSourceBindingsGraphsNodesAndFactsPreserved": true,
+    "repeatedRawBytesExact": true,
+    "callerReachedFromDerivedClassSeed": true,
+    "separateClassValueProofObserved": true,
+    "allOwnedSourceGitStoreBytesUnchanged": true,
+    "runtimeExecutionObserved": false,
+    "commands": [
+      {
+        "name": "same-report-green",
+        "command": [
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+          "--root",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-ctor-value-audit-74carg_z\\source",
+          "--max-bytes",
+          "4000000",
+          "--timeout",
+          "60000",
+          "git",
+          "compiler-affected",
+          "6847af86ec0c1283cc20f2be8ff691b26d43dd22a5a611beff1d4ddb98fad8b8",
+          "--node",
+          "C:\\Program Files\\nodejs\\node.exe",
+          "--typescript",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\node_modules\\typescript\\lib\\typescript.js",
+          "--trust-compiler"
+        ],
+        "startedSuspended": true,
+        "assignedBeforeResume": true,
+        "pid": 32028,
+        "exitCode": 0,
+        "activeAtParentExit": 0,
+        "activeAfterCleanup": 0,
+        "seconds": 3.19
+      },
+      {
+        "name": "same-report-green-repeat",
+        "command": [
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+          "--root",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-ctor-value-audit-74carg_z\\source",
+          "--max-bytes",
+          "4000000",
+          "--timeout",
+          "60000",
+          "git",
+          "compiler-affected",
+          "6847af86ec0c1283cc20f2be8ff691b26d43dd22a5a611beff1d4ddb98fad8b8",
+          "--node",
+          "C:\\Program Files\\nodejs\\node.exe",
+          "--typescript",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\node_modules\\typescript\\lib\\typescript.js",
+          "--trust-compiler"
+        ],
+        "startedSuspended": true,
+        "assignedBeforeResume": true,
+        "pid": 23576,
+        "exitCode": 0,
+        "activeAtParentExit": 0,
+        "activeAfterCleanup": 0,
+        "seconds": 2.871
+      }
+    ]
+  },
+  "legacyCompiler": {
+    "legacyRawBytesExact": true,
+    "artifactId": "98abc3b62ac7b94e634fcc1cf3ed9465b32e03f73dccbd001577510cad99d518",
+    "nativeCliSha256": "1d6e25dee252a19b4d9726390e34a7460ca118610cdc4f666a67bd374f5789a0",
+    "commands": [
+      {
+        "name": "legacy-after",
+        "command": [
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+          "--snapshot",
+          "208e8bd91cba0d2f459e0889e81fe98cf0e751b74a828e36344ab62df7edfd6e",
+          "--root",
+          "C:\\Users\\Lomi\\AppData\\Local\\Temp\\yoke-owned-compiler-legacy-njz6n8pj\\source \u03c0",
+          "--max-bytes",
+          "4000000",
+          "compiler",
+          "--node",
+          "C:\\Program Files\\nodejs\\node.exe",
+          "--typescript",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\node_modules\\typescript\\lib\\typescript.js",
+          "--trust-compiler"
+        ],
+        "startedSuspended": true,
+        "assignedBeforeResume": true,
+        "pid": 13992,
+        "exitCode": 0,
+        "activeAtParentExit": 1,
+        "activeAfterCleanup": 0,
+        "seconds": 1.419
+      }
+    ]
+  },
+  "runtimeExecutionEstablished": false,
+  "systemSettingsChanged": false,
+  "originalSymlinkFixturesChanged": false,
+  "fullStatusComplete": false
+}

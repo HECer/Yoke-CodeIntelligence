@@ -1,0 +1,79 @@
+{
+  "group": "meaning_archive_cli",
+  "index": 184,
+  "freeBytesBefore": 3376873472,
+  "commands": [
+    {
+      "name": "compile",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--test",
+        "meaning_archive_cli",
+        "--no-run",
+        "--message-format=json-render-diagnostics"
+      ],
+      "exitCode": 0,
+      "seconds": 3.624021499999799
+    },
+    {
+      "name": "test",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--test",
+        "meaning_archive_cli",
+        "--no-fail-fast",
+        "--",
+        "--test-threads=1"
+      ],
+      "exitCode": 101,
+      "seconds": 10.160910399979912
+    }
+  ],
+  "deletedNewTestArtifacts": [
+    {
+      "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\meaning_archive_cli-90e10b9eea5f0e39.exe",
+      "bytes": 107570176,
+      "sha256": "ffe56dd688c38ee7ac1504ae30daf5b0db5aca960976836a540cfab670b0faf6",
+      "deleted": true
+    },
+    {
+      "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\meaning_archive_cli-90e10b9eea5f0e39.pdb",
+      "bytes": 14790656,
+      "sha256": "b3a3d6cb65c5759443b0ca8beacbdc7790362a331f8765b5d7f2ce1132860410",
+      "deleted": true
+    }
+  ],
+  "testExecutables": [
+    {
+      "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\meaning_archive_cli-90e10b9eea5f0e39.exe",
+      "sha256": "ffe56dd688c38ee7ac1504ae30daf5b0db5aca960976836a540cfab670b0faf6",
+      "existedBefore": false
+    }
+  ],
+  "totals": {
+    "passed": 9,
+    "failed": 1,
+    "ignored": 0
+  },
+  "resultGroups": 1,
+  "failures": [
+    "existing_output_file_directory_and_hardlink_are_never_overwritten"
+  ],
+  "allChecksPassed": false,
+  "sourceUnchanged": true,
+  "freeBytesAfter": 3374837760
+}

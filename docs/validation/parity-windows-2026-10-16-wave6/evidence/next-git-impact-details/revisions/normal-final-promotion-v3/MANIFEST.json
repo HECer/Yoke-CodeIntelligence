@@ -1,0 +1,182 @@
+{
+  "actions": 16,
+  "artifactClosure": "all packet files except MANIFEST.json and MANIFEST.sha256",
+  "artifacts": {
+    "COPY-MAPPINGS.json": {
+      "bytes": 9759,
+      "sha256": "722c23c0f8fff4a10e26e702619e40342974225c16b4bda9917ac5543857ecec"
+    },
+    "EXPECTED-NORMAL-AFTER.json": {
+      "bytes": 393241,
+      "sha256": "11f688628aa77bf3f50c440cd954aa49e0588800aeabb838bc17d09efe9ef30f"
+    },
+    "EXPECTED-NORMAL-BEFORE.json": {
+      "bytes": 391788,
+      "sha256": "afdc36edc71c1396dece79d8cc5ae1d5fddf81100c687a5878e373ac43825bcf"
+    },
+    "FINAL-IMAGE-MAP.json": {
+      "bytes": 227607,
+      "sha256": "00fece6c858b70a0cfe9f9d01919bcf4e6f51722b4ec1d82483ba6a4e2df3cee"
+    },
+    "PROMOTION-GATES.json": {
+      "bytes": 806,
+      "sha256": "0c3622231139b2b0216675ae3afd6c0a8dad0fdf082c2d24aaf73b9a3f49d0f5"
+    },
+    "PROPOSAL.json": {
+      "bytes": 1171,
+      "sha256": "679ac8af9de14f8b710973c304ae9e2a4c889a1576a71faa50858a899a8a8d32"
+    },
+    "README.md": {
+      "bytes": 3190,
+      "sha256": "6c72863d12353bd5e67d8260ccd6758ae7dac31f111d9a55b3a4e0d2d420cfc3"
+    },
+    "SOURCE-PINS.json": {
+      "bytes": 7708,
+      "sha256": "ebd80187190f16f3dd1f273e7b0d21bdac0eff435412b1eed5d23a42ff80e166"
+    },
+    "apply_normal.py": {
+      "bytes": 15336,
+      "sha256": "64be3d9a6e91808807abaaf28e0e3abdb391e28ece0ee27a5beff94a8a2a71b9"
+    },
+    "before/native/src/git_workflows.rs.txt": {
+      "bytes": 84535,
+      "sha256": "09d4d4ff79cf50a3186377e52f5ed798cd6753e43704ec2441fa13ce5a5c2a89"
+    },
+    "before/native/src/main.rs.txt": {
+      "bytes": 155503,
+      "sha256": "dff3190975f82833cbbf19c3af6fc91aad6eb980ce21de9d6d33b3e962994d7c"
+    },
+    "before/native/src/meaning_archive_cli.rs.txt": {
+      "bytes": 20489,
+      "sha256": "dd0764c7dd3e6b8c6e5272aedf5d0b62e02ce0aa2f782559aef64f6f861c4566"
+    },
+    "patches/native--src--git_workflows.rs.forward.patch": {
+      "bytes": 355,
+      "sha256": "03e5674da09a4f7bea43ddd6dc722140c17a7c57761678420b924fed4dcd7d84"
+    },
+    "patches/native--src--git_workflows.rs.inverse.patch": {
+      "bytes": 355,
+      "sha256": "c0490b09611188161b1d10a62d2d4823e9e29712018437d2d53158274028765e"
+    },
+    "patches/native--src--main.rs.forward.patch": {
+      "bytes": 3217,
+      "sha256": "509b05db7dcaa7da2716f3f9e0a5f2b16cc6cdf11821901744dc3f388806bc0c"
+    },
+    "patches/native--src--main.rs.inverse.patch": {
+      "bytes": 3217,
+      "sha256": "632d1ce31ed6d1b230993e07d320cb1fa33d26b7237bd9fcedcac36c9883876a"
+    },
+    "patches/native--src--meaning_archive_cli.rs.forward.patch": {
+      "bytes": 7220,
+      "sha256": "255414cc8f8f763fa0996cd7f07fde34818f588885bf981145842376c779d35f"
+    },
+    "patches/native--src--meaning_archive_cli.rs.inverse.patch": {
+      "bytes": 7220,
+      "sha256": "30b6cb38b7001c29a40c6b73ddd3f0eebe4215174b786e1275ffa3671a077399"
+    },
+    "payload/native/docs/git-impact-details-cli.md.txt": {
+      "bytes": 2203,
+      "sha256": "cd20cd2acb6636383de4d548298fb2e6ccb438fcbdeaae4ec275daf053793ce7"
+    },
+    "payload/native/docs/git-impact-details.md.txt": {
+      "bytes": 5652,
+      "sha256": "27e96c0560a90bfd217ea631244d8f25cd783e032f886b40bc0d73617dbb088e"
+    },
+    "payload/native/src/git_impact_candidates.rs.txt": {
+      "bytes": 15046,
+      "sha256": "38f8c688389853e1f443aea9e2ac1fafcfb5dcd366a39e602b4720cef16133bb"
+    },
+    "payload/native/src/git_impact_cli.rs.txt": {
+      "bytes": 4214,
+      "sha256": "38b72e9a7f0e27154d0697e046ca0d0fc50e5e5e87058fcd7dff7e40f4689072"
+    },
+    "payload/native/src/git_impact_details.rs.txt": {
+      "bytes": 33194,
+      "sha256": "aa1b882f7dc3bebe94de5f95997f39897ef68a2f795892e6a04edbb974b6742e"
+    },
+    "payload/native/src/git_impact_details_scope_tests.rs.txt": {
+      "bytes": 7441,
+      "sha256": "6d7efb8f7defd2cf047d5270650324b9ed8c24ea381a5f2beec1e28e9fe02d8e"
+    },
+    "payload/native/src/git_impact_quotes.rs.txt": {
+      "bytes": 10089,
+      "sha256": "d392b5970fcd5c969e499e78ed40f23d233117660b994469303b4a92b2fe0231"
+    },
+    "payload/native/src/git_workflows.rs.txt": {
+      "bytes": 84593,
+      "sha256": "0e2d9ea13aa11a8d54559012b015da61fbee27afe2596d32315b5a268d6c26cb"
+    },
+    "payload/native/src/main.rs.txt": {
+      "bytes": 157179,
+      "sha256": "c114e0f1f8509f970d22a167259498f8798f32a43113ed61792844f6c488af43"
+    },
+    "payload/native/src/meaning_archive_cli.rs.txt": {
+      "bytes": 25012,
+      "sha256": "66e9221e7ce91f897dfc8cf8b514edaac08790729e863e4221bb79eba5662c86"
+    },
+    "payload/native/tests/git_impact_details.rs.txt": {
+      "bytes": 29933,
+      "sha256": "00c7ab5c2b4f86e4804de2d3833b94c63d0136f61788c76fde4a1a4e84b47778"
+    },
+    "payload/native/tests/git_impact_details_cli.rs.txt": {
+      "bytes": 38731,
+      "sha256": "72b98fbce4943f31583b36fcbd23dd4b219b4f193698f650340580babcd9af10"
+    },
+    "payload/native/tests/git_impact_details_no_git.rs.txt": {
+      "bytes": 2496,
+      "sha256": "1be0b2609d0ee43b51c399187abe4b66f1fb872a5e09e2aafd3f98cebaef581d"
+    },
+    "payload/native/tests/git_impact_details_qualification.rs.txt": {
+      "bytes": 4338,
+      "sha256": "0a045bbeac292a5b50959d090cf66d56fd4eb784d18cfa8de822b632c369aeba"
+    },
+    "payload/native/tests/git_impact_details_sqlite_limits.rs.txt": {
+      "bytes": 2571,
+      "sha256": "62c641806b831ddb59e53dc8dd146cc4fa2a6c0aa01fd9d8b5c765e20822e4a9"
+    },
+    "payload/native/tests/support/git_impact_fixture.rs.txt": {
+      "bytes": 14318,
+      "sha256": "cc789bb9d263600f0d0865ed2e7bbbb42b1b4eb3f5d5537388be6ad789a450f4"
+    },
+    "prepare_packet.py": {
+      "bytes": 4668,
+      "sha256": "afd98d31746b0ac3a39e86f7514e18ac340aeaf17d47d5ddcb7f4f7ec154ce39"
+    }
+  },
+  "baselineAuthority": "Reviewed base packet's frozen full AFDC map; root must freshly verify all source bytes immediately before apply",
+  "cargoNodeRustcOrProductExecution": false,
+  "changedPacketArtifacts": [
+    "README.md",
+    "apply_normal.py",
+    "prepare_packet.py"
+  ],
+  "createOnly": 13,
+  "derivedFromManifestSha256": "d07f01244ac124e7d17b3a348f44c2bd5404082d8bde8f7a377968e2e50de2ef",
+  "imageFiles": 1568,
+  "imageMapSha256": "00fece6c858b70a0cfe9f9d01919bcf4e6f51722b4ec1d82483ba6a4e2df3cee",
+  "imageWrites": [],
+  "inheritedStaticBaseManifestSha256": "d50c99eaf8754aca66a07d3af8a5c2b40b03ac6dab7536ac6dc14332b3eefe19",
+  "normalAcceptanceOrUniversalParityClaim": false,
+  "normalAfterFiles": 2419,
+  "normalAfterMapSha256": "11f688628aa77bf3f50c440cd954aa49e0588800aeabb838bc17d09efe9ef30f",
+  "normalBeforeFiles": 2406,
+  "normalBeforeMapSha256": "afdc36edc71c1396dece79d8cc5ae1d5fddf81100c687a5878e373ac43825bcf",
+  "normalFullInventoryRecheckedDuringPreparation": false,
+  "normalWrites": [],
+  "old193PinsOr3327EvidenceRescanned": false,
+  "oldPolicyOrPartialFailedReceiptsReused": false,
+  "operationalOutputDirectory": "normal-applications/normal-final-promotion-v3",
+  "otherThirteenPayloadsByteExactBase": true,
+  "overriddenPayloads": [
+    "native/src/main.rs",
+    "native/src/meaning_archive_cli.rs",
+    "native/tests/git_impact_details_cli.rs"
+  ],
+  "replaceExact": 3,
+  "revision": "normal-final-promotion-v3",
+  "rootApplierPreparedNotExecuted": true,
+  "schemaVersion": 2,
+  "semanticChange": "Require the exact private selector before Cargo --; thread-only harness tail",
+  "sourcePins": 33,
+  "status": "APPLY_HELD"
+}

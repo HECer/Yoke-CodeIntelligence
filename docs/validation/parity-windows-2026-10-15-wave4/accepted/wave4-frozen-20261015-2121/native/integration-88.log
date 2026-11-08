@@ -1,0 +1,44 @@
+    Finished `test` profile [unoptimized] target(s) in 1.00s
+     Running tests\scoped_resolution.rs (target\debug\deps\scoped_resolution-1bfc4b64fd13bc76.exe)
+
+running 23 tests
+test destructured_locals_cannot_be_replaced_by_an_unrelated_global_function ... ok
+test containers_and_function_return_annotations_cannot_be_used_as_receiver_types ... ok
+test a_rebound_receiver_in_a_conditional_branch_cannot_keep_a_definite_type_candidate ... ok
+test explicit_interface_method_declarations_are_candidates_with_exact_signatures ... ok
+test grouped_rust_imports_can_select_symbols_from_inline_modules ... ok
+test extends_and_implements_remain_distinct_and_inherited_member_calls_are_candidates ... ok
+test embedded_typescript_imports_bind_using_the_embedded_language_family ... ok
+test imported_receiver_types_and_constructor_fields_stay_in_the_imported_class ... ok
+test identical_methods_in_separate_namespaces_do_not_cross_bind ... ok
+test imported_aliases_select_the_declared_module_instead_of_another_same_named_symbol ... ok
+test java_explicit_receiver_cannot_bind_to_the_callers_own_same_named_method ... ok
+test keyword_argument_and_object_key_spelling_are_not_symbol_references ... ok
+test multiline_signatures_preserve_the_complete_header_without_the_body ... ok
+test namespace_import_member_calls_and_non_call_references_keep_exact_utf8_anchors ... ok
+test named_reexports_follow_the_captured_module_chain ... ok
+test lexical_shadowing_and_reassignment_block_unique_global_name_guesses ... ok
+test nested_functions_reference_the_nearest_lexical_function ... ok
+test rust_future_non_hoisted_let_binding_does_not_shadow_an_earlier_call ... ok
+test relative_module_paths_that_escape_the_captured_root_remain_unresolved ... ok
+test rust_impl_receivers_and_explicit_type_paths_bind_to_the_same_method_owner ... ok
+test union_receiver_candidates_preserve_parallel_possible_dispatch ... ok
+test shared_inheritance_paths_cannot_amplify_work_past_the_original_request_budget ... ok
+test typed_receivers_do_not_cross_bind_methods_with_the_same_name ... ok
+
+test result: ok. 23 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests\selected_graph_views.rs (target\debug\deps\selected_graph_views-36da6d50955d3227.exe)
+
+running 8 tests
+test bounded_selected_response_pages_complete_lineage_without_claiming_generic_artifact_scope ... ok
+test native_mcp_keeps_eight_tools_and_exercises_published_view_selection ... ok
+test selected_context_and_entity_read_use_historic_cas_without_capturing_live_source ... ok
+test ordinary_tools_select_one_published_code_markdown_and_manifest_view ... ok
+test selected_query_replays_published_view_and_rejects_forged_registry_scope ... ok
+test selected_queries_reject_scope_mismatch_unknown_fields_and_canonical_only_modes ... ok
+test selected_source_reads_preserve_utf8_boundaries_and_reject_ambiguous_source_selectors ... ok
+test selected_semantic_claims_keep_distinct_nodes_parallel_edges_and_provider_lineage ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.21s
+

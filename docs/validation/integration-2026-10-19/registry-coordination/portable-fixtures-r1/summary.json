@@ -1,0 +1,76 @@
+{
+  "allChecksPassed": true,
+  "sourceUnchanged": true,
+  "checks": [
+    {
+      "gate": "format",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "fmt",
+        "--all",
+        "--check"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 6.019,
+      "recordedAt": "2026-10-18T23:45:46.168716+00:00"
+    },
+    {
+      "gate": "clippy",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "clippy",
+        "--workspace",
+        "--all-targets",
+        "--locked",
+        "--keep-going",
+        "-j2",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 18.82,
+      "recordedAt": "2026-10-18T23:46:04.990101+00:00"
+    },
+    {
+      "gate": "debugger-repl",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "--no-fail-fast",
+        "-j2",
+        "--test",
+        "debug_adapter",
+        "--test",
+        "agent_repl",
+        "--",
+        "--test-threads=2"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 17.347,
+      "recordedAt": "2026-10-18T23:46:22.338558+00:00"
+    },
+    {
+      "gate": "typescript-typecheck",
+      "command": [
+        "npm.cmd",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 4.744,
+      "recordedAt": "2026-10-18T23:46:27.083195+00:00"
+    },
+    {
+      "gate": "typescript-tests",
+      "command": [
+        "npm.cmd",
+        "test"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 67.921,
+      "recordedAt": "2026-10-18T23:47:35.006735+00:00"
+    }
+  ]
+}

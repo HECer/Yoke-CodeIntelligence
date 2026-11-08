@@ -1,0 +1,124 @@
+{
+  "sourceUnchanged": true,
+  "checks": [
+    {
+      "name": "fmt",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "exitCode": 0,
+      "seconds": 5.8191564999870025,
+      "sourceUnchanged": true,
+      "totals": {
+        "passed": 0,
+        "failed": 0,
+        "ignored": 0
+      },
+      "deletedNewTestArtifacts": []
+    },
+    {
+      "name": "graph_analysis_policy",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--test",
+        "graph_analysis_policy",
+        "--",
+        "--test-threads=1"
+      ],
+      "exitCode": 0,
+      "seconds": 4.508392600022489,
+      "sourceUnchanged": true,
+      "totals": {
+        "passed": 5,
+        "failed": 0,
+        "ignored": 0
+      },
+      "deletedNewTestArtifacts": [
+        {
+          "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\graph_analysis_policy-6ffd54bdca9a5d8a.exe",
+          "sha256": "4b0a4fc32be5fde2908b21bde10158cd96cd843b4d25dc441b7fdabf6cbfda6a",
+          "bytes": 106290176
+        },
+        {
+          "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\graph_analysis_policy-6ffd54bdca9a5d8a.pdb",
+          "sha256": "8b2e26aab561ac9e5de787b700561f91b2eba9a163eb1865ce5451cd1a2b484d",
+          "bytes": 14004224
+        }
+      ]
+    },
+    {
+      "name": "clippy",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "clippy",
+        "--workspace",
+        "--all-targets",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exitCode": 0,
+      "seconds": 23.37693820000277,
+      "sourceUnchanged": true,
+      "totals": {
+        "passed": 0,
+        "failed": 0,
+        "ignored": 0
+      },
+      "deletedNewTestArtifacts": []
+    },
+    {
+      "name": "typecheck",
+      "command": [
+        "npm.cmd",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0,
+      "seconds": 5.946192699979292,
+      "sourceUnchanged": true,
+      "totals": {
+        "passed": 0,
+        "failed": 0,
+        "ignored": 0
+      },
+      "deletedNewTestArtifacts": []
+    },
+    {
+      "name": "retained",
+      "command": [
+        "npm.cmd",
+        "test"
+      ],
+      "exitCode": 0,
+      "seconds": 67.58307510000304,
+      "sourceUnchanged": true,
+      "totals": {
+        "passed": 0,
+        "failed": 0,
+        "ignored": 0
+      },
+      "deletedNewTestArtifacts": []
+    }
+  ],
+  "allChecksPassed": true,
+  "scope": "Source-category analysis policy plus existing graph/view contracts",
+  "fullStatusCertified": false,
+  "cliSha256": "f98306321bc2203176b481c0ca4b50ae426eb08cb1b5b9b18f6b8546c69c5edd"
+}

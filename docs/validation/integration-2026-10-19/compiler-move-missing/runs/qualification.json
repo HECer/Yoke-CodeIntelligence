@@ -1,0 +1,171 @@
+{
+  "baseIntegration": "ec8b89f56ed503e292a05fa608b19de6637b5f38",
+  "sourceCommit": "fabc0971f91c9bf5b29c371050fce7cb4e8f79ae",
+  "finalPhase": "final-r3",
+  "newIntegrationCases": [
+    "shorthand_only_named_default_namespace_and_combined_imports_keep_original_bindings",
+    "missing_import_relocation_retains_bom_crlf_directives_comments_and_repeated_property_keys",
+    "multiple_missing_shorthand_imports_compose_without_changing_public_keys_or_existing_aliases",
+    "omitted_source_dependencies_add_only_required_exports_and_keep_existing_public_aliases",
+    "missing_local_and_imported_dependencies_compose_in_one_plan",
+    "proto_shorthand_keeps_an_own_property_instead_of_setting_the_result_prototype"
+  ],
+  "newCasesPassed": 6,
+  "updatedExistingIntegrationCases": [
+    "omitted_shorthand_import_is_reconstructed_without_rebinding_the_target",
+    "actual_cli_move_requires_independent_tsc_approval_and_conditional_recovery"
+  ],
+  "updatedExistingUnitCases": [
+    "compiler_move::repairs::tests::coherent_repaired_effects_still_require_original_bindings_ownership_and_property_keys",
+    "compiler_move::tests::native_syntax_correspondence_keeps_operators_precedence_comments_and_for_separators"
+  ],
+  "nativeTotals": {
+    "passed": 659,
+    "failed": 0,
+    "ignored": 9
+  },
+  "nativeGroups": 13,
+  "nativeFrozenInputs": 799,
+  "retainedFrozenInputs": 793,
+  "importScenarios": 12,
+  "localDependencyScenarios": 12,
+  "cliGateScenarios": 3,
+  "prototypeRuntimeOracleCases": 3,
+  "noRepairLegacyControl": {
+    "allChecksPassed": true,
+    "sourceUnchanged": true,
+    "runtimeInputsUnchanged": true,
+    "sameOwnedFixtureAsBaseCheckpoint": "C:\\Users\\Lomi\\AppData\\Local\\Temp\\ci-compiler-move-stdlib-cspbg7fc",
+    "priorSourceCommit": "b1da9f70a57bbca1f1573b9b54d58beca517c63c",
+    "planIdEqual": false,
+    "priorPlanId": "98a9b4d58ecfd4a9ff7648af3f4c14e09d89f7df22d0c3ec99854f5ed4f47a1d",
+    "currentPlanId": "d19436b85ce17388a589431d9f1defd688ca9c63f5bfeb94a9d6699951bf1cc6",
+    "resultSnapshotIdExact": true,
+    "filesExact": true,
+    "diffExact": true,
+    "planTimestampFieldsDiffer": true,
+    "planIdentityFormulaSourceUnchanged": true,
+    "intentExact": true,
+    "effectDigestExact": true,
+    "sourceBindingsExact": true,
+    "compilerContextIdExact": true,
+    "standardLibraryHashesExact": true,
+    "noRepairMetadataAdded": true,
+    "executedBinarySha256": "7fc8fbcb3f2aa1536f0d2974116b17cbe1b08426eb53d3b8672a6a5252c72ae6",
+    "isAdditionalProbeNotRustTestCount": true,
+    "command": [
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\yoke.exe",
+      "--root",
+      "C:\\Users\\Lomi\\AppData\\Local\\Temp\\ci-compiler-move-stdlib-cspbg7fc\\project",
+      "session",
+      "--id",
+      "stdlib",
+      "--host-profile",
+      "C:\\Users\\Lomi\\AppData\\Local\\Temp\\ci-compiler-move-stdlib-cspbg7fc\\host\\host.json",
+      "--requests",
+      "C:\\Users\\Lomi\\AppData\\Local\\Temp\\ci-compiler-move-stdlib-cspbg7fc\\host\\requests.json"
+    ]
+  },
+  "wholeNativeRerun": false,
+  "otherPlatformsCertified": false,
+  "fullParityCertified": false,
+  "mainMerged": false,
+  "releasePerformed": false,
+  "unchangedSources": {
+    "native/src/analysis.rs": {
+      "currentSha256": "06b761e1e0b5e48d2892c9653bbe54f04dcb94f4eda1796701eb4cfc7f6f8050",
+      "baseGitSha256": "06b761e1e0b5e48d2892c9653bbe54f04dcb94f4eda1796701eb4cfc7f6f8050",
+      "match": "raw"
+    },
+    "native/src/model.rs": {
+      "currentSha256": "dbf4f3a895b6a2abf0ec7d75ca8914c8fd7d4d3c241e1a0e1977a953146398ed",
+      "baseGitSha256": "1a4eb3c9aa6ef9d9568d284b172c89eab296b74a420b20b9f44f5272da3c0bbd",
+      "match": "crlf-only"
+    },
+    "native/src/lsp.rs": {
+      "currentSha256": "4f499a085e5c1a3ffe330481d401e52aeea6a038bb52eb532e86ccb1a6492727",
+      "baseGitSha256": "2a4cab6f748b68c5254cb36a706af0937c643e7926fa8627c4618bbcd4737144",
+      "match": "crlf-only"
+    },
+    "native/src/lsp_refactor_intents.rs": {
+      "currentSha256": "e6ec61714bbe629ed5d2f735e7efb5ad4596b789f6ebc59be6498380b864a0f5",
+      "baseGitSha256": "613d8b0bd893b6a32267288ead2a3ae5a469eee0fc4ff9cdcd069716c4933ec4",
+      "match": "crlf-only"
+    },
+    "native/src/semantic_move_intents.rs": {
+      "currentSha256": "e82135e42bb6a9228dafa5269e6714ddfcf3bfe9ba3f6ff3ff2d7a950a1d0520",
+      "baseGitSha256": "2180690a1860f73959fab4db4b386e5c5726d144b4499cf59943450bf2f7a23f",
+      "match": "crlf-only"
+    },
+    "native/src/semantic_refactor.rs": {
+      "currentSha256": "b508782248be05cba3b97ad42c41acde5fe2accb134fd6a6c6f63f61aebf88d9",
+      "baseGitSha256": "63c5eec7d08a4f0a349174a641e2d76209a2fc9cbf648160596b9044518729e6",
+      "match": "crlf-only"
+    },
+    "native/src/changes.rs": {
+      "currentSha256": "f1826e81498a8d47da2992e9af5fc8e612b43fb8507f8b41fdee1227fb2be77f",
+      "baseGitSha256": "f1826e81498a8d47da2992e9af5fc8e612b43fb8507f8b41fdee1227fb2be77f",
+      "match": "raw"
+    },
+    "native/src/changes_plan.rs": {
+      "currentSha256": "d7fe328ebd4758726b4da9801763e9d33a7bf2da62e96da9096def8f6e34e534",
+      "baseGitSha256": "bfe907bdc1f90521aa9e3410e531f9af32997eceff4a8d60dfb7d37b2d2dfd54",
+      "match": "crlf-only"
+    },
+    "native/src/agent_repl.rs": {
+      "currentSha256": "2d6600498bd092961258d2f7f93fa189e5a33f8d114bd8a4de5ec108ee00f361",
+      "baseGitSha256": "2d6600498bd092961258d2f7f93fa189e5a33f8d114bd8a4de5ec108ee00f361",
+      "match": "raw"
+    },
+    "native/src/project_session.rs": {
+      "currentSha256": "b97257603634a7610b7353fa473de7097474671f6b5e8e371c0afd16de0753a3",
+      "baseGitSha256": "b97257603634a7610b7353fa473de7097474671f6b5e8e371c0afd16de0753a3",
+      "match": "raw"
+    },
+    "native/src/compiler_inline.rs": {
+      "currentSha256": "183a848a5fc86335f5b6feb58f22fc08f4ac32c28f2d383d9cad83be9ceb32fc",
+      "baseGitSha256": "183a848a5fc86335f5b6feb58f22fc08f4ac32c28f2d383d9cad83be9ceb32fc",
+      "match": "raw"
+    },
+    "native/src/compiler_inline_worker.cjs": {
+      "currentSha256": "a5c7b4bc952f82afc5fd9c0705d0dfee00e6395398e8ae23e3039f2039e38697",
+      "baseGitSha256": "a5c7b4bc952f82afc5fd9c0705d0dfee00e6395398e8ae23e3039f2039e38697",
+      "match": "raw"
+    },
+    "native/src/arxiv_rate.rs": {
+      "currentSha256": "24902e9273339e4909cfd3a308d52e2f6c34333f540eeab3dbe9a096fb7fe064",
+      "baseGitSha256": "24902e9273339e4909cfd3a308d52e2f6c34333f540eeab3dbe9a096fb7fe064",
+      "match": "raw"
+    },
+    "native/tests/session_refactor.rs": {
+      "currentSha256": "09f81f562c9a38568e166dc7ca34c93252266f22c1fbb22ef582c855c6d2ef2e",
+      "baseGitSha256": "09f81f562c9a38568e166dc7ca34c93252266f22c1fbb22ef582c855c6d2ef2e",
+      "match": "raw"
+    },
+    "native/tests/compiler_inline.rs": {
+      "currentSha256": "59fa07379e5132578aea262940ab358e92d83c97ad27dd56bd1cce5bbdb859c8",
+      "baseGitSha256": "59fa07379e5132578aea262940ab358e92d83c97ad27dd56bd1cce5bbdb859c8",
+      "match": "raw"
+    },
+    "Cargo.toml": {
+      "currentSha256": "cf60054b3ffa7b43c4125891240fe7615e76fee9bc3b16f4bcb80f3bcb35adcd",
+      "baseGitSha256": "be77bbd32ce56936e815667a6b469196916e9b85fa302847dfe9187a44dc7e6b",
+      "match": "crlf-only"
+    },
+    "Cargo.lock": {
+      "currentSha256": "ab040125431d7de27dab371593c3e39f6fa9e9138c259532280b08a68b38edca",
+      "baseGitSha256": "ab040125431d7de27dab371593c3e39f6fa9e9138c259532280b08a68b38edca",
+      "match": "raw"
+    },
+    "native/Cargo.toml": {
+      "currentSha256": "8a0f755845dd751103b909866d1c3de0a094ece3e80fcbe63aabec5c958b1b9f",
+      "baseGitSha256": "0067e6cc425bd8d7f9ab96c472ea118ca41d85363dc425029d149311347dbfda",
+      "match": "crlf-only"
+    },
+    "native/tests/fixtures/postgres-catalog-response.jsonl": {
+      "currentSha256": "f67a05349a6cedf55222afd3bb3231c169d382dd4b078d76544daac517530b47",
+      "baseGitSha256": "f67a05349a6cedf55222afd3bb3231c169d382dd4b078d76544daac517530b47",
+      "match": "raw"
+    }
+  }
+}

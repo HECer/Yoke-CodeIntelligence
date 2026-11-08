@@ -1,0 +1,22 @@
+{
+  "native/src/mcp_http.rs": {
+    "before": "32bc8b356eca795f6e68e2a9f99f905d7a8d63ad1e366dd6eb9643e2be71ad1d",
+    "after": "bbe2fee7c13cbc944b1b6c6a9d6cc83b23c4fda50317659b98a486439f236bb8"
+  },
+  "native/src/mcp_http_rejection_tests.rs": {
+    "before": null,
+    "after": "19bbbf8cf77ea3e5aa5755905301d9328a2f1aa036f9b18c76571320f11ef33d"
+  },
+  "native/src/project_session.rs": {
+    "before": "38e8067eb5b21187798a1214ca98b1a12105bd946ca7a4d6e76498da61ee4b96",
+    "after": "2d13856e8543cec902fb71a3e7ec90080add8dea494eb19aefb578348cc979f4"
+  },
+  "native/tests/collections_cli_review.rs": {
+    "before": "c61d61636f5582b3dc7215be400d658c0ac180f5963ede01f048d9df73353ba8",
+    "after": "739d569b980498a4068b607796cfe06b4ddb8db410764f4bc35ec06dec64671b"
+  },
+  "native/tests/mcp_http.rs": {
+    "before": "bff3decb478fcfed4b564e07d9b81871ada0146306b80ae0eb2b7d0fa0996b30",
+    "after": "a25ae94287dfe784682a5172f5fdedfb06d1e31b8891cf38364c47a02be956f4"
+  }
+}

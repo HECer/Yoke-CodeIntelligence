@@ -1,0 +1,110 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\r5b-affected-v1\native)
+    Finished `test` profile [unoptimized] target(s) in 6.38s
+     Running tests\git_affected_cli.rs (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\debug\deps\git_affected_cli-7b50ed3c547efd2f.exe)
+
+running 8 tests
+test affected_options_leaf_and_ancestor_reparse_points_refuse_after_real_options_success ... FAILED
+test affected_default_and_explicit_depth_options_match_complete_library_canonical_bytes ... FAILED
+test affected_static_domain_zero_deadline_and_zero_stdout_capacity_do_not_initialize_a_missing_store ... FAILED
+test affected_options_are_closed_duplicate_safe_and_admitted_at_exact_raw_byte_boundary ... FAILED
+test affected_replays_selected_history_without_git_live_source_or_latest_capture_fallback ... FAILED
+test affected_zero_depths_are_preserved_while_zero_required_credits_refuse_without_partial_bytes ... FAILED
+test affected_routing_refuses_a_meta_only_wal_store_before_any_physical_initialization ... FAILED
+test affected_stdout_cap_includes_lf_and_refuses_one_byte_below_without_clamping ... FAILED
+
+failures:
+
+---- affected_options_leaf_and_ancestor_reparse_points_refuse_after_real_options_success stdout ----
+
+thread 'affected_options_leaf_and_ancestor_reparse_points_refuse_after_real_options_success' (12924) panicked at native\tests\git_affected_cli.rs:68:5:
+error: unrecognized subcommand 'affected'
+
+Usage: yoke.exe git [OPTIONS] <COMMAND>
+
+For more information, try '--help'.
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- affected_default_and_explicit_depth_options_match_complete_library_canonical_bytes stdout ----
+
+thread 'affected_default_and_explicit_depth_options_match_complete_library_canonical_bytes' (97060) panicked at native\tests\git_affected_cli.rs:68:5:
+error: unrecognized subcommand 'affected'
+
+Usage: yoke.exe git [OPTIONS] <COMMAND>
+
+For more information, try '--help'.
+
+
+---- affected_static_domain_zero_deadline_and_zero_stdout_capacity_do_not_initialize_a_missing_store stdout ----
+
+thread 'affected_static_domain_zero_deadline_and_zero_stdout_capacity_do_not_initialize_a_missing_store' (109656) panicked at native\tests\git_affected_cli.rs:83:5:
+assertion `left == right` failed
+  left: [101, 114, 114, 111, 114, 58, 32, 117, 110, 114, 101, 99, 111, 103, 110, 105, 122, 101, 100, 32, 115, 117, 98, 99, 111, 109, 109, 97, 110, 100, 32, 39, 97, 102, 102, 101, 99, 116, 101, 100, 39, 10, 10, 85, 115, 97, 103, 101, 58, 32, 121, 111, 107, 101, 46, 101, 120, 101, 32, 103, 105, 116, 32, 91, 79, 80, 84, 73, 79, 78, 83, 93, 32, 60, 67, 79, 77, 77, 65, 78, 68, 62, 10, 10, 70, 111, 114, 32, 109, 111, 114, 101, 32, 105, 110, 102, 111, 114, 109, 97, 116, 105, 111, 110, 44, 32, 116, 114, 121, 32, 39, 45, 45, 104, 101, 108, 112, 39, 46, 10]
+ right: [121, 111, 107, 101, 58, 32, 103, 105, 116, 95, 97, 102, 102, 101, 99, 116, 101, 100, 95, 100, 101, 116, 97, 105, 108, 115, 95, 99, 97, 112, 97, 99, 105, 116, 121, 95, 101, 120, 99, 101, 101, 100, 101, 100, 10]
+
+---- affected_options_are_closed_duplicate_safe_and_admitted_at_exact_raw_byte_boundary stdout ----
+
+thread 'affected_options_are_closed_duplicate_safe_and_admitted_at_exact_raw_byte_boundary' (105548) panicked at native\tests\git_affected_cli.rs:68:5:
+error: unrecognized subcommand 'affected'
+
+Usage: yoke.exe git [OPTIONS] <COMMAND>
+
+For more information, try '--help'.
+
+
+---- affected_replays_selected_history_without_git_live_source_or_latest_capture_fallback stdout ----
+
+thread 'affected_replays_selected_history_without_git_live_source_or_latest_capture_fallback' (91336) panicked at native\tests\git_affected_cli.rs:68:5:
+error: unrecognized subcommand 'affected'
+
+Usage: yoke.exe git [OPTIONS] <COMMAND>
+
+For more information, try '--help'.
+
+
+---- affected_zero_depths_are_preserved_while_zero_required_credits_refuse_without_partial_bytes stdout ----
+
+thread 'affected_zero_depths_are_preserved_while_zero_required_credits_refuse_without_partial_bytes' (69036) panicked at native\tests\git_affected_cli.rs:68:5:
+error: unrecognized subcommand 'affected'
+
+Usage: yoke.exe git [OPTIONS] <COMMAND>
+
+For more information, try '--help'.
+
+
+---- affected_routing_refuses_a_meta_only_wal_store_before_any_physical_initialization stdout ----
+
+thread 'affected_routing_refuses_a_meta_only_wal_store_before_any_physical_initialization' (78240) panicked at native\tests\git_affected_cli.rs:68:5:
+error: unrecognized subcommand 'affected'
+
+Usage: yoke.exe git [OPTIONS] <COMMAND>
+
+For more information, try '--help'.
+
+
+---- affected_stdout_cap_includes_lf_and_refuses_one_byte_below_without_clamping stdout ----
+
+thread 'affected_stdout_cap_includes_lf_and_refuses_one_byte_below_without_clamping' (78196) panicked at native\tests\git_affected_cli.rs:68:5:
+error: unrecognized subcommand 'affected'
+
+Usage: yoke.exe git [OPTIONS] <COMMAND>
+
+For more information, try '--help'.
+
+
+
+failures:
+    affected_default_and_explicit_depth_options_match_complete_library_canonical_bytes
+    affected_options_are_closed_duplicate_safe_and_admitted_at_exact_raw_byte_boundary
+    affected_options_leaf_and_ancestor_reparse_points_refuse_after_real_options_success
+    affected_replays_selected_history_without_git_live_source_or_latest_capture_fallback
+    affected_routing_refuses_a_meta_only_wal_store_before_any_physical_initialization
+    affected_static_domain_zero_deadline_and_zero_stdout_capacity_do_not_initialize_a_missing_store
+    affected_stdout_cap_includes_lf_and_refuses_one_byte_below_without_clamping
+    affected_zero_depths_are_preserved_while_zero_required_credits_refuse_without_partial_bytes
+
+test result: FAILED. 0 passed; 8 failed; 0 ignored; 0 measured; 0 filtered out; finished in 17.43s
+
+error: test failed, to rerun pass `--test git_affected_cli`
+error: 1 target failed:
+    `--test git_affected_cli`

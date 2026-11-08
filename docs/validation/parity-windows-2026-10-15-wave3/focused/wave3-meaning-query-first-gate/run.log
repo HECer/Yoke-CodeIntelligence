@@ -1,0 +1,269 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+warning: multiple fields are never read
+   --> native\src\host_install.rs:624:5
+    |
+623 | pub(super) struct DurableOutputRegistration {
+    |                   ------------------------- fields in this struct
+624 |     plan_id: String,
+    |     ^^^^^^^
+625 |     journal_id: String,
+    |     ^^^^^^^^^^
+626 |     root_index: usize,
+    |     ^^^^^^^^^^
+627 |     attempt: u8,
+    |     ^^^^^^^
+628 |     path: PathBuf,
+    |     ^^^^
+629 |     identity: String,
+    |     ^^^^^^^^
+630 |     after_hash: String,
+    |     ^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: methods `path`, `identity`, `after_hash`, and `matches` are never used
+   --> native\src\host_install.rs:633:19
+    |
+632 | impl DurableOutputRegistration {
+    | ------------------------------ methods in this implementation
+633 |     pub(super) fn path(&self) -> &Path {
+    |                   ^^^^
+...
+636 |     pub(super) fn identity(&self) -> &str {
+    |                   ^^^^^^^^
+...
+639 |     pub(super) fn after_hash(&self) -> &str {
+    |                   ^^^^^^^^^^
+...
+642 |     pub(super) fn matches(&self, path: &Path, id: &str) -> bool {
+    |                   ^^^^^^^
+
+warning: fields `path` and `byte_length` are never read
+  --> native\src\host_install_io.rs:32:16
+   |
+31 | pub(super) struct OutputBinding {
+   |                   ------------- fields in this struct
+32 |     pub(super) path: PathBuf,
+   |                ^^^^
+33 |     pub(super) identity: String,
+34 |     pub(super) byte_length: usize,
+   |                ^^^^^^^^^^^
+
+warning: fields `file` and `after_hash` are never read
+  --> native\src\host_install_io.rs:44:5
+   |
+43 | pub(super) struct RegisteredOutput {
+   |                   ---------------- fields in this struct
+44 |     file: HeldFile,
+   |     ^^^^
+45 |     after_hash: String,
+   |     ^^^^^^^^^^
+
+warning: function `open_registered_output` is never used
+  --> native\src\host_install_io.rs:57:15
+   |
+57 | pub(super) fn open_registered_output(
+   |               ^^^^^^^^^^^^^^^^^^^^^^
+
+warning: methods `identity`, `len`, and `is_empty` are never used
+  --> native\src\host_install_io.rs:87:19
+   |
+78 | impl ArmedOutput {
+   | ---------------- methods in this implementation
+...
+87 |     pub(super) fn identity(&self) -> &str {
+   |                   ^^^^^^^^
+...
+90 |     pub(super) fn len(&self) -> usize {
+   |                   ^^^
+...
+93 |     pub(super) fn is_empty(&self) -> bool {
+   |                   ^^^^^^^^
+
+warning: methods `binding`, `identity`, `len`, `is_empty`, and `discard` are never used
+   --> native\src\host_install_io.rs:108:19
+    |
+107 | impl RegisteredOutput {
+    | --------------------- methods in this implementation
+108 |     pub(super) fn binding(&self) -> OutputBinding {
+    |                   ^^^^^^^
+...
+116 |     pub(super) fn identity(&self) -> &str {
+    |                   ^^^^^^^^
+...
+119 |     pub(super) fn len(&self) -> usize {
+    |                   ^^^
+...
+122 |     pub(super) fn is_empty(&self) -> bool {
+    |                   ^^^^^^^^
+...
+136 |     pub(super) fn discard(self, canonical: &[u8], d: &Deadline) -> Result<()> {
+    |                   ^^^^^^^
+
+warning: field `model_key` is never read
+    --> native\src\meaning_build.rs:1531:9
+     |
+1521 | pub(crate) struct CheckedPublishedGraph {
+     |                   --------------------- field in this struct
+...
+1531 |     pub model_key: String,
+     |         ^^^^^^^^^
+     |
+     = note: `CheckedPublishedGraph` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+
+warning: field `source_scopes` is never read
+    --> native\src\meaning_build.rs:1539:9
+     |
+1536 | pub(crate) struct CheckedPublishedSet {
+     |                   ------------------- field in this struct
+...
+1539 |     pub source_scopes: Vec<MeaningSourceScope>,
+     |         ^^^^^^^^^^^^^
+
+warning: method `source_scopes` is never used
+    --> native\src\meaning_build.rs:1552:19
+     |
+1545 | impl CheckedPublishedSet {
+     | ------------------------ method in this implementation
+...
+1552 |     pub(crate) fn source_scopes(&self) -> &[MeaningSourceScope] {
+     |                   ^^^^^^^^^^^^^
+
+warning: `yoke-code-intelligence` (lib) generated 10 warnings
+    Finished `test` profile [unoptimized] target(s) in 1m 04s
+     Running tests\facade_file_delete.rs (target\debug\deps\facade_file_delete-10f76ec2ac5264c5.exe)
+
+running 10 tests
+test forced_file_delete_materializes_the_plan_without_removing_the_original_or_its_callers ... ok
+test forced_file_delete_permission_and_external_context_denials_have_zero_change_effects ... ok
+test forced_file_delete_omitted_and_null_selectors_create_one_exact_delete_for_v8_v9 ... ok
+test forced_file_delete_stale_workspace_preflight_preserves_changed_sources_for_v8_v9 ... ok
+test default_safe_mode_and_propagation_are_distinct_unsupported_file_intents ... ok
+test forced_file_delete_workspace_apply_keeps_host_approval_and_verification_gates ... ok
+test public_forced_file_delete_accepts_generated_null_and_false_defaults ... ok
+test source_symlink_cannot_redirect_a_forced_file_deletion ... ok
+test readonly_ignored_excluded_and_uncaptured_binary_sources_cannot_be_force_deleted ... ok
+test empty_malformed_directory_missing_and_unsafe_file_selectors_never_prepare_deletions ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.74s
+
+     Running tests\graph_view.rs (target\debug\deps\graph_view-97c800a70b6f82cc.exe)
+
+running 11 tests
+test default_view_exposes_structural_relationships_without_replacing_canonical_graph ... ok
+test newly_derived_view_omits_legacy_config_file_signature_values_without_rewriting_history ... ok
+test context_omits_environment_values_and_clips_unicode_at_byte_budget ... ok
+test captured_readonly_dependency_proof_allows_view_and_collection_reads ... ok
+test registered_view_rejects_corrupt_cas_and_foreign_overlay_scope ... ok
+test selected_structural_artifacts_reject_forged_node_scope_lines_and_schema ... ok
+test semantic_and_structural_overlays_have_distinct_namespaces_and_provider_trust ... ok
+test source_view_remains_historical_and_rejects_forged_scope_options_and_deadlines ... ok
+test view_find_trace_context_and_export_preserve_source_and_parallel_calls ... ok
+test source_bound_view_exports_all_seven_formats ... ok
+test selected_overlay_inputs_have_an_aggregate_byte_budget ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.65s
+
+     Running tests\meaning_archive_primitives.rs (target\debug\deps\meaning_archive_primitives-c5256081a2ec240f.exe)
+
+running 10 tests
+test archived_attempt_preserves_unknown_cost_original_currency_and_response_usage ... ok
+test archived_attempt_keeps_response_usage_distinct_from_later_reconciled_usage ... ok
+test archived_attempt_requires_exact_hashed_task_record_key_and_row_pairing ... ok
+test archived_attempt_reuses_state_event_and_task_total_validation ... ok
+test archived_capture_deadline_and_lineage_capacity_are_checked_before_replay ... ok
+test archived_capture_overlay_uses_its_exact_base_scope_and_checked_revision ... ok
+test archived_capture_rejects_resealed_protected_paths_unknown_policy_and_noncanonical_envelopes ... ok
+test archived_capture_recovers_exact_v8_and_v9_default_and_configured_options ... ok
+test archived_capture_scope_only_derived_lineage_returns_acquisition_policy_without_an_epoch_upgrade ... ok
+test archived_attempt_byte_budget_and_deadline_fail_without_replaying_live_state ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests\meaning_graph_views.rs (target\debug\deps\meaning_graph_views-6f736190f27f413b.exe)
+
+running 11 tests
+test explicit_meaning_view_finds_alias_candidates_and_source_without_merging_claims ... ok
+test every_untyped_graphify_tool_and_resource_refuses_a_genuine_meaning_view_without_side_effects ... FAILED
+test invalid_meaning_selection_is_admitted_before_default_structural_artifact_publication ... ok
+test inferred_support_and_hyperedge_roles_never_become_directed_or_exact_bindings ... ok
+test meaning_read_and_context_return_historic_quote_citations_without_declaration_anchors ... ok
+test published_view_queries_and_archived_meaning_keep_identity_after_later_ledger_changes ... FAILED
+test multi_file_relation_and_hyperedge_reads_preserve_all_citations_and_shared_context_budget ... ok
+test meaning_trace_preserves_direction_and_ordered_hyperedge_incidence_without_a_clique ... ok
+test unselected_views_keep_the_released_schema_identity_and_artifact_bytes ... ok
+test source_only_projection_consumers_refuse_meaning_before_report_or_archive_publication ... ok
+test two_published_meaning_graphs_keep_equal_local_claims_in_separate_namespaces ... ok
+
+failures:
+
+---- every_untyped_graphify_tool_and_resource_refuses_a_genuine_meaning_view_without_side_effects stdout ----
+
+thread 'every_untyped_graphify_tool_and_resource_refuses_a_genuine_meaning_view_without_side_effects' (21520) panicked at native\tests\meaning_graph_views.rs:864:5:
+Untyped Graphify consumers silently discarded a selected meaning layer: ["query_graph", "get_node", "get_neighbors", "shortest_path"]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- published_view_queries_and_archived_meaning_keep_identity_after_later_ledger_changes stdout ----
+
+thread 'published_view_queries_and_archived_meaning_keep_identity_after_later_ledger_changes' (84104) panicked at native\tests\meaning_graph_views.rs:736:10:
+Later task/attempt row sizes invalidated a published immutable View: View claims differ from canonical graph or selected published overlay origins
+
+
+failures:
+    every_untyped_graphify_tool_and_resource_refuses_a_genuine_meaning_view_without_side_effects
+    published_view_queries_and_archived_meaning_keep_identity_after_later_ledger_changes
+
+test result: FAILED. 9 passed; 2 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.79s
+
+error: test failed, to rerun pass `-p yoke-code-intelligence --test meaning_graph_views`
+     Running tests\meaning_view.rs (target\debug\deps\meaning_view-b5b38a8d4ebfefd0.exe)
+
+running 10 tests
+test empty_meaning_selection_stays_absent_and_never_resolves_a_worker ... ok
+test archived_unknown_reports_remain_unknown_without_fresh_accounting_or_provider_attestation ... ok
+test explicit_no_claims_keeps_source_bindings_and_complete_packet_coverage ... ok
+test archived_replay_uses_frozen_original_and_rebound_sources_after_live_source_and_worker_removal ... ok
+test later_task_accounting_cannot_change_a_published_layer_or_upgrade_unknown_receipts ... FAILED
+test published_selection_preserves_multifile_quotes_roles_parallel_claims_and_original_receipts ... ok
+test published_rebind_retains_original_snapshot_request_and_accounting_lineage ... ok
+test archived_proof_rederives_claims_and_rejects_missing_receipts_cycles_and_policy_drift ... ok
+test validation_replays_quotes_roles_provenance_scope_and_real_closure_budget ... ok
+test selection_order_is_deterministic_shared_dependencies_are_charged_once_and_models_stay_distinct ... ok
+
+failures:
+
+---- later_task_accounting_cannot_change_a_published_layer_or_upgrade_unknown_receipts stdout ----
+
+thread 'later_task_accounting_cannot_change_a_published_layer_or_upgrade_unknown_receipts' (68816) panicked at native\tests\meaning_view.rs:810:5:
+assertion `left == right` failed: Mutable task/attempt row size entered the immutable meaning layer
+  left: MeaningLayer { schema_version: 1, scope: MeaningScope { workspace_id: "fdb7861c96fa0c0cda5f258cf10a5396d222845ebbd96912d512f39ee356bfed", snapshot_id: "b5178364600cd77c9d2b20d72de7afb7fd636378d4b1f12a07e7952d9432cdb0", base_graph_hash: "a36cd773a25b6c618c70181a87bc2ab5a8a4ecbdae6c0ceefe0b876ac469fc7d", analyzer_epoch: "yoke-tree-sitter-8", capture_policy_hash: "fb2bd2139cd6343ac53ca51c8d60ca7d7b6debb0351bff07c80e233bafd11a7f" }, selections: [MeaningSelectionRef { graph_id: "a76904a46c815b3d7abc258faf13452ef33cc7b1624bc7ef8648f58193c589c4", job_id: "b60662450e4bf1347ba32f85d0094861c19f7d946da2e4886572c78a8f303089", artifact_id: "d7f7cf5b55039d7ffc6295540b15bd94db4090e7cce5c249b6b2ee274c9f1163", total_bytes: 11962 }], packets: [MeaningPacket { selection_index: 0, index: 0, input_hash: "da6cb25c141b89cdc6bd250011959b452fcf3aaa63b1654389ad650c4bbe4ee5", unit_set_hash: "90505ee8aabf44f11c7e5b38ce1610f321fe151bf32048a2dfa7ee60078d3add", contract_hash: "eaf1c7e214f72e22b4f23ca6e125ff81ecb03d1c065cc2264f96ed70dfb6f7f5", source_bindings: [Binding { source_id: "9f4911d844b56ff8c4640a3db48d948857dda22c029b9c134f160fdcbebe9e3f", path: "a.rs", content_hash: "26786936189e9a06ab95198220ded0e539341b6eb8fdb8f48d59374017d3baf5", start_byte: 0, end_byte: 62 }], provenance: ReceiptProvenance { snapshot_id: "b5178364600cd77c9d2b20d72de7afb7fd636378d4b1f12a07e7952d9432cdb0", original_snapshot_id: "b5178364600cd77c9d2b20d72de7afb7fd636378d4b1f12a07e7952d9432cdb0", original_job_id: "b60662450e4bf1347ba32f85d0094861c19f7d946da2e4886572c78a8f303089", response_artifact_id: "e7f74f06f5785cb6145994f3b8ca3b1ee4fa738a6bff1d2942a385a58f63ae1c", attempt_id: "eeb6119fd10fa2ebb275e15e5de17c74fe4281b5ae490d4cc68a3d6f9678a732", request_id: "a608791f208891bf513861ae202b477d5e456aaf3be6310fc0d59502a406a995", model: "meaning-view-fixture", model_version: "v1", currency: "EUR", provider_reported_cost_micros: None, provider_reported_usage: None, rebound: false, binding_validation: "exact_captured_source_replayed" }, concepts: [MeaningConcept { id: "48fd3aa1ea14af20948789703342431f9fb1018414a89e27fa10c31f7547faca", claim_id: "70a44a5ad1493775b5cc676b3d8078865f4917c71f6202be3058f832f7df7527", label: "Storage policy", description: "Owned inferred fixture", aliases: ["Shared alias"], evidence_ids: ["48a33f088607ae16aebbe8b3fc28358180a17fb5360a4dafa0adf9127967a18e"], resolution: InferredConcept, provider_attestation: Unverified }], relations: [], hyperedges: [], evidence: [MeaningEvidence { id: "48a33f088607ae16aebbe8b3fc28358180a17fb5360a4dafa0adf9127967a18e", base_evidence_id: "45d721925e50d83d7d554537014da5b3e3b9011f2db2027909b2e27216c14f60", source_id: "9f4911d844b56ff8c4640a3db48d948857dda22c029b9c134f160fdcbebe9e3f", snapshot_id: "b5178364600cd77c9d2b20d72de7afb7fd636378d4b1f12a07e7952d9432cdb0", path: "a.rs", content_hash: "26786936189e9a06ab95198220ded0e539341b6eb8fdb8f48d59374017d3baf5", start_byte: 0, end_byte: 62, start_line: 1, end_line: 2, text: "// captured source\npub fn alpha() -> &'static str { \"café\" }\n" }], citation_links: [CitationLink { id: "33d391225e27d3e955a3496e60c9d1e6f9a4930cea5251b4b7af35e8888223a7", claim: "48fd3aa1ea14af20948789703342431f9fb1018414a89e27fa10c31f7547faca", claim_kind: Concept, evidence_id: "48a33f088607ae16aebbe8b3fc28358180a17fb5360a4dafa0adf9127967a18e", file_entity_id: "631f22cefb62c2a3180fa9d674d56369278a2069a451164f6ba58aef77d6ef0e" }], coverage: [UnitCoverage { source_id: "9f4911d844b56ff8c4640a3db48d948857dda22c029b9c134f160fdcbebe9e3f", outcome: "claims" }] }, MeaningPacket { selection_index: 0, index: 1, input_hash: "5070ba98545363137cf6defccd3dd20ae4f53982ea345f039f295f1941d8f44c", unit_set_hash: "8e6fb73ece9179ca6071451294127e8366d04df142322790985da8c909bd37b5", contract_hash: "eaf1c7e214f72e22b4f23ca6e125ff81ecb03d1c065cc2264f96ed70dfb6f7f5", source_bindings: [Binding { source_id: "6dcca4ab4cc4a1ec9814966ba8d0cb092edead7c10d812d0fd1fa814e948bb80", path: "b.rs", content_hash: "5c5ab0fa8e9b4cc138e98155cd8b4d08f880b050ddc93ea63461ad635b7620ef", start_byte: 0, end_byte: 27 }], provenance: ReceiptProvenance { snapshot_id: "b5178364600cd77c9d2b20d72de7afb7fd636378d4b1f12a07e7952d9432cdb0", original_snapshot_id: "b5178364600cd77c9d2b20d72de7afb7fd636378d4b1f12a07e7952d9432cdb0", original_job_id: "b60662450e4bf1347ba32f85d0094861c19f7d946da2e4886572c78a8f303089", response_artifact_id: "26b8eda6b161839bd4781b537655b0b4bd7261269a7c674969cf224c03fc31f8", attempt_id: "032239aeb7e76940a10f9ed7d69c87e120d26e3d26eb3c0360ccae221ce5f365", request_id: "a13d9162d27be746bc30f3b883d83d4081612c9c2db8ef923c9ca2d394b633dc", model: "meaning-view-fixture", model_version: "v1", currency: "EUR", provider_reported_cost_micros: None, provider_reported_usage: None, rebound: false, binding_validation: "exact_captured_source_replayed" }, concepts: [MeaningConcept { id: "25b83310ebfe60bfb4ca0c1ebfb7b69236ddac64af5b2c937383630149bffcc2", claim_id: "7011e67968a5af76212dcc4b8e2f867862ee208f3131afbf389e6fcfc57193aa", label: "Storage policy", description: "Owned inferred fixture", aliases: ["Shared alias"], evidence_ids: ["5e71b148b45fcba9bf0a2d3b58747742641bfc153c78383bfd55ff4bf92840d4"], resolution: InferredConcept, provider_attestation: Unverified }], relations: [], hyperedges: [], evidence: [MeaningEvidence { id: "5e71b148b45fcba9bf0a2d3b58747742641bfc153c78383bfd55ff4bf92840d4", base_evidence_id: "8f586ec36ff4d1807ab8067800f2b6bab75b640321ca4ee946721d3d54e8196f", source_id: "6dcca4ab4cc4a1ec9814966ba8d0cb092edead7c10d812d0fd1fa814e948bb80", snapshot_id: "b5178364600cd77c9d2b20d72de7afb7fd636378d4b1f12a07e7952d9432cdb0", path: "b.rs", content_hash: "5c5ab0fa8e9b4cc138e98155cd8b4d08f880b050ddc93ea63461ad635b7620ef", start_byte: 0, end_byte: 27, start_line: 1, end_line: 1, text: "pub fn beta() -> u32 { 2 }\n" }], citation_links: [CitationLink { id: "3f8974d021f6b678341a585846397937269b0d24fce9f0771dc4f44f6b292f13", claim: "25b83310ebfe60bfb4ca0c1ebfb7b69236ddac64af5b2c937383630149bffcc2", claim_kind: Concept, evidence_id: "5e71b148b45fcba9bf0a2d3b58747742641bfc153c78383bfd55ff4bf92840d4", file_entity_id: "3f44a8caf2ea075d4fb00b15fb695a0753065f5c3578f5b3429a8c408cc6c3b1" }], coverage: [UnitCoverage { source_id: "6dcca4ab4cc4a1ec9814966ba8d0cb092edead7c10d812d0fd1fa814e948bb80", outcome: "claims" }] }, MeaningPacket { selection_index: 0, index: 2, input_hash: "905d963a7e2f0067e9cb974028d1c75e2b00f1a2e25d4cc54d765c9a3357b79e", unit_set_hash: "4a0db39560761d53e108c945309b446c5f619c57fb0f26ebdc6a5b1d2c5d8879", contract_hash: "eaf1c7e214f72e22b4f23ca6e125ff81ecb03d1c065cc2264f96ed70dfb6f7f5", source_bindings: [Binding { source_id: "9f4911d844b56ff8c4640a3db48d948857dda22c029b9c134f160fdcbebe9e3f", path: "a.rs", content_hash: "26786936189e9a06ab95198220ded0e539341b6eb8fdb8f48d59374017d3baf5", start_byte: 0, end_byte: 62 }, Binding { source_id: "6dcca4ab4cc4a1ec9814966ba8d0cb092edead7c10d812d0fd1fa814e948bb80", path: "b.rs", content_hash: "5c5ab0fa8e9b4cc138e98155cd8b4d08f880b050ddc93ea63461ad635b7620ef", start_byte: 0, end_byte: 27 }], provenance: ReceiptProvenance { snapshot_id: "b5178364600cd77c9d2b20d72de7afb7fd636378d4b1f12a07e7952d9432cdb0", original_snapshot_id: "b5178364600cd77c9d2b20d72de7afb7fd636378d4b1f12a07e7952d9432cdb0", original_job_id: "b60662450e4bf1347ba32f85d0094861c19f7d946da2e4886572c78a8f303089", response_artifact_id: "a653d8bba04a3f51020fb1235e04ed3261d4e2dc1c3cc312642bc3c2c201fe84", attempt_id: "9299604f4aec53f36f21256a0425921bbd404d97ebbcbab8f5a2e6672330acac", request_id: "bcea5a882fc887bfb6ea7b996af1b3df249cf8af15688e729ac9a5b3b52fa3d1", model: "meaning-view-fixture", model_version: "v1", currency: "EUR", provider_reported_cost_micros: None, provider_reported_usage: None, rebound: false, binding_validation: "exact_captured_source_replayed" }, concepts: [MeaningConcept { id: "eccf8330b20cb8b9ea03495c79b336de7127ee7765166821fc5ade38977629d0", claim_id: "24cb053f22be6d777d5051c5b59b70e005fd41872f31db144b300d381a31f5d2", label: "Read path", description: "Owned read fixture", aliases: ["Shared alias"], evidence_ids: ["abeb8cfd2005b55738d4a5f2808b46d718f08f0fe5c27175fa0242f0066ebf28"], resolution: InferredConcept, provider_attestation: Unverified }, MeaningConcept { id: "6cbcdea22b7088d28d606f3deb056dad515797e385b0c748a191bd0642ce59ff", claim_id: "28a341a1ab87fd106a77891af9a9b86ec3212270b7ec7a53405a435c33bd11e7", label: "Storage policy", description: "Owned inferred fixture", aliases: ["Shared alias"], evidence_ids: ["abeb8cfd2005b55738d4a5f2808b46d718f08f0fe5c27175fa0242f0066ebf28", "139f86c268872e593148f259cfd0eb98de12752687a9eb2b6181d72f1bb9faa7"], resolution: InferredConcept, provider_attestation: Unverified }, MeaningConcept { id: "0934b02f55632c86f2158e5c57019f8a9bef03839b478421798dccc410a06f84", claim_id: "bb1d34aed1b8566dc9567fcfe0bfce3c9e4097434862b7e2e6a9c97244782f4a", label: "Write path", description: "Owned write fixture", aliases: [], evidence_ids: ["139f86c268872e593148f259cfd0eb98de12752687a9eb2b6181d72f1bb9faa7"], resolution: InferredConcept, provider_attestation: Unverified }], relations: [MeaningRelation { id: "862f0e0f1933f3f69f0f7e31000bf6a198df0e5389b17c1872700639dfaf5f5c", claim_id: "447228bc683e24859b709c3e642afc291854edcd0d4a7c9c5f221fceaef2146c", source: "6cbcdea22b7088d28d606f3deb056dad515797e385b0c748a191bd0642ce59ff", target: "eccf8330b20cb8b9ea03495c79b336de7127ee7765166821fc5ade38977629d0", relation: "uses", description: "Parallel claim", evidence_ids: ["abeb8cfd2005b55738d4a5f2808b46d718f08f0fe5c27175fa0242f0066ebf28", "139f86c268872e593148f259cfd0eb98de12752687a9eb2b6181d72f1bb9faa7"], resolution: InferredConcept, provider_attestation: Unverified }, MeaningRelation { id: "613091ef4bea099e861f8555e35825d022ffe24825154dedb439b0e8dc532d45", claim_id: "b36c7ac4014d1f9beb4781149d550f7a80101e4fa4b7eaa799e6eff793c8440f", source: "6cbcdea22b7088d28d606f3deb056dad515797e385b0c748a191bd0642ce59ff", target: "eccf8330b20cb8b9ea03495c79b336de7127ee7765166821fc5ade38977629d0", relation: "uses", description: "Forward claim", evidence_ids: ["abeb8cfd2005b55738d4a5f2808b46d718f08f0fe5c27175fa0242f0066ebf28", "139f86c268872e593148f259cfd0eb98de12752687a9eb2b6181d72f1bb9faa7"], resolution: InferredConcept, provider_attestation: Unverified }, MeaningRelation { id: "5eebcecc1b3107a25935c0ff703f2bb7858fe2500f7e368dd7c0c60a85124b66", claim_id: "d0f8d49a0b5615e5e5ad7ab9b8e1ed6fcd15cb9cc82ed5cfdd9a82c05f1051a1", source: "eccf8330b20cb8b9ea03495c79b336de7127ee7765166821fc5ade38977629d0", target: "6cbcdea22b7088d28d606f3deb056dad515797e385b0c748a191bd0642ce59ff", relation: "uses", description: "Reverse claim", evidence_ids: ["abeb8cfd2005b55738d4a5f2808b46d718f08f0fe5c27175fa0242f0066ebf28", "139f86c268872e593148f259cfd0eb98de12752687a9eb2b6181d72f1bb9faa7"], resolution: InferredConcept, provider_attestation: Unverified }], hyperedges: [MeaningHyperedge { id: "982bc3705395b6d119d2cc624c1ce3fef17360b6e59bff7a8d24e1f1402de6a7", claim_id: "cdb1dfad689718ec2c6839297959e765dc8f0233cd33353cb6c388cc11ce65be", relation: "coordinates", participants: [Participant { role: "output", concept: "0934b02f55632c86f2158e5c57019f8a9bef03839b478421798dccc410a06f84" }, Participant { role: "input", concept: "6cbcdea22b7088d28d606f3deb056dad515797e385b0c748a191bd0642ce59ff" }, Participant { role: "input", concept: "eccf8330b20cb8b9ea03495c79b336de7127ee7765166821fc5ade38977629d0" }], description: "Ordered roles remain inferred", evidence_ids: ["abeb8cfd2005b55738d4a5f2808b46d718f08f0fe5c27175fa0242f0066ebf28", "139f86c268872e593148f259cfd0eb98de12752687a9eb2b6181d72f1bb9faa7"], resolution: InferredConcept, provider_attestation: Unverified }], evidence: [MeaningEvidence { id: "abeb8cfd2005b55738d4a5f2808b46d718f08f0fe5c27175fa0242f0066ebf28", base_evidence_id: "7009c323b8d9debbbdc84d03b72167f0cc0afc1c86c66cc23228430ad3010475", source_id: "6dcca4ab4cc4a1ec9814966ba8d0cb092edead7c10d812d0fd1fa814e948bb80", snapshot_id: "b5178364600cd77c9d2b20d72de7afb7fd636378d4b1f12a07e7952d9432cdb0", path: "b.rs", content_hash: "5c5ab0fa8e9b4cc138e98155cd8b4d08f880b050ddc93ea63461ad635b7620ef", start_byte: 0, end_byte: 27, start_line: 1, end_line: 1, text: "pub fn beta() -> u32 { 2 }\n" }, MeaningEvidence { id: "139f86c268872e593148f259cfd0eb98de12752687a9eb2b6181d72f1bb9faa7", base_evidence_id: "fb5088faa1829e04e1932ed9a0b7c263cd51ba7ceb1cc285f94218c80ad892f9", source_id: "9f4911d844b56ff8c4640a3db48d948857dda22c029b9c134f160fdcbebe9e3f", snapshot_id: "b5178364600cd77c9d2b20d72de7afb7fd636378d4b1f12a07e7952d9432cdb0", path: "a.rs", content_hash: "26786936189e9a06ab95198220ded0e539341b6eb8fdb8f48d59374017d3baf5", start_byte: 0, end_byte: 62, start_line: 1, end_line: 2, text: "// captured source\npub fn alpha() -> &'static str { \"café\" }\n" }], citation_links: [CitationLink { id: "112342e04a32f1090483cbc29ce6927e0e4c854e93247cf56b6c2d7a7b06730a", claim: "eccf8330b20cb8b9ea03495c79b336de7127ee7765166821fc5ade38977629d0", claim_kind: Concept, evidence_id: "abeb8cfd2005b55738d4a5f2808b46d718f08f0fe5c27175fa0242f0066ebf28", file_entity_id: "3f44a8caf2ea075d4fb00b15fb695a0753065f5c3578f5b3429a8c408cc6c3b1" }, CitationLink { id: "0e6fb74a97558b49385e5098ef5389286ec0549be4469ccff3fa529b1efa1191", claim: "6cbcdea22b7088d28d606f3deb056dad515797e385b0c748a191bd0642ce59ff", claim_kind: Concept, evidence_id: "abeb8cfd2005b55738d4a5f2808b46d718f08f0fe5c27175fa0242f0066ebf28", file_entity_id: "3f44a8caf2ea075d4fb00b15fb695a0753065f5c3578f5b3429a8c408cc6c3b1" }, CitationLink { id: "b3011909395bc1395de4a3c88c61f6e8b954265889dba126955d41d6ecdfa732", claim: "6cbcdea22b7088d28d606f3deb056dad515797e385b0c748a191bd0642ce59ff", claim_kind: Concept, evidence_id: "139f86c268872e593148f259cfd0eb98de12752687a9eb2b6181d72f1bb9faa7", file_entity_id: "631f22cefb62c2a3180fa9d674d56369278a2069a451164f6ba58aef77d6ef0e" }, CitationLink { id: "c77d4e786c0ffac23435e094c7f831c0046752ead247c4a6bce564d7b05a2920", claim: "0934b02f55632c86f2158e5c57019f8a9bef03839b478421798dccc410a06f84", claim_kind: Concept, evidence_id: "139f86c268872e593148f259cfd0eb98de12752687a9eb2b6181d72f1bb9faa7", file_entity_id: "631f22cefb62c2a3180fa9d674d56369278a2069a451164f6ba58aef77d6ef0e" }, CitationLink { id: "f06c0797a7f51ba86403044f5cd17fbbb8613a65042e209ec0bc545455d35c07", claim: "862f0e0f1933f3f69f0f7e31000bf6a198df0e5389b17c1872700639dfaf5f5c", claim_kind: Relation, evidence_id: "abeb8cfd2005b55738d4a5f2808b46d718f08f0fe5c27175fa0242f0066ebf28", file_entity_id: "3f44a8caf2ea075d4fb00b15fb695a0753065f5c3578f5b3429a8c408cc6c3b1" }, CitationLink { id: "83d246a4d60c854520bbcec46ec8f82c4fd6888c9b87fb8b4b03754d94522717", claim: "862f0e0f1933f3f69f0f7e31000bf6a198df0e5389b17c1872700639dfaf5f5c", claim_kind: Relation, evidence_id: "139f86c268872e593148f259cfd0eb98de12752687a9eb2b6181d72f1bb9faa7", file_entity_id: "631f22cefb62c2a3180fa9d674d56369278a2069a451164f6ba58aef77d6ef0e" }, CitationLink { id: "a6c376de1e212d35ac483620374fcbbeeaaef170a5a1fb55e5f71d89285daac4", claim: "613091ef4bea099e861f8555e35825d022ffe24825154dedb439b0e8dc532d45", claim_kind: Relation, evidence_id: "abeb8cfd2005b55738d4a5f2808b46d718f08f0fe5c27175fa0242f0066ebf28", file_entity_id: "3f44a8caf2ea075d4fb00b15fb695a0753065f5c3578f5b3429a8c408cc6c3b1" }, CitationLink { id: "78ac35933fcf687b7d55f7e148ac6387aec1b6dcdafad6548645021b1c43bcff", claim: "613091ef4bea099e861f8555e35825d022ffe24825154dedb439b0e8dc532d45", claim_kind: Relation, evidence_id: "139f86c268872e593148f259cfd0eb98de12752687a9eb2b6181d72f1bb9faa7", file_entity_id: "631f22cefb62c2a3180fa9d674d56369278a2069a451164f6ba58aef77d6ef0e" }, CitationLink { id: "ea80abe3ea86519895168ed5123574fe48baaecc9edd98ba63a26a31243e60fb", claim: "5eebcecc1b3107a25935c0ff703f2bb7858fe2500f7e368dd7c0c60a85124b66", claim_kind: Relation, evidence_id: "abeb8cfd2005b55738d4a5f2808b46d718f08f0fe5c27175fa0242f0066ebf28", file_entity_id: "3f44a8caf2ea075d4fb00b15fb695a0753065f5c3578f5b3429a8c408cc6c3b1" }, CitationLink { id: "32b512c6e31d081d12398dd368c042437949432a7f1ffd0cdd9b5234aa9c1168", claim: "5eebcecc1b3107a25935c0ff703f2bb7858fe2500f7e368dd7c0c60a85124b66", claim_kind: Relation, evidence_id: "139f86c268872e593148f259cfd0eb98de12752687a9eb2b6181d72f1bb9faa7", file_entity_id: "631f22cefb62c2a3180fa9d674d56369278a2069a451164f6ba58aef77d6ef0e" }, CitationLink { id: "514e0a9a6346aae9065ebda8695efbc93d6642b06889e33fe4167186b7bcd1cc", claim: "982bc3705395b6d119d2cc624c1ce3fef17360b6e59bff7a8d24e1f1402de6a7", claim_kind: Hyperedge, evidence_id: "abeb8cfd2005b55738d4a5f2808b46d718f08f0fe5c27175fa0242f0066ebf28", file_entity_id: "3f44a8caf2ea075d4fb00b15fb695a0753065f5c3578f5b3429a8c408cc6c3b1" }, CitationLink { id: "ac08ddd33dd9e603747bf8a98c144ce6e1bdc516303ad903346b5f97a5fbf404", claim: "982bc3705395b6d119d2cc624c1ce3fef17360b6e59bff7a8d24e1f1402de6a7", claim_kind: Hyperedge, evidence_id: "139f86c268872e593148f259cfd0eb98de12752687a9eb2b6181d72f1bb9faa7", file_entity_id: "631f22cefb62c2a3180fa9d674d56369278a2069a451164f6ba58aef77d6ef0e" }], coverage: [UnitCoverage { source_id: "6dcca4ab4cc4a1ec9814966ba8d0cb092edead7c10d812d0fd1fa814e948bb80", outcome: "claims" }, UnitCoverage { source_id: "9f4911d844b56ff8c4640a3db48d948857dda22c029b9c134f160fdcbebe9e3f", outcome: "claims" }] }], input_bytes: 35677 }
+ right: MeaningLayer { schema_version: 1, scope: MeaningScope { workspace_id: "fdb7861c96fa0c0cda5f258cf10a5396d222845ebbd96912d512f39ee356bfed", snapshot_id: "b5178364600cd77c9d2b20d72de7afb7fd636378d4b1f12a07e7952d9432cdb0", base_graph_hash: "a36cd773a25b6c618c70181a87bc2ab5a8a4ecbdae6c0ceefe0b876ac469fc7d", analyzer_epoch: "yoke-tree-sitter-8", capture_policy_hash: "fb2bd2139cd6343ac53ca51c8d60ca7d7b6debb0351bff07c80e233bafd11a7f" }, selections: [MeaningSelectionRef { graph_id: "a76904a46c815b3d7abc258faf13452ef33cc7b1624bc7ef8648f58193c589c4", job_id: "b60662450e4bf1347ba32f85d0094861c19f7d946da2e4886572c78a8f303089", artifact_id: "d7f7cf5b55039d7ffc6295540b15bd94db4090e7cce5c249b6b2ee274c9f1163", total_bytes: 11962 }], packets: [MeaningPacket { selection_index: 0, index: 0, input_hash: "da6cb25c141b89cdc6bd250011959b452fcf3aaa63b1654389ad650c4bbe4ee5", unit_set_hash: "90505ee8aabf44f11c7e5b38ce1610f321fe151bf32048a2dfa7ee60078d3add", contract_hash: "eaf1c7e214f72e22b4f23ca6e125ff81ecb03d1c065cc2264f96ed70dfb6f7f5", source_bindings: [Binding { source_id: "9f4911d844b56ff8c4640a3db48d948857dda22c029b9c134f160fdcbebe9e3f", path: "a.rs", content_hash: "26786936189e9a06ab95198220ded0e539341b6eb8fdb8f48d59374017d3baf5", start_byte: 0, end_byte: 62 }], provenance: ReceiptProvenance { snapshot_id: "b5178364600cd77c9d2b20d72de7afb7fd636378d4b1f12a07e7952d9432cdb0", original_snapshot_id: "b5178364600cd77c9d2b20d72de7afb7fd636378d4b1f12a07e7952d9432cdb0", original_job_id: "b60662450e4bf1347ba32f85d0094861c19f7d946da2e4886572c78a8f303089", response_artifact_id: "e7f74f06f5785cb6145994f3b8ca3b1ee4fa738a6bff1d2942a385a58f63ae1c", attempt_id: "eeb6119fd10fa2ebb275e15e5de17c74fe4281b5ae490d4cc68a3d6f9678a732", request_id: "a608791f208891bf513861ae202b477d5e456aaf3be6310fc0d59502a406a995", model: "meaning-view-fixture", model_version: "v1", currency: "EUR", provider_reported_cost_micros: None, provider_reported_usage: None, rebound: false, binding_validation: "exact_captured_source_replayed" }, concepts: [MeaningConcept { id: "48fd3aa1ea14af20948789703342431f9fb1018414a89e27fa10c31f7547faca", claim_id: "70a44a5ad1493775b5cc676b3d8078865f4917c71f6202be3058f832f7df7527", label: "Storage policy", description: "Owned inferred fixture", aliases: ["Shared alias"], evidence_ids: ["48a33f088607ae16aebbe8b3fc28358180a17fb5360a4dafa0adf9127967a18e"], resolution: InferredConcept, provider_attestation: Unverified }], relations: [], hyperedges: [], evidence: [MeaningEvidence { id: "48a33f088607ae16aebbe8b3fc28358180a17fb5360a4dafa0adf9127967a18e", base_evidence_id: "45d721925e50d83d7d554537014da5b3e3b9011f2db2027909b2e27216c14f60", source_id: "9f4911d844b56ff8c4640a3db48d948857dda22c029b9c134f160fdcbebe9e3f", snapshot_id: "b5178364600cd77c9d2b20d72de7afb7fd636378d4b1f12a07e7952d9432cdb0", path: "a.rs", content_hash: "26786936189e9a06ab95198220ded0e539341b6eb8fdb8f48d59374017d3baf5", start_byte: 0, end_byte: 62, start_line: 1, end_line: 2, text: "// captured source\npub fn alpha() -> &'static str { \"café\" }\n" }], citation_links: [CitationLink { id: "33d391225e27d3e955a3496e60c9d1e6f9a4930cea5251b4b7af35e8888223a7", claim: "48fd3aa1ea14af20948789703342431f9fb1018414a89e27fa10c31f7547faca", claim_kind: Concept, evidence_id: "48a33f088607ae16aebbe8b3fc28358180a17fb5360a4dafa0adf9127967a18e", file_entity_id: "631f22cefb62c2a3180fa9d674d56369278a2069a451164f6ba58aef77d6ef0e" }], coverage: [UnitCoverage { source_id: "9f4911d844b56ff8c4640a3db48d948857dda22c029b9c134f160fdcbebe9e3f", outcome: "claims" }] }, MeaningPacket { selection_index: 0, index: 1, input_hash: "5070ba98545363137cf6defccd3dd20ae4f53982ea345f039f295f1941d8f44c", unit_set_hash: "8e6fb73ece9179ca6071451294127e8366d04df142322790985da8c909bd37b5", contract_hash: "eaf1c7e214f72e22b4f23ca6e125ff81ecb03d1c065cc2264f96ed70dfb6f7f5", source_bindings: [Binding { source_id: "6dcca4ab4cc4a1ec9814966ba8d0cb092edead7c10d812d0fd1fa814e948bb80", path: "b.rs", content_hash: "5c5ab0fa8e9b4cc138e98155cd8b4d08f880b050ddc93ea63461ad635b7620ef", start_byte: 0, end_byte: 27 }], provenance: ReceiptProvenance { snapshot_id: "b5178364600cd77c9d2b20d72de7afb7fd636378d4b1f12a07e7952d9432cdb0", original_snapshot_id: "b5178364600cd77c9d2b20d72de7afb7fd636378d4b1f12a07e7952d9432cdb0", original_job_id: "b60662450e4bf1347ba32f85d0094861c19f7d946da2e4886572c78a8f303089", response_artifact_id: "26b8eda6b161839bd4781b537655b0b4bd7261269a7c674969cf224c03fc31f8", attempt_id: "032239aeb7e76940a10f9ed7d69c87e120d26e3d26eb3c0360ccae221ce5f365", request_id: "a13d9162d27be746bc30f3b883d83d4081612c9c2db8ef923c9ca2d394b633dc", model: "meaning-view-fixture", model_version: "v1", currency: "EUR", provider_reported_cost_micros: None, provider_reported_usage: None, rebound: false, binding_validation: "exact_captured_source_replayed" }, concepts: [MeaningConcept { id: "25b83310ebfe60bfb4ca0c1ebfb7b69236ddac64af5b2c937383630149bffcc2", claim_id: "7011e67968a5af76212dcc4b8e2f867862ee208f3131afbf389e6fcfc57193aa", label: "Storage policy", description: "Owned inferred fixture", aliases: ["Shared alias"], evidence_ids: ["5e71b148b45fcba9bf0a2d3b58747742641bfc153c78383bfd55ff4bf92840d4"], resolution: InferredConcept, provider_attestation: Unverified }], relations: [], hyperedges: [], evidence: [MeaningEvidence { id: "5e71b148b45fcba9bf0a2d3b58747742641bfc153c78383bfd55ff4bf92840d4", base_evidence_id: "8f586ec36ff4d1807ab8067800f2b6bab75b640321ca4ee946721d3d54e8196f", source_id: "6dcca4ab4cc4a1ec9814966ba8d0cb092edead7c10d812d0fd1fa814e948bb80", snapshot_id: "b5178364600cd77c9d2b20d72de7afb7fd636378d4b1f12a07e7952d9432cdb0", path: "b.rs", content_hash: "5c5ab0fa8e9b4cc138e98155cd8b4d08f880b050ddc93ea63461ad635b7620ef", start_byte: 0, end_byte: 27, start_line: 1, end_line: 1, text: "pub fn beta() -> u32 { 2 }\n" }], citation_links: [CitationLink { id: "3f8974d021f6b678341a585846397937269b0d24fce9f0771dc4f44f6b292f13", claim: "25b83310ebfe60bfb4ca0c1ebfb7b69236ddac64af5b2c937383630149bffcc2", claim_kind: Concept, evidence_id: "5e71b148b45fcba9bf0a2d3b58747742641bfc153c78383bfd55ff4bf92840d4", file_entity_id: "3f44a8caf2ea075d4fb00b15fb695a0753065f5c3578f5b3429a8c408cc6c3b1" }], coverage: [UnitCoverage { source_id: "6dcca4ab4cc4a1ec9814966ba8d0cb092edead7c10d812d0fd1fa814e948bb80", outcome: "claims" }] }, MeaningPacket { selection_index: 0, index: 2, input_hash: "905d963a7e2f0067e9cb974028d1c75e2b00f1a2e25d4cc54d765c9a3357b79e", unit_set_hash: "4a0db39560761d53e108c945309b446c5f619c57fb0f26ebdc6a5b1d2c5d8879", contract_hash: "eaf1c7e214f72e22b4f23ca6e125ff81ecb03d1c065cc2264f96ed70dfb6f7f5", source_bindings: [Binding { source_id: "9f4911d844b56ff8c4640a3db48d948857dda22c029b9c134f160fdcbebe9e3f", path: "a.rs", content_hash: "26786936189e9a06ab95198220ded0e539341b6eb8fdb8f48d59374017d3baf5", start_byte: 0, end_byte: 62 }, Binding { source_id: "6dcca4ab4cc4a1ec9814966ba8d0cb092edead7c10d812d0fd1fa814e948bb80", path: "b.rs", content_hash: "5c5ab0fa8e9b4cc138e98155cd8b4d08f880b050ddc93ea63461ad635b7620ef", start_byte: 0, end_byte: 27 }], provenance: ReceiptProvenance { snapshot_id: "b5178364600cd77c9d2b20d72de7afb7fd636378d4b1f12a07e7952d9432cdb0", original_snapshot_id: "b5178364600cd77c9d2b20d72de7afb7fd636378d4b1f12a07e7952d9432cdb0", original_job_id: "b60662450e4bf1347ba32f85d0094861c19f7d946da2e4886572c78a8f303089", response_artifact_id: "a653d8bba04a3f51020fb1235e04ed3261d4e2dc1c3cc312642bc3c2c201fe84", attempt_id: "9299604f4aec53f36f21256a0425921bbd404d97ebbcbab8f5a2e6672330acac", request_id: "bcea5a882fc887bfb6ea7b996af1b3df249cf8af15688e729ac9a5b3b52fa3d1", model: "meaning-view-fixture", model_version: "v1", currency: "EUR", provider_reported_cost_micros: None, provider_reported_usage: None, rebound: false, binding_validation: "exact_captured_source_replayed" }, concepts: [MeaningConcept { id: "eccf8330b20cb8b9ea03495c79b336de7127ee7765166821fc5ade38977629d0", claim_id: "24cb053f22be6d777d5051c5b59b70e005fd41872f31db144b300d381a31f5d2", label: "Read path", description: "Owned read fixture", aliases: ["Shared alias"], evidence_ids: ["abeb8cfd2005b55738d4a5f2808b46d718f08f0fe5c27175fa0242f0066ebf28"], resolution: InferredConcept, provider_attestation: Unverified }, MeaningConcept { id: "6cbcdea22b7088d28d606f3deb056dad515797e385b0c748a191bd0642ce59ff", claim_id: "28a341a1ab87fd106a77891af9a9b86ec3212270b7ec7a53405a435c33bd11e7", label: "Storage policy", description: "Owned inferred fixture", aliases: ["Shared alias"], evidence_ids: ["abeb8cfd2005b55738d4a5f2808b46d718f08f0fe5c27175fa0242f0066ebf28", "139f86c268872e593148f259cfd0eb98de12752687a9eb2b6181d72f1bb9faa7"], resolution: InferredConcept, provider_attestation: Unverified }, MeaningConcept { id: "0934b02f55632c86f2158e5c57019f8a9bef03839b478421798dccc410a06f84", claim_id: "bb1d34aed1b8566dc9567fcfe0bfce3c9e4097434862b7e2e6a9c97244782f4a", label: "Write path", description: "Owned write fixture", aliases: [], evidence_ids: ["139f86c268872e593148f259cfd0eb98de12752687a9eb2b6181d72f1bb9faa7"], resolution: InferredConcept, provider_attestation: Unverified }], relations: [MeaningRelation { id: "862f0e0f1933f3f69f0f7e31000bf6a198df0e5389b17c1872700639dfaf5f5c", claim_id: "447228bc683e24859b709c3e642afc291854edcd0d4a7c9c5f221fceaef2146c", source: "6cbcdea22b7088d28d606f3deb056dad515797e385b0c748a191bd0642ce59ff", target: "eccf8330b20cb8b9ea03495c79b336de7127ee7765166821fc5ade38977629d0", relation: "uses", description: "Parallel claim", evidence_ids: ["abeb8cfd2005b55738d4a5f2808b46d718f08f0fe5c27175fa0242f0066ebf28", "139f86c268872e593148f259cfd0eb98de12752687a9eb2b6181d72f1bb9faa7"], resolution: InferredConcept, provider_attestation: Unverified }, MeaningRelation { id: "613091ef4bea099e861f8555e35825d022ffe24825154dedb439b0e8dc532d45", claim_id: "b36c7ac4014d1f9beb4781149d550f7a80101e4fa4b7eaa799e6eff793c8440f", source: "6cbcdea22b7088d28d606f3deb056dad515797e385b0c748a191bd0642ce59ff", target: "eccf8330b20cb8b9ea03495c79b336de7127ee7765166821fc5ade38977629d0", relation: "uses", description: "Forward claim", evidence_ids: ["abeb8cfd2005b55738d4a5f2808b46d718f08f0fe5c27175fa0242f0066ebf28", "139f86c268872e593148f259cfd0eb98de12752687a9eb2b6181d72f1bb9faa7"], resolution: InferredConcept, provider_attestation: Unverified }, MeaningRelation { id: "5eebcecc1b3107a25935c0ff703f2bb7858fe2500f7e368dd7c0c60a85124b66", claim_id: "d0f8d49a0b5615e5e5ad7ab9b8e1ed6fcd15cb9cc82ed5cfdd9a82c05f1051a1", source: "eccf8330b20cb8b9ea03495c79b336de7127ee7765166821fc5ade38977629d0", target: "6cbcdea22b7088d28d606f3deb056dad515797e385b0c748a191bd0642ce59ff", relation: "uses", description: "Reverse claim", evidence_ids: ["abeb8cfd2005b55738d4a5f2808b46d718f08f0fe5c27175fa0242f0066ebf28", "139f86c268872e593148f259cfd0eb98de12752687a9eb2b6181d72f1bb9faa7"], resolution: InferredConcept, provider_attestation: Unverified }], hyperedges: [MeaningHyperedge { id: "982bc3705395b6d119d2cc624c1ce3fef17360b6e59bff7a8d24e1f1402de6a7", claim_id: "cdb1dfad689718ec2c6839297959e765dc8f0233cd33353cb6c388cc11ce65be", relation: "coordinates", participants: [Participant { role: "output", concept: "0934b02f55632c86f2158e5c57019f8a9bef03839b478421798dccc410a06f84" }, Participant { role: "input", concept: "6cbcdea22b7088d28d606f3deb056dad515797e385b0c748a191bd0642ce59ff" }, Participant { role: "input", concept: "eccf8330b20cb8b9ea03495c79b336de7127ee7765166821fc5ade38977629d0" }], description: "Ordered roles remain inferred", evidence_ids: ["abeb8cfd2005b55738d4a5f2808b46d718f08f0fe5c27175fa0242f0066ebf28", "139f86c268872e593148f259cfd0eb98de12752687a9eb2b6181d72f1bb9faa7"], resolution: InferredConcept, provider_attestation: Unverified }], evidence: [MeaningEvidence { id: "abeb8cfd2005b55738d4a5f2808b46d718f08f0fe5c27175fa0242f0066ebf28", base_evidence_id: "7009c323b8d9debbbdc84d03b72167f0cc0afc1c86c66cc23228430ad3010475", source_id: "6dcca4ab4cc4a1ec9814966ba8d0cb092edead7c10d812d0fd1fa814e948bb80", snapshot_id: "b5178364600cd77c9d2b20d72de7afb7fd636378d4b1f12a07e7952d9432cdb0", path: "b.rs", content_hash: "5c5ab0fa8e9b4cc138e98155cd8b4d08f880b050ddc93ea63461ad635b7620ef", start_byte: 0, end_byte: 27, start_line: 1, end_line: 1, text: "pub fn beta() -> u32 { 2 }\n" }, MeaningEvidence { id: "139f86c268872e593148f259cfd0eb98de12752687a9eb2b6181d72f1bb9faa7", base_evidence_id: "fb5088faa1829e04e1932ed9a0b7c263cd51ba7ceb1cc285f94218c80ad892f9", source_id: "9f4911d844b56ff8c4640a3db48d948857dda22c029b9c134f160fdcbebe9e3f", snapshot_id: "b5178364600cd77c9d2b20d72de7afb7fd636378d4b1f12a07e7952d9432cdb0", path: "a.rs", content_hash: "26786936189e9a06ab95198220ded0e539341b6eb8fdb8f48d59374017d3baf5", start_byte: 0, end_byte: 62, start_line: 1, end_line: 2, text: "// captured source\npub fn alpha() -> &'static str { \"café\" }\n" }], citation_links: [CitationLink { id: "112342e04a32f1090483cbc29ce6927e0e4c854e93247cf56b6c2d7a7b06730a", claim: "eccf8330b20cb8b9ea03495c79b336de7127ee7765166821fc5ade38977629d0", claim_kind: Concept, evidence_id: "abeb8cfd2005b55738d4a5f2808b46d718f08f0fe5c27175fa0242f0066ebf28", file_entity_id: "3f44a8caf2ea075d4fb00b15fb695a0753065f5c3578f5b3429a8c408cc6c3b1" }, CitationLink { id: "0e6fb74a97558b49385e5098ef5389286ec0549be4469ccff3fa529b1efa1191", claim: "6cbcdea22b7088d28d606f3deb056dad515797e385b0c748a191bd0642ce59ff", claim_kind: Concept, evidence_id: "abeb8cfd2005b55738d4a5f2808b46d718f08f0fe5c27175fa0242f0066ebf28", file_entity_id: "3f44a8caf2ea075d4fb00b15fb695a0753065f5c3578f5b3429a8c408cc6c3b1" }, CitationLink { id: "b3011909395bc1395de4a3c88c61f6e8b954265889dba126955d41d6ecdfa732", claim: "6cbcdea22b7088d28d606f3deb056dad515797e385b0c748a191bd0642ce59ff", claim_kind: Concept, evidence_id: "139f86c268872e593148f259cfd0eb98de12752687a9eb2b6181d72f1bb9faa7", file_entity_id: "631f22cefb62c2a3180fa9d674d56369278a2069a451164f6ba58aef77d6ef0e" }, CitationLink { id: "c77d4e786c0ffac23435e094c7f831c0046752ead247c4a6bce564d7b05a2920", claim: "0934b02f55632c86f2158e5c57019f8a9bef03839b478421798dccc410a06f84", claim_kind: Concept, evidence_id: "139f86c268872e593148f259cfd0eb98de12752687a9eb2b6181d72f1bb9faa7", file_entity_id: "631f22cefb62c2a3180fa9d674d56369278a2069a451164f6ba58aef77d6ef0e" }, CitationLink { id: "f06c0797a7f51ba86403044f5cd17fbbb8613a65042e209ec0bc545455d35c07", claim: "862f0e0f1933f3f69f0f7e31000bf6a198df0e5389b17c1872700639dfaf5f5c", claim_kind: Relation, evidence_id: "abeb8cfd2005b55738d4a5f2808b46d718f08f0fe5c27175fa0242f0066ebf28", file_entity_id: "3f44a8caf2ea075d4fb00b15fb695a0753065f5c3578f5b3429a8c408cc6c3b1" }, CitationLink { id: "83d246a4d60c854520bbcec46ec8f82c4fd6888c9b87fb8b4b03754d94522717", claim: "862f0e0f1933f3f69f0f7e31000bf6a198df0e5389b17c1872700639dfaf5f5c", claim_kind: Relation, evidence_id: "139f86c268872e593148f259cfd0eb98de12752687a9eb2b6181d72f1bb9faa7", file_entity_id: "631f22cefb62c2a3180fa9d674d56369278a2069a451164f6ba58aef77d6ef0e" }, CitationLink { id: "a6c376de1e212d35ac483620374fcbbeeaaef170a5a1fb55e5f71d89285daac4", claim: "613091ef4bea099e861f8555e35825d022ffe24825154dedb439b0e8dc532d45", claim_kind: Relation, evidence_id: "abeb8cfd2005b55738d4a5f2808b46d718f08f0fe5c27175fa0242f0066ebf28", file_entity_id: "3f44a8caf2ea075d4fb00b15fb695a0753065f5c3578f5b3429a8c408cc6c3b1" }, CitationLink { id: "78ac35933fcf687b7d55f7e148ac6387aec1b6dcdafad6548645021b1c43bcff", claim: "613091ef4bea099e861f8555e35825d022ffe24825154dedb439b0e8dc532d45", claim_kind: Relation, evidence_id: "139f86c268872e593148f259cfd0eb98de12752687a9eb2b6181d72f1bb9faa7", file_entity_id: "631f22cefb62c2a3180fa9d674d56369278a2069a451164f6ba58aef77d6ef0e" }, CitationLink { id: "ea80abe3ea86519895168ed5123574fe48baaecc9edd98ba63a26a31243e60fb", claim: "5eebcecc1b3107a25935c0ff703f2bb7858fe2500f7e368dd7c0c60a85124b66", claim_kind: Relation, evidence_id: "abeb8cfd2005b55738d4a5f2808b46d718f08f0fe5c27175fa0242f0066ebf28", file_entity_id: "3f44a8caf2ea075d4fb00b15fb695a0753065f5c3578f5b3429a8c408cc6c3b1" }, CitationLink { id: "32b512c6e31d081d12398dd368c042437949432a7f1ffd0cdd9b5234aa9c1168", claim: "5eebcecc1b3107a25935c0ff703f2bb7858fe2500f7e368dd7c0c60a85124b66", claim_kind: Relation, evidence_id: "139f86c268872e593148f259cfd0eb98de12752687a9eb2b6181d72f1bb9faa7", file_entity_id: "631f22cefb62c2a3180fa9d674d56369278a2069a451164f6ba58aef77d6ef0e" }, CitationLink { id: "514e0a9a6346aae9065ebda8695efbc93d6642b06889e33fe4167186b7bcd1cc", claim: "982bc3705395b6d119d2cc624c1ce3fef17360b6e59bff7a8d24e1f1402de6a7", claim_kind: Hyperedge, evidence_id: "abeb8cfd2005b55738d4a5f2808b46d718f08f0fe5c27175fa0242f0066ebf28", file_entity_id: "3f44a8caf2ea075d4fb00b15fb695a0753065f5c3578f5b3429a8c408cc6c3b1" }, CitationLink { id: "ac08ddd33dd9e603747bf8a98c144ce6e1bdc516303ad903346b5f97a5fbf404", claim: "982bc3705395b6d119d2cc624c1ce3fef17360b6e59bff7a8d24e1f1402de6a7", claim_kind: Hyperedge, evidence_id: "139f86c268872e593148f259cfd0eb98de12752687a9eb2b6181d72f1bb9faa7", file_entity_id: "631f22cefb62c2a3180fa9d674d56369278a2069a451164f6ba58aef77d6ef0e" }], coverage: [UnitCoverage { source_id: "6dcca4ab4cc4a1ec9814966ba8d0cb092edead7c10d812d0fd1fa814e948bb80", outcome: "claims" }, UnitCoverage { source_id: "9f4911d844b56ff8c4640a3db48d948857dda22c029b9c134f160fdcbebe9e3f", outcome: "claims" }] }], input_bytes: 35528 }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    later_task_accounting_cannot_change_a_published_layer_or_upgrade_unknown_receipts
+
+test result: FAILED. 9 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 9.83s
+
+error: test failed, to rerun pass `-p yoke-code-intelligence --test meaning_view`
+     Running tests\selected_view_analysis.rs (target\debug\deps\selected_view_analysis-4bdd1f0c8eb0e5b6.exe)
+
+running 11 tests
+test canonical_report_bytes_and_registration_match_frozen_golden ... ok
+test existing_graphify_hubs_include_parallel_citations_and_count_self_loops_twice ... ok
+test existing_graphify_hubs_preserve_file_level_manifest_source_precision ... ok
+test selected_report_keeps_multiple_source_bindings_without_choosing_a_fabricated_exact_anchor ... ok
+test existing_graphify_community_tools_assign_default_view_overlay_nodes ... ok
+test explicit_selected_analysis_and_resources_replay_historic_views_and_reject_unsupported_scope ... ok
+test selected_report_preparation_validation_and_admission_have_no_publication_side_effects ... ok
+test selected_report_publication_rechecks_cas_after_preparation ... ok
+test selected_report_preserves_provider_claims_and_every_original_anchor_family ... ok
+test selected_report_retention_replays_exact_bytes_and_rejects_scope_and_cas_tampering ... ok
+test selected_report_resource_admission_precedes_publication_of_a_large_formatted_body ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.25s
+
+error: 2 targets failed:
+    `-p yoke-code-intelligence --test meaning_graph_views`
+    `-p yoke-code-intelligence --test meaning_view`

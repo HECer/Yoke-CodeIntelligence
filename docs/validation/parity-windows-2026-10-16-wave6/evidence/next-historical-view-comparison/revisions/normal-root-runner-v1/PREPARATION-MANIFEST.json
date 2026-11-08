@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "status": "PREPARED_UNEXECUTED_ROOT_ONLY",
+  "actionId": "act_mvart3zi_dfbce3f31d2d",
+  "normalWrites": false,
+  "imageWrites": false,
+  "wrappersInvoked": false,
+  "cargoNodeRustcOrQuarantineInvoked": false,
+  "validationPerformed": "Python AST parsing, exact pins and independent read-only static review only",
+  "fullAcceptanceActualCounts": null,
+  "requiredPromotedSource": {
+    "files": 2406,
+    "mapSha256": "afdc36edc71c1396dece79d8cc5ae1d5fddf81100c687a5878e373ac43825bcf",
+    "promotionManifestSha256": "8cecd97b741523de422bbf00aeb9ccc9c13e05d34ac1435ed0d828865c315785",
+    "completedPromotionJournalRequired": true,
+    "currentMapCheckedBeforeCargo": true
+  },
+  "cacheOrigin": {
+    "invokedByTheseWrappers": false,
+    "owner": "root with separately reviewed r3_test_promotion quarantine tooling",
+    "requiredOrder": "After R5 Cargo and before normal H18 Cargo; no concurrent source context and no quarantine/context switch between normal phases",
+    "quarantineExecutionCertifiedByThisPreparation": false
+  },
+  "h18": {
+    "wrapper": "run_h18_normal.py",
+    "tag": "r3-normal-h18-20261016-v1",
+    "targetNames": ["selected_view_analysis", "protocol_connection", "meaning_view_archives", "registry_replay_review", "collection_registry_access", "graph_view"],
+    "expectedPassed": 51,
+    "expectedGroups": 6,
+    "expectedCountsAreActualCredit": false,
+    "cargoCommands": 1,
+    "buildJobs": 2,
+    "testThreads": 4,
+    "ordinaryTempRoot": "D:/Yoke-Test-Scratch/r3-normal-h18-20261016-v1",
+    "evidenceBundle": "target/parity-validation-20261015/r3-normal-h18-20261016-v1",
+    "exactHistoricalTestNamesOnly": true,
+    "rawAndFullSourceMapHashesRequired": true
+  },
+  "fullWindowsAcceptance": {
+    "wrapper": "run_r3_windows_acceptance.py",
+    "tag": "r3-normal-frozen-20261016-v1",
+    "pipelineTag": "r3-normal-pipeline-20261016-v1",
+    "phases": ["format", "clippy", "python", "typescript", "native", "finalize"],
+    "frozenRunnerModified": false,
+    "extraCargoArguments": [],
+    "ordinaryTempRootPattern": "D:/Yoke-Test-Scratch/r3-normal-frozen-20261016-v1-<phase>",
+    "aclTempRoot": "C:/Users/Public/Yoke-Test-Scratch/r3-normal-frozen-20261016-v1-acl",
+    "originalFrozenRunnerAclFixtures": 3,
+    "requiresFreshH18ArtifactClosure": true,
+    "perPhaseCountsComeOnlyFromFreshReceipts": true,
+    "pipelineIsOrchestrationOnly": true
+  },
+  "artifacts": {
+    "normal_runner_common.py": {"sha256":"ef78be98e82967e3d3d96fcfc8e6f6ec1a4a21428a9f80f3c0b7f0ceb72a15eb","bytes":7209},
+    "run_h18_normal.py": {"sha256":"427a1a400480ea690ff8ad46715042101380583f154f2f09c5ddf2d091c59749","bytes":5778},
+    "run_r3_windows_acceptance.py": {"sha256":"444a015ea324d94f70cff6db6eccec95ac1c8b4ff459fb5c31e38dba66b47dc7","bytes":8266},
+    "H18-EXPECTED-TESTS.json": {"sha256":"0c21b1e45653b00393243efeb8ffcef5c1741b863f2283ad739fc2aa2e59b7d2","bytes":4613},
+    "README.md": {"sha256":"364b6b10bf91eb583478ffbe07bf86f2cff22c53f66eda8b85b925218ca4ce82","bytes":3903}
+  },
+  "sourcePins": {
+    "target/parity-validation-20261015/acceptance_wave4.py": "b51bbffbddd07be0aa6ef019fc950d772c628d77b3567f646d7a837726aa3d15",
+    "target/parity-validation-20261015/next-universal-slice/root/run_wave5_acceptance_after_test_migration.py": "c8432150d24b9a35c0c38a14525d07b546f55faefb89c647529138a8afe87b27",
+    "target/parity-validation-20261015/next-historical-view-comparison/revisions/normal-promotion-prep-v2/MANIFEST.json": "8cecd97b741523de422bbf00aeb9ccc9c13e05d34ac1435ed0d828865c315785",
+    "target/parity-validation-20261015/next-historical-view-comparison/revisions/normal-promotion-prep-v2/EXPECTED-NORMAL-AFTER.json": "afdc36edc71c1396dece79d8cc5ae1d5fddf81100c687a5878e373ac43825bcf",
+    "target/parity-validation-20261015/next-historical-view-comparison/ROOT-NORMAL-PROMOTION-REVIEW-V2.json": "8f50bace7f162aac25b8bfcc9628c0641f638d4bbd5b709222fda94fbbea2ab4",
+    "target/parity-validation-20261015/next-historical-view-comparison/h18-regression-plan.json": "0a5db448f6275617a4625df9a327f628b8034c45bfe26264624ec4f1a8e58fdc",
+    "target/parity-validation-20261015/wave5-frozen-20261016-0654/native/receipt.json": "9bb40f88d8974d8e9bdaf01722b926dfe4ff17ceb19cf31d103cf41c3e73c75e"
+  },
+  "interpretation": "Tooling preparation is not H18, compilation, quarantine, normal-source promotion or full acceptance. Old evidence is preserved and historical names confer no new pass credit."
+}

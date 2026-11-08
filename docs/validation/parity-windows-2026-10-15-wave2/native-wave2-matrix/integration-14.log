@@ -1,0 +1,103 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 10.00s
+     Running tests\host_config.rs (target\debug\deps\host_config-7659402ec860ad5b.exe)
+
+running 22 tests
+test agents_marker_presence_never_grants_ownership ... ok
+test agents_and_patch_work_are_bounded_before_output ... ok
+test agents_reject_changed_receipts_owned_bytes_duplicate_and_nested_markers ... ok
+test agents_install_update_remove_preserve_bom_unicode_and_crlf_bytes ... ok
+test agents_empty_existing_file_round_trips_without_phantom_bytes ... ok
+test agents_removal_preserves_later_human_prefix_and_append ... ok
+test jsonc_decoded_duplicate_keys_unowned_entries_and_ambiguous_parents_fail ... ok
+test jsonc_accepts_only_json_whitespace_outside_comments_and_strings ... ok
+test jsonc_empty_and_trailing_comma_parents_restore_original_punctuation ... ok
+test jsonc_human_append_is_preserved_or_rejected_when_unrecorded_punctuation_would_be_removed ... ok
+test patch_application_checks_entire_input_fragments_ranges_and_output_hash ... ok
+test jsonc_oversized_receipt_selector_is_rejected_before_unbounded_decoding ... ok
+test serialized_empty_owned_fragment_returns_error_instead_of_panicking ... ok
+test jsonc_named_entry_preserves_comments_bom_crlf_and_literal_unowned_bytes ... ok
+test receipts_are_strict_serialized_data_and_do_not_include_human_prefix ... ok
+test structured_formats_reject_stale_selectors_body_capacity_and_deadlines ... ok
+test toml_inverse_refuses_to_join_an_unterminated_human_comment_with_a_later_table_header ... ok
+test toml_quoted_aliases_dotted_conflicts_and_body_headers_fail_without_claiming_ownership ... ok
+test toml_managed_table_preserves_human_comments_and_round_trips_crlf ... ok
+test toml_inverse_preserves_an_existing_appendix_newline_and_updates_retain_the_owned_separator ... ok
+test toml_table_removal_never_reparents_later_human_keys ... ok
+test toml_scanner_ignores_fake_headers_in_multiline_strings_and_arrays_with_quote_runs ... ok
+
+test result: ok. 22 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests\host_credentials.rs (target\debug\deps\host_credentials-d3ecb384a1a8a4e4.exe)
+
+running 5 tests
+test actual_github_credential_round_trip_is_create_only_and_keeps_secrets_out_of_metadata ... ignored, Actual Windows Credential Manager; creates and removes only one unique Yoke GitHub fixture entry
+test actual_tls_and_service_token_never_export_private_material_or_overwrite_entries ... ignored, Requires the actual Windows per-user Credential Manager; creates and removes only unique Yoke test entries
+test host_credential_names_cannot_access_unrelated_accounts ... ok
+test model_token_admission_rejects_header_injection_and_oversize_without_exposure ... ok
+test github_token_admission_rejects_invalid_bytes_without_exposing_them ... ok
+
+test result: ok. 3 passed; 0 failed; 2 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\host_install.rs (target\debug\deps\host_install-ecb3efabd0fd83d7.exe)
+
+running 9 tests
+test dry_run_is_deterministic_and_creates_no_source_engine_or_host_state ... ok
+test every_target_and_host_binding_is_checked_before_first_write ... ok
+test receipt_ownership_is_required_and_serialized_plans_cannot_widen_paths ... ok
+test state_and_target_aliases_bounds_invalid_utf8_and_deadlines_fail_closed ... ok
+test internal_volume_guid_binding_launches_the_real_binary_and_is_not_a_user_path_grant ... ok
+test windows_existing_writer_and_hardlink_alias_are_refused_before_other_targets_change ... ok
+test private_state_never_contains_unrelated_human_config_or_policy_contents ... ok
+test uninstall_preserves_foreign_appends_and_refuses_changes_inside_owned_block ... ok
+test install_and_uninstall_preserve_human_bom_crlf_and_original_empty_presence ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.55s
+
+     Running tests\host_install_cli.rs (target\debug\deps\host_install_cli-580c103695fa8de9.exe)
+
+running 11 tests
+test host_install_cli_initialization_permission_precedes_selection_and_plan_reads ... ok
+test host_install_cli_initialization_refuses_foreign_scaffold_bytes_without_disclosing_them ... ok
+test host_install_cli_initialization_admits_a_valid_output_budget_before_writing_state ... ok
+test host_install_cli_initialization_output_failure_identifies_its_durable_result ... ok
+test host_install_cli_planning_and_status_are_pure_and_keep_human_text_private ... ok
+test host_install_cli_initialization_repairs_an_owned_scaffold_and_replays_without_source_changes ... ok
+test host_install_cli_rejects_ambiguous_selection_and_small_write_output_before_mutation ... ok
+test host_install_cli_write_permission_precedes_selection_or_plan_reads ... ok
+test host_install_cli_valid_output_budget_is_admitted_before_any_host_state_or_file_write ... ok
+test host_install_cli_output_failure_identifies_the_committed_result_and_can_be_retried ... ok
+test host_install_cli_installs_and_uninstalls_only_its_owned_fragment ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.09s
+
+     Running tests\hybrid_retrieval.rs (target\debug\deps\hybrid_retrieval-965a15cea6c717ed.exe)
+
+running 3 tests
+test retrieval_rejects_foreign_graphs_and_unbounded_or_unknown_options ... ok
+test graph_ranking_retrieves_a_source_connected_neighbor_without_lexical_match ... ok
+test task_retrieval_ranks_source_bodies_and_balances_files_with_exact_anchors ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.22s
+
+     Running tests\ignored_capture.rs (target\debug\deps\ignored_capture-0d67016a001ac4c7.exe)
+
+running 15 tests
+test empty_ignored_option_preserves_released_nondefault_configured_capture_identity ... ok
+test empty_ignored_option_preserves_released_serialization_and_default_capture_identity ... ok
+test editor_ignored_prefix_updates_are_denied_before_buffer_revisions_change ... ok
+test derived_edits_outside_ignored_scope_keep_exact_old_classification_and_readonly_sources ... ok
+test host_ignored_option_never_relaxes_secret_internal_or_normalized_path_protection ... ok
+test host_optin_captures_ignored_sources_read_only_and_binds_complete_observed_outcomes ... ok
+test missing_future_reordered_and_incomplete_observed_proofs_never_fall_back_to_default_capture ... ok
+test ignored_source_archives_retain_exact_capture_proof_after_original_store_is_gone ... ok
+test observed_ignore_outcomes_are_immutable_when_current_ignore_files_change ... ok
+test retention_recognizes_only_the_exact_ignored_proof_kind_and_rejects_mutated_rows ... ok
+test ordinary_editor_overlays_preserve_ignored_source_classification_without_live_receipt_authority ... ok
+test windows_case_aliases_cannot_create_files_inside_host_readonly_ignored_prefixes ... ok
+test windows_short_name_aliases_cannot_create_files_inside_host_readonly_prefixes ... ok
+test readonly_ignored_edits_and_new_files_fail_before_any_durable_plan_or_snapshot ... ok
+test windows_short_name_aliases_do_not_grant_protected_writes_without_ignored_optin ... ok
+
+test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.16s
+

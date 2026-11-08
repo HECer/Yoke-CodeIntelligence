@@ -1,0 +1,21 @@
+{
+  "graph_review_adversarial": {
+    "executable": "target\\debug\\deps\\graph_review_adversarial-69abd8cc0880666f.exe",
+    "ignored": [],
+    "registered": [
+      "review_cargo_ordinary_ancestor_does_not_shadow_workspace",
+      "review_json_pointer_can_address_array_child_keys",
+      "review_launcher_option_values_are_not_persisted_as_packages",
+      "review_tree_export_script_is_valid_javascript",
+      "review_yaml_mcp_config_preserves_server_contract"
+    ]
+  },
+  "graph_root_review": {
+    "executable": "target\\debug\\deps\\graph_root_review-63fbcb7ba6cc9403.exe",
+    "ignored": [],
+    "registered": [
+      "artifact_resource_page_respects_byte_budget_after_json_control_escaping",
+      "trail_exact_file_selector_can_trace_more_than_two_hundred_declarations"
+    ]
+  }
+}

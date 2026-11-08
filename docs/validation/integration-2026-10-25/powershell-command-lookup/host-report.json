@@ -1,0 +1,160 @@
+{
+  "schema": 2,
+  "diagnosticOnly": true,
+  "nativeAcceptance": false,
+  "diagnosticComplete": false,
+  "diagnosticMode": "command-boundary",
+  "nativeYokeImageReadOrExecuted": false,
+  "trialDeadlineSeconds": 20,
+  "memberObservationSeconds": 0.25,
+  "maxObservedMembers": 16,
+  "sourceRevision": "0d0b43e3ac41cf25c8f2d6e57ec3100df7a68d4d",
+  "sourceSha256": "3439daf07f60f484639197748f37a7fd6acfbb8c57402a01dba3099565212f26",
+  "environmentNames": [
+    "CARGO_HOME",
+    "CI",
+    "DO_NOT_TRACK",
+    "NO_COLOR",
+    "PATH",
+    "SystemDrive",
+    "SystemRoot",
+    "TEMP",
+    "TMP",
+    "USERPROFILE",
+    "WINDIR"
+  ],
+  "trials": [
+    {
+      "name": "nested-snapshot-command-lookup",
+      "jobsRequested": 2,
+      "resumeMode": "snapshot",
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "timedOut": true,
+      "nativeAcceptance": false,
+      "membersBeforeCleanup": {
+        "complete": true,
+        "members": [
+          {
+            "pid": 5488,
+            "root": true,
+            "inOuterOwnedJob": true,
+            "creationTime100ns": 134374412106238957,
+            "imagePath": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+            "exited": false,
+            "exitCode": null,
+            "unavailable": []
+          },
+          {
+            "pid": 496,
+            "root": false,
+            "inOuterOwnedJob": true,
+            "creationTime100ns": 134374412106393556,
+            "imagePath": "C:\\Windows\\System32\\conhost.exe",
+            "exited": false,
+            "exitCode": null,
+            "unavailable": []
+          }
+        ],
+        "unavailable": [],
+        "assignedAtQuery": 2,
+        "returnedAtQuery": 2,
+        "startedElapsedSeconds": 19.760913399999993,
+        "finishedElapsedSeconds": 19.76136439999999
+      },
+      "pid": 5488,
+      "snapshotEntriesScanned": 1374,
+      "snapshotEndError": 18,
+      "resumedThreads": [
+        {
+          "primary": true,
+          "previousSuspendCount": 1
+        }
+      ],
+      "primaryObservedResumed": true,
+      "resumeElapsedSeconds": 0.014582899999993515,
+      "activeBeforeCleanup": [
+        2,
+        2
+      ],
+      "treeExitedBeforeCleanup": false,
+      "activeAfterCleanup": [
+        0,
+        0
+      ],
+      "rootExitedAfterCleanup": true,
+      "elapsedSeconds": 20.032302500000014,
+      "stdout": "",
+      "stderr": "owned-script-entry\r\nowned-host-version:5.1.26100.33648\r\nowned-before-boundary-clock\r\nowned-before-command-lookup-ms:0\r\n",
+      "streamEOF": [
+        true,
+        true
+      ],
+      "readerError": [
+        false,
+        false
+      ],
+      "outputExceeded": [
+        false,
+        false
+      ],
+      "diagnosticComplete": false
+    },
+    {
+      "name": "nested-snapshot-fixed-module-import",
+      "jobsRequested": 2,
+      "resumeMode": "snapshot",
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "timedOut": false,
+      "nativeAcceptance": false,
+      "membersBeforeCleanup": {
+        "complete": true,
+        "members": [],
+        "unavailable": [],
+        "assignedAtQuery": 0,
+        "returnedAtQuery": 0,
+        "startedElapsedSeconds": 0.5721888999999578,
+        "finishedElapsedSeconds": 0.5722188999999958
+      },
+      "pid": 9148,
+      "snapshotEntriesScanned": 1349,
+      "snapshotEndError": 18,
+      "resumedThreads": [
+        {
+          "primary": true,
+          "previousSuspendCount": 1
+        }
+      ],
+      "primaryObservedResumed": true,
+      "resumeElapsedSeconds": 0.014310599999987517,
+      "exitCode": 0,
+      "activeBeforeCleanup": [
+        0,
+        0
+      ],
+      "treeExitedBeforeCleanup": true,
+      "activeAfterCleanup": [
+        0,
+        0
+      ],
+      "rootExitedAfterCleanup": true,
+      "elapsedSeconds": 0.5723886000000107,
+      "stdout": "owned-shell-test\r\n",
+      "stderr": "owned-script-entry\r\nowned-host-version:5.1.26100.33648\r\nowned-before-boundary-clock\r\nowned-before-fixed-module-import-ms:0\r\nowned-after-fixed-module-import-ms:320\r\nowned-before-command-lookup-ms:320\r\nowned-after-command-lookup-ms:325\r\nowned-before-captured-write-output\r\nowned-before-command-invoke-ms:331\r\nowned-after-command-invoke-ms:355\r\nowned-after-captured-write-output\r\nowned-script-end\r\n",
+      "streamEOF": [
+        true,
+        true
+      ],
+      "readerError": [
+        false,
+        false
+      ],
+      "outputExceeded": [
+        false,
+        false
+      ],
+      "diagnosticComplete": true
+    }
+  ]
+}

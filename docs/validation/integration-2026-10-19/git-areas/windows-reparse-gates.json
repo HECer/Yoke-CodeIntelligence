@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "product": "Code Intelligence",
+  "version": "0.5.0",
+  "recordedAt": "2026-10-19T10:44:42.970632+00:00",
+  "sourceManifest": "docs/validation/integration-2026-10-19/git-areas/final/source-before.json",
+  "sourceManifestSha256": "120b77c2732dee91178226f6fcd728f7533b5e23f8f6352acf4d92482f08777b",
+  "applicationBinary": "target/debug/yoke.exe",
+  "applicationBinarySha256": "c9b9c5e344299ff7d742191915c3f82f3b953eceabeeed9940e23a6f2e5ea9f2",
+  "cases": [
+    {
+      "testName": "affected_options_leaf_and_ancestor_reparse_points_refuse_after_real_options_success",
+      "binary": "target/debug/deps/git_affected_cli-8bd34e65d21add4b.exe",
+      "binarySha256": "75f27802d644f4a7705900a64621d33a53728de6c584d3b1540d56ed0c479ba4",
+      "observedFailure": "Windows error1314 during real symbolic-link fixture creation; product safety assertion not reached"
+    },
+    {
+      "testName": "windows_real_options_file_and_ancestor_reparse_points_refuse_after_genuine_positive",
+      "binary": "target/debug/deps/git_impact_details_cli-21d011653ec3ca4b.exe",
+      "binarySha256": "bf976d2f3c13133ba59e19ca42ba1fd614cf34cb2bcb8723d6cff142e9b829d6",
+      "observedFailure": "Windows error1314 during real symbolic-link fixture creation; product safety assertion not reached"
+    }
+  ]
+}

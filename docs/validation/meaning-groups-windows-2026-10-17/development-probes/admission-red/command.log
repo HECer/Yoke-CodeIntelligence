@@ -1,0 +1,40 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 5.16s
+     Running tests\meaning_groups_admission.rs (E:/Yoke-Build-Cache/meaning-aliases-20261016\debug\deps\meaning_groups_admission-561737e9547fb6a6.exe)
+
+running 7 tests
+test meaning_group_admission_every_hard_limit_and_all_zero_capacities_are_checked ... FAILED
+test meaning_group_admission_library_serialized_review_is_bounded_before_parent_loading ... ok
+test meaning_group_admission_nested_unknown_fields_and_duplicate_json_keys_refuse ... ok
+test meaning_group_admission_oversized_blank_rationale_hits_byte_guard_before_trimming ... FAILED
+test meaning_group_admission_per_group_member_limit_is_independent_of_total_capacity ... ok
+test meaning_group_admission_rationale_limit_counts_exact_utf8_bytes ... ok
+test meaning_group_admission_zero_output_is_a_valid_capacity ... FAILED
+
+failures:
+
+---- meaning_group_admission_every_hard_limit_and_all_zero_capacities_are_checked stdout ----
+
+thread 'meaning_group_admission_every_hard_limit_and_all_zero_capacities_are_checked' (92228) panicked at native\tests\meaning_groups_admission.rs:87:45:
+called `Result::unwrap()` on an `Err` value: Invalid meaning group limits
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- meaning_group_admission_oversized_blank_rationale_hits_byte_guard_before_trimming stdout ----
+
+thread 'meaning_group_admission_oversized_blank_rationale_hits_byte_guard_before_trimming' (60188) panicked at native\tests\meaning_groups_admission.rs:42:5:
+Invalid meaning group rationale
+
+---- meaning_group_admission_zero_output_is_a_valid_capacity stdout ----
+
+thread 'meaning_group_admission_zero_output_is_a_valid_capacity' (35180) panicked at native\tests\meaning_groups_admission.rs:32:5:
+assertion failed: meaning_groups::validate_options(&options).is_ok()
+
+
+failures:
+    meaning_group_admission_every_hard_limit_and_all_zero_capacities_are_checked
+    meaning_group_admission_oversized_blank_rationale_hits_byte_guard_before_trimming
+    meaning_group_admission_zero_output_is_a_valid_capacity
+
+test result: FAILED. 4 passed; 3 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+
+error: test failed, to rerun pass `--test meaning_groups_admission`

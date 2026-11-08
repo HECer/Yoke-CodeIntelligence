@@ -1,0 +1,42 @@
+{
+  "sourceCommit": "bed2bc9612e4db5e90c6d710602b37d6da2f6d9d",
+  "runtimeCommit": "c1eb4fb0bbc715468e253789f412ff411da46058",
+  "parentCommit": "2bc4df49423332497a14118cbd45d72c32ecb352",
+  "paths": [
+    "native/README.md",
+    "native/docs/propagated-delete.md",
+    "native/src/semantic_propagated_delete.rs",
+    "native/tests/fixtures/propagated-delete-lsp.mjs",
+    "native/tests/propagated_delete_contract.rs",
+    "native/tests/session_refactor.rs"
+  ],
+  "newCases": {
+    "defaultIntegration": 10,
+    "actualFunctionBindingsCli": 1
+  },
+  "nativeGroups": 15,
+  "nativeTotals": {
+    "passed": 592,
+    "failed": 0,
+    "ignored": 13
+  },
+  "nativeInputsMatched": 738,
+  "nativeBinarySha256": "f9852499f3f049332f1c12331f30384518588d3a4a96f47cf1a1d5f316afeb39",
+  "nativeBinaryBytes": 159188480,
+  "actualCliExecutableHashMatchesFinalBinary": true,
+  "binaryHashObservedAt": "2026-10-20T05:28:18.364134+00:00",
+  "actualTools": {
+    "node": "C:\\Program Files\\nodejs\\node.exe",
+    "nodeSha256": "ba4e6d110e8c1592a1ecd390f6b05f3da124b13871a5be62b341a07a853c6c32",
+    "nodeVersion": "v24.21.0",
+    "compiler": "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\typescript-5.8.3-lsp-5.1.3\\node_modules\\typescript\\lib\\tsc.js",
+    "compilerSha256": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983",
+    "compilerVersion": "Version 5.8.3",
+    "server": "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\typescript-5.8.3-lsp-5.1.3\\node_modules\\typescript-language-server\\lib\\cli.mjs",
+    "serverSha256": "3c2a7818315bd8399e56f461fe7da01c0f8f67a9c66108af0b655605b088dd77",
+    "serverVersion": "5.1.3",
+    "compilerLibrary": "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\typescript-5.8.3-lsp-5.1.3\\node_modules\\typescript\\lib\\typescript.js",
+    "compilerLibrarySha256": "dd17428736a07e1db1a138d8a14295ddb2699ba780ee15038acdd2c6da5373a0"
+  },
+  "wholeNativeRerun": false
+}

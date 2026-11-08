@@ -1,0 +1,18 @@
+{
+  "command": [
+    "node",
+    "--test",
+    "--test-concurrency=1",
+    "--test-name-pattern",
+    "^LIVE installed graphify pinned structural extraction$",
+    "test/live/upstreams.mjs"
+  ],
+  "exitCode": 1,
+  "elapsedSeconds": 1.937,
+  "copiedInputs": 163,
+  "sourceUnchanged": true,
+  "gatesSelected": [
+    "graphifyy0.9.87"
+  ],
+  "graft": "Separate native binding build in progress; not counted here"
+}

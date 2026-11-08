@@ -1,0 +1,67 @@
+{
+  "skills_cli": {
+    "executable": "target\\debug\\deps\\skills_cli-091e7a1a8e0b53d0.exe",
+    "ignored": [],
+    "registered": [
+      "cli_rejects_untrusted_roots_and_source_options_before_initializing_state",
+      "folding_the_library_preflights_every_revision_before_changing_the_first_skill",
+      "host_cli_observes_missing_revision_guards_and_preserves_explicit_stale_guards",
+      "public_cli_preserves_authored_history_through_confirm_fold_and_publish",
+      "small_output_budget_retains_the_complete_mutation_receipt_in_the_personal_store"
+    ]
+  },
+  "store_cancellation": {
+    "executable": "target\\debug\\deps\\store_cancellation-a0db40c66b27d046.exe",
+    "ignored": [],
+    "registered": [
+      "active_sql_is_interrupted_by_inherited_host_cancellation",
+      "cancelled_store_refuses_new_publication_until_deadline_is_replaced",
+      "sqlite_lock_contention_retains_a_finite_timeout_and_atomic_recovery"
+    ]
+  },
+  "store_identity": {
+    "executable": "target\\debug\\deps\\store_identity-0ab8be677c48a4fa.exe",
+    "ignored": [],
+    "registered": [
+      "a_corrupted_snapshot_payload_cannot_alias_a_different_lookup_identity",
+      "graph_lookup_and_every_evidence_member_keep_the_same_snapshot_identity",
+      "snapshot_workspace_mismatch_is_rejected_before_source_retrieval",
+      "valid_disk_and_derived_snapshot_identities_remain_readable"
+    ]
+  },
+  "store_review": {
+    "executable": "target\\debug\\deps\\store_review-5fff24c677e876db.exe",
+    "ignored": [],
+    "registered": [
+      "source_blob_artifact_fallback_cannot_bypass_captured_path_authority"
+    ]
+  },
+  "test_map": {
+    "executable": "target\\debug\\deps\\test_map-913379a96a9c85ac.exe",
+    "ignored": [],
+    "registered": [
+      "a_covered_configuration_change_still_widens_to_every_known_test",
+      "actual_node_collection_separates_stdout_and_rejects_skipped_only_pass",
+      "collector_requires_host_trust_and_a_real_available_command",
+      "failed_tests_remain_selected_even_when_source_is_unchanged",
+      "import_binds_hashes_rejects_malformed_and_retains_failed_tests",
+      "node_source_stdout_cannot_forge_test_results_and_changed_copy_invalidates_hash_binding",
+      "overflowing_node_reporter_output_never_publishes_a_pass",
+      "selection_widens_unknown_config_and_new_tests",
+      "source_stdout_cannot_fake_a_skipped_only_pass",
+      "timed_out_node_collection_retains_the_previous_map",
+      "v8_utf16_ranges_respect_crlf_and_narrower_zero_hit_ranges",
+      "widening_with_an_empty_or_partial_caller_list_includes_all_recorded_tests"
+    ]
+  },
+  "trail_adapter": {
+    "executable": "target\\debug\\deps\\trail_adapter-26b9a5c2ec70b6a1.exe",
+    "ignored": [],
+    "registered": [
+      "named_call_trace_accepts_full_closure_without_the_native_depth_eight_limit",
+      "public_trail_mcp_profile_lists_six_tools_and_accepts_legacy_query_aliases",
+      "six_public_trail_tools_preserve_freshness_and_exact_file_api_contracts",
+      "task_retrieval_regex_hits_and_repo_orientation_use_captured_source"
+    ]
+  }
+}

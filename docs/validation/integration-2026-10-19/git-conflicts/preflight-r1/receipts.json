@@ -1,0 +1,36 @@
+[
+  {
+    "gate": "format",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "fmt",
+      "--all",
+      "--check"
+    ],
+    "exitCode": 0,
+    "timedOut": false,
+    "elapsedSeconds": 5.245,
+    "recordedAt": "2026-10-19T09:37:19.230046+00:00",
+    "resultGroups": []
+  },
+  {
+    "gate": "clippy",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "clippy",
+      "--workspace",
+      "--all-targets",
+      "--locked",
+      "--keep-going",
+      "-j1",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "exitCode": 101,
+    "timedOut": false,
+    "elapsedSeconds": 205.473,
+    "recordedAt": "2026-10-19T09:40:44.703836+00:00",
+    "resultGroups": []
+  }
+]

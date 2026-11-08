@@ -1,0 +1,66 @@
+{
+  "cases": [
+    {
+      "case": 0,
+      "language": "js",
+      "beforeDiagnostics": [],
+      "beforeTypes": [
+        "() => 3"
+      ],
+      "beforeObserved": "[\"\",3]",
+      "afterDiagnostics": [
+        {
+          "code": 2304,
+          "message": "Cannot find name 'n'."
+        },
+        {
+          "code": 6133,
+          "message": "'n' is declared but its value is never read."
+        }
+      ],
+      "afterTypes": [
+        "any"
+      ],
+      "afterObserved": "[\"\",3]",
+      "sameTypes": false,
+      "sameRuntime": true
+    },
+    {
+      "case": 1,
+      "language": "ts",
+      "beforeDiagnostics": [],
+      "beforeTypes": [
+        "() => 3"
+      ],
+      "beforeObserved": "[\"\",3]",
+      "afterDiagnostics": [],
+      "afterTypes": [
+        "() => 3"
+      ],
+      "afterObserved": "[\"\",3]",
+      "sameTypes": true,
+      "sameRuntime": true
+    },
+    {
+      "case": 2,
+      "language": "ts",
+      "beforeDiagnostics": [],
+      "beforeTypes": [
+        "number"
+      ],
+      "beforeObserved": "4",
+      "afterDiagnostics": [],
+      "afterTypes": [
+        "number"
+      ],
+      "afterObserved": "4",
+      "sameTypes": true,
+      "sameRuntime": true
+    }
+  ],
+  "allChecksPassed": false,
+  "nativeAdmission": false,
+  "prototypeOnly": true,
+  "ownedLiteralFixturesExecuted": true,
+  "analyzedCodeExecuted": false
+}

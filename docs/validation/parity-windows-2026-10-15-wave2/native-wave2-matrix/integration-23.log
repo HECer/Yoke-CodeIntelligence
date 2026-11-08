@@ -1,0 +1,63 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 9.33s
+     Running tests\parity_construct_review.rs (target\debug\deps\parity_construct_review-cc6b783fc409aaf8.exe)
+
+running 2 tests
+test quoted_lisp_declarations_do_not_create_executable_declaration_entities ... ok
+test lisp_let_binding_pairs_are_not_invocations_of_same_named_functions ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\parity_retention.rs (target\debug\deps\parity_retention-f49e3418d1911aab.exe)
+
+running 8 tests
+test development_six_cache_missing_only_embedded_language_keeps_exact_old_schema ... ok
+test duplicate_provenance_fields_are_refused_before_dependency_interpretation ... ok
+test rehashed_report_with_unknown_nested_schema_is_refused ... ok
+test released_analyzer_four_extraction_cache_is_readable_without_rewriting_old_payloads ... ok
+test parity_record_future_fields_and_corrupt_bindings_never_grant_purge ... ok
+test source_bound_reports_exports_and_markdown_artifacts_are_known_retention_dependencies ... ok
+test valid_capture_notes_session_and_unpublished_capture_do_not_disable_retention ... ok
+test structural_semantic_and_view_artifacts_preserve_exact_source_roots ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.02s
+
+     Running tests\parity_source_review.rs (target\debug\deps\parity_source_review-223360b1f37f3121.exe)
+
+running 1 test
+test corrupted_oversized_cas_is_rejected_before_an_unbounded_source_buffer_allocation ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.13s
+
+     Running tests\parity_view_review.rs (target\debug\deps\parity_view_review-5885658842c4425e.exe)
+
+running 3 tests
+test resealed_view_cannot_invent_canonical_labels_or_parent_claims ... ok
+test resealed_view_cannot_remove_canonical_observations ... ok
+test resealed_view_cannot_relabel_a_selected_overlay_or_upgrade_its_precision ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.37s
+
+     Running tests\parser_epoch9.rs (target\debug\deps\parser_epoch9-683ec3da72b69dcb.exe)
+
+running 8 tests
+test commonlisp9_preserves_escaped_symbol_case ... ok
+test commonlisp9_local_function_designators_use_the_function_namespace ... ok
+test commonlisp9_extracts_local_functions_without_treating_binding_lists_as_calls ... ok
+test powershell9_matches_command_case_without_binding_dynamic_command_variables ... ok
+test powershell9_function_drive_reference_is_distinct_from_value_and_literal_text ... ok
+test commonlisp9_rejects_known_impossible_arity_but_keeps_optional_and_rest_candidates ... ok
+test verilog9_retains_task_declaration_and_task_function_scope ... ok
+test commonlisp9_function_namespace_and_flet_labels_visibility_are_distinct ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests\platform_credentials.rs (target\debug\deps\platform_credentials-40235d1fc0b3fd5d.exe)
+
+running 3 tests
+test rejects_empty_and_oversized_binary_secrets_before_backend_access ... ok
+test valid_native_targets_do_not_use_mock_or_windows_fallback ... ok
+test rejects_foreign_ambiguous_and_traversing_targets_before_backend_access ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

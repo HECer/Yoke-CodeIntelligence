@@ -1,0 +1,41 @@
+    Checking yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\native)
+error: this boolean expression can be simplified
+   --> native\src\graph_analysis_policy.rs:110:9
+    |
+110 | /         !self.excluded_kinds.contains(&node.kind)
+111 | |             && !self.excluded_labels.contains(&node.name)
+112 | |             && !(self.extensionless_as_concepts
+113 | |                 && !node.path.rsplit('/').next().unwrap_or("").contains('.'))
+    | |_____________________________________________________________________________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#nonminimal_bool
+    = note: `-D clippy::nonminimal-bool` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::nonminimal_bool)]`
+help: try
+    |
+110 -         !self.excluded_kinds.contains(&node.kind)
+111 -             && !self.excluded_labels.contains(&node.name)
+112 -             && !(self.extensionless_as_concepts
+113 -                 && !node.path.rsplit('/').next().unwrap_or("").contains('.'))
+110 +         !(self.excluded_kinds.contains(&node.kind) || self.excluded_labels.contains(&node.name) || self.extensionless_as_concepts && !node.path.rsplit('/').next().unwrap_or("").contains('.'))
+    |
+110 -         !self.excluded_kinds.contains(&node.kind)
+111 -             && !self.excluded_labels.contains(&node.name)
+112 -             && !(self.extensionless_as_concepts
+113 -                 && !node.path.rsplit('/').next().unwrap_or("").contains('.'))
+110 +         (node.path.rsplit('/').next().unwrap_or("").contains('.') || !self.extensionless_as_concepts) && !self.excluded_labels.contains(&node.name) && !self.excluded_kinds.contains(&node.kind)
+    |
+
+error: this boolean expression can be simplified
+   --> native\src\graph_analysis_policy.rs:112:16
+    |
+112 |               && !(self.extensionless_as_concepts
+    |  ________________^
+113 | |                 && !node.path.rsplit('/').next().unwrap_or("").contains('.'))
+    | |_____________________________________________________________________________^ help: try: `!self.extensionless_as_concepts || node.path.rsplit('/').next().unwrap_or("").contains('.')`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#nonminimal_bool
+
+error: could not compile `yoke-code-intelligence` (lib) due to 2 previous errors
+warning: build failed, waiting for other jobs to finish...
+error: could not compile `yoke-code-intelligence` (lib test) due to 2 previous errors

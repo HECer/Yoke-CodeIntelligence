@@ -1,0 +1,60 @@
+✔ an expired process deadline refuses before any actual child launch (4.3556ms)
+✔ an already cancelled process refuses before any actual child launch (1.1095ms)
+✖ a deadline expiring immediately after actual spawn closes the child and stdio before rejection (23.5496ms)
+✖ cancellation immediately after actual spawn closes the child and stdio before rejection (20.9773ms)
+✔ an armed ordinary process deadline closes a stalled actual child and all stdio (2753.6423ms)
+✔ an armed ordinary cancellation closes a ready actual child and all stdio (1823.8229ms)
+✔ an ordinary successful actual process preserves captured output and closes all stdio (81.8404ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 5
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4830.1667
+
+✖ failing tests:
+
+test at target\parity-validation-20261015\next-process-deadline\process-deadline-transition.test.mjs:106:1
+✖ a deadline expiring immediately after actual spawn closes the child and stdio before rejection (23.5496ms)
+  AssertionError [ERR_ASSERTION]: runProcess rejected before its actual child closed
+  
+  false !== true
+  
+      at assertOneClosedChild (file:///G:/NN-Developed/Dev-Tools/Yoke-CodeIntelligence/Code-Intelligence/target/parity-validation-20261015/next-process-deadline/process-deadline-transition.test.mjs:69:12)
+      at expectClosedRejection (file:///G:/NN-Developed/Dev-Tools/Yoke-CodeIntelligence/Code-Intelligence/target/parity-validation-20261015/next-process-deadline/process-deadline-transition.test.mjs:83:5)
+      at async file:///G:/NN-Developed/Dev-Tools/Yoke-CodeIntelligence/Code-Intelligence/target/parity-validation-20261015/next-process-deadline/process-deadline-transition.test.mjs:117:9
+      at async withRecordedChild (file:///G:/NN-Developed/Dev-Tools/Yoke-CodeIntelligence/Code-Intelligence/target/parity-validation-20261015/next-process-deadline/process-deadline-transition.test.mjs:48:9)
+      at async TestContext.<anonymous> (file:///G:/NN-Developed/Dev-Tools/Yoke-CodeIntelligence/Code-Intelligence/target/parity-validation-20261015/next-process-deadline/process-deadline-transition.test.mjs:110:5)
+      at async Test.run (node:internal/test_runner/test:1113:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:788:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at target\parity-validation-20261015\next-process-deadline\process-deadline-transition.test.mjs:122:1
+✖ cancellation immediately after actual spawn closes the child and stdio before rejection (20.9773ms)
+  AssertionError [ERR_ASSERTION]: runProcess rejected before its actual child closed
+  
+  false !== true
+  
+      at assertOneClosedChild (file:///G:/NN-Developed/Dev-Tools/Yoke-CodeIntelligence/Code-Intelligence/target/parity-validation-20261015/next-process-deadline/process-deadline-transition.test.mjs:69:12)
+      at expectClosedRejection (file:///G:/NN-Developed/Dev-Tools/Yoke-CodeIntelligence/Code-Intelligence/target/parity-validation-20261015/next-process-deadline/process-deadline-transition.test.mjs:83:5)
+      at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+      at async file:///G:/NN-Developed/Dev-Tools/Yoke-CodeIntelligence/Code-Intelligence/target/parity-validation-20261015/next-process-deadline/process-deadline-transition.test.mjs:132:9
+      at async withRecordedChild (file:///G:/NN-Developed/Dev-Tools/Yoke-CodeIntelligence/Code-Intelligence/target/parity-validation-20261015/next-process-deadline/process-deadline-transition.test.mjs:48:9)
+      at async TestContext.<anonymous> (file:///G:/NN-Developed/Dev-Tools/Yoke-CodeIntelligence/Code-Intelligence/target/parity-validation-20261015/next-process-deadline/process-deadline-transition.test.mjs:127:5)
+      at async Test.run (node:internal/test_runner/test:1113:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:788:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

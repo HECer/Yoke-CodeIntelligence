@@ -1,0 +1,12 @@
+    Finished `test` profile [unoptimized] target(s) in 1.02s
+     Running tests\yaml_admission_review.rs (target\debug\deps\yaml_admission_review-91453fd17d0712c3.exe)
+
+running 5 tests
+test scalar_aliases_are_admitted_before_total_clone_allocation ... ok
+test container_aliases_include_nested_scalar_bytes ... ok
+test retained_nested_anchor_copies_are_charged_without_aliases ... ok
+test expanded_scalar_byte_budget_is_shared_across_documents ... ok
+test small_unicode_aliases_and_independent_documents_remain_supported ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.82s
+

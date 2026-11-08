@@ -1,0 +1,50 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 5.48s
+     Running tests\container.rs (target\debug\deps\container-abdf4bac385e8b44.exe)
+
+running 7 tests
+test labeled_cli_creation_failure_preserves_daemon_diagnostics_without_a_passing_receipt ... ok
+test labeled_cli_fixture_requires_isolation_and_owned_cleanup_before_passing_receipt ... ok
+test labeled_cli_timeout_still_removes_exact_owned_container_and_never_passes ... ok
+test missing_trust_mutable_images_root_users_and_unavailable_docker_never_create_approval ... ok
+test real_daemon_digest_pinned_offline_container_verification ... ignored, Requires an explicitly supplied locally installed digest-pinned Linux image and live Docker daemon
+test labeled_cli_zero_tests_integrity_failure_and_cleanup_failure_are_failed_receipts ... ok
+test remote_daemon_or_conflicting_host_prefix_is_refused_before_any_cli_execution ... ok
+
+test result: ok. 6 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 6.28s
+
+     Running tests\github_app_auth.rs (target\debug\deps\github_app_auth-6cf7b6ad575c1eb2.exe)
+
+running 14 tests
+test malformed_or_encrypted_private_material_is_rejected_without_echo ... ok
+test production_permission_precedes_os_key_access ... ok
+test host_profile_rejects_ambiguous_authority_and_unknown_fields ... ok
+test windows::downloaded_pkcs1_and_host_pkcs8_are_accepted_without_trailing_der ... ok
+test windows::identity_suspension_and_missing_permissions_stop_before_token_creation ... ok
+test windows::inherited_cancellation_interrupts_a_stalled_response_and_keeps_its_cause ... ok
+test windows::positive_request_aggregate_and_output_limits_are_enforced ... ok
+test windows::redirect_duplicates_raw_capacity_and_errors_never_publish_remote_secrets ... ok
+test windows::rs256_authorization_binds_identity_restricted_repository_and_opaque_token ... ok
+test windows::synchronously_created_client_refuses_later_async_use_without_panicking ... ok
+test windows::repository_proof_requires_exact_total_id_and_name ... ok
+test windows::token_lifetime_is_rechecked_after_the_last_repository_reply ... ok
+test windows::zero_budgets_and_cancelled_deadline_refuse_before_io ... ok
+test windows::token_response_refuses_broadened_wrong_expired_and_header_unsafe_credentials ... ok
+
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.12s
+
+     Running tests\host_install.rs (target\debug\deps\host_install-b0be2380faf85667.exe)
+
+running 9 tests
+test dry_run_is_deterministic_and_creates_no_source_engine_or_host_state ... ok
+test every_target_and_host_binding_is_checked_before_first_write ... ok
+test internal_volume_guid_binding_launches_the_real_binary_and_is_not_a_user_path_grant ... ok
+test private_state_never_contains_unrelated_human_config_or_policy_contents ... ok
+test receipt_ownership_is_required_and_serialized_plans_cannot_widen_paths ... ok
+test state_and_target_aliases_bounds_invalid_utf8_and_deadlines_fail_closed ... ok
+test install_and_uninstall_preserve_human_bom_crlf_and_original_empty_presence ... ok
+test windows_existing_writer_and_hardlink_alias_are_refused_before_other_targets_change ... ok
+test uninstall_preserves_foreign_appends_and_refuses_changes_inside_owned_block ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.09s
+

@@ -1,0 +1,1681 @@
+{
+  "data": [
+    {
+      "name": "yoke_owned-fixture",
+      "runtimeStatus": "connected",
+      "pluginId": null,
+      "httpOrigin": null,
+      "serverInfo": {
+        "name": "yoke-code-intelligence",
+        "title": null,
+        "version": "0.5.0",
+        "description": null,
+        "icons": null,
+        "websiteUrl": null
+      },
+      "serverCapabilities": {
+        "resources": {
+          "subscribe": false,
+          "listChanged": false
+        },
+        "tools": {
+          "listChanged": false
+        }
+      },
+      "tools": {
+        "ci_read": {
+          "name": "ci_read",
+          "description": "Read exact immutable UTF-8 source ranges, read a selected Meaning-View claim with all of its source quotes, or page a complete result artifact. Meaning claims remain unverified inference.",
+          "inputSchema": {
+            "additionalProperties": false,
+            "oneOf": [
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "artifactId": {
+                    "pattern": "^[a-f0-9]{64}$",
+                    "type": "string"
+                  },
+                  "cursor": {
+                    "type": "string"
+                  },
+                  "encoding": {
+                    "enum": [
+                      "utf8",
+                      "base64"
+                    ]
+                  },
+                  "endByte": {
+                    "maximum": 4000000,
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "endLine": {
+                    "maximum": 4000000,
+                    "minimum": 1,
+                    "type": "integer"
+                  },
+                  "entityId": {
+                    "pattern": "^[a-f0-9]{64}$",
+                    "type": "string"
+                  },
+                  "maxBytes": {
+                    "maximum": 4000000,
+                    "minimum": 1024,
+                    "type": "integer"
+                  },
+                  "path": {
+                    "type": "string"
+                  },
+                  "snapshotId": {
+                    "pattern": "^[a-f0-9]{64}$",
+                    "type": "string"
+                  },
+                  "startByte": {
+                    "maximum": 4000000,
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "startLine": {
+                    "maximum": 4000000,
+                    "minimum": 1,
+                    "type": "integer"
+                  },
+                  "taskId": {
+                    "type": "string"
+                  },
+                  "timeoutMs": {
+                    "maximum": 600000,
+                    "minimum": 10,
+                    "type": "integer"
+                  },
+                  "tokenBudget": {
+                    "maximum": 1000000,
+                    "minimum": 1,
+                    "type": "integer"
+                  }
+                },
+                "required": [],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "endByte": {
+                    "maximum": 4000000,
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "endLine": {
+                    "maximum": 4000000,
+                    "minimum": 1,
+                    "type": "integer"
+                  },
+                  "entityId": {
+                    "pattern": "^[a-f0-9]{64}$",
+                    "type": "string"
+                  },
+                  "graphViewId": {
+                    "pattern": "^[a-f0-9]{64}$",
+                    "type": "string"
+                  },
+                  "maxBytes": {
+                    "maximum": 4000000,
+                    "minimum": 1024,
+                    "type": "integer"
+                  },
+                  "path": {
+                    "type": "string"
+                  },
+                  "snapshotId": {
+                    "pattern": "^[a-f0-9]{64}$",
+                    "type": "string"
+                  },
+                  "startByte": {
+                    "maximum": 4000000,
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "startLine": {
+                    "maximum": 4000000,
+                    "minimum": 1,
+                    "type": "integer"
+                  },
+                  "taskId": {
+                    "type": "string"
+                  },
+                  "timeoutMs": {
+                    "maximum": 600000,
+                    "minimum": 10,
+                    "type": "integer"
+                  },
+                  "tokenBudget": {
+                    "maximum": 1000000,
+                    "minimum": 1,
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "graphViewId"
+                ],
+                "type": "object"
+              }
+            ],
+            "properties": {
+              "artifactId": {
+                "pattern": "^[a-f0-9]{64}$",
+                "type": "string"
+              },
+              "cursor": {
+                "type": "string"
+              },
+              "encoding": {
+                "enum": [
+                  "utf8",
+                  "base64"
+                ]
+              },
+              "endByte": {
+                "maximum": 4000000,
+                "minimum": 0,
+                "type": "integer"
+              },
+              "endLine": {
+                "maximum": 4000000,
+                "minimum": 1,
+                "type": "integer"
+              },
+              "entityId": {
+                "pattern": "^[a-f0-9]{64}$",
+                "type": "string"
+              },
+              "graphViewId": {
+                "pattern": "^[a-f0-9]{64}$",
+                "type": "string"
+              },
+              "maxBytes": {
+                "maximum": 4000000,
+                "minimum": 1024,
+                "type": "integer"
+              },
+              "path": {
+                "type": "string"
+              },
+              "snapshotId": {
+                "pattern": "^[a-f0-9]{64}$",
+                "type": "string"
+              },
+              "startByte": {
+                "maximum": 4000000,
+                "minimum": 0,
+                "type": "integer"
+              },
+              "startLine": {
+                "maximum": 4000000,
+                "minimum": 1,
+                "type": "integer"
+              },
+              "taskId": {
+                "type": "string"
+              },
+              "timeoutMs": {
+                "maximum": 600000,
+                "minimum": 10,
+                "type": "integer"
+              },
+              "tokenBudget": {
+                "maximum": 1000000,
+                "minimum": 1,
+                "type": "integer"
+              }
+            },
+            "type": "object"
+          },
+          "annotations": {
+            "readOnlyHint": true,
+            "destructiveHint": false,
+            "openWorldHint": false
+          }
+        },
+        "ci_trace": {
+          "name": "ci_trace",
+          "description": "Traverse evidence-backed directed multiedges with explicit direction and uncertainty filters.",
+          "inputSchema": {
+            "additionalProperties": false,
+            "oneOf": [
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "depth": {
+                    "maximum": 8,
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "direction": {
+                    "enum": [
+                      "in",
+                      "out",
+                      "both"
+                    ]
+                  },
+                  "entityIds": {
+                    "items": {
+                      "pattern": "^[a-f0-9]{64}$",
+                      "type": "string"
+                    },
+                    "maxItems": 20,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "maxBytes": {
+                    "maximum": 4000000,
+                    "minimum": 1024,
+                    "type": "integer"
+                  },
+                  "maxVisited": {
+                    "maximum": 1000,
+                    "minimum": 1,
+                    "type": "integer"
+                  },
+                  "relations": {
+                    "items": {
+                      "type": "string"
+                    },
+                    "maxItems": 20,
+                    "type": "array"
+                  },
+                  "resolutions": {
+                    "items": {
+                      "type": "string"
+                    },
+                    "maxItems": 20,
+                    "type": "array"
+                  },
+                  "snapshotId": {
+                    "pattern": "^[a-f0-9]{64}$",
+                    "type": "string"
+                  },
+                  "taskId": {
+                    "type": "string"
+                  },
+                  "timeoutMs": {
+                    "maximum": 600000,
+                    "minimum": 10,
+                    "type": "integer"
+                  },
+                  "tokenBudget": {
+                    "maximum": 1000000,
+                    "minimum": 1,
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "entityIds"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "depth": {
+                    "maximum": 8,
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "direction": {
+                    "enum": [
+                      "in",
+                      "out",
+                      "both"
+                    ]
+                  },
+                  "entityIds": {
+                    "items": {
+                      "pattern": "^[a-f0-9]{64}$",
+                      "type": "string"
+                    },
+                    "maxItems": 20,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "graphViewId": {
+                    "pattern": "^[a-f0-9]{64}$",
+                    "type": "string"
+                  },
+                  "maxBytes": {
+                    "maximum": 4000000,
+                    "minimum": 1024,
+                    "type": "integer"
+                  },
+                  "maxVisited": {
+                    "maximum": 1000,
+                    "minimum": 1,
+                    "type": "integer"
+                  },
+                  "relations": {
+                    "items": {
+                      "type": "string"
+                    },
+                    "maxItems": 20,
+                    "type": "array"
+                  },
+                  "resolutions": {
+                    "items": {
+                      "type": "string"
+                    },
+                    "maxItems": 20,
+                    "type": "array"
+                  },
+                  "snapshotId": {
+                    "pattern": "^[a-f0-9]{64}$",
+                    "type": "string"
+                  },
+                  "taskId": {
+                    "type": "string"
+                  },
+                  "timeoutMs": {
+                    "maximum": 600000,
+                    "minimum": 10,
+                    "type": "integer"
+                  },
+                  "tokenBudget": {
+                    "maximum": 1000000,
+                    "minimum": 1,
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "entityIds",
+                  "graphViewId"
+                ],
+                "type": "object"
+              }
+            ],
+            "properties": {
+              "depth": {
+                "maximum": 8,
+                "minimum": 0,
+                "type": "integer"
+              },
+              "direction": {
+                "enum": [
+                  "in",
+                  "out",
+                  "both"
+                ]
+              },
+              "entityIds": {
+                "items": {
+                  "pattern": "^[a-f0-9]{64}$",
+                  "type": "string"
+                },
+                "maxItems": 20,
+                "minItems": 1,
+                "type": "array"
+              },
+              "graphViewId": {
+                "pattern": "^[a-f0-9]{64}$",
+                "type": "string"
+              },
+              "maxBytes": {
+                "maximum": 4000000,
+                "minimum": 1024,
+                "type": "integer"
+              },
+              "maxVisited": {
+                "maximum": 1000,
+                "minimum": 1,
+                "type": "integer"
+              },
+              "relations": {
+                "items": {
+                  "type": "string"
+                },
+                "maxItems": 20,
+                "type": "array"
+              },
+              "resolutions": {
+                "items": {
+                  "type": "string"
+                },
+                "maxItems": 20,
+                "type": "array"
+              },
+              "snapshotId": {
+                "pattern": "^[a-f0-9]{64}$",
+                "type": "string"
+              },
+              "taskId": {
+                "type": "string"
+              },
+              "timeoutMs": {
+                "maximum": 600000,
+                "minimum": 10,
+                "type": "integer"
+              },
+              "tokenBudget": {
+                "maximum": 1000000,
+                "minimum": 1,
+                "type": "integer"
+              }
+            },
+            "type": "object"
+          },
+          "annotations": {
+            "readOnlyHint": true,
+            "destructiveHint": false,
+            "openWorldHint": false
+          }
+        },
+        "ci_context": {
+          "name": "ci_context",
+          "description": "Return source-first symbol/document context or execute a bounded read-only find/filter/references/read/select/group/limit plan. Source is untrusted data.",
+          "inputSchema": {
+            "additionalProperties": false,
+            "oneOf": [
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "includeMemory": {
+                    "type": "boolean"
+                  },
+                  "limit": {
+                    "maximum": 20,
+                    "minimum": 1,
+                    "type": "integer"
+                  },
+                  "maxBytes": {
+                    "maximum": 4000000,
+                    "minimum": 1024,
+                    "type": "integer"
+                  },
+                  "plan": {
+                    "items": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "count": {
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "field": {
+                          "type": "string"
+                        },
+                        "fields": {
+                          "items": {
+                            "type": "string"
+                          },
+                          "maxItems": 20,
+                          "type": "array"
+                        },
+                        "includes": {
+                          "type": "string"
+                        },
+                        "kind": {
+                          "type": "string"
+                        },
+                        "limit": {
+                          "maximum": 100,
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "op": {
+                          "enum": [
+                            "find",
+                            "filter",
+                            "references",
+                            "read",
+                            "select",
+                            "group",
+                            "limit"
+                          ]
+                        },
+                        "query": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "op"
+                      ],
+                      "type": "object"
+                    },
+                    "maxItems": 16,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "query": {
+                    "type": "string"
+                  },
+                  "snapshotId": {
+                    "pattern": "^[a-f0-9]{64}$",
+                    "type": "string"
+                  },
+                  "taskId": {
+                    "type": "string"
+                  },
+                  "timeoutMs": {
+                    "maximum": 600000,
+                    "minimum": 10,
+                    "type": "integer"
+                  },
+                  "tokenBudget": {
+                    "maximum": 1000000,
+                    "minimum": 1,
+                    "type": "integer"
+                  }
+                },
+                "required": [],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "depth": {
+                    "maximum": 8,
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "graphViewId": {
+                    "pattern": "^[a-f0-9]{64}$",
+                    "type": "string"
+                  },
+                  "kind": {
+                    "description": "Exact selected-view node kind; canonical symbol/all/text/semantic modes are unavailable.",
+                    "maxLength": 100,
+                    "minLength": 1,
+                    "not": {
+                      "enum": [
+                        "symbol",
+                        "all",
+                        "text",
+                        "semantic"
+                      ]
+                    },
+                    "type": "string"
+                  },
+                  "limit": {
+                    "maximum": 20,
+                    "minimum": 1,
+                    "type": "integer"
+                  },
+                  "maxBytes": {
+                    "maximum": 4000000,
+                    "minimum": 1024,
+                    "type": "integer"
+                  },
+                  "maxSourceBytes": {
+                    "maximum": 256000,
+                    "minimum": 100,
+                    "type": "integer"
+                  },
+                  "path": {
+                    "maxLength": 4096,
+                    "type": "string"
+                  },
+                  "query": {
+                    "maxLength": 1000,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "snapshotId": {
+                    "pattern": "^[a-f0-9]{64}$",
+                    "type": "string"
+                  },
+                  "taskId": {
+                    "type": "string"
+                  },
+                  "timeoutMs": {
+                    "maximum": 600000,
+                    "minimum": 10,
+                    "type": "integer"
+                  },
+                  "tokenBudget": {
+                    "maximum": 1000000,
+                    "minimum": 1,
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "query",
+                  "graphViewId"
+                ],
+                "type": "object"
+              }
+            ],
+            "properties": {
+              "depth": {
+                "maximum": 8,
+                "minimum": 0,
+                "type": "integer"
+              },
+              "graphViewId": {
+                "pattern": "^[a-f0-9]{64}$",
+                "type": "string"
+              },
+              "includeMemory": {
+                "type": "boolean"
+              },
+              "kind": {
+                "description": "Exact selected-view node kind; canonical symbol/all/text/semantic modes are unavailable.",
+                "maxLength": 100,
+                "minLength": 1,
+                "not": {
+                  "enum": [
+                    "symbol",
+                    "all",
+                    "text",
+                    "semantic"
+                  ]
+                },
+                "type": "string"
+              },
+              "limit": {
+                "maximum": 20,
+                "minimum": 1,
+                "type": "integer"
+              },
+              "maxBytes": {
+                "maximum": 4000000,
+                "minimum": 1024,
+                "type": "integer"
+              },
+              "maxSourceBytes": {
+                "maximum": 256000,
+                "minimum": 100,
+                "type": "integer"
+              },
+              "path": {
+                "maxLength": 4096,
+                "type": "string"
+              },
+              "plan": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "count": {
+                      "maximum": 100,
+                      "minimum": 0,
+                      "type": "integer"
+                    },
+                    "field": {
+                      "type": "string"
+                    },
+                    "fields": {
+                      "items": {
+                        "type": "string"
+                      },
+                      "maxItems": 20,
+                      "type": "array"
+                    },
+                    "includes": {
+                      "type": "string"
+                    },
+                    "kind": {
+                      "type": "string"
+                    },
+                    "limit": {
+                      "maximum": 100,
+                      "minimum": 1,
+                      "type": "integer"
+                    },
+                    "op": {
+                      "enum": [
+                        "find",
+                        "filter",
+                        "references",
+                        "read",
+                        "select",
+                        "group",
+                        "limit"
+                      ]
+                    },
+                    "query": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "op"
+                  ],
+                  "type": "object"
+                },
+                "maxItems": 16,
+                "minItems": 1,
+                "type": "array"
+              },
+              "query": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "maxLength": 1000,
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                ]
+              },
+              "snapshotId": {
+                "pattern": "^[a-f0-9]{64}$",
+                "type": "string"
+              },
+              "taskId": {
+                "type": "string"
+              },
+              "timeoutMs": {
+                "maximum": 600000,
+                "minimum": 10,
+                "type": "integer"
+              },
+              "tokenBudget": {
+                "maximum": 1000000,
+                "minimum": 1,
+                "type": "integer"
+              }
+            },
+            "type": "object"
+          },
+          "annotations": {
+            "readOnlyHint": true,
+            "destructiveHint": false,
+            "openWorldHint": false
+          }
+        },
+        "ci_find": {
+          "name": "ci_find",
+          "description": "Find source-bound structural/vector candidates, request host-registered semantic navigation, or select an already published graphViewId for exact-kind name retrieval. Structural candidates are not compiler bindings.",
+          "inputSchema": {
+            "additionalProperties": false,
+            "oneOf": [
+              {
+                "additionalProperties": false,
+                "oneOf": [
+                  {
+                    "anyOf": [
+                      {
+                        "required": [
+                          "query"
+                        ]
+                      },
+                      {
+                        "required": [
+                          "namePath"
+                        ]
+                      },
+                      {
+                        "required": [
+                          "pathGlob"
+                        ]
+                      },
+                      {
+                        "required": [
+                          "relativePath"
+                        ]
+                      }
+                    ],
+                    "not": {
+                      "anyOf": [
+                        {
+                          "required": [
+                            "languageServer"
+                          ]
+                        },
+                        {
+                          "required": [
+                            "vector"
+                          ]
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "not": {
+                      "anyOf": [
+                        {
+                          "required": [
+                            "query"
+                          ]
+                        },
+                        {
+                          "required": [
+                            "languageServer"
+                          ]
+                        }
+                      ]
+                    },
+                    "properties": {
+                      "kind": {
+                        "const": "semantic"
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "model",
+                      "vector"
+                    ]
+                  },
+                  {
+                    "not": {
+                      "anyOf": [
+                        {
+                          "required": [
+                            "query"
+                          ]
+                        },
+                        {
+                          "required": [
+                            "kind"
+                          ]
+                        },
+                        {
+                          "required": [
+                            "path"
+                          ]
+                        },
+                        {
+                          "required": [
+                            "limit"
+                          ]
+                        },
+                        {
+                          "required": [
+                            "offset"
+                          ]
+                        },
+                        {
+                          "required": [
+                            "regex"
+                          ]
+                        },
+                        {
+                          "required": [
+                            "model"
+                          ]
+                        },
+                        {
+                          "required": [
+                            "vector"
+                          ]
+                        },
+                        {
+                          "required": [
+                            "namePath"
+                          ]
+                        },
+                        {
+                          "required": [
+                            "relativePath"
+                          ]
+                        },
+                        {
+                          "required": [
+                            "pathGlob"
+                          ]
+                        },
+                        {
+                          "required": [
+                            "excludeGlob"
+                          ]
+                        },
+                        {
+                          "required": [
+                            "includeBody"
+                          ]
+                        },
+                        {
+                          "required": [
+                            "substringMatching"
+                          ]
+                        },
+                        {
+                          "required": [
+                            "includeKinds"
+                          ]
+                        },
+                        {
+                          "required": [
+                            "excludeKinds"
+                          ]
+                        },
+                        {
+                          "required": [
+                            "ignoreCase"
+                          ]
+                        },
+                        {
+                          "required": [
+                            "multiline"
+                          ]
+                        },
+                        {
+                          "required": [
+                            "groupBySymbol"
+                          ]
+                        },
+                        {
+                          "required": [
+                            "beforeContextLines"
+                          ]
+                        },
+                        {
+                          "required": [
+                            "afterContextLines"
+                          ]
+                        },
+                        {
+                          "required": [
+                            "depth"
+                          ]
+                        },
+                        {
+                          "required": [
+                            "searchBody"
+                          ]
+                        }
+                      ]
+                    },
+                    "required": [
+                      "languageServer"
+                    ]
+                  }
+                ],
+                "properties": {
+                  "afterContextLines": {
+                    "maximum": 100,
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "beforeContextLines": {
+                    "maximum": 100,
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "depth": {
+                    "maximum": 8,
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "excludeGlob": {
+                    "type": "string"
+                  },
+                  "excludeKinds": {
+                    "items": {
+                      "type": "string"
+                    },
+                    "maxItems": 100,
+                    "type": "array"
+                  },
+                  "groupBySymbol": {
+                    "type": "boolean"
+                  },
+                  "ignoreCase": {
+                    "type": "boolean"
+                  },
+                  "includeBody": {
+                    "type": "boolean"
+                  },
+                  "includeKinds": {
+                    "items": {
+                      "type": "string"
+                    },
+                    "maxItems": 100,
+                    "type": "array"
+                  },
+                  "kind": {
+                    "enum": [
+                      "symbol",
+                      "file",
+                      "all",
+                      "text",
+                      "document",
+                      "semantic",
+                      "concept",
+                      "rationale",
+                      "api_contract"
+                    ]
+                  },
+                  "languageServer": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "offset": {
+                        "maximum": 4000000,
+                        "minimum": 0,
+                        "type": "integer"
+                      },
+                      "operation": {
+                        "enum": [
+                          "definition",
+                          "declaration",
+                          "references",
+                          "implementation",
+                          "hover",
+                          "symbols",
+                          "typeDefinition",
+                          "incomingCalls",
+                          "outgoingCalls",
+                          "supertypes",
+                          "subtypes",
+                          "completion",
+                          "signatureHelp",
+                          "diagnostics",
+                          "symbolInfo",
+                          "prepareRename",
+                          "codeActions",
+                          "willRenameFiles",
+                          "capabilities"
+                        ]
+                      },
+                      "options": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "depth": {
+                            "maximum": 8,
+                            "minimum": 0,
+                            "type": "integer"
+                          },
+                          "endByte": {
+                            "maximum": 4000000,
+                            "minimum": 0,
+                            "type": "integer"
+                          },
+                          "excludeKinds": {
+                            "items": {
+                              "maximum": 26,
+                              "minimum": 1,
+                              "type": "integer"
+                            },
+                            "maxItems": 26,
+                            "type": "array"
+                          },
+                          "includeBody": {
+                            "type": "boolean"
+                          },
+                          "includeDeclaration": {
+                            "type": "boolean"
+                          },
+                          "includeKinds": {
+                            "items": {
+                              "maximum": 26,
+                              "minimum": 1,
+                              "type": "integer"
+                            },
+                            "maxItems": 26,
+                            "type": "array"
+                          },
+                          "maxItems": {
+                            "maximum": 2000,
+                            "minimum": 1,
+                            "type": "integer"
+                          },
+                          "minSeverity": {
+                            "maximum": 4,
+                            "minimum": 1,
+                            "type": "integer"
+                          },
+                          "namePathPattern": {
+                            "type": "string"
+                          },
+                          "only": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "maxItems": 20,
+                            "type": "array"
+                          },
+                          "startByte": {
+                            "maximum": 4000000,
+                            "minimum": 0,
+                            "type": "integer"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "path": {
+                        "maxLength": 4096,
+                        "minLength": 1,
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "operation",
+                      "path",
+                      "offset"
+                    ],
+                    "type": "object"
+                  },
+                  "limit": {
+                    "maximum": 200,
+                    "minimum": 1,
+                    "type": "integer"
+                  },
+                  "maxBytes": {
+                    "maximum": 4000000,
+                    "minimum": 1024,
+                    "type": "integer"
+                  },
+                  "model": {
+                    "type": "string"
+                  },
+                  "multiline": {
+                    "type": "boolean"
+                  },
+                  "namePath": {
+                    "type": "string"
+                  },
+                  "offset": {
+                    "maximum": 100000,
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "path": {
+                    "type": "string"
+                  },
+                  "pathGlob": {
+                    "type": "string"
+                  },
+                  "query": {
+                    "type": "string"
+                  },
+                  "regex": {
+                    "type": "boolean"
+                  },
+                  "relativePath": {
+                    "type": "string"
+                  },
+                  "searchBody": {
+                    "type": "boolean"
+                  },
+                  "snapshotId": {
+                    "pattern": "^[a-f0-9]{64}$",
+                    "type": "string"
+                  },
+                  "substringMatching": {
+                    "type": "boolean"
+                  },
+                  "taskId": {
+                    "type": "string"
+                  },
+                  "timeoutMs": {
+                    "maximum": 600000,
+                    "minimum": 10,
+                    "type": "integer"
+                  },
+                  "tokenBudget": {
+                    "maximum": 1000000,
+                    "minimum": 1,
+                    "type": "integer"
+                  },
+                  "vector": {
+                    "items": {
+                      "type": "number"
+                    },
+                    "maxItems": 4096,
+                    "minItems": 1,
+                    "type": "array"
+                  }
+                },
+                "required": [],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "graphViewId": {
+                    "pattern": "^[a-f0-9]{64}$",
+                    "type": "string"
+                  },
+                  "kind": {
+                    "description": "Exact selected-view node kind; canonical symbol/all/text/semantic modes are unavailable.",
+                    "maxLength": 100,
+                    "minLength": 1,
+                    "not": {
+                      "enum": [
+                        "symbol",
+                        "all",
+                        "text",
+                        "semantic"
+                      ]
+                    },
+                    "type": "string"
+                  },
+                  "limit": {
+                    "maximum": 200,
+                    "minimum": 1,
+                    "type": "integer"
+                  },
+                  "maxBytes": {
+                    "maximum": 4000000,
+                    "minimum": 1024,
+                    "type": "integer"
+                  },
+                  "path": {
+                    "maxLength": 4096,
+                    "type": "string"
+                  },
+                  "query": {
+                    "maxLength": 1000,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "snapshotId": {
+                    "pattern": "^[a-f0-9]{64}$",
+                    "type": "string"
+                  },
+                  "taskId": {
+                    "type": "string"
+                  },
+                  "timeoutMs": {
+                    "maximum": 600000,
+                    "minimum": 10,
+                    "type": "integer"
+                  },
+                  "tokenBudget": {
+                    "maximum": 1000000,
+                    "minimum": 1,
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "query",
+                  "graphViewId"
+                ],
+                "type": "object"
+              }
+            ],
+            "properties": {
+              "afterContextLines": {
+                "maximum": 100,
+                "minimum": 0,
+                "type": "integer"
+              },
+              "beforeContextLines": {
+                "maximum": 100,
+                "minimum": 0,
+                "type": "integer"
+              },
+              "depth": {
+                "maximum": 8,
+                "minimum": 0,
+                "type": "integer"
+              },
+              "excludeGlob": {
+                "type": "string"
+              },
+              "excludeKinds": {
+                "items": {
+                  "type": "string"
+                },
+                "maxItems": 100,
+                "type": "array"
+              },
+              "graphViewId": {
+                "pattern": "^[a-f0-9]{64}$",
+                "type": "string"
+              },
+              "groupBySymbol": {
+                "type": "boolean"
+              },
+              "ignoreCase": {
+                "type": "boolean"
+              },
+              "includeBody": {
+                "type": "boolean"
+              },
+              "includeKinds": {
+                "items": {
+                  "type": "string"
+                },
+                "maxItems": 100,
+                "type": "array"
+              },
+              "kind": {
+                "anyOf": [
+                  {
+                    "enum": [
+                      "symbol",
+                      "file",
+                      "all",
+                      "text",
+                      "document",
+                      "semantic",
+                      "concept",
+                      "rationale",
+                      "api_contract"
+                    ]
+                  },
+                  {
+                    "description": "Exact selected-view node kind; canonical symbol/all/text/semantic modes are unavailable.",
+                    "maxLength": 100,
+                    "minLength": 1,
+                    "not": {
+                      "enum": [
+                        "symbol",
+                        "all",
+                        "text",
+                        "semantic"
+                      ]
+                    },
+                    "type": "string"
+                  }
+                ]
+              },
+              "languageServer": {
+                "additionalProperties": false,
+                "properties": {
+                  "offset": {
+                    "maximum": 4000000,
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "operation": {
+                    "enum": [
+                      "definition",
+                      "declaration",
+                      "references",
+                      "implementation",
+                      "hover",
+                      "symbols",
+                      "typeDefinition",
+                      "incomingCalls",
+                      "outgoingCalls",
+                      "supertypes",
+                      "subtypes",
+                      "completion",
+                      "signatureHelp",
+                      "diagnostics",
+                      "symbolInfo",
+                      "prepareRename",
+                      "codeActions",
+                      "willRenameFiles",
+                      "capabilities"
+                    ]
+                  },
+                  "options": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "depth": {
+                        "maximum": 8,
+                        "minimum": 0,
+                        "type": "integer"
+                      },
+                      "endByte": {
+                        "maximum": 4000000,
+                        "minimum": 0,
+                        "type": "integer"
+                      },
+                      "excludeKinds": {
+                        "items": {
+                          "maximum": 26,
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "maxItems": 26,
+                        "type": "array"
+                      },
+                      "includeBody": {
+                        "type": "boolean"
+                      },
+                      "includeDeclaration": {
+                        "type": "boolean"
+                      },
+                      "includeKinds": {
+                        "items": {
+                          "maximum": 26,
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "maxItems": 26,
+                        "type": "array"
+                      },
+                      "maxItems": {
+                        "maximum": 2000,
+                        "minimum": 1,
+                        "type": "integer"
+                      },
+                      "minSeverity": {
+                        "maximum": 4,
+                        "minimum": 1,
+                        "type": "integer"
+                      },
+                      "namePathPattern": {
+                        "type": "string"
+                      },
+                      "only": {
+                        "items": {
+                          "type": "string"
+                        },
+                        "maxItems": 20,
+                        "type": "array"
+                      },
+                      "startByte": {
+                        "maximum": 4000000,
+                        "minimum": 0,
+                        "type": "integer"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "path": {
+                    "maxLength": 4096,
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "operation",
+                  "path",
+                  "offset"
+                ],
+                "type": "object"
+              },
+              "limit": {
+                "maximum": 200,
+                "minimum": 1,
+                "type": "integer"
+              },
+              "maxBytes": {
+                "maximum": 4000000,
+                "minimum": 1024,
+                "type": "integer"
+              },
+              "model": {
+                "type": "string"
+              },
+              "multiline": {
+                "type": "boolean"
+              },
+              "namePath": {
+                "type": "string"
+              },
+              "offset": {
+                "maximum": 100000,
+                "minimum": 0,
+                "type": "integer"
+              },
+              "path": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "maxLength": 4096,
+                    "type": "string"
+                  }
+                ]
+              },
+              "pathGlob": {
+                "type": "string"
+              },
+              "query": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "maxLength": 1000,
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                ]
+              },
+              "regex": {
+                "type": "boolean"
+              },
+              "relativePath": {
+                "type": "string"
+              },
+              "searchBody": {
+                "type": "boolean"
+              },
+              "snapshotId": {
+                "pattern": "^[a-f0-9]{64}$",
+                "type": "string"
+              },
+              "substringMatching": {
+                "type": "boolean"
+              },
+              "taskId": {
+                "type": "string"
+              },
+              "timeoutMs": {
+                "maximum": 600000,
+                "minimum": 10,
+                "type": "integer"
+              },
+              "tokenBudget": {
+                "maximum": 1000000,
+                "minimum": 1,
+                "type": "integer"
+              },
+              "vector": {
+                "items": {
+                  "type": "number"
+                },
+                "maxItems": 4096,
+                "minItems": 1,
+                "type": "array"
+              }
+            },
+            "type": "object"
+          },
+          "annotations": {
+            "readOnlyHint": true,
+            "destructiveHint": false,
+            "openWorldHint": true
+          }
+        },
+        "ci_retrieve": {
+          "name": "ci_retrieve",
+          "description": "Rank captured source bodies with BM25 and personalized graph relevance. Default/global preserves legacy ranking; explicit manifest_balanced_v1 uses checked manifest scopes without automatic fallback. Ranking remains a heuristic.",
+          "inputSchema": {
+            "additionalProperties": false,
+            "properties": {
+              "excludeGlob": {
+                "type": "string"
+              },
+              "graphWeight": {
+                "maximum": 1,
+                "minimum": 0,
+                "type": "number"
+              },
+              "includeBody": {
+                "type": "boolean"
+              },
+              "limit": {
+                "maximum": 200,
+                "minimum": 1,
+                "type": "integer"
+              },
+              "pathGlob": {
+                "type": "string"
+              },
+              "perFileLimit": {
+                "maximum": 200,
+                "minimum": 1,
+                "type": "integer"
+              },
+              "query": {
+                "type": "string"
+              },
+              "relativePath": {
+                "type": "string"
+              },
+              "scopeMode": {
+                "enum": [
+                  "global",
+                  "manifest_balanced_v1"
+                ],
+                "type": "string"
+              },
+              "snapshotId": {
+                "pattern": "^[a-f0-9]{64}$",
+                "type": "string"
+              },
+              "timeoutMs": {
+                "maximum": 600000,
+                "minimum": 10,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "type": "object"
+          },
+          "annotations": {
+            "readOnlyHint": true,
+            "destructiveHint": false,
+            "openWorldHint": false
+          }
+        },
+        "ci_graph": {
+          "name": "ci_graph",
+          "description": "Build or query an immutable graph view with explicitly selected source-bound structural, semantic, and typed Meaning layers. Meaning claims retain exact citations and unverified inference; source-only exports reject Meaning layers.",
+          "inputSchema": {
+            "additionalProperties": false,
+            "properties": {
+              "operation": {
+                "enum": [
+                  "build",
+                  "find",
+                  "trace",
+                  "context",
+                  "export"
+                ]
+              },
+              "options": {
+                "type": "object"
+              },
+              "snapshotId": {
+                "pattern": "^[a-f0-9]{64}$",
+                "type": "string"
+              },
+              "timeoutMs": {
+                "maximum": 600000,
+                "minimum": 10,
+                "type": "integer"
+              },
+              "viewId": {
+                "pattern": "^[a-f0-9]{64}$",
+                "type": "string"
+              }
+            },
+            "required": [
+              "operation"
+            ],
+            "type": "object"
+          },
+          "annotations": {
+            "readOnlyHint": true,
+            "destructiveHint": false,
+            "openWorldHint": false
+          }
+        }
+      },
+      "toolsError": null,
+      "resources": [],
+      "resourceTemplates": [],
+      "authStatus": "unsupported"
+    }
+  ],
+  "nextCursor": null
+}

@@ -1,0 +1,22 @@
+    Finished `test` profile [unoptimized] target(s) in 0.74s
+     Running tests\semantic_mcp.rs (target\debug\deps\semantic_mcp-ff5d010631b07000.exe)
+
+running 7 tests
+test ci_find_requires_one_search_mode_and_keeps_eight_advertised_tools ... ok
+test explicit_vector_search_without_a_query_keeps_its_existing_local_mode ... ok
+test mutating_authority_mixed_and_malformed_requests_never_start_a_provider ... ok
+test captured_path_language_and_utf8_offset_are_checked_before_execution ... ok
+test unconfigured_semantic_navigation_fails_explicitly_without_execution ... ok
+test registered_stdio_navigation_binds_old_requested_snapshot_after_disk_changes ... ok
+test tsx_navigation_can_use_an_explicitly_registered_typescript_provider ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.88s
+
+     Running tests\semantic_provider_context.rs (target\debug\deps\semantic_provider_context-5750f4a178f3dbe2.exe)
+
+running 2 tests
+test forged_source_context_is_rejected_before_any_overlay_publication ... ok
+test semantic_provider_source_context_is_immutable_and_does_not_rewrite_historical_unknown_context ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.36s
+

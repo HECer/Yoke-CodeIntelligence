@@ -1,0 +1,22 @@
+[workspace]
+members = ["native"]
+resolver = "2"
+
+[profile.release]
+lto = "thin"
+codegen-units = 1
+strip = "symbols"
+
+# Avoid duplicating large grammar debug symbols across every integration binary.
+[profile.dev]
+debug = 0
+incremental = false
+
+[profile.test]
+debug = 0
+incremental = false
+
+# Keep exact provider/source SHA-256 proofs practical in development builds.
+[profile.dev.package.sha2]
+opt-level = 3
+

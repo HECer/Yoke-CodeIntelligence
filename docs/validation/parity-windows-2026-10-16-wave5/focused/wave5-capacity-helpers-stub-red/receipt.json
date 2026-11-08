@@ -1,0 +1,26 @@
+{
+  "checkedAtUtc": "2026-10-15T23:21:22.929432+00:00",
+  "scope": "focused_gate_not_frozen_suite",
+  "command": [
+    "cargo",
+    "test",
+    "-j",
+    "2",
+    "--manifest-path",
+    "native/Cargo.toml",
+    "--lib",
+    "retrieval_capacity::tests",
+    "--",
+    "--nocapture",
+    "--test-threads=4"
+  ],
+  "exitCode": 101,
+  "seconds": 103.359,
+  "tempRoot": "D:\\Yoke-Test-Scratch\\wave5-capacity-helpers-stub-red",
+  "logSha256": "4e8abedb62df2f5def7ca3eed1452f75789ad4b65f1c2a25c0a1e28fbd1101a4",
+  "groups": 1,
+  "passed": 2,
+  "failed": 5,
+  "ignored": 0,
+  "sourceChanges": []
+}

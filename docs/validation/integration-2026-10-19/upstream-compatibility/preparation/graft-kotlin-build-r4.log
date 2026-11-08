@@ -1,0 +1,89 @@
+npm notice run tree-sitter-kotlin@0.3.8 install
+npm notice run node-gyp-build
+(node:20064) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+gyp info it worked if it ends with ok
+gyp info using node-gyp@13.0.0
+gyp info using node@24.21.0 | win32 | x64
+(node:15248) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+gyp info find Python using Python version 3.14.7 found at "C:\Users\Lomi\AppData\Local\YokeValidation\upstreams-20261019-2hp9hr7r\python\Scripts\python.exe"
+
+gyp info find VS using VS2026 (18.0) found at:
+gyp info find VS "C:\Program Files\Microsoft Visual Studio\18\Community"
+gyp info find VS run with --verbose for detailed information
+gyp info spawn C:\Users\Lomi\AppData\Local\YokeValidation\upstreams-20261019-2hp9hr7r\python\Scripts\python.exe
+gyp info spawn args [
+gyp info spawn args 'C:\\Users\\Lomi\\AppData\\Roaming\\npm\\node_modules\\npm\\node_modules\\node-gyp\\gyp\\gyp_main.py',
+gyp info spawn args 'binding.gyp',
+gyp info spawn args '-f',
+gyp info spawn args 'msvs',
+gyp info spawn args '-I',
+gyp info spawn args 'C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\upstreams-20261019-2hp9hr7r\\node\\node_modules\\@nanonets\\graft\\node_modules\\tree-sitter-kotlin\\build\\config.gypi',
+gyp info spawn args '-I',
+gyp info spawn args 'C:\\Users\\Lomi\\AppData\\Roaming\\npm\\node_modules\\npm\\node_modules\\node-gyp\\addon.gypi',
+gyp info spawn args '-I',
+gyp info spawn args 'C:\\Users\\Lomi\\AppData\\Local\\node-gyp\\Cache\\24.21.0\\include\\node\\common.gypi',
+gyp info spawn args '-Dlibrary=shared_library',
+gyp info spawn args '-Dvisibility=default',
+gyp info spawn args '-Dnode_root_dir=C:\\Users\\Lomi\\AppData\\Local\\node-gyp\\Cache\\24.21.0',
+gyp info spawn args '-Dnode_gyp_dir=C:\\Users\\Lomi\\AppData\\Roaming\\npm\\node_modules\\npm\\node_modules\\node-gyp',
+gyp info spawn args '-Dnode_lib_file=C:\\\\Users\\\\Lomi\\\\AppData\\\\Local\\\\node-gyp\\\\Cache\\\\24.21.0\\\\<(target_arch)\\\\node.lib',
+gyp info spawn args '-Dmodule_root_dir=C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\upstreams-20261019-2hp9hr7r\\node\\node_modules\\@nanonets\\graft\\node_modules\\tree-sitter-kotlin',
+gyp info spawn args '-Dnode_engine=v8',
+gyp info spawn args '--depth=.',
+gyp info spawn args '--no-parallel',
+gyp info spawn args '--generator-output',
+gyp info spawn args 'C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\upstreams-20261019-2hp9hr7r\\node\\node_modules\\@nanonets\\graft\\node_modules\\tree-sitter-kotlin\\build',
+gyp info spawn args '-Goutput_dir=.'
+gyp info spawn args ]
+gyp info spawn C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Current\Bin\MSBuild.exe
+gyp info spawn args [
+gyp info spawn args 'build/binding.sln',
+gyp info spawn args '/clp:Verbosity=minimal',
+gyp info spawn args '/nologo',
+gyp info spawn args '/nodeReuse:false',
+gyp info spawn args '/p:Configuration=Release;Platform=x64'
+gyp info spawn args ]
+
+  binding.cc
+C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Microsoft\VC\v180\Microsoft.CppCommon.targets(790,5): error MSB4018: Unerwarteter Fehler bei der CL-Aufgabe. [C:\Users\Lomi\AppData\Local\YokeValidation\upstreams-20261019-2hp9hr7r\node\node_modules\@nanonets\graft\node_modules\tree-sitter-kotlin\build\tree_sitter_kotlin_binding.vcxproj]
+C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Microsoft\VC\v180\Microsoft.CppCommon.targets(790,5): error MSB4018: System.TypeInitializationException: Der Typeninitialisierer für "Microsoft.Build.Utilities.FileTracker" hat eine Ausnahme verursacht. ---> System.ArgumentException: Absolute Pfadinformationen sind erforderlich. [C:\Users\Lomi\AppData\Local\YokeValidation\upstreams-20261019-2hp9hr7r\node\node_modules\@nanonets\graft\node_modules\tree-sitter-kotlin\build\tree_sitter_kotlin_binding.vcxproj]
+C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Microsoft\VC\v180\Microsoft.CppCommon.targets(790,5): error MSB4018:    bei System.Security.Util.StringExpressionSet.CreateListFromExpressions(String[] str, Boolean needFullPath) [C:\Users\Lomi\AppData\Local\YokeValidation\upstreams-20261019-2hp9hr7r\node\node_modules\@nanonets\graft\node_modules\tree-sitter-kotlin\build\tree_sitter_kotlin_binding.vcxproj]
+C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Microsoft\VC\v180\Microsoft.CppCommon.targets(790,5): error MSB4018:    bei System.Security.Permissions.FileIOPermission.AddPathList(FileIOPermissionAccess access, AccessControlActions control, String[] pathListOrig, Boolean checkForDuplicates, Boolean needFullPath, Boolean copyPathList) [C:\Users\Lomi\AppData\Local\YokeValidation\upstreams-20261019-2hp9hr7r\node\node_modules\@nanonets\graft\node_modules\tree-sitter-kotlin\build\tree_sitter_kotlin_binding.vcxproj]
+C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Microsoft\VC\v180\Microsoft.CppCommon.targets(790,5): error MSB4018:    bei System.Security.Permissions.FileIOPermission..ctor(FileIOPermissionAccess access, String path) [C:\Users\Lomi\AppData\Local\YokeValidation\upstreams-20261019-2hp9hr7r\node\node_modules\@nanonets\graft\node_modules\tree-sitter-kotlin\build\tree_sitter_kotlin_binding.vcxproj]
+C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Microsoft\VC\v180\Microsoft.CppCommon.targets(790,5): error MSB4018:    bei System.Environment.InternalGetFolderPath(SpecialFolder folder, SpecialFolderOption option, Boolean suppressSecurityChecks) [C:\Users\Lomi\AppData\Local\YokeValidation\upstreams-20261019-2hp9hr7r\node\node_modules\@nanonets\graft\node_modules\tree-sitter-kotlin\build\tree_sitter_kotlin_binding.vcxproj]
+C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Microsoft\VC\v180\Microsoft.CppCommon.targets(790,5): error MSB4018:    bei System.Environment.GetFolderPath(SpecialFolder folder) [C:\Users\Lomi\AppData\Local\YokeValidation\upstreams-20261019-2hp9hr7r\node\node_modules\@nanonets\graft\node_modules\tree-sitter-kotlin\build\tree_sitter_kotlin_binding.vcxproj]
+C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Microsoft\VC\v180\Microsoft.CppCommon.targets(790,5): error MSB4018:    bei Microsoft.Build.Utilities.FileTracker.InitializeCommonApplicationDataPaths() [C:\Users\Lomi\AppData\Local\YokeValidation\upstreams-20261019-2hp9hr7r\node\node_modules\@nanonets\graft\node_modules\tree-sitter-kotlin\build\tree_sitter_kotlin_binding.vcxproj]
+C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Microsoft\VC\v180\Microsoft.CppCommon.targets(790,5): error MSB4018:    bei Microsoft.Build.Utilities.FileTracker..cctor() [C:\Users\Lomi\AppData\Local\YokeValidation\upstreams-20261019-2hp9hr7r\node\node_modules\@nanonets\graft\node_modules\tree-sitter-kotlin\build\tree_sitter_kotlin_binding.vcxproj]
+C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Microsoft\VC\v180\Microsoft.CppCommon.targets(790,5): error MSB4018:    --- Ende der internen Ausnahmestapelüberwachung --- [C:\Users\Lomi\AppData\Local\YokeValidation\upstreams-20261019-2hp9hr7r\node\node_modules\@nanonets\graft\node_modules\tree-sitter-kotlin\build\tree_sitter_kotlin_binding.vcxproj]
+C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Microsoft\VC\v180\Microsoft.CppCommon.targets(790,5): error MSB4018:    bei Microsoft.Build.Utilities.FileTracker.FileIsExcludedFromDependencies(String fileName) [C:\Users\Lomi\AppData\Local\YokeValidation\upstreams-20261019-2hp9hr7r\node\node_modules\@nanonets\graft\node_modules\tree-sitter-kotlin\build\tree_sitter_kotlin_binding.vcxproj]
+C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Microsoft\VC\v180\Microsoft.CppCommon.targets(790,5): error MSB4018:    bei Microsoft.Build.Utilities.CanonicalTrackedInputFiles.ConstructDependencyTable() [C:\Users\Lomi\AppData\Local\YokeValidation\upstreams-20261019-2hp9hr7r\node\node_modules\@nanonets\graft\node_modules\tree-sitter-kotlin\build\tree_sitter_kotlin_binding.vcxproj]
+C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Microsoft\VC\v180\Microsoft.CppCommon.targets(790,5): error MSB4018:    bei Microsoft.Build.Utilities.CanonicalTrackedInputFiles.InternalConstruct(ITask ownerTask, ITaskItem[] tlogFiles, ITaskItem[] sourceFiles, ITaskItem[] outputFiles, ITaskItem[] excludedInputPaths, CanonicalTrackedOutputFiles outputs, Boolean useMinimalRebuildOptimization, Boolean maintainCompositeRootingMarkers) [C:\Users\Lomi\AppData\Local\YokeValidation\upstreams-20261019-2hp9hr7r\node\node_modules\@nanonets\graft\node_modules\tree-sitter-kotlin\build\tree_sitter_kotlin_binding.vcxproj]
+C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Microsoft\VC\v180\Microsoft.CppCommon.targets(790,5): error MSB4018:    bei Microsoft.Build.Utilities.CanonicalTrackedInputFiles..ctor(ITaskItem[] tlogFiles, ITaskItem[] sourceFiles, ITaskItem[] excludedInputPaths, CanonicalTrackedOutputFiles outputs, Boolean useMinimalRebuildOptimization, Boolean maintainCompositeRootingMarkers) [C:\Users\Lomi\AppData\Local\YokeValidation\upstreams-20261019-2hp9hr7r\node\node_modules\@nanonets\graft\node_modules\tree-sitter-kotlin\build\tree_sitter_kotlin_binding.vcxproj]
+C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Microsoft\VC\v180\Microsoft.CppCommon.targets(790,5): error MSB4018:    bei Microsoft.Build.CPPTasks.CL.PostExecuteTool(Int32 exitCode) [C:\Users\Lomi\AppData\Local\YokeValidation\upstreams-20261019-2hp9hr7r\node\node_modules\@nanonets\graft\node_modules\tree-sitter-kotlin\build\tree_sitter_kotlin_binding.vcxproj]
+C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Microsoft\VC\v180\Microsoft.CppCommon.targets(790,5): error MSB4018:    bei Microsoft.Build.CPPTasks.TrackedVCToolTask.ExecuteTool(String pathToTool, String responseFileCommands, String commandLineCommands) [C:\Users\Lomi\AppData\Local\YokeValidation\upstreams-20261019-2hp9hr7r\node\node_modules\@nanonets\graft\node_modules\tree-sitter-kotlin\build\tree_sitter_kotlin_binding.vcxproj]
+C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Microsoft\VC\v180\Microsoft.CppCommon.targets(790,5): error MSB4018:    bei Microsoft.Build.CPPTasks.CL.ExecuteTool(String pathToTool, String responseFileCommands, String commandLineCommands) [C:\Users\Lomi\AppData\Local\YokeValidation\upstreams-20261019-2hp9hr7r\node\node_modules\@nanonets\graft\node_modules\tree-sitter-kotlin\build\tree_sitter_kotlin_binding.vcxproj]
+C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Microsoft\VC\v180\Microsoft.CppCommon.targets(790,5): error MSB4018:    bei Microsoft.Build.Utilities.ToolTask.Execute() [C:\Users\Lomi\AppData\Local\YokeValidation\upstreams-20261019-2hp9hr7r\node\node_modules\@nanonets\graft\node_modules\tree-sitter-kotlin\build\tree_sitter_kotlin_binding.vcxproj]
+C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Microsoft\VC\v180\Microsoft.CppCommon.targets(790,5): error MSB4018:    bei Microsoft.Build.CPPTasks.VCToolTask.Execute() [C:\Users\Lomi\AppData\Local\YokeValidation\upstreams-20261019-2hp9hr7r\node\node_modules\@nanonets\graft\node_modules\tree-sitter-kotlin\build\tree_sitter_kotlin_binding.vcxproj]
+C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Microsoft\VC\v180\Microsoft.CppCommon.targets(790,5): error MSB4018:    bei Microsoft.Build.CPPTasks.TrackedVCToolTask.Execute() [C:\Users\Lomi\AppData\Local\YokeValidation\upstreams-20261019-2hp9hr7r\node\node_modules\@nanonets\graft\node_modules\tree-sitter-kotlin\build\tree_sitter_kotlin_binding.vcxproj]
+C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Microsoft\VC\v180\Microsoft.CppCommon.targets(790,5): error MSB4018:    bei Microsoft.Build.BackEnd.TaskExecutionHost.Execute() [C:\Users\Lomi\AppData\Local\YokeValidation\upstreams-20261019-2hp9hr7r\node\node_modules\@nanonets\graft\node_modules\tree-sitter-kotlin\build\tree_sitter_kotlin_binding.vcxproj]
+C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Microsoft\VC\v180\Microsoft.CppCommon.targets(790,5): error MSB4018:    bei Microsoft.Build.BackEnd.TaskBuilder.<ExecuteInstantiatedTask>d__26.MoveNext() [C:\Users\Lomi\AppData\Local\YokeValidation\upstreams-20261019-2hp9hr7r\node\node_modules\@nanonets\graft\node_modules\tree-sitter-kotlin\build\tree_sitter_kotlin_binding.vcxproj]
+gyp ERR! build error 
+gyp ERR! stack Error: `C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Current\Bin\MSBuild.exe` failed with exit code: 1
+gyp ERR! stack at ChildProcess.<anonymous> (C:\Users\Lomi\AppData\Roaming\npm\node_modules\npm\node_modules\node-gyp\lib\build.js:219:23)
+gyp ERR! stack at ChildProcess.emit (node:events:514:28)
+gyp ERR! stack at ChildProcess._handle.onexit (node:internal/child_process:295:12)
+gyp ERR! System Windows_NT 10.0.19045
+gyp ERR! command "C:\\Program Files\\nodejs\\node.exe" "C:\\Users\\Lomi\\AppData\\Roaming\\npm\\node_modules\\npm\\node_modules\\node-gyp\\bin\\node-gyp.js" "rebuild"
+gyp ERR! cwd C:\Users\Lomi\AppData\Local\YokeValidation\upstreams-20261019-2hp9hr7r\node\node_modules\@nanonets\graft\node_modules\tree-sitter-kotlin
+gyp ERR! node -v v24.21.0
+gyp ERR! node-gyp -v v13.0.0
+gyp ERR! $npm_package_name tree-sitter-kotlin
+gyp ERR! $npm_package_version 0.3.8
+gyp ERR! not ok 
+npm error code 1
+npm error path C:\Users\Lomi\AppData\Local\YokeValidation\upstreams-20261019-2hp9hr7r\node\node_modules\@nanonets\graft\node_modules\tree-sitter-kotlin
+npm error command failed
+npm error command C:\WINDOWS\system32\cmd.exe /d /s /c node-gyp-build
+npm error A complete log of this run can be found in: C:\Users\Lomi\AppData\Local\YokeValidation\upstreams-20261019-2hp9hr7r\npm-cache\_logs\2026-10-19T01_49_37_957Z-debug-0.log

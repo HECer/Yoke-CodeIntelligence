@@ -1,0 +1,83 @@
+   Compiling yoke-code-intelligence v0.5.0 (E:\Yoke-Worktrees\mixed-document-view-20261017\native)
+    Finished `test` profile [unoptimized] target(s) in 13.71s
+     Running tests\document_cli.rs (E:/Yoke-Build-Cache/mixed-document-view-20261017\debug\deps\document_cli-954103af4cf9dd24.exe)
+
+running 1 test
+test public_document_cli_builds_searches_reads_and_queries_archive_without_source_store ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.35s
+
+     Running tests\document_graph.rs (E:/Yoke-Build-Cache/mixed-document-view-20261017\debug\deps\document_graph-6c07e61ec8f7294c.exe)
+
+running 6 tests
+test document_records_and_exact_binary_xml_text_artifacts_are_retention_roots ... ok
+test document_query_types_utf8_ranges_and_seed_capacity_are_strict ... ok
+test docx_search_read_trace_and_archive_preserve_distinct_exact_coordinates ... ok
+test archives_reject_future_schema_corrupt_objects_and_human_destination_overwrite ... ok
+test resealed_registered_graph_cannot_invent_labels_from_the_original_container ... ok
+test xlsx_shared_strings_bind_both_reference_and_value_xml_with_cached_formula_metadata ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.38s
+
+     Running tests\document_graph_review.rs (E:/Yoke-Build-Cache/mixed-document-view-20261017\debug\deps\document_graph_review-3a585efaf29f2975.exe)
+
+running 2 tests
+test document_trace_admits_serialized_output_before_large_allocation ... ok
+test rejected_document_metadata_is_admitted_before_identity_serialization ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 18.77s
+
+     Running tests\graph_view.rs (E:/Yoke-Build-Cache/mixed-document-view-20261017\debug\deps\graph_view-97c800a70b6f82cc.exe)
+
+running 11 tests
+test default_view_exposes_structural_relationships_without_replacing_canonical_graph ... ok
+test newly_derived_view_omits_legacy_config_file_signature_values_without_rewriting_history ... ok
+test context_omits_environment_values_and_clips_unicode_at_byte_budget ... ok
+test captured_readonly_dependency_proof_allows_view_and_collection_reads ... ok
+test registered_view_rejects_corrupt_cas_and_foreign_overlay_scope ... ok
+test semantic_and_structural_overlays_have_distinct_namespaces_and_provider_trust ... ok
+test selected_structural_artifacts_reject_forged_node_scope_lines_and_schema ... ok
+test source_view_remains_historical_and_rejects_forged_scope_options_and_deadlines ... ok
+test view_find_trace_context_and_export_preserve_source_and_parallel_calls ... ok
+test source_bound_view_exports_all_seven_formats ... ok
+test selected_overlay_inputs_have_an_aggregate_byte_budget ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.17s
+
+     Running tests\mixed_view_cli.rs (E:/Yoke-Build-Cache/mixed-document-view-20261017\debug\deps\mixed_view_cli-ffc3fea888a9b7f2.exe)
+
+running 15 tests
+test exact_aggregate_source_reservation_refuses_before_corrupt_source_access_and_sorts_documents ... ok
+test artifact_registration_bytes_participate_in_the_exact_aggregate_metadata_budget ... ok
+test every_explicit_source_and_document_pin_is_checked_before_results_or_writes ... ok
+test exact_mixed_output_and_capacity_refusals_never_publish_partial_results ... ok
+test malformed_mixed_selection_and_query_are_rejected_before_missing_store_initialization ... ok
+test later_document_pin_denial_precedes_any_bulk_native_source_read ... ok
+test global_mixed_pagination_and_case_match_oracles_are_independent_of_source_spaces ... ok
+test mixed_library_capability_retains_frozen_bytes_after_transaction_rollback_and_cas_loss ... ok
+test mixed_find_replays_code_docx_and_xlsx_without_live_files_or_writes ... ok
+test mixed_library_search_admission_bounds_bytes_before_whitespace_normalization ... ok
+test mixed_load_and_query_honor_expired_and_shared_cancelled_deadlines_without_writes ... ok
+test mixed_read_global_capture_and_execution_flags_refuse_with_actual_valid_parents ... ok
+test mixed_typed_reads_preserve_utf8_and_xml_origins_and_refuse_container_offsets ... ok
+test historical_receipt_scope_is_retained_but_never_searched_as_current_source ... ok
+test mixed_source_provenance_retains_exact_meaning_packets_coverage_and_search_scope_roles ... ok
+
+test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 6.94s
+
+     Running tests\view_comparison_cli.rs (E:/Yoke-Build-Cache/mixed-document-view-20261017\debug\deps\view_comparison_cli-e184ff915382ff28.exe)
+
+running 10 tests
+test compare_views_cli_refuses_missing_or_incomplete_stores_without_initializing_them ... ok
+test compare_views_cli_reads_a_checkpointed_store_after_its_last_writer_closed ... ok
+test compare_views_cli_exact_output_limit_includes_its_single_newline ... ok
+test compare_views_cli_rejects_bad_host_json_before_creating_source_state ... ok
+test compare_views_cli_keeps_all_five_input_pins_binding ... ok
+test compare_views_cli_replays_history_and_preserves_directed_parallel_changes_without_publication ... ok
+test compare_views_cli_zero_capacities_refuse_without_output_or_store_creation ... ok
+test compare_views_cli_whole_result_budgets_refuse_without_artifact_fallback ... ok
+test compare_views_cli_uses_only_explicit_one_to_one_primary_file_continuity ... ok
+test compare_views_cli_rejects_execution_and_capture_options_before_host_file_access ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.78s
+

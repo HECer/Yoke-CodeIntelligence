@@ -1,0 +1,104 @@
+{
+  "baseline": "84e1186621eb2ac984609bb05549e9a3b93d759b",
+  "focusedPython": {
+    "passed": 13,
+    "failed": 0,
+    "skipped": 0
+  },
+  "wholePython": {
+    "passed": 87,
+    "failed": 0,
+    "skipped": 0
+  },
+  "firstWholePythonAttempt": {
+    "passed": 84,
+    "failed": 2,
+    "skipped": 1,
+    "reason": "Cargo absent from invocation PATH; rerun uses installed Rust bin directory"
+  },
+  "typecheckExit": 0,
+  "npmExit": 0,
+  "npm": {
+    "passed": 260,
+    "failed": 0,
+    "existingSkipped": 3
+  },
+  "changedRustFileRustfmtExit": 0,
+  "nativeBuildOrExecutionAttemptedLocally": false,
+  "nativeProductionAndCargoProfilesExactToBaseline": true,
+  "workflowOnlyAddsTwoWindowsTempSetupSteps": true,
+  "hostedNewCorrectionVerified": false,
+  "fullStatusComplete": false,
+  "inertIndependentStdioProbe": {
+    "kind": "owned-PowerShell-stdio-probe",
+    "nativeYokeImageOpenedOrExecuted": false,
+    "exitCode": 0,
+    "seconds": 0.2684601999935694,
+    "exactArgumentAndInputBytes": true,
+    "actual": {
+      "bytes": 164,
+      "sha256": "aba1bb21ff787782ec1813d7c73d90aecea630b858adcfa6ce8c5101b2ee45d1",
+      "argumentSha256": "c62731184cb4606e455113f63ba61076d0836e1ecdfa7f865e149a10cde9b6e7"
+    },
+    "expected": {
+      "bytes": 164,
+      "sha256": "aba1bb21ff787782ec1813d7c73d90aecea630b858adcfa6ce8c5101b2ee45d1",
+      "argumentSha256": "c62731184cb4606e455113f63ba61076d0836e1ecdfa7f865e149a10cde9b6e7"
+    },
+    "stderr": "",
+    "jobAdmission": {
+      "specificJobMembershipConfirmed": true,
+      "queryHandleClosedBeforeNativeRead": true
+    },
+    "activeAfterCleanup": 0
+  },
+  "products": [
+    {
+      "path": ".github/workflows/rust.yml",
+      "sha256": "4ff38688259f32ac2de46313bdc6581ba0f906d4c4b0717965410fdeb5c371e9",
+      "gitBlobSha": "a66e03acbc0800ae84676989f8a93e46f3c95ad7"
+    },
+    {
+      "path": "scripts/ci_windows_temp.py",
+      "sha256": "8e507c35f82bb86304d1c81ec3f1807fcbf7e13256504bd4fb7d206c1fc94486",
+      "gitBlobSha": "01b2e807adde6d51755cb59656d0fe314eded279"
+    },
+    {
+      "path": "scripts/tests/test_ci_windows_temp.py",
+      "sha256": "52476e12d76ea136f1b4ee9ef3efd8e4d457cfa5efa104cace944ec76603f31d",
+      "gitBlobSha": "a465c7d4e334c8c3878ef41e70a88b5c449bd23e"
+    },
+    {
+      "path": "native/tests/claude_source_hooks.rs",
+      "sha256": "0bca6663b0da2bc0fea243da72d6ba4705547fdcef2d19b84628eaf7e1007bdd",
+      "gitBlobSha": "b7cd1a8c63df5809b174be40f331f0a91a25b117"
+    }
+  ],
+  "logs": [
+    {
+      "path": "python-temp.txt",
+      "sha256": "9805117bf502efa27bf3de42c7a4e4610819d60060a853868cacf7c08975dd64",
+      "originalSha256": "88ac13d6a216aef079567d03c880e0fbf403235bda35621d34b947e09df80d23",
+      "originalEncoding": "utf-16"
+    },
+    {
+      "path": "python-all-rust-path.txt",
+      "sha256": "7d8e035d679bffad50e0baf30824a1a26ff9a75f4eb45257a272c075c356c102",
+      "originalSha256": "b8c518f0d7712abc0475a08615748988d7f80d1e9a076dd0afa512ab2f6e1f66",
+      "originalEncoding": "utf-16"
+    },
+    {
+      "path": "typecheck.txt",
+      "sha256": "cc336a08627dbad0e09c5ac70b4adab4a72bed7714ccf6fb34c6610a52f0398a",
+      "originalSha256": "6c4ee3443e2366dab2a7f7d6bf41faf79b019431598618b70cb9fe4a071eac47",
+      "originalEncoding": "utf-16"
+    },
+    {
+      "path": "npm-test.txt",
+      "sha256": "84f2416f243320758d815b2e52c4ed4e1644e761da501ca4b43fbcb87b17fa5a",
+      "originalSha256": "239160a05b151c49a98b1c49d4dfc4bdea6ae3b3daf01ee68dd0d4d7c4f85633",
+      "originalEncoding": "utf-16"
+    }
+  ],
+  "diagnosticsSha256": "fb2344f3080e5139626ce00b901f4195bdfb2fea1b6038902d6bae286886442a"
+}

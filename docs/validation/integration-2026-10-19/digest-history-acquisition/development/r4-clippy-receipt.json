@@ -1,0 +1,17 @@
+{
+  "command": [
+    "cargo",
+    "clippy",
+    "--workspace",
+    "--all-targets",
+    "--locked",
+    "--keep-going",
+    "-j2",
+    "--",
+    "-D",
+    "warnings"
+  ],
+  "exitCode": 0,
+  "elapsedSeconds": 104.628,
+  "recordedAt": "2026-10-19T06:30:14.196665+00:00"
+}

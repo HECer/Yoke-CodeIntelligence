@@ -1,0 +1,59 @@
+{
+  "accepted": true,
+  "aclTempRoot": null,
+  "artifactSha256": {
+    "clippy.log": "308be4ef209cb40af0764094b860510edcfa10de55924d0c7f1021f88b94058e",
+    "source-after.json": "d9b2112398d06212d977212518c2377f6ed2d8df89c359a9925b1b7999bbfa31",
+    "source-before.json": "d9b2112398d06212d977212518c2377f6ed2d8df89c359a9925b1b7999bbfa31"
+  },
+  "checkedAtUtc": "2026-10-16T16:17:26.538702+00:00",
+  "failed": 0,
+  "groups": 0,
+  "ignored": 0,
+  "interpretation": "Fresh execution only. Shared freeze required across all five phases; ignored test results are never relabeled as passing.",
+  "matrixCoverage": {},
+  "passed": 0,
+  "phase": "clippy",
+  "phases": [
+    "format",
+    "clippy",
+    "native",
+    "python",
+    "typescript"
+  ],
+  "results": [
+    {
+      "command": [
+        "cargo",
+        "clippy",
+        "--workspace",
+        "--all-targets",
+        "--locked",
+        "-j",
+        "2",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exitCode": 0,
+      "failed": 0,
+      "groups": 0,
+      "ignored": 0,
+      "inventoryOnly": false,
+      "label": "clippy",
+      "logSha256": "308be4ef209cb40af0764094b860510edcfa10de55924d0c7f1021f88b94058e",
+      "origin": "fresh_execution",
+      "passed": 0,
+      "runnerSha256": "b51bbffbddd07be0aa6ef019fc950d772c628d77b3567f646d7a837726aa3d15",
+      "seconds": 1.328,
+      "sourceManifestSha256": "d9b2112398d06212d977212518c2377f6ed2d8df89c359a9925b1b7999bbfa31",
+      "tempRoot": "D:\\Yoke-Test-Scratch\\affected-r5b-verified-20261016-clippy"
+    }
+  ],
+  "runnerSha256": "b51bbffbddd07be0aa6ef019fc950d772c628d77b3567f646d7a837726aa3d15",
+  "sourceChanges": [],
+  "sourceFiles": 2873,
+  "sourceManifestSha256": "d9b2112398d06212d977212518c2377f6ed2d8df89c359a9925b1b7999bbfa31",
+  "tempRoot": "D:\\Yoke-Test-Scratch\\affected-r5b-verified-20261016-clippy",
+  "validationErrors": []
+}

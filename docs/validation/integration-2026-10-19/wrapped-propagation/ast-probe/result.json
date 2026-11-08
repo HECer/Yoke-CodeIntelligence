@@ -1,0 +1,37 @@
+{
+  "sourceUnchanged": true,
+  "inputs": 737,
+  "commands": [
+    {
+      "name": "native",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--no-fail-fast",
+        "--lib",
+        "--",
+        "--test-threads=1",
+        "semantic_refactor::propagated_delete::result_ast::tests"
+      ],
+      "exitCode": 101,
+      "seconds": 57.2090501000057,
+      "totals": {
+        "passed": 0,
+        "failed": 1,
+        "ignored": 0
+      },
+      "groups": 1,
+      "failures": [
+        "semantic_refactor::propagated_delete::result_ast::tests::removed_leading_declaration_keeps_surviving_node_roles_and_trivia"
+      ]
+    }
+  ],
+  "allChecksPassed": false,
+  "wholeNativeRerun": false
+}

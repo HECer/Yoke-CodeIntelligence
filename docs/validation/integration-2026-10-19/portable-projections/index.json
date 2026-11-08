@@ -1,0 +1,651 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-19T17:52:49.891616+00:00",
+  "parentCommit": "5d369e04f30bf45e2271a3ddaa0f4bac3998811c",
+  "implementationCommit": "c8d0f52e73267f616233682f80544f64328d464c",
+  "integratedRuntimeCommit": "ad8505a10281951881d96083e19fc1881cbed6ce",
+  "accepted": false,
+  "wholeNativeRerun": false,
+  "fullParityCertified": false,
+  "allScopedChecksPassed": false,
+  "allNewCapabilityChecksPassed": true,
+  "finalStage": "r4",
+  "finalScopedTotals": {
+    "passed": 480,
+    "failed": 1,
+    "ignored": 7
+  },
+  "finalScopedResultGroups": [
+    {
+      "passed": 9,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "passed": 429,
+      "failed": 0,
+      "ignored": 7
+    },
+    {
+      "passed": 9,
+      "failed": 1,
+      "ignored": 0
+    },
+    {
+      "passed": 13,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "passed": 7,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "passed": 13,
+      "failed": 0,
+      "ignored": 0
+    }
+  ],
+  "newDefaultTestsPassed": 9,
+  "countsAreNonadditive": true,
+  "frozenNativeInputs": 667,
+  "frozenIntegratedInputs": 677,
+  "integrationSummary": {
+    "sourceUnchanged": true,
+    "frozenInputs": 677,
+    "nativeInputsMatched": 667,
+    "commands": [
+      {
+        "name": "format",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "fmt",
+          "--all",
+          "--check"
+        ],
+        "exitCode": 0,
+        "seconds": 5.21
+      },
+      {
+        "name": "python-contracts",
+        "command": [
+          "python",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "scripts/tests",
+          "-v"
+        ],
+        "exitCode": 0,
+        "seconds": 1.11
+      },
+      {
+        "name": "typecheck",
+        "command": [
+          "npm.cmd",
+          "run",
+          "typecheck"
+        ],
+        "exitCode": 0,
+        "seconds": 5.15
+      },
+      {
+        "name": "tests",
+        "command": [
+          "npm.cmd",
+          "test"
+        ],
+        "exitCode": 0,
+        "seconds": 64.34
+      }
+    ],
+    "allChecksPassed": true,
+    "runtimeCommit": "ad8505a10281951881d96083e19fc1881cbed6ce",
+    "wholeNativeRerun": false
+  },
+  "libraryReplaySourceLineage": {
+    "stage": "r3",
+    "onlyFinalSourceDifference": [
+      "native/tests/meaning_projection_portable.rs"
+    ],
+    "runtimeAndLibraryInputsUnchanged": true
+  },
+  "findings": [
+    "Initial API RED refuses actual source/receipt-produced native exports after the source Store and provider are removed: 0 passed/1 failed, no source changes. Only the first export was reached. Initial raw source hashes and log are retained; the original stub source itself was not separately frozen as an artifact.",
+    "R2 implementation passes actual import/CLI/malformed/authority/budget/wire cases: 6 passed/1 failed. The remaining traversal fixture mistakenly chose an equal-label concept from a different packet. The implementation correctly returned no relations for that distinct original reference. Final fixture selects the packet-qualified relation endpoint, explicitly selects Alpha/Beta for host grouping and adds asymmetric/two-parent cases. R2 sources/logs are preserved; this failure is not called a production defect.",
+    "Final data-only consumers accept native meaning_group_projection_v1 and meaning_join_projection_v1 exports. Review/node/policy/projection identity recipes, graph/packet membership, original directed endpoint mappings, every ordered hyperedge slot, local evidence references and finite independent capacities are checked without a Store or provider.",
+    "Imported claims are nested under exportMetadata. All results retain bindingValidation not_replayed, sourceAuthority false, providerAttestation unverified, semanticIdentityEstablished false, modelCalls zero and complete false. Imports cannot construct meaning_join::JoinedGraph or perform captured-source/receipt replay.",
+    "Actual fixtures build published native graphs with explicitly owned local Node protocol workers; these are not live model calls or model-quality validation. Exports are consumed only after source Store/provider deletion. Same-label records in distinct packets and two parent graphs remain separate; parallel observations, selfloops, original evidence and repeated ordered role slots remain unchanged.",
+    "A coherent omitted-record subset is deliberately admitted as untrusted data, and remains incomplete. Structural consistency and transport hashes cannot detect coherent forgeries, establish complete parent closure or source/model/receipt/accounting truth.",
+    "Final nine contracts include CLI exact newline-inclusive output/host-flag admission and no initialization, malformed/duplicate-key/Unicode inputs, byte/count/output/deadline boundaries, authority laundering, corrupted membership/endpoints/roles/evidence/policy, asymmetric directed trace and two actual parent graphs. Fixed maximum constants are not claimed as fully populated maximum-size execution tests.",
+    "R4 strengthens only the portable test to close the engine before removing its TempDir and asserts actual absence of the entire original source/Store/provider directory. All runtime/library inputs remain byte-identical to R3, whose429 library tests/7 ignored are retained without claiming a second library run. All final nine portable tests pass.",
+    "Expanded archive CLI regressions retain one unchanged Windows fixture setup failure: existing_output_file_directory_and_hardlink_are_never_overwritten cannot create its real symlink (OS1314). R3 Cargo stopped after this target, so the other queued targets were not counted. R4 uses no-fail-fast, executes all four selected regression targets and retains the same one failure. No security fixture was weakened or skipped.",
+    "All-target Clippy, format, 17 Python tests, mandatory typecheck and TypeScript 260 passed/3 skipped pass with frozen inputs. The selected native tally retains the known archive OS1314 failure. No whole-native acceptance, full R1-R9 parity, main merge or release is claimed. Semantic alias identity/dedup, mixed document source spaces, cross-history/workspace joins, broader schemas and outcome learning remain open."
+  ],
+  "inventoryPreserved": {
+    "historicalInventory": {
+      "path": "docs/parity/public-contracts-2026-10-14.json",
+      "sha256": "993eb15143bf61a1cf64c80ff53d491ee13f7faeecf2ff4b53a6975de9972c3e",
+      "treatment": "Preserve unchanged as the pinned historical public-contract inventory. Its baseline05Boundary, state=open and empty windowsAcceptance values are not current implementation verdicts."
+    },
+    "ledgerSummary": {
+      "allBackendRuntimeReviewsRetained": true,
+      "assessmentCounts": {
+        "catalog_declared_runtime_review_required": 77,
+        "explicitly_unavailable": 2,
+        "mapped_partial_contract": 179,
+        "measurement_not_transferable": 1,
+        "outside_pinned_public_production_scope": 1,
+        "product_choice_review_required": 1,
+        "reference_metadata_only": 12,
+        "unreconciled_review_required": 73,
+        "unverified_hosted_contract_requires_review": 1,
+        "upstream_boundary_retained": 6
+      },
+      "categoryCounts": {
+        "graphifyCapabilities": 32,
+        "graphifyMcpSurface": 19,
+        "metadataAndScope": 11,
+        "serenaConfigurationEntries": 6,
+        "serenaConfigurationMembers": 56,
+        "serenaLanguageServerIds": 77,
+        "serenaReplFacadeMethods": 50,
+        "serenaTools": 53,
+        "serenaUpstreamBoundaries": 6,
+        "trailCapabilities": 37,
+        "trailPublicTools": 6
+      },
+      "explicitUnavailableRefs": [
+        "serena:tool:open_dashboard",
+        "serena:repl:cfg.open_dashboard"
+      ],
+      "rootIntegrityCheck": "Read-only admission rehashed 1650 prior artifact pins and 1677 new pins, replayed the complete new tree and all five raw phases against the unchanged freeze; this is local consistency evidence, not a signature.",
+      "totalEnumeratedEntries": 353,
+      "unreconciledReviewRequiredRefs": [
+        "trail:Session cold-start mining",
+        "trail:Prompt/edit/session hooks and statusline",
+        "trail:Self-hosted GitHub App",
+        "trail:History digest / brain onboarding",
+        "trail:Cloud workspace/client/team UI",
+        "graphify:postgres_catalog",
+        "graphify:google_shortcuts",
+        "graphify:url_ingest",
+        "graphify:asr",
+        "graphify:affected",
+        "graphify:db_push",
+        "graphify:git_lifecycle",
+        "graphify:diagnostics_benchmark",
+        "serena:configuration:layers",
+        "serena:configuration:projectKeys",
+        "serena:configuration:modeNames",
+        "serena:configuration:contextNames",
+        "serena:configuration:layers:0",
+        "serena:configuration:layers:1",
+        "serena:configuration:layers:2",
+        "serena:configuration:layers:3",
+        "serena:configuration:layers:4",
+        "serena:configuration:layers:5",
+        "serena:configuration:projectKeys:0",
+        "serena:configuration:projectKeys:1",
+        "serena:configuration:projectKeys:2",
+        "serena:configuration:projectKeys:3",
+        "serena:configuration:projectKeys:4",
+        "serena:configuration:projectKeys:5",
+        "serena:configuration:projectKeys:6",
+        "serena:configuration:projectKeys:7",
+        "serena:configuration:projectKeys:8",
+        "serena:configuration:projectKeys:9",
+        "serena:configuration:projectKeys:10",
+        "serena:configuration:projectKeys:11",
+        "serena:configuration:projectKeys:12",
+        "serena:configuration:projectKeys:13",
+        "serena:configuration:projectKeys:14",
+        "serena:configuration:projectKeys:15",
+        "serena:configuration:projectKeys:16",
+        "serena:configuration:projectKeys:17",
+        "serena:configuration:projectKeys:18",
+        "serena:configuration:projectKeys:19",
+        "serena:configuration:projectKeys:20",
+        "serena:configuration:projectKeys:21",
+        "serena:configuration:projectKeys:22",
+        "serena:configuration:projectKeys:23",
+        "serena:configuration:projectKeys:24",
+        "serena:configuration:modeNames:0",
+        "serena:configuration:modeNames:1",
+        "serena:configuration:modeNames:2",
+        "serena:configuration:modeNames:3",
+        "serena:configuration:modeNames:4",
+        "serena:configuration:modeNames:5",
+        "serena:configuration:modeNames:6",
+        "serena:configuration:modeNames:7",
+        "serena:configuration:modeNames:8",
+        "serena:configuration:contextNames:0",
+        "serena:configuration:contextNames:1",
+        "serena:configuration:contextNames:2",
+        "serena:configuration:contextNames:3",
+        "serena:configuration:contextNames:4",
+        "serena:configuration:contextNames:5",
+        "serena:configuration:contextNames:6",
+        "serena:configuration:contextNames:7",
+        "serena:configuration:contextNames:8",
+        "serena:configuration:contextNames:9",
+        "serena:configuration:contextNames:10",
+        "serena:configuration:contextNames:11",
+        "serena:configuration:contextNames:12",
+        "serena:configuration:contextNames:13",
+        "serena:configuration:contextNames:14",
+        "serena:configuration:contextNames:15"
+      ],
+      "validation": "All 353 original identities and false full-contract certifications plus 77 backend runtime unknowns are retained; bounded Windows development acceptance only."
+    }
+  },
+  "artifacts": [
+    {
+      "path": "ci-meaning-projection.md",
+      "bytes": 5396,
+      "sha256": "697e7617e3eb875ba96f2a01f306dc89424d2bac68fced215660e3a1d2b2ada2"
+    },
+    {
+      "path": "ci-r2-additional-tests.rs",
+      "bytes": 3842,
+      "sha256": "e33c3b9f799d33baa1612b242accee3a13623390618c66b8e24b32318435ffd5"
+    },
+    {
+      "path": "ci-r2-final-run.py",
+      "bytes": 2865,
+      "sha256": "cf35dab0c8b1836b14eb8dcd5e235e2a8ad9f8bffbcccaebb41da8f035cdad47"
+    },
+    {
+      "path": "ci-r2-finish-edits.py",
+      "bytes": 1985,
+      "sha256": "e8226186bd08692b4bf9bb590869e78721fdbafe06edc6caa139c3c118a5456c"
+    },
+    {
+      "path": "ci-r2-integrated.py",
+      "bytes": 3028,
+      "sha256": "3df718340b989aad0b9a848e1719391c3dddabf7d0f25fe076b06d54fd9b2af4"
+    },
+    {
+      "path": "ci-r2-pr.py",
+      "bytes": 5118,
+      "sha256": "41c667d9d767c6d0100aa7c136a1fc5683c7c8065251c347514dd5f403f47556"
+    },
+    {
+      "path": "ci-r2-preserve.py",
+      "bytes": 7747,
+      "sha256": "91c9eed105b85069fcff56b70be089dcce68c49d912501de74d203b579eb2880"
+    },
+    {
+      "path": "ci-r2-r4-run.py",
+      "bytes": 2929,
+      "sha256": "a5e0bf5b7ca4d53143d3874af51317098576fb294d8fba81688d25d9dd910473"
+    },
+    {
+      "path": "ci-r2-run.py",
+      "bytes": 2454,
+      "sha256": "f5667d73bcb77803894a56750ab98fad829113a13130a65c3f7e623855e0aba5"
+    },
+    {
+      "path": "ci-r2-stage.py",
+      "bytes": 1384,
+      "sha256": "b546843ca2ec37ee9ecf3ee367cb71a20f347646c0bfe730044b625e22aa6609"
+    },
+    {
+      "path": "ci-r2-strengthen.py",
+      "bytes": 2164,
+      "sha256": "98d3155a4ea8ca733a3bc473ddb384ec00da398131642e8bd07328a282b85e01"
+    },
+    {
+      "path": "ci-r2-update-docs.py",
+      "bytes": 8865,
+      "sha256": "ab249e4a57c00ee2505814b83c7794929bb3001801cfa7dc74d3ace3b7175762"
+    },
+    {
+      "path": "frozen-tracker.json",
+      "bytes": 499106,
+      "sha256": "4fd6f8dd9886f02c0a63eff4b831af9c3d946d552777e8dd76662327457e4de0"
+    },
+    {
+      "path": "integrated/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "integrated/python-contracts.log",
+      "bytes": 2845,
+      "sha256": "bd381bf8eadc705d94eec06156b2e4521670f2c3234679cf8e34a6881f0e574d"
+    },
+    {
+      "path": "integrated/scoped-source-materialization.json",
+      "bytes": 188602,
+      "sha256": "ffee174134014cbc8a3c624a9f79350c12c8a70022a7010937452b7d209a4e96"
+    },
+    {
+      "path": "integrated/source-after.json",
+      "bytes": 72470,
+      "sha256": "7d53323351d545d3fe83ed3a510ab5195f0530d5083cd249f0bf3266bd049e79"
+    },
+    {
+      "path": "integrated/source-before.json",
+      "bytes": 72470,
+      "sha256": "7d53323351d545d3fe83ed3a510ab5195f0530d5083cd249f0bf3266bd049e79"
+    },
+    {
+      "path": "integrated/summary.json",
+      "bytes": 1034,
+      "sha256": "64607c21ddaec066e310735cb472c30dc4a7fdc37bf24f5c9ce4e92e8f131dd4"
+    },
+    {
+      "path": "integrated/tests.log",
+      "bytes": 25026,
+      "sha256": "a09355d476f295a733fbbc2fba2bb6b145f2c44bfa5cf88e51536aee03048e9e"
+    },
+    {
+      "path": "integrated/typecheck.log",
+      "bytes": 101,
+      "sha256": "30ef9ce16cf042ab6f160e0a76c1fbfe22f02a3c3a3659ee62863ffc1efdbfdf"
+    },
+    {
+      "path": "r2/clippy.log",
+      "bytes": 168,
+      "sha256": "7a0bfdbca6ac732cc99b90c4c1bcb4e6473ee373055ce191ff0c82c1b406d987"
+    },
+    {
+      "path": "r2/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "r2/freeze.json",
+      "bytes": 41,
+      "sha256": "3b81fc5acf695a8f5e00c56847809942b167cefe7f1fc70b12cf9a7700fd110e"
+    },
+    {
+      "path": "r2/groups.log",
+      "bytes": 1056,
+      "sha256": "4a2e8bf88111bbeaf09e9ef7b33189da05d420d2ea2aeae0997dd13482fff7a2"
+    },
+    {
+      "path": "r2/join.log",
+      "bytes": 1612,
+      "sha256": "769fc9870f7232504af5fbaeab87142f09c301b11ed57df8b72521877358a432"
+    },
+    {
+      "path": "r2/library.log",
+      "bytes": 49984,
+      "sha256": "b5c1517f27d6625585950b407259df50456089f31ddcb8957946c007d9d6db93"
+    },
+    {
+      "path": "r2/portable.log",
+      "bytes": 5397,
+      "sha256": "f1096b2f6588cbdceaea7f8f6b85370369309be32699d3fbdf6bd89e748f0b3f"
+    },
+    {
+      "path": "r2/results.json",
+      "bytes": 2301,
+      "sha256": "cfe1b2f1b5e9c2aeedb220bda931ee48bafc67c10e27c67be1ee0653407cbc39"
+    },
+    {
+      "path": "r2/runner.py",
+      "bytes": 2454,
+      "sha256": "f5667d73bcb77803894a56750ab98fad829113a13130a65c3f7e623855e0aba5"
+    },
+    {
+      "path": "r2/source/native/src/lib.rs",
+      "bytes": 34053,
+      "sha256": "39cd577b806135463784577d6e1d1cc8caa623a5835784de9caa876f9e5e8940"
+    },
+    {
+      "path": "r2/source/native/src/main.rs",
+      "bytes": 173677,
+      "sha256": "0c9eb5950dca39adaf3a7f3afda91987415916bc4e9a73ee8e187149ab35f87f"
+    },
+    {
+      "path": "r2/source/native/src/meaning_projection.rs",
+      "bytes": 26518,
+      "sha256": "94b064e5314550866d66f96d3e0f0aa236da182e1bb291b597b8d7d74d4139b8"
+    },
+    {
+      "path": "r2/source/native/src/meaning_projection_cli.rs",
+      "bytes": 2468,
+      "sha256": "f33924cacb8fd521bf8b35490d4b670f36d5251e1507d38d96c06b930bb0b1bd"
+    },
+    {
+      "path": "r2/source/native/tests/meaning_projection_portable.rs",
+      "bytes": 15956,
+      "sha256": "7d6d3829a335f976610c21e77c033a242980cf7903e818e373421a046fd4504b"
+    },
+    {
+      "path": "r2/source/native/tests/support/meaning_semantics_fixture.rs",
+      "bytes": 6644,
+      "sha256": "4c6eb5d728f33d1e353a39007ebdae6afe0109a441bb7851786228333fde88a8"
+    },
+    {
+      "path": "r2/source-after.json",
+      "bytes": 71987,
+      "sha256": "d55f9e10bb457a6ed6a000ef20e4a0b9bbe724f7c8d052971a1fd4f5ace1c8b6"
+    },
+    {
+      "path": "r2/source-before.json",
+      "bytes": 71987,
+      "sha256": "d55f9e10bb457a6ed6a000ef20e4a0b9bbe724f7c8d052971a1fd4f5ace1c8b6"
+    },
+    {
+      "path": "r3/clippy.log",
+      "bytes": 168,
+      "sha256": "c0475bf801460aa1d992f32264d2f7657cf2ca232ef48b46cb3f18009fae7fe9"
+    },
+    {
+      "path": "r3/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "r3/freeze.json",
+      "bytes": 70,
+      "sha256": "3f6fc5665080393226fbf37245040405db39b6f74a1a078eb5dcb96469faee0a"
+    },
+    {
+      "path": "r3/library.log",
+      "bytes": 49984,
+      "sha256": "a02ca858a7249cd425dcd77aab6f37ea1b7c62c5d3ff97c23584e95754aac530"
+    },
+    {
+      "path": "r3/portable.log",
+      "bytes": 1165,
+      "sha256": "23426d81c2941f9300608cbe4a27bb733e417cdf006a2a8928dafdcd69aa2de7"
+    },
+    {
+      "path": "r3/regressions.log",
+      "bytes": 1905,
+      "sha256": "9c5531a96aa0343cbca46f41c14cae8c11dec08d5b6f73efd83016203ac41752"
+    },
+    {
+      "path": "r3/results.json",
+      "bytes": 2020,
+      "sha256": "80978d60f5f3019bb4e8c69bb76b06f8f63f47dcd15668a3b8716d6f2075787f"
+    },
+    {
+      "path": "r3/runner.py",
+      "bytes": 2865,
+      "sha256": "cf35dab0c8b1836b14eb8dcd5e235e2a8ad9f8bffbcccaebb41da8f035cdad47"
+    },
+    {
+      "path": "r3/source/native/docs/meaning-projection.md",
+      "bytes": 5396,
+      "sha256": "697e7617e3eb875ba96f2a01f306dc89424d2bac68fced215660e3a1d2b2ada2"
+    },
+    {
+      "path": "r3/source/native/src/lib.rs",
+      "bytes": 34053,
+      "sha256": "39cd577b806135463784577d6e1d1cc8caa623a5835784de9caa876f9e5e8940"
+    },
+    {
+      "path": "r3/source/native/src/main.rs",
+      "bytes": 173677,
+      "sha256": "0c9eb5950dca39adaf3a7f3afda91987415916bc4e9a73ee8e187149ab35f87f"
+    },
+    {
+      "path": "r3/source/native/src/meaning_projection.rs",
+      "bytes": 27467,
+      "sha256": "4ec800a700109db1e3486c605055ec6d9a3ee7b038d87ad77f9dc40ebed3070e"
+    },
+    {
+      "path": "r3/source/native/src/meaning_projection_cli.rs",
+      "bytes": 2468,
+      "sha256": "f33924cacb8fd521bf8b35490d4b670f36d5251e1507d38d96c06b930bb0b1bd"
+    },
+    {
+      "path": "r3/source/native/tests/meaning_projection_portable.rs",
+      "bytes": 21768,
+      "sha256": "f5f99df0d0a4ba64c3f75497efccfcb40cf65a6821acc3198deb2b05d57ff480"
+    },
+    {
+      "path": "r3/source/native/tests/support/meaning_semantics_fixture.rs",
+      "bytes": 6644,
+      "sha256": "4c6eb5d728f33d1e353a39007ebdae6afe0109a441bb7851786228333fde88a8"
+    },
+    {
+      "path": "r3/source-after.json",
+      "bytes": 72095,
+      "sha256": "cbe7d94c3d22e7a6729af6faba9b79e224bfda39fd36a5132383ba7976444838"
+    },
+    {
+      "path": "r3/source-before.json",
+      "bytes": 72095,
+      "sha256": "cbe7d94c3d22e7a6729af6faba9b79e224bfda39fd36a5132383ba7976444838"
+    },
+    {
+      "path": "r3-to-r4-test-only.json",
+      "bytes": 309,
+      "sha256": "17aa3e62e161f4986f24b0e5272edbb37116bc10ee21ecbadc1722c0ae89579c"
+    },
+    {
+      "path": "r4/clippy.log",
+      "bytes": 167,
+      "sha256": "06d9d96a198d361685a792f54a9ef3f9ea916c37046827219615316bedf3f43a"
+    },
+    {
+      "path": "r4/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "r4/freeze.json",
+      "bytes": 111,
+      "sha256": "9ff37ffa263a7e4de897f053c713c04545bd36652adedfcea792002d74d65041"
+    },
+    {
+      "path": "r4/portable.log",
+      "bytes": 1165,
+      "sha256": "608513c76765caf4f4a5eb5463f2aeb895b0627d2c768b17a303596e58decbda"
+    },
+    {
+      "path": "r4/regressions.log",
+      "bytes": 5597,
+      "sha256": "f6c7291cd50347875dd77f11017fd3407d674ad612f8ec569d1b24e8941fd60f"
+    },
+    {
+      "path": "r4/results.json",
+      "bytes": 1648,
+      "sha256": "96e49077fc9284ecc1fed4171998c78ac3bc3a984c593d7e6167b4e4b12af1f4"
+    },
+    {
+      "path": "r4/runner.py",
+      "bytes": 2929,
+      "sha256": "a5e0bf5b7ca4d53143d3874af51317098576fb294d8fba81688d25d9dd910473"
+    },
+    {
+      "path": "r4/source/native/docs/meaning-projection.md",
+      "bytes": 5396,
+      "sha256": "697e7617e3eb875ba96f2a01f306dc89424d2bac68fced215660e3a1d2b2ada2"
+    },
+    {
+      "path": "r4/source/native/src/lib.rs",
+      "bytes": 34053,
+      "sha256": "39cd577b806135463784577d6e1d1cc8caa623a5835784de9caa876f9e5e8940"
+    },
+    {
+      "path": "r4/source/native/src/main.rs",
+      "bytes": 173677,
+      "sha256": "0c9eb5950dca39adaf3a7f3afda91987415916bc4e9a73ee8e187149ab35f87f"
+    },
+    {
+      "path": "r4/source/native/src/meaning_projection.rs",
+      "bytes": 27467,
+      "sha256": "4ec800a700109db1e3486c605055ec6d9a3ee7b038d87ad77f9dc40ebed3070e"
+    },
+    {
+      "path": "r4/source/native/src/meaning_projection_cli.rs",
+      "bytes": 2468,
+      "sha256": "f33924cacb8fd521bf8b35490d4b670f36d5251e1507d38d96c06b930bb0b1bd"
+    },
+    {
+      "path": "r4/source/native/tests/meaning_projection_portable.rs",
+      "bytes": 22174,
+      "sha256": "6b78c07a6aa76554a2b5c475ace25f621d1281d5de732d6ec9b7440cf3020d36"
+    },
+    {
+      "path": "r4/source/native/tests/support/meaning_semantics_fixture.rs",
+      "bytes": 6644,
+      "sha256": "4c6eb5d728f33d1e353a39007ebdae6afe0109a441bb7851786228333fde88a8"
+    },
+    {
+      "path": "r4/source-after.json",
+      "bytes": 72095,
+      "sha256": "9fc4e3eb7be8e25d76b2d4cd2078b56b88249cac8c51f7ead883763083dfb4f9"
+    },
+    {
+      "path": "r4/source-before.json",
+      "bytes": 72095,
+      "sha256": "9fc4e3eb7be8e25d76b2d4cd2078b56b88249cac8c51f7ead883763083dfb4f9"
+    },
+    {
+      "path": "red/freeze.json",
+      "bytes": 41,
+      "sha256": "b61dc2e6e08d6a5784cf107647f55df4ab47973c99b7ce26260731eefff307d8"
+    },
+    {
+      "path": "red/portable.log",
+      "bytes": 1113,
+      "sha256": "b5ffa656b32fa9bf04c71188f3a339fbad3d5e4684161ba55b168413b90b9854"
+    },
+    {
+      "path": "red/results.json",
+      "bytes": 441,
+      "sha256": "18717c499cd998cfc18644439456fcc8542c93c3e24a7150ad16bb5e3fe97795"
+    },
+    {
+      "path": "red/source-after.json",
+      "bytes": 71876,
+      "sha256": "7134730b6a76883e1cb6d69ee21df23d0ef9e1f5d82341610cd2270607818965"
+    },
+    {
+      "path": "red/source-before.json",
+      "bytes": 71876,
+      "sha256": "7134730b6a76883e1cb6d69ee21df23d0ef9e1f5d82341610cd2270607818965"
+    },
+    {
+      "path": "source-materialization.json",
+      "bytes": 263867,
+      "sha256": "8005a7aac7f8c8c72c89258088fad4ff322d36036d3ac073da83d3474cac9ee4"
+    }
+  ],
+  "sourceMaterialization": {
+    "path": "source-materialization.json",
+    "counts": {
+      "raw_equal": 96,
+      "crlf_only_checkout_materialization": 580,
+      "thematic_status_metadata_after_freeze": 1
+    },
+    "inputCount": 677
+  },
+  "metadataAfterFreeze": {
+    "path": "docs/parity/native-reconciliation-2026-10-15.json",
+    "beforeSha256": "4fd6f8dd9886f02c0a63eff4b831af9c3d946d552777e8dd76662327457e4de0",
+    "afterSha256": "ed196781ddc984f419a6313a9e2c33a71fc64100a71c4fbfe54f0162aa079a23",
+    "scope": "Thematic R2 status/evidence only; inventoryLedger, historicalInventory and ledgerSummary unchanged."
+  }
+}

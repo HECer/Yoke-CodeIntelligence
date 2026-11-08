@@ -1,0 +1,123 @@
+{
+  "schemaVersion": 1,
+  "kind": "native_dashboard_management_scoped_acceptance_v1",
+  "product": "Code Intelligence",
+  "version": "0.5.0",
+  "productCommit": "552cd8d8a1075d4f360eb1517e1f72a5683db40e",
+  "productRemoteBlobsVerified": 12,
+  "sourceInputs": 1133,
+  "sourceFreezeSha256": "bc3ba8f8bbbc89a81d233b548733adcddbc916aea8be713e1a6ad23a1bb93bf8",
+  "sourceInputsUnchangedDuringQualification": true,
+  "cliDebugSha256": "90a518f30131996d7210187b34d7ba4a01bfae6be3e372b3e52178908dea3238",
+  "nativeGroups": [
+    {
+      "group": "whole-library",
+      "passed": 600,
+      "failed": 0,
+      "ignored": 7,
+      "filteredOut": 0
+    },
+    {
+      "group": "whole-main",
+      "passed": 6,
+      "failed": 0,
+      "ignored": 0,
+      "filteredOut": 0
+    },
+    {
+      "group": "whole-session_dashboard_management",
+      "passed": 8,
+      "failed": 0,
+      "ignored": 0,
+      "filteredOut": 0
+    },
+    {
+      "group": "whole-session_dashboard",
+      "passed": 13,
+      "failed": 0,
+      "ignored": 0,
+      "filteredOut": 0
+    },
+    {
+      "group": "whole-notes",
+      "passed": 15,
+      "failed": 0,
+      "ignored": 0,
+      "filteredOut": 0
+    },
+    {
+      "group": "whole-mcp_http",
+      "passed": 18,
+      "failed": 0,
+      "ignored": 0,
+      "filteredOut": 0
+    },
+    {
+      "group": "whole-protocol_connection",
+      "passed": 5,
+      "failed": 0,
+      "ignored": 0,
+      "filteredOut": 0
+    },
+    {
+      "group": "whole-session_steering",
+      "passed": 12,
+      "failed": 0,
+      "ignored": 0,
+      "filteredOut": 0
+    }
+  ],
+  "nativePassed": 677,
+  "nativeFailed": 0,
+  "existingIgnored": 7,
+  "filteredOut": 0,
+  "uniqueWholeGroups": 8,
+  "clippyAllTargetsWarningsDenied": true,
+  "formatCargoRoots": 368,
+  "cargoFmtAllWindowsCommandLineError206Retained": true,
+  "formatHelper": "scripts/native_fmt.py --check",
+  "typescriptTypecheck": true,
+  "typescriptPassed": 260,
+  "typescriptExistingSkips": 3,
+  "actualStdioVariants": [
+    "serena",
+    "persistent-python",
+    "native-session"
+  ],
+  "actualHttpIndependentSessions": 2,
+  "actualNativeBrowserCrudConflictAndControls": true,
+  "nativeBrowserSourceBytesExactForBothProjects": true,
+  "visualSourceHtmlSha256": "9d1191cc9e192a0b6f292e77aa7dd068e162b7a52f63d7fceb6655cb9932b1f4",
+  "visualFixtureDistinctFromNativeBrowserWorkflow": true,
+  "visualWidths": [
+    1366,
+    390
+  ],
+  "allOwnedJobsEmpty": true,
+  "allFreshSyntheticCredentialsRemoved": true,
+  "existingCredentialsAccessed": false,
+  "systemOrPrivilegeSettingsChanged": false,
+  "analyzedSourceExecuted": false,
+  "defaultModelCalls": 0,
+  "scope": "Current native session project/mode controls and project named-note CRUD, under explicit independent host authority. Full dashboard management remains active.",
+  "remaining": [
+    "registered language/backend selection",
+    "host-selected global/project configuration document editing with durable conditional recovery",
+    "explicit private raw logs",
+    "owned MCP shutdown",
+    "tray and automatic browser integration",
+    "broader accessibility and non-Windows/runtime/upstream certification"
+  ],
+  "fullNativeRun": false,
+  "wholeWindowsBaselineUpgrade": false,
+  "originalInventoryReclassified": false,
+  "fullContractCertification": false,
+  "mainMerged": false,
+  "released": false,
+  "rawArchive": {
+    "path": "raw-logs.zip",
+    "sha256": "e991329254be436e2c3e17ddf651fbf98ec9a75cce03414b0fd156aff2791d5b",
+    "bytes": 2329022,
+    "members": 558
+  }
+}

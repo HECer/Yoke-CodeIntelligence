@@ -1,0 +1,117 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence-r1-file-usage\native)
+    Finished `test` profile [unoptimized] target(s) in 2m 39s
+     Running tests\facade_directory_move.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\facade_directory_move-ea1514a7032e37fa.exe)
+
+running 10 tests
+test a_successful_verifier_that_changes_empty_directory_shape_cannot_authorize_apply ... ok
+test actual_owned_verification_applies_and_recovers_the_full_directory_shape ... ok
+test an_actual_unprivileged_junction_refuses_before_provider_start ... ok
+test captured_file_rename_cannot_gain_directory_authority_from_a_folder_capable_provider ... ok
+test directory_destination_parent_requires_its_exact_existing_host_spelling ... ok
+test directory_edit_permission_and_excluded_scope_refusals_precede_provider_start ... ok
+test folder_capability_and_original_coordinate_text_only_effects_are_required_before_publication ... ok
+test native_directory_move_keeps_the_explicit_final_name_contract ... ok
+test occupied_missing_protected_and_uncaptured_tree_entries_refuse_before_provider_start ... ok
+test omitted_null_empty_directory_selectors_bind_one_parent_basename_plan_for_both_epochs ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 7.60s
+
+     Running tests\facade_file_delete.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\facade_file_delete-45e18baa4c56fda6.exe)
+
+running 10 tests
+test default_safe_mode_and_propagation_are_distinct_unsupported_file_intents ... ok
+test empty_malformed_directory_missing_and_unsafe_file_selectors_never_prepare_deletions ... ok
+test forced_file_delete_materializes_the_plan_without_removing_the_original_or_its_callers ... ok
+test forced_file_delete_omitted_and_null_selectors_create_one_exact_delete_for_v8_v9 ... ok
+test forced_file_delete_permission_and_external_context_denials_have_zero_change_effects ... ok
+test forced_file_delete_stale_workspace_preflight_preserves_changed_sources_for_v8_v9 ... ok
+test forced_file_delete_workspace_apply_keeps_host_approval_and_verification_gates ... ok
+test public_forced_file_delete_accepts_generated_null_and_false_defaults ... ok
+test readonly_ignored_excluded_and_uncaptured_binary_sources_cannot_be_force_deleted ... ok
+test source_symlink_cannot_redirect_a_forced_file_deletion ... FAILED
+
+failures:
+
+---- source_symlink_cannot_redirect_a_forced_file_deletion stdout ----
+
+thread 'source_symlink_cannot_redirect_a_forced_file_deletion' (22660) panicked at native\tests\facade_file_delete.rs:487:81:
+called `Result::unwrap()` on an `Err` value: Os { code: 1314, kind: Uncategorized, message: "Dem Client fehlt ein erforderliches Recht." }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    source_symlink_cannot_redirect_a_forced_file_deletion
+
+test result: FAILED. 9 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.63s
+
+error: test failed, to rerun pass `--test facade_file_delete`
+     Running tests\facade_file_usage.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\facade_file_usage-b0a2df00d50c0f53.exe)
+
+running 9 tests
+test actual_file_inventory_quota_admits2000_and_refuses2001_before_provider_start ... ok
+test actual_source_byte_quota_counts_each_captured_file_before_provider_start ... ok
+test eight_declarations_are_checked_and_the_ninth_refuses_before_provider_start ... ok
+test javascript_module_syntax_uses_the_registered_javascript_provider ... ok
+test missing_empty_foreign_and_truncated_provider_responses_cannot_be_absence_proofs ... ok
+test omitted_and_null_file_selectors_require_self_bound_compiler_queries_for_both_epochs ... ok
+test path_name_and_graph_usage_candidates_refuse_before_provider_start ... ok
+test real_owned_copied_verification_and_existing_approval_stale_and_recovery_gates_remain ... ok
+test unsupported_source_shapes_paths_permissions_and_capacity_do_not_start_a_provider ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 26.01s
+
+     Running tests\plan_integrity.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\plan_integrity-ca8ba141e3d85d01.exe)
+
+running 13 tests
+test ambiguous_unknown_and_oversized_saved_json_cannot_publish_approval ... ok
+test approved_plan_cannot_change_applied_bytes_after_its_record_is_modified ... ok
+test captured_result_metadata_and_complete_file_delta_are_replayed ... ok
+test clearing_saved_test_warnings_cannot_remove_the_host_test_change_gate ... ok
+test expired_or_cancelled_host_requests_cannot_be_extended_by_plan_replay ... ok
+test identity_replay_and_expiry_admission_remain_separate ... ok
+test invalid_plan_is_rejected_before_an_explicit_owned_verifier_can_start ... ok
+test plan_replay_restores_sql_policy_and_preserves_the_callers_transaction ... ok
+test preparation_refuses_escaped_plan_overflow_before_publishing_a_derived_result ... ok
+test record_key_and_fixed_expiry_cannot_be_changed_without_changing_the_plan_identity ... ok
+test recovery_cannot_restore_different_bytes_from_a_modified_saved_plan ... ok
+test released_epoch_plan_ids_review_bytes_apply_and_recovery_remain_compatible ... ok
+test saved_review_text_must_describe_the_exact_captured_effect_before_approval ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.95s
+
+     Running tests\refactor_intents.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\refactor_intents-8aa34edf555f238e.exe)
+
+running 15 tests
+test amplified_candidate_contents_are_bounded_before_any_publication ... ok
+test deterministic_later_noop_nul_or_secret_candidate_is_rejected_before_any_publication ... ok
+test flagged_refactoring_obeys_session_plan_permissions_before_querying_a_provider ... ok
+test flagged_rename_rejects_unrelated_and_wholefile_provider_changes_before_publication ... ok
+test inline_keep_definition_preserves_exact_declaration_bytes_while_replacing_a_call ... ok
+test invalid_later_inline_candidate_cannot_leave_an_earlier_hidden_plan_or_derivative ... ok
+test keep_definition_rejects_broad_ambiguous_and_command_candidates_without_plans ... ok
+test keeping_an_inline_definition_requires_a_real_source_bound_call_replacement ... ok
+test native_occurrences_distinguish_string_comment_markers_and_unicode_word_boundaries ... ok
+test native_text_occurrences_refuse_potentially_interpolated_strings_before_publication ... ok
+test native_text_rename_never_rewrites_rust_raw_string_delimiters ... ok
+test native_unicode_rename_refuses_byte_string_occurrences_before_publication ... ok
+test projected_refactors_keep_v8_v9_source_proofs_and_never_edit_readonly_or_ignored_sources ... ok
+test requested_comment_and_text_rename_options_change_only_their_own_occurrence_classes ... ok
+test requested_false_occurrence_flags_also_constrain_provider_supplied_edits ... ok
+
+test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 10.41s
+
+     Running tests\semantic_refactor.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\semantic_refactor-340658c1437e324c.exe)
+
+running 7 tests
+test explicit_force_delete_keeps_verified_usage_context_and_still_refuses_foreign_or_stale_sources ... ok
+test file_move_negotiates_will_rename_and_combines_pre_rename_edits_into_one_guarded_plan ... ok
+test indexed_symbol_refactoring_selects_the_same_source_order_overload_as_the_facade ... ok
+test inline_refactoring_accepts_only_the_requested_kind_and_explicit_workspace_edits ... ok
+test inspection_equivalent_uses_actual_registered_diagnostics_and_declared_kind_registry ... ok
+test semantic_delete_refuses_actual_candidate_unresolved_foreign_and_stale_uses_without_publishing_plans ... ok
+test unused_semantic_delete_requires_registered_source_proof_and_only_prepares_a_guarded_plan ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.93s
+
+error: 1 target failed:
+    `--test facade_file_delete`

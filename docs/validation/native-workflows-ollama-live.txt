@@ -1,0 +1,34 @@
+Actual local native embedding validation, 2026-10-14 UTC
+
+Explicit host-authorized test setup command:
+rtk proxy python.exe C:/Users/HEC_e/AppData/Local/Temp/yoke-ollama-neural-gate-20261014.py
+
+The helper independently verified the official registry manifest and Apache-2.0 license hash, then started ONLY an owned hidden Ollama serve process with a sanitized environment, numeric loopback endpoint, CPU selection and dedicated models directory outside the repository. It pulled the explicit official model through that owned HTTP endpoint. No paid API was used, no user configuration/model junction was altered and no existing default server was stopped by the helper.
+
+Runtime: Ollama 0.40.3
+Model: all-minilm:22m (embedding capability only)
+Total model/config/license bytes: 45,960,996 (authorized cap: 1 GiB)
+Pinned manifest digest: 1b226e2802dbb772b5fc32a58f103ca1804ef7501331012de126ab22f67475ef
+Owned server PID: 65920
+Owned endpoint: http://127.0.0.1:59197
+Model directory: C:/Users/HEC_e/AppData/Local/Temp/yoke-ollama-neural-gate-20261014-143952/models
+
+The existing ignored native Rust gate was executed directly from the built test executable, avoiding a concurrent Cargo build:
+target/debug/deps/ollama-33449f70771d32c1.exe --ignored --exact actual_local_installed_embedding_model_gate --nocapture
+YOKE_OLLAMA_ENDPOINT=http://127.0.0.1:59197
+YOKE_OLLAMA_MODEL=all-minilm:22m
+YOKE_OLLAMA_DIGEST=1b226e2802dbb772b5fc32a58f103ca1804ef7501331012de126ab22f67475ef
+
+Observed output:
+running 1 test
+test actual_local_installed_embedding_model_gate ... ok
+test result: ok. 1 passed; 0 failed; 0 ignored; 8 filtered out; finished in 0.72s
+
+The native executable worker was also exercised with one schema-1 embed_query request on stdin (synthetic query: invoice):
+target/debug/yoke.exe --timeout 120000 model-worker --endpoint http://127.0.0.1:59197 --model all-minilm:22m --digest 1b226e2802dbb772b5fc32a58f103ca1804ef7501331012de126ab22f67475ef
+
+Observed result: exit 0; one 384-coordinate embedding; every coordinate finite; vector nonzero; exact model digest, requestId and inputHash; actualCostMicros null/unknown billing; no original source writes. No raw coordinates, tokens, private identity bytes or server configuration logs are included in this evidence.
+
+Cleanup: the owned Windows KILL_ON_JOB_CLOSE job was closed, the owned server exit and endpoint closure were confirmed, and the existing user Ollama identity length/mtime remained unchanged. The user model junction still targets Q:/Ollama/models. The helper took no action against the existing default listener; external running-state preservation is not asserted. Downloaded weights remain outside the repository and release artifacts.
+
+This is actual neural embedding integration evidence, not a protocol-fixture result. Neural quality, actual summaries/reranking/vision and external billing truth were not evaluated. The Rust adapter still never starts a daemon or downloads a model automatically; this setup was separately authorized for testing.

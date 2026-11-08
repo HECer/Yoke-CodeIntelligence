@@ -1,0 +1,25 @@
+{
+  "ignored_capture_cli": {
+    "executable": "target\\debug\\deps\\ignored_capture_cli-f58edd793e6654af.exe",
+    "ignored": [],
+    "registered": [
+      "host_cli_can_explicitly_capture_an_ignored_directory_as_read_only"
+    ]
+  },
+  "ignored_facades": {
+    "executable": "target\\debug\\deps\\ignored_facades-794e2546159fdaae.exe",
+    "ignored": [],
+    "registered": [
+      "captured_directory_membership_rejects_files_and_unknown_empty_scopes_without_live_reads",
+      "deeply_nested_directory_projection_has_an_explicit_budget_and_can_be_refined",
+      "ignored_text_is_filtered_before_blob_reads_and_selected_code_paths",
+      "list_filters_observed_ignored_files_before_directory_projection",
+      "malformed_native_directory_arguments_fail_before_capture_publication",
+      "native_ignored_filter_is_strict_and_precedes_file_and_symbol_pagination",
+      "pinned_fs_facade_defaults_and_explicit_ignored_options_preserve_host_scope",
+      "public_directory_recursion_returns_every_captured_level_and_nonrecursive_keeps_first_level",
+      "public_external_directory_queries_share_ignored_scope_without_activation_and_honor_removal",
+      "querying_a_pinned_snapshot_keeps_original_ignore_outcomes_after_disk_policy_changes"
+    ]
+  }
+}

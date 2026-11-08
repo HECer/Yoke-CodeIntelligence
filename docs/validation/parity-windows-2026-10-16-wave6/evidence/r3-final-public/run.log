@@ -1,0 +1,85 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\r3-shadow-unavailable-v1\native)
+    Finished `test` profile [unoptimized] target(s) in 2m 41s
+     Running tests\historical_receipt_fixture_qualification.rs (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\debug\deps\historical_receipt_fixture_qualification-72ab9d25051d43a1.exe)
+
+running 2 tests
+test h11_owned_worker_publishes_literal_reports_and_reuses_only_original_receipts ... ok
+test h11_owned_archives_replay_original_reports_after_later_host_accounting_and_store_removal ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 10.49s
+
+     Running tests\historical_view_adversarial.rs (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\debug\deps\historical_view_adversarial-02d723fb92bdcde2.exe)
+
+running 4 tests
+test error_redaction::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling ... ok
+test h08_portable_full_source_and_proof_closure_cannot_be_repaired_from_live_paths ... ok
+test h09_public_view_resealing_does_not_authorize_forged_precision_ranges_edges_or_completeness ... ok
+test h08_published_comparison_requires_uncited_history_and_uncorrupted_view_overlay_cas ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 7.32s
+
+     Running tests\historical_view_boundaries.rs (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\debug\deps\historical_view_boundaries-f5d82ba0450ad0f8.exe)
+
+running 7 tests
+test error_oracle::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling ... ok
+test h14_each_of_the_five_genuine_capture_option_fields_is_a_compatibility_boundary ... ok
+test h14_individually_valid_epoch8_and_epoch9_refuse_cross_epoch_in_both_orders ... ok
+test h14_normalized_options_replay_identically_including_both_empty_optional_fields ... ok
+test h06_historical_union_membership_does_not_satisfy_current_primary_binding ... ok
+test h06_genuine_primary_controls_precede_malformed_and_nonbijective_declarations ... ok
+test h06_one_hundred_real_primary_declarations_pass_and_one_hundred_one_refuse ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 6.73s
+
+     Running tests\historical_view_budget_options.rs (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\debug\deps\historical_view_budget_options-0bd7ee08ae66cb3e.exe)
+
+running 2 tests
+test explicit_budgets_above_defaults_are_admitted_and_reported_without_clamping ... ok
+test zero_budgets_refuse_positive_work_instead_of_meaning_unlimited ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.62s
+
+     Running tests\historical_view_comparison.rs (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\debug\deps\historical_view_comparison-9338980b82f50dc0.exe)
+
+running 8 tests
+test error_redaction::error_guard_checks_every_owned_sentinel_in_full_context_without_relabeling ... ok
+test directed_parallel_delta_does_not_infer_which_identical_occurrence_survived ... ok
+test identical_bytes_across_paths_do_not_manufacture_rename_lineage ... ok
+test explicit_pair_replays_historical_bytes_and_is_deterministic_without_publication ... ok
+test all_output_or_deadline_failures_publish_nothing ... ok
+test stale_snapshot_artifact_and_graph_pins_refuse_without_mutation ... ok
+test wrong_store_and_cross_workspace_pins_do_not_fall_back_to_equal_paths ... ok
+test checked_archives_compare_after_live_store_and_worker_are_gone_without_quote_leaks ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.95s
+
+     Running tests\historical_view_fixture_qualification.rs (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\debug\deps\historical_view_fixture_qualification-51cfbc36f26879ae.exe)
+
+running 2 tests
+test genuine_source_only_views_qualify_epoch8_and_epoch9_and_the_mutation_oracle ... ok
+test genuine_original_and_rebound_typed_archives_qualify_both_epochs_without_a_live_store ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 9.37s
+
+     Running tests\historical_view_receipts.rs (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\debug\deps\historical_view_receipts-9bd63eedbe6a9c95.exe)
+
+running 4 tests
+test h11_new_digest_oracle_sorts_nested_objects_without_reordering_arrays_or_erasing_nulls ... ok
+test h11_different_currencies_and_versions_remain_original_nonaggregated_receipts ... ok
+test h11_checked_archives_keep_original_reports_after_later_ledger_reconciliation_and_store_removal ... ok
+test h11_published_comparison_preserves_null_zero_independent_usage_and_receipt_reuse ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 15.58s
+
+     Running tests\historical_view_semantics.rs (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\target\debug\deps\historical_view_semantics-9119bdf4ff5b8103.exe)
+
+running 6 tests
+test h12_directed_parallel_and_self_loop_occurrences_use_original_ids_and_literal_counts ... ok
+test h10_position_closed_schema_preserves_unicode_crlf_file_and_multiple_bindings ... ok
+test h16_declared_moved_file_pairs_only_that_file_and_keeps_duplicate_descendants_ambiguous ... ok
+test h16_duplicate_structural_candidates_and_their_calls_stay_ambiguous_even_with_host_continuity ... ok
+test h12_independent_meaning_generations_keep_order_repetition_direction_and_exact_namespaces_storelessly ... ok
+test h12_owned_fixture_qualifies_two_legal_independent_generations_before_comparison ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 7.24s
+

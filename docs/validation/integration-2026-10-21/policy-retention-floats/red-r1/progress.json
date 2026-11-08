@@ -1,0 +1,47 @@
+[
+  {
+    "name": "fmt",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "fmt",
+      "--all",
+      "--",
+      "--check"
+    ],
+    "exitCode": 0,
+    "seconds": 6.3682993999973405,
+    "sourceUnchanged": true,
+    "totals": {
+      "passed": 0,
+      "failed": 0,
+      "ignored": 0
+    },
+    "deletedNewTestArtifacts": []
+  },
+  {
+    "name": "graph_analysis_policy",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "test",
+      "--workspace",
+      "--locked",
+      "-j",
+      "2",
+      "--target-dir",
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+      "--test",
+      "graph_analysis_policy",
+      "--",
+      "--test-threads=1"
+    ],
+    "exitCode": 101,
+    "seconds": 1.858944600011455,
+    "sourceUnchanged": true,
+    "totals": {
+      "passed": 0,
+      "failed": 0,
+      "ignored": 0
+    },
+    "deletedNewTestArtifacts": []
+  }
+]

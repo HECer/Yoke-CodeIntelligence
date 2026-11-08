@@ -1,0 +1,57 @@
+{
+  "accepted": true,
+  "checkedAtUtc": "2026-10-17T20:36:25.119891+00:00",
+  "freezeArtifactSha256": {
+    "freeze.json": "ab582a30b50e65f074039921fbb12090ae16588f33f96599c86c25c79dfb1818",
+    "runner.py": "5b1dbf5179f274d57fc0217108867d90d9a62ae233ca551496e89d386df81a00",
+    "source-freeze.json": "536f049021a3342eaa0b8c73a9eed7dd6b4fe445f33631fc058fbc577d29d5e4"
+  },
+  "interpretation": "All five phases freshly executed on identical frozen source and runner; ignored tests remain ignored. Three disjoint ACL fixtures, one exact durable-write recovery fixture and the complete ignored_capture target execute on C. This is a C-backed functional storage profile, not HDD or concurrent-load latency certification. query_parity, github and debug_adapter execute serially on E with unchanged deadlines. Other ordinary integration targets execute on E with four threads; real short-name fixtures execute on C.",
+  "phaseReceipts": {
+    "clippy": {
+      "failed": 0,
+      "groups": 0,
+      "ignored": 0,
+      "passed": 0,
+      "receiptSha256": "962d68b24463246dedb70d84b6c3cd375876a236639972bdcb66e79edd0dda43"
+    },
+    "format": {
+      "failed": 0,
+      "groups": 0,
+      "ignored": 0,
+      "passed": 0,
+      "receiptSha256": "6f052d4abfa13571125e702fe6ced113f958b6aadb931fcb8fff18a7c1315509"
+    },
+    "native": {
+      "failed": 0,
+      "groups": 246,
+      "ignored": 33,
+      "passed": 1928,
+      "receiptSha256": "1552e497d28f434828a1564e68d3dcb4bbfa6e3dfd3e38aad11fe46022dd1c95"
+    },
+    "python": {
+      "failed": 0,
+      "groups": 1,
+      "ignored": 0,
+      "passed": 11,
+      "receiptSha256": "b0d9e2839f9ac18bcc4ffdac359e3342a59488ad0a44d47cb7bf6b6b9e89e0be"
+    },
+    "typescript": {
+      "failed": 0,
+      "groups": 1,
+      "ignored": 3,
+      "passed": 254,
+      "receiptSha256": "8301379301a698947c73a7316b3b42dc22cee80d90b53691c3b2c8933625f62f"
+    }
+  },
+  "phases": [
+    "format",
+    "clippy",
+    "native",
+    "python",
+    "typescript"
+  ],
+  "runnerSha256": "5b1dbf5179f274d57fc0217108867d90d9a62ae233ca551496e89d386df81a00",
+  "sourceFiles": 3970,
+  "sourceManifestSha256": "536f049021a3342eaa0b8c73a9eed7dd6b4fe445f33631fc058fbc577d29d5e4"
+}

@@ -1,0 +1,51 @@
+{
+  "baselineHead": "d90a4e3587e55b8eebdfabc4647e355d91230e1f",
+  "actualFailedCiCheckout": "50a29da933e17daab3beccab626c452beafe45fc",
+  "failedUnixJobs": [
+    120879209374,
+    120879209584
+  ],
+  "sourceFile": "native/src/host_documents.rs",
+  "sourceSha256": "cc0e4acda3c3f5a8a08bd113e7c1b07d651a46860bfb5ee560dbf894a6c332cb",
+  "canonicalGitBlobSha": "417509140c055e966a4b496f934461fa7ad99e01",
+  "canonicalDiffIsOneWindowsConditionOnTestHelper": true,
+  "runtimePrefixExactToBaseline": true,
+  "allFiveExistingCallersAlreadyWindowsOnly": [
+    "selected_unicode_bom_crlf_bytes_are_authoritative_and_plans_are_inert",
+    "project_and_journal_scopes_refuse_relabeling_or_analyzed_recovery_authority",
+    "external_file_changes_and_hardlinks_never_reuse_a_loaded_revision",
+    "replacing_analyzed_root_or_document_parent_invalidates_pinned_access",
+    "selected_missing_file_is_unavailable_not_an_empty_complete_document"
+  ],
+  "testsRemovedOrNewlySkipped": 0,
+  "rustfmtEdition2024CheckExit": 0,
+  "typecheckExit": 0,
+  "npmTestExit": 0,
+  "npmTests": {
+    "passed": 260,
+    "failed": 0,
+    "existingSkipped": 3
+  },
+  "nativeBuildOrExecutionAttempted": false,
+  "localDiskReserveBytes": 500000000,
+  "hostedCorrectionConfirmed": false,
+  "fullStatusComplete": false,
+  "logs": [
+    {
+      "path": "typecheck.txt",
+      "sha256": "aebc7ac1c6de6cc44f762cd46ec06a7e43fbe3f607ba5d49e6e283263b907fd4",
+      "bytes": 437,
+      "publicRendering": "UTF-8, LF, trailing whitespace removed",
+      "originalEncoding": "utf-16",
+      "originalSha256": "1e98350f862f183059bcdda6678ca88090e3a7a6f706c38f2ea0d7cc87c5371e"
+    },
+    {
+      "path": "npm-test.txt",
+      "sha256": "59b0cfe79f6eecf96bf7d3cd9949a2264156ec51502594886f140ba066f1032d",
+      "bytes": 25363,
+      "publicRendering": "UTF-8, LF, trailing whitespace removed",
+      "originalEncoding": "utf-16",
+      "originalSha256": "4ca62686007276a43a5940ac5e074a636283d5dfb302ae170c88e4b56fd04dc4"
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "command": [
+    "C:\\Python314\\python.exe",
+    "-I",
+    "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\control-compiler-transaction\\compiler_transaction_worker.py",
+    "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-transaction\\release-cli-compiler-transaction-e89-r2\\worker-spec.json"
+  ],
+  "deadlineSeconds": 3600,
+  "logCapBytes": 16000000,
+  "stdinClosed": true,
+  "startedSuspended": true,
+  "assignedBeforeResume": true,
+  "completed": false,
+  "treeExitedBeforeCleanup": false,
+  "minimumFreeObserved": 18413080576,
+  "cleanupErrors": [],
+  "streamEOF": [
+    true,
+    true
+  ],
+  "readerErrors": [
+    false,
+    false
+  ],
+  "startedMonotonicNs": 24973957517900,
+  "absoluteDeadlineNs": 28573948052600,
+  "jobName": "Local\\YokeCompilerTransaction-e4b95d4ab7ebf2141ce8e5f642c8310c74ef4428472f0b0968f2634f902c1883",
+  "namedJobCreatedNew": true,
+  "pid": 21708,
+  "resumePreviousSuspendCount": 1,
+  "exitCode": 1,
+  "rootObservedMonotonicNs": 25487982715900,
+  "membersAtRootObservation": [
+    {
+      "pid": 10320,
+      "imageBytesRead": false,
+      "imageIdentityKnown": false,
+      "membershipConfirmed": true,
+      "imageQueryError": 5
+    },
+    {
+      "pid": 6152,
+      "imageBytesRead": false,
+      "imageIdentityKnown": false,
+      "membershipConfirmed": true,
+      "imagePathMetadata": "C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\VC\\Tools\\MSVC\\14.51.36231\\bin\\Hostx64\\x64\\vctip.exe"
+    }
+  ],
+  "rootExitedAtObservation": true,
+  "activeAtRootObservation": 2,
+  "originalDrainSeconds": 1,
+  "activeBeforeCleanup": 1,
+  "membersAfterOriginalDrain": [
+    {
+      "pid": 6152,
+      "imageBytesRead": false,
+      "imageIdentityKnown": false,
+      "membershipConfirmed": true,
+      "imagePathMetadata": "C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\VC\\Tools\\MSVC\\14.51.36231\\bin\\Hostx64\\x64\\vctip.exe"
+    }
+  ],
+  "treeObservedMonotonicNs": 25488992154600,
+  "cleanupSeconds": 2,
+  "activeAfterCleanup": 0,
+  "rootExitedAfterCleanup": true,
+  "elapsedSeconds": 515.0350447000019,
+  "capturedLogBytes": 399823,
+  "outputExceeded": false,
+  "cleanupUnproven": false
+}

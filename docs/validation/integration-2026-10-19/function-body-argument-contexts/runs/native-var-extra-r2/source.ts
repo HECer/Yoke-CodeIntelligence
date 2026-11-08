@@ -1,0 +1,1 @@
+function helper(n:number):number{var \u006e:number;n++;return n;}const result=helper(2);export const observed=result;

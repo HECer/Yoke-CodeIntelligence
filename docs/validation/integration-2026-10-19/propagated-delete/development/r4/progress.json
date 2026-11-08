@@ -1,0 +1,131 @@
+[
+  {
+    "name": "format",
+    "exitCode": 0,
+    "elapsedSeconds": 5.128,
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "fmt",
+      "--all",
+      "--check"
+    ]
+  },
+  {
+    "name": "contracts",
+    "exitCode": 0,
+    "elapsedSeconds": 82.379,
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "test",
+      "--locked",
+      "-j1",
+      "--target-dir",
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+      "--test",
+      "propagated_delete_contract",
+      "--",
+      "--nocapture",
+      "--test-threads=1"
+    ]
+  },
+  {
+    "name": "actual-propagation",
+    "exitCode": 0,
+    "elapsedSeconds": 18.567,
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "test",
+      "--locked",
+      "-j1",
+      "--target-dir",
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+      "--test",
+      "propagated_delete_live",
+      "--",
+      "--ignored",
+      "--nocapture",
+      "--test-threads=1"
+    ]
+  },
+  {
+    "name": "clippy",
+    "exitCode": 0,
+    "elapsedSeconds": 202.483,
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "clippy",
+      "--locked",
+      "-j1",
+      "--target-dir",
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+      "--all-targets",
+      "--",
+      "-D",
+      "warnings"
+    ]
+  },
+  {
+    "name": "native",
+    "exitCode": 0,
+    "elapsedSeconds": 376.109,
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "test",
+      "--locked",
+      "-j1",
+      "--target-dir",
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+      "--lib",
+      "--test",
+      "semantic_refactor",
+      "--test",
+      "agent_symbol_contracts",
+      "--test",
+      "agent_facade_semantics",
+      "--test",
+      "agent_facade_options",
+      "--test",
+      "capture_changes",
+      "--test",
+      "plan_integrity",
+      "--test",
+      "symbol_move_own_v1",
+      "--test",
+      "symbol_move_effect_admission",
+      "--test",
+      "symbol_move_declarations",
+      "--test",
+      "symbol_delete_ranges",
+      "--test",
+      "declaration_attachment_ranges",
+      "--test",
+      "facade_file_usage",
+      "--",
+      "--nocapture",
+      "--test-threads=1"
+    ]
+  },
+  {
+    "name": "actual-regressions",
+    "exitCode": 0,
+    "elapsedSeconds": 24.759,
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "test",
+      "--locked",
+      "-j1",
+      "--target-dir",
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+      "--test",
+      "symbol_delete_live",
+      "--test",
+      "declaration_attachments_live",
+      "--test",
+      "file_usage_live",
+      "--",
+      "--ignored",
+      "--nocapture",
+      "--test-threads=1"
+    ]
+  }
+]

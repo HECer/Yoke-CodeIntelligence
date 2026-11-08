@@ -1,0 +1,27 @@
+{
+  "checkedAtUtc": "2026-10-15T20:12:43.141875+00:00",
+  "scope": "focused_gate_not_frozen_suite",
+  "command": [
+    "cargo",
+    "test",
+    "--workspace",
+    "--locked",
+    "-j",
+    "2",
+    "--lib",
+    "host_install::output_recovery_tests::sixteen_root_v2_history_reserves_only_remaining_output_work",
+    "--",
+    "--exact",
+    "--test-threads=4",
+    "--nocapture"
+  ],
+  "exitCode": 101,
+  "seconds": 40.672,
+  "tempRoot": "D:\\Yoke-Test-Scratch\\wave4-recovery-isolated-diagnostic",
+  "logSha256": "5dd398c551b63b51d1d93d8c9a5b6eff018cc505472265a862f177505e48c06b",
+  "groups": 1,
+  "passed": 0,
+  "failed": 1,
+  "ignored": 0,
+  "sourceChanges": []
+}

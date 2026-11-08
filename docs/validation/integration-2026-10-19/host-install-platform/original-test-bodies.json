@@ -1,0 +1,181 @@
+[
+  {
+    "file": "native/src/host_install.rs",
+    "unchangedOriginalTests": [
+      {
+        "name": "rollback_refuses_a_rehashed_noncanonical_foreign_output_before_any_write",
+        "normalizedBodySha256": "ad55c1df50591b36acc468d1b0ebe2a3fee69b6b4023699cfbe00cebfda6a54f"
+      },
+      {
+        "name": "committed_cleanup_refuses_a_rehashed_noncanonical_foreign_backup",
+        "normalizedBodySha256": "b27f38031d156fcf3c2ad79e92d3d72fe858063a72acdfe8e2f36c7c5affc314"
+      },
+      {
+        "name": "explicit_initialization_recovery_repairs_only_an_empty_scaffold_and_replays",
+        "normalizedBodySha256": "11661b1cd4a78002de807bd1c9c3161e564a57b685337710b8c81f29a5988c0a"
+      },
+      {
+        "name": "initialization_recovery_preserves_and_refuses_foreign_contents",
+        "normalizedBodySha256": "c85f948adb8e21d3e5a262cd28e0e9da0dab3d97fa9ac53267918b28e171e8ac"
+      },
+      {
+        "name": "initialization_recovery_rejects_wrong_token_plan_and_authority_without_writes",
+        "normalizedBodySha256": "68103ef651dc457d5fe653ea5aab2e3159eb98133ace1084ca7df2fc1b50237d"
+      },
+      {
+        "name": "initialization_recovery_refuses_a_hardlinked_lock_without_changing_either_name",
+        "normalizedBodySha256": "4a279c1799a4b3cd8cad28ff1af76f7c44620f994c78336a91a10be28066ee30"
+      },
+      {
+        "name": "resume_after_original_rename_publishes_owned_output_and_finishes_cleanup",
+        "normalizedBodySha256": "169860bcc790224157651b2ecdd8f72845d4ac8e1eefce991962e38688b8f408"
+      },
+      {
+        "name": "constructed_output_rename_before_event_resumes_and_replays_without_writes",
+        "normalizedBodySha256": "d11d6f308b8b5bca43a65032fefe12d662e141b3c7b2f72115ed1f67e30c6c75"
+      },
+      {
+        "name": "constructed_receipt_before_cleanup_event_blocks_rollback_and_resumes",
+        "normalizedBodySha256": "3055c85a4eef14b27857b532b22c73c18755dbed61b16bf578b6bdd26a0d50d9"
+      },
+      {
+        "name": "constructed_backup_deletion_before_event_resumes_and_apply_replays",
+        "normalizedBodySha256": "bd7b017c981e07b5940dc98a9b007181ee666f43ba0ddb6b037885d38ccdec77"
+      },
+      {
+        "name": "constructed_rollback_direction_replays_then_allows_a_new_install_history",
+        "normalizedBodySha256": "9771272c0bb92271545cf78c3ca203ce2bccb6db59855ef4683a240e10c86130"
+      },
+      {
+        "name": "constructed_mixed_three_root_prefix_resumes_every_original_and_output",
+        "normalizedBodySha256": "3e8ab0b9f35cbedcb89245dac715468a42fb93222a11eddc635f6b8885738551"
+      },
+      {
+        "name": "constructed_mixed_prefix_foreign_suffix_refuses_all_recovery_before_writes",
+        "normalizedBodySha256": "8b99b4d883fa8452dcde7759cdcd9afe7ed882ca030dba87de3809d35e87be2e"
+      },
+      {
+        "name": "constructed_unjournaled_output_identity_is_preserved_and_refused",
+        "normalizedBodySha256": "ff0da41ee4fca2a3dbca811bee8e90718b7d5c9ae9d4d8bbdc4c5f6d8196c6e1"
+      },
+      {
+        "name": "rollback_after_original_rename_restores_same_original_and_releases_ownership",
+        "normalizedBodySha256": "2209263ef3d14097b438deccd19eaa76d78a89fb192d43218760f711ce573fa3"
+      },
+      {
+        "name": "foreign_occupant_blocks_resume_and_rollback_without_changing_original_backup",
+        "normalizedBodySha256": "607ad2882ce7c857dc1700b32d956d418542e453e80586dbac2bd744efb10172"
+      },
+      {
+        "name": "receipt_commit_does_not_disguise_pending_cleanup_as_successful_replay",
+        "normalizedBodySha256": "50a7bc0e5c0e250bb898787567e02fb04a80527fdd44df122c4eb0b976dd0297"
+      },
+      {
+        "name": "unknown_journal_phase_is_refused_before_it_can_accumulate_in_pending_results",
+        "normalizedBodySha256": "67eb9cceafb1528e6dd0b5b00ce51d6fc313e20d3dc047a4fd6f7a7a927d2441"
+      },
+      {
+        "name": "journal_progress_cannot_widen_beyond_the_authorized_target_set",
+        "normalizedBodySha256": "c379149257df8223f15307949a7d3038ef122369c16d5b1718d723700d627fca"
+      },
+      {
+        "name": "state_capacity_reserves_the_next_receipt_and_journal_before_touching_targets",
+        "normalizedBodySha256": "9007b6939c4a3b69677e2ed0dd6c9d4f0fab97d9a3facd1a50c285d9c003c52d"
+      },
+      {
+        "name": "successful_receipt_replay_rejects_foreign_target_edits",
+        "normalizedBodySha256": "4a397582286d4df1d02562f310dc38655bad692f0071fc9f5a377be50d3fd352"
+      }
+    ]
+  },
+  {
+    "file": "native/tests/host_install.rs",
+    "unchangedOriginalTests": [
+      {
+        "name": "internal_volume_guid_binding_launches_the_real_binary_and_is_not_a_user_path_grant",
+        "normalizedBodySha256": "f6cc0984fa2a2762ad692d5a57dbc21e05ae6122109f4a61bdb9f3d752305d3b"
+      },
+      {
+        "name": "dry_run_is_deterministic_and_creates_no_source_engine_or_host_state",
+        "normalizedBodySha256": "64e4d53ae503a3ccff4228f6543494e8e4aaad6f5526cbd7b3206e74888bf81f"
+      },
+      {
+        "name": "install_and_uninstall_preserve_human_bom_crlf_and_original_empty_presence",
+        "normalizedBodySha256": "3ec17ebba66c2f22278618c14b5174837c77aef11c4014e0e0d5ee7322271926"
+      },
+      {
+        "name": "uninstall_preserves_foreign_appends_and_refuses_changes_inside_owned_block",
+        "normalizedBodySha256": "219e9af0fa171b1f67bba87ef8d70d8a52c0c34d851176732b7a0a87f1890c84"
+      },
+      {
+        "name": "every_target_and_host_binding_is_checked_before_first_write",
+        "normalizedBodySha256": "18b554c24bfde8809220b735a4ed8af7c7628be4468c9a3a03093acabafe6d01"
+      },
+      {
+        "name": "receipt_ownership_is_required_and_serialized_plans_cannot_widen_paths",
+        "normalizedBodySha256": "fbabc9803c866cc323e7f0cc134e82e2e84e2044d56e2fe732c9b8c16fd4e02f"
+      },
+      {
+        "name": "private_state_never_contains_unrelated_human_config_or_policy_contents",
+        "normalizedBodySha256": "3b2553317567a6e9448046c863d03448a550bd101ff098bc224a0ad9a75d847a"
+      },
+      {
+        "name": "state_and_target_aliases_bounds_invalid_utf8_and_deadlines_fail_closed",
+        "normalizedBodySha256": "53aa8ea75a7e35081d3cb339641b0bf7f8075141325c29d73af9cc382933f0bd"
+      },
+      {
+        "name": "windows_existing_writer_and_hardlink_alias_are_refused_before_other_targets_change",
+        "normalizedBodySha256": "7d4ccfc239a4712b85aae20c078218a25f35d06f94ae0c5ae6ea6af402e98d20"
+      }
+    ]
+  },
+  {
+    "file": "native/tests/host_install_cli.rs",
+    "unchangedOriginalTests": [
+      {
+        "name": "host_install_cli_planning_and_status_are_pure_and_keep_human_text_private",
+        "normalizedBodySha256": "33a761acdb063a080e2520ab49b64fa962b1cc2c7a241f90dfd944d81e756859"
+      },
+      {
+        "name": "host_install_cli_installs_and_uninstalls_only_its_owned_fragment",
+        "normalizedBodySha256": "5990a8a24f527aafc8229ee359a5adf97f34e3faa86254a3a1e7a0e516ec31c3"
+      },
+      {
+        "name": "host_install_cli_write_permission_precedes_selection_or_plan_reads",
+        "normalizedBodySha256": "9544c780e631e2cd09b8557fec56bb4522a2107f6dc886a8ac47e15e9fe4d3cb"
+      },
+      {
+        "name": "host_install_cli_rejects_ambiguous_selection_and_small_write_output_before_mutation",
+        "normalizedBodySha256": "43d8684f84fb3b4542e9bf931360042b5eb1563bf82bbd74d03729a8126951f5"
+      },
+      {
+        "name": "host_install_cli_output_failure_identifies_the_committed_result_and_can_be_retried",
+        "normalizedBodySha256": "4390b9ae8e0a73caffaa556fe9380d595e1589bcfa10daa982c417e53c2f8b96"
+      },
+      {
+        "name": "host_install_cli_valid_output_budget_is_admitted_before_any_host_state_or_file_write",
+        "normalizedBodySha256": "05b716a3e1aeb67b239bde274b8478b696ce55f57c061fe6888b7cb7be7f8901"
+      },
+      {
+        "name": "host_install_cli_initialization_permission_precedes_selection_and_plan_reads",
+        "normalizedBodySha256": "fdef1554df81b1ba2fd75068ecad0fa8bda7bb4108bc62ff2832a0643f7c9691"
+      },
+      {
+        "name": "host_install_cli_initialization_repairs_an_owned_scaffold_and_replays_without_source_changes",
+        "normalizedBodySha256": "f2fcab1e71e37e0b69948fed3c7b68fce24ff8a439008884f94b8e0b084ae254"
+      },
+      {
+        "name": "host_install_cli_initialization_refuses_foreign_scaffold_bytes_without_disclosing_them",
+        "normalizedBodySha256": "9edaed1d398b243f6ad0fc9f2b339351c1d2d0c85bc5c185845f876e5ab847f9"
+      },
+      {
+        "name": "host_install_cli_initialization_admits_a_valid_output_budget_before_writing_state",
+        "normalizedBodySha256": "50d9f8f9f1cebb22e2095a2e547922833279628647551003af55323067d4c609"
+      },
+      {
+        "name": "host_install_cli_initialization_output_failure_identifies_its_durable_result",
+        "normalizedBodySha256": "77dd95750df8610d53d50543244475cad8cf377b4f61efa5274df9d2e2f02696"
+      }
+    ]
+  }
+]

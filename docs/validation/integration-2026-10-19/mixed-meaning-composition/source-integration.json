@@ -1,0 +1,31 @@
+{
+  "sourceCommit": "789d50bb0d9a72a3ab97a1cc9f7e8eab91493203",
+  "runtimeCommit": "6702727d303cf6088a8b03702cfc76fddc434ec3",
+  "parentCommit": "87be1a19ae1556099352fc7400034fdd109acae6",
+  "paths": [
+    "native/README.md",
+    "native/docs/mixed-meaning-composition.md",
+    "native/docs/mixed-meaning-queries.md",
+    "native/src/mixed_meaning_cli.rs",
+    "native/src/mixed_meaning_composition.rs",
+    "native/src/mixed_meaning_provider.rs",
+    "native/src/mixed_meaning_query.rs",
+    "native/tests/mixed_meaning_composition.rs"
+  ],
+  "nativeInputsMatched": 752,
+  "nativeGroups": 20,
+  "nativeTotals": {
+    "passed": 630,
+    "failed": 0,
+    "ignored": 7
+  },
+  "newCases": {
+    "defaultIntegration": 8,
+    "actualNativeCliIncludedInDefault": 1
+  },
+  "nativeBinarySha256": "6704584c5144157ef8298fb9f0a192bc5b27d7944505705649bbe265c98705ff",
+  "nativeBinaryBytes": 160629248,
+  "binaryHashObservedAt": "2026-10-20T08:59:08.358587+00:00",
+  "wholeNativeRerun": false,
+  "fullR4Complete": false
+}

@@ -12,6 +12,12 @@ def main():
     if version != '0.9.87':
         raise RuntimeError('Expected graphifyy==0.9.87; contract-test before changing the pin')
     root = Path(data['root']).resolve()
+    # The host owns this disposable cache separately from source materialization.
+    # Keeping the explicit scan root preserves source_file/identity semantics.
+    cache_root = Path(data['cacheRoot'])
+    if not cache_root.is_absolute() or not cache_root.is_dir():
+        raise ValueError('Host cache directory must be existing and absolute')
+    cache_root = cache_root.resolve()
     paths = []
     for relative in data['sourceHashes']:
         path = (root / relative).resolve()
@@ -20,7 +26,7 @@ def main():
         paths.append(path)
     with contextlib.redirect_stdout(sys.stderr):
         from graphify.extract import extract
-        result = extract(paths, root=root)
+        result = extract(paths, root=root, cache_root=cache_root)
     sys.stdout.buffer.write(json.dumps(dict(snapshotId=data['snapshotId'], sourceHashes=data['sourceHashes'],
                    version=version, rawExtraction=True, graph=result), ensure_ascii=False).encode('utf-8'))
 

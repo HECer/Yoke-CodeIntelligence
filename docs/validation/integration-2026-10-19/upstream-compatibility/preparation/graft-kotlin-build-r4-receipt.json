@@ -1,0 +1,20 @@
+{
+  "command": [
+    "npm.cmd",
+    "rebuild",
+    "tree-sitter-kotlin",
+    "--foreground-scripts",
+    "--registry=https://registry.npmjs.org",
+    "--userconfig=C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\upstreams-20261019-2hp9hr7r\\user.npmrc",
+    "--globalconfig=C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\upstreams-20261019-2hp9hr7r\\global.npmrc",
+    "--cache=C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\upstreams-20261019-2hp9hr7r\\npm-cache"
+  ],
+  "exitCode": 1,
+  "elapsedSeconds": 6.703,
+  "developerEnvironment": {
+    "VSINSTALLDIR": "C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\",
+    "VCINSTALLDIR": "C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\VC\\",
+    "VSCMD_VER": "18.0"
+  },
+  "scope": "Only explicitly approved pinned Kotlin native binding; actual VS18 developer environment"
+}

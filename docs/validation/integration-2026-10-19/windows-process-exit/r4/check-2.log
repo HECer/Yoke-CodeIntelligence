@@ -1,0 +1,15 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 34s
+     Running tests\process.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\process-a14ea79dd611eb34.exe)
+
+running 7 tests
+test capture_transfers_exact_unicode_bytes_and_independent_streams ... ok
+test descendant_held_stdio_cannot_extend_the_shared_deadline ... ok
+test output_overflow_is_a_failure_with_bounded_retained_bytes ... ok
+test runtime_environment_filters_secrets_and_preserves_host_overrides ... ok
+test source_selected_defaults_and_oversized_stdin_are_rejected_before_spawn ... ok
+test windows_host_fixture_does_not_allocate_a_console_window ... ok
+test windows_runtime_environment_supports_managed_known_folders ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.35s
+

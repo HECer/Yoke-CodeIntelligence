@@ -1,0 +1,2476 @@
+{
+  "sourceCommit": "704b647d625dcc5f359386b20834d329ffb6cdf4",
+  "archive": {
+    "name": "evidence.zip",
+    "members": 265,
+    "expandedBytes": 4110928,
+    "bytes": 1184036,
+    "sha256": "16d7f899e9cd613bde579b2a17eec77e562b80b43db28c01e98c76c4bedd992a"
+  },
+  "members": [
+    {
+      "name": "actual-cli/causal-proofs.json",
+      "bytes": 7029,
+      "sha256": "75f1a38fb248c2b25c6e5d18c0aeb73a8674d1ec19fe8883611aadd0bb6cca3e",
+      "origin": "derived from exact admitted CLI output/private cause checks",
+      "representation": "derived-causal-proof",
+      "originalBytes": 7029,
+      "originalSha256": "75f1a38fb248c2b25c6e5d18c0aeb73a8674d1ec19fe8883611aadd0bb6cca3e"
+    },
+    {
+      "name": "actual-cli/native/marker-apply.result.json",
+      "bytes": 74,
+      "sha256": "d5f36225624e8c7b534b9288020c31c343add1a169b26e2b31ce1fc5a958dd92",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\private-owner-retirement-live-704\\retirement-704-live-r1\\worker-evidence\\native\\marker-apply.result.json",
+      "representation": "byte-exact",
+      "originalBytes": 74,
+      "originalSha256": "d5f36225624e8c7b534b9288020c31c343add1a169b26e2b31ce1fc5a958dd92"
+    },
+    {
+      "name": "actual-cli/native/missing-write-permission.result.json",
+      "bytes": 86,
+      "sha256": "7540ec16ccc36ae00039f3990fb0decffe4104928694b3f4d8c17d75fff482bd",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\private-owner-retirement-live-704\\retirement-704-live-r1\\worker-evidence\\native\\missing-write-permission.result.json",
+      "representation": "byte-exact",
+      "originalBytes": 86,
+      "originalSha256": "7540ec16ccc36ae00039f3990fb0decffe4104928694b3f4d8c17d75fff482bd"
+    },
+    {
+      "name": "actual-cli/native/repeat-apply.result.json",
+      "bytes": 74,
+      "sha256": "0969b101905d33560c70a801d589a61c8dfc83e0242084125175aece15f26f89",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\private-owner-retirement-live-704\\retirement-704-live-r1\\worker-evidence\\native\\repeat-apply.result.json",
+      "representation": "byte-exact",
+      "originalBytes": 74,
+      "originalSha256": "0969b101905d33560c70a801d589a61c8dfc83e0242084125175aece15f26f89"
+    },
+    {
+      "name": "actual-cli/native/retirement-apply.result.json",
+      "bytes": 77,
+      "sha256": "650a15116e98c76324822786be1bc2d94765a8a7446273bd19655160569a06e2",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\private-owner-retirement-live-704\\retirement-704-live-r1\\worker-evidence\\native\\retirement-apply.result.json",
+      "representation": "byte-exact",
+      "originalBytes": 77,
+      "originalSha256": "650a15116e98c76324822786be1bc2d94765a8a7446273bd19655160569a06e2"
+    },
+    {
+      "name": "actual-cli/native/retirement-apply.stdout",
+      "bytes": 242,
+      "sha256": "dddc644c78d696bb11dae0ef2a2ce7c66d641e31004bfe345aee595433cc15b7",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\private-owner-retirement-live-704\\retirement-704-live-r1\\worker-evidence\\native\\retirement-apply.stdout",
+      "representation": "byte-exact",
+      "originalBytes": 242,
+      "originalSha256": "dddc644c78d696bb11dae0ef2a2ce7c66d641e31004bfe345aee595433cc15b7"
+    },
+    {
+      "name": "actual-cli/native/retirement-inspect.result.json",
+      "bytes": 79,
+      "sha256": "ee9213b02503411af160ac63b963684ac1717ea6aeff4a6faafe4e7f3928672c",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\private-owner-retirement-live-704\\retirement-704-live-r1\\worker-evidence\\native\\retirement-inspect.result.json",
+      "representation": "byte-exact",
+      "originalBytes": 79,
+      "originalSha256": "ee9213b02503411af160ac63b963684ac1717ea6aeff4a6faafe4e7f3928672c"
+    },
+    {
+      "name": "actual-cli/native/retirement-inspect.stdout",
+      "bytes": 326,
+      "sha256": "5543af047141f05587bcdba92066cfb750c8f034aaf60db3df728533481805ca",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\private-owner-retirement-live-704\\retirement-704-live-r1\\worker-evidence\\native\\retirement-inspect.stdout",
+      "representation": "byte-exact",
+      "originalBytes": 326,
+      "originalSha256": "5543af047141f05587bcdba92066cfb750c8f034aaf60db3df728533481805ca"
+    },
+    {
+      "name": "actual-cli/native/retirement-plan.result.json",
+      "bytes": 76,
+      "sha256": "ce4ac3f1dc0d35c040e6c9f9846c3466b91132f01bdbefeec7fd1f1a797760f0",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\private-owner-retirement-live-704\\retirement-704-live-r1\\worker-evidence\\native\\retirement-plan.result.json",
+      "representation": "byte-exact",
+      "originalBytes": 76,
+      "originalSha256": "ce4ac3f1dc0d35c040e6c9f9846c3466b91132f01bdbefeec7fd1f1a797760f0"
+    },
+    {
+      "name": "actual-cli/native/second-selection-apply.result.json",
+      "bytes": 84,
+      "sha256": "1974cc33e5f7c39ce74e6aab21d6fb9c08c2ee8c82105a50020b855dde27edb4",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\private-owner-retirement-live-704\\retirement-704-live-r1\\worker-evidence\\native\\second-selection-apply.result.json",
+      "representation": "byte-exact",
+      "originalBytes": 84,
+      "originalSha256": "1974cc33e5f7c39ce74e6aab21d6fb9c08c2ee8c82105a50020b855dde27edb4"
+    },
+    {
+      "name": "actual-cli/native/second-selection-plan.result.json",
+      "bytes": 83,
+      "sha256": "d720bccbe02adef99ce9159b9fff1c2f7a0efd625f51b5cbbbc8eed1092a1221",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\private-owner-retirement-live-704\\retirement-704-live-r1\\worker-evidence\\native\\second-selection-plan.result.json",
+      "representation": "byte-exact",
+      "originalBytes": 83,
+      "originalSha256": "d720bccbe02adef99ce9159b9fff1c2f7a0efd625f51b5cbbbc8eed1092a1221"
+    },
+    {
+      "name": "actual-cli/serena/marker-apply.result.json",
+      "bytes": 74,
+      "sha256": "d5f36225624e8c7b534b9288020c31c343add1a169b26e2b31ce1fc5a958dd92",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\private-owner-retirement-live-704\\retirement-704-live-r1\\worker-evidence\\serena\\marker-apply.result.json",
+      "representation": "byte-exact",
+      "originalBytes": 74,
+      "originalSha256": "d5f36225624e8c7b534b9288020c31c343add1a169b26e2b31ce1fc5a958dd92"
+    },
+    {
+      "name": "actual-cli/serena/missing-write-permission.result.json",
+      "bytes": 86,
+      "sha256": "7540ec16ccc36ae00039f3990fb0decffe4104928694b3f4d8c17d75fff482bd",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\private-owner-retirement-live-704\\retirement-704-live-r1\\worker-evidence\\serena\\missing-write-permission.result.json",
+      "representation": "byte-exact",
+      "originalBytes": 86,
+      "originalSha256": "7540ec16ccc36ae00039f3990fb0decffe4104928694b3f4d8c17d75fff482bd"
+    },
+    {
+      "name": "actual-cli/serena/repeat-apply.result.json",
+      "bytes": 74,
+      "sha256": "0969b101905d33560c70a801d589a61c8dfc83e0242084125175aece15f26f89",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\private-owner-retirement-live-704\\retirement-704-live-r1\\worker-evidence\\serena\\repeat-apply.result.json",
+      "representation": "byte-exact",
+      "originalBytes": 74,
+      "originalSha256": "0969b101905d33560c70a801d589a61c8dfc83e0242084125175aece15f26f89"
+    },
+    {
+      "name": "actual-cli/serena/retirement-apply.result.json",
+      "bytes": 77,
+      "sha256": "650a15116e98c76324822786be1bc2d94765a8a7446273bd19655160569a06e2",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\private-owner-retirement-live-704\\retirement-704-live-r1\\worker-evidence\\serena\\retirement-apply.result.json",
+      "representation": "byte-exact",
+      "originalBytes": 77,
+      "originalSha256": "650a15116e98c76324822786be1bc2d94765a8a7446273bd19655160569a06e2"
+    },
+    {
+      "name": "actual-cli/serena/retirement-apply.stdout",
+      "bytes": 242,
+      "sha256": "379875dfc8bfad42c2524db8b12b4c233732f629d0514e0c05c2c309f16e6732",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\private-owner-retirement-live-704\\retirement-704-live-r1\\worker-evidence\\serena\\retirement-apply.stdout",
+      "representation": "byte-exact",
+      "originalBytes": 242,
+      "originalSha256": "379875dfc8bfad42c2524db8b12b4c233732f629d0514e0c05c2c309f16e6732"
+    },
+    {
+      "name": "actual-cli/serena/retirement-inspect.result.json",
+      "bytes": 79,
+      "sha256": "ee9213b02503411af160ac63b963684ac1717ea6aeff4a6faafe4e7f3928672c",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\private-owner-retirement-live-704\\retirement-704-live-r1\\worker-evidence\\serena\\retirement-inspect.result.json",
+      "representation": "byte-exact",
+      "originalBytes": 79,
+      "originalSha256": "ee9213b02503411af160ac63b963684ac1717ea6aeff4a6faafe4e7f3928672c"
+    },
+    {
+      "name": "actual-cli/serena/retirement-inspect.stdout",
+      "bytes": 326,
+      "sha256": "65b4e8a09311d44de9577b2f392a5fdbc166ac6249bb009b339823bd2ed7884c",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\private-owner-retirement-live-704\\retirement-704-live-r1\\worker-evidence\\serena\\retirement-inspect.stdout",
+      "representation": "byte-exact",
+      "originalBytes": 326,
+      "originalSha256": "65b4e8a09311d44de9577b2f392a5fdbc166ac6249bb009b339823bd2ed7884c"
+    },
+    {
+      "name": "actual-cli/serena/retirement-plan.result.json",
+      "bytes": 76,
+      "sha256": "ce4ac3f1dc0d35c040e6c9f9846c3466b91132f01bdbefeec7fd1f1a797760f0",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\private-owner-retirement-live-704\\retirement-704-live-r1\\worker-evidence\\serena\\retirement-plan.result.json",
+      "representation": "byte-exact",
+      "originalBytes": 76,
+      "originalSha256": "ce4ac3f1dc0d35c040e6c9f9846c3466b91132f01bdbefeec7fd1f1a797760f0"
+    },
+    {
+      "name": "actual-cli/serena/second-selection-apply.result.json",
+      "bytes": 84,
+      "sha256": "1974cc33e5f7c39ce74e6aab21d6fb9c08c2ee8c82105a50020b855dde27edb4",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\private-owner-retirement-live-704\\retirement-704-live-r1\\worker-evidence\\serena\\second-selection-apply.result.json",
+      "representation": "byte-exact",
+      "originalBytes": 84,
+      "originalSha256": "1974cc33e5f7c39ce74e6aab21d6fb9c08c2ee8c82105a50020b855dde27edb4"
+    },
+    {
+      "name": "actual-cli/serena/second-selection-plan.result.json",
+      "bytes": 83,
+      "sha256": "d720bccbe02adef99ce9159b9fff1c2f7a0efd625f51b5cbbbc8eed1092a1221",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\private-owner-retirement-live-704\\retirement-704-live-r1\\worker-evidence\\serena\\second-selection-plan.result.json",
+      "representation": "byte-exact",
+      "originalBytes": 83,
+      "originalSha256": "d720bccbe02adef99ce9159b9fff1c2f7a0efd625f51b5cbbbc8eed1092a1221"
+    },
+    {
+      "name": "actual-worker/job.json",
+      "bytes": 233,
+      "sha256": "db425f0e0bd0c3c61ea31cc6d7a4462685f94e2b53a25ec47249626de8d4bf4d",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\private-owner-retirement-live-704\\retirement-704-live-r1\\worker-evidence\\job.json",
+      "representation": "byte-exact",
+      "originalBytes": 233,
+      "originalSha256": "db425f0e0bd0c3c61ea31cc6d7a4462685f94e2b53a25ec47249626de8d4bf4d"
+    },
+    {
+      "name": "actual-worker/live-result.json",
+      "bytes": 3437,
+      "sha256": "3e2c9905d4daf62133b1fbc3581ff01d40805e65e0519335c49c16db9417f5e9",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\private-owner-retirement-live-704\\retirement-704-live-r1\\worker-evidence\\live-result.json",
+      "representation": "byte-exact",
+      "originalBytes": 3437,
+      "originalSha256": "3e2c9905d4daf62133b1fbc3581ff01d40805e65e0519335c49c16db9417f5e9"
+    },
+    {
+      "name": "actual-worker/native/variant-result.json",
+      "bytes": 1283,
+      "sha256": "b584b65c1949c7a01860bd508c3f903123d6c24c099214bbc1429c64e7e3e222",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\private-owner-retirement-live-704\\retirement-704-live-r1\\worker-evidence\\native\\variant-result.json",
+      "representation": "byte-exact",
+      "originalBytes": 1283,
+      "originalSha256": "b584b65c1949c7a01860bd508c3f903123d6c24c099214bbc1429c64e7e3e222"
+    },
+    {
+      "name": "actual-worker/serena/variant-result.json",
+      "bytes": 1283,
+      "sha256": "bcefb0f9c708452ea5a9b832f957a2d50fae418226b6989165b546c83c9ac0e6",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\private-owner-retirement-live-704\\retirement-704-live-r1\\worker-evidence\\serena\\variant-result.json",
+      "representation": "byte-exact",
+      "originalBytes": 1283,
+      "originalSha256": "bcefb0f9c708452ea5a9b832f957a2d50fae418226b6989165b546c83c9ac0e6"
+    },
+    {
+      "name": "controls/control-cli/.gitattributes",
+      "bytes": 14,
+      "sha256": "a79691a93b46e49ce460c26ef22afcc03d6eca1e63bf2edbc20e96159510f6c9",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\control-cli\\.gitattributes",
+      "representation": "byte-exact",
+      "originalBytes": 14,
+      "originalSha256": "a79691a93b46e49ce460c26ef22afcc03d6eca1e63bf2edbc20e96159510f6c9"
+    },
+    {
+      "name": "controls/control-cli/README.md",
+      "bytes": 4754,
+      "sha256": "1bbe94b3ac00dff9d1116ab8ccc8aadce545b14dd536888644d1cb92eac3cea6",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\control-cli\\README.md",
+      "representation": "byte-exact",
+      "originalBytes": 4754,
+      "originalSha256": "1bbe94b3ac00dff9d1116ab8ccc8aadce545b14dd536888644d1cb92eac3cea6"
+    },
+    {
+      "name": "controls/control-cli/base_controller.py",
+      "bytes": 42174,
+      "sha256": "a226a064b769585a9f3a107042ed5b26cbbdede4816106ae1db6d62b4dfa1af7",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\control-cli\\base_controller.py",
+      "representation": "byte-exact",
+      "originalBytes": 42174,
+      "originalSha256": "a226a064b769585a9f3a107042ed5b26cbbdede4816106ae1db6d62b4dfa1af7"
+    },
+    {
+      "name": "controls/control-cli/cli_controller.py",
+      "bytes": 24141,
+      "sha256": "d6e306cabbeffaf47b51904758dd0d7c0c4c0ed4dd65f077f1ef07a01ec47582",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\control-cli\\cli_controller.py",
+      "representation": "byte-exact",
+      "originalBytes": 24141,
+      "originalSha256": "d6e306cabbeffaf47b51904758dd0d7c0c4c0ed4dd65f077f1ef07a01ec47582"
+    },
+    {
+      "name": "controls/control-cli/private_windows_api.py",
+      "bytes": 2146,
+      "sha256": "d9ff76538ec359bb6095898b83c21390aec57c2252073190eeb6e317d9091500",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\control-cli\\private_windows_api.py",
+      "representation": "byte-exact",
+      "originalBytes": 2146,
+      "originalSha256": "d9ff76538ec359bb6095898b83c21390aec57c2252073190eeb6e317d9091500"
+    },
+    {
+      "name": "controls/control-cli/review-manifest.json",
+      "bytes": 1424,
+      "sha256": "8dd48b1595220464fc638d458a6f8dd7b19f55454c35c0bda7eb7cea255b94f8",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\control-cli\\review-manifest.json",
+      "representation": "byte-exact",
+      "originalBytes": 1424,
+      "originalSha256": "8dd48b1595220464fc638d458a6f8dd7b19f55454c35c0bda7eb7cea255b94f8"
+    },
+    {
+      "name": "controls/control-cli/test_metadata_pin.py",
+      "bytes": 4241,
+      "sha256": "6f555a7b29a85f17c404cba57474c682ae84adf28915ac8b1f10db73b9041aca",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\control-cli\\test_metadata_pin.py",
+      "representation": "byte-exact",
+      "originalBytes": 4241,
+      "originalSha256": "6f555a7b29a85f17c404cba57474c682ae84adf28915ac8b1f10db73b9041aca"
+    },
+    {
+      "name": "controls/control-compiler-lld/.gitattributes",
+      "bytes": 14,
+      "sha256": "a79691a93b46e49ce460c26ef22afcc03d6eca1e63bf2edbc20e96159510f6c9",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\control-compiler-lld\\.gitattributes",
+      "representation": "byte-exact",
+      "originalBytes": 14,
+      "originalSha256": "a79691a93b46e49ce460c26ef22afcc03d6eca1e63bf2edbc20e96159510f6c9"
+    },
+    {
+      "name": "controls/control-compiler-lld/README.md",
+      "bytes": 8304,
+      "sha256": "a09c68653255a64ad2f0cca79ecb8a3ba8690416cdbf11cb4ed35c497aaa7ba0",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\control-compiler-lld\\README.md",
+      "representation": "byte-exact",
+      "originalBytes": 8304,
+      "originalSha256": "a09c68653255a64ad2f0cca79ecb8a3ba8690416cdbf11cb4ed35c497aaa7ba0"
+    },
+    {
+      "name": "controls/control-compiler-lld/compiler_transaction_controller.py",
+      "bytes": 13772,
+      "sha256": "d6ab4fe93432a74a769e9abcdddcef40e87ef274e98fea498a219d95c2c9f29d",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\control-compiler-lld\\compiler_transaction_controller.py",
+      "representation": "byte-exact",
+      "originalBytes": 13772,
+      "originalSha256": "d6ab4fe93432a74a769e9abcdddcef40e87ef274e98fea498a219d95c2c9f29d"
+    },
+    {
+      "name": "controls/control-compiler-lld/compiler_transaction_worker.py",
+      "bytes": 1600,
+      "sha256": "cf24492dafb4c30ce057a0885c5021339fc76fa3dba1e1efdddaf111fa1285fb",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\control-compiler-lld\\compiler_transaction_worker.py",
+      "representation": "byte-exact",
+      "originalBytes": 1600,
+      "originalSha256": "cf24492dafb4c30ce057a0885c5021339fc76fa3dba1e1efdddaf111fa1285fb"
+    },
+    {
+      "name": "controls/control-compiler-lld/private_windows_api.py",
+      "bytes": 2146,
+      "sha256": "d9ff76538ec359bb6095898b83c21390aec57c2252073190eeb6e317d9091500",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\control-compiler-lld\\private_windows_api.py",
+      "representation": "byte-exact",
+      "originalBytes": 2146,
+      "originalSha256": "d9ff76538ec359bb6095898b83c21390aec57c2252073190eeb6e317d9091500"
+    },
+    {
+      "name": "controls/control-compiler-lld/review-manifest.json",
+      "bytes": 6537,
+      "sha256": "141943606a7c38d4b33f2291b211eabee008d3469da8c45b12bfc4f3b6edaea9",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\control-compiler-lld\\review-manifest.json",
+      "representation": "byte-exact",
+      "originalBytes": 6537,
+      "originalSha256": "141943606a7c38d4b33f2291b211eabee008d3469da8c45b12bfc4f3b6edaea9"
+    },
+    {
+      "name": "controls/control-compiler-lld/runtime-fork.patch",
+      "bytes": 5828,
+      "sha256": "93bb522cb253643e9ac69e05efd26e9964d6d7cc05dc6ce31699d141f9314ad6",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\control-compiler-lld\\runtime-fork.patch",
+      "representation": "byte-exact",
+      "originalBytes": 5828,
+      "originalSha256": "93bb522cb253643e9ac69e05efd26e9964d6d7cc05dc6ce31699d141f9314ad6"
+    },
+    {
+      "name": "controls/control-compiler-lld/test_compiler_transaction.py",
+      "bytes": 48288,
+      "sha256": "da422d730d3db84b4967fe422d8b8106ed5bb2faac05fa95b012ec5c5ee4bed9",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\control-compiler-lld\\test_compiler_transaction.py",
+      "representation": "byte-exact",
+      "originalBytes": 48288,
+      "originalSha256": "da422d730d3db84b4967fe422d8b8106ed5bb2faac05fa95b012ec5c5ee4bed9"
+    },
+    {
+      "name": "controls/control-compiler-lld/transaction_protocol.py",
+      "bytes": 45739,
+      "sha256": "eda51ab9efef48ae9675bef75ecd57ad4b3bea3319f132f6614c2e813de0b45a",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\control-compiler-lld\\transaction_protocol.py",
+      "representation": "byte-exact",
+      "originalBytes": 45739,
+      "originalSha256": "eda51ab9efef48ae9675bef75ecd57ad4b3bea3319f132f6614c2e813de0b45a"
+    },
+    {
+      "name": "controls/control-compiler-lld/transaction_runtime.py",
+      "bytes": 44391,
+      "sha256": "1608c69131ab3374812496ee9ff855e2c906ac172d31f9899331aa33f2e98de8",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\control-compiler-lld\\transaction_runtime.py",
+      "representation": "byte-exact",
+      "originalBytes": 44391,
+      "originalSha256": "1608c69131ab3374812496ee9ff855e2c906ac172d31f9899331aa33f2e98de8"
+    },
+    {
+      "name": "controls/control-compiler-lld/v2-fork.patch",
+      "bytes": 52980,
+      "sha256": "006f58884051c894305b88ab3b3b46796b8eb0a6c3111df816bf6ac4765bdee5",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\control-compiler-lld\\v2-fork.patch",
+      "representation": "byte-exact",
+      "originalBytes": 52980,
+      "originalSha256": "006f58884051c894305b88ab3b3b46796b8eb0a6c3111df816bf6ac4765bdee5"
+    },
+    {
+      "name": "controls/control-history-lld-704/.gitattributes",
+      "bytes": 14,
+      "sha256": "85e48d232edc7b02f6cecf8fbbf905f3b126c467b594d8dd16c4f8fa283a8320",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\control-history-lld-704\\.gitattributes",
+      "representation": "byte-exact",
+      "originalBytes": 14,
+      "originalSha256": "85e48d232edc7b02f6cecf8fbbf905f3b126c467b594d8dd16c4f8fa283a8320"
+    },
+    {
+      "name": "controls/control-history-lld-704/README.md",
+      "bytes": 10308,
+      "sha256": "aef3bcfbee3eab9d1e3a6f2d320733163464867be23b58c5eb223af49ee40237",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\control-history-lld-704\\README.md",
+      "representation": "byte-exact",
+      "originalBytes": 10308,
+      "originalSha256": "aef3bcfbee3eab9d1e3a6f2d320733163464867be23b58c5eb223af49ee40237"
+    },
+    {
+      "name": "controls/control-history-lld-704/history_transaction_controller.py",
+      "bytes": 29968,
+      "sha256": "b6b60d9a37c27946ad1a7e8f6818d1363d1dede39d5ed5503d132db41938b81c",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\control-history-lld-704\\history_transaction_controller.py",
+      "representation": "byte-exact",
+      "originalBytes": 29968,
+      "originalSha256": "b6b60d9a37c27946ad1a7e8f6818d1363d1dede39d5ed5503d132db41938b81c"
+    },
+    {
+      "name": "controls/control-history-lld-704/review-manifest.json",
+      "bytes": 3766,
+      "sha256": "5c378d5ed7295a8b828429ceb3d0f802b269053bf7625ec614cd26244642a40a",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\control-history-lld-704\\review-manifest.json",
+      "representation": "byte-exact",
+      "originalBytes": 3766,
+      "originalSha256": "5c378d5ed7295a8b828429ceb3d0f802b269053bf7625ec614cd26244642a40a"
+    },
+    {
+      "name": "controls/control-history-lld-704/test_history_transaction_controller.py",
+      "bytes": 46834,
+      "sha256": "ffdc1add5d27f4acf1864c3f22dba4e5ffb46b22f4ad751a84e6b5b5d62b28cf",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\control-history-lld-704\\test_history_transaction_controller.py",
+      "representation": "byte-exact",
+      "originalBytes": 46834,
+      "originalSha256": "ffdc1add5d27f4acf1864c3f22dba4e5ffb46b22f4ad751a84e6b5b5d62b28cf"
+    },
+    {
+      "name": "controls/control-history/.gitattributes",
+      "bytes": 14,
+      "sha256": "a79691a93b46e49ce460c26ef22afcc03d6eca1e63bf2edbc20e96159510f6c9",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\control-history\\.gitattributes",
+      "representation": "byte-exact",
+      "originalBytes": 14,
+      "originalSha256": "a79691a93b46e49ce460c26ef22afcc03d6eca1e63bf2edbc20e96159510f6c9"
+    },
+    {
+      "name": "controls/control-history/README.md",
+      "bytes": 6878,
+      "sha256": "628651bd06b1a37a90b03af8d85926991d0bc7f3029e9559a60c92db1c08bf5f",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\control-history\\README.md",
+      "representation": "byte-exact",
+      "originalBytes": 6878,
+      "originalSha256": "628651bd06b1a37a90b03af8d85926991d0bc7f3029e9559a60c92db1c08bf5f"
+    },
+    {
+      "name": "controls/control-history/local_history_controller.py",
+      "bytes": 29875,
+      "sha256": "8d37fd4ca9c4f9d7b3320da6d628ff1b5537d880b4090289347d9df7f205d142",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\control-history\\local_history_controller.py",
+      "representation": "byte-exact",
+      "originalBytes": 29875,
+      "originalSha256": "8d37fd4ca9c4f9d7b3320da6d628ff1b5537d880b4090289347d9df7f205d142"
+    },
+    {
+      "name": "controls/control-history/review-manifest.json",
+      "bytes": 1986,
+      "sha256": "84e19772b5c90d6313cfb4902bc7d671f82eaa753d6279b8b9f787f422c055c9",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\control-history\\review-manifest.json",
+      "representation": "byte-exact",
+      "originalBytes": 1986,
+      "originalSha256": "84e19772b5c90d6313cfb4902bc7d671f82eaa753d6279b8b9f787f422c055c9"
+    },
+    {
+      "name": "controls/control-history/test_local_history_controller.py",
+      "bytes": 28916,
+      "sha256": "7ec89b7aa5e810d44d466c7150d1b0f7615defa78cc310617d8b4d5a239427f7",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\control-history\\test_local_history_controller.py",
+      "representation": "byte-exact",
+      "originalBytes": 28916,
+      "originalSha256": "7ec89b7aa5e810d44d466c7150d1b0f7615defa78cc310617d8b4d5a239427f7"
+    },
+    {
+      "name": "controls/control-owner-retirement-live-704/.gitattributes",
+      "bytes": 68,
+      "sha256": "2772963d25d715c4a88465d05d8628800277fa393e1631d7e112ab4a92a21511",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\control-owner-retirement-live-704\\.gitattributes",
+      "representation": "byte-exact",
+      "originalBytes": 68,
+      "originalSha256": "2772963d25d715c4a88465d05d8628800277fa393e1631d7e112ab4a92a21511"
+    },
+    {
+      "name": "controls/control-owner-retirement-live-704/README.md",
+      "bytes": 4382,
+      "sha256": "5bcce66071f0961a311f3a3692d855f7fe2b2ecd919e3d9ba4e85308a050f642",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\control-owner-retirement-live-704\\README.md",
+      "representation": "byte-exact",
+      "originalBytes": 4382,
+      "originalSha256": "5bcce66071f0961a311f3a3692d855f7fe2b2ecd919e3d9ba4e85308a050f642"
+    },
+    {
+      "name": "controls/control-owner-retirement-live-704/owner_retirement_live.py",
+      "bytes": 20012,
+      "sha256": "81f9f0d07e35d2a35a50eae7deff8ca4a4381edca431f9f1c3dea21b239d831e",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\control-owner-retirement-live-704\\owner_retirement_live.py",
+      "representation": "byte-exact",
+      "originalBytes": 20012,
+      "originalSha256": "81f9f0d07e35d2a35a50eae7deff8ca4a4381edca431f9f1c3dea21b239d831e"
+    },
+    {
+      "name": "controls/control-owner-retirement-live-704/retirement_transaction_controller.py",
+      "bytes": 33030,
+      "sha256": "0daf107290c6105cca78f29605930b1e7121826e507250c3ad48e8dbaa2ff543",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\control-owner-retirement-live-704\\retirement_transaction_controller.py",
+      "representation": "byte-exact",
+      "originalBytes": 33030,
+      "originalSha256": "0daf107290c6105cca78f29605930b1e7121826e507250c3ad48e8dbaa2ff543"
+    },
+    {
+      "name": "controls/control-owner-retirement-live-704/retirement_worker_entry.py",
+      "bytes": 12987,
+      "sha256": "9a62cb24f20a179450f47ce7d3961850f762d7d72928a57ca322280a04c5bed9",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\control-owner-retirement-live-704\\retirement_worker_entry.py",
+      "representation": "byte-exact",
+      "originalBytes": 12987,
+      "originalSha256": "9a62cb24f20a179450f47ce7d3961850f762d7d72928a57ca322280a04c5bed9"
+    },
+    {
+      "name": "controls/control-owner-retirement-live-704/review-manifest.json",
+      "bytes": 4616,
+      "sha256": "ac5c7137a0856c378f3018923e4a82ea75ae23cac87baa476c5bd8c608c0c01d",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\control-owner-retirement-live-704\\review-manifest.json",
+      "representation": "byte-exact",
+      "originalBytes": 4616,
+      "originalSha256": "ac5c7137a0856c378f3018923e4a82ea75ae23cac87baa476c5bd8c608c0c01d"
+    },
+    {
+      "name": "controls/control-owner-retirement-live-704/test_owner_retirement_live.py",
+      "bytes": 17176,
+      "sha256": "f946350aead585762addc3c61daae412c35c574a0eb44eb31142c0f64e03ef92",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\control-owner-retirement-live-704\\test_owner_retirement_live.py",
+      "representation": "byte-exact",
+      "originalBytes": 17176,
+      "originalSha256": "f946350aead585762addc3c61daae412c35c574a0eb44eb31142c0f64e03ef92"
+    },
+    {
+      "name": "controls/control-owner-retirement-live-704/test_retirement_transaction_controller.py",
+      "bytes": 49959,
+      "sha256": "1292797797231989b49a4839c30041f0d5e97371db39d5779709f66d0b1a215a",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\control-owner-retirement-live-704\\test_retirement_transaction_controller.py",
+      "representation": "byte-exact",
+      "originalBytes": 49959,
+      "originalSha256": "1292797797231989b49a4839c30041f0d5e97371db39d5779709f66d0b1a215a"
+    },
+    {
+      "name": "guard-tests/consumer-after.json",
+      "bytes": 1109,
+      "sha256": "92d75a08fa021f334faf421dfb32a668531fd2112c93b6f12be74084e4458275",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-retirement-704-guard-tests\\retirement-704-guard-tests-r2\\consumer-after.json",
+      "representation": "byte-exact",
+      "originalBytes": 1109,
+      "originalSha256": "92d75a08fa021f334faf421dfb32a668531fd2112c93b6f12be74084e4458275"
+    },
+    {
+      "name": "guard-tests/consumer-before.json",
+      "bytes": 1109,
+      "sha256": "92d75a08fa021f334faf421dfb32a668531fd2112c93b6f12be74084e4458275",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-retirement-704-guard-tests\\retirement-704-guard-tests-r2\\consumer-before.json",
+      "representation": "byte-exact",
+      "originalBytes": 1109,
+      "originalSha256": "92d75a08fa021f334faf421dfb32a668531fd2112c93b6f12be74084e4458275"
+    },
+    {
+      "name": "guard-tests/control-after.json",
+      "bytes": 914,
+      "sha256": "204b543d9df10fd8058cf11b87fc27292d5412296334a42cb9712ed8dbaa7f71",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-retirement-704-guard-tests\\retirement-704-guard-tests-r2\\control-after.json",
+      "representation": "byte-exact",
+      "originalBytes": 914,
+      "originalSha256": "204b543d9df10fd8058cf11b87fc27292d5412296334a42cb9712ed8dbaa7f71"
+    },
+    {
+      "name": "guard-tests/control-before.json",
+      "bytes": 914,
+      "sha256": "204b543d9df10fd8058cf11b87fc27292d5412296334a42cb9712ed8dbaa7f71",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-retirement-704-guard-tests\\retirement-704-guard-tests-r2\\control-before.json",
+      "representation": "byte-exact",
+      "originalBytes": 914,
+      "originalSha256": "204b543d9df10fd8058cf11b87fc27292d5412296334a42cb9712ed8dbaa7f71"
+    },
+    {
+      "name": "guard-tests/dependency-after.json",
+      "bytes": 8107,
+      "sha256": "120afbfa0072a78395ea3580ce52c1d723911986f305e95430fe558070dbd8be",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-retirement-704-guard-tests\\retirement-704-guard-tests-r2\\dependency-after.json",
+      "representation": "byte-exact",
+      "originalBytes": 8107,
+      "originalSha256": "120afbfa0072a78395ea3580ce52c1d723911986f305e95430fe558070dbd8be"
+    },
+    {
+      "name": "guard-tests/dependency-before.json",
+      "bytes": 8107,
+      "sha256": "120afbfa0072a78395ea3580ce52c1d723911986f305e95430fe558070dbd8be",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-retirement-704-guard-tests\\retirement-704-guard-tests-r2\\dependency-before.json",
+      "representation": "byte-exact",
+      "originalBytes": 8107,
+      "originalSha256": "120afbfa0072a78395ea3580ce52c1d723911986f305e95430fe558070dbd8be"
+    },
+    {
+      "name": "guard-tests/git-files-after.job.json",
+      "bytes": 1171,
+      "sha256": "51a1ced0d2a2baa0c51a0fdd5a1aab2818ade019adc4f73e1d3c92234b221a33",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-retirement-704-guard-tests\\retirement-704-guard-tests-r2\\git-files-after.job.json",
+      "representation": "byte-exact",
+      "originalBytes": 1171,
+      "originalSha256": "51a1ced0d2a2baa0c51a0fdd5a1aab2818ade019adc4f73e1d3c92234b221a33"
+    },
+    {
+      "name": "guard-tests/git-files-after.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-retirement-704-guard-tests\\retirement-704-guard-tests-r2\\git-files-after.stderr",
+      "representation": "byte-exact",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "guard-tests/git-files-before.job.json",
+      "bytes": 1171,
+      "sha256": "fcd3783919638bbc75c1f0d6f2591525cf4e1201336ada8ef08c7b3aa8bb9e5d",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-retirement-704-guard-tests\\retirement-704-guard-tests-r2\\git-files-before.job.json",
+      "representation": "byte-exact",
+      "originalBytes": 1171,
+      "originalSha256": "fcd3783919638bbc75c1f0d6f2591525cf4e1201336ada8ef08c7b3aa8bb9e5d"
+    },
+    {
+      "name": "guard-tests/git-files-before.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-retirement-704-guard-tests\\retirement-704-guard-tests-r2\\git-files-before.stderr",
+      "representation": "byte-exact",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "guard-tests/git-head-after.job.json",
+      "bytes": 1187,
+      "sha256": "e6bc9b992d39c1f796be62a30c5b184968c2d6c41f43e4ac774d4c2f28481e0d",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-retirement-704-guard-tests\\retirement-704-guard-tests-r2\\git-head-after.job.json",
+      "representation": "byte-exact",
+      "originalBytes": 1187,
+      "originalSha256": "e6bc9b992d39c1f796be62a30c5b184968c2d6c41f43e4ac774d4c2f28481e0d"
+    },
+    {
+      "name": "guard-tests/git-head-after.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-retirement-704-guard-tests\\retirement-704-guard-tests-r2\\git-head-after.stderr",
+      "representation": "byte-exact",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "guard-tests/git-head-after.stdout",
+      "bytes": 41,
+      "sha256": "cc514d1e543de7aba890aa530db79f6e89feab8b960f8f90281c5ee01aebe623",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-retirement-704-guard-tests\\retirement-704-guard-tests-r2\\git-head-after.stdout",
+      "representation": "byte-exact",
+      "originalBytes": 41,
+      "originalSha256": "cc514d1e543de7aba890aa530db79f6e89feab8b960f8f90281c5ee01aebe623"
+    },
+    {
+      "name": "guard-tests/git-head-before.job.json",
+      "bytes": 1185,
+      "sha256": "a1a9fc42f50f18779e88cea4cf5cecbcc8666a358d4dc1dc5666dd98b1db9491",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-retirement-704-guard-tests\\retirement-704-guard-tests-r2\\git-head-before.job.json",
+      "representation": "byte-exact",
+      "originalBytes": 1185,
+      "originalSha256": "a1a9fc42f50f18779e88cea4cf5cecbcc8666a358d4dc1dc5666dd98b1db9491"
+    },
+    {
+      "name": "guard-tests/git-head-before.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-retirement-704-guard-tests\\retirement-704-guard-tests-r2\\git-head-before.stderr",
+      "representation": "byte-exact",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "guard-tests/git-head-before.stdout",
+      "bytes": 41,
+      "sha256": "cc514d1e543de7aba890aa530db79f6e89feab8b960f8f90281c5ee01aebe623",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-retirement-704-guard-tests\\retirement-704-guard-tests-r2\\git-head-before.stdout",
+      "representation": "byte-exact",
+      "originalBytes": 41,
+      "originalSha256": "cc514d1e543de7aba890aa530db79f6e89feab8b960f8f90281c5ee01aebe623"
+    },
+    {
+      "name": "guard-tests/git-status-after.job.json",
+      "bytes": 1214,
+      "sha256": "f07baa4968f7ef2b2587b74869901e7ba76b956f2d7165761bd96a0d369b25bf",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-retirement-704-guard-tests\\retirement-704-guard-tests-r2\\git-status-after.job.json",
+      "representation": "byte-exact",
+      "originalBytes": 1214,
+      "originalSha256": "f07baa4968f7ef2b2587b74869901e7ba76b956f2d7165761bd96a0d369b25bf"
+    },
+    {
+      "name": "guard-tests/git-status-after.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-retirement-704-guard-tests\\retirement-704-guard-tests-r2\\git-status-after.stderr",
+      "representation": "byte-exact",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "guard-tests/git-status-after.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-retirement-704-guard-tests\\retirement-704-guard-tests-r2\\git-status-after.stdout",
+      "representation": "byte-exact",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "guard-tests/git-status-before.job.json",
+      "bytes": 1214,
+      "sha256": "6693f57bc87a9099d76e08c67190df65f9fc0b3bdee7d7b233c8b64868720ecb",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-retirement-704-guard-tests\\retirement-704-guard-tests-r2\\git-status-before.job.json",
+      "representation": "byte-exact",
+      "originalBytes": 1214,
+      "originalSha256": "6693f57bc87a9099d76e08c67190df65f9fc0b3bdee7d7b233c8b64868720ecb"
+    },
+    {
+      "name": "guard-tests/git-status-before.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-retirement-704-guard-tests\\retirement-704-guard-tests-r2\\git-status-before.stderr",
+      "representation": "byte-exact",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "guard-tests/git-status-before.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-retirement-704-guard-tests\\retirement-704-guard-tests-r2\\git-status-before.stdout",
+      "representation": "byte-exact",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "guard-tests/result.json",
+      "bytes": 636,
+      "sha256": "fbe4658a15bbcd1a496da7d5bdc74e6e8487f38bff1171856d42f0f68f075532",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-retirement-704-guard-tests\\retirement-704-guard-tests-r2\\result.json",
+      "representation": "byte-exact",
+      "originalBytes": 636,
+      "originalSha256": "fbe4658a15bbcd1a496da7d5bdc74e6e8487f38bff1171856d42f0f68f075532"
+    },
+    {
+      "name": "guard-tests/source-after.json",
+      "bytes": 155770,
+      "sha256": "8f496268fb3d38c6b5809ada8884ea75a89627a91cdde9eaece66723caa9e65e",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-retirement-704-guard-tests\\retirement-704-guard-tests-r2\\source-after.json",
+      "representation": "byte-exact",
+      "originalBytes": 155770,
+      "originalSha256": "8f496268fb3d38c6b5809ada8884ea75a89627a91cdde9eaece66723caa9e65e"
+    },
+    {
+      "name": "guard-tests/source-before.json",
+      "bytes": 155770,
+      "sha256": "8f496268fb3d38c6b5809ada8884ea75a89627a91cdde9eaece66723caa9e65e",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-retirement-704-guard-tests\\retirement-704-guard-tests-r2\\source-before.json",
+      "representation": "byte-exact",
+      "originalBytes": 155770,
+      "originalSha256": "8f496268fb3d38c6b5809ada8884ea75a89627a91cdde9eaece66723caa9e65e"
+    },
+    {
+      "name": "guard-tests/tests.job.json",
+      "bytes": 1286,
+      "sha256": "f9f6bdc7b7c8a60480bd3b970be79b2c406b305ac9ccaeffe794c976efd80774",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-retirement-704-guard-tests\\retirement-704-guard-tests-r2\\tests.job.json",
+      "representation": "byte-exact",
+      "originalBytes": 1286,
+      "originalSha256": "f9f6bdc7b7c8a60480bd3b970be79b2c406b305ac9ccaeffe794c976efd80774"
+    },
+    {
+      "name": "guard-tests/tests.stderr",
+      "bytes": 12836,
+      "sha256": "a2d05d8a6c48f49ed89a0503920b44fe93948d7bf6c0b391eb9607ffe15e9fc5",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-retirement-704-guard-tests\\retirement-704-guard-tests-r2\\tests.stderr",
+      "representation": "byte-exact",
+      "originalBytes": 12836,
+      "originalSha256": "a2d05d8a6c48f49ed89a0503920b44fe93948d7bf6c0b391eb9607ffe15e9fc5"
+    },
+    {
+      "name": "guard-tests/tests.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-retirement-704-guard-tests\\retirement-704-guard-tests-r2\\tests.stdout",
+      "representation": "byte-exact",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "live-admission/archive-consumer-controls-after.json",
+      "bytes": 683,
+      "sha256": "2dc060b44121c45ce49f7cceda329a6b87e10e1c6aa218ae9bb3207a82fa67cd",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-owner-retirement-live-704\\retirement-704-live-r1\\archive-consumer-controls-after.json",
+      "representation": "byte-exact",
+      "originalBytes": 683,
+      "originalSha256": "2dc060b44121c45ce49f7cceda329a6b87e10e1c6aa218ae9bb3207a82fa67cd"
+    },
+    {
+      "name": "live-admission/archive-consumer-controls-before.json",
+      "bytes": 683,
+      "sha256": "2dc060b44121c45ce49f7cceda329a6b87e10e1c6aa218ae9bb3207a82fa67cd",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-owner-retirement-live-704\\retirement-704-live-r1\\archive-consumer-controls-before.json",
+      "representation": "byte-exact",
+      "originalBytes": 683,
+      "originalSha256": "2dc060b44121c45ce49f7cceda329a6b87e10e1c6aa218ae9bb3207a82fa67cd"
+    },
+    {
+      "name": "live-admission/archive-consumer-controls-final.json",
+      "bytes": 683,
+      "sha256": "2dc060b44121c45ce49f7cceda329a6b87e10e1c6aa218ae9bb3207a82fa67cd",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-owner-retirement-live-704\\retirement-704-live-r1\\archive-consumer-controls-final.json",
+      "representation": "byte-exact",
+      "originalBytes": 683,
+      "originalSha256": "2dc060b44121c45ce49f7cceda329a6b87e10e1c6aa218ae9bb3207a82fa67cd"
+    },
+    {
+      "name": "live-admission/consumer-controls-after.json",
+      "bytes": 1109,
+      "sha256": "92d75a08fa021f334faf421dfb32a668531fd2112c93b6f12be74084e4458275",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-owner-retirement-live-704\\retirement-704-live-r1\\consumer-controls-after.json",
+      "representation": "byte-exact",
+      "originalBytes": 1109,
+      "originalSha256": "92d75a08fa021f334faf421dfb32a668531fd2112c93b6f12be74084e4458275"
+    },
+    {
+      "name": "live-admission/consumer-controls-before.json",
+      "bytes": 1109,
+      "sha256": "92d75a08fa021f334faf421dfb32a668531fd2112c93b6f12be74084e4458275",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-owner-retirement-live-704\\retirement-704-live-r1\\consumer-controls-before.json",
+      "representation": "byte-exact",
+      "originalBytes": 1109,
+      "originalSha256": "92d75a08fa021f334faf421dfb32a668531fd2112c93b6f12be74084e4458275"
+    },
+    {
+      "name": "live-admission/consumer-controls-final.json",
+      "bytes": 1109,
+      "sha256": "92d75a08fa021f334faf421dfb32a668531fd2112c93b6f12be74084e4458275",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-owner-retirement-live-704\\retirement-704-live-r1\\consumer-controls-final.json",
+      "representation": "byte-exact",
+      "originalBytes": 1109,
+      "originalSha256": "92d75a08fa021f334faf421dfb32a668531fd2112c93b6f12be74084e4458275"
+    },
+    {
+      "name": "live-admission/git-files-after.job.json",
+      "bytes": 1391,
+      "sha256": "2b63041c39363ed69f3d0845509de66205384bb32fff3b51d6d69b9519b2db4c",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-owner-retirement-live-704\\retirement-704-live-r1\\git-files-after.job.json",
+      "representation": "byte-exact",
+      "originalBytes": 1391,
+      "originalSha256": "2b63041c39363ed69f3d0845509de66205384bb32fff3b51d6d69b9519b2db4c"
+    },
+    {
+      "name": "live-admission/git-files-after.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-owner-retirement-live-704\\retirement-704-live-r1\\git-files-after.stderr",
+      "representation": "byte-exact",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "live-admission/git-files-before.job.json",
+      "bytes": 1392,
+      "sha256": "ed542d768d250ccb1d5034b60704ef39bf703a381ac821bd5ace73d88372d54b",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-owner-retirement-live-704\\retirement-704-live-r1\\git-files-before.job.json",
+      "representation": "byte-exact",
+      "originalBytes": 1392,
+      "originalSha256": "ed542d768d250ccb1d5034b60704ef39bf703a381ac821bd5ace73d88372d54b"
+    },
+    {
+      "name": "live-admission/git-files-before.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-owner-retirement-live-704\\retirement-704-live-r1\\git-files-before.stderr",
+      "representation": "byte-exact",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "live-admission/git-files-final.job.json",
+      "bytes": 1391,
+      "sha256": "e2bb1dcc0c4863287d56d4a12c727f319d723c0706db717d6faf535b81eff308",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-owner-retirement-live-704\\retirement-704-live-r1\\git-files-final.job.json",
+      "representation": "byte-exact",
+      "originalBytes": 1391,
+      "originalSha256": "e2bb1dcc0c4863287d56d4a12c727f319d723c0706db717d6faf535b81eff308"
+    },
+    {
+      "name": "live-admission/git-files-final.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-owner-retirement-live-704\\retirement-704-live-r1\\git-files-final.stderr",
+      "representation": "byte-exact",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "live-admission/git-head-after.job.json",
+      "bytes": 1442,
+      "sha256": "38fcc4cd06841d3cbd272d3f55c103a1a13a3cc2cca709f8572166b7fffd73b3",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-owner-retirement-live-704\\retirement-704-live-r1\\git-head-after.job.json",
+      "representation": "byte-exact",
+      "originalBytes": 1442,
+      "originalSha256": "38fcc4cd06841d3cbd272d3f55c103a1a13a3cc2cca709f8572166b7fffd73b3"
+    },
+    {
+      "name": "live-admission/git-head-after.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-owner-retirement-live-704\\retirement-704-live-r1\\git-head-after.stderr",
+      "representation": "byte-exact",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "live-admission/git-head-after.stdout",
+      "bytes": 41,
+      "sha256": "cc514d1e543de7aba890aa530db79f6e89feab8b960f8f90281c5ee01aebe623",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-owner-retirement-live-704\\retirement-704-live-r1\\git-head-after.stdout",
+      "representation": "byte-exact",
+      "originalBytes": 41,
+      "originalSha256": "cc514d1e543de7aba890aa530db79f6e89feab8b960f8f90281c5ee01aebe623"
+    },
+    {
+      "name": "live-admission/git-head-before.job.json",
+      "bytes": 1403,
+      "sha256": "fc282862fd38037b11e3eb0153302df268eff0e44d254992a986f6850adb0a17",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-owner-retirement-live-704\\retirement-704-live-r1\\git-head-before.job.json",
+      "representation": "byte-exact",
+      "originalBytes": 1403,
+      "originalSha256": "fc282862fd38037b11e3eb0153302df268eff0e44d254992a986f6850adb0a17"
+    },
+    {
+      "name": "live-admission/git-head-before.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-owner-retirement-live-704\\retirement-704-live-r1\\git-head-before.stderr",
+      "representation": "byte-exact",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "live-admission/git-head-before.stdout",
+      "bytes": 41,
+      "sha256": "cc514d1e543de7aba890aa530db79f6e89feab8b960f8f90281c5ee01aebe623",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-owner-retirement-live-704\\retirement-704-live-r1\\git-head-before.stdout",
+      "representation": "byte-exact",
+      "originalBytes": 41,
+      "originalSha256": "cc514d1e543de7aba890aa530db79f6e89feab8b960f8f90281c5ee01aebe623"
+    },
+    {
+      "name": "live-admission/git-head-final.job.json",
+      "bytes": 1405,
+      "sha256": "8aaa03caf374336e665f15fc54dfef37a53ffe493e281ff4ef998cd31be8eee1",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-owner-retirement-live-704\\retirement-704-live-r1\\git-head-final.job.json",
+      "representation": "byte-exact",
+      "originalBytes": 1405,
+      "originalSha256": "8aaa03caf374336e665f15fc54dfef37a53ffe493e281ff4ef998cd31be8eee1"
+    },
+    {
+      "name": "live-admission/git-head-final.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-owner-retirement-live-704\\retirement-704-live-r1\\git-head-final.stderr",
+      "representation": "byte-exact",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "live-admission/git-head-final.stdout",
+      "bytes": 41,
+      "sha256": "cc514d1e543de7aba890aa530db79f6e89feab8b960f8f90281c5ee01aebe623",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-owner-retirement-live-704\\retirement-704-live-r1\\git-head-final.stdout",
+      "representation": "byte-exact",
+      "originalBytes": 41,
+      "originalSha256": "cc514d1e543de7aba890aa530db79f6e89feab8b960f8f90281c5ee01aebe623"
+    },
+    {
+      "name": "live-admission/git-status-after.job.json",
+      "bytes": 1433,
+      "sha256": "0d5ca6d735f45946823a703a0d2aad3cc78af8e463c4c2f9f96be723b2f9361e",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-owner-retirement-live-704\\retirement-704-live-r1\\git-status-after.job.json",
+      "representation": "byte-exact",
+      "originalBytes": 1433,
+      "originalSha256": "0d5ca6d735f45946823a703a0d2aad3cc78af8e463c4c2f9f96be723b2f9361e"
+    },
+    {
+      "name": "live-admission/git-status-after.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-owner-retirement-live-704\\retirement-704-live-r1\\git-status-after.stderr",
+      "representation": "byte-exact",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "live-admission/git-status-after.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-owner-retirement-live-704\\retirement-704-live-r1\\git-status-after.stdout",
+      "representation": "byte-exact",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "live-admission/git-status-before.job.json",
+      "bytes": 1471,
+      "sha256": "65392e30abcf350dd99aabc3a2cf26e2bdbe01ddf54f5b0cd47e1fa27112338f",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-owner-retirement-live-704\\retirement-704-live-r1\\git-status-before.job.json",
+      "representation": "byte-exact",
+      "originalBytes": 1471,
+      "originalSha256": "65392e30abcf350dd99aabc3a2cf26e2bdbe01ddf54f5b0cd47e1fa27112338f"
+    },
+    {
+      "name": "live-admission/git-status-before.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-owner-retirement-live-704\\retirement-704-live-r1\\git-status-before.stderr",
+      "representation": "byte-exact",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "live-admission/git-status-before.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-owner-retirement-live-704\\retirement-704-live-r1\\git-status-before.stdout",
+      "representation": "byte-exact",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "live-admission/git-status-final.job.json",
+      "bytes": 1432,
+      "sha256": "4cfbf908b562ceff6e635235d0e43128001c75ef850b2df32db7221ea8c0b9f2",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-owner-retirement-live-704\\retirement-704-live-r1\\git-status-final.job.json",
+      "representation": "byte-exact",
+      "originalBytes": 1432,
+      "originalSha256": "4cfbf908b562ceff6e635235d0e43128001c75ef850b2df32db7221ea8c0b9f2"
+    },
+    {
+      "name": "live-admission/git-status-final.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-owner-retirement-live-704\\retirement-704-live-r1\\git-status-final.stderr",
+      "representation": "byte-exact",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "live-admission/git-status-final.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-owner-retirement-live-704\\retirement-704-live-r1\\git-status-final.stdout",
+      "representation": "byte-exact",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "live-admission/harness-controls-after.json",
+      "bytes": 298,
+      "sha256": "c77b01890025e38562dbc418a03a9d68c905a665019c0d1d4339a40daf01675e",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-owner-retirement-live-704\\retirement-704-live-r1\\harness-controls-after.json",
+      "representation": "byte-exact",
+      "originalBytes": 298,
+      "originalSha256": "c77b01890025e38562dbc418a03a9d68c905a665019c0d1d4339a40daf01675e"
+    },
+    {
+      "name": "live-admission/harness-controls-before.json",
+      "bytes": 298,
+      "sha256": "c77b01890025e38562dbc418a03a9d68c905a665019c0d1d4339a40daf01675e",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-owner-retirement-live-704\\retirement-704-live-r1\\harness-controls-before.json",
+      "representation": "byte-exact",
+      "originalBytes": 298,
+      "originalSha256": "c77b01890025e38562dbc418a03a9d68c905a665019c0d1d4339a40daf01675e"
+    },
+    {
+      "name": "live-admission/harness-controls-final.json",
+      "bytes": 298,
+      "sha256": "c77b01890025e38562dbc418a03a9d68c905a665019c0d1d4339a40daf01675e",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-owner-retirement-live-704\\retirement-704-live-r1\\harness-controls-final.json",
+      "representation": "byte-exact",
+      "originalBytes": 298,
+      "originalSha256": "c77b01890025e38562dbc418a03a9d68c905a665019c0d1d4339a40daf01675e"
+    },
+    {
+      "name": "live-admission/history-files-after.job.json",
+      "bytes": 1569,
+      "sha256": "84483fca3fc76027865774de31a52a54f0eccaf38edd6c30d0e101cd7c51b169",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-owner-retirement-live-704\\retirement-704-live-r1\\history-files-after.job.json",
+      "representation": "byte-exact",
+      "originalBytes": 1569,
+      "originalSha256": "84483fca3fc76027865774de31a52a54f0eccaf38edd6c30d0e101cd7c51b169"
+    },
+    {
+      "name": "live-admission/history-files-after.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-owner-retirement-live-704\\retirement-704-live-r1\\history-files-after.stderr",
+      "representation": "byte-exact",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "live-admission/history-files-after.stdout",
+      "bytes": 37581,
+      "sha256": "bd9a8aeb97a827a714c16299ac94609c2252d03900502ab7bfdeaca00a226c06",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-owner-retirement-live-704\\retirement-704-live-r1\\history-files-after.stdout",
+      "representation": "byte-exact",
+      "originalBytes": 37581,
+      "originalSha256": "bd9a8aeb97a827a714c16299ac94609c2252d03900502ab7bfdeaca00a226c06"
+    },
+    {
+      "name": "live-admission/history-files-before.job.json",
+      "bytes": 1568,
+      "sha256": "fdc0a3c070c607bebcf720e129933bcf53af8656f90d38f29103ec806002f8a1",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-owner-retirement-live-704\\retirement-704-live-r1\\history-files-before.job.json",
+      "representation": "byte-exact",
+      "originalBytes": 1568,
+      "originalSha256": "fdc0a3c070c607bebcf720e129933bcf53af8656f90d38f29103ec806002f8a1"
+    },
+    {
+      "name": "live-admission/history-files-before.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-owner-retirement-live-704\\retirement-704-live-r1\\history-files-before.stderr",
+      "representation": "byte-exact",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "live-admission/history-files-before.stdout",
+      "bytes": 37581,
+      "sha256": "bd9a8aeb97a827a714c16299ac94609c2252d03900502ab7bfdeaca00a226c06",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-owner-retirement-live-704\\retirement-704-live-r1\\history-files-before.stdout",
+      "representation": "byte-exact",
+      "originalBytes": 37581,
+      "originalSha256": "bd9a8aeb97a827a714c16299ac94609c2252d03900502ab7bfdeaca00a226c06"
+    },
+    {
+      "name": "live-admission/history-files-final.job.json",
+      "bytes": 1569,
+      "sha256": "d103a57b5be77a5508982d608886c571d52ab477c7aee43155dc30149b24f110",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-owner-retirement-live-704\\retirement-704-live-r1\\history-files-final.job.json",
+      "representation": "byte-exact",
+      "originalBytes": 1569,
+      "originalSha256": "d103a57b5be77a5508982d608886c571d52ab477c7aee43155dc30149b24f110"
+    },
+    {
+      "name": "live-admission/history-files-final.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-owner-retirement-live-704\\retirement-704-live-r1\\history-files-final.stderr",
+      "representation": "byte-exact",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "live-admission/history-files-final.stdout",
+      "bytes": 37581,
+      "sha256": "bd9a8aeb97a827a714c16299ac94609c2252d03900502ab7bfdeaca00a226c06",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-owner-retirement-live-704\\retirement-704-live-r1\\history-files-final.stdout",
+      "representation": "byte-exact",
+      "originalBytes": 37581,
+      "originalSha256": "bd9a8aeb97a827a714c16299ac94609c2252d03900502ab7bfdeaca00a226c06"
+    },
+    {
+      "name": "live-admission/history-sources-after.json",
+      "bytes": 116935,
+      "sha256": "a1af0511fed5ec9600799e34af4d8c2c74268e9bd0e9d15134f6ed8598404b44",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-owner-retirement-live-704\\retirement-704-live-r1\\history-sources-after.json",
+      "representation": "byte-exact",
+      "originalBytes": 116935,
+      "originalSha256": "a1af0511fed5ec9600799e34af4d8c2c74268e9bd0e9d15134f6ed8598404b44"
+    },
+    {
+      "name": "live-admission/history-sources-before.json",
+      "bytes": 116935,
+      "sha256": "a1af0511fed5ec9600799e34af4d8c2c74268e9bd0e9d15134f6ed8598404b44",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-owner-retirement-live-704\\retirement-704-live-r1\\history-sources-before.json",
+      "representation": "byte-exact",
+      "originalBytes": 116935,
+      "originalSha256": "a1af0511fed5ec9600799e34af4d8c2c74268e9bd0e9d15134f6ed8598404b44"
+    },
+    {
+      "name": "live-admission/history-sources-final.json",
+      "bytes": 116935,
+      "sha256": "a1af0511fed5ec9600799e34af4d8c2c74268e9bd0e9d15134f6ed8598404b44",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-owner-retirement-live-704\\retirement-704-live-r1\\history-sources-final.json",
+      "representation": "byte-exact",
+      "originalBytes": 116935,
+      "originalSha256": "a1af0511fed5ec9600799e34af4d8c2c74268e9bd0e9d15134f6ed8598404b44"
+    },
+    {
+      "name": "live-admission/legacy-history-controls-after.json",
+      "bytes": 670,
+      "sha256": "22a00c508ea5853da48ed70013df36118136490f5776c7b6aa1de96710903c46",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-owner-retirement-live-704\\retirement-704-live-r1\\legacy-history-controls-after.json",
+      "representation": "byte-exact",
+      "originalBytes": 670,
+      "originalSha256": "22a00c508ea5853da48ed70013df36118136490f5776c7b6aa1de96710903c46"
+    },
+    {
+      "name": "live-admission/legacy-history-controls-before.json",
+      "bytes": 670,
+      "sha256": "22a00c508ea5853da48ed70013df36118136490f5776c7b6aa1de96710903c46",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-owner-retirement-live-704\\retirement-704-live-r1\\legacy-history-controls-before.json",
+      "representation": "byte-exact",
+      "originalBytes": 670,
+      "originalSha256": "22a00c508ea5853da48ed70013df36118136490f5776c7b6aa1de96710903c46"
+    },
+    {
+      "name": "live-admission/legacy-history-controls-final.json",
+      "bytes": 670,
+      "sha256": "22a00c508ea5853da48ed70013df36118136490f5776c7b6aa1de96710903c46",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-owner-retirement-live-704\\retirement-704-live-r1\\legacy-history-controls-final.json",
+      "representation": "byte-exact",
+      "originalBytes": 670,
+      "originalSha256": "22a00c508ea5853da48ed70013df36118136490f5776c7b6aa1de96710903c46"
+    },
+    {
+      "name": "live-admission/original-controls-after.json",
+      "bytes": 914,
+      "sha256": "973fe29cbee2fa41b862f2c8350032aa42cb1273c505e5d18c53e45efcfb0bbc",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-owner-retirement-live-704\\retirement-704-live-r1\\original-controls-after.json",
+      "representation": "byte-exact",
+      "originalBytes": 914,
+      "originalSha256": "973fe29cbee2fa41b862f2c8350032aa42cb1273c505e5d18c53e45efcfb0bbc"
+    },
+    {
+      "name": "live-admission/original-controls-before.json",
+      "bytes": 914,
+      "sha256": "973fe29cbee2fa41b862f2c8350032aa42cb1273c505e5d18c53e45efcfb0bbc",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-owner-retirement-live-704\\retirement-704-live-r1\\original-controls-before.json",
+      "representation": "byte-exact",
+      "originalBytes": 914,
+      "originalSha256": "973fe29cbee2fa41b862f2c8350032aa42cb1273c505e5d18c53e45efcfb0bbc"
+    },
+    {
+      "name": "live-admission/original-controls-final.json",
+      "bytes": 914,
+      "sha256": "973fe29cbee2fa41b862f2c8350032aa42cb1273c505e5d18c53e45efcfb0bbc",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-owner-retirement-live-704\\retirement-704-live-r1\\original-controls-final.json",
+      "representation": "byte-exact",
+      "originalBytes": 914,
+      "originalSha256": "973fe29cbee2fa41b862f2c8350032aa42cb1273c505e5d18c53e45efcfb0bbc"
+    },
+    {
+      "name": "live-admission/request.json",
+      "bytes": 1643,
+      "sha256": "974935117148e6bc5286b43df7cde2b7d095016841a31be8b97e488a0ee9e3e5",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-owner-retirement-live-704\\retirement-704-live-r1\\request.json",
+      "representation": "byte-exact",
+      "originalBytes": 1643,
+      "originalSha256": "974935117148e6bc5286b43df7cde2b7d095016841a31be8b97e488a0ee9e3e5"
+    },
+    {
+      "name": "live-admission/result.json",
+      "bytes": 4162,
+      "sha256": "debf5db79563b8fa65b6d2fe164d6fc2a46938a1e5274fb05ac9707b3d338092",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-owner-retirement-live-704\\retirement-704-live-r1\\result.json",
+      "representation": "byte-exact",
+      "originalBytes": 4162,
+      "originalSha256": "debf5db79563b8fa65b6d2fe164d6fc2a46938a1e5274fb05ac9707b3d338092"
+    },
+    {
+      "name": "live-admission/source-after.json",
+      "bytes": 155770,
+      "sha256": "8f496268fb3d38c6b5809ada8884ea75a89627a91cdde9eaece66723caa9e65e",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-owner-retirement-live-704\\retirement-704-live-r1\\source-after.json",
+      "representation": "byte-exact",
+      "originalBytes": 155770,
+      "originalSha256": "8f496268fb3d38c6b5809ada8884ea75a89627a91cdde9eaece66723caa9e65e"
+    },
+    {
+      "name": "live-admission/source-before.json",
+      "bytes": 155770,
+      "sha256": "8f496268fb3d38c6b5809ada8884ea75a89627a91cdde9eaece66723caa9e65e",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-owner-retirement-live-704\\retirement-704-live-r1\\source-before.json",
+      "representation": "byte-exact",
+      "originalBytes": 155770,
+      "originalSha256": "8f496268fb3d38c6b5809ada8884ea75a89627a91cdde9eaece66723caa9e65e"
+    },
+    {
+      "name": "live-admission/source-final.json",
+      "bytes": 155770,
+      "sha256": "8f496268fb3d38c6b5809ada8884ea75a89627a91cdde9eaece66723caa9e65e",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-owner-retirement-live-704\\retirement-704-live-r1\\source-final.json",
+      "representation": "byte-exact",
+      "originalBytes": 155770,
+      "originalSha256": "8f496268fb3d38c6b5809ada8884ea75a89627a91cdde9eaece66723caa9e65e"
+    },
+    {
+      "name": "live-admission/transaction-controls-after.json",
+      "bytes": 1482,
+      "sha256": "6a9589863d91d6b2af42672aa65a146939f09a81c5968aa6dc2d5b1f0af3673e",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-owner-retirement-live-704\\retirement-704-live-r1\\transaction-controls-after.json",
+      "representation": "byte-exact",
+      "originalBytes": 1482,
+      "originalSha256": "6a9589863d91d6b2af42672aa65a146939f09a81c5968aa6dc2d5b1f0af3673e"
+    },
+    {
+      "name": "live-admission/transaction-controls-before.json",
+      "bytes": 1482,
+      "sha256": "6a9589863d91d6b2af42672aa65a146939f09a81c5968aa6dc2d5b1f0af3673e",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-owner-retirement-live-704\\retirement-704-live-r1\\transaction-controls-before.json",
+      "representation": "byte-exact",
+      "originalBytes": 1482,
+      "originalSha256": "6a9589863d91d6b2af42672aa65a146939f09a81c5968aa6dc2d5b1f0af3673e"
+    },
+    {
+      "name": "live-admission/transaction-controls-final.json",
+      "bytes": 1482,
+      "sha256": "6a9589863d91d6b2af42672aa65a146939f09a81c5968aa6dc2d5b1f0af3673e",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-owner-retirement-live-704\\retirement-704-live-r1\\transaction-controls-final.json",
+      "representation": "byte-exact",
+      "originalBytes": 1482,
+      "originalSha256": "6a9589863d91d6b2af42672aa65a146939f09a81c5968aa6dc2d5b1f0af3673e"
+    },
+    {
+      "name": "preparation/export_retirement_live_evidence.py",
+      "bytes": 11984,
+      "sha256": "87a1130f00f2c3c4893e4e5f1bb1f8acc2e181df32c1495ff3e1b9b81230c39c",
+      "origin": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\validation\\integration-20261025\\platform-repairs\\export_retirement_live_evidence.py",
+      "representation": "byte-exact",
+      "originalBytes": 11984,
+      "originalSha256": "87a1130f00f2c3c4893e4e5f1bb1f8acc2e181df32c1495ff3e1b9b81230c39c"
+    },
+    {
+      "name": "preparation/observe_retirement_source_equivalence.py",
+      "bytes": 3001,
+      "sha256": "92dee4636d5bcd67ee277322d495b41501deabe3eac2c572404ad49d53b851d0",
+      "origin": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\validation\\integration-20261025\\platform-repairs\\observe_retirement_source_equivalence.py",
+      "representation": "byte-exact",
+      "originalBytes": 3001,
+      "originalSha256": "92dee4636d5bcd67ee277322d495b41501deabe3eac2c572404ad49d53b851d0"
+    },
+    {
+      "name": "preparation/owner-retirement-consumer-preparation-r1.json",
+      "bytes": 2125,
+      "sha256": "4852df98dd9528f7b8d6961537fd6e542643567d40714cec257a23e4492d1f47",
+      "origin": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\validation\\integration-20261025\\platform-repairs\\owner-retirement-consumer-preparation-r1.json",
+      "representation": "byte-exact",
+      "originalBytes": 2125,
+      "originalSha256": "4852df98dd9528f7b8d6961537fd6e542643567d40714cec257a23e4492d1f47"
+    },
+    {
+      "name": "preparation/owner-retirement-consumer-preparation-r2.json",
+      "bytes": 2500,
+      "sha256": "1e89f8c523dbb4821865193a9eb0f7b198f121e13d4d299cc23b8e9aa0885e58",
+      "origin": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\validation\\integration-20261025\\platform-repairs\\owner-retirement-consumer-preparation-r2.json",
+      "representation": "byte-exact",
+      "originalBytes": 2500,
+      "originalSha256": "1e89f8c523dbb4821865193a9eb0f7b198f121e13d4d299cc23b8e9aa0885e58"
+    },
+    {
+      "name": "preparation/owner-retirement-source-equivalence-r1.json",
+      "bytes": 285900,
+      "sha256": "43dea8df050b7c1e6e87a54b25685443a8935185e85dd3eac76ae51b6da57159",
+      "origin": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\validation\\integration-20261025\\platform-repairs\\owner-retirement-source-equivalence-r1.json",
+      "representation": "byte-exact",
+      "originalBytes": 285900,
+      "originalSha256": "43dea8df050b7c1e6e87a54b25685443a8935185e85dd3eac76ae51b6da57159"
+    },
+    {
+      "name": "preparation/prepare_owner_retirement_consumer.py",
+      "bytes": 13246,
+      "sha256": "39fbbcce54746b4df5651f0bb3f8c87b4df6ecd2192b713c11491d9490a61406",
+      "origin": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\validation\\integration-20261025\\platform-repairs\\prepare_owner_retirement_consumer.py",
+      "representation": "byte-exact",
+      "originalBytes": 13246,
+      "originalSha256": "39fbbcce54746b4df5651f0bb3f8c87b4df6ecd2192b713c11491d9490a61406"
+    },
+    {
+      "name": "preparation/prepare_retirement_controller_tests.py",
+      "bytes": 9855,
+      "sha256": "fdaa6a2360b4d2806a9562376bbae89e795556a7299d1407dc6ac25493517d31",
+      "origin": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\validation\\integration-20261025\\platform-repairs\\prepare_retirement_controller_tests.py",
+      "representation": "byte-exact",
+      "originalBytes": 9855,
+      "originalSha256": "fdaa6a2360b4d2806a9562376bbae89e795556a7299d1407dc6ac25493517d31"
+    },
+    {
+      "name": "preparation/reseal_retirement_consumer_r2.py",
+      "bytes": 4075,
+      "sha256": "d30632c5093f475aaac4536b46ae928138c6f08c11d657811412a316c717055a",
+      "origin": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\validation\\integration-20261025\\platform-repairs\\reseal_retirement_consumer_r2.py",
+      "representation": "byte-exact",
+      "originalBytes": 4075,
+      "originalSha256": "d30632c5093f475aaac4536b46ae928138c6f08c11d657811412a316c717055a"
+    },
+    {
+      "name": "preparation/run_retirement_704_guard_tests_r1.py",
+      "bytes": 13188,
+      "sha256": "172564006c274b5e3f249b142895b4d9496096a78c98562c135966e672adaf6b",
+      "origin": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\validation\\integration-20261025\\platform-repairs\\run_retirement_704_guard_tests_r1.py",
+      "representation": "byte-exact",
+      "originalBytes": 13188,
+      "originalSha256": "172564006c274b5e3f249b142895b4d9496096a78c98562c135966e672adaf6b"
+    },
+    {
+      "name": "preparation/run_retirement_704_guard_tests_r2.py",
+      "bytes": 13188,
+      "sha256": "396ae9ee5ab53e4f11bf602df3e08b64c8b4147c6879f75b52a65815fb1be2d0",
+      "origin": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\validation\\integration-20261025\\platform-repairs\\run_retirement_704_guard_tests_r2.py",
+      "representation": "byte-exact",
+      "originalBytes": 13188,
+      "originalSha256": "396ae9ee5ab53e4f11bf602df3e08b64c8b4147c6879f75b52a65815fb1be2d0"
+    },
+    {
+      "name": "preparation/seal_retirement_consumer.py",
+      "bytes": 7334,
+      "sha256": "5fe9563bf2342f15887177c0d2ecb1a767e09dc801bfe4dc5568936c621ca960",
+      "origin": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\validation\\integration-20261025\\platform-repairs\\seal_retirement_consumer.py",
+      "representation": "byte-exact",
+      "originalBytes": 7334,
+      "originalSha256": "5fe9563bf2342f15887177c0d2ecb1a767e09dc801bfe4dc5568936c621ca960"
+    },
+    {
+      "name": "producer-704/build-inputs-after.json",
+      "bytes": 4710,
+      "sha256": "b65a684f1c19c5d5ae9b45bcbbd42f6dcda37486bd084c3021d4d9a895ceab3d",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-704-r2\\build-inputs-after.json",
+      "representation": "byte-exact",
+      "originalBytes": 4710,
+      "originalSha256": "b65a684f1c19c5d5ae9b45bcbbd42f6dcda37486bd084c3021d4d9a895ceab3d"
+    },
+    {
+      "name": "producer-704/build-inputs-before.json",
+      "bytes": 4710,
+      "sha256": "b65a684f1c19c5d5ae9b45bcbbd42f6dcda37486bd084c3021d4d9a895ceab3d",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-704-r2\\build-inputs-before.json",
+      "representation": "byte-exact",
+      "originalBytes": 4710,
+      "originalSha256": "b65a684f1c19c5d5ae9b45bcbbd42f6dcda37486bd084c3021d4d9a895ceab3d"
+    },
+    {
+      "name": "producer-704/build-inputs-final.json",
+      "bytes": 4710,
+      "sha256": "b65a684f1c19c5d5ae9b45bcbbd42f6dcda37486bd084c3021d4d9a895ceab3d",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-704-r2\\build-inputs-final.json",
+      "representation": "byte-exact",
+      "originalBytes": 4710,
+      "originalSha256": "b65a684f1c19c5d5ae9b45bcbbd42f6dcda37486bd084c3021d4d9a895ceab3d"
+    },
+    {
+      "name": "producer-704/build-inputs-worker-after.json",
+      "bytes": 4710,
+      "sha256": "b65a684f1c19c5d5ae9b45bcbbd42f6dcda37486bd084c3021d4d9a895ceab3d",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-704-r2\\build-inputs-worker-after.json",
+      "representation": "byte-exact",
+      "originalBytes": 4710,
+      "originalSha256": "b65a684f1c19c5d5ae9b45bcbbd42f6dcda37486bd084c3021d4d9a895ceab3d"
+    },
+    {
+      "name": "producer-704/build-inputs-worker-before.json",
+      "bytes": 4710,
+      "sha256": "b65a684f1c19c5d5ae9b45bcbbd42f6dcda37486bd084c3021d4d9a895ceab3d",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-704-r2\\build-inputs-worker-before.json",
+      "representation": "byte-exact",
+      "originalBytes": 4710,
+      "originalSha256": "b65a684f1c19c5d5ae9b45bcbbd42f6dcda37486bd084c3021d4d9a895ceab3d"
+    },
+    {
+      "name": "producer-704/cargo-summary.json",
+      "bytes": 1249,
+      "sha256": "0f8e20706018c507944ef9a2db4ac27b28ffc65dd485602ef7364e90ae5aa481",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-704-r2\\cargo-summary.json",
+      "representation": "byte-exact",
+      "originalBytes": 1249,
+      "originalSha256": "0f8e20706018c507944ef9a2db4ac27b28ffc65dd485602ef7364e90ae5aa481"
+    },
+    {
+      "name": "producer-704/git-files-after.job.json",
+      "bytes": 1392,
+      "sha256": "06a43131927955553dddb7f0f1dd15789390973694bdf99910da3c4b83a50126",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-704-r2\\git-files-after.job.json",
+      "representation": "byte-exact",
+      "originalBytes": 1392,
+      "originalSha256": "06a43131927955553dddb7f0f1dd15789390973694bdf99910da3c4b83a50126"
+    },
+    {
+      "name": "producer-704/git-files-after.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-704-r2\\git-files-after.stderr",
+      "representation": "byte-exact",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "producer-704/git-files-before.job.json",
+      "bytes": 1393,
+      "sha256": "aa7e11ef1bfd2ddb513c858ebf183024171320167c848d63c7284279e647c4c5",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-704-r2\\git-files-before.job.json",
+      "representation": "byte-exact",
+      "originalBytes": 1393,
+      "originalSha256": "aa7e11ef1bfd2ddb513c858ebf183024171320167c848d63c7284279e647c4c5"
+    },
+    {
+      "name": "producer-704/git-files-before.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-704-r2\\git-files-before.stderr",
+      "representation": "byte-exact",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "producer-704/git-files-final.job.json",
+      "bytes": 1393,
+      "sha256": "d278368c32464828b596a4797e43ddc0680c1324378854832b8037b8c37cdb4f",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-704-r2\\git-files-final.job.json",
+      "representation": "byte-exact",
+      "originalBytes": 1393,
+      "originalSha256": "d278368c32464828b596a4797e43ddc0680c1324378854832b8037b8c37cdb4f"
+    },
+    {
+      "name": "producer-704/git-files-final.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-704-r2\\git-files-final.stderr",
+      "representation": "byte-exact",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "producer-704/git-head-after.job.json",
+      "bytes": 1406,
+      "sha256": "475ec0675e4bd36421554f2921a6b8dd71c1f8ea9f907014a01ef715f2c1fe9e",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-704-r2\\git-head-after.job.json",
+      "representation": "byte-exact",
+      "originalBytes": 1406,
+      "originalSha256": "475ec0675e4bd36421554f2921a6b8dd71c1f8ea9f907014a01ef715f2c1fe9e"
+    },
+    {
+      "name": "producer-704/git-head-after.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-704-r2\\git-head-after.stderr",
+      "representation": "byte-exact",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "producer-704/git-head-after.stdout",
+      "bytes": 41,
+      "sha256": "cc514d1e543de7aba890aa530db79f6e89feab8b960f8f90281c5ee01aebe623",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-704-r2\\git-head-after.stdout",
+      "representation": "byte-exact",
+      "originalBytes": 41,
+      "originalSha256": "cc514d1e543de7aba890aa530db79f6e89feab8b960f8f90281c5ee01aebe623"
+    },
+    {
+      "name": "producer-704/git-head-before.job.json",
+      "bytes": 1407,
+      "sha256": "bfb5f1c1b9f375bcfeb491c17686b8e70e8e8306f8f03618bfc065a74f9df682",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-704-r2\\git-head-before.job.json",
+      "representation": "byte-exact",
+      "originalBytes": 1407,
+      "originalSha256": "bfb5f1c1b9f375bcfeb491c17686b8e70e8e8306f8f03618bfc065a74f9df682"
+    },
+    {
+      "name": "producer-704/git-head-before.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-704-r2\\git-head-before.stderr",
+      "representation": "byte-exact",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "producer-704/git-head-before.stdout",
+      "bytes": 41,
+      "sha256": "cc514d1e543de7aba890aa530db79f6e89feab8b960f8f90281c5ee01aebe623",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-704-r2\\git-head-before.stdout",
+      "representation": "byte-exact",
+      "originalBytes": 41,
+      "originalSha256": "cc514d1e543de7aba890aa530db79f6e89feab8b960f8f90281c5ee01aebe623"
+    },
+    {
+      "name": "producer-704/git-head-final.job.json",
+      "bytes": 1406,
+      "sha256": "30319baf63b17b3932e4391e5d402e12d76fda8fae70fc9e9b46ee01b9121504",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-704-r2\\git-head-final.job.json",
+      "representation": "byte-exact",
+      "originalBytes": 1406,
+      "originalSha256": "30319baf63b17b3932e4391e5d402e12d76fda8fae70fc9e9b46ee01b9121504"
+    },
+    {
+      "name": "producer-704/git-head-final.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-704-r2\\git-head-final.stderr",
+      "representation": "byte-exact",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "producer-704/git-head-final.stdout",
+      "bytes": 41,
+      "sha256": "cc514d1e543de7aba890aa530db79f6e89feab8b960f8f90281c5ee01aebe623",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-704-r2\\git-head-final.stdout",
+      "representation": "byte-exact",
+      "originalBytes": 41,
+      "originalSha256": "cc514d1e543de7aba890aa530db79f6e89feab8b960f8f90281c5ee01aebe623"
+    },
+    {
+      "name": "producer-704/git-status-after.job.json",
+      "bytes": 1434,
+      "sha256": "624b63e7335d8647583502acda3d3531682e2c2c6064aba4fa00a148f18547e6",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-704-r2\\git-status-after.job.json",
+      "representation": "byte-exact",
+      "originalBytes": 1434,
+      "originalSha256": "624b63e7335d8647583502acda3d3531682e2c2c6064aba4fa00a148f18547e6"
+    },
+    {
+      "name": "producer-704/git-status-after.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-704-r2\\git-status-after.stderr",
+      "representation": "byte-exact",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "producer-704/git-status-after.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-704-r2\\git-status-after.stdout",
+      "representation": "byte-exact",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "producer-704/git-status-before.job.json",
+      "bytes": 1434,
+      "sha256": "6bf19d7331d23b3a7048b02050890a6363088f0d027f6a04a5458e476e0a3bce",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-704-r2\\git-status-before.job.json",
+      "representation": "byte-exact",
+      "originalBytes": 1434,
+      "originalSha256": "6bf19d7331d23b3a7048b02050890a6363088f0d027f6a04a5458e476e0a3bce"
+    },
+    {
+      "name": "producer-704/git-status-before.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-704-r2\\git-status-before.stderr",
+      "representation": "byte-exact",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "producer-704/git-status-before.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-704-r2\\git-status-before.stdout",
+      "representation": "byte-exact",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "producer-704/git-status-final.job.json",
+      "bytes": 1434,
+      "sha256": "6af66d72efd82feab4f1e19d4f5da734c2765bdb362a733a572f90ff3e960099",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-704-r2\\git-status-final.job.json",
+      "representation": "byte-exact",
+      "originalBytes": 1434,
+      "originalSha256": "6af66d72efd82feab4f1e19d4f5da734c2765bdb362a733a572f90ff3e960099"
+    },
+    {
+      "name": "producer-704/git-status-final.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-704-r2\\git-status-final.stderr",
+      "representation": "byte-exact",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "producer-704/git-status-final.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-704-r2\\git-status-final.stdout",
+      "representation": "byte-exact",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "producer-704/inner.job.json",
+      "bytes": 1881,
+      "sha256": "0825f997228ecb99075b86da86d5001e0794c8858f36f938c02a929a2b7d92db",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-704-r2\\inner.job.json",
+      "representation": "job-name-redacted-public-view",
+      "originalBytes": 1935,
+      "originalSha256": "682a4c637bc3a171dc99b11d3462289c39361a7c55a28cc4d5079176d5a1f332"
+    },
+    {
+      "name": "producer-704/original-control-after.json",
+      "bytes": 914,
+      "sha256": "973fe29cbee2fa41b862f2c8350032aa42cb1273c505e5d18c53e45efcfb0bbc",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-704-r2\\original-control-after.json",
+      "representation": "byte-exact",
+      "originalBytes": 914,
+      "originalSha256": "973fe29cbee2fa41b862f2c8350032aa42cb1273c505e5d18c53e45efcfb0bbc"
+    },
+    {
+      "name": "producer-704/original-control-before.json",
+      "bytes": 914,
+      "sha256": "973fe29cbee2fa41b862f2c8350032aa42cb1273c505e5d18c53e45efcfb0bbc",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-704-r2\\original-control-before.json",
+      "representation": "byte-exact",
+      "originalBytes": 914,
+      "originalSha256": "973fe29cbee2fa41b862f2c8350032aa42cb1273c505e5d18c53e45efcfb0bbc"
+    },
+    {
+      "name": "producer-704/original-control-final.json",
+      "bytes": 914,
+      "sha256": "973fe29cbee2fa41b862f2c8350032aa42cb1273c505e5d18c53e45efcfb0bbc",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-704-r2\\original-control-final.json",
+      "representation": "byte-exact",
+      "originalBytes": 914,
+      "originalSha256": "973fe29cbee2fa41b862f2c8350032aa42cb1273c505e5d18c53e45efcfb0bbc"
+    },
+    {
+      "name": "producer-704/outer.job.json",
+      "bytes": 1666,
+      "sha256": "b5d88d9c5e28a6b156179837de419510a02f819f5f0a2474fc7216930813d9c4",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-704-r2\\outer.job.json",
+      "representation": "job-name-redacted-public-view",
+      "originalBytes": 1720,
+      "originalSha256": "c03d1464e24a33b528a368b4d5a79d61f0f1e4b7824561032ca2c7bfd2b4ccf5"
+    },
+    {
+      "name": "producer-704/outer.stderr",
+      "bytes": 10051,
+      "sha256": "4ecd090d33baa9c72537e305b31ad73aa8be31536ba6f2fd26fdd01cba718c54",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-704-r2\\outer.stderr",
+      "representation": "byte-exact",
+      "originalBytes": 10051,
+      "originalSha256": "4ecd090d33baa9c72537e305b31ad73aa8be31536ba6f2fd26fdd01cba718c54"
+    },
+    {
+      "name": "producer-704/outer.stdout",
+      "bytes": 400003,
+      "sha256": "1ac309fc93ce579e3f37904aa596873e30f2166281672c828426ef67ce362c68",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-704-r2\\outer.stdout",
+      "representation": "byte-exact",
+      "originalBytes": 400003,
+      "originalSha256": "1ac309fc93ce579e3f37904aa596873e30f2166281672c828426ef67ce362c68"
+    },
+    {
+      "name": "producer-704/protected-after.json",
+      "bytes": 26597,
+      "sha256": "888dd0579fb72b50cb588c33e1b0a490fe8b8d6fd13d1f92ffdf1174b9130b16",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-704-r2\\protected-after.json",
+      "representation": "byte-exact",
+      "originalBytes": 26597,
+      "originalSha256": "888dd0579fb72b50cb588c33e1b0a490fe8b8d6fd13d1f92ffdf1174b9130b16"
+    },
+    {
+      "name": "producer-704/protected-before.json",
+      "bytes": 26597,
+      "sha256": "888dd0579fb72b50cb588c33e1b0a490fe8b8d6fd13d1f92ffdf1174b9130b16",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-704-r2\\protected-before.json",
+      "representation": "byte-exact",
+      "originalBytes": 26597,
+      "originalSha256": "888dd0579fb72b50cb588c33e1b0a490fe8b8d6fd13d1f92ffdf1174b9130b16"
+    },
+    {
+      "name": "producer-704/protected-final.json",
+      "bytes": 26597,
+      "sha256": "888dd0579fb72b50cb588c33e1b0a490fe8b8d6fd13d1f92ffdf1174b9130b16",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-704-r2\\protected-final.json",
+      "representation": "byte-exact",
+      "originalBytes": 26597,
+      "originalSha256": "888dd0579fb72b50cb588c33e1b0a490fe8b8d6fd13d1f92ffdf1174b9130b16"
+    },
+    {
+      "name": "producer-704/request.json",
+      "bytes": 1424,
+      "sha256": "e7fe5b682f51777eae0d861d2ed0db1046680e80722b86b32e2eba8f7612a895",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-704-r2\\request.json",
+      "representation": "byte-exact",
+      "originalBytes": 1424,
+      "originalSha256": "e7fe5b682f51777eae0d861d2ed0db1046680e80722b86b32e2eba8f7612a895"
+    },
+    {
+      "name": "producer-704/result.json",
+      "bytes": 2062,
+      "sha256": "f8a96cb29e8cfe39aa5f29a056410736fc2fb9c560a69d603dd996a0673a2767",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-704-r2\\result.json",
+      "representation": "byte-exact",
+      "originalBytes": 2062,
+      "originalSha256": "f8a96cb29e8cfe39aa5f29a056410736fc2fb9c560a69d603dd996a0673a2767"
+    },
+    {
+      "name": "producer-704/selected-image-after.json",
+      "bytes": 512,
+      "sha256": "5e439ebbdc521389e4e1a5b290579ecfd073015a209f7d873cd114e6f88f1fa3",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-704-r2\\selected-image-after.json",
+      "representation": "byte-exact",
+      "originalBytes": 512,
+      "originalSha256": "5e439ebbdc521389e4e1a5b290579ecfd073015a209f7d873cd114e6f88f1fa3"
+    },
+    {
+      "name": "producer-704/selected-image.json",
+      "bytes": 512,
+      "sha256": "5e439ebbdc521389e4e1a5b290579ecfd073015a209f7d873cd114e6f88f1fa3",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-704-r2\\selected-image.json",
+      "representation": "byte-exact",
+      "originalBytes": 512,
+      "originalSha256": "5e439ebbdc521389e4e1a5b290579ecfd073015a209f7d873cd114e6f88f1fa3"
+    },
+    {
+      "name": "producer-704/source-after.json",
+      "bytes": 155770,
+      "sha256": "8f496268fb3d38c6b5809ada8884ea75a89627a91cdde9eaece66723caa9e65e",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-704-r2\\source-after.json",
+      "representation": "byte-exact",
+      "originalBytes": 155770,
+      "originalSha256": "8f496268fb3d38c6b5809ada8884ea75a89627a91cdde9eaece66723caa9e65e"
+    },
+    {
+      "name": "producer-704/source-before.json",
+      "bytes": 155770,
+      "sha256": "8f496268fb3d38c6b5809ada8884ea75a89627a91cdde9eaece66723caa9e65e",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-704-r2\\source-before.json",
+      "representation": "byte-exact",
+      "originalBytes": 155770,
+      "originalSha256": "8f496268fb3d38c6b5809ada8884ea75a89627a91cdde9eaece66723caa9e65e"
+    },
+    {
+      "name": "producer-704/source-final.json",
+      "bytes": 155770,
+      "sha256": "8f496268fb3d38c6b5809ada8884ea75a89627a91cdde9eaece66723caa9e65e",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-704-r2\\source-final.json",
+      "representation": "byte-exact",
+      "originalBytes": 155770,
+      "originalSha256": "8f496268fb3d38c6b5809ada8884ea75a89627a91cdde9eaece66723caa9e65e"
+    },
+    {
+      "name": "producer-704/transaction-control-after.json",
+      "bytes": 1482,
+      "sha256": "6a9589863d91d6b2af42672aa65a146939f09a81c5968aa6dc2d5b1f0af3673e",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-704-r2\\transaction-control-after.json",
+      "representation": "byte-exact",
+      "originalBytes": 1482,
+      "originalSha256": "6a9589863d91d6b2af42672aa65a146939f09a81c5968aa6dc2d5b1f0af3673e"
+    },
+    {
+      "name": "producer-704/transaction-control-before.json",
+      "bytes": 1482,
+      "sha256": "6a9589863d91d6b2af42672aa65a146939f09a81c5968aa6dc2d5b1f0af3673e",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-704-r2\\transaction-control-before.json",
+      "representation": "byte-exact",
+      "originalBytes": 1482,
+      "originalSha256": "6a9589863d91d6b2af42672aa65a146939f09a81c5968aa6dc2d5b1f0af3673e"
+    },
+    {
+      "name": "producer-704/transaction-control-final.json",
+      "bytes": 1482,
+      "sha256": "6a9589863d91d6b2af42672aa65a146939f09a81c5968aa6dc2d5b1f0af3673e",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-704-r2\\transaction-control-final.json",
+      "representation": "byte-exact",
+      "originalBytes": 1482,
+      "originalSha256": "6a9589863d91d6b2af42672aa65a146939f09a81c5968aa6dc2d5b1f0af3673e"
+    },
+    {
+      "name": "unchanged-harness/scripts/host_history_live.py",
+      "bytes": 42088,
+      "sha256": "3a3f5de28756ddcc383c3c92821f15fd5db24a72c324ef6a20d1ed6a24f819b2",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\scripts\\host_history_live.py",
+      "representation": "byte-exact",
+      "originalBytes": 42088,
+      "originalSha256": "3a3f5de28756ddcc383c3c92821f15fd5db24a72c324ef6a20d1ed6a24f819b2"
+    },
+    {
+      "name": "unchanged-harness/scripts/tests/test_host_history_live.py",
+      "bytes": 17073,
+      "sha256": "f37e7b419be242337d066678c3a8454156f3062bbb7578b33d14d001500b73db",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\scripts\\tests\\test_host_history_live.py",
+      "representation": "byte-exact",
+      "originalBytes": 17073,
+      "originalSha256": "f37e7b419be242337d066678c3a8454156f3062bbb7578b33d14d001500b73db"
+    },
+    {
+      "name": "unexecuted-preparation-r1/.gitattributes",
+      "bytes": 68,
+      "sha256": "2772963d25d715c4a88465d05d8628800277fa393e1631d7e112ab4a92a21511",
+      "origin": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\validation\\integration-20261025\\platform-repairs\\retirement-source-preparation-r1\\.gitattributes",
+      "representation": "byte-exact",
+      "originalBytes": 68,
+      "originalSha256": "2772963d25d715c4a88465d05d8628800277fa393e1631d7e112ab4a92a21511"
+    },
+    {
+      "name": "unexecuted-preparation-r1/README.md",
+      "bytes": 4191,
+      "sha256": "cdf5d5d5a5cb652a4b7088f0ae02ecf0ee2778d3a29f8c99b67958ce874fa33f",
+      "origin": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\validation\\integration-20261025\\platform-repairs\\retirement-source-preparation-r1\\README.md",
+      "representation": "byte-exact",
+      "originalBytes": 4191,
+      "originalSha256": "cdf5d5d5a5cb652a4b7088f0ae02ecf0ee2778d3a29f8c99b67958ce874fa33f"
+    },
+    {
+      "name": "unexecuted-preparation-r1/owner_retirement_live.py",
+      "bytes": 19271,
+      "sha256": "8ae198b52ee84dfe11919298253717ae6fd41213bd1799003481fe74dedaf4b2",
+      "origin": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\validation\\integration-20261025\\platform-repairs\\retirement-source-preparation-r1\\owner_retirement_live.py",
+      "representation": "byte-exact",
+      "originalBytes": 19271,
+      "originalSha256": "8ae198b52ee84dfe11919298253717ae6fd41213bd1799003481fe74dedaf4b2"
+    },
+    {
+      "name": "unexecuted-preparation-r1/retirement_transaction_controller.py",
+      "bytes": 33030,
+      "sha256": "0daf107290c6105cca78f29605930b1e7121826e507250c3ad48e8dbaa2ff543",
+      "origin": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\validation\\integration-20261025\\platform-repairs\\retirement-source-preparation-r1\\retirement_transaction_controller.py",
+      "representation": "byte-exact",
+      "originalBytes": 33030,
+      "originalSha256": "0daf107290c6105cca78f29605930b1e7121826e507250c3ad48e8dbaa2ff543"
+    },
+    {
+      "name": "unexecuted-preparation-r1/retirement_worker_entry.py",
+      "bytes": 12987,
+      "sha256": "ce450f5cfaf0cd259458ed5ff85a1d69e322bdf9b3c0774f721a8b1aeb0572e7",
+      "origin": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\validation\\integration-20261025\\platform-repairs\\retirement-source-preparation-r1\\retirement_worker_entry.py",
+      "representation": "byte-exact",
+      "originalBytes": 12987,
+      "originalSha256": "ce450f5cfaf0cd259458ed5ff85a1d69e322bdf9b3c0774f721a8b1aeb0572e7"
+    },
+    {
+      "name": "unexecuted-preparation-r1/review-manifest.json",
+      "bytes": 4616,
+      "sha256": "0b0f26ca905164973faa3fc263807952a976cb738be473d9e48ebb0b918f100e",
+      "origin": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\validation\\integration-20261025\\platform-repairs\\retirement-source-preparation-r1\\review-manifest.json",
+      "representation": "byte-exact",
+      "originalBytes": 4616,
+      "originalSha256": "0b0f26ca905164973faa3fc263807952a976cb738be473d9e48ebb0b918f100e"
+    },
+    {
+      "name": "unexecuted-preparation-r1/test_owner_retirement_live.py",
+      "bytes": 15738,
+      "sha256": "82357e6324d42f6dbfd237779f2e7328798ace23b5ba2c0d2e0580bbc70e211e",
+      "origin": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\validation\\integration-20261025\\platform-repairs\\retirement-source-preparation-r1\\test_owner_retirement_live.py",
+      "representation": "byte-exact",
+      "originalBytes": 15738,
+      "originalSha256": "82357e6324d42f6dbfd237779f2e7328798ace23b5ba2c0d2e0580bbc70e211e"
+    },
+    {
+      "name": "unexecuted-preparation-r1/test_retirement_transaction_controller.py",
+      "bytes": 49959,
+      "sha256": "1292797797231989b49a4839c30041f0d5e97371db39d5779709f66d0b1a215a",
+      "origin": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\validation\\integration-20261025\\platform-repairs\\retirement-source-preparation-r1\\test_retirement_transaction_controller.py",
+      "representation": "byte-exact",
+      "originalBytes": 49959,
+      "originalSha256": "1292797797231989b49a4839c30041f0d5e97371db39d5779709f66d0b1a215a"
+    },
+    {
+      "name": "version-704/build-inputs-after.json",
+      "bytes": 4710,
+      "sha256": "b65a684f1c19c5d5ae9b45bcbbd42f6dcda37486bd084c3021d4d9a895ceab3d",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-version-704-r1\\build-inputs-after.json",
+      "representation": "byte-exact",
+      "originalBytes": 4710,
+      "originalSha256": "b65a684f1c19c5d5ae9b45bcbbd42f6dcda37486bd084c3021d4d9a895ceab3d"
+    },
+    {
+      "name": "version-704/build-inputs-before.json",
+      "bytes": 4710,
+      "sha256": "b65a684f1c19c5d5ae9b45bcbbd42f6dcda37486bd084c3021d4d9a895ceab3d",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-version-704-r1\\build-inputs-before.json",
+      "representation": "byte-exact",
+      "originalBytes": 4710,
+      "originalSha256": "b65a684f1c19c5d5ae9b45bcbbd42f6dcda37486bd084c3021d4d9a895ceab3d"
+    },
+    {
+      "name": "version-704/build-inputs-final.json",
+      "bytes": 4710,
+      "sha256": "b65a684f1c19c5d5ae9b45bcbbd42f6dcda37486bd084c3021d4d9a895ceab3d",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-version-704-r1\\build-inputs-final.json",
+      "representation": "byte-exact",
+      "originalBytes": 4710,
+      "originalSha256": "b65a684f1c19c5d5ae9b45bcbbd42f6dcda37486bd084c3021d4d9a895ceab3d"
+    },
+    {
+      "name": "version-704/git-files-after.job.json",
+      "bytes": 1392,
+      "sha256": "442c8aa69bda368fd12f387a107f407f1c4e9cb9b72b0450877c0fcda953be82",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-version-704-r1\\git-files-after.job.json",
+      "representation": "byte-exact",
+      "originalBytes": 1392,
+      "originalSha256": "442c8aa69bda368fd12f387a107f407f1c4e9cb9b72b0450877c0fcda953be82"
+    },
+    {
+      "name": "version-704/git-files-after.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-version-704-r1\\git-files-after.stderr",
+      "representation": "byte-exact",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "version-704/git-files-before.job.json",
+      "bytes": 1389,
+      "sha256": "7c833816f47e60ad81cd014afc7e6aef369d8a9f8c8045b00a4445cac519531f",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-version-704-r1\\git-files-before.job.json",
+      "representation": "byte-exact",
+      "originalBytes": 1389,
+      "originalSha256": "7c833816f47e60ad81cd014afc7e6aef369d8a9f8c8045b00a4445cac519531f"
+    },
+    {
+      "name": "version-704/git-files-before.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-version-704-r1\\git-files-before.stderr",
+      "representation": "byte-exact",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "version-704/git-files-final.job.json",
+      "bytes": 1392,
+      "sha256": "7955883ed2466092d40fb756cbc6a7162b15930da2242b1fcfa3a6daf54de8f5",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-version-704-r1\\git-files-final.job.json",
+      "representation": "byte-exact",
+      "originalBytes": 1392,
+      "originalSha256": "7955883ed2466092d40fb756cbc6a7162b15930da2242b1fcfa3a6daf54de8f5"
+    },
+    {
+      "name": "version-704/git-files-final.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-version-704-r1\\git-files-final.stderr",
+      "representation": "byte-exact",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "version-704/git-head-after.job.json",
+      "bytes": 1406,
+      "sha256": "5a14486a083624079b6897a4e8aa1655d73c6eda332337428a3f4c11912c98c6",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-version-704-r1\\git-head-after.job.json",
+      "representation": "byte-exact",
+      "originalBytes": 1406,
+      "originalSha256": "5a14486a083624079b6897a4e8aa1655d73c6eda332337428a3f4c11912c98c6"
+    },
+    {
+      "name": "version-704/git-head-after.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-version-704-r1\\git-head-after.stderr",
+      "representation": "byte-exact",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "version-704/git-head-after.stdout",
+      "bytes": 41,
+      "sha256": "cc514d1e543de7aba890aa530db79f6e89feab8b960f8f90281c5ee01aebe623",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-version-704-r1\\git-head-after.stdout",
+      "representation": "byte-exact",
+      "originalBytes": 41,
+      "originalSha256": "cc514d1e543de7aba890aa530db79f6e89feab8b960f8f90281c5ee01aebe623"
+    },
+    {
+      "name": "version-704/git-head-before.job.json",
+      "bytes": 1406,
+      "sha256": "a47a55cb2b9bac8447d35e3183b99de3fd77afbcec2ca304f6f856a21a7a85e1",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-version-704-r1\\git-head-before.job.json",
+      "representation": "byte-exact",
+      "originalBytes": 1406,
+      "originalSha256": "a47a55cb2b9bac8447d35e3183b99de3fd77afbcec2ca304f6f856a21a7a85e1"
+    },
+    {
+      "name": "version-704/git-head-before.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-version-704-r1\\git-head-before.stderr",
+      "representation": "byte-exact",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "version-704/git-head-before.stdout",
+      "bytes": 41,
+      "sha256": "cc514d1e543de7aba890aa530db79f6e89feab8b960f8f90281c5ee01aebe623",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-version-704-r1\\git-head-before.stdout",
+      "representation": "byte-exact",
+      "originalBytes": 41,
+      "originalSha256": "cc514d1e543de7aba890aa530db79f6e89feab8b960f8f90281c5ee01aebe623"
+    },
+    {
+      "name": "version-704/git-head-final.job.json",
+      "bytes": 1406,
+      "sha256": "1d32b5d1e2728e55d45af1bea48f4ed61e62552df7b50f5449e8c7f1697e8487",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-version-704-r1\\git-head-final.job.json",
+      "representation": "byte-exact",
+      "originalBytes": 1406,
+      "originalSha256": "1d32b5d1e2728e55d45af1bea48f4ed61e62552df7b50f5449e8c7f1697e8487"
+    },
+    {
+      "name": "version-704/git-head-final.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-version-704-r1\\git-head-final.stderr",
+      "representation": "byte-exact",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "version-704/git-head-final.stdout",
+      "bytes": 41,
+      "sha256": "cc514d1e543de7aba890aa530db79f6e89feab8b960f8f90281c5ee01aebe623",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-version-704-r1\\git-head-final.stdout",
+      "representation": "byte-exact",
+      "originalBytes": 41,
+      "originalSha256": "cc514d1e543de7aba890aa530db79f6e89feab8b960f8f90281c5ee01aebe623"
+    },
+    {
+      "name": "version-704/git-status-after.job.json",
+      "bytes": 1434,
+      "sha256": "9c9abbdd61173b89d9d7a2d5cf90e8339f724cbb60b6892fef56b7d98f1de2c7",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-version-704-r1\\git-status-after.job.json",
+      "representation": "byte-exact",
+      "originalBytes": 1434,
+      "originalSha256": "9c9abbdd61173b89d9d7a2d5cf90e8339f724cbb60b6892fef56b7d98f1de2c7"
+    },
+    {
+      "name": "version-704/git-status-after.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-version-704-r1\\git-status-after.stderr",
+      "representation": "byte-exact",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "version-704/git-status-after.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-version-704-r1\\git-status-after.stdout",
+      "representation": "byte-exact",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "version-704/git-status-before.job.json",
+      "bytes": 1434,
+      "sha256": "5a2e35b0d9c1a07389d92c0d02e10609cb1e7443a66f84fbcebcdc39a049d45f",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-version-704-r1\\git-status-before.job.json",
+      "representation": "byte-exact",
+      "originalBytes": 1434,
+      "originalSha256": "5a2e35b0d9c1a07389d92c0d02e10609cb1e7443a66f84fbcebcdc39a049d45f"
+    },
+    {
+      "name": "version-704/git-status-before.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-version-704-r1\\git-status-before.stderr",
+      "representation": "byte-exact",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "version-704/git-status-before.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-version-704-r1\\git-status-before.stdout",
+      "representation": "byte-exact",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "version-704/git-status-final.job.json",
+      "bytes": 1434,
+      "sha256": "62ff9c46c253fe061a41b8b2396f1b54e4bf546a0d11e140ee6d1ac30952786e",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-version-704-r1\\git-status-final.job.json",
+      "representation": "byte-exact",
+      "originalBytes": 1434,
+      "originalSha256": "62ff9c46c253fe061a41b8b2396f1b54e4bf546a0d11e140ee6d1ac30952786e"
+    },
+    {
+      "name": "version-704/git-status-final.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-version-704-r1\\git-status-final.stderr",
+      "representation": "byte-exact",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "version-704/git-status-final.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-version-704-r1\\git-status-final.stdout",
+      "representation": "byte-exact",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "version-704/original-control-after.json",
+      "bytes": 914,
+      "sha256": "973fe29cbee2fa41b862f2c8350032aa42cb1273c505e5d18c53e45efcfb0bbc",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-version-704-r1\\original-control-after.json",
+      "representation": "byte-exact",
+      "originalBytes": 914,
+      "originalSha256": "973fe29cbee2fa41b862f2c8350032aa42cb1273c505e5d18c53e45efcfb0bbc"
+    },
+    {
+      "name": "version-704/original-control-before.json",
+      "bytes": 914,
+      "sha256": "973fe29cbee2fa41b862f2c8350032aa42cb1273c505e5d18c53e45efcfb0bbc",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-version-704-r1\\original-control-before.json",
+      "representation": "byte-exact",
+      "originalBytes": 914,
+      "originalSha256": "973fe29cbee2fa41b862f2c8350032aa42cb1273c505e5d18c53e45efcfb0bbc"
+    },
+    {
+      "name": "version-704/original-control-final.json",
+      "bytes": 914,
+      "sha256": "973fe29cbee2fa41b862f2c8350032aa42cb1273c505e5d18c53e45efcfb0bbc",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-version-704-r1\\original-control-final.json",
+      "representation": "byte-exact",
+      "originalBytes": 914,
+      "originalSha256": "973fe29cbee2fa41b862f2c8350032aa42cb1273c505e5d18c53e45efcfb0bbc"
+    },
+    {
+      "name": "version-704/outer.job.json",
+      "bytes": 1428,
+      "sha256": "06ec78bb9900b3fd8c9bfd4eb620c32116c4b5d7cc2fcb7080db7e6d2ba68c9b",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-version-704-r1\\outer.job.json",
+      "representation": "byte-exact",
+      "originalBytes": 1428,
+      "originalSha256": "06ec78bb9900b3fd8c9bfd4eb620c32116c4b5d7cc2fcb7080db7e6d2ba68c9b"
+    },
+    {
+      "name": "version-704/outer.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-version-704-r1\\outer.stderr",
+      "representation": "byte-exact",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "version-704/outer.stdout",
+      "bytes": 11,
+      "sha256": "20eeb8aea208f5d298168abe4ae67bb92ecf1b3dbb6ce0bde1d7050aa3b3c422",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-version-704-r1\\outer.stdout",
+      "representation": "byte-exact",
+      "originalBytes": 11,
+      "originalSha256": "20eeb8aea208f5d298168abe4ae67bb92ecf1b3dbb6ce0bde1d7050aa3b3c422"
+    },
+    {
+      "name": "version-704/protected-after.json",
+      "bytes": 26597,
+      "sha256": "888dd0579fb72b50cb588c33e1b0a490fe8b8d6fd13d1f92ffdf1174b9130b16",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-version-704-r1\\protected-after.json",
+      "representation": "byte-exact",
+      "originalBytes": 26597,
+      "originalSha256": "888dd0579fb72b50cb588c33e1b0a490fe8b8d6fd13d1f92ffdf1174b9130b16"
+    },
+    {
+      "name": "version-704/protected-before.json",
+      "bytes": 26597,
+      "sha256": "888dd0579fb72b50cb588c33e1b0a490fe8b8d6fd13d1f92ffdf1174b9130b16",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-version-704-r1\\protected-before.json",
+      "representation": "byte-exact",
+      "originalBytes": 26597,
+      "originalSha256": "888dd0579fb72b50cb588c33e1b0a490fe8b8d6fd13d1f92ffdf1174b9130b16"
+    },
+    {
+      "name": "version-704/protected-final.json",
+      "bytes": 26597,
+      "sha256": "888dd0579fb72b50cb588c33e1b0a490fe8b8d6fd13d1f92ffdf1174b9130b16",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-version-704-r1\\protected-final.json",
+      "representation": "byte-exact",
+      "originalBytes": 26597,
+      "originalSha256": "888dd0579fb72b50cb588c33e1b0a490fe8b8d6fd13d1f92ffdf1174b9130b16"
+    },
+    {
+      "name": "version-704/request.json",
+      "bytes": 1261,
+      "sha256": "1304896f90234c4cd9cf536a5502dbddaf39ba0b6e94a4f0fa5ca46e63a7ddac",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-version-704-r1\\request.json",
+      "representation": "byte-exact",
+      "originalBytes": 1261,
+      "originalSha256": "1304896f90234c4cd9cf536a5502dbddaf39ba0b6e94a4f0fa5ca46e63a7ddac"
+    },
+    {
+      "name": "version-704/result.json",
+      "bytes": 2080,
+      "sha256": "4cd78fa340dd60b689ee365c4695b881527290ec7c6f6afb72fec64756507db8",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-version-704-r1\\result.json",
+      "representation": "byte-exact",
+      "originalBytes": 2080,
+      "originalSha256": "4cd78fa340dd60b689ee365c4695b881527290ec7c6f6afb72fec64756507db8"
+    },
+    {
+      "name": "version-704/selected-image-after.json",
+      "bytes": 512,
+      "sha256": "5e439ebbdc521389e4e1a5b290579ecfd073015a209f7d873cd114e6f88f1fa3",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-version-704-r1\\selected-image-after.json",
+      "representation": "byte-exact",
+      "originalBytes": 512,
+      "originalSha256": "5e439ebbdc521389e4e1a5b290579ecfd073015a209f7d873cd114e6f88f1fa3"
+    },
+    {
+      "name": "version-704/selected-image.json",
+      "bytes": 512,
+      "sha256": "5e439ebbdc521389e4e1a5b290579ecfd073015a209f7d873cd114e6f88f1fa3",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-version-704-r1\\selected-image.json",
+      "representation": "byte-exact",
+      "originalBytes": 512,
+      "originalSha256": "5e439ebbdc521389e4e1a5b290579ecfd073015a209f7d873cd114e6f88f1fa3"
+    },
+    {
+      "name": "version-704/source-after.json",
+      "bytes": 155770,
+      "sha256": "8f496268fb3d38c6b5809ada8884ea75a89627a91cdde9eaece66723caa9e65e",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-version-704-r1\\source-after.json",
+      "representation": "byte-exact",
+      "originalBytes": 155770,
+      "originalSha256": "8f496268fb3d38c6b5809ada8884ea75a89627a91cdde9eaece66723caa9e65e"
+    },
+    {
+      "name": "version-704/source-before.json",
+      "bytes": 155770,
+      "sha256": "8f496268fb3d38c6b5809ada8884ea75a89627a91cdde9eaece66723caa9e65e",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-version-704-r1\\source-before.json",
+      "representation": "byte-exact",
+      "originalBytes": 155770,
+      "originalSha256": "8f496268fb3d38c6b5809ada8884ea75a89627a91cdde9eaece66723caa9e65e"
+    },
+    {
+      "name": "version-704/source-final.json",
+      "bytes": 155770,
+      "sha256": "8f496268fb3d38c6b5809ada8884ea75a89627a91cdde9eaece66723caa9e65e",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-version-704-r1\\source-final.json",
+      "representation": "byte-exact",
+      "originalBytes": 155770,
+      "originalSha256": "8f496268fb3d38c6b5809ada8884ea75a89627a91cdde9eaece66723caa9e65e"
+    },
+    {
+      "name": "version-704/transaction-control-after.json",
+      "bytes": 1482,
+      "sha256": "6a9589863d91d6b2af42672aa65a146939f09a81c5968aa6dc2d5b1f0af3673e",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-version-704-r1\\transaction-control-after.json",
+      "representation": "byte-exact",
+      "originalBytes": 1482,
+      "originalSha256": "6a9589863d91d6b2af42672aa65a146939f09a81c5968aa6dc2d5b1f0af3673e"
+    },
+    {
+      "name": "version-704/transaction-control-before.json",
+      "bytes": 1482,
+      "sha256": "6a9589863d91d6b2af42672aa65a146939f09a81c5968aa6dc2d5b1f0af3673e",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-version-704-r1\\transaction-control-before.json",
+      "representation": "byte-exact",
+      "originalBytes": 1482,
+      "originalSha256": "6a9589863d91d6b2af42672aa65a146939f09a81c5968aa6dc2d5b1f0af3673e"
+    },
+    {
+      "name": "version-704/transaction-control-final.json",
+      "bytes": 1482,
+      "sha256": "6a9589863d91d6b2af42672aa65a146939f09a81c5968aa6dc2d5b1f0af3673e",
+      "origin": "C:\\Users\\Lomi\\.t3\\worktrees\\Yoke-CodeIntelligence\\t3-b1973677\\validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-version-704-r1\\transaction-control-final.json",
+      "representation": "byte-exact",
+      "originalBytes": 1482,
+      "originalSha256": "6a9589863d91d6b2af42672aa65a146939f09a81c5968aa6dc2d5b1f0af3673e"
+    }
+  ],
+  "omissions": [
+    {
+      "origin": "validation\\integration-20261025\\platform-repairs\\runs-owner-retirement-live-704\\retirement-704-live-r1\\git-files-after.stdout",
+      "bytes": 1887740,
+      "sha256": "52c61c716dd4ca7fa5e0ab8e9347339501297fcc65531768f961960c1ee85bdc",
+      "reason": "redundant full Git inventory"
+    },
+    {
+      "origin": "validation\\integration-20261025\\platform-repairs\\runs-owner-retirement-live-704\\retirement-704-live-r1\\git-files-before.stdout",
+      "bytes": 1887740,
+      "sha256": "52c61c716dd4ca7fa5e0ab8e9347339501297fcc65531768f961960c1ee85bdc",
+      "reason": "redundant full Git inventory"
+    },
+    {
+      "origin": "validation\\integration-20261025\\platform-repairs\\runs-owner-retirement-live-704\\retirement-704-live-r1\\git-files-final.stdout",
+      "bytes": 1887740,
+      "sha256": "52c61c716dd4ca7fa5e0ab8e9347339501297fcc65531768f961960c1ee85bdc",
+      "reason": "redundant full Git inventory"
+    },
+    {
+      "origin": "validation\\integration-20261025\\platform-repairs\\runs-retirement-704-guard-tests\\retirement-704-guard-tests-r2\\git-files-after.stdout",
+      "bytes": 1887740,
+      "sha256": "52c61c716dd4ca7fa5e0ab8e9347339501297fcc65531768f961960c1ee85bdc",
+      "reason": "redundant full Git inventory"
+    },
+    {
+      "origin": "validation\\integration-20261025\\platform-repairs\\runs-retirement-704-guard-tests\\retirement-704-guard-tests-r2\\git-files-before.stdout",
+      "bytes": 1887740,
+      "sha256": "52c61c716dd4ca7fa5e0ab8e9347339501297fcc65531768f961960c1ee85bdc",
+      "reason": "redundant full Git inventory"
+    },
+    {
+      "origin": "validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-704-r2\\git-files-after.stdout",
+      "bytes": 1887740,
+      "sha256": "52c61c716dd4ca7fa5e0ab8e9347339501297fcc65531768f961960c1ee85bdc",
+      "reason": "redundant full Git inventory"
+    },
+    {
+      "origin": "validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-704-r2\\git-files-before.stdout",
+      "bytes": 1887740,
+      "sha256": "52c61c716dd4ca7fa5e0ab8e9347339501297fcc65531768f961960c1ee85bdc",
+      "reason": "redundant full Git inventory"
+    },
+    {
+      "origin": "validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-704-r2\\git-files-final.stdout",
+      "bytes": 1887740,
+      "sha256": "52c61c716dd4ca7fa5e0ab8e9347339501297fcc65531768f961960c1ee85bdc",
+      "reason": "redundant full Git inventory"
+    },
+    {
+      "origin": "validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-704-r2\\worker-spec.json",
+      "reason": "private worker specification"
+    },
+    {
+      "origin": "validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-version-704-r1\\git-files-after.stdout",
+      "bytes": 1887740,
+      "sha256": "52c61c716dd4ca7fa5e0ab8e9347339501297fcc65531768f961960c1ee85bdc",
+      "reason": "redundant full Git inventory"
+    },
+    {
+      "origin": "validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-version-704-r1\\git-files-before.stdout",
+      "bytes": 1887740,
+      "sha256": "52c61c716dd4ca7fa5e0ab8e9347339501297fcc65531768f961960c1ee85bdc",
+      "reason": "redundant full Git inventory"
+    },
+    {
+      "origin": "validation\\integration-20261025\\platform-repairs\\runs-compiler-lld\\release-cli-compiler-lld-version-704-r1\\git-files-final.stdout",
+      "bytes": 1887740,
+      "sha256": "52c61c716dd4ca7fa5e0ab8e9347339501297fcc65531768f961960c1ee85bdc",
+      "reason": "redundant full Git inventory"
+    }
+  ],
+  "privateBodiesNotExported": [
+    "worker specifications",
+    "fixture configuration and owner/journal bodies",
+    "private retirement plans",
+    "capabilities and raw native stderr"
+  ],
+  "publicPacketAloneIsNotCompleteProducerAdmission": true
+}

@@ -1,0 +1,22 @@
+    Finished `test` profile [unoptimized] target(s) in 0.52s
+     Running tests\office.rs (target\debug\deps\office-dd16d7ee5a8a673a.exe)
+
+running 8 tests
+test office_refuses_wrong_main_root_instead_of_extracting_fake_document_text ... ok
+test native_xlsx_keeps_shared_inline_values_and_formula_cache_distinct ... ok
+test native_docx_inspection_decodes_source_bound_unicode_paragraphs_and_tables ... ok
+test public_cli_reads_office_without_starting_office_or_a_worker ... ok
+test public_office_cli_retains_large_results_as_artifacts_within_its_output_budget ... ok
+test forbidden_xml_scalars_cannot_enter_persisted_office_text ... ok
+test unicode_zip_extra_fields_cannot_replace_admitted_part_identity ... ok
+test package_paths_bounds_entities_secrets_and_crc_fail_before_persistence ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.33s
+
+     Running tests\office_bounds.rs (target\debug\deps\office_bounds-9fc912b3f32f0c6c.exe)
+
+running 1 test
+test rejected_office_text_is_admitted_before_dom_and_extraction_copies ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.85s
+

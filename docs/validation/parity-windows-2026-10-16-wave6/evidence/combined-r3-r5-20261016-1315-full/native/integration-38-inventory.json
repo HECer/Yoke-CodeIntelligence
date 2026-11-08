@@ -1,0 +1,21 @@
+{
+  "git_impact_details_sqlite_limits": {
+    "executable": "target\\debug\\deps\\git_impact_details_sqlite_limits-f5a4447c054ece1f.exe",
+    "ignored": [],
+    "registered": [
+      "caller_sqlite_limit_and_read_transaction_survive_success_and_both_refusal_classes"
+    ]
+  },
+  "git_review": {
+    "executable": "target\\debug\\deps\\git_review-08fe162b4872c36e.exe",
+    "ignored": [],
+    "registered": [
+      "branch_overlap_includes_dependencies_authorized_by_the_captured_readonly_scope",
+      "committed_ignore_policy_is_applied_even_when_policy_files_are_outside_only_dirs",
+      "historical_author_metadata_cannot_publish_obvious_secret_values",
+      "ignored_parent_directories_cannot_be_reopened_by_their_unvisited_nested_policy",
+      "parent_cache_length_admission_does_not_materialize_oversized_sqlite_values",
+      "valid_committed_source_batches_are_partitioned_by_bytes_within_the_total_budget"
+    ]
+  }
+}

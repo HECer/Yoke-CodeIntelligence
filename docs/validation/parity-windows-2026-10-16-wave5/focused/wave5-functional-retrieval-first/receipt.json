@@ -1,0 +1,26 @@
+{
+  "checkedAtUtc": "2026-10-15T23:50:16.483688+00:00",
+  "scope": "focused_gate_not_frozen_suite",
+  "command": [
+    "cargo",
+    "test",
+    "-j",
+    "2",
+    "--manifest-path",
+    "native/Cargo.toml",
+    "--lib",
+    "retrieval",
+    "--",
+    "--nocapture",
+    "--test-threads=4"
+  ],
+  "exitCode": 101,
+  "seconds": 162.735,
+  "tempRoot": "D:\\Yoke-Test-Scratch\\wave5-functional-retrieval-first",
+  "logSha256": "cbc97eaca1f38f7aedf4ce7409221571fe68e8b45ff47a9c974a89936852ae09",
+  "groups": 1,
+  "passed": 71,
+  "failed": 6,
+  "ignored": 6,
+  "sourceChanges": []
+}

@@ -1,0 +1,19 @@
+{
+  "status": "ignored_functional_draft_unexecuted",
+  "actionId": "act_mva5a52b_79ff1fa9cb30",
+  "normalFilesUnchanged": true,
+  "legacyTailByteExact": true,
+  "files": {
+    "retrieval.rs": "74bf0ad4f47dbb378c3e869ec93c47044bec25904cf4a41ed75e03b536aa3ad1",
+    "retrieval_balanced.rs": "b50ae642318ecc8bb64502f19b0fa207a8e669fd37e4e2bc6e9c0b8c078b7010",
+    "retrieval_driver_tests.rs": "04c7c75f6392467a6cebf82b839c1c147de949979df38ad6b444fba252d6a822"
+  },
+  "kernelRed": "20deae788f66ae720c5e14ade2ae3f33c90701e1dede7c025d45967f785ee324",
+  "public31Red": "a06bbdc0f0ab54921ef1a621889c78d754bda155db3d3eb16c6fe037b356ede9",
+  "oldGlobalGolden": "56a374f44ff295af6cbcd19f71f529d545abe156c0ea739936cb4e069d88aed3",
+  "notes": [
+    "Requires A check_deadline and opaque Run implementation.",
+    "Cancellation test only clears flag after all typed/usage/pointer assertions.",
+    "No Cargo, Node, build, or test execution by this owner."
+  ]
+}

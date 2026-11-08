@@ -1,0 +1,27 @@
+{
+  "sourceUnchanged": true,
+  "inputs": 798,
+  "commands": [
+    {
+      "name": "clippy",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "clippy",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exitCode": 101,
+      "seconds": 57.40691499999957
+    }
+  ],
+  "allChecksPassed": false,
+  "wholeNativeRerun": false
+}

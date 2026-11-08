@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "kind": "ignored_next_slice_planning_sources",
+  "observedAtUtc": "2026-10-15T19:36:09.340410+00:00",
+  "scope": "read_only_local_observations_not_frozen_acceptance",
+  "planSha256": "4afb8f1767025c612e6bf93be32900d4fb82547ec4e0c6b97690a0e0b462acf6",
+  "executedTests": false,
+  "browsedUpstreams": false,
+  "sourceHashes": {
+    "docs/parity/public-contracts-2026-10-14.json": "993eb15143bf61a1cf64c80ff53d491ee13f7faeecf2ff4b53a6975de9972c3e",
+    "docs/parity/native-reconciliation-2026-10-15.json": "8ce1996a518815edaaf88bf21c2ac2de305d3b4275709485d5334040b38e76fe",
+    "native/src/retrieval.rs": "c209e6da3dc36e09613066ea1031d3174067675d8ac97e235f887de4e6cc633b",
+    "native/src/query_features.rs": "be26064454d310b5a1ce300ae0ec5fd178d796b8e3e61b2e1870f7a5de3968ef",
+    "native/src/manifest_graph.rs": "c0dd194f780472fe2d35f6f1c345250d2046114eb477b5d91ce95263e54f1a85",
+    "native/src/config_graph.rs": "d2a6dbb1292664208e06b65e8473a68b0111f48862253eb9c4b7290c156d1179",
+    "native/src/graph_extensions.rs": "0186a4e3d09e39adceaea1e2199deead74190acdb1090dc4e2b1b743defa0f2b",
+    "native/src/graph_view.rs": "ba56714b4e555757ec35681b7438c035da46e95513dc98a028fafb5a68369fd9",
+    "native/src/git_workflows.rs": "09d4d4ff79cf50a3186377e52f5ed798cd6753e43704ec2441fa13ce5a5c2a89",
+    "native/src/trail_adapter.rs": "97202f01513121bc2ee9606223f54fa5e7b7aa89a4bdf6995e6819bc00153ad3",
+    "native/src/protocol.rs": "e99af9335ced8b8d102ac0805ae8292591da31447e987b41be786f79308028f1",
+    "native/tests/hybrid_retrieval.rs": "7456dc40b6ae8837e3fcfd966d2eff984fcda9ab7d651c8a8b43ec293bf52f17",
+    "native/docs/selected-view-analysis.md": "00b3ec10f0b11e40c102dcf0f762fe026bf0f700e1a897ee1c5c413359ea6ca5",
+    "native/docs/git-workflows.md": "efa4d38decd72f32d145f34f748526ea917170a69db78c3f00f08f46d944ae6b"
+  }
+}

@@ -1,0 +1,12 @@
+    Checking yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\native)
+warning: unused import: `anyhow::Context`
+  --> native\src\github_app_digest_acquisition.rs:10:5
+   |
+10 | use anyhow::Context as _;
+   |     ^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `yoke-code-intelligence` (lib) generated 1 warning
+warning: `yoke-code-intelligence` (lib test) generated 1 warning (1 duplicate)
+    Finished `dev` profile [unoptimized] target(s) in 1m 11s

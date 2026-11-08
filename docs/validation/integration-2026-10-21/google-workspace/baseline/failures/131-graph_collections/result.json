@@ -1,0 +1,79 @@
+{
+  "group": "graph_collections",
+  "index": 131,
+  "freeBytesBefore": 3391713280,
+  "commands": [
+    {
+      "name": "compile",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--test",
+        "graph_collections",
+        "--no-run",
+        "--message-format=json-render-diagnostics"
+      ],
+      "exitCode": 0,
+      "seconds": 4.291083999996772
+    },
+    {
+      "name": "test",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--test",
+        "graph_collections",
+        "--no-fail-fast",
+        "--",
+        "--test-threads=1"
+      ],
+      "exitCode": 101,
+      "seconds": 4.253369400015799
+    }
+  ],
+  "deletedNewTestArtifacts": [
+    {
+      "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\graph_collections-4cd6898727de2824.exe",
+      "bytes": 120054784,
+      "sha256": "3857e2eafa941ad3989a41386f76bc72ddcab95aaa2d57ce1ddb12ff1dd2a57f",
+      "deleted": true
+    },
+    {
+      "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\graph_collections-4cd6898727de2824.pdb",
+      "bytes": 21778432,
+      "sha256": "8f82ed6137ff3042ef75ebcbe2496001c85724baa53dcca6b2dd6faac69e2612",
+      "deleted": true
+    }
+  ],
+  "testExecutables": [
+    {
+      "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\graph_collections-4cd6898727de2824.exe",
+      "sha256": "3857e2eafa941ad3989a41386f76bc72ddcab95aaa2d57ce1ddb12ff1dd2a57f",
+      "existedBefore": false
+    }
+  ],
+  "totals": {
+    "passed": 11,
+    "failed": 1,
+    "ignored": 0
+  },
+  "resultGroups": 1,
+  "failures": [
+    "collection_sqlite_sidecars_cannot_write_through_links"
+  ],
+  "allChecksPassed": false,
+  "sourceUnchanged": true,
+  "freeBytesAfter": 3390222336
+}

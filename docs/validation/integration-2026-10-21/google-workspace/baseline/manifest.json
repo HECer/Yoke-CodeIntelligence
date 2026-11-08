@@ -1,0 +1,2181 @@
+{
+  "runnerPid": 5884,
+  "sourceCommit": "6951ff94aee42e867329a2a042204c13c670b788",
+  "groups": [
+    {
+      "name": "lib",
+      "selector": [
+        "--lib"
+      ]
+    },
+    {
+      "name": "bin-yoke",
+      "selector": [
+        "--bin",
+        "yoke"
+      ]
+    },
+    {
+      "name": "adversarial",
+      "selector": [
+        "--test",
+        "adversarial"
+      ]
+    },
+    {
+      "name": "agent_dependency_options",
+      "selector": [
+        "--test",
+        "agent_dependency_options"
+      ]
+    },
+    {
+      "name": "agent_diagnostic_boundaries",
+      "selector": [
+        "--test",
+        "agent_diagnostic_boundaries"
+      ]
+    },
+    {
+      "name": "agent_documentation",
+      "selector": [
+        "--test",
+        "agent_documentation"
+      ]
+    },
+    {
+      "name": "agent_facade_options",
+      "selector": [
+        "--test",
+        "agent_facade_options"
+      ]
+    },
+    {
+      "name": "agent_facade_semantics",
+      "selector": [
+        "--test",
+        "agent_facade_semantics"
+      ]
+    },
+    {
+      "name": "agent_file_options",
+      "selector": [
+        "--test",
+        "agent_file_options"
+      ]
+    },
+    {
+      "name": "agent_memory_namespaces",
+      "selector": [
+        "--test",
+        "agent_memory_namespaces"
+      ]
+    },
+    {
+      "name": "agent_repl",
+      "selector": [
+        "--test",
+        "agent_repl"
+      ]
+    },
+    {
+      "name": "agent_repl_lifecycle",
+      "selector": [
+        "--test",
+        "agent_repl_lifecycle"
+      ]
+    },
+    {
+      "name": "agent_symbol_contracts",
+      "selector": [
+        "--test",
+        "agent_symbol_contracts"
+      ]
+    },
+    {
+      "name": "analyzer_cli",
+      "selector": [
+        "--test",
+        "analyzer_cli"
+      ]
+    },
+    {
+      "name": "analyzer_epochs",
+      "selector": [
+        "--test",
+        "analyzer_epochs"
+      ]
+    },
+    {
+      "name": "artifact_page_review",
+      "selector": [
+        "--test",
+        "artifact_page_review"
+      ]
+    },
+    {
+      "name": "artifacts",
+      "selector": [
+        "--test",
+        "artifacts"
+      ]
+    },
+    {
+      "name": "arxiv_source",
+      "selector": [
+        "--test",
+        "arxiv_source"
+      ]
+    },
+    {
+      "name": "arxiv_source_cli",
+      "selector": [
+        "--test",
+        "arxiv_source_cli"
+      ]
+    },
+    {
+      "name": "arxiv_source_http",
+      "selector": [
+        "--test",
+        "arxiv_source_http"
+      ]
+    },
+    {
+      "name": "blob_bounds",
+      "selector": [
+        "--test",
+        "blob_bounds"
+      ]
+    },
+    {
+      "name": "capture_analyzer8_fixture",
+      "selector": [
+        "--test",
+        "capture_analyzer8_fixture"
+      ]
+    },
+    {
+      "name": "capture_changes",
+      "selector": [
+        "--test",
+        "capture_changes"
+      ]
+    },
+    {
+      "name": "capture_epoch_selection",
+      "selector": [
+        "--test",
+        "capture_epoch_selection"
+      ]
+    },
+    {
+      "name": "capture_options",
+      "selector": [
+        "--test",
+        "capture_options"
+      ]
+    },
+    {
+      "name": "capture_policy",
+      "selector": [
+        "--test",
+        "capture_policy"
+      ]
+    },
+    {
+      "name": "client_lock",
+      "selector": [
+        "--test",
+        "client_lock"
+      ]
+    },
+    {
+      "name": "codex_host_cli",
+      "selector": [
+        "--test",
+        "codex_host_cli"
+      ]
+    },
+    {
+      "name": "collection_registry_access",
+      "selector": [
+        "--test",
+        "collection_registry_access"
+      ]
+    },
+    {
+      "name": "collections_cli",
+      "selector": [
+        "--test",
+        "collections_cli"
+      ]
+    },
+    {
+      "name": "collections_cli_review",
+      "selector": [
+        "--test",
+        "collections_cli_review"
+      ]
+    },
+    {
+      "name": "compatibility",
+      "selector": [
+        "--test",
+        "compatibility"
+      ]
+    },
+    {
+      "name": "compatibility_review",
+      "selector": [
+        "--test",
+        "compatibility_review"
+      ]
+    },
+    {
+      "name": "compiler_inline",
+      "selector": [
+        "--test",
+        "compiler_inline"
+      ]
+    },
+    {
+      "name": "compiler_inline_body",
+      "selector": [
+        "--test",
+        "compiler_inline_body"
+      ]
+    },
+    {
+      "name": "compiler_move",
+      "selector": [
+        "--test",
+        "compiler_move"
+      ]
+    },
+    {
+      "name": "config_graph",
+      "selector": [
+        "--test",
+        "config_graph"
+      ]
+    },
+    {
+      "name": "container",
+      "selector": [
+        "--test",
+        "container"
+      ]
+    },
+    {
+      "name": "contracts",
+      "selector": [
+        "--test",
+        "contracts"
+      ]
+    },
+    {
+      "name": "core",
+      "selector": [
+        "--test",
+        "core"
+      ]
+    },
+    {
+      "name": "credentials",
+      "selector": [
+        "--test",
+        "credentials"
+      ]
+    },
+    {
+      "name": "dataflow",
+      "selector": [
+        "--test",
+        "dataflow"
+      ]
+    },
+    {
+      "name": "deadline_scope",
+      "selector": [
+        "--test",
+        "deadline_scope"
+      ]
+    },
+    {
+      "name": "deadlines",
+      "selector": [
+        "--test",
+        "deadlines"
+      ]
+    },
+    {
+      "name": "debug_adapter",
+      "selector": [
+        "--test",
+        "debug_adapter"
+      ]
+    },
+    {
+      "name": "decision_cli",
+      "selector": [
+        "--test",
+        "decision_cli"
+      ]
+    },
+    {
+      "name": "decision_records",
+      "selector": [
+        "--test",
+        "decision_records"
+      ]
+    },
+    {
+      "name": "decision_records_review",
+      "selector": [
+        "--test",
+        "decision_records_review"
+      ]
+    },
+    {
+      "name": "decision_retention",
+      "selector": [
+        "--test",
+        "decision_retention"
+      ]
+    },
+    {
+      "name": "declaration_attachment_ranges",
+      "selector": [
+        "--test",
+        "declaration_attachment_ranges"
+      ]
+    },
+    {
+      "name": "declaration_attachments_live",
+      "selector": [
+        "--test",
+        "declaration_attachments_live"
+      ]
+    },
+    {
+      "name": "dependency_queries",
+      "selector": [
+        "--test",
+        "dependency_queries"
+      ]
+    },
+    {
+      "name": "derived_graph_mixed_budget",
+      "selector": [
+        "--test",
+        "derived_graph_mixed_budget"
+      ]
+    },
+    {
+      "name": "derived_graph_preparation",
+      "selector": [
+        "--test",
+        "derived_graph_preparation"
+      ]
+    },
+    {
+      "name": "digest_history_acquisition",
+      "selector": [
+        "--test",
+        "digest_history_acquisition"
+      ]
+    },
+    {
+      "name": "digest_history_jobs",
+      "selector": [
+        "--test",
+        "digest_history_jobs"
+      ]
+    },
+    {
+      "name": "digest_receiver",
+      "selector": [
+        "--test",
+        "digest_receiver"
+      ]
+    },
+    {
+      "name": "directory_move_live",
+      "selector": [
+        "--test",
+        "directory_move_live"
+      ]
+    },
+    {
+      "name": "document_cli",
+      "selector": [
+        "--test",
+        "document_cli"
+      ]
+    },
+    {
+      "name": "document_explorer",
+      "selector": [
+        "--test",
+        "document_explorer"
+      ]
+    },
+    {
+      "name": "document_graph",
+      "selector": [
+        "--test",
+        "document_graph"
+      ]
+    },
+    {
+      "name": "document_graph_review",
+      "selector": [
+        "--test",
+        "document_graph_review"
+      ]
+    },
+    {
+      "name": "editor",
+      "selector": [
+        "--test",
+        "editor"
+      ]
+    },
+    {
+      "name": "editor_http",
+      "selector": [
+        "--test",
+        "editor_http"
+      ]
+    },
+    {
+      "name": "engine_epoch_review",
+      "selector": [
+        "--test",
+        "engine_epoch_review"
+      ]
+    },
+    {
+      "name": "epoch_cache_review",
+      "selector": [
+        "--test",
+        "epoch_cache_review"
+      ]
+    },
+    {
+      "name": "epoch_producers",
+      "selector": [
+        "--test",
+        "epoch_producers"
+      ]
+    },
+    {
+      "name": "explorer_export",
+      "selector": [
+        "--test",
+        "explorer_export"
+      ]
+    },
+    {
+      "name": "explorer_runtime",
+      "selector": [
+        "--test",
+        "explorer_runtime"
+      ]
+    },
+    {
+      "name": "export",
+      "selector": [
+        "--test",
+        "export"
+      ]
+    },
+    {
+      "name": "facade_directory_move",
+      "selector": [
+        "--test",
+        "facade_directory_move"
+      ]
+    },
+    {
+      "name": "facade_file_delete",
+      "selector": [
+        "--test",
+        "facade_file_delete"
+      ]
+    },
+    {
+      "name": "facade_file_move",
+      "selector": [
+        "--test",
+        "facade_file_move"
+      ]
+    },
+    {
+      "name": "facade_file_rename",
+      "selector": [
+        "--test",
+        "facade_file_rename"
+      ]
+    },
+    {
+      "name": "facade_file_usage",
+      "selector": [
+        "--test",
+        "facade_file_usage"
+      ]
+    },
+    {
+      "name": "falkor_publish",
+      "selector": [
+        "--test",
+        "falkor_publish"
+      ]
+    },
+    {
+      "name": "falkor_publish_cli",
+      "selector": [
+        "--test",
+        "falkor_publish_cli"
+      ]
+    },
+    {
+      "name": "falkor_wire",
+      "selector": [
+        "--test",
+        "falkor_wire"
+      ]
+    },
+    {
+      "name": "federated_collections",
+      "selector": [
+        "--test",
+        "federated_collections"
+      ]
+    },
+    {
+      "name": "federation",
+      "selector": [
+        "--test",
+        "federation"
+      ]
+    },
+    {
+      "name": "federation_archive",
+      "selector": [
+        "--test",
+        "federation_archive"
+      ]
+    },
+    {
+      "name": "federation_archive_receipts",
+      "selector": [
+        "--test",
+        "federation_archive_receipts"
+      ]
+    },
+    {
+      "name": "federation_epoch_review",
+      "selector": [
+        "--test",
+        "federation_epoch_review"
+      ]
+    },
+    {
+      "name": "federation_epochs",
+      "selector": [
+        "--test",
+        "federation_epochs"
+      ]
+    },
+    {
+      "name": "federation_http",
+      "selector": [
+        "--test",
+        "federation_http"
+      ]
+    },
+    {
+      "name": "federation_receipt_bounds",
+      "selector": [
+        "--test",
+        "federation_receipt_bounds"
+      ]
+    },
+    {
+      "name": "feedback_cli",
+      "selector": [
+        "--test",
+        "feedback_cli"
+      ]
+    },
+    {
+      "name": "file_api",
+      "selector": [
+        "--test",
+        "file_api"
+      ]
+    },
+    {
+      "name": "file_usage_live",
+      "selector": [
+        "--test",
+        "file_usage_live"
+      ]
+    },
+    {
+      "name": "freshness",
+      "selector": [
+        "--test",
+        "freshness"
+      ]
+    },
+    {
+      "name": "freshness_epoch",
+      "selector": [
+        "--test",
+        "freshness_epoch"
+      ]
+    },
+    {
+      "name": "git_affected_cli",
+      "selector": [
+        "--test",
+        "git_affected_cli"
+      ]
+    },
+    {
+      "name": "git_affected_details",
+      "selector": [
+        "--test",
+        "git_affected_details"
+      ]
+    },
+    {
+      "name": "git_affected_qualification",
+      "selector": [
+        "--test",
+        "git_affected_qualification"
+      ]
+    },
+    {
+      "name": "git_areas",
+      "selector": [
+        "--test",
+        "git_areas"
+      ]
+    },
+    {
+      "name": "git_cli",
+      "selector": [
+        "--test",
+        "git_cli"
+      ]
+    },
+    {
+      "name": "git_conflicts",
+      "selector": [
+        "--test",
+        "git_conflicts"
+      ]
+    },
+    {
+      "name": "git_epoch_selection",
+      "selector": [
+        "--test",
+        "git_epoch_selection"
+      ]
+    },
+    {
+      "name": "git_epochs",
+      "selector": [
+        "--test",
+        "git_epochs"
+      ]
+    },
+    {
+      "name": "git_impact_details",
+      "selector": [
+        "--test",
+        "git_impact_details"
+      ]
+    },
+    {
+      "name": "git_impact_details_cli",
+      "selector": [
+        "--test",
+        "git_impact_details_cli"
+      ]
+    },
+    {
+      "name": "git_impact_details_no_git",
+      "selector": [
+        "--test",
+        "git_impact_details_no_git"
+      ]
+    },
+    {
+      "name": "git_impact_details_qualification",
+      "selector": [
+        "--test",
+        "git_impact_details_qualification"
+      ]
+    },
+    {
+      "name": "git_impact_details_sqlite_limits",
+      "selector": [
+        "--test",
+        "git_impact_details_sqlite_limits"
+      ]
+    },
+    {
+      "name": "git_owners",
+      "selector": [
+        "--test",
+        "git_owners"
+      ]
+    },
+    {
+      "name": "git_review",
+      "selector": [
+        "--test",
+        "git_review"
+      ]
+    },
+    {
+      "name": "git_workflows",
+      "selector": [
+        "--test",
+        "git_workflows"
+      ]
+    },
+    {
+      "name": "github",
+      "selector": [
+        "--test",
+        "github"
+      ]
+    },
+    {
+      "name": "github_app",
+      "selector": [
+        "--test",
+        "github_app"
+      ]
+    },
+    {
+      "name": "github_app_auth",
+      "selector": [
+        "--test",
+        "github_app_auth"
+      ]
+    },
+    {
+      "name": "github_app_auth_cli",
+      "selector": [
+        "--test",
+        "github_app_auth_cli"
+      ]
+    },
+    {
+      "name": "github_app_cli",
+      "selector": [
+        "--test",
+        "github_app_cli"
+      ]
+    },
+    {
+      "name": "github_app_digest",
+      "selector": [
+        "--test",
+        "github_app_digest"
+      ]
+    },
+    {
+      "name": "github_app_digest_cli",
+      "selector": [
+        "--test",
+        "github_app_digest_cli"
+      ]
+    },
+    {
+      "name": "github_app_digest_handoff",
+      "selector": [
+        "--test",
+        "github_app_digest_handoff"
+      ]
+    },
+    {
+      "name": "github_app_digest_mapping",
+      "selector": [
+        "--test",
+        "github_app_digest_mapping"
+      ]
+    },
+    {
+      "name": "github_app_history_bridge",
+      "selector": [
+        "--test",
+        "github_app_history_bridge"
+      ]
+    },
+    {
+      "name": "github_app_history_cli",
+      "selector": [
+        "--test",
+        "github_app_history_cli"
+      ]
+    },
+    {
+      "name": "github_app_ingress",
+      "selector": [
+        "--test",
+        "github_app_ingress"
+      ]
+    },
+    {
+      "name": "github_app_ingress_cli",
+      "selector": [
+        "--test",
+        "github_app_ingress_cli"
+      ]
+    },
+    {
+      "name": "github_app_pages_cli",
+      "selector": [
+        "--test",
+        "github_app_pages_cli"
+      ]
+    },
+    {
+      "name": "github_app_publication",
+      "selector": [
+        "--test",
+        "github_app_publication"
+      ]
+    },
+    {
+      "name": "github_app_publication_cli",
+      "selector": [
+        "--test",
+        "github_app_publication_cli"
+      ]
+    },
+    {
+      "name": "github_app_worker",
+      "selector": [
+        "--test",
+        "github_app_worker"
+      ]
+    },
+    {
+      "name": "github_app_worker_cli",
+      "selector": [
+        "--test",
+        "github_app_worker_cli"
+      ]
+    },
+    {
+      "name": "github_app_worker_run",
+      "selector": [
+        "--test",
+        "github_app_worker_run"
+      ]
+    },
+    {
+      "name": "github_discussions",
+      "selector": [
+        "--test",
+        "github_discussions"
+      ]
+    },
+    {
+      "name": "github_live",
+      "selector": [
+        "--test",
+        "github_live"
+      ]
+    },
+    {
+      "name": "graph",
+      "selector": [
+        "--test",
+        "graph"
+      ]
+    },
+    {
+      "name": "graph_archive_review",
+      "selector": [
+        "--test",
+        "graph_archive_review"
+      ]
+    },
+    {
+      "name": "graph_collections",
+      "selector": [
+        "--test",
+        "graph_collections"
+      ]
+    },
+    {
+      "name": "graph_exports",
+      "selector": [
+        "--test",
+        "graph_exports"
+      ]
+    },
+    {
+      "name": "graph_extensions",
+      "selector": [
+        "--test",
+        "graph_extensions"
+      ]
+    },
+    {
+      "name": "graph_review_adversarial",
+      "selector": [
+        "--test",
+        "graph_review_adversarial"
+      ]
+    },
+    {
+      "name": "graph_root_review",
+      "selector": [
+        "--test",
+        "graph_root_review"
+      ]
+    },
+    {
+      "name": "graph_view",
+      "selector": [
+        "--test",
+        "graph_view"
+      ]
+    },
+    {
+      "name": "graphify_adapter",
+      "selector": [
+        "--test",
+        "graphify_adapter"
+      ]
+    },
+    {
+      "name": "graphify_cli",
+      "selector": [
+        "--test",
+        "graphify_cli"
+      ]
+    },
+    {
+      "name": "graphify_selected_queries",
+      "selector": [
+        "--test",
+        "graphify_selected_queries"
+      ]
+    },
+    {
+      "name": "historical_publication",
+      "selector": [
+        "--test",
+        "historical_publication"
+      ]
+    },
+    {
+      "name": "historical_receipt_fixture_qualification",
+      "selector": [
+        "--test",
+        "historical_receipt_fixture_qualification"
+      ]
+    },
+    {
+      "name": "historical_view_adversarial",
+      "selector": [
+        "--test",
+        "historical_view_adversarial"
+      ]
+    },
+    {
+      "name": "historical_view_boundaries",
+      "selector": [
+        "--test",
+        "historical_view_boundaries"
+      ]
+    },
+    {
+      "name": "historical_view_budget_options",
+      "selector": [
+        "--test",
+        "historical_view_budget_options"
+      ]
+    },
+    {
+      "name": "historical_view_comparison",
+      "selector": [
+        "--test",
+        "historical_view_comparison"
+      ]
+    },
+    {
+      "name": "historical_view_fixture_qualification",
+      "selector": [
+        "--test",
+        "historical_view_fixture_qualification"
+      ]
+    },
+    {
+      "name": "historical_view_receipts",
+      "selector": [
+        "--test",
+        "historical_view_receipts"
+      ]
+    },
+    {
+      "name": "historical_view_semantics",
+      "selector": [
+        "--test",
+        "historical_view_semantics"
+      ]
+    },
+    {
+      "name": "host_cli",
+      "selector": [
+        "--test",
+        "host_cli"
+      ]
+    },
+    {
+      "name": "host_config",
+      "selector": [
+        "--test",
+        "host_config"
+      ]
+    },
+    {
+      "name": "host_credentials",
+      "selector": [
+        "--test",
+        "host_credentials"
+      ]
+    },
+    {
+      "name": "host_install",
+      "selector": [
+        "--test",
+        "host_install"
+      ]
+    },
+    {
+      "name": "host_install_cli",
+      "selector": [
+        "--test",
+        "host_install_cli"
+      ]
+    },
+    {
+      "name": "host_output_disposition",
+      "selector": [
+        "--test",
+        "host_output_disposition"
+      ]
+    },
+    {
+      "name": "hybrid_retrieval",
+      "selector": [
+        "--test",
+        "hybrid_retrieval"
+      ]
+    },
+    {
+      "name": "ignored_capture",
+      "selector": [
+        "--test",
+        "ignored_capture"
+      ]
+    },
+    {
+      "name": "ignored_capture_cli",
+      "selector": [
+        "--test",
+        "ignored_capture_cli"
+      ]
+    },
+    {
+      "name": "ignored_facades",
+      "selector": [
+        "--test",
+        "ignored_facades"
+      ]
+    },
+    {
+      "name": "json_output_review",
+      "selector": [
+        "--test",
+        "json_output_review"
+      ]
+    },
+    {
+      "name": "knowledge",
+      "selector": [
+        "--test",
+        "knowledge"
+      ]
+    },
+    {
+      "name": "knowledge_cli",
+      "selector": [
+        "--test",
+        "knowledge_cli"
+      ]
+    },
+    {
+      "name": "language_constructs",
+      "selector": [
+        "--test",
+        "language_constructs"
+      ]
+    },
+    {
+      "name": "ledger",
+      "selector": [
+        "--test",
+        "ledger"
+      ]
+    },
+    {
+      "name": "ledger_admission_review",
+      "selector": [
+        "--test",
+        "ledger_admission_review"
+      ]
+    },
+    {
+      "name": "ledger_batches",
+      "selector": [
+        "--test",
+        "ledger_batches"
+      ]
+    },
+    {
+      "name": "ledger_batches_review",
+      "selector": [
+        "--test",
+        "ledger_batches_review"
+      ]
+    },
+    {
+      "name": "legacy_retrieval_oracle",
+      "selector": [
+        "--test",
+        "legacy_retrieval_oracle"
+      ]
+    },
+    {
+      "name": "live",
+      "selector": [
+        "--test",
+        "live"
+      ]
+    },
+    {
+      "name": "live_enrichment",
+      "selector": [
+        "--test",
+        "live_enrichment"
+      ]
+    },
+    {
+      "name": "lsp",
+      "selector": [
+        "--test",
+        "lsp"
+      ]
+    },
+    {
+      "name": "lsp_action_resolve",
+      "selector": [
+        "--test",
+        "lsp_action_resolve"
+      ]
+    },
+    {
+      "name": "lsp_dependency_scope",
+      "selector": [
+        "--test",
+        "lsp_dependency_scope"
+      ]
+    },
+    {
+      "name": "lsp_enrichment",
+      "selector": [
+        "--test",
+        "lsp_enrichment"
+      ]
+    },
+    {
+      "name": "lsp_lifecycle",
+      "selector": [
+        "--test",
+        "lsp_lifecycle"
+      ]
+    },
+    {
+      "name": "lsp_source_execution",
+      "selector": [
+        "--test",
+        "lsp_source_execution"
+      ]
+    },
+    {
+      "name": "maintenance",
+      "selector": [
+        "--test",
+        "maintenance"
+      ]
+    },
+    {
+      "name": "manifest_graph",
+      "selector": [
+        "--test",
+        "manifest_graph"
+      ]
+    },
+    {
+      "name": "markdown_graph",
+      "selector": [
+        "--test",
+        "markdown_graph"
+      ]
+    },
+    {
+      "name": "mcp_collection_grants",
+      "selector": [
+        "--test",
+        "mcp_collection_grants"
+      ]
+    },
+    {
+      "name": "mcp_collection_grants_review",
+      "selector": [
+        "--test",
+        "mcp_collection_grants_review"
+      ]
+    },
+    {
+      "name": "mcp_http",
+      "selector": [
+        "--test",
+        "mcp_http"
+      ]
+    },
+    {
+      "name": "mcp_http_cli",
+      "selector": [
+        "--test",
+        "mcp_http_cli"
+      ]
+    },
+    {
+      "name": "mcp_http_review",
+      "selector": [
+        "--test",
+        "mcp_http_review"
+      ]
+    },
+    {
+      "name": "meaning_archive_cli",
+      "selector": [
+        "--test",
+        "meaning_archive_cli"
+      ]
+    },
+    {
+      "name": "meaning_archive_primitives",
+      "selector": [
+        "--test",
+        "meaning_archive_primitives"
+      ]
+    },
+    {
+      "name": "meaning_build",
+      "selector": [
+        "--test",
+        "meaning_build"
+      ]
+    },
+    {
+      "name": "meaning_cli",
+      "selector": [
+        "--test",
+        "meaning_cli"
+      ]
+    },
+    {
+      "name": "meaning_collection_archives",
+      "selector": [
+        "--test",
+        "meaning_collection_archives"
+      ]
+    },
+    {
+      "name": "meaning_commit_review",
+      "selector": [
+        "--test",
+        "meaning_commit_review"
+      ]
+    },
+    {
+      "name": "meaning_feedback",
+      "selector": [
+        "--test",
+        "meaning_feedback"
+      ]
+    },
+    {
+      "name": "meaning_graph",
+      "selector": [
+        "--test",
+        "meaning_graph"
+      ]
+    },
+    {
+      "name": "meaning_graph_views",
+      "selector": [
+        "--test",
+        "meaning_graph_views"
+      ]
+    },
+    {
+      "name": "meaning_groups_admission",
+      "selector": [
+        "--test",
+        "meaning_groups_admission"
+      ]
+    },
+    {
+      "name": "meaning_identity",
+      "selector": [
+        "--test",
+        "meaning_identity"
+      ]
+    },
+    {
+      "name": "meaning_join_cli",
+      "selector": [
+        "--test",
+        "meaning_join_cli"
+      ]
+    },
+    {
+      "name": "meaning_projection_portable",
+      "selector": [
+        "--test",
+        "meaning_projection_portable"
+      ]
+    },
+    {
+      "name": "meaning_protocol",
+      "selector": [
+        "--test",
+        "meaning_protocol"
+      ]
+    },
+    {
+      "name": "meaning_retention_review",
+      "selector": [
+        "--test",
+        "meaning_retention_review"
+      ]
+    },
+    {
+      "name": "meaning_view",
+      "selector": [
+        "--test",
+        "meaning_view"
+      ]
+    },
+    {
+      "name": "meaning_view_archives",
+      "selector": [
+        "--test",
+        "meaning_view_archives"
+      ]
+    },
+    {
+      "name": "media",
+      "selector": [
+        "--test",
+        "media"
+      ]
+    },
+    {
+      "name": "member_decorators",
+      "selector": [
+        "--test",
+        "member_decorators"
+      ]
+    },
+    {
+      "name": "mixed_meaning_claims",
+      "selector": [
+        "--test",
+        "mixed_meaning_claims"
+      ]
+    },
+    {
+      "name": "mixed_meaning_composition",
+      "selector": [
+        "--test",
+        "mixed_meaning_composition"
+      ]
+    },
+    {
+      "name": "mixed_meaning_provider",
+      "selector": [
+        "--test",
+        "mixed_meaning_provider"
+      ]
+    },
+    {
+      "name": "mixed_meaning_queries",
+      "selector": [
+        "--test",
+        "mixed_meaning_queries"
+      ]
+    },
+    {
+      "name": "mixed_pdf_view",
+      "selector": [
+        "--test",
+        "mixed_pdf_view"
+      ]
+    },
+    {
+      "name": "mixed_view_cli",
+      "selector": [
+        "--test",
+        "mixed_view_cli"
+      ]
+    },
+    {
+      "name": "model_bedrock",
+      "selector": [
+        "--test",
+        "model_bedrock"
+      ]
+    },
+    {
+      "name": "model_bedrock_batch_cli_review",
+      "selector": [
+        "--test",
+        "model_bedrock_batch_cli_review"
+      ]
+    },
+    {
+      "name": "model_bedrock_cli",
+      "selector": [
+        "--test",
+        "model_bedrock_cli"
+      ]
+    },
+    {
+      "name": "model_bedrock_cli_actual",
+      "selector": [
+        "--test",
+        "model_bedrock_cli_actual"
+      ]
+    },
+    {
+      "name": "model_bedrock_review",
+      "selector": [
+        "--test",
+        "model_bedrock_review"
+      ]
+    },
+    {
+      "name": "model_http",
+      "selector": [
+        "--test",
+        "model_http"
+      ]
+    },
+    {
+      "name": "model_http_cli",
+      "selector": [
+        "--test",
+        "model_http_cli"
+      ]
+    },
+    {
+      "name": "model_http_review",
+      "selector": [
+        "--test",
+        "model_http_review"
+      ]
+    },
+    {
+      "name": "model_identity",
+      "selector": [
+        "--test",
+        "model_identity"
+      ]
+    },
+    {
+      "name": "monorepo_pre_feature_envelope",
+      "selector": [
+        "--test",
+        "monorepo_pre_feature_envelope"
+      ]
+    },
+    {
+      "name": "monorepo_profiles",
+      "selector": [
+        "--test",
+        "monorepo_profiles"
+      ]
+    },
+    {
+      "name": "monorepo_retrieval",
+      "selector": [
+        "--test",
+        "monorepo_retrieval"
+      ]
+    },
+    {
+      "name": "monorepo_scopes",
+      "selector": [
+        "--test",
+        "monorepo_scopes"
+      ]
+    },
+    {
+      "name": "neo4j_publish",
+      "selector": [
+        "--test",
+        "neo4j_publish"
+      ]
+    },
+    {
+      "name": "neo4j_publish_cli",
+      "selector": [
+        "--test",
+        "neo4j_publish_cli"
+      ]
+    },
+    {
+      "name": "notes",
+      "selector": [
+        "--test",
+        "notes"
+      ]
+    },
+    {
+      "name": "office",
+      "selector": [
+        "--test",
+        "office"
+      ]
+    },
+    {
+      "name": "office_bounds",
+      "selector": [
+        "--test",
+        "office_bounds"
+      ]
+    },
+    {
+      "name": "ollama",
+      "selector": [
+        "--test",
+        "ollama"
+      ]
+    },
+    {
+      "name": "operations",
+      "selector": [
+        "--test",
+        "operations"
+      ]
+    },
+    {
+      "name": "parity_cli",
+      "selector": [
+        "--test",
+        "parity_cli"
+      ]
+    },
+    {
+      "name": "parity_construct_review",
+      "selector": [
+        "--test",
+        "parity_construct_review"
+      ]
+    },
+    {
+      "name": "parity_retention",
+      "selector": [
+        "--test",
+        "parity_retention"
+      ]
+    },
+    {
+      "name": "parity_source_review",
+      "selector": [
+        "--test",
+        "parity_source_review"
+      ]
+    },
+    {
+      "name": "parity_view_review",
+      "selector": [
+        "--test",
+        "parity_view_review"
+      ]
+    },
+    {
+      "name": "parser_epoch9",
+      "selector": [
+        "--test",
+        "parser_epoch9"
+      ]
+    },
+    {
+      "name": "plan_feedback",
+      "selector": [
+        "--test",
+        "plan_feedback"
+      ]
+    },
+    {
+      "name": "plan_integrity",
+      "selector": [
+        "--test",
+        "plan_integrity"
+      ]
+    },
+    {
+      "name": "platform_credentials",
+      "selector": [
+        "--test",
+        "platform_credentials"
+      ]
+    },
+    {
+      "name": "postgres_catalog",
+      "selector": [
+        "--test",
+        "postgres_catalog"
+      ]
+    },
+    {
+      "name": "postgres_catalog_cli",
+      "selector": [
+        "--test",
+        "postgres_catalog_cli"
+      ]
+    },
+    {
+      "name": "process",
+      "selector": [
+        "--test",
+        "process"
+      ]
+    },
+    {
+      "name": "project_session",
+      "selector": [
+        "--test",
+        "project_session"
+      ]
+    },
+    {
+      "name": "projects",
+      "selector": [
+        "--test",
+        "projects"
+      ]
+    },
+    {
+      "name": "propagated_delete_contract",
+      "selector": [
+        "--test",
+        "propagated_delete_contract"
+      ]
+    },
+    {
+      "name": "propagated_delete_live",
+      "selector": [
+        "--test",
+        "propagated_delete_live"
+      ]
+    },
+    {
+      "name": "protocol_connection",
+      "selector": [
+        "--test",
+        "protocol_connection"
+      ]
+    },
+    {
+      "name": "provider_batch_bounds",
+      "selector": [
+        "--test",
+        "provider_batch_bounds"
+      ]
+    },
+    {
+      "name": "provider_batches",
+      "selector": [
+        "--test",
+        "provider_batches"
+      ]
+    },
+    {
+      "name": "provider_batches_review",
+      "selector": [
+        "--test",
+        "provider_batches_review"
+      ]
+    },
+    {
+      "name": "provider_scope_review",
+      "selector": [
+        "--test",
+        "provider_scope_review"
+      ]
+    },
+    {
+      "name": "providers",
+      "selector": [
+        "--test",
+        "providers"
+      ]
+    },
+    {
+      "name": "publication",
+      "selector": [
+        "--test",
+        "publication"
+      ]
+    },
+    {
+      "name": "python_empty_suite",
+      "selector": [
+        "--test",
+        "python_empty_suite"
+      ]
+    },
+    {
+      "name": "query_parity",
+      "selector": [
+        "--test",
+        "query_parity"
+      ]
+    },
+    {
+      "name": "read_only_dependencies",
+      "selector": [
+        "--test",
+        "read_only_dependencies"
+      ]
+    },
+    {
+      "name": "refactor_intents",
+      "selector": [
+        "--test",
+        "refactor_intents"
+      ]
+    },
+    {
+      "name": "registry_replay_review",
+      "selector": [
+        "--test",
+        "registry_replay_review"
+      ]
+    },
+    {
+      "name": "replacement",
+      "selector": [
+        "--test",
+        "replacement"
+      ]
+    },
+    {
+      "name": "resource_paging",
+      "selector": [
+        "--test",
+        "resource_paging"
+      ]
+    },
+    {
+      "name": "retention",
+      "selector": [
+        "--test",
+        "retention"
+      ]
+    },
+    {
+      "name": "retrieval",
+      "selector": [
+        "--test",
+        "retrieval"
+      ]
+    },
+    {
+      "name": "runtime",
+      "selector": [
+        "--test",
+        "runtime"
+      ]
+    },
+    {
+      "name": "scoped_parent_performance",
+      "selector": [
+        "--test",
+        "scoped_parent_performance"
+      ]
+    },
+    {
+      "name": "scoped_resolution",
+      "selector": [
+        "--test",
+        "scoped_resolution"
+      ]
+    },
+    {
+      "name": "selected_graph_views",
+      "selector": [
+        "--test",
+        "selected_graph_views"
+      ]
+    },
+    {
+      "name": "selected_view_analysis",
+      "selector": [
+        "--test",
+        "selected_view_analysis"
+      ]
+    },
+    {
+      "name": "selected_view_analysis_review",
+      "selector": [
+        "--test",
+        "selected_view_analysis_review"
+      ]
+    },
+    {
+      "name": "selected_view_review",
+      "selector": [
+        "--test",
+        "selected_view_review"
+      ]
+    },
+    {
+      "name": "semantic_enrichment",
+      "selector": [
+        "--test",
+        "semantic_enrichment"
+      ]
+    },
+    {
+      "name": "semantic_mcp",
+      "selector": [
+        "--test",
+        "semantic_mcp"
+      ]
+    },
+    {
+      "name": "semantic_provider_context",
+      "selector": [
+        "--test",
+        "semantic_provider_context"
+      ]
+    },
+    {
+      "name": "semantic_refactor",
+      "selector": [
+        "--test",
+        "semantic_refactor"
+      ]
+    },
+    {
+      "name": "server_catalog",
+      "selector": [
+        "--test",
+        "server_catalog"
+      ]
+    },
+    {
+      "name": "session_collections",
+      "selector": [
+        "--test",
+        "session_collections"
+      ]
+    },
+    {
+      "name": "session_collections_admission",
+      "selector": [
+        "--test",
+        "session_collections_admission"
+      ]
+    },
+    {
+      "name": "session_epoch_selection",
+      "selector": [
+        "--test",
+        "session_epoch_selection"
+      ]
+    },
+    {
+      "name": "session_mcp",
+      "selector": [
+        "--test",
+        "session_mcp"
+      ]
+    },
+    {
+      "name": "session_refactor",
+      "selector": [
+        "--test",
+        "session_refactor"
+      ]
+    },
+    {
+      "name": "session_review",
+      "selector": [
+        "--test",
+        "session_review"
+      ]
+    },
+    {
+      "name": "session_root_aliases",
+      "selector": [
+        "--test",
+        "session_root_aliases"
+      ]
+    },
+    {
+      "name": "sibling_declarators",
+      "selector": [
+        "--test",
+        "sibling_declarators"
+      ]
+    },
+    {
+      "name": "skill_takeaways",
+      "selector": [
+        "--test",
+        "skill_takeaways"
+      ]
+    },
+    {
+      "name": "skill_takeaways_batch_review",
+      "selector": [
+        "--test",
+        "skill_takeaways_batch_review"
+      ]
+    },
+    {
+      "name": "skill_takeaways_contract_review",
+      "selector": [
+        "--test",
+        "skill_takeaways_contract_review"
+      ]
+    },
+    {
+      "name": "skill_takeaways_review",
+      "selector": [
+        "--test",
+        "skill_takeaways_review"
+      ]
+    },
+    {
+      "name": "skills_cli",
+      "selector": [
+        "--test",
+        "skills_cli"
+      ]
+    },
+    {
+      "name": "source_acquisition",
+      "selector": [
+        "--test",
+        "source_acquisition"
+      ]
+    },
+    {
+      "name": "source_acquisition_cli",
+      "selector": [
+        "--test",
+        "source_acquisition_cli"
+      ]
+    },
+    {
+      "name": "source_acquisition_http",
+      "selector": [
+        "--test",
+        "source_acquisition_http"
+      ]
+    },
+    {
+      "name": "store_cancellation",
+      "selector": [
+        "--test",
+        "store_cancellation"
+      ]
+    },
+    {
+      "name": "store_identity",
+      "selector": [
+        "--test",
+        "store_identity"
+      ]
+    },
+    {
+      "name": "store_open_deadline",
+      "selector": [
+        "--test",
+        "store_open_deadline"
+      ]
+    },
+    {
+      "name": "store_read_only",
+      "selector": [
+        "--test",
+        "store_read_only"
+      ]
+    },
+    {
+      "name": "store_review",
+      "selector": [
+        "--test",
+        "store_review"
+      ]
+    },
+    {
+      "name": "symbol_delete_live",
+      "selector": [
+        "--test",
+        "symbol_delete_live"
+      ]
+    },
+    {
+      "name": "symbol_delete_ranges",
+      "selector": [
+        "--test",
+        "symbol_delete_ranges"
+      ]
+    },
+    {
+      "name": "symbol_move_declarations",
+      "selector": [
+        "--test",
+        "symbol_move_declarations"
+      ]
+    },
+    {
+      "name": "symbol_move_effect_admission",
+      "selector": [
+        "--test",
+        "symbol_move_effect_admission"
+      ]
+    },
+    {
+      "name": "symbol_move_own_v1",
+      "selector": [
+        "--test",
+        "symbol_move_own_v1"
+      ]
+    },
+    {
+      "name": "test_map",
+      "selector": [
+        "--test",
+        "test_map"
+      ]
+    },
+    {
+      "name": "trail_adapter",
+      "selector": [
+        "--test",
+        "trail_adapter"
+      ]
+    },
+    {
+      "name": "trail_bodies",
+      "selector": [
+        "--test",
+        "trail_bodies"
+      ]
+    },
+    {
+      "name": "trail_review",
+      "selector": [
+        "--test",
+        "trail_review"
+      ]
+    },
+    {
+      "name": "transcript_semantic",
+      "selector": [
+        "--test",
+        "transcript_semantic"
+      ]
+    },
+    {
+      "name": "universal_languages",
+      "selector": [
+        "--test",
+        "universal_languages"
+      ]
+    },
+    {
+      "name": "vector_admission_review",
+      "selector": [
+        "--test",
+        "vector_admission_review"
+      ]
+    },
+    {
+      "name": "view_comparison_cli",
+      "selector": [
+        "--test",
+        "view_comparison_cli"
+      ]
+    },
+    {
+      "name": "workflow_cli",
+      "selector": [
+        "--test",
+        "workflow_cli"
+      ]
+    },
+    {
+      "name": "workspace",
+      "selector": [
+        "--test",
+        "workspace"
+      ]
+    },
+    {
+      "name": "yaml_admission_review",
+      "selector": [
+        "--test",
+        "yaml_admission_review"
+      ]
+    },
+    {
+      "name": "doc",
+      "selector": [
+        "--doc"
+      ]
+    }
+  ],
+  "integrationTargets": 307,
+  "frozenInputs": 927,
+  "cliSha256": "f2cb69f0ea1f4b7f367af90a7563b76dc5427b23a258ce3c732fcc66e5cff0ab",
+  "existingArtifactsNeverDeleted": true,
+  "ignorePolicy": "Cargo defaults; no ignored test promoted to passing",
+  "sourceCodeExecution": "Only repository test harnesses and their explicitly owned fixtures",
+  "fullStatusCertified": false
+}

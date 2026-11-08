@@ -1,0 +1,101 @@
+{
+  "diagnosticOnly": true,
+  "nativeAcceptance": false,
+  "nativeYokeImageReadOrExecuted": false,
+  "trials": [
+    {
+      "name": "cwd-ordinary",
+      "jobsRequested": 2,
+      "resumeMode": "snapshot",
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "timedOut": false,
+      "nativeAcceptance": false,
+      "pid": 50904,
+      "snapshotEntriesScanned": 3659,
+      "snapshotEndError": 18,
+      "resumedThreads": [
+        {
+          "primary": true,
+          "previousSuspendCount": 1
+        }
+      ],
+      "primaryObservedResumed": true,
+      "resumeElapsedSeconds": 0.04896580008789897,
+      "exitCode": 0,
+      "activeBeforeCleanup": [
+        0,
+        0
+      ],
+      "treeExitedBeforeCleanup": true,
+      "activeAfterCleanup": [
+        0,
+        0
+      ],
+      "rootExitedAfterCleanup": true,
+      "elapsedSeconds": 0.28289660008158535,
+      "stdout": "owned-windows-runtime\r\n",
+      "stderr": "owned-script-entry\r\nowned-host-version:5.1.19041.6456\r\nowned-before-folder\r\nowned-after-folder\r\nowned-script-end\r\n",
+      "streamEOF": [
+        true,
+        true
+      ],
+      "readerError": [
+        false,
+        false
+      ],
+      "outputExceeded": [
+        false,
+        false
+      ],
+      "diagnosticComplete": true
+    },
+    {
+      "name": "cwd-verbatim",
+      "jobsRequested": 2,
+      "resumeMode": "snapshot",
+      "startedSuspended": true,
+      "assignedBeforeResume": true,
+      "timedOut": false,
+      "nativeAcceptance": false,
+      "pid": 58460,
+      "snapshotEntriesScanned": 3659,
+      "snapshotEndError": 18,
+      "resumedThreads": [
+        {
+          "primary": true,
+          "previousSuspendCount": 1
+        }
+      ],
+      "primaryObservedResumed": true,
+      "resumeElapsedSeconds": 0.032467500073835254,
+      "exitCode": 0,
+      "activeBeforeCleanup": [
+        0,
+        0
+      ],
+      "treeExitedBeforeCleanup": true,
+      "activeAfterCleanup": [
+        0,
+        0
+      ],
+      "rootExitedAfterCleanup": true,
+      "elapsedSeconds": 0.23887070000637323,
+      "stdout": "owned-windows-runtime\r\n",
+      "stderr": "owned-script-entry\r\nowned-host-version:5.1.19041.6456\r\nowned-before-folder\r\nowned-after-folder\r\nowned-script-end\r\n",
+      "streamEOF": [
+        true,
+        true
+      ],
+      "readerError": [
+        false,
+        false
+      ],
+      "outputExceeded": [
+        false,
+        false
+      ],
+      "diagnosticComplete": true
+    }
+  ]
+}

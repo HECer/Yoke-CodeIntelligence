@@ -1,0 +1,41 @@
+{
+  "checkedAtUtc": "2026-10-15T16:59:40.822237+00:00",
+  "scope": "focused_gate_not_frozen_suite",
+  "command": [
+    "cargo",
+    "test",
+    "-p",
+    "yoke-code-intelligence",
+    "--locked",
+    "-j",
+    "2",
+    "--no-fail-fast",
+    "--test",
+    "derived_graph_preparation",
+    "--test",
+    "derived_graph_mixed_budget",
+    "--test",
+    "meaning_graph_views",
+    "--test",
+    "graph_view",
+    "--test",
+    "selected_view_analysis",
+    "--test",
+    "selected_view_review",
+    "--",
+    "--test-threads=4"
+  ],
+  "exitCode": 101,
+  "seconds": 222.953,
+  "tempRoot": "D:\\Yoke-Test-Scratch\\wave3-atomic-admission-conflict-red",
+  "logSha256": "068847f89b91974820e42b776fb77227924a92c77e11acf6422ff92bb4861c3e",
+  "groups": 6,
+  "passed": 47,
+  "failed": 2,
+  "ignored": 0,
+  "sourceChanges": [
+    "native/src/host_install_io.rs",
+    "native/src/host_output_recovery_tests.rs",
+    "native/src/protocol.rs"
+  ]
+}

@@ -1,0 +1,21 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 4.03s
+     Running tests\workflow_cli.rs (target\debug\deps\workflow_cli-927186d3a166e179.exe)
+actual_native_cli_tls_service_and_client_load_os_credentials: test
+ambiguous_json_rpc_ids_and_nested_lsp_results_are_refused: test
+host_only_execution_and_retention_never_inherit_authority_from_config_json: test
+host_profiles_reject_duplicate_keys_instead_of_replacing_policy: test
+malformed_host_profile_values_are_not_repeated_in_cli_errors: test
+model_worker_deadline_includes_an_input_pipe_that_never_closes: test
+native_runtime_cli_preserves_state_across_authorized_repl_commands: test
+readonly_mcp_dataflow_and_native_cli_share_exact_snapshot_evidence: test
+runtime_cli_preserves_failed_program_evidence_and_returns_failure: test
+
+9 tests, 0 benchmarks
+     Running tests\workspace.rs (target\debug\deps\workspace-c7e87e907ce0c02f.exe)
+executed_verification_deadline_includes_descendants_holding_output_pipes: test
+real_rustc_verification_approval_apply_and_rollback_preserve_original: test
+rollback_restores_deleted_sources_and_keeps_foreign_writes: test
+syntax_only_verification_does_not_authorize_workspace_writes: test
+
+4 tests, 0 benchmarks

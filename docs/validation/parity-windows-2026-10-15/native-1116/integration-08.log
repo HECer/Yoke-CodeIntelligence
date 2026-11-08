@@ -1,0 +1,55 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 9.60s
+     Running tests\epoch_cache_review.rs (target\debug\deps\epoch_cache_review-f4b7b79687aefe85.exe)
+
+running 1 test
+test cached_extraction_cannot_publish_past_the_exact_declared_source_size ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.08s
+
+     Running tests\epoch_producers.rs (target\debug\deps\epoch_producers-42d26cbc6208d4bd.exe)
+
+running 3 tests
+test ordinary_guarded_prepare_preserves_the_proven_base_epoch ... ok
+test mcp_prepare_uses_historical_source_policy_instead_of_new_capture_policy ... ok
+test ordinary_editor_capture_uses_the_explicit_host_epoch ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.19s
+
+     Running tests\explorer_export.rs (target\debug\deps\explorer_export-c9a7185de16e2409.exe)
+
+running 6 tests
+test graphml_dynamic_attributes_are_xml_values_not_markup ... ok
+test offline_html_preserves_canonical_graph_and_inert_hostile_labels ... ok
+test template_markers_inside_source_metadata_are_preserved_verbatim ... ok
+test native_markdown_metadata_unrepresentable_in_xml_is_refused_without_changing_graph ... ok
+test community_metadata_requires_exact_canonical_source_and_preserves_graph ... ok
+test source_bound_html_writer_is_create_only_and_idempotent ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.18s
+
+     Running tests\explorer_runtime.rs (target\debug\deps\explorer_runtime-5350e133bfddf44b.exe)
+
+running 2 tests
+test frame_scheduler_completes_once_when_animation_frames_starve_or_race ... ok
+test first_throttled_timer_finishes_bounded_layout_and_preserves_all_observations ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.17s
+
+     Running tests\export.rs (target\debug\deps\export-892d9be829d70668.exe)
+
+running 1 test
+test canonical_export_preserves_directed_parallel_evidence ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.17s
+
+     Running tests\federated_collections.rs (target\debug\deps\federated_collections-97e4dc2b6e05984f.exe)
+
+running 4 tests
+test source_only_archive_does_not_invent_canonical_graph_authority ... ok
+test unknown_authority_kinds_and_nested_fields_are_not_silently_accepted ... ok
+test archived_foreign_collection_requires_current_host_context_for_every_operation ... ok
+test archived_sources_outlive_original_receipts_but_not_changed_receiver_policy ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.64s
+

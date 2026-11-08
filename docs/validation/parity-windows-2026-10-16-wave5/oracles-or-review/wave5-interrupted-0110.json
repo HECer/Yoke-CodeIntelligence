@@ -1,0 +1,18 @@
+{
+  "scope": "interrupted_attempt_only_not_full_acceptance",
+  "tag": "wave5-frozen-20261016-0110",
+  "acceptedFullRun": false,
+  "nativeReceiptPresent": false,
+  "summaryPresent": false,
+  "pipelineResultPresent": true,
+  "pipelineExitCode": 1,
+  "pipelineSha256": "a87905e382bb0f9e90a70522c180f35b0f73687cdea9a9c439187b4f8bace487",
+  "lastLog": "wave5-frozen-20261016-0110/native/integration-28-inventory-all.log",
+  "lastLogSha256": "ee98c65a840d7b0bde91c96b93695ee539979b23d6cc046db7f86b3b446b9ea3",
+  "linkerExitCode": 1073807364,
+  "linkerExitHex": "0x40010004",
+  "sdkStatus": "DBG_TERMINATE_PROCESS",
+  "sdkComment": "Debugger terminated process.",
+  "sdkHeaderSha256": "867fb9c361267933150c1b58910758656084f3886037b615b6c058076a1a9adb",
+  "interpretation": "External process-termination status is established by the local Windows SDK; initiating actor/cause is unknown. The incomplete phase is not accepted or resumed in place. All original files remain unchanged; a fresh complete run is required."
+}

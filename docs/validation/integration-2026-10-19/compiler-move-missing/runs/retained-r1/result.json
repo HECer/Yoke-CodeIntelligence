@@ -1,0 +1,41 @@
+{
+  "sourceUnchanged": true,
+  "frozenInputs": 793,
+  "commands": [
+    {
+      "name": "python-contracts",
+      "command": [
+        "C:\\Python314\\python.exe",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "scripts/tests",
+        "-v"
+      ],
+      "exitCode": 0,
+      "seconds": 1.05
+    },
+    {
+      "name": "typecheck",
+      "command": [
+        "npm.cmd",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0,
+      "seconds": 3.96
+    },
+    {
+      "name": "tests",
+      "command": [
+        "npm.cmd",
+        "test"
+      ],
+      "exitCode": 0,
+      "seconds": 63.43
+    }
+  ],
+  "allChecksPassed": true,
+  "wholeNativeRerun": false
+}

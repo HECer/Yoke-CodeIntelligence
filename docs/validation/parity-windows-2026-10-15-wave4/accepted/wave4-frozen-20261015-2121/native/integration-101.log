@@ -1,0 +1,28 @@
+warning: failed to save last-use data
+This may prevent cargo from accurately tracking what is being used in its global cache. This information is used for automatically removing unused data in the cache.
+
+database or disk is full
+
+Caused by:
+  Error code 13: database or disk is full
+    Finished `test` profile [unoptimized] target(s) in 0.65s
+     Running tests\trail_adapter.rs (target\debug\deps\trail_adapter-26b9a5c2ec70b6a1.exe)
+
+running 4 tests
+test named_call_trace_accepts_full_closure_without_the_native_depth_eight_limit ... ok
+test six_public_trail_tools_preserve_freshness_and_exact_file_api_contracts ... ok
+test public_trail_mcp_profile_lists_six_tools_and_accepts_legacy_query_aliases ... ok
+test task_retrieval_regex_hits_and_repo_orientation_use_captured_source ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.34s
+
+     Running tests\trail_bodies.rs (target\debug\deps\trail_bodies-b68b4cc4940ea540.exe)
+
+running 4 tests
+test full_definitions_exceed_old_excerpt_limit_and_default_crux_has_eight_lines ... ok
+test find_all_returns_more_than_two_hundred_source_occurrences ... ok
+test public_file_api_returns_all_three_hundred_and_fifty_headers_in_one_projection ... ok
+test large_full_definition_results_are_published_as_readable_artifacts ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.24s
+

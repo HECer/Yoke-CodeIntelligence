@@ -1,0 +1,13 @@
+    Checking yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+error: the borrowed expression implements the required traits
+   --> native\tests\arxiv_source_cli.rs:146:34
+    |
+146 |     let hash = yoke::model::hash(&pending);
+    |                                  ^^^^^^^^ help: change this to: `pending`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#needless_borrows_for_generic_args
+    = note: `-D clippy::needless-borrows-for-generic-args` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::needless_borrows_for_generic_args)]`
+
+error: could not compile `yoke-code-intelligence` (test "arxiv_source_cli") due to 1 previous error
+warning: build failed, waiting for other jobs to finish...

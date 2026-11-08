@@ -1,0 +1,22 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 4.62s
+     Running tests\host_credentials.rs (target\debug\deps\host_credentials-d3ecb384a1a8a4e4.exe)
+actual_github_credential_round_trip_is_create_only_and_keeps_secrets_out_of_metadata: test
+actual_tls_and_service_token_never_export_private_material_or_overwrite_entries: test
+github_token_admission_rejects_invalid_bytes_without_exposing_them: test
+host_credential_names_cannot_access_unrelated_accounts: test
+model_token_admission_rejects_header_injection_and_oversize_without_exposure: test
+
+5 tests, 0 benchmarks
+     Running tests\host_install.rs (target\debug\deps\host_install-ecb3efabd0fd83d7.exe)
+dry_run_is_deterministic_and_creates_no_source_engine_or_host_state: test
+every_target_and_host_binding_is_checked_before_first_write: test
+install_and_uninstall_preserve_human_bom_crlf_and_original_empty_presence: test
+internal_volume_guid_binding_launches_the_real_binary_and_is_not_a_user_path_grant: test
+private_state_never_contains_unrelated_human_config_or_policy_contents: test
+receipt_ownership_is_required_and_serialized_plans_cannot_widen_paths: test
+state_and_target_aliases_bounds_invalid_utf8_and_deadlines_fail_closed: test
+uninstall_preserves_foreign_appends_and_refuses_changes_inside_owned_block: test
+windows_existing_writer_and_hardlink_alias_are_refused_before_other_targets_change: test
+
+9 tests, 0 benchmarks

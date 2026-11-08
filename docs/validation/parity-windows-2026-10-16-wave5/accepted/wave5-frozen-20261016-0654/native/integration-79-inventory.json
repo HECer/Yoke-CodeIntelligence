@@ -1,0 +1,25 @@
+{
+  "parity_view_review": {
+    "executable": "target\\debug\\deps\\parity_view_review-5885658842c4425e.exe",
+    "ignored": [],
+    "registered": [
+      "resealed_view_cannot_invent_canonical_labels_or_parent_claims",
+      "resealed_view_cannot_relabel_a_selected_overlay_or_upgrade_its_precision",
+      "resealed_view_cannot_remove_canonical_observations"
+    ]
+  },
+  "parser_epoch9": {
+    "executable": "target\\debug\\deps\\parser_epoch9-683ec3da72b69dcb.exe",
+    "ignored": [],
+    "registered": [
+      "commonlisp9_extracts_local_functions_without_treating_binding_lists_as_calls",
+      "commonlisp9_function_namespace_and_flet_labels_visibility_are_distinct",
+      "commonlisp9_local_function_designators_use_the_function_namespace",
+      "commonlisp9_preserves_escaped_symbol_case",
+      "commonlisp9_rejects_known_impossible_arity_but_keeps_optional_and_rest_candidates",
+      "powershell9_function_drive_reference_is_distinct_from_value_and_literal_text",
+      "powershell9_matches_command_case_without_binding_dynamic_command_variables",
+      "verilog9_retains_task_declaration_and_task_function_scope"
+    ]
+  }
+}

@@ -1,0 +1,17 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 2.90s
+     Running tests\semantic_refactor.rs (target\debug\deps\semantic_refactor-f66dd7e99dc076bb.exe)
+explicit_force_delete_keeps_verified_usage_context_and_still_refuses_foreign_or_stale_sources: test
+file_move_negotiates_will_rename_and_combines_pre_rename_edits_into_one_guarded_plan: test
+indexed_symbol_refactoring_selects_the_same_source_order_overload_as_the_facade: test
+inline_refactoring_accepts_only_the_requested_kind_and_explicit_workspace_edits: test
+inspection_equivalent_uses_actual_registered_diagnostics_and_declared_kind_registry: test
+semantic_delete_refuses_actual_candidate_unresolved_foreign_and_stale_uses_without_publishing_plans: test
+unused_semantic_delete_requires_registered_source_proof_and_only_prepares_a_guarded_plan: test
+
+7 tests, 0 benchmarks
+     Running tests\server_catalog.rs (target\debug\deps\server_catalog-daa9d2634cae3c47.exe)
+host_registration_resolves_language_metadata_without_starting_any_process: test
+registration_never_derives_execution_authority_from_a_backend_name: test
+
+2 tests, 0 benchmarks

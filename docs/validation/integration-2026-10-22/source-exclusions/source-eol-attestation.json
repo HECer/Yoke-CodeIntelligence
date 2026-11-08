@@ -1,0 +1,11 @@
+[
+  {
+    "path": "native/src/capture.rs",
+    "priorFrozenWorktreeSha256": "8a5a971abe4d694a914d3682330f351fe19fd68090708fcba1ea1121f93aa92e",
+    "priorGitBlobSha256": "8a5a971abe4d694a914d3682330f351fe19fd68090708fcba1ea1121f93aa92e",
+    "priorFrozenEqualsPriorGitLf": true,
+    "currentTestedFileUsesCrlf": true,
+    "currentTestedBytesSha256": "c8efa34da45040e7212a069494e16aada7261534b7775eb300d7d46e6ffdec25",
+    "reason": "Implementation changed LF to CRLF before validation; retain exact tested and committed bytes, without post-validation normalization."
+  }
+]

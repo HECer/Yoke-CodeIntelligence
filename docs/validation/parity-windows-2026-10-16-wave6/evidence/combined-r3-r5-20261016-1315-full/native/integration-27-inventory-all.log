@@ -1,0 +1,19 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 4.66s
+     Running tests\export.rs (target\debug\deps\export-892d9be829d70668.exe)
+canonical_export_preserves_directed_parallel_evidence: test
+
+1 test, 0 benchmarks
+     Running tests\facade_file_delete.rs (target\debug\deps\facade_file_delete-10f76ec2ac5264c5.exe)
+default_safe_mode_and_propagation_are_distinct_unsupported_file_intents: test
+empty_malformed_directory_missing_and_unsafe_file_selectors_never_prepare_deletions: test
+forced_file_delete_materializes_the_plan_without_removing_the_original_or_its_callers: test
+forced_file_delete_omitted_and_null_selectors_create_one_exact_delete_for_v8_v9: test
+forced_file_delete_permission_and_external_context_denials_have_zero_change_effects: test
+forced_file_delete_stale_workspace_preflight_preserves_changed_sources_for_v8_v9: test
+forced_file_delete_workspace_apply_keeps_host_approval_and_verification_gates: test
+public_forced_file_delete_accepts_generated_null_and_false_defaults: test
+readonly_ignored_excluded_and_uncaptured_binary_sources_cannot_be_force_deleted: test
+source_symlink_cannot_redirect_a_forced_file_deletion: test
+
+10 tests, 0 benchmarks

@@ -1,0 +1,17 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 3.78s
+     Running tests\server_catalog.rs (target\debug\deps\server_catalog-daa9d2634cae3c47.exe)
+host_registration_resolves_language_metadata_without_starting_any_process: test
+registration_never_derives_execution_authority_from_a_backend_name: test
+
+2 tests, 0 benchmarks
+     Running tests\session_collections.rs (target\debug\deps\session_collections-729062ee8f2bd3cf.exe)
+collection_policy_changes_invalidate_resume_but_empty_policy_keeps_original_fingerprint: test
+configured_query_only_project_can_register_current_checked_view_without_activation: test
+empty_collections_preserve_legacy_host_serialization: test
+native_archived_queries_never_open_original_or_active_source: test
+native_registry_read_wrapper_uses_exact_archived_membership: test
+registration_requires_host_write_authority_and_explicit_binding_expectation: test
+transient_current_foreign_grants_authorize_only_the_registered_receiver_and_call: test
+
+7 tests, 0 benchmarks

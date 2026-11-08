@@ -1,0 +1,38 @@
+{
+  "artifactSha256": {
+    "manifest-balanced-retrieval.md.after.txt": "64b8f2ffa268eae23ff19dc652e1669fac8ece40d4e6d0bdf6a770d9da1dea94",
+    "manifest-balanced-retrieval.md.before.txt": "22999200ab764e4f7c4b2e4e554889baefe94b2395209cdc73a4e8c8f591b21a",
+    "manifest-balanced-retrieval.md.forward.patch": "ee8238c4988a47ff160201f582838394fadcefe8f8525b73f05f8bcbbaf5d1a8",
+    "manifest-balanced-retrieval.md.inverse.patch": "8c6822151492c9bbc8b3ba8862f107b1ee09ff2accebef38a1a6936691ecb206",
+    "trail_bodies.rs.after.txt": "636138f56e0d748941ed3bc6cf6fcd4762a0023cb3f3d4e3b0b720beb06d92c5",
+    "trail_bodies.rs.before.txt": "6de393acfe04555088e9b42e33cff6ee368176cbcb415f9de3d4691d85c94201",
+    "trail_bodies.rs.forward.patch": "d8c91e333edfdb261fb72ced36adc8ec4db958290dcb61a1e12adf1d629bc250",
+    "trail_bodies.rs.inverse.patch": "4d70db1553ce9d9167f904e67893a690e08889ca43acb4cc30b764940beafbb0"
+  },
+  "checkedAtUtc": "2026-10-16T06:50:23.837482+00:00",
+  "failedFullCounts": {
+    "failed": 1,
+    "groups": 222,
+    "ignored": 33,
+    "passed": 1633
+  },
+  "failedFullTag": "wave5-frozen-20261016-0605",
+  "failedNativeReceiptSha256": "2adc438b4a6e4a52c7fbd97e87c07630b5ef62a7dc8850e0f1ff221c2dc90791",
+  "focusedCounts": {
+    "failed": 0,
+    "groups": 3,
+    "ignored": 0,
+    "passed": 18
+  },
+  "focusedReceiptSha256": "82255ece1384e91e9e0855f7aa2f5f09e56ee639bc7d7c24ae171a98722ee73e",
+  "helperSha256": "a58ff3fefa9ccf5d6d9c8dd8391be9f2c0e021c5dbe6d93d00f4c317247214fd",
+  "interpretation": "All automatic Trail/Graft find_code calls, including global fallback, deliberately obey the new 4MB logical envelope with no artifact fallback. The unchanged Wave4 test expected the replaced behavior. Production code is unchanged. The original test and failure remain preserved. Three exact full-definition positives and a separate complete 12000-occurrence find_all artifact transport control protect the retained functionality. A new complete five-phase run is required.",
+  "previousSourceManifestSha256": "3b9fb9474f7c7df29e765aecb7eb47e83c558a441985e7b2f90e708152eccfdd",
+  "scope": "test_contract_migration_and_documentation_only_not_full_acceptance",
+  "sourceChanges": [
+    "native/docs/manifest-balanced-retrieval.md",
+    "native/tests/trail_bodies.rs"
+  ],
+  "sourceFiles": 1528,
+  "sourceManifestSha256": "0373cf52584645b8a81d0fe3d9624b8073c9d15748f1db26a4ff53ca167a4863"
+}

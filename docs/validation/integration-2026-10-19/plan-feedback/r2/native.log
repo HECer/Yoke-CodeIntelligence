@@ -1,0 +1,27 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+warning: unused import: `anyhow::Context`
+ --> native\src\plan_feedback_store.rs:3:5
+  |
+3 | use anyhow::Context as _;
+  |     ^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `yoke-code-intelligence` (lib) generated 1 warning
+warning: unused import: `process::Command`
+ --> native\tests\plan_feedback.rs:3:15
+  |
+3 | use std::{fs, process::Command};
+  |               ^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `yoke-code-intelligence` (test "plan_feedback") generated 1 warning (run `cargo fix --test "plan_feedback" -p yoke-code-intelligence` to apply 1 suggestion)
+    Finished `test` profile [unoptimized] target(s) in 1m 27s
+     Running tests\plan_feedback.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\plan_feedback-49826affaaf26377.exe)
+
+running 1 test
+test planned_result_views_replay_exact_unicode_crlf_without_application_or_execution ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.20s
+

@@ -1,0 +1,30 @@
+{
+  "checkedAtUtc": "2026-10-16T12:27:25.171194+00:00",
+  "command": [
+    "cargo",
+    "clippy",
+    "--workspace",
+    "--keep-going",
+    "--all-targets",
+    "--locked",
+    "-j2",
+    "--manifest-path",
+    "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\target\\r5-shadow-unavailable-v1\\Cargo.toml",
+    "--target-dir",
+    "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\target",
+    "--",
+    "-D",
+    "warnings"
+  ],
+  "exitCode": 0,
+  "helperSha256": "c4b799adb3f1882b12bf7c9a5594265a163dc62dfac86a82dbcbb774dfc5159a",
+  "imageSourceChanges": [],
+  "inventoryHelperSha256": "4198e187803656e134abe970850386801ce92c466ab14f39327014e8ea9cc676",
+  "kind": "clippy",
+  "rawSha256": "f2f7ac94f44e468b4c49f5bcb827804e2af21967ae8ac45dddb0141ed451423d",
+  "reviewedManifestFileSha256": "f36da14c3e3877aece086af9f86777cf8f16912320edde37723631479fd6df9d",
+  "scope": "isolated_image_only_not_normal_checkout_acceptance",
+  "seconds": 185.141,
+  "sourceFiles": 1568,
+  "validationErrors": []
+}

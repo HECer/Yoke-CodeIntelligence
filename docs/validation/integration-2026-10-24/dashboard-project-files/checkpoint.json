@@ -1,0 +1,168 @@
+{
+  "project": "HECer/Yoke-CodeIntelligence",
+  "product": "Code Intelligence",
+  "version": "0.5.0",
+  "productCommit": "125a538cffc90c45807f30b232afd70752998a6d",
+  "productRemoteBlobsVerified": 7,
+  "sourceInputs": 1145,
+  "native": {
+    "groups": [
+      {
+        "target": "library",
+        "passed": 647,
+        "failed": 0,
+        "ignored": 7,
+        "measured": 0,
+        "filtered": 0,
+        "log": "validation/integration-20261018/dashboard-project-files-20261024-4f81de1e-qualified3/whole-library.stdout"
+      },
+      {
+        "target": "session_dashboard_management",
+        "passed": 22,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0,
+        "log": "validation/integration-20261018/dashboard-project-files-20261024-4f81de1e-qualified3/whole-session_dashboard_management.stdout"
+      },
+      {
+        "target": "session_dashboard",
+        "passed": 13,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0,
+        "log": "validation/integration-20261018/dashboard-project-files-20261024-4f81de1e-qualified3/whole-session_dashboard.stdout"
+      },
+      {
+        "target": "notes",
+        "passed": 15,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0,
+        "log": "validation/integration-20261018/dashboard-project-files-20261024-4f81de1e-qualified3/whole-notes.stdout"
+      },
+      {
+        "target": "mcp_http",
+        "passed": 18,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0,
+        "log": "validation/integration-20261018/dashboard-project-files-20261024-4f81de1e-qualified3/whole-mcp_http.stdout"
+      },
+      {
+        "target": "protocol_connection",
+        "passed": 5,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0,
+        "log": "validation/integration-20261018/dashboard-project-files-20261024-4f81de1e-qualified3/whole-protocol_connection.stdout"
+      },
+      {
+        "target": "session_steering",
+        "passed": 12,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0,
+        "log": "validation/integration-20261018/dashboard-project-files-20261024-4f81de1e-qualified3/whole-session_steering.stdout"
+      },
+      {
+        "target": "server_selection",
+        "passed": 8,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0,
+        "log": "validation/integration-20261018/dashboard-project-files-20261024-4f81de1e-qualified3/whole-server_selection.stdout"
+      },
+      {
+        "target": "server_settings",
+        "passed": 8,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0,
+        "log": "validation/integration-20261018/dashboard-project-files-20261024-4f81de1e-qualified3/whole-server_settings.stdout"
+      },
+      {
+        "target": "project_session",
+        "passed": 6,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0,
+        "log": "validation/integration-20261018/dashboard-project-files-20261024-4f81de1e-qualified3/whole-project_session.stdout"
+      },
+      {
+        "target": "main",
+        "passed": 6,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0,
+        "log": "validation/integration-20261018/dashboard-project-files-20261024-4f81de1e-qualified3/whole-main.stdout"
+      }
+    ],
+    "totals": {
+      "passed": 760,
+      "failed": 0,
+      "ignored": 7,
+      "measured": 0,
+      "filtered": 0
+    },
+    "sourceInputs": 1145,
+    "sourceInputsExact": true,
+    "reusedGroupCount": 0,
+    "focused8NotAddedToWhole760": true,
+    "preceding643Pass4Fail7IgnorePreserved": true,
+    "platform": "Windows",
+    "fullPlatformOrParityCertification": false
+  },
+  "cliSha256": "d4fbfbcc3a6de7175e6d6528cf77c9ef26ad4726c158e76d5dc3579da53542fc",
+  "originalNativeWorkspaceWriter": true,
+  "browserCanApproveOrExecuteVerification": false,
+  "projectWritesRequireOriginalHostApprovalAndExecutedVerification": true,
+  "fullCurrentBaseSnapshotAndWriterLockRetained": true,
+  "globalDocumentWriterNeverUsedForProjectFiles": true,
+  "workspaceRecoveryInDashboard": false,
+  "workspaceRecoveryUsesOriginalHostCli": true,
+  "allJobsEmpty": true,
+  "browserAcceptance": {
+    "complete": true,
+    "product": "Code Intelligence",
+    "version": "0.5.0",
+    "actualNativeBrowser": true,
+    "cancelPreservedProposal": true,
+    "documentWidth": 375,
+    "explicitConfirmation": true,
+    "height": 844,
+    "nativeScreenshot": false,
+    "noHorizontalOverflow": true,
+    "projectEditorWritable": true,
+    "realHostApprovalAndExecutedVerification": true,
+    "saveDisabledBeforeHostGates": true,
+    "saved": true,
+    "savedContentIncludesInertScript": true,
+    "staticCapturedNativeDomRerender": true,
+    "width": 390,
+    "closing": true,
+    "editorReadOnly": true,
+    "noExitClaim": true,
+    "unsavedProjectDraftRetainedCopyable": true,
+    "sourceSha256": "d81bc96727e08ec4db1f099be943200aa43b24e214452ffb9b54bbde18829d63",
+    "realProjectBytesCheckedAfterSaveAndAfterShutdown": true,
+    "unsavedDraftWasNotWritten": true,
+    "ownedRuntimeExitProvenBeforeJobCleanup": true,
+    "stdinStillOpenOnNativeExit": true,
+    "staticCapturedNativeDomRerendersInspected": true
+  },
+  "precedingFailuresPreserved": true,
+  "focused8NotAddedToWhole760": true,
+  "fullStatusComplete": false,
+  "mainMerged": false,
+  "released": false
+}

@@ -1,0 +1,21 @@
+[
+  {
+    "name": "portable",
+    "command": [
+      "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+      "test",
+      "--workspace",
+      "--locked",
+      "-j",
+      "2",
+      "--target-dir",
+      "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+      "--test",
+      "meaning_projection_portable",
+      "--",
+      "--test-threads=1"
+    ],
+    "exitCode": 101,
+    "seconds": 81.81
+  }
+]

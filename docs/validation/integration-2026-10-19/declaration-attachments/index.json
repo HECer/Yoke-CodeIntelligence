@@ -1,0 +1,576 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-19T16:04:15.108380+00:00",
+  "parentCommit": "525d7a851e1e7ddc36f9edb032be37e467f20b71",
+  "implementationCommit": "c3588f8213c9cca9bb1f3b2a5ad5df3f8524f860",
+  "integratedRuntimeCommit": "a2f190dc1475af1eec17410b886bb26b27243441",
+  "accepted": false,
+  "wholeNativeRerun": false,
+  "allScopedChecksPassed": true,
+  "finalStage": "r3",
+  "finalScopedTotals": {
+    "passed": 545,
+    "failed": 0,
+    "ignored": 7
+  },
+  "finalScopedResultGroups": [
+    {
+      "passed": 6,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "passed": 5,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "passed": 429,
+      "failed": 0,
+      "ignored": 7
+    },
+    {
+      "passed": 4,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "passed": 8,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "passed": 1,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "passed": 13,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "passed": 7,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "passed": 18,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "passed": 36,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "passed": 18,
+      "failed": 0,
+      "ignored": 0
+    }
+  ],
+  "newDefaultTestsPassed": 7,
+  "actualCompositeGateRustTestsPassed": 3,
+  "actualOwnedFixtureCount": 6,
+  "actualOwnedLanguages": [
+    "rust",
+    "python",
+    "typescript",
+    "javascript"
+  ],
+  "countsAreNonadditive": true,
+  "frozenNativeInputCount": 558,
+  "frozenIntegratedInputCount": 670,
+  "integrationSummary": {
+    "stage": "r3",
+    "checks": [
+      {
+        "gate": "format",
+        "exitCode": 0,
+        "elapsedSeconds": 5.342,
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "fmt",
+          "--all",
+          "--check"
+        ]
+      },
+      {
+        "gate": "python-contracts",
+        "exitCode": 0,
+        "elapsedSeconds": 1.074,
+        "command": [
+          "python",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "scripts/tests",
+          "-v"
+        ]
+      },
+      {
+        "gate": "typecheck",
+        "exitCode": 0,
+        "elapsedSeconds": 4.948,
+        "command": [
+          "npm.cmd",
+          "run",
+          "typecheck"
+        ]
+      },
+      {
+        "gate": "tests",
+        "exitCode": 0,
+        "elapsedSeconds": 64.435,
+        "command": [
+          "npm.cmd",
+          "test"
+        ]
+      }
+    ],
+    "sourceUnchanged": true,
+    "scopedInputsMatched": 558,
+    "allIntegrationChecksPassed": true,
+    "runtimeCommit": "a2f190dc1475af1eec17410b886bb26b27243441",
+    "wholeNativeRerun": false
+  },
+  "attempts": [
+    {
+      "stage": "r2",
+      "result": "development/r2/result.json"
+    },
+    {
+      "stage": "r3",
+      "result": "development/r3/result.json"
+    },
+    {
+      "stage": "red-r1",
+      "result": "development/red-r1/result.json"
+    }
+  ],
+  "toolVersions": {
+    "rustc": {
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\rustc.exe",
+        "--version"
+      ],
+      "output": "rustc 1.94.1 (e408947bf 2026-03-25)"
+    },
+    "python": {
+      "command": [
+        "C:/Python314/python.exe",
+        "--version"
+      ],
+      "output": "Python 3.14.7"
+    }
+  },
+  "findings": [
+    "Two actual REDs: Rust left inline on a following constant; Python compilation succeeded but stdlib AST detected a decorator reattached to a retained function. No project module execution.",
+    "Initial repair passed both real fixtures but refused Python class methods and Rust impl methods because raw function syntax differs from released contextual method classification. Final binding derives the nearest declared owner, preserves stored kinds/anchors and refuses forged kinds; nested functions remain functions.",
+    "Rust reuses existing owned source_transfer attributes/docs, including intervening comments; Python removes only its exact decorated_definition and refuses otherwise empty required bodies. BOM/Unicode/CRLF remain source-bound.",
+    "Actual final Rust/Python compiler/AST gates and existing TS/JS actual gate pass copied verification, approved apply and exact recovery. No external provider protocol or authority schema changes.",
+    "Three completed clean merged worktree checkouts were removed without force after exact path/common-repo/clean/ancestor checks; branches, source evidence and primary build cache preserved. Current checkout is Yoke-CI-r1-attach.",
+    "Other languages, separate TS member decorators, general propagation, exhaustive references, full R1-R9/hosted/platform acceptance, main merge and release remain open. Earlier whole-native Windows failures are preserved and not replaced by this selected run."
+  ],
+  "inventoryPreserved": {
+    "historicalInventory": {
+      "path": "docs/parity/public-contracts-2026-10-14.json",
+      "sha256": "993eb15143bf61a1cf64c80ff53d491ee13f7faeecf2ff4b53a6975de9972c3e",
+      "treatment": "Preserve unchanged as the pinned historical public-contract inventory. Its baseline05Boundary, state=open and empty windowsAcceptance values are not current implementation verdicts."
+    },
+    "ledgerSummary": {
+      "allBackendRuntimeReviewsRetained": true,
+      "assessmentCounts": {
+        "catalog_declared_runtime_review_required": 77,
+        "explicitly_unavailable": 2,
+        "mapped_partial_contract": 179,
+        "measurement_not_transferable": 1,
+        "outside_pinned_public_production_scope": 1,
+        "product_choice_review_required": 1,
+        "reference_metadata_only": 12,
+        "unreconciled_review_required": 73,
+        "unverified_hosted_contract_requires_review": 1,
+        "upstream_boundary_retained": 6
+      },
+      "categoryCounts": {
+        "graphifyCapabilities": 32,
+        "graphifyMcpSurface": 19,
+        "metadataAndScope": 11,
+        "serenaConfigurationEntries": 6,
+        "serenaConfigurationMembers": 56,
+        "serenaLanguageServerIds": 77,
+        "serenaReplFacadeMethods": 50,
+        "serenaTools": 53,
+        "serenaUpstreamBoundaries": 6,
+        "trailCapabilities": 37,
+        "trailPublicTools": 6
+      },
+      "explicitUnavailableRefs": [
+        "serena:tool:open_dashboard",
+        "serena:repl:cfg.open_dashboard"
+      ],
+      "rootIntegrityCheck": "Read-only admission rehashed 1650 prior artifact pins and 1677 new pins, replayed the complete new tree and all five raw phases against the unchanged freeze; this is local consistency evidence, not a signature.",
+      "totalEnumeratedEntries": 353,
+      "unreconciledReviewRequiredRefs": [
+        "trail:Session cold-start mining",
+        "trail:Prompt/edit/session hooks and statusline",
+        "trail:Self-hosted GitHub App",
+        "trail:History digest / brain onboarding",
+        "trail:Cloud workspace/client/team UI",
+        "graphify:postgres_catalog",
+        "graphify:google_shortcuts",
+        "graphify:url_ingest",
+        "graphify:asr",
+        "graphify:affected",
+        "graphify:db_push",
+        "graphify:git_lifecycle",
+        "graphify:diagnostics_benchmark",
+        "serena:configuration:layers",
+        "serena:configuration:projectKeys",
+        "serena:configuration:modeNames",
+        "serena:configuration:contextNames",
+        "serena:configuration:layers:0",
+        "serena:configuration:layers:1",
+        "serena:configuration:layers:2",
+        "serena:configuration:layers:3",
+        "serena:configuration:layers:4",
+        "serena:configuration:layers:5",
+        "serena:configuration:projectKeys:0",
+        "serena:configuration:projectKeys:1",
+        "serena:configuration:projectKeys:2",
+        "serena:configuration:projectKeys:3",
+        "serena:configuration:projectKeys:4",
+        "serena:configuration:projectKeys:5",
+        "serena:configuration:projectKeys:6",
+        "serena:configuration:projectKeys:7",
+        "serena:configuration:projectKeys:8",
+        "serena:configuration:projectKeys:9",
+        "serena:configuration:projectKeys:10",
+        "serena:configuration:projectKeys:11",
+        "serena:configuration:projectKeys:12",
+        "serena:configuration:projectKeys:13",
+        "serena:configuration:projectKeys:14",
+        "serena:configuration:projectKeys:15",
+        "serena:configuration:projectKeys:16",
+        "serena:configuration:projectKeys:17",
+        "serena:configuration:projectKeys:18",
+        "serena:configuration:projectKeys:19",
+        "serena:configuration:projectKeys:20",
+        "serena:configuration:projectKeys:21",
+        "serena:configuration:projectKeys:22",
+        "serena:configuration:projectKeys:23",
+        "serena:configuration:projectKeys:24",
+        "serena:configuration:modeNames:0",
+        "serena:configuration:modeNames:1",
+        "serena:configuration:modeNames:2",
+        "serena:configuration:modeNames:3",
+        "serena:configuration:modeNames:4",
+        "serena:configuration:modeNames:5",
+        "serena:configuration:modeNames:6",
+        "serena:configuration:modeNames:7",
+        "serena:configuration:modeNames:8",
+        "serena:configuration:contextNames:0",
+        "serena:configuration:contextNames:1",
+        "serena:configuration:contextNames:2",
+        "serena:configuration:contextNames:3",
+        "serena:configuration:contextNames:4",
+        "serena:configuration:contextNames:5",
+        "serena:configuration:contextNames:6",
+        "serena:configuration:contextNames:7",
+        "serena:configuration:contextNames:8",
+        "serena:configuration:contextNames:9",
+        "serena:configuration:contextNames:10",
+        "serena:configuration:contextNames:11",
+        "serena:configuration:contextNames:12",
+        "serena:configuration:contextNames:13",
+        "serena:configuration:contextNames:14",
+        "serena:configuration:contextNames:15"
+      ],
+      "validation": "All 353 original identities and false full-contract certifications plus 77 backend runtime unknowns are retained; bounded Windows development acceptance only."
+    }
+  },
+  "artifacts": [
+    {
+      "path": "ci-declaration-attachments-r2.py",
+      "bytes": 3175,
+      "sha256": "d0015dc7fc8a0579ad4c3f41d8aaeba29d7e7c13cf61ddcaa1feb61256d1bead"
+    },
+    {
+      "path": "ci-declaration-attachments-r3-setup.py",
+      "bytes": 345,
+      "sha256": "a3c75ea6ede45102188d6153c4c8269177b5dae41473a221a91a1e1ffadb9dc6"
+    },
+    {
+      "path": "ci-declaration-attachments-r3.py",
+      "bytes": 3175,
+      "sha256": "9e3e9947b43011a4c706550c9a33b7c39131db7a382975fa2a52c3b09763a184"
+    },
+    {
+      "path": "ci-declaration-attachments-red.py",
+      "bytes": 2001,
+      "sha256": "d0bbb1affcb0335471a01027de9fd0b721b406461564660f7112309c14153d92"
+    },
+    {
+      "path": "ci-declaration-attachments-wire.py",
+      "bytes": 220,
+      "sha256": "8cc64202b29ee8a0a6438fb2030c29a202849815eaed179e4fd672d13bb63eb5"
+    },
+    {
+      "path": "completed-worktree-cleanup.json",
+      "bytes": 1346,
+      "sha256": "9574b55770f2e143c5ad9f112ab544125700dc1e21d68d5198c7fad4ff58560b"
+    },
+    {
+      "path": "development/r2/actual-rust-python.log",
+      "bytes": 3830,
+      "sha256": "30d68314c168973cf2271a36a91db2e0af7e2f675f93b3cc5997926f13d4c85d"
+    },
+    {
+      "path": "development/r2/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "development/r2/progress.json",
+      "bytes": 1103,
+      "sha256": "18e78d38f03f56aa9e5b514e793ae4d9abb179b2341389bf11e249be37920156"
+    },
+    {
+      "path": "development/r2/ranges.log",
+      "bytes": 2020,
+      "sha256": "6d05f32ea530600516914e12dab75274b70cb80f44bccc032dc3cf21dab23466"
+    },
+    {
+      "path": "development/r2/result.json",
+      "bytes": 123619,
+      "sha256": "fc54efbb08d5a1d8e499962b77886a1550e4cbeaf02cb57ba5566a3719884a6d"
+    },
+    {
+      "path": "development/r2/source/native/src/analysis.rs",
+      "bytes": 34672,
+      "sha256": "d4251d31de3fc0c1dec156a1a26888928b0b6580c00b6d1a438739adea796ada"
+    },
+    {
+      "path": "development/r2/source/native/src/changes.rs",
+      "bytes": 31447,
+      "sha256": "a3f4be56d1f1d881549fae3df5451a54a15899b2ac990f138fb64c6bf7cfa2e9"
+    },
+    {
+      "path": "development/r2/source/native/src/changes_symbol_delete.rs",
+      "bytes": 12492,
+      "sha256": "e17f6d1374e8539e5f0fc83c1c2a6a862cc18b569cd24d4342942e804871e024"
+    },
+    {
+      "path": "development/r2/source/native/src/refactor_contract.rs",
+      "bytes": 20474,
+      "sha256": "09ae8ed466e4eb58d8fe42b49d919da6a42441bf6248d4f15dcdfcc5e51ec2cb"
+    },
+    {
+      "path": "development/r2/source/native/tests/declaration_attachment_ranges.rs",
+      "bytes": 6457,
+      "sha256": "fa6fb262d7e431fad18089460451ca755c25b65f8af857dd954342f94a818d77"
+    },
+    {
+      "path": "development/r2/source/native/tests/declaration_attachments_live.rs",
+      "bytes": 4210,
+      "sha256": "5d7178ad29dc81b2485f312508ccfcae069f3a895e7692a3a0a8df79fa33fe07"
+    },
+    {
+      "path": "development/r3/actual-rust-python.log",
+      "bytes": 3830,
+      "sha256": "de718d9388d6330c4c996273feeb8f24f6f54445411ddec36aad63d814a41985"
+    },
+    {
+      "path": "development/r3/actual-typescript.log",
+      "bytes": 8508,
+      "sha256": "73424f55284444fab8c5aa42145864718650a1189b855680d11ef9a6edc0d368"
+    },
+    {
+      "path": "development/r3/clippy.log",
+      "bytes": 168,
+      "sha256": "9a097b969dfe26717f38ffc4436f2809b79b4f022a1af031d82c2ba96b536b6d"
+    },
+    {
+      "path": "development/r3/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "development/r3/native.log",
+      "bytes": 76220,
+      "sha256": "b56e224944854b7a447db0333d157b57138b36b9c622b42e9b55246a694366e2"
+    },
+    {
+      "path": "development/r3/progress.json",
+      "bytes": 2640,
+      "sha256": "da16d75231cee611fb424e436342913c0273c48060ce8233739308e3fa9e70de"
+    },
+    {
+      "path": "development/r3/ranges.log",
+      "bytes": 1720,
+      "sha256": "9a4f7689a43178ff670d599705144fe5f63818eed6702c357ff33f0aac32112c"
+    },
+    {
+      "path": "development/r3/result.json",
+      "bytes": 125294,
+      "sha256": "f0f5a969b4dbc1e9d6db707e94b349f0541a3fab2e22b250f2848d06f3d2926c"
+    },
+    {
+      "path": "development/r3/source/native/src/analysis.rs",
+      "bytes": 34819,
+      "sha256": "06b761e1e0b5e48d2892c9653bbe54f04dcb94f4eda1796701eb4cfc7f6f8050"
+    },
+    {
+      "path": "development/r3/source/native/src/changes.rs",
+      "bytes": 31447,
+      "sha256": "a3f4be56d1f1d881549fae3df5451a54a15899b2ac990f138fb64c6bf7cfa2e9"
+    },
+    {
+      "path": "development/r3/source/native/src/changes_symbol_delete.rs",
+      "bytes": 12587,
+      "sha256": "dfdaeb72720f6e7171cfc38bf360a28e1c2f87f91e64b281672722dea6bdb397"
+    },
+    {
+      "path": "development/r3/source/native/src/refactor_contract.rs",
+      "bytes": 20513,
+      "sha256": "13590b4b7baa66d14c7dfa50335bc0cadf89605dea63aa19a651e56249739907"
+    },
+    {
+      "path": "development/r3/source/native/tests/declaration_attachment_ranges.rs",
+      "bytes": 6950,
+      "sha256": "c7a7f871988db30c3dbf862a14b010fefdfb463a494eb68948709fcbc30b302a"
+    },
+    {
+      "path": "development/r3/source/native/tests/declaration_attachments_live.rs",
+      "bytes": 4210,
+      "sha256": "5d7178ad29dc81b2485f312508ccfcae069f3a895e7692a3a0a8df79fa33fe07"
+    },
+    {
+      "path": "development/red-r1/native.log",
+      "bytes": 8304,
+      "sha256": "9a6c0b388b879e69dec08d16a896b45a80143ef788c9eca461bfb45173c5c676"
+    },
+    {
+      "path": "development/red-r1/result.json",
+      "bytes": 122838,
+      "sha256": "1a906ceb0c6ea2595fa88364b071e7900bc97ca84961e19b9880fe26a8d00ad6"
+    },
+    {
+      "path": "development/red-r1/source/native/src/analysis.rs",
+      "bytes": 34672,
+      "sha256": "d4251d31de3fc0c1dec156a1a26888928b0b6580c00b6d1a438739adea796ada"
+    },
+    {
+      "path": "development/red-r1/source/native/src/changes.rs",
+      "bytes": 31427,
+      "sha256": "0e75425b8866ee5875dd2f326ee2daa42d8aceeb1c61a1003deb70b1edb19ecc"
+    },
+    {
+      "path": "development/red-r1/source/native/src/changes_symbol_delete.rs",
+      "bytes": 9000,
+      "sha256": "f5370b0411fce878bd91f9aee5d0a55ff88911581dd947bbe8483fe3f3112e34"
+    },
+    {
+      "path": "development/red-r1/source/native/src/refactor_contract.rs",
+      "bytes": 19198,
+      "sha256": "371086bf261f1c1fb3a22906e842392e0bb41f92a83d5b99e38431d558f97e07"
+    },
+    {
+      "path": "development/red-r1/source/native/tests/declaration_attachments_live.rs",
+      "bytes": 4210,
+      "sha256": "5d7178ad29dc81b2485f312508ccfcae069f3a895e7692a3a0a8df79fa33fe07"
+    },
+    {
+      "path": "frozen-tracker.json",
+      "bytes": 489768,
+      "sha256": "7f9b3e1b58c9ef6fcaa01a23970ed2e99f68e84ca73f7d84d2bc4a51318f62a8"
+    },
+    {
+      "path": "integrated/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "integrated/python-contracts.log",
+      "bytes": 2845,
+      "sha256": "d1c1d3163dbf2b529a868896e47701e6a14c32c9400eaeb0325e3a383d0c420e"
+    },
+    {
+      "path": "integrated/scoped-source-materialization.json",
+      "bytes": 161387,
+      "sha256": "ec9dfe913321d68d2ed5d1407b1a4a282a1be474a39f09e44b7300a446d808db"
+    },
+    {
+      "path": "integrated/source-after.json",
+      "bytes": 70995,
+      "sha256": "3442e622c45c65831097a9fd45adbe68055b331e47bd7fa077cf5e4490fbf02d"
+    },
+    {
+      "path": "integrated/source-before.json",
+      "bytes": 70995,
+      "sha256": "3442e622c45c65831097a9fd45adbe68055b331e47bd7fa077cf5e4490fbf02d"
+    },
+    {
+      "path": "integrated/summary.json",
+      "bytes": 1015,
+      "sha256": "2c849c301bf5f569d6f9fdd6e7a140a673b3435186eca715ec086349e4e0d150"
+    },
+    {
+      "path": "integrated/tests.log",
+      "bytes": 25034,
+      "sha256": "6c5ea2cefa59a94920c916d728643f1570977ee5f2b9146f9c0233dcf94474d0"
+    },
+    {
+      "path": "integrated/typecheck.log",
+      "bytes": 101,
+      "sha256": "30ef9ce16cf042ab6f160e0a76c1fbfe22f02a3c3a3659ee62863ffc1efdbfdf"
+    },
+    {
+      "path": "preserve-declaration-attachments.py",
+      "bytes": 7022,
+      "sha256": "8d2475516150c1092590678aeea9a12c6b0b5d4f7df0d8205368806a2880e553"
+    },
+    {
+      "path": "run-declaration-attachments-integrated.py",
+      "bytes": 3317,
+      "sha256": "804c5a705dbdc0d06e717393398920b47572801fef24255457a24e3bfeaeec00"
+    },
+    {
+      "path": "source-materialization.json",
+      "bytes": 261012,
+      "sha256": "c0c49b0822238b86e902e0f6f85a73675b00b24ae52b6e6e11be74e7fc8f7675"
+    },
+    {
+      "path": "tool-versions.json",
+      "bytes": 1036,
+      "sha256": "da667d2e0b466e927c0fffb547eb707a71fa1e491a37653cba80006dde6a45eb"
+    },
+    {
+      "path": "update-declaration-attachments-docs.py",
+      "bytes": 8087,
+      "sha256": "cf588cc8153a05b44dc92c2eb74e89cd9c9d537127a258ce22a14d92ee10fbf7"
+    },
+    {
+      "path": "verify-declaration-attachments-staged.py",
+      "bytes": 1278,
+      "sha256": "ec255c3014717a11d0b3a8c661f498c7068eff0d3c34d4d1dbf384405edaa424"
+    }
+  ],
+  "sourceMaterialization": {
+    "path": "source-materialization.json",
+    "counts": {
+      "raw_equal": 98,
+      "crlf_only_checkout_materialization": 571,
+      "thematic_status_metadata_after_freeze": 1
+    },
+    "inputCount": 670
+  },
+  "metadataAfterFreeze": {
+    "path": "docs/parity/native-reconciliation-2026-10-15.json",
+    "beforeSha256": "7f9b3e1b58c9ef6fcaa01a23970ed2e99f68e84ca73f7d84d2bc4a51318f62a8",
+    "afterSha256": "38c6bf61f8edfbdd981cdfdfe7f26685810b4f216a775defc138e4baad985e1b",
+    "scope": "Thematic R1 status/evidence only; original inventoryLedger, historicalInventory and ledgerSummary preserved."
+  }
+}

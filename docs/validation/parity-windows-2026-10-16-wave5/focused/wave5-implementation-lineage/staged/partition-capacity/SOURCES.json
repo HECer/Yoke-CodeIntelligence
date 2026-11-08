@@ -1,0 +1,89 @@
+{
+  "schemaVersion": 1,
+  "status": "read_only_local_source_contracts_not_runtime_certification",
+  "sources": {
+    "native/src/analysis.rs": "0867d8d0ba24e1118d5f30ce99df3178486cc57e0e096ff70c522bee52f742af",
+    "native/src/capture.rs": "cd3959eb7a05d2a2c94746e7d6238ccffa1849c40ab873a7b5aeafbd46875edf",
+    "native/src/model.rs": "1a4eb3c9aa6ef9d9568d284b172c89eab296b74a420b20b9f44f5272da3c0bbd",
+    "native/src/paths.rs": "61c5fdab07cd7357cb6fbc5734c253b72e0949000234f03090bd63adc8367f72",
+    "native/src/store.rs": "9d8c8d22eae7bf9a82136728ba20b0c9a46184e52a1b1f78f96e1848e5be33d3",
+    "native/Cargo.toml": "e597fce2722a3e268c87d8e8b2b512b55752651eecae65f6b3eace36698ac814"
+  },
+  "specificContracts": [
+    {
+      "path": "native/src/capture.rs",
+      "lines": [
+        508,
+        1642,
+        1664
+      ],
+      "fact": "100K manifest ceiling; native next source is opened/read before existing total/count budget refusal"
+    },
+    {
+      "path": "native/src/paths.rs",
+      "lines": [
+        15,
+        37
+      ],
+      "fact": "4096UTF8 and portable component syntax; no source grant"
+    },
+    {
+      "path": "native/src/analysis.rs",
+      "lines": [
+        336,
+        410,
+        428,
+        783,
+        919,
+        933
+      ],
+      "fact": "onefileentity/source,1M AST nodes/file,contains edge/symbol,actual evidence and observation generation"
+    },
+    {
+      "path": "native/src/model.rs",
+      "lines": [
+        99,
+        122
+      ],
+      "fact": "required Observation and Graph serialization keys"
+    },
+    {
+      "path": "native/src/store.rs",
+      "lines": [
+        617,
+        625,
+        657
+      ],
+      "fact": "capture publication reads sources and serializes complete graph; caller cost predates retrieval scope"
+    },
+    {
+      "path": "native/Cargo.toml",
+      "fact": "rusqlite0.37 enables bundled/hooks/limits; existing authorizer used only as fixture IO oracle"
+    }
+  ],
+  "observationalLowerBounds": {
+    "minimalRequiredObservationJsonBytes": 321,
+    "oneMillionObservationArrayBytes": 322000001,
+    "modelEmptyFileEntityAt5BytePath": 428,
+    "100KModeledEmptyFileEntityArrayBytes": 42900001
+  },
+  "arithmeticOnly": {
+    "ownershipBase": 15999800,
+    "ownershipExactFilenameExtensions": 200,
+    "ownershipPlusOneFilenameExtensions": 201,
+    "streamChunks": 63808,
+    "streamTailBytes": 572,
+    "streamBytes": 64000000,
+    "streamIndependentSha256": "ec27c9e8186e18955923e326ec81571b342e471d31277a4a57695fd87911c858"
+  },
+  "notExecuted": [
+    "Cargo",
+    "Node",
+    "Engine fixtures",
+    "capacity helpers",
+    "Windows long paths",
+    "providers",
+    "real services",
+    "performance measurements"
+  ]
+}

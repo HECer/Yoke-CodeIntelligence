@@ -1,0 +1,33 @@
+{
+  "gates": [
+    {
+      "gate": "format-r5",
+      "exitCode": 0,
+      "elapsedSeconds": 5.369,
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "fmt",
+        "--all",
+        "--check"
+      ]
+    },
+    {
+      "gate": "clippy-r5",
+      "exitCode": 101,
+      "elapsedSeconds": 155.413,
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "clippy",
+        "--locked",
+        "--all-targets",
+        "-j1",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--",
+        "-D",
+        "warnings"
+      ]
+    }
+  ],
+  "sourceUnchanged": true
+}

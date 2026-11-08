@@ -1,0 +1,40 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 11.26s
+     Running tests\analyzer_epochs.rs (target\debug\deps\analyzer_epochs-c361693f00f37901.exe)
+analyzer_selection_follows_exact_native_and_derived_ids_instead_of_the_active_epoch: test
+authentic_v8_extractions_and_entire_graphs_replay_byte_identically: test
+authentic_v8_view_archives_stay_self_contained_without_original_store: test
+explicit_editor9_constructor_reuses_its_exact_graph_without_relabelling_active8: test
+explicit_v9_policy_reaches_embedded_symbols_scoped_bindings_and_evidence: test
+extraction_cache_keys_are_separated_by_epoch: test
+frozen_v8_classifier_matches_every_extension_captured_by_the_original_executable: test
+identical_patch_gets_a_new_v9_identity_without_republishing_v8_graph_bytes: test
+unknown_or_resealed_capture_ids_never_select_the_current_analyzer_as_a_fallback: test
+v8_cache_cannot_be_relabelled_as_a_v9_assembly: test
+
+10 tests, 0 benchmarks
+     Running tests\artifact_page_review.rs (target\debug\deps\artifact_page_review-c2c02323c8a46e29.exe)
+a_small_artifact_page_does_not_allocate_the_entire_valid_artifact: test
+oversized_resource_rejection_happens_before_allocating_the_artifact_body: test
+
+2 tests, 0 benchmarks
+     Running tests\artifacts.rs (target\debug\deps\artifacts-adcf4496e341070d.exe)
+binary_artifacts_page_with_explicit_base64_without_loss_or_budget_overflow: test
+cas_artifact_pages_cannot_claim_an_unrelated_snapshot: test
+foreign_source_and_unpublished_blobs_cannot_bypass_explicit_read_grants: test
+published_response_artifacts_remain_roots_during_explicit_maintenance: test
+
+4 tests, 0 benchmarks
+     Running tests\blob_bounds.rs (target\debug\deps\blob_bounds-26361ac4fc7198b8.exe)
+corrupted_tiny_cas_objects_are_rejected_before_large_allocation_on_write_and_artifact_read: test
+
+1 test, 0 benchmarks
+     Running tests\capture_analyzer8_fixture.rs (target\debug\deps\capture_analyzer8_fixture-f6a913d94bf0d50b.exe)
+capture_authentic_analyzer8_before_migration: test
+capture_authentic_federation_receiver8_before_receipt_migration: test
+
+2 tests, 0 benchmarks
+     Running tests\capture_changes.rs (target\debug\deps\capture_changes-baab65246c798430.exe)
+host_language_overrides_survive_guarded_derived_snapshots_and_workspace_apply: test
+
+1 test, 0 benchmarks

@@ -1,0 +1,79 @@
+{
+  "group": "maintenance",
+  "index": 176,
+  "freeBytesBefore": 3404808192,
+  "commands": [
+    {
+      "name": "compile",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--test",
+        "maintenance",
+        "--no-run",
+        "--message-format=json-render-diagnostics"
+      ],
+      "exitCode": 0,
+      "seconds": 4.097240600007353
+    },
+    {
+      "name": "test",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--test",
+        "maintenance",
+        "--no-fail-fast",
+        "--",
+        "--test-threads=1"
+      ],
+      "exitCode": 101,
+      "seconds": 2.102131100022234
+    }
+  ],
+  "deletedNewTestArtifacts": [
+    {
+      "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\maintenance-002b6cdf930ec089.exe",
+      "bytes": 98774016,
+      "sha256": "67dcf48c8fac8fa2afde79ca5fbd438831b38aebfee6bd4027a598fcbd357b78",
+      "deleted": true
+    },
+    {
+      "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\maintenance-002b6cdf930ec089.pdb",
+      "bytes": 9482240,
+      "sha256": "6adafd3919a769268f1b8dfce989dc75422e74ecdc435d48265a9485588e937c",
+      "deleted": true
+    }
+  ],
+  "testExecutables": [
+    {
+      "path": "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target\\debug\\deps\\maintenance-002b6cdf930ec089.exe",
+      "sha256": "67dcf48c8fac8fa2afde79ca5fbd438831b38aebfee6bd4027a598fcbd357b78",
+      "existedBefore": false
+    }
+  ],
+  "totals": {
+    "passed": 11,
+    "failed": 1,
+    "ignored": 0
+  },
+  "resultGroups": 1,
+  "failures": [
+    "blob_links_are_refused_and_external_targets_are_preserved"
+  ],
+  "allChecksPassed": false,
+  "sourceUnchanged": true,
+  "freeBytesAfter": 3404193792
+}

@@ -1,0 +1,12 @@
+{
+  "verifiedAt": "2026-10-20T06:15:24.976590+00:00",
+  "head": "da45d2591cfb9f208e87d742eadc17a65fc8f50a",
+  "beforeBytes": 6420,
+  "beforeSha256": "c3e5ae3573094073ee6791153608fa92fe13d6988c94bd602c05d92c0d618432",
+  "afterBytes": 6576,
+  "afterSha256": "d3a1d6980320031465eb0e2c29e83f0f875e2e66fc5b5a7bacfe481edf4524ee",
+  "changes": [
+    "Correct latest integrated/native inventory row744/738 to745/739",
+    "Scope before/after CLI executable hashing to earlier TS/LSP checkpoint; latest PDF case has no separate call-hash attestation"
+  ]
+}

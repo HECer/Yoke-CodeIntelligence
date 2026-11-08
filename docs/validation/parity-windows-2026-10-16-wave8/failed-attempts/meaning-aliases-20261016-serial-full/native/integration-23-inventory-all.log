@@ -1,0 +1,16 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 6.26s
+     Running tests\document_graph_review.rs (E:\Yoke-Build-Cache\meaning-aliases-20261016\debug\deps\document_graph_review-3a585efaf29f2975.exe)
+document_trace_admits_serialized_output_before_large_allocation: test
+rejected_document_metadata_is_admitted_before_identity_serialization: test
+
+2 tests, 0 benchmarks
+     Running tests\editor.rs (E:\Yoke-Build-Cache\meaning-aliases-20261016\debug\deps\editor-42dab2ae0cfcc0b0.exe)
+ancestor_ignore_policies_also_protect_unsaved_new_files: test
+editor_buffers_are_versioned_source_bound_and_never_write_saved_files: test
+editor_cannot_restore_omitted_ignored_protected_or_secret_source: test
+editor_capture_refuses_foreign_disk_changes_and_accepts_a_real_saved_buffer: test
+effective_ignore_whitelists_apply_equally_to_saved_and_unsaved_new_paths: test
+nested_ignore_policies_are_scoped_and_git_excludes_cannot_be_bypassed: test
+
+6 tests, 0 benchmarks

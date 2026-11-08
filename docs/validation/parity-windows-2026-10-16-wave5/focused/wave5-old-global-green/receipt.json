@@ -1,0 +1,28 @@
+{
+  "checkedAtUtc": "2026-10-15T22:39:47.466182+00:00",
+  "scope": "focused_gate_not_frozen_suite",
+  "command": [
+    "cargo",
+    "test",
+    "-j",
+    "2",
+    "--manifest-path",
+    "native/Cargo.toml",
+    "--test",
+    "legacy_retrieval_oracle",
+    "--",
+    "--exact",
+    "native_global_complete_json_matches_pre_feature_frozen_oracle",
+    "--nocapture",
+    "--test-threads=4"
+  ],
+  "exitCode": 0,
+  "seconds": 7.531,
+  "tempRoot": "D:\\Yoke-Test-Scratch\\wave5-old-global-green",
+  "logSha256": "f51b74a9cf3cfb994ec24d8249638bd8b82fcfe30609c5ef0a69446033850b6e",
+  "groups": 1,
+  "passed": 1,
+  "failed": 0,
+  "ignored": 0,
+  "sourceChanges": []
+}

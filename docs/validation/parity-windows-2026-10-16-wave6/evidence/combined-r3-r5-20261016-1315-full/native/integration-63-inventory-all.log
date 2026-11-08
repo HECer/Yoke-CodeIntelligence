@@ -1,0 +1,17 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 4.47s
+     Running tests\lsp_lifecycle.rs (target\debug\deps\lsp_lifecycle-6843554963ada3d4.exe)
+failed_health_does_not_publish_status_generation_or_claim_restart: test
+restart_performs_new_real_provider_handshakes_and_advances_only_owned_status: test
+
+2 tests, 0 benchmarks
+     Running tests\lsp_source_execution.rs (target\debug\deps\lsp_source_execution-72fe99b4b2ad15da.exe)
+actual_jedi_source_auto_import_module_does_not_execute_without_host_authority: test
+actual_rust_source_selected_rustc_requires_explicit_host_execution_authority: test
+passive_host_redirect_settings_are_refused_before_a_provider_is_started: test
+passive_rust_keeps_proven_nested_workspace_and_dependency_paths_available: test
+passive_rust_manifest_and_host_tool_redirects_are_refused_before_provider_start: test
+passive_rust_omits_selectors_only_from_provider_copy_and_reports_original_hashes: test
+unknown_passive_backend_contract_is_unavailable_before_process_start: test
+
+7 tests, 0 benchmarks

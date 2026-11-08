@@ -1,0 +1,45 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 6.67s
+     Running tests\editor_http.rs (target\debug\deps\editor_http-1c473e0ebe3f9924.exe)
+excessive_headers_and_unknown_operation_fields_are_rejected: test
+framing_rejects_duplicate_lengths_transfer_encoding_and_invalid_payloads: test
+host_origin_and_auth_are_checked_before_waiting_for_declared_body: test
+maximally_escaped_valid_buffer_fits_the_transport_without_relaxing_source_limit: test
+nonreading_client_does_not_block_the_next_authenticated_request: test
+pipelining_and_duplicate_authorization_cannot_dispatch_editor_operations: test
+real_editor_requests_read_unsaved_source_without_workspace_write_authority: test
+slow_body_chunks_share_the_header_deadline: test
+slow_header_bytes_cannot_reset_the_connection_deadline: test
+stale_buffer_and_close_versions_cannot_replace_newer_editor_source: test
+
+10 tests, 0 benchmarks
+     Running tests\engine_epoch_review.rs (target\debug\deps\engine_epoch_review-48b61e0554397a59.exe)
+default_engine_reanalysis_uses_exact_proven_epoch_instead_of_active_epoch: test
+default_engine_refuses_missing_graph_with_unproven_capture_epoch: test
+existing_graph_fastpath_rejects_a_different_manifest_under_the_same_id: test
+
+3 tests, 0 benchmarks
+     Running tests\epoch_cache_review.rs (target\debug\deps\epoch_cache_review-f4b7b79687aefe85.exe)
+cached_extraction_cannot_publish_past_the_exact_declared_source_size: test
+
+1 test, 0 benchmarks
+     Running tests\epoch_producers.rs (target\debug\deps\epoch_producers-42d26cbc6208d4bd.exe)
+mcp_prepare_uses_historical_source_policy_instead_of_new_capture_policy: test
+ordinary_editor_capture_uses_the_explicit_host_epoch: test
+ordinary_guarded_prepare_preserves_the_proven_base_epoch: test
+
+3 tests, 0 benchmarks
+     Running tests\explorer_export.rs (target\debug\deps\explorer_export-c9a7185de16e2409.exe)
+community_metadata_requires_exact_canonical_source_and_preserves_graph: test
+graphml_dynamic_attributes_are_xml_values_not_markup: test
+native_markdown_metadata_unrepresentable_in_xml_is_refused_without_changing_graph: test
+offline_html_preserves_canonical_graph_and_inert_hostile_labels: test
+source_bound_html_writer_is_create_only_and_idempotent: test
+template_markers_inside_source_metadata_are_preserved_verbatim: test
+
+6 tests, 0 benchmarks
+     Running tests\explorer_runtime.rs (target\debug\deps\explorer_runtime-5350e133bfddf44b.exe)
+first_throttled_timer_finishes_bounded_layout_and_preserves_all_observations: test
+frame_scheduler_completes_once_when_animation_frames_starve_or_race: test
+
+2 tests, 0 benchmarks

@@ -1,0 +1,264 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+warning: fields `start`, `end`, and `text` are never read
+    --> native\src\lsp.rs:1196:9
+     |
+1195 | pub(crate) struct CheckedTextEdit {
+     |                   --------------- fields in this struct
+1196 |     pub start: usize,
+     |         ^^^^^
+1197 |     pub end: usize,
+     |         ^^^
+1198 |     pub text: String,
+     |         ^^^^
+     |
+     = note: `CheckedTextEdit` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+     = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: fields `path`, `source_hash`, `original_source`, `version`, and `edits` are never read
+    --> native\src\lsp.rs:1203:9
+     |
+1202 |     TextDocument {
+     |     ------------ fields in this variant
+1203 |         path: String,
+     |         ^^^^
+1204 |         source_hash: String,
+     |         ^^^^^^^^^^^
+1205 |         original_source: bool,
+     |         ^^^^^^^^^^^^^^^
+1206 |         version: Option<i64>,
+     |         ^^^^^^^
+1207 |         edits: Vec<CheckedTextEdit>,
+     |         ^^^^^
+     |
+     = note: `CheckedEditOperation` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+
+warning: fields `path` and `applied` are never read
+    --> native\src\lsp.rs:1210:9
+     |
+1209 |     Create {
+     |     ------ fields in this variant
+1210 |         path: String,
+     |         ^^^^
+1211 |         applied: bool,
+     |         ^^^^^^^
+     |
+     = note: `CheckedEditOperation` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+
+warning: fields `old`, `new`, and `applied` are never read
+    --> native\src\lsp.rs:1214:9
+     |
+1213 |     Rename {
+     |     ------ fields in this variant
+1214 |         old: String,
+     |         ^^^
+1215 |         new: String,
+     |         ^^^
+1216 |         applied: bool,
+     |         ^^^^^^^
+     |
+     = note: `CheckedEditOperation` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+
+warning: fields `path` and `applied` are never read
+    --> native\src\lsp.rs:1219:9
+     |
+1218 |     Delete {
+     |     ------ fields in this variant
+1219 |         path: String,
+     |         ^^^^
+1220 |         applied: bool,
+     |         ^^^^^^^
+     |
+     = note: `CheckedEditOperation` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+
+warning: field `operations` is never read
+    --> native\src\lsp.rs:1229:9
+     |
+1225 | pub(crate) struct CheckedWorkspaceEdit {
+     |                   -------------------- field in this struct
+...
+1229 |     pub operations: Vec<CheckedEditOperation>,
+     |         ^^^^^^^^^^
+
+warning: struct `StagedSemantic` is never constructed
+    --> native\src\lsp.rs:1286:19
+     |
+1286 | pub(crate) struct StagedSemantic {
+     |                   ^^^^^^^^^^^^^^
+
+warning: function `stage_at` is never used
+    --> native\src\lsp.rs:1671:15
+     |
+1671 | pub(crate) fn stage_at(
+     |               ^^^^^^^^
+
+warning: `yoke-code-intelligence` (lib) generated 8 warnings
+warning: unused import: `json`
+ --> native\tests\meaning_build.rs:2:24
+  |
+2 | use serde_json::{Value,json};
+  |                        ^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `yoke-code-intelligence` (test "meaning_build") generated 1 warning (run `cargo fix --test "meaning_build" -p yoke-code-intelligence` to apply 1 suggestion)
+    Finished `test` profile [unoptimized] target(s) in 1m 34s
+     Running tests\meaning_build.rs (target\debug\deps\meaning_build-5530091b88518422.exe)
+
+running 15 tests
+test accounted_overrun_blocks_later_reserved_send_and_never_publishes ... FAILED
+test body_selection_uses_full_body_and_invalidates_unchanged_signature_changes ... FAILED
+test altered_contract_and_provider_version_do_not_reuse_old_claims ... FAILED
+test forged_cache_origin_is_rejected_without_starting_worker ... FAILED
+test later_invalid_claim_accounts_bill_but_publishes_no_partial_graph_or_cache ... FAILED
+test fixed_cross_file_packet_preserves_relations_and_hyperedge_roles ... FAILED
+test malformed_or_unbound_replies_keep_sent_hold_and_cancel_only_unsent ... FAILED
+test no_claims_is_explicit_successful_coverage ... FAILED
+test oversized_source_is_rejected_as_complete_selection_before_worker ... ok
+test publication_failure_rolls_back_every_new_cache_pointer ... FAILED
+test publishes_source_bound_claims_then_reuses_receipts_with_zero_calls_or_reservations ... FAILED
+test retained_graph_validates_original_receipt_and_rebound_snapshot_dependencies ... FAILED
+test unchanged_body_cache_rebinds_new_snapshot_and_changed_body_invalidates_it ... FAILED
+test unknown_billing_remains_reserved_after_valid_graph_publication ... FAILED
+test every_selected_source_budget_and_graph_sink_is_admitted_before_first_child ... ok
+
+failures:
+
+---- accounted_overrun_blocks_later_reserved_send_and_never_publishes stdout ----
+
+thread 'accounted_overrun_blocks_later_reserved_send_and_never_publishes' (51404) panicked at native\tests\meaning_build.rs:60:68:
+assertion `left == right` failed
+  left: 0
+ right: 1
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- body_selection_uses_full_body_and_invalidates_unchanged_signature_changes stdout ----
+
+thread 'body_selection_uses_full_body_and_invalidates_unchanged_signature_changes' (61080) panicked at native\tests\meaning_build.rs:94:208:
+called `Result::unwrap()` on an `Err` value: Meaning build unavailable
+
+---- altered_contract_and_provider_version_do_not_reuse_old_claims stdout ----
+
+thread 'altered_contract_and_provider_version_do_not_reuse_old_claims' (81908) panicked at native\tests\meaning_build.rs:82:61:
+called `Result::unwrap()` on an `Err` value: Meaning build unavailable
+
+---- forged_cache_origin_is_rejected_without_starting_worker stdout ----
+
+thread 'forged_cache_origin_is_rejected_without_starting_worker' (79264) panicked at native\tests\meaning_build.rs:86:53:
+called `Result::unwrap()` on an `Err` value: Meaning build unavailable
+
+---- later_invalid_claim_accounts_bill_but_publishes_no_partial_graph_or_cache stdout ----
+
+thread 'later_invalid_claim_accounts_bill_but_publishes_no_partial_graph_or_cache' (53752) panicked at native\tests\meaning_build.rs:51:75:
+assertion `left == right` failed
+  left: 0
+ right: 2
+
+---- fixed_cross_file_packet_preserves_relations_and_hyperedge_roles stdout ----
+
+thread 'fixed_cross_file_packet_preserves_relations_and_hyperedge_roles' (75020) panicked at native\tests\meaning_build.rs:72:120:
+called `Result::unwrap()` on an `Err` value: Meaning build unavailable
+
+---- malformed_or_unbound_replies_keep_sent_hold_and_cancel_only_unsent stdout ----
+
+thread 'malformed_or_unbound_replies_keep_sent_hold_and_cancel_only_unsent' (57572) panicked at native\tests\meaning_build.rs:56:115:
+assertion `left == right` failed
+  left: 0
+ right: 1
+
+---- no_claims_is_explicit_successful_coverage stdout ----
+
+thread 'no_claims_is_explicit_successful_coverage' (81924) panicked at native\tests\meaning_build.rs:68:58:
+called `Result::unwrap()` on an `Err` value: Meaning build unavailable
+
+---- publication_failure_rolls_back_every_new_cache_pointer stdout ----
+
+thread 'publication_failure_rolls_back_every_new_cache_pointer' (46356) panicked at native\tests\meaning_build.rs:90:266:
+assertion `left == right` failed
+  left: 0
+ right: 2
+
+---- publishes_source_bound_claims_then_reuses_receipts_with_zero_calls_or_reservations stdout ----
+
+thread 'publishes_source_bound_claims_then_reuses_receipts_with_zero_calls_or_reservations' (30452) panicked at native\tests\meaning_build.rs:38:63:
+meaning extraction: Meaning build unavailable
+
+---- retained_graph_validates_original_receipt_and_rebound_snapshot_dependencies stdout ----
+
+thread 'retained_graph_validates_original_receipt_and_rebound_snapshot_dependencies' (44456) panicked at native\tests\meaning_build.rs:103:51:
+called `Result::unwrap()` on an `Err` value: Meaning build unavailable
+
+---- unchanged_body_cache_rebinds_new_snapshot_and_changed_body_invalidates_it stdout ----
+
+thread 'unchanged_body_cache_rebinds_new_snapshot_and_changed_body_invalidates_it' (70676) panicked at native\tests\meaning_build.rs:76:67:
+called `Result::unwrap()` on an `Err` value: Meaning build unavailable
+
+---- unknown_billing_remains_reserved_after_valid_graph_publication stdout ----
+
+thread 'unknown_billing_remains_reserved_after_valid_graph_publication' (62540) panicked at native\tests\meaning_build.rs:64:56:
+called `Result::unwrap()` on an `Err` value: Meaning build unavailable
+
+
+failures:
+    accounted_overrun_blocks_later_reserved_send_and_never_publishes
+    altered_contract_and_provider_version_do_not_reuse_old_claims
+    body_selection_uses_full_body_and_invalidates_unchanged_signature_changes
+    fixed_cross_file_packet_preserves_relations_and_hyperedge_roles
+    forged_cache_origin_is_rejected_without_starting_worker
+    later_invalid_claim_accounts_bill_but_publishes_no_partial_graph_or_cache
+    malformed_or_unbound_replies_keep_sent_hold_and_cancel_only_unsent
+    no_claims_is_explicit_successful_coverage
+    publication_failure_rolls_back_every_new_cache_pointer
+    publishes_source_bound_claims_then_reuses_receipts_with_zero_calls_or_reservations
+    retained_graph_validates_original_receipt_and_rebound_snapshot_dependencies
+    unchanged_body_cache_rebinds_new_snapshot_and_changed_body_invalidates_it
+    unknown_billing_remains_reserved_after_valid_graph_publication
+
+test result: FAILED. 2 passed; 13 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.05s
+
+error: test failed, to rerun pass `--test meaning_build`
+     Running tests\meaning_graph.rs (target\debug\deps\meaning_graph-6b84601965ba426b.exe)
+
+running 6 tests
+test model_concepts_relations_and_ordered_roles_keep_exact_source_and_inference_labels ... FAILED
+test empty_extraction_records_no_claims_without_claiming_semantic_completeness ... FAILED
+test exact_claim_dedup_remaps_endpoints_but_aliases_do_not_merge_distinct_concepts ... FAILED
+test nonzero_excerpts_and_identical_quotes_in_distinct_files_keep_their_own_bindings ... FAILED
+test utf8_support_escape_forged_source_identity_and_false_coverage_fail_closed ... ok
+test ambiguous_keys_roles_coverage_and_capacity_are_not_accepted_as_inference ... ok
+
+failures:
+
+---- model_concepts_relations_and_ordered_roles_keep_exact_source_and_inference_labels stdout ----
+
+thread 'model_concepts_relations_and_ordered_roles_keep_exact_source_and_inference_labels' (82224) panicked at native\tests\meaning_graph.rs:55:78:
+called `Result::unwrap()` on an `Err` value: Meaning graph unavailable
+
+---- empty_extraction_records_no_claims_without_claiming_semantic_completeness stdout ----
+
+thread 'empty_extraction_records_no_claims_without_claiming_semantic_completeness' (72956) panicked at native\tests\meaning_graph.rs:139:78:
+called `Result::unwrap()` on an `Err` value: Meaning graph unavailable
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- exact_claim_dedup_remaps_endpoints_but_aliases_do_not_merge_distinct_concepts stdout ----
+
+thread 'exact_claim_dedup_remaps_endpoints_but_aliases_do_not_merge_distinct_concepts' (44320) panicked at native\tests\meaning_graph.rs:81:63:
+called `Result::unwrap()` on an `Err` value: Meaning graph unavailable
+
+---- nonzero_excerpts_and_identical_quotes_in_distinct_files_keep_their_own_bindings stdout ----
+
+thread 'nonzero_excerpts_and_identical_quotes_in_distinct_files_keep_their_own_bindings' (82208) panicked at native\tests\meaning_graph.rs:184:6:
+called `Result::unwrap()` on an `Err` value: Meaning graph unavailable
+
+
+failures:
+    empty_extraction_records_no_claims_without_claiming_semantic_completeness
+    exact_claim_dedup_remaps_endpoints_but_aliases_do_not_merge_distinct_concepts
+    model_concepts_relations_and_ordered_roles_keep_exact_source_and_inference_labels
+    nonzero_excerpts_and_identical_quotes_in_distinct_files_keep_their_own_bindings
+
+test result: FAILED. 2 passed; 4 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `--test meaning_graph`
+error: 2 targets failed:
+    `--test meaning_build`
+    `--test meaning_graph`

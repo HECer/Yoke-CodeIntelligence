@@ -1,0 +1,29 @@
+{
+  "provider_scope_review": {
+    "executable": "target\\debug\\deps\\provider_scope_review-efdd81e89803991c.exe",
+    "ignored": [],
+    "registered": [
+      "corrupt_cas_size_is_refused_before_source_allocation_or_provider_launch",
+      "escaped_request_is_admitted_before_serialization_allocation_and_billing",
+      "explicitly_captured_readonly_dependencies_keep_exact_model_source_binding",
+      "persisted_unknown_native_identity_does_not_grant_model_source_authority"
+    ]
+  },
+  "providers": {
+    "executable": "target\\debug\\deps\\providers-4a75185b5a986379.exe",
+    "ignored": [],
+    "registered": [
+      "complete_bound_failed_replies_still_account_for_reported_costs",
+      "corpus_excerpts_stop_at_exact_utf8_boundaries_and_report_omissions",
+      "embeddings_and_query_search_use_versioned_source_bound_collections",
+      "host_trust_and_exact_reply_binding_fail_closed",
+      "invalid_requests_and_missing_capabilities_fail_before_model_attempts",
+      "media_descriptions_bind_captured_bytes_without_source_writes",
+      "query_vector_dimension_must_match_indexed_corpus_before_settlement",
+      "reranking_and_vectors_reject_invalid_exact_candidates",
+      "successful_unknown_billing_and_known_overrun_keep_budget_conservative",
+      "summaries_use_immutable_utf8_source_and_remain_inferences",
+      "unavailable_timeout_and_output_cap_keep_unknown_reservations"
+    ]
+  }
+}

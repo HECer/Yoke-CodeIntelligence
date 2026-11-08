@@ -1,0 +1,38 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 59s
+     Running tests\compiler_inline.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\compiler_inline-c9db561b95c33aa2.exe)
+
+running 15 tests
+test actual_cli_compiler_plan_requires_independent_tsc_approval_apply_and_conditional_recovery ... ok
+test actual_compiler_expands_shorthand_properties_without_changing_their_key ... ok
+test actual_compiler_handles_async_anonymous_functions_and_captured_import_bindings ... ok
+test actual_compiler_inlines_a_middle_sibling_and_unicode_crlf_sources_in_both_epochs ... ok
+test actual_compiler_keep_definition_preserves_exact_bytes_with_earlier_and_later_consumers ... ok
+test actual_compiler_preserves_first_middle_last_siblings_across_ts_tsx_js_jsx ... FAILED
+test actual_unicode_names_keep_utf8_anchors_and_repository_plugins_inert ... ok
+test captured_readonly_dependencies_and_oversized_input_cannot_gain_inline_write_authority ... ok
+test compiler_inline_refuses_cross_file_script_consumers_and_ambiguous_contexts ... ok
+test compiler_inline_refuses_unsupported_and_unsafe_inputs_without_hidden_plans ... ok
+test compiler_registration_and_changed_binary_invalidate_session_before_rebinding ... ok
+test host_compiler_opt_in_preserves_the_existing_non_ts_lsp_route ... ok
+test inline_authority_paths_stale_snapshot_deadline_and_budget_fail_before_publication ... ok
+test keep_definition_omits_both_compiler_pieces_of_a_last_sibling_removal ... ok
+test session_and_jb_facade_require_explicit_host_opt_in_and_edit_mode ... ok
+
+failures:
+
+---- actual_compiler_preserves_first_middle_last_siblings_across_ts_tsx_js_jsx stdout ----
+
+thread 'actual_compiler_preserves_first_middle_last_siblings_across_ts_tsx_js_jsx' (25644) panicked at native\tests\compiler_inline.rs:223:37:
+tsx/0: Compiler worker failed, exceeded bounds or timed out: Inline would change a free identifier binding at a consumer
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    actual_compiler_preserves_first_middle_last_siblings_across_ts_tsx_js_jsx
+
+test result: FAILED. 14 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 42.11s
+
+error: test failed, to rerun pass `--test compiler_inline`
+error: 1 target failed:
+    `--test compiler_inline`

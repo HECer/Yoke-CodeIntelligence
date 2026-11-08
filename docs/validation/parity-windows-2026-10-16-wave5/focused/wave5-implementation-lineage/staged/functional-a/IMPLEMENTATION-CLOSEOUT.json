@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "scope": "Implemented A manifest-balanced retrieval authority, partition, marker parser, strict bounded saved-Graph reads, and owned fixtures.",
+  "actionId": "act_mva5a5mg_773f4cecd8d3",
+  "remainingValidationOwner": "act_mv9ccqo6_7d510f9b5700",
+  "normalSha256": {
+    "native/src/retrieval_scopes.rs": "f7652274180fe6ac7dbe36b2590e12851a6c1944e508fdca532ecb53dd8ca165",
+    "native/src/retrieval_partition.rs": "02062490f3cbb8317da2cc95f215574ed74b7a860d19f86eb5eb86a615117440",
+    "native/src/retrieval_marker_decode.rs": "6f9387d1bd246f75c72050af4b6d72c9ba39a11a4b9e1f64d0221a1f659e9149",
+    "native/src/retrieval_capacity.rs": "3c372858963cedecbbed0651a5b5e496716dc15de98c6f6ee4c2b4672a09f9a3",
+    "native/src/retrieval_saved_graph.rs": "3d87c2e1ba5842ca1857544257f5be9a943a012f8d71fe3b19f1a9dbfd42f68e",
+    "native/src/retrieval_saved_graph_decode.rs": "c7aebc0b5c26afc9a10bbeadfff995b46e93169223bf3da4a110c2927431ae72",
+    "native/src/retrieval_scopes_tests.rs": "af14c13b5de980bfd41f0c0f2dc7c91c61a65e8a3d84035ba610b1c1628ab365",
+    "native/src/retrieval_scopes_capacity_tests.rs": "1221fc500486fb3b367cc957ac140d4bb72dc779088f54e4aece6302b7f3fdd2",
+    "native/src/retrieval_capacity_tests.rs": "738fe1d7d5b93b7ac49989dac9d159191bf1a5b055645764d2fca0887e7aab42",
+    "native/src/retrieval_saved_graph_tests.rs": "5546baa53693a87e91a158b3e0a8efabe30bdb5f4dea753d98bf33c6504c1cd4",
+    "native/src/retrieval_saved_graph_schema_tests.rs": "8ba206e4a30c4b52c432e18d06435719270abb510a77c9ca7b2f44147e2de848"
+  },
+  "measuredRootGates": [
+    {
+      "name": "complete focused retrieval",
+      "process": 85431,
+      "selected": 94,
+      "passed": 88,
+      "failed": 0,
+      "ignored": 6,
+      "exclusions": [],
+      "sourceChanges": [],
+      "rawLogSha256": "ce7f2c07edd6510f57fc3d1296c511cd959dfe8e091a7f3e1c9085cfbdcf599a"
+    },
+    {
+      "name": "monorepo_retrieval and monorepo_scopes public targets",
+      "process": 31546,
+      "passed": 10,
+      "sourceChanges": [],
+      "rawLogSha256": "90860f0827df7c07231b008186c5ddf903c34f406ecfd9f14fce5aa50b926ee7"
+    },
+    {
+      "name": "oversized saved Graph row refuses before payload read",
+      "passed": 1,
+      "rawLogSha256": "72391769959fbec5ddd757fb38d369815847d169149a4fbe4861aa57268ca1e6"
+    },
+    {
+      "name": "genuine Windows 4096-byte path and explicit 4097-byte omission/refusal",
+      "passed": 1,
+      "sourceChanges": [],
+      "rawLogSha256": "b81298325db95ff903d83046d719f4e46ef8811d56af3e2592bebec8ac17f9fd"
+    }
+  ],
+  "qualifiedFixturesAtCloseout": {
+    "executedPass": [
+      "oversized_saved_row_refuses_before_raw_payload_read_and_auto_fallback",
+      "genuine_4096_utf8_path_is_captured_and_4097_is_refused_by_existing_capture_boundary"
+    ],
+    "rootRunningNotYetValidated": [
+      "real_100k_files_pass_then_one_real_function_rejects_entity_100001_before_graph_reload"
+    ],
+    "unexecuted": [
+      "real_graph_exact_64mb_passes_and_plus_one_refuses_before_saved_graph_loading",
+      "real_ownership_exact_16mb_passes_and_next_byte_refuses_before_body_scoring",
+      "genuine_one_million_observations_is_byte_dominated_then_plus_one_refuses_before_graph_loading"
+    ]
+  },
+  "longPathFixtureCorrection": {
+    "preservedOriginalSha256": "c76168483bffb862732bb32a24bd5e1ae5f561f40bb31fb66d83a11ebcdc60a1",
+    "correctedTestSha256": "1221fc500486fb3b367cc957ac140d4bb72dc779088f54e4aece6302b7f3fdd2",
+    "actualPriorFailureLogSha256": "ff6644d8f5fd80a3bc256289a97b4ffdcbd7eefd31d8d0921dbaec6d0d17c04b",
+    "classification": "Wrong test assumption about existing capture behavior; only post-rename test expectations changed. All 4096-byte positives and all product behavior were preserved."
+  },
+  "reviewEvidence": [
+    "mem_mva7xvs6_dd76b2e10192",
+    "repairs-1/A-REPAIR-DIFF.patch",
+    "repairs-3/PROMOTION.json",
+    "repairs-4/LONG-PATH-TEST.patch"
+  ],
+  "qualifications": [
+    "All test execution was centralized by root; this child ran no Cargo or Node commands.",
+    "The focused gate ignores six qualified tests by default; two were separately executed successfully after qualification.",
+    "Remaining large-fixture execution and broad Windows acceptance belong to root and are pending at this closeout.",
+    "No upstream ranking/performance/full-contract equivalence or Linux/macOS certification is claimed.",
+    "Normal source and test files remain frozen."
+  ]
+}

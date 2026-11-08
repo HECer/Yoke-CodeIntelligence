@@ -1,0 +1,38 @@
+--- before/native/src/retrieval_scopes_capacity_tests.rs
++++ after/native/src/retrieval_scopes_capacity_tests.rs
+@@ -405,11 +405,30 @@
+     let mut plus_one = path.clone();
+     plus_one.insert(plus_one.len() - 4, 'x');
+     rename_owned(root.path(), &path, &plus_one);
+-    let error = engine.index(&d).unwrap_err();
+-    assert!(
+-        error.to_string().contains("Invalid path length"),
+-        "{error:#}"
+-    );
++    assert_eq!(plus_one.len(), 4097);
++    let (snapshot, graph, _, _) = engine.index(&d).unwrap();
++    assert!(
++        snapshot
++            .files
++            .iter()
++            .all(|f| f.path != path && f.path != plus_one)
++    );
++    assert_eq!(
++        snapshot.omissions,
++        vec![crate::model::Omission {
++            path: plus_one.clone(),
++            reason: "unsupported-path".into(),
++        }]
++    );
++    assert_eq!(graph.coverage.omissions, 1);
++    assert!(!graph.coverage.exhaustive);
++    let mut run = begin(&engine.store, &snapshot, &graph, &d, 4_000_000).unwrap();
++    let usage = run.usage();
++    assert_eq!(
++        hard(run.read_source(&plus_one)),
++        RetrievalHardError::DeniedSource("captured_path")
++    );
++    assert_eq!(run.usage(), usage);
+ }
+ 
+ fn calls(count: usize) -> String {

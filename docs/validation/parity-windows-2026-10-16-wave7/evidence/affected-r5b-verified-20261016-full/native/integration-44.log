@@ -1,0 +1,27 @@
+    Finished `test` profile [unoptimized] target(s) in 0.68s
+     Running tests\graph_extensions.rs (target\debug\deps\graph_extensions-5cf6101264dc4545.exe)
+
+running 9 tests
+test expired_and_rebound_or_corrupt_source_reports_are_rejected ... ok
+test ambiguous_members_cannot_collide_community_identities ... ok
+test duplicate_structural_identities_are_reported_ambiguous ... ok
+test invalid_analysis_options_fail_without_persisting ... ok
+test empty_graph_and_hub_exclusion_remain_explicit ... ok
+test persisted_wrong_line_anchors_are_not_certified_as_exact ... ok
+test report_is_reproducible_with_actual_leiden_and_source_bound_labels ... ok
+test report_keeps_parallel_arcs_exact_anchors_and_uncertainty ... ok
+test snapshot_diff_ignores_offset_and_id_churn_but_detects_body_change ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.14s
+
+     Running tests\graph_review_adversarial.rs (target\debug\deps\graph_review_adversarial-69abd8cc0880666f.exe)
+
+running 5 tests
+test review_json_pointer_can_address_array_child_keys ... ok
+test review_launcher_option_values_are_not_persisted_as_packages ... ok
+test review_tree_export_script_is_valid_javascript ... ok
+test review_cargo_ordinary_ancestor_does_not_shadow_workspace ... ok
+test review_yaml_mcp_config_preserves_server_contract ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.71s
+

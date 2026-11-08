@@ -1,0 +1,418 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 41s
+     Running tests\capture_options.rs (target\debug\deps\capture_options-86b21d2a771393a5.exe)
+
+running 8 tests
+test capture_option_proof_obeys_the_shared_store_deadline ... ok
+test derived_snapshot_preserves_only_proven_capture_options ... ok
+test explicit_include_lifts_only_builtin_skip_and_never_widens_only_dirs ... ok
+test known_lsp_only_languages_are_explicit_capture_metadata_without_ast_claims ... ok
+test language_overrides_are_host_typed_and_change_immutable_identity ... ok
+test scoped_capture_uses_directory_segments_and_keeps_protections ... ok
+test exhausted_origin_chain_cannot_publish_an_invalid_capture_proof ... ok
+test unsafe_scope_and_unknown_language_fail_before_capture ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.18s
+
+     Running tests\capture_policy.rs (target\debug\deps\capture_policy-cc51f7a3c548b392.exe)
+
+running 9 tests
+test arbitrary_derived_id_preserves_proven_v9_capture_policy_without_claiming_extraction ... ok
+test canonical_derived_v9_from_disk_v8_retains_v8_source_acquisition_policy ... ok
+test capture_policy_traversal_is_bounded_and_honors_the_callers_expired_deadline ... ok
+test foreign_scope_receipts_and_their_native_children_do_not_grant_disk_acquisition ... ok
+test ignored_capture_v9_lineage_preserves_members_and_rejects_resealed_member_changes ... ok
+test overlay_v9_from_disk_v8_retains_the_base_capture_policy ... ok
+test resealed_scope_proof_cannot_widen_only_dirs_before_following_its_valid_origin ... ok
+test unproven_or_tampered_capture_lineage_cannot_authorize_disk_recapture ... ok
+test exact_git_capture_receipts_select_their_own_policy_and_never_fall_back_on_corruption ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.98s
+
+     Running tests\deadline_scope.rs (target\debug\deps\deadline_scope-1143c21d9cdadf7a.exe)
+
+running 2 tests
+test nested_deadlines_inherit_host_ceiling_cancellation_and_restore_after_scope ... ok
+test scoped_deadline_restores_after_panic_and_does_not_leak_to_other_threads ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\editor.rs (target\debug\deps\editor-f3c22a4724a592b3.exe)
+
+running 6 tests
+test editor_buffers_are_versioned_source_bound_and_never_write_saved_files ... ok
+test ancestor_ignore_policies_also_protect_unsaved_new_files ... ok
+test editor_cannot_restore_omitted_ignored_protected_or_secret_source ... ok
+test editor_capture_refuses_foreign_disk_changes_and_accepts_a_real_saved_buffer ... ok
+test effective_ignore_whitelists_apply_equally_to_saved_and_unsaved_new_paths ... ok
+test nested_ignore_policies_are_scoped_and_git_excludes_cannot_be_bypassed ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.23s
+
+     Running tests\git_affected_cli.rs (target\debug\deps\git_affected_cli-8bd34e65d21add4b.exe)
+
+running 8 tests
+test affected_default_and_explicit_depth_options_match_complete_library_canonical_bytes ... ok
+test affected_options_are_closed_duplicate_safe_and_admitted_at_exact_raw_byte_boundary ... ok
+test affected_options_leaf_and_ancestor_reparse_points_refuse_after_real_options_success ... FAILED
+test affected_replays_selected_history_without_git_live_source_or_latest_capture_fallback ... ok
+test affected_static_domain_zero_deadline_and_zero_stdout_capacity_do_not_initialize_a_missing_store ... ok
+test affected_routing_refuses_a_meta_only_wal_store_before_any_physical_initialization ... ok
+test affected_stdout_cap_includes_lf_and_refuses_one_byte_below_without_clamping ... ok
+test affected_zero_depths_are_preserved_while_zero_required_credits_refuse_without_partial_bytes ... ok
+
+failures:
+
+---- affected_options_leaf_and_ancestor_reparse_points_refuse_after_real_options_success stdout ----
+
+thread 'affected_options_leaf_and_ancestor_reparse_points_refuse_after_real_options_success' (1712) panicked at native\tests\git_affected_cli.rs:505:10:
+Real Windows file reparse fixture prerequisite: Os { code: 1314, kind: Uncategorized, message: "Dem Client fehlt ein erforderliches Recht." }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    affected_options_leaf_and_ancestor_reparse_points_refuse_after_real_options_success
+
+test result: FAILED. 7 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.87s
+
+error: test failed, to rerun pass `--test git_affected_cli`
+     Running tests\git_affected_details.rs (target\debug\deps\git_affected_details-8b3afb4dc74680e6.exe)
+
+running 12 tests
+test base_root_keeps_both_descendant_candidates_and_contract_ancestor ... ok
+test caller_transaction_sql_limit_and_state_survive_success_and_all_failure_classes ... ok
+test canonical_identity_binds_every_option_input_and_false_inference_field ... ok
+test default_options_are_closed_thirteen_fields_and_direct_callers_cannot_raise_maxima ... ok
+test derived_root_has_exact_ancestor_members_full_witnesses_and_no_sibling_shortcut ... ok
+test exact_graph_original_row_and_seed_state_budgets_succeed_one_less_refuses ... ok
+test historical_replay_needs_no_live_git_and_preserves_report_r5a_and_store_state ... ok
+test no_change_still_charges_every_index_observation_and_allows_true_zero_derived_work ... ok
+test root_and_walk_seed_states_retain_parallel_calls_and_independent_incoming_distances ... ok
+test recursive_rows_new_source_bytes_and_wire_boundaries_are_independently_measured ... ok
+test selected_depths_have_explicit_boundaries_and_capacity_never_drops_member_candidates ... ok
+test unicode_crlf_tables_bind_exact_historical_entities_observations_and_evidence_vectors ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 6.69s
+
+     Running tests\git_affected_qualification.rs (target\debug\deps\git_affected_qualification-6b4a85662c01b701.exe)
+
+running 3 tests
+test released_git_derived_body_fixture_qualifies_exact_crlf_unicode_owners_hierarchy_and_parallel_calls ... ok
+test released_git_base_body_fixture_qualifies_reverse_descendant_inputs_without_sibling_shortcuts ... ok
+test released_git_no_change_fixture_retains_real_hierarchy_and_calls_with_zero_original_seeds ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.80s
+
+     Running tests\git_areas.rs (target\debug\deps\git_areas-4a7a166b5b2c35ab.exe)
+
+running 8 tests
+test a_clean_saved_report_is_an_empty_selection_but_never_a_missing_meaning_capability_success ... ok
+test actual_cli_opens_existing_readonly_state_with_no_git_or_provider_on_path_and_exact_stdout_cap ... ok
+test actual_saved_git_directory_areas_keep_exact_parent_quotes_and_every_parallel_occurrence ... ok
+test caller_transaction_sql_limits_original_cancel_and_expiry_are_preserved ... ok
+test closed_options_zero_capacities_exact_wire_limits_and_missing_state_never_publish ... ok
+test corrupt_saved_meaning_body_refuses_and_cannot_be_disguised_as_directory_fallback ... ok
+test optional_meaning_quotas_and_foreign_or_corrupt_registrations_refuse_without_new_calls_or_writes ... ok
+test replayed_meaning_file_sets_rank_specific_claims_preserve_equal_label_ties_and_stay_offline ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.75s
+
+     Running tests\git_cli.rs (target\debug\deps\git_cli-90e7903b23cba792.exe)
+
+running 1 test
+test public_git_cli_analyzes_and_reloads_immutable_reports_with_explicit_host_execution ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.67s
+
+     Running tests\git_conflicts.rs (target\debug\deps\git_conflicts-cced1d9e69069962.exe)
+
+running 12 tests
+test actual_index_stage_matrix_modes_and_unadmitted_shared_objects_preserve_every_position ... ok
+test a_clean_index_is_an_observation_and_never_a_claim_that_branch_merging_is_safe ... ok
+test cli_default_denials_bad_host_paths_and_closed_limits_do_not_initialize_state ... ok
+test cli_uses_existing_readonly_state_preserves_exact_envelope_and_refuses_unused_global_authority ... ok
+test actual_sha1_sha256_conflicts_preserve_index_and_source_spaces_and_replay_epochs8_and9 ... ok
+test exact_source_pages_bind_the_observed_index_and_never_use_changed_working_files ... ok
+test explicit_captured_readonly_dependencies_are_read_permissions_and_never_write_permissions ... ok
+test foreign_or_unproved_scope_metadata_never_authorizes_current_local_git_sources ... ok
+test cumulative_blob_quote_scope_and_output_limits_are_independent_and_never_write_state ... ok
+test linked_worktrees_are_explicit_independent_index_observations_not_paths_followed_from_git_data ... ok
+test native_git_and_overlay_scope_lineage_remains_valid_but_a_foreign_derived_wrapper_does_not ... ok
+test permission_root_scope_caller_transaction_deadline_and_sql_policy_fail_closed ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 17.49s
+
+     Running tests\git_epoch_selection.rs (target\debug\deps\git_epoch_selection-ffe986bef64ca8a2.exe)
+
+running 2 tests
+test worktree_cache_seed_uses_selected_epoch_without_copying_other_epoch_entries ... ok
+test selected_epoch_is_shared_by_working_and_committed_git_report_sides ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.94s
+
+     Running tests\git_epochs.rs (target\debug\deps\git_epochs-e2ec0afa021314a0.exe)
+
+running 9 tests
+test authentic_git8_receipts_reports_and_graphs_remain_readable ... ok
+test git8_registry_archive_replays_without_the_original_workspace ... ok
+test git_epoch_accessors_install_the_new_callers_deadline ... ok
+test explicit_git9_capture_has_distinct_identity_facts_and_missing_graph_replay ... ok
+test guarded_derivative_archive_keeps_older_git_source_proof_offline ... ok
+test git_epoch_selection_rejects_invalid_receipts_missing_proofs_and_expired_deadlines ... ok
+test missing_authentic_git8_graph_replays_the_original_extraction_epoch ... ok
+test synthetic_legacy_git_receipts_remain_readable_without_an_extractor_claim ... ok
+test resealed_offline_git_proof_cannot_invent_commit_or_source_bytes ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.46s
+
+     Running tests\git_impact_details.rs (target\debug\deps\git_impact_details-9f02b92e5224a8c8.exe)
+
+running 29 tests
+test a_positive_aggregate_quote_cap_is_consumed_in_documented_occurrence_order ... ok
+test admitted_control_character_source_is_omitted_without_fabricated_safe_quote_text ... ok
+test an_exact_content_pair_stays_ambiguous_when_a_modified_partner_also_qualifies ... ok
+test caller_owned_read_transaction_survives_success_and_refusal ... ok
+test changed_or_missing_captured_graph_refuses_without_reanalysis_or_publication ... ok
+test canonical_full_result_id_row_counter_and_exact_wire_limit_are_independent ... ok
+test duplicate_identical_groups_retain_the_complete_ambiguous_cross_product ... ok
+test changed_source_cas_refuses_with_a_static_error_and_no_live_source_fallback ... ok
+test exact_similarity_threshold_is_inclusive_and_lower_nonzero_scores_are_rejected ... ok
+test exact_pair_line_work_source_and_row_budgets_succeed_and_one_below_refuses ... ok
+test expired_deadline_refuses_without_sql_cas_or_transaction_mutation ... ok
+test html_escapes_captured_source_markup_without_changing_structured_quote_bytes ... ok
+test historical_epoch_eight_and_nine_reports_keep_their_bindings_after_host_epoch_changes ... ok
+test identical_source_objects_are_charged_once_per_hash_across_both_scoped_sides ... ok
+test insertion_empty_ranges_and_absent_sides_remain_distinct_exact_source_values ... ok
+test modified_move_keeps_all_original_claims_parallel_ids_and_exact_two_side_quotes ... ok
+test quote_prefixes_stop_on_utf8_boundaries_and_report_actual_excerpt_ranges ... ok
+test replay_uses_report_snapshots_after_live_files_and_latest_selection_change ... ok
+test report_id_authority_rejects_missing_cross_workspace_and_resealed_fabricated_reports ... ok
+test same_path_edits_are_excluded_and_unrelated_added_deleted_sources_stay_unpaired ... ok
+test score_normalizes_only_horizontal_ascii_edges_and_crlf_not_quote_bytes ... ok
+test similarity_counts_repeated_normalized_lines_with_multiplicity ... ok
+test tied_modified_candidates_are_all_visible_in_stable_path_order ... ok
+test unequal_whitespace_only_sources_report_no_signal_instead_of_a_rename ... ok
+test similarity_preserves_unicode_case_composition_and_unterminated_carriage_return ... ok
+test unique_identical_content_including_empty_files_does_not_prove_rename_identity ... ok
+test zero_charge_dimensions_succeed_instead_of_becoming_unconditional_refusals ... ok
+test zero_hard_budgets_are_real_limits_and_never_restore_defaults ... ok
+test zero_quote_caps_omit_nonempty_ranges_but_keep_genuine_empty_ranges_complete ... ok
+
+test result: ok. 29 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 13.43s
+
+     Running tests\git_impact_details_cli.rs (target\debug\deps\git_impact_details_cli-21d011653ec3ca4b.exe)
+
+running 15 tests
+test closed_checkpointed_store_with_special_host_path_returns_complete_canonical_cli_result ... ok
+test explicit_zero_hard_budgets_are_capacity_refusals_instead_of_defaults ... ok
+test global_stdout_cap_includes_lf_for_json_and_html_without_clamping_options ... ok
+test impact_options_and_html_flags_refuse_legacy_kinds_instead_of_silent_ignoring ... ok
+test historical_details_need_no_git_live_sources_latest_capture_or_provider ... ok
+test invalid_report_and_domain_flags_are_static_without_creating_missing_store ... ok
+test invalid_uninitialized_wal_shm_pairs_refuse_without_physical_mutation ... ok
+test incomplete_existing_stores_refuse_without_schema_directory_lock_or_journal_initialization ... ok
+test legacy_load_render_and_three_digest_values_keep_existing_contracts ... ok
+test public_impact_details_cli_returns_complete_canonical_library_result_and_literal_sources ... ok
+test public_impact_details_html_is_exact_sealed_render_and_escapes_source_markup ... ok
+test strict_options_reject_unknown_duplicate_bad_utf8_and_oversize_without_diagnostics_leaks ... ok
+test valid_closed_options_at_exact_raw_cap_succeed_and_one_more_byte_refuses ... ok
+test windows_real_options_file_and_ancestor_reparse_points_refuse_after_genuine_positive ... FAILED
+test zero_quote_caps_preserve_explicit_options_and_report_omissions ... ok
+
+failures:
+
+---- windows_real_options_file_and_ancestor_reparse_points_refuse_after_genuine_positive stdout ----
+
+thread 'windows_real_options_file_and_ancestor_reparse_points_refuse_after_genuine_positive' (12052) panicked at native\tests\git_impact_details_cli.rs:698:10:
+real Windows file reparse prerequisite: Os { code: 1314, kind: Uncategorized, message: "Dem Client fehlt ein erforderliches Recht." }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    windows_real_options_file_and_ancestor_reparse_points_refuse_after_genuine_positive
+
+test result: FAILED. 14 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 6.60s
+
+error: test failed, to rerun pass `--test git_impact_details_cli`
+     Running tests\git_impact_details_no_git.rs (target\debug\deps\git_impact_details_no_git-2a05fcc2529f0c72.exe)
+
+running 1 test
+test historical_details_succeed_without_host_path_git_and_ignore_repo_execution_traps ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.83s
+
+     Running tests\git_impact_details_qualification.rs (target\debug\deps\git_impact_details_qualification-e42d9d1b5f629e48.exe)
+
+running 3 tests
+test configured_real_capture_retains_the_policy_record_used_by_private_denial_cases ... ok
+test independent_quote_oracle_distinguishes_unicode_bytes_crlf_empty_and_null ... ok
+test owned_move_report_replays_both_original_sources_and_all_parallel_occurrences ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.37s
+
+     Running tests\git_impact_details_sqlite_limits.rs (target\debug\deps\git_impact_details_sqlite_limits-2492edf5d2701f62.exe)
+
+running 1 test
+test caller_sqlite_limit_and_read_transaction_survive_success_and_both_refusal_classes ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.99s
+
+     Running tests\git_review.rs (target\debug\deps\git_review-43ad1b31956708d5.exe)
+
+running 6 tests
+test branch_overlap_includes_dependencies_authorized_by_the_captured_readonly_scope ... ok
+test committed_ignore_policy_is_applied_even_when_policy_files_are_outside_only_dirs ... ok
+test historical_author_metadata_cannot_publish_obvious_secret_values ... ok
+test ignored_parent_directories_cannot_be_reopened_by_their_unvisited_nested_policy ... ok
+test parent_cache_length_admission_does_not_materialize_oversized_sqlite_values ... ok
+test valid_committed_source_batches_are_partitioned_by_bytes_within_the_total_budget ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 20.38s
+
+     Running tests\git_workflows.rs (target\debug\deps\git_workflows-deceb750f3784a79.exe)
+
+running 17 tests
+test git_history_dependencies_require_captured_readonly_scope_proof ... ok
+test deleted_and_renamed_commit_sources_keep_base_symbols_and_exact_original_paths ... ok
+test historical_git_refuses_disk_ignored_capture_options_before_publication ... ok
+test historical_git_source_proof_rejects_missing_tree_membership ... ok
+test immutable_git_report_renderings_and_digests_remain_bound_after_live_changes ... ok
+test impact_keeps_parallel_call_occurrences_and_absent_file_has_no_false_anchor ... ok
+test local_branch_overlap_and_history_owners_are_actual_metadata_candidates ... ok
+test missing_promisor_object_never_executes_remote_helper ... ok
+test resealed_git_report_cannot_invent_impact_distance_or_omit_changes ... ok
+test oversized_git_source_receipt_is_rejected_before_sqlite_cell_allocation ... ok
+test resealed_git_report_rejects_unknown_historical_metadata_fields ... ok
+test typed_git_records_and_exact_commit_artifacts_are_known_retention_roots ... ok
+test unicode_refs_resolve_to_exact_commit_without_argument_interpretation ... ok
+test unrelated_local_branch_is_reported_without_aborting_other_results ... ok
+test workflow_never_runs_repo_filters_fsmonitor_hooks_or_ref_options ... ok
+test working_diff_binds_git_base_and_native_source_and_incoming_impact ... ok
+test worktree_cache_seed_copies_verified_parser_entries_without_parent_state ... ok
+
+test result: ok. 17 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 10.31s
+
+     Running tests\ignored_capture.rs (target\debug\deps\ignored_capture-6065e64dcd472fe1.exe)
+
+running 15 tests
+test editor_ignored_prefix_updates_are_denied_before_buffer_revisions_change ... ok
+test derived_edits_outside_ignored_scope_keep_exact_old_classification_and_readonly_sources ... ok
+test empty_ignored_option_preserves_released_nondefault_configured_capture_identity ... ok
+test empty_ignored_option_preserves_released_serialization_and_default_capture_identity ... ok
+test host_ignored_option_never_relaxes_secret_internal_or_normalized_path_protection ... ok
+test host_optin_captures_ignored_sources_read_only_and_binds_complete_observed_outcomes ... ok
+test ignored_source_archives_retain_exact_capture_proof_after_original_store_is_gone ... ok
+test missing_future_reordered_and_incomplete_observed_proofs_never_fall_back_to_default_capture ... ok
+test observed_ignore_outcomes_are_immutable_when_current_ignore_files_change ... ok
+test ordinary_editor_overlays_preserve_ignored_source_classification_without_live_receipt_authority ... ok
+test retention_recognizes_only_the_exact_ignored_proof_kind_and_rejects_mutated_rows ... ok
+test readonly_ignored_edits_and_new_files_fail_before_any_durable_plan_or_snapshot ... ok
+test windows_case_aliases_cannot_create_files_inside_host_readonly_ignored_prefixes ... ok
+test windows_short_name_aliases_cannot_create_files_inside_host_readonly_prefixes ... ok
+test windows_short_name_aliases_do_not_grant_protected_writes_without_ignored_optin ... ok
+
+test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.72s
+
+     Running tests\meaning_build.rs (target\debug\deps\meaning_build-2e08fe45a5f0cff0.exe)
+
+running 26 tests
+test accounted_overrun_blocks_later_reserved_send_and_never_publishes ... ok
+test body_selection_uses_full_body_and_invalidates_unchanged_signature_changes ... ok
+test altered_contract_and_provider_version_do_not_reuse_old_claims ... ok
+test cache_reuse_requires_the_original_completed_graph_registration ... ok
+test every_selected_source_budget_and_graph_sink_is_admitted_before_first_child ... ok
+test currency_scoped_cache_prevents_mixing_old_and_new_monetary_units ... ok
+test failed_status_counts_only_dispatched_attempts_and_reports_missing_unknown_receipts ... ok
+test exact_snapshot_analyzer_epochs_have_separate_cache_namespaces ... ok
+test fixed_cross_file_packet_preserves_relations_and_hyperedge_roles ... ok
+test forged_cache_origin_is_rejected_without_starting_worker ... ok
+test fully_bound_bill_is_accounted_even_when_provider_error_text_is_unsafe ... ok
+test immutable_response_preserves_provider_local_claim_keys_before_normalization ... ok
+test later_invalid_claim_accounts_bill_but_publishes_no_partial_graph_or_cache ... ok
+test in_place_provider_script_change_invalidates_cache_even_when_command_is_unchanged ... ok
+test malformed_provider_schema_does_not_echo_untrusted_field_values ... ok
+test malformed_or_unbound_replies_keep_sent_hold_and_cancel_only_unsent ... ok
+test oversized_source_is_rejected_as_complete_selection_before_worker ... ok
+test no_claims_is_explicit_successful_coverage ... ok
+test publication_failure_rolls_back_every_new_cache_pointer ... ok
+test publishes_source_bound_claims_then_reuses_receipts_with_zero_calls_or_reservations ... ok
+test query_matches_literal_quotes_and_backslashes_in_displayed_claim_text ... ok
+test retained_cache_value_must_match_the_validated_immutable_row ... ok
+test retained_graph_validates_original_receipt_and_rebound_snapshot_dependencies ... ok
+test unknown_billing_remains_reserved_after_valid_graph_publication ... ok
+test valid_bound_bill_is_preserved_when_worker_exits_unsuccessfully ... ok
+test unchanged_body_cache_rebinds_new_snapshot_and_changed_body_invalidates_it ... ok
+
+test result: ok. 26 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 7.78s
+
+     Running tests\meaning_cli.rs (target\debug\deps\meaning_cli-5d8e7c06959aee42.exe)
+
+running 13 tests
+test meaning_alias_limits_fail_before_creating_state ... ok
+test meaning_cli_admits_the_entire_selection_and_cost_before_first_worker ... ok
+test meaning_alias_cli_replays_exact_graph_without_provider_source_capture_or_writes ... ok
+test meaning_cli_build_reference_is_bounded_and_graph_reads_never_create_overflow_artifacts ... ok
+test meaning_cli_failed_later_claim_keeps_billing_and_no_partial_publication ... ok
+test meaning_cli_output_pipe_loss_reports_the_already_durable_job_and_graph ... ok
+test meaning_cli_builds_queries_and_reuses_immutable_receipts_without_read_time_execution ... ok
+test meaning_cli_read_commands_require_existing_store_and_reject_execution_configuration ... ok
+test meaning_cli_requires_explicit_provider_permission_before_opening_source_state ... ok
+test meaning_cli_rejects_ambiguous_host_json_and_invalid_output_budget_before_state ... ok
+test meaning_group_cli_rejects_ambiguous_host_review_and_limits_before_store_creation ... ok
+test meaning_group_cli_requires_existing_store_and_refuses_capture_or_execution_flags ... ok
+test meaning_group_cli_replays_parent_and_preserves_all_sql_cas_and_original_claims ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.06s
+
+     Running tests\meaning_graph.rs (target\debug\deps\meaning_graph-6b484267b77e564c.exe)
+
+running 7 tests
+test empty_extraction_records_no_claims_without_claiming_semantic_completeness ... ok
+test exact_claim_dedup_remaps_endpoints_but_aliases_do_not_merge_distinct_concepts ... ok
+test ambiguous_keys_roles_coverage_and_capacity_are_not_accepted_as_inference ... ok
+test model_concepts_relations_and_ordered_roles_keep_exact_source_and_inference_labels ... ok
+test nonzero_excerpts_and_identical_quotes_in_distinct_files_keep_their_own_bindings ... ok
+test utf8_support_escape_forged_source_identity_and_false_coverage_fail_closed ... ok
+test overlapping_support_cannot_expand_small_inputs_into_unbounded_quotation_artifacts ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests\meaning_groups_admission.rs (target\debug\deps\meaning_groups_admission-4e7ce53475b6f6a6.exe)
+
+running 7 tests
+test meaning_group_admission_every_hard_limit_and_all_zero_capacities_are_checked ... ok
+test meaning_group_admission_nested_unknown_fields_and_duplicate_json_keys_refuse ... ok
+test meaning_group_admission_oversized_blank_rationale_hits_byte_guard_before_trimming ... ok
+test meaning_group_admission_per_group_member_limit_is_independent_of_total_capacity ... ok
+test meaning_group_admission_rationale_limit_counts_exact_utf8_bytes ... ok
+test meaning_group_admission_zero_output_is_a_valid_capacity ... ok
+test meaning_group_admission_library_serialized_review_is_bounded_before_parent_loading ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests\meaning_protocol.rs (target\debug\deps\meaning_protocol-3d5b42a4ec6a8f36.exe)
+
+running 4 tests
+test meaning_ollama_accounting_keeps_invalid_usage_unknown_in_bound_error ... ok
+test meaning_ollama_accounting_preserves_usage_after_invalid_shape_and_duplicate_json ... ok
+test meaning_ollama_accounting_preserves_usage_after_postcall_digest_change ... ok
+test meaning_ollama_success_keeps_exact_no_claims_and_reported_usage ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+     Running tests\process.rs (target\debug\deps\process-2b0da15419d96306.exe)
+
+running 7 tests
+test capture_transfers_exact_unicode_bytes_and_independent_streams ... ok
+test output_overflow_is_a_failure_with_bounded_retained_bytes ... ok
+test runtime_environment_filters_secrets_and_preserves_host_overrides ... ok
+test source_selected_defaults_and_oversized_stdin_are_rejected_before_spawn ... ok
+test windows_host_fixture_does_not_allocate_a_console_window ... ok
+test windows_runtime_environment_supports_managed_known_folders ... ok
+test descendant_held_stdio_cannot_extend_the_shared_deadline ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.51s
+
+error: 2 targets failed:
+    `--test git_affected_cli`
+    `--test git_impact_details_cli`

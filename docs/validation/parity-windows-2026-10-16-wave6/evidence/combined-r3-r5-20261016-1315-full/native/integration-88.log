@@ -1,0 +1,25 @@
+    Finished `test` profile [unoptimized] target(s) in 0.78s
+     Running tests\projects.rs (target\debug\deps\projects-8f94e632183a0e8f.exe)
+
+running 7 tests
+test compiler_requires_host_trust_and_captured_config_cannot_enable_plugins ... ok
+test configured_compiler_uses_historical_sources_extends_and_exact_unicode_bindings ... ok
+test compiler_output_outside_snapshot_and_overwriting_inputs_are_denied ... ok
+test changed_trusted_standard_library_changes_context_identity_for_unchanged_source ... ok
+test missing_references_cycles_and_empty_solution_never_become_successful_builds ... ok
+test overlapping_projects_keep_distinct_compiler_contexts_and_report_binding_conflicts ... ok
+test solution_build_consumes_referenced_declarations_without_source_tree_writes ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 11.14s
+
+     Running tests\protocol_connection.rs (target\debug\deps\protocol_connection-6f45346f06f41a07.exe)
+
+running 5 tests
+test host_selected_profiles_keep_their_public_surface_across_messages ... ok
+test owned_transport_state_retains_initialization_and_refuses_profile_switches ... ok
+test separate_transport_messages_preserve_initialization_and_profile_state ... ok
+test incomplete_stdio_frames_are_rejected_before_dispatch_or_publication ... ok
+test legal_request_ids_and_escaped_source_fit_the_complete_response_envelope ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.13s
+

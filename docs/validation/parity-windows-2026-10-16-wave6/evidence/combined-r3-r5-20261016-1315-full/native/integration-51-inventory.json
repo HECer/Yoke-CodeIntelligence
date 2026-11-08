@@ -1,0 +1,44 @@
+{
+  "host_config": {
+    "executable": "target\\debug\\deps\\host_config-7659402ec860ad5b.exe",
+    "ignored": [],
+    "registered": [
+      "agents_and_patch_work_are_bounded_before_output",
+      "agents_empty_existing_file_round_trips_without_phantom_bytes",
+      "agents_install_update_remove_preserve_bom_unicode_and_crlf_bytes",
+      "agents_marker_presence_never_grants_ownership",
+      "agents_reject_changed_receipts_owned_bytes_duplicate_and_nested_markers",
+      "agents_removal_preserves_later_human_prefix_and_append",
+      "jsonc_accepts_only_json_whitespace_outside_comments_and_strings",
+      "jsonc_decoded_duplicate_keys_unowned_entries_and_ambiguous_parents_fail",
+      "jsonc_empty_and_trailing_comma_parents_restore_original_punctuation",
+      "jsonc_human_append_is_preserved_or_rejected_when_unrecorded_punctuation_would_be_removed",
+      "jsonc_named_entry_preserves_comments_bom_crlf_and_literal_unowned_bytes",
+      "jsonc_oversized_receipt_selector_is_rejected_before_unbounded_decoding",
+      "patch_application_checks_entire_input_fragments_ranges_and_output_hash",
+      "receipts_are_strict_serialized_data_and_do_not_include_human_prefix",
+      "serialized_empty_owned_fragment_returns_error_instead_of_panicking",
+      "structured_formats_reject_stale_selectors_body_capacity_and_deadlines",
+      "toml_inverse_preserves_an_existing_appendix_newline_and_updates_retain_the_owned_separator",
+      "toml_inverse_refuses_to_join_an_unterminated_human_comment_with_a_later_table_header",
+      "toml_managed_table_preserves_human_comments_and_round_trips_crlf",
+      "toml_quoted_aliases_dotted_conflicts_and_body_headers_fail_without_claiming_ownership",
+      "toml_scanner_ignores_fake_headers_in_multiline_strings_and_arrays_with_quote_runs",
+      "toml_table_removal_never_reparents_later_human_keys"
+    ]
+  },
+  "host_credentials": {
+    "executable": "target\\debug\\deps\\host_credentials-d3ecb384a1a8a4e4.exe",
+    "ignored": [
+      "actual_github_credential_round_trip_is_create_only_and_keeps_secrets_out_of_metadata",
+      "actual_tls_and_service_token_never_export_private_material_or_overwrite_entries"
+    ],
+    "registered": [
+      "actual_github_credential_round_trip_is_create_only_and_keeps_secrets_out_of_metadata",
+      "actual_tls_and_service_token_never_export_private_material_or_overwrite_entries",
+      "github_token_admission_rejects_invalid_bytes_without_exposing_them",
+      "host_credential_names_cannot_access_unrelated_accounts",
+      "model_token_admission_rejects_header_injection_and_oversize_without_exposure"
+    ]
+  }
+}

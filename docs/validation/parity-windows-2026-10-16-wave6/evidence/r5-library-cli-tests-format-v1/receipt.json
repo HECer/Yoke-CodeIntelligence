@@ -1,0 +1,23 @@
+{
+  "checkedAtUtc": "2026-10-16T10:43:36.240426+00:00",
+  "command": [
+    "cargo",
+    "fmt",
+    "--all",
+    "--manifest-path",
+    "G:\\NN-Developed\\Dev-Tools\\Yoke-CodeIntelligence\\Code-Intelligence\\target\\r5-shadow-unavailable-v1\\Cargo.toml",
+    "--",
+    "--check"
+  ],
+  "exitCode": 1,
+  "helperSha256": "c4b799adb3f1882b12bf7c9a5594265a163dc62dfac86a82dbcbb774dfc5159a",
+  "imageSourceChanges": [],
+  "inventoryHelperSha256": "4198e187803656e134abe970850386801ce92c466ab14f39327014e8ea9cc676",
+  "kind": "format",
+  "rawSha256": "d816e0b32822685bcaaf542a2aa6e711019758857f3d1f979016978fda2fcabc",
+  "reviewedManifestFileSha256": "a45d5952851f39076cc77232ac59202d43736f9a39f17b590f0ff275ec66d4a2",
+  "scope": "isolated_image_only_not_normal_checkout_acceptance",
+  "seconds": 13.406,
+  "sourceFiles": 1567,
+  "validationErrors": []
+}

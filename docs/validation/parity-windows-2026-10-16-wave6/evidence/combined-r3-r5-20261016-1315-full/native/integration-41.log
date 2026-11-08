@@ -1,0 +1,27 @@
+    Finished `test` profile [unoptimized] target(s) in 1.00s
+     Running tests\graph_archive_review.rs (target\debug\deps\graph_archive_review-34a08598b98b6c0e.exe)
+
+running 2 tests
+test collection_reregistration_caps_existing_source_sql_cells_before_length_reads ... ok
+test resealed_archives_cannot_reclassify_a_captured_file_as_protected_source ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.66s
+
+     Running tests\graph_collections.rs (target\debug\deps\graph_collections-07ab8869252f0b4a.exe)
+
+running 12 tests
+test archived_capture_scope_keeps_configured_readonly_dependencies_and_rejects_missing_proof ... ok
+test canonical_collection_also_rejects_resealed_protected_source_after_registration ... ok
+test collection_historical_source_survives_original_history_retirement_and_blob_purge ... ok
+test collection_queries_use_namespaced_entities_and_exact_original_call_anchors ... ok
+test collection_sqlite_sidecars_cannot_write_through_links ... ok
+test legacy_default_native_archive_without_scope_sidecar_retains_original_identity ... ok
+test registered_collection_namespaces_equal_symbols_and_preserves_parallel_edges ... ok
+test registration_is_immutable_and_rejects_forged_graph_or_unregistered_scope ... ok
+test registry_payload_capacity_is_checked_before_decoding_corrupt_registration ... ok
+test registry_payload_sqlite_cell_is_capped_before_length_admission ... ok
+test selected_view_collection_preserves_origins_namespaces_and_source_after_retirement ... ok
+test view_archive_rejects_resealed_invented_rows_corrupt_inputs_and_foreign_view ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.94s
+

@@ -1,0 +1,10 @@
+{
+  "prototypeBehaviorWorkerPatch": true,
+  "diagnosticOnlyWorkerPatch": false,
+  "note": "The generic driver result kept diagnosticOnlyWorkerPatch=true. This phase actually patches carrier/type annotations and argument name barriers in a temporary worker. Treat that one driver flag as superseded by this qualification and inspect worker.cjs; raw result bytes are preserved.",
+  "nativeAdmission": false,
+  "snapshotIdsSynthetic": true,
+  "ownedLiteralFixturesExecuted": true,
+  "analyzedCodeExecuted": false,
+  "workerSha256": "0fb10fb599b61fe79c4853f49771ca912103028cbb39c5cc3aad064be0204f7f"
+}

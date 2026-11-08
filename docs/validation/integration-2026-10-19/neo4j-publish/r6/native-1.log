@@ -1,0 +1,25 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 14s
+     Running tests\neo4j_publish.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\neo4j_publish-491c3a1e96396b67.exe)
+
+running 7 tests
+test altered_graph_labels_or_an_unrelated_source_store_cannot_be_published_as_verified ... ok
+test altered_payload_preconditions_and_programs_cannot_reuse_a_prepared_plan_identity ... ok
+test closed_limits_and_expired_requests_cannot_grant_network_or_source_authority ... ok
+test exact_serialized_capacity_is_admitted_and_lower_budgets_publish_nothing ... ok
+test offline_plans_roundtrip_without_authority_and_bind_distinct_scope_revision_and_program ... ok
+test target_rejects_credentialed_redirectable_paths_remote_plain_http_and_unknown_grants ... ok
+test verified_payload_preserves_parallel_directions_exact_evidence_and_original_source_bytes ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.64s
+
+     Running tests\neo4j_publish_cli.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\neo4j_publish_cli-39229a678f78479b.exe)
+
+running 4 tests
+test bootstrap_offline_inspection_and_closed_configuration_never_connect_or_initialize_source ... ok
+test host_grants_and_foreign_source_flags_refuse_before_config_reads_and_store_creation ... ok
+test lost_stdout_keeps_the_approved_journal_and_reports_its_plan_identity ... ok
+test prepare_uses_the_existing_saved_snapshot_and_preserves_source_bytes_after_disk_changes ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.51s
+

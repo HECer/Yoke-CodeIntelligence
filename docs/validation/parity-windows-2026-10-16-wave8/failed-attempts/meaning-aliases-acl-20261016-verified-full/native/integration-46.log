@@ -1,0 +1,21 @@
+    Finished `test` profile [unoptimized] target(s) in 1.05s
+     Running tests\graphify_adapter.rs (E:\Yoke-Build-Cache\meaning-aliases-20261016\debug\deps\graphify_adapter-e1d8de0958eea3b6.exe)
+
+running 7 tests
+test foreign_roots_unknown_arguments_and_ambiguous_names_fail_closed ... ok
+test filters_depth_and_conservative_token_byte_budget_are_real ... ok
+test parallel_neighbors_exact_evidence_and_directed_shortest_path_are_preserved ... ok
+test shortest_path_bounds_are_consistent_for_missing_and_ambiguous_endpoints ... ok
+test question_context_inference_is_labeled_and_explicit_filter_takes_precedence ... ok
+test ten_pinned_schemas_six_resources_and_pr_unavailability_are_explicit ... ok
+test community_and_ambiguous_neighbor_responses_honor_the_requested_budget ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.60s
+
+     Running tests\graphify_cli.rs (E:\Yoke-Build-Cache\meaning-aliases-20261016\debug\deps\graphify_cli-2f3cad2bee8ea6cb.exe)
+
+running 1 test
+test public_graphify_cli_exposes_ten_tools_six_resources_and_real_graph_stats ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.13s
+

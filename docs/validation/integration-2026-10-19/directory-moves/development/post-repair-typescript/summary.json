@@ -1,0 +1,24 @@
+{
+  "checks": [
+    {
+      "gate": "typecheck",
+      "exitCode": 0,
+      "elapsedSeconds": 2.23,
+      "command": [
+        "npm.cmd",
+        "run",
+        "typecheck"
+      ]
+    },
+    {
+      "gate": "tests",
+      "exitCode": 0,
+      "elapsedSeconds": 58.585,
+      "command": [
+        "npm.cmd",
+        "test"
+      ]
+    }
+  ],
+  "sourceUnchanged": true
+}

@@ -1,0 +1,25 @@
+{
+  "qualifiedCodeCommit": "ced3f2d2867bb7c3eb973217f46855246a33adfe",
+  "productBytesExactAfterQualification": true,
+  "changedFrozenInputs": {
+    "docs/REMAINING_WORK.md": {
+      "before": "d5de40174b545039abdba77d829b75174cbf4e69ee43d06aa3583d5013985320",
+      "after": "b64502dc63f2d40c43bd267a0730347dc6ebed40bfe88a369aba3bc399449c3e"
+    },
+    "docs/STATUS.md": {
+      "before": "0f8676e4ef3be22b48173a73650e7ea30c88c2455a2dc843d8869d55a5f13e87",
+      "after": "ecf484d54f1b0d974d0aae60caa680be16a6db110305a96342b4670170f68330"
+    },
+    "docs/parity/native-reconciliation-2026-10-15.json": {
+      "before": "a55a1128a209d66ec039dc5f680439c19ab40daf123884ff8f1b8ddbca3e8aaf",
+      "after": "578e9b60387760ef3d97009f58b0d704db67256018cedf47ac7ae50892c5abad"
+    }
+  },
+  "newDocumentation": [
+    "native/docs/native-formatting.md"
+  ],
+  "noLaterProductTestClaimed": true,
+  "reconciliationExactlyOneAdditiveKey": "nativeFormattingGateAcceptance20261023",
+  "originalReconciliationOtherwiseDeepEqual": true,
+  "everyArchiveMemberLengthAndSha256Reopened": true
+}

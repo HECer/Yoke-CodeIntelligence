@@ -1,0 +1,2992 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-19T14:12:07.969800+00:00",
+  "parentCommit": "272866f6c106932c7e2f14f62f460d0a2f7a2200",
+  "implementationCommit": "e6a4586",
+  "integratedCommit": "eaf9d5995c2370b4873bbd752f1479b0923637a0",
+  "accepted": false,
+  "allLocalChecksPassed": false,
+  "wholeNativeRun": true,
+  "frozenInputCount": 661,
+  "wholeNativeTotals": {
+    "passed": 2463,
+    "failed": 11,
+    "ignored": 40
+  },
+  "nativeResultGroups": 269,
+  "allTestableNativeTargetsRan": true,
+  "inventoryPreserved": {
+    "inventoryLedger": true,
+    "historicalInventory": true,
+    "ledgerSummary": true
+  },
+  "newSourceFiles": [
+    {
+      "source": "native/src/changes_directory.rs",
+      "artifact": "new-source/native/src/changes_directory.rs",
+      "sha256": "afd35ecaff10b1786cc255c5a6bf8c7d324d49e21c421ba3d0103727d81004fc",
+      "scope": "initial_frozen_full_run"
+    },
+    {
+      "source": "native/src/changes_directory_tests.rs",
+      "artifact": "new-source/native/src/changes_directory_tests.rs",
+      "sha256": "7cf39918062e8623747dab644d355e8b1379d37e4b2d43e1f1aa00be057ca9ac",
+      "scope": "initial_frozen_full_run"
+    },
+    {
+      "source": "native/src/semantic_directory_move.rs",
+      "artifact": "new-source/native/src/semantic_directory_move.rs",
+      "sha256": "0d8af9938336480af681de8fe738f5d5b92283325bc18c96e2fb2338776f1d1c",
+      "scope": "initial_frozen_full_run"
+    },
+    {
+      "source": "native/tests/directory_move_live.rs",
+      "artifact": "new-source/native/tests/directory_move_live.rs",
+      "sha256": "f4b3aeada234067843fa9300599a1f159350131f23a9e036375b98695ca43b7c",
+      "scope": "initial_frozen_full_run"
+    },
+    {
+      "source": "native/tests/facade_directory_move.rs",
+      "artifact": "new-source/native/tests/facade_directory_move.rs",
+      "sha256": "487bb9e7d648efcc273d191763852adf3c46535ca5156a4723c23a99c697ae08",
+      "scope": "initial_frozen_full_run"
+    },
+    {
+      "source": "native/tests/fixtures/directory-move-lsp.mjs",
+      "artifact": "new-source/native/tests/fixtures/directory-move-lsp.mjs",
+      "sha256": "59d050a0892af428e5ed0896a078dc4eadc65c0eee931cd91ede90fd07e64b39",
+      "scope": "initial_frozen_full_run"
+    }
+  ],
+  "summary": {
+    "allChecksPassed": false,
+    "sourceUnchanged": true,
+    "wholeNativeRun": true,
+    "allTestableNativeTargetsRan": true,
+    "nativeTargetCoverage": {
+      "expectedTestableTargets": {
+        "yoke": 2,
+        "adversarial": 1,
+        "agent_dependency_options": 1,
+        "agent_diagnostic_boundaries": 1,
+        "agent_documentation": 1,
+        "agent_facade_options": 1,
+        "agent_facade_semantics": 1,
+        "agent_file_options": 1,
+        "agent_memory_namespaces": 1,
+        "agent_repl": 1,
+        "agent_repl_lifecycle": 1,
+        "agent_symbol_contracts": 1,
+        "analyzer_cli": 1,
+        "analyzer_epochs": 1,
+        "artifact_page_review": 1,
+        "artifacts": 1,
+        "blob_bounds": 1,
+        "capture_analyzer8_fixture": 1,
+        "capture_changes": 1,
+        "capture_epoch_selection": 1,
+        "capture_options": 1,
+        "capture_policy": 1,
+        "client_lock": 1,
+        "collection_registry_access": 1,
+        "collections_cli": 1,
+        "collections_cli_review": 1,
+        "compatibility": 1,
+        "compatibility_review": 1,
+        "config_graph": 1,
+        "container": 1,
+        "contracts": 1,
+        "core": 1,
+        "credentials": 1,
+        "dataflow": 1,
+        "deadline_scope": 1,
+        "deadlines": 1,
+        "debug_adapter": 1,
+        "decision_cli": 1,
+        "decision_records": 1,
+        "decision_records_review": 1,
+        "decision_retention": 1,
+        "dependency_queries": 1,
+        "derived_graph_mixed_budget": 1,
+        "derived_graph_preparation": 1,
+        "digest_history_acquisition": 1,
+        "digest_history_jobs": 1,
+        "digest_receiver": 1,
+        "directory_move_live": 1,
+        "document_cli": 1,
+        "document_explorer": 1,
+        "document_graph": 1,
+        "document_graph_review": 1,
+        "editor": 1,
+        "editor_http": 1,
+        "engine_epoch_review": 1,
+        "epoch_cache_review": 1,
+        "epoch_producers": 1,
+        "explorer_export": 1,
+        "explorer_runtime": 1,
+        "export": 1,
+        "facade_directory_move": 1,
+        "facade_file_delete": 1,
+        "facade_file_move": 1,
+        "facade_file_rename": 1,
+        "federated_collections": 1,
+        "federation": 1,
+        "federation_archive": 1,
+        "federation_archive_receipts": 1,
+        "federation_epoch_review": 1,
+        "federation_epochs": 1,
+        "federation_http": 1,
+        "federation_receipt_bounds": 1,
+        "feedback_cli": 1,
+        "file_api": 1,
+        "freshness": 1,
+        "freshness_epoch": 1,
+        "git_affected_cli": 1,
+        "git_affected_details": 1,
+        "git_affected_qualification": 1,
+        "git_areas": 1,
+        "git_cli": 1,
+        "git_conflicts": 1,
+        "git_epoch_selection": 1,
+        "git_epochs": 1,
+        "git_impact_details": 1,
+        "git_impact_details_cli": 1,
+        "git_impact_details_no_git": 1,
+        "git_impact_details_qualification": 1,
+        "git_impact_details_sqlite_limits": 1,
+        "git_review": 1,
+        "git_workflows": 1,
+        "github": 1,
+        "github_app": 1,
+        "github_app_auth": 1,
+        "github_app_auth_cli": 1,
+        "github_app_cli": 1,
+        "github_app_digest": 1,
+        "github_app_digest_cli": 1,
+        "github_app_digest_handoff": 1,
+        "github_app_digest_mapping": 1,
+        "github_app_ingress": 1,
+        "github_app_ingress_cli": 1,
+        "github_app_pages_cli": 1,
+        "github_app_publication": 1,
+        "github_app_publication_cli": 1,
+        "github_app_worker": 1,
+        "github_app_worker_cli": 1,
+        "github_app_worker_run": 1,
+        "github_discussions": 1,
+        "github_live": 1,
+        "graph": 1,
+        "graph_archive_review": 1,
+        "graph_collections": 1,
+        "graph_exports": 1,
+        "graph_extensions": 1,
+        "graph_review_adversarial": 1,
+        "graph_root_review": 1,
+        "graph_view": 1,
+        "graphify_adapter": 1,
+        "graphify_cli": 1,
+        "graphify_selected_queries": 1,
+        "historical_publication": 1,
+        "historical_receipt_fixture_qualification": 1,
+        "historical_view_adversarial": 1,
+        "historical_view_boundaries": 1,
+        "historical_view_budget_options": 1,
+        "historical_view_comparison": 1,
+        "historical_view_fixture_qualification": 1,
+        "historical_view_receipts": 1,
+        "historical_view_semantics": 1,
+        "host_cli": 1,
+        "host_config": 1,
+        "host_credentials": 1,
+        "host_install": 1,
+        "host_install_cli": 1,
+        "host_output_disposition": 1,
+        "hybrid_retrieval": 1,
+        "ignored_capture": 1,
+        "ignored_capture_cli": 1,
+        "ignored_facades": 1,
+        "json_output_review": 1,
+        "knowledge": 1,
+        "knowledge_cli": 1,
+        "language_constructs": 1,
+        "ledger": 1,
+        "ledger_admission_review": 1,
+        "ledger_batches": 1,
+        "ledger_batches_review": 1,
+        "legacy_retrieval_oracle": 1,
+        "live": 1,
+        "live_enrichment": 1,
+        "lsp": 1,
+        "lsp_action_resolve": 1,
+        "lsp_dependency_scope": 1,
+        "lsp_enrichment": 1,
+        "lsp_lifecycle": 1,
+        "lsp_source_execution": 1,
+        "maintenance": 1,
+        "manifest_graph": 1,
+        "markdown_graph": 1,
+        "mcp_collection_grants": 1,
+        "mcp_collection_grants_review": 1,
+        "mcp_http": 1,
+        "mcp_http_cli": 1,
+        "mcp_http_review": 1,
+        "meaning_archive_cli": 1,
+        "meaning_archive_primitives": 1,
+        "meaning_build": 1,
+        "meaning_cli": 1,
+        "meaning_collection_archives": 1,
+        "meaning_commit_review": 1,
+        "meaning_graph": 1,
+        "meaning_graph_views": 1,
+        "meaning_groups_admission": 1,
+        "meaning_join_cli": 1,
+        "meaning_protocol": 1,
+        "meaning_retention_review": 1,
+        "meaning_view": 1,
+        "meaning_view_archives": 1,
+        "media": 1,
+        "mixed_pdf_view": 1,
+        "mixed_view_cli": 1,
+        "model_bedrock": 1,
+        "model_bedrock_batch_cli_review": 1,
+        "model_bedrock_cli": 1,
+        "model_bedrock_cli_actual": 1,
+        "model_bedrock_review": 1,
+        "model_http": 1,
+        "model_http_cli": 1,
+        "model_http_review": 1,
+        "model_identity": 1,
+        "monorepo_pre_feature_envelope": 1,
+        "monorepo_profiles": 1,
+        "monorepo_retrieval": 1,
+        "monorepo_scopes": 1,
+        "notes": 1,
+        "office": 1,
+        "office_bounds": 1,
+        "ollama": 1,
+        "operations": 1,
+        "parity_cli": 1,
+        "parity_construct_review": 1,
+        "parity_retention": 1,
+        "parity_source_review": 1,
+        "parity_view_review": 1,
+        "parser_epoch9": 1,
+        "plan_integrity": 1,
+        "platform_credentials": 1,
+        "process": 1,
+        "project_session": 1,
+        "projects": 1,
+        "protocol_connection": 1,
+        "provider_batch_bounds": 1,
+        "provider_batches": 1,
+        "provider_batches_review": 1,
+        "provider_scope_review": 1,
+        "providers": 1,
+        "publication": 1,
+        "query_parity": 1,
+        "read_only_dependencies": 1,
+        "refactor_intents": 1,
+        "registry_replay_review": 1,
+        "replacement": 1,
+        "resource_paging": 1,
+        "retention": 1,
+        "retrieval": 1,
+        "runtime": 1,
+        "scoped_parent_performance": 1,
+        "scoped_resolution": 1,
+        "selected_graph_views": 1,
+        "selected_view_analysis": 1,
+        "selected_view_analysis_review": 1,
+        "selected_view_review": 1,
+        "semantic_enrichment": 1,
+        "semantic_mcp": 1,
+        "semantic_provider_context": 1,
+        "semantic_refactor": 1,
+        "server_catalog": 1,
+        "session_collections": 1,
+        "session_collections_admission": 1,
+        "session_epoch_selection": 1,
+        "session_mcp": 1,
+        "session_review": 1,
+        "session_root_aliases": 1,
+        "skill_takeaways": 1,
+        "skill_takeaways_batch_review": 1,
+        "skill_takeaways_contract_review": 1,
+        "skill_takeaways_review": 1,
+        "skills_cli": 1,
+        "store_cancellation": 1,
+        "store_identity": 1,
+        "store_open_deadline": 1,
+        "store_read_only": 1,
+        "store_review": 1,
+        "symbol_move_declarations": 1,
+        "symbol_move_effect_admission": 1,
+        "symbol_move_own_v1": 1,
+        "test_map": 1,
+        "trail_adapter": 1,
+        "trail_bodies": 1,
+        "trail_review": 1,
+        "universal_languages": 1,
+        "vector_admission_review": 1,
+        "view_comparison_cli": 1,
+        "workflow_cli": 1,
+        "workspace": 1,
+        "yaml_admission_review": 1
+      },
+      "observedExecutableNames": {
+        "yoke": 2,
+        "adversarial": 1,
+        "agent_dependency_options": 1,
+        "agent_diagnostic_boundaries": 1,
+        "agent_documentation": 1,
+        "agent_facade_options": 1,
+        "agent_facade_semantics": 1,
+        "agent_file_options": 1,
+        "agent_memory_namespaces": 1,
+        "agent_repl": 1,
+        "agent_repl_lifecycle": 1,
+        "agent_symbol_contracts": 1,
+        "analyzer_cli": 1,
+        "analyzer_epochs": 1,
+        "artifact_page_review": 1,
+        "artifacts": 1,
+        "blob_bounds": 1,
+        "capture_analyzer8_fixture": 1,
+        "capture_changes": 1,
+        "capture_epoch_selection": 1,
+        "capture_options": 1,
+        "capture_policy": 1,
+        "client_lock": 1,
+        "collection_registry_access": 1,
+        "collections_cli": 1,
+        "collections_cli_review": 1,
+        "compatibility": 1,
+        "compatibility_review": 1,
+        "config_graph": 1,
+        "container": 1,
+        "contracts": 1,
+        "core": 1,
+        "credentials": 1,
+        "dataflow": 1,
+        "deadline_scope": 1,
+        "deadlines": 1,
+        "debug_adapter": 1,
+        "decision_cli": 1,
+        "decision_records": 1,
+        "decision_records_review": 1,
+        "decision_retention": 1,
+        "dependency_queries": 1,
+        "derived_graph_mixed_budget": 1,
+        "derived_graph_preparation": 1,
+        "digest_history_acquisition": 1,
+        "digest_history_jobs": 1,
+        "digest_receiver": 1,
+        "directory_move_live": 1,
+        "document_cli": 1,
+        "document_explorer": 1,
+        "document_graph": 1,
+        "document_graph_review": 1,
+        "editor": 1,
+        "editor_http": 1,
+        "engine_epoch_review": 1,
+        "epoch_cache_review": 1,
+        "epoch_producers": 1,
+        "explorer_export": 1,
+        "explorer_runtime": 1,
+        "export": 1,
+        "facade_directory_move": 1,
+        "facade_file_delete": 1,
+        "facade_file_move": 1,
+        "facade_file_rename": 1,
+        "federated_collections": 1,
+        "federation": 1,
+        "federation_archive": 1,
+        "federation_archive_receipts": 1,
+        "federation_epoch_review": 1,
+        "federation_epochs": 1,
+        "federation_http": 1,
+        "federation_receipt_bounds": 1,
+        "feedback_cli": 1,
+        "file_api": 1,
+        "freshness": 1,
+        "freshness_epoch": 1,
+        "git_affected_cli": 1,
+        "git_affected_details": 1,
+        "git_affected_qualification": 1,
+        "git_areas": 1,
+        "git_cli": 1,
+        "git_conflicts": 1,
+        "git_epoch_selection": 1,
+        "git_epochs": 1,
+        "git_impact_details": 1,
+        "git_impact_details_cli": 1,
+        "git_impact_details_no_git": 1,
+        "git_impact_details_qualification": 1,
+        "git_impact_details_sqlite_limits": 1,
+        "git_review": 1,
+        "git_workflows": 1,
+        "github": 1,
+        "github_app": 1,
+        "github_app_auth": 1,
+        "github_app_auth_cli": 1,
+        "github_app_cli": 1,
+        "github_app_digest": 1,
+        "github_app_digest_cli": 1,
+        "github_app_digest_handoff": 1,
+        "github_app_digest_mapping": 1,
+        "github_app_ingress": 1,
+        "github_app_ingress_cli": 1,
+        "github_app_pages_cli": 1,
+        "github_app_publication": 1,
+        "github_app_publication_cli": 1,
+        "github_app_worker": 1,
+        "github_app_worker_cli": 1,
+        "github_app_worker_run": 1,
+        "github_discussions": 1,
+        "github_live": 1,
+        "graph": 1,
+        "graph_archive_review": 1,
+        "graph_collections": 1,
+        "graph_exports": 1,
+        "graph_extensions": 1,
+        "graph_review_adversarial": 1,
+        "graph_root_review": 1,
+        "graph_view": 1,
+        "graphify_adapter": 1,
+        "graphify_cli": 1,
+        "graphify_selected_queries": 1,
+        "historical_publication": 1,
+        "historical_receipt_fixture_qualification": 1,
+        "historical_view_adversarial": 1,
+        "historical_view_boundaries": 1,
+        "historical_view_budget_options": 1,
+        "historical_view_comparison": 1,
+        "historical_view_fixture_qualification": 1,
+        "historical_view_receipts": 1,
+        "historical_view_semantics": 1,
+        "host_cli": 1,
+        "host_config": 1,
+        "host_credentials": 1,
+        "host_install": 1,
+        "host_install_cli": 1,
+        "host_output_disposition": 1,
+        "hybrid_retrieval": 1,
+        "ignored_capture": 1,
+        "ignored_capture_cli": 1,
+        "ignored_facades": 1,
+        "json_output_review": 1,
+        "knowledge": 1,
+        "knowledge_cli": 1,
+        "language_constructs": 1,
+        "ledger": 1,
+        "ledger_admission_review": 1,
+        "ledger_batches": 1,
+        "ledger_batches_review": 1,
+        "legacy_retrieval_oracle": 1,
+        "live": 1,
+        "live_enrichment": 1,
+        "lsp": 1,
+        "lsp_action_resolve": 1,
+        "lsp_dependency_scope": 1,
+        "lsp_enrichment": 1,
+        "lsp_lifecycle": 1,
+        "lsp_source_execution": 1,
+        "maintenance": 1,
+        "manifest_graph": 1,
+        "markdown_graph": 1,
+        "mcp_collection_grants": 1,
+        "mcp_collection_grants_review": 1,
+        "mcp_http": 1,
+        "mcp_http_cli": 1,
+        "mcp_http_review": 1,
+        "meaning_archive_cli": 1,
+        "meaning_archive_primitives": 1,
+        "meaning_build": 1,
+        "meaning_cli": 1,
+        "meaning_collection_archives": 1,
+        "meaning_commit_review": 1,
+        "meaning_graph": 1,
+        "meaning_graph_views": 1,
+        "meaning_groups_admission": 1,
+        "meaning_join_cli": 1,
+        "meaning_protocol": 1,
+        "meaning_retention_review": 1,
+        "meaning_view": 1,
+        "meaning_view_archives": 1,
+        "media": 1,
+        "mixed_pdf_view": 1,
+        "mixed_view_cli": 1,
+        "model_bedrock": 1,
+        "model_bedrock_batch_cli_review": 1,
+        "model_bedrock_cli": 1,
+        "model_bedrock_cli_actual": 1,
+        "model_bedrock_review": 1,
+        "model_http": 1,
+        "model_http_cli": 1,
+        "model_http_review": 1,
+        "model_identity": 1,
+        "monorepo_pre_feature_envelope": 1,
+        "monorepo_profiles": 1,
+        "monorepo_retrieval": 1,
+        "monorepo_scopes": 1,
+        "notes": 1,
+        "office": 1,
+        "office_bounds": 1,
+        "ollama": 1,
+        "operations": 1,
+        "parity_cli": 1,
+        "parity_construct_review": 1,
+        "parity_retention": 1,
+        "parity_source_review": 1,
+        "parity_view_review": 1,
+        "parser_epoch9": 1,
+        "plan_integrity": 1,
+        "platform_credentials": 1,
+        "process": 1,
+        "project_session": 1,
+        "projects": 1,
+        "protocol_connection": 1,
+        "provider_batch_bounds": 1,
+        "provider_batches": 1,
+        "provider_batches_review": 1,
+        "provider_scope_review": 1,
+        "providers": 1,
+        "publication": 1,
+        "query_parity": 1,
+        "read_only_dependencies": 1,
+        "refactor_intents": 1,
+        "registry_replay_review": 1,
+        "replacement": 1,
+        "resource_paging": 1,
+        "retention": 1,
+        "retrieval": 1,
+        "runtime": 1,
+        "scoped_parent_performance": 1,
+        "scoped_resolution": 1,
+        "selected_graph_views": 1,
+        "selected_view_analysis": 1,
+        "selected_view_analysis_review": 1,
+        "selected_view_review": 1,
+        "semantic_enrichment": 1,
+        "semantic_mcp": 1,
+        "semantic_provider_context": 1,
+        "semantic_refactor": 1,
+        "server_catalog": 1,
+        "session_collections": 1,
+        "session_collections_admission": 1,
+        "session_epoch_selection": 1,
+        "session_mcp": 1,
+        "session_review": 1,
+        "session_root_aliases": 1,
+        "skill_takeaways": 1,
+        "skill_takeaways_batch_review": 1,
+        "skill_takeaways_contract_review": 1,
+        "skill_takeaways_review": 1,
+        "skills_cli": 1,
+        "store_cancellation": 1,
+        "store_identity": 1,
+        "store_open_deadline": 1,
+        "store_read_only": 1,
+        "store_review": 1,
+        "symbol_move_declarations": 1,
+        "symbol_move_effect_admission": 1,
+        "symbol_move_own_v1": 1,
+        "test_map": 1,
+        "trail_adapter": 1,
+        "trail_bodies": 1,
+        "trail_review": 1,
+        "universal_languages": 1,
+        "vector_admission_review": 1,
+        "view_comparison_cli": 1,
+        "workflow_cli": 1,
+        "workspace": 1,
+        "yaml_admission_review": 1,
+        "benchmark": 1
+      },
+      "expectedTestableTargetCount": 268,
+      "observedInvocations": 269,
+      "missing": {},
+      "failures": [
+        "sqlite_sidecar_links_cannot_rewrite_files_outside_state",
+        "source_symlink_cannot_redirect_a_forced_file_deletion",
+        "directory_missing_excluded_and_readonly_sources_have_no_file_rename_authority",
+        "receiver_ignore_excludes_links_and_remote_policy_text_cannot_change_host_authority",
+        "windows_host_aliases_cannot_read_protected_files_or_alternate_streams",
+        "affected_options_leaf_and_ancestor_reparse_points_refuse_after_real_options_success",
+        "windows_real_options_file_and_ancestor_reparse_points_refuse_after_genuine_positive",
+        "collection_sqlite_sidecars_cannot_write_through_links",
+        "blob_links_are_refused_and_external_targets_are_preserved",
+        "existing_output_file_directory_and_hardlink_are_never_overwritten",
+        "media_cannot_bypass_source_scope_links_ignore_or_protected_paths"
+      ],
+      "allTestableTargetsRan": true
+    },
+    "wholeNativeTotals": {
+      "passed": 2463,
+      "failed": 11,
+      "ignored": 40
+    },
+    "checks": [
+      {
+        "gate": "format",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "fmt",
+          "--all",
+          "--check"
+        ],
+        "exitCode": 0,
+        "timedOut": false,
+        "elapsedSeconds": 5.67,
+        "recordedAt": "2026-10-19T13:09:54.793226+00:00",
+        "resultGroups": []
+      },
+      {
+        "gate": "clippy",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "clippy",
+          "--workspace",
+          "--all-targets",
+          "--locked",
+          "--keep-going",
+          "-j1",
+          "--",
+          "-D",
+          "warnings"
+        ],
+        "exitCode": 0,
+        "timedOut": false,
+        "elapsedSeconds": 214.536,
+        "recordedAt": "2026-10-19T13:13:29.330101+00:00",
+        "resultGroups": []
+      },
+      {
+        "gate": "whole-native",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "test",
+          "--workspace",
+          "--all-targets",
+          "--locked",
+          "--no-fail-fast",
+          "-j1",
+          "--",
+          "--test-threads=1"
+        ],
+        "exitCode": 101,
+        "timedOut": false,
+        "elapsedSeconds": 2614.807,
+        "recordedAt": "2026-10-19T13:57:04.136932+00:00",
+        "resultGroups": [
+          {
+            "passed": 425,
+            "failed": 0,
+            "ignored": 7
+          },
+          {
+            "passed": 0,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 13,
+            "failed": 1,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 4,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 3,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 4,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 4,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 22,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 3,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 8,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 4,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 10,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 4,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 0,
+            "failed": 0,
+            "ignored": 2
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 3,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 8,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 9,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 7,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 5,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 6,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 8,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 6,
+            "failed": 0,
+            "ignored": 1
+          },
+          {
+            "passed": 12,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 6,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 2
+          },
+          {
+            "passed": 7,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 7,
+            "failed": 0,
+            "ignored": 1
+          },
+          {
+            "passed": 10,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 13,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 4,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 7,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 10,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 13,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 23,
+            "failed": 0,
+            "ignored": 1
+          },
+          {
+            "passed": 0,
+            "failed": 0,
+            "ignored": 1
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 6,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 6,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 10,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 3,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 3,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 6,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 9,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 9,
+            "failed": 1,
+            "ignored": 0
+          },
+          {
+            "passed": 8,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 8,
+            "failed": 1,
+            "ignored": 0
+          },
+          {
+            "passed": 4,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 12,
+            "failed": 1,
+            "ignored": 0
+          },
+          {
+            "passed": 6,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 4,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 7,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 16,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 20,
+            "failed": 1,
+            "ignored": 0
+          },
+          {
+            "passed": 3,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 7,
+            "failed": 1,
+            "ignored": 0
+          },
+          {
+            "passed": 12,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 3,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 8,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 12,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 9,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 29,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 14,
+            "failed": 1,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 3,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 6,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 17,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 12,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 21,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 14,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 4,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 35,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 38,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 18,
+            "failed": 0,
+            "ignored": 1
+          },
+          {
+            "passed": 13,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 20,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 4,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 7,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 102,
+            "failed": 0,
+            "ignored": 4
+          },
+          {
+            "passed": 14,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 33,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 5,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 28,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 14,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 0,
+            "failed": 0,
+            "ignored": 1
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 11,
+            "failed": 1,
+            "ignored": 0
+          },
+          {
+            "passed": 10,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 9,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 5,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 11,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 7,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 8,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 4,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 7,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 8,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 4,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 6,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 22,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 3,
+            "failed": 0,
+            "ignored": 2
+          },
+          {
+            "passed": 9,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 11,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 10,
+            "failed": 0,
+            "ignored": 1
+          },
+          {
+            "passed": 3,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 15,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 10,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 13,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 14,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 5,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 6,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 3,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 0,
+            "failed": 0,
+            "ignored": 4
+          },
+          {
+            "passed": 0,
+            "failed": 0,
+            "ignored": 3
+          },
+          {
+            "passed": 10,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 5,
+            "failed": 0,
+            "ignored": 1
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 19,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 5,
+            "failed": 0,
+            "ignored": 2
+          },
+          {
+            "passed": 11,
+            "failed": 1,
+            "ignored": 0
+          },
+          {
+            "passed": 8,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 3,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 18,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 3,
+            "failed": 0,
+            "ignored": 1
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 9,
+            "failed": 1,
+            "ignored": 0
+          },
+          {
+            "passed": 10,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 26,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 13,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 7,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 7,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 13,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 7,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 13,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 4,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 3,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 11,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 9,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 12,
+            "failed": 1,
+            "ignored": 0
+          },
+          {
+            "passed": 9,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 15,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 12,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 6,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 4,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 0,
+            "failed": 0,
+            "ignored": 2
+          },
+          {
+            "passed": 7,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 16,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 3,
+            "failed": 0,
+            "ignored": 1
+          },
+          {
+            "passed": 3,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 12,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 7,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 3,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 15,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 8,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 11,
+            "failed": 0,
+            "ignored": 1
+          },
+          {
+            "passed": 8,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 8,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 8,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 3,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 8,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 13,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 3,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 7,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 6,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 7,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 5,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 14,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 10,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 4,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 11,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 12,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 11,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 15,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 8,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 4,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 16,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 5,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 14,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 23,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 8,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 11,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 6,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 3,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 7,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 7,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 2,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 8,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 6,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 3,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 3,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 6,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 7,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 4,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 5,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 9,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 4,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 7,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 7,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 18,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 36,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 18,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 12,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 4,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 5,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 4,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 20,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 8,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 10,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 8,
+            "failed": 0,
+            "ignored": 1
+          },
+          {
+            "passed": 4,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 5,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 0,
+            "failed": 0,
+            "ignored": 0
+          }
+        ]
+      },
+      {
+        "gate": "doctests",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "test",
+          "--workspace",
+          "--doc",
+          "--locked",
+          "--no-fail-fast",
+          "-j1"
+        ],
+        "exitCode": 0,
+        "timedOut": false,
+        "elapsedSeconds": 31.117,
+        "recordedAt": "2026-10-19T13:57:35.264123+00:00",
+        "resultGroups": [
+          {
+            "passed": 0,
+            "failed": 0,
+            "ignored": 0
+          }
+        ]
+      },
+      {
+        "gate": "python-contracts",
+        "command": [
+          "python",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "scripts/tests",
+          "-v"
+        ],
+        "exitCode": 0,
+        "timedOut": false,
+        "elapsedSeconds": 1.187,
+        "recordedAt": "2026-10-19T13:57:36.451709+00:00",
+        "resultGroups": []
+      },
+      {
+        "gate": "typescript-typecheck",
+        "command": [
+          "npm.cmd",
+          "run",
+          "typecheck"
+        ],
+        "exitCode": 0,
+        "timedOut": false,
+        "elapsedSeconds": 4.689,
+        "recordedAt": "2026-10-19T13:57:41.140965+00:00",
+        "resultGroups": []
+      },
+      {
+        "gate": "typescript-tests",
+        "command": [
+          "npm.cmd",
+          "test"
+        ],
+        "exitCode": 0,
+        "timedOut": false,
+        "elapsedSeconds": 59.399,
+        "recordedAt": "2026-10-19T13:58:40.540659+00:00",
+        "resultGroups": []
+      },
+      {
+        "gate": "actual-directory-provider",
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "test",
+          "--locked",
+          "-j1",
+          "--test",
+          "directory_move_live",
+          "--",
+          "--ignored",
+          "--nocapture",
+          "--test-threads=1"
+        ],
+        "exitCode": 0,
+        "timedOut": false,
+        "elapsedSeconds": 26.473,
+        "recordedAt": "2026-10-19T13:59:07.015163+00:00",
+        "resultGroups": [
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          }
+        ]
+      }
+    ],
+    "scope": "Full default Windows native all-target run after finite captured directory selection, source-bound standard-LSP folder repair, guarded physical rename, copied directory-shape verification and conditional recovery. Test fixtures run serially under the current Windows CI profile while in-test concurrency adversaries remain intact. The actual installed rust-analyzer/rustc gate is separate and nonadditive. Ignored host gates, OS prerequisites, broader STATUS/R1-R9 work, upstream/platform certification, packaging, main merge and release remain open."
+  },
+  "postFreezeRepair": {
+    "summary": {
+      "gates": [
+        {
+          "gate": "format",
+          "exitCode": 0,
+          "elapsedSeconds": 4.776,
+          "command": [
+            "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+            "fmt",
+            "--all",
+            "--check"
+          ],
+          "groups": []
+        },
+        {
+          "gate": "clippy",
+          "exitCode": 0,
+          "elapsedSeconds": 169.274,
+          "command": [
+            "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+            "clippy",
+            "--locked",
+            "--all-targets",
+            "--keep-going",
+            "-j1",
+            "--target-dir",
+            "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+            "--",
+            "-D",
+            "warnings"
+          ],
+          "groups": []
+        },
+        {
+          "gate": "scoped-native",
+          "exitCode": 101,
+          "elapsedSeconds": 371.58,
+          "command": [
+            "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+            "test",
+            "--locked",
+            "--no-fail-fast",
+            "-j1",
+            "--target-dir",
+            "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+            "--lib",
+            "--test",
+            "facade_directory_move",
+            "--test",
+            "facade_file_move",
+            "--test",
+            "facade_file_rename",
+            "--test",
+            "facade_file_delete",
+            "--test",
+            "plan_integrity",
+            "--test",
+            "semantic_refactor",
+            "--test",
+            "refactor_intents",
+            "--",
+            "--test-threads=1"
+          ],
+          "groups": [
+            {
+              "passed": 425,
+              "failed": 0,
+              "ignored": 7
+            },
+            {
+              "passed": 10,
+              "failed": 0,
+              "ignored": 0
+            },
+            {
+              "passed": 9,
+              "failed": 1,
+              "ignored": 0
+            },
+            {
+              "passed": 8,
+              "failed": 0,
+              "ignored": 0
+            },
+            {
+              "passed": 9,
+              "failed": 0,
+              "ignored": 0
+            },
+            {
+              "passed": 13,
+              "failed": 0,
+              "ignored": 0
+            },
+            {
+              "passed": 15,
+              "failed": 0,
+              "ignored": 0
+            },
+            {
+              "passed": 7,
+              "failed": 0,
+              "ignored": 0
+            }
+          ]
+        },
+        {
+          "gate": "actual-directory-provider",
+          "exitCode": 0,
+          "elapsedSeconds": 9.449,
+          "command": [
+            "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+            "test",
+            "--locked",
+            "-j1",
+            "--target-dir",
+            "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+            "--test",
+            "directory_move_live",
+            "--",
+            "--ignored",
+            "--nocapture",
+            "--test-threads=1"
+          ],
+          "groups": [
+            {
+              "passed": 1,
+              "failed": 0,
+              "ignored": 0
+            }
+          ]
+        }
+      ],
+      "sourceUnchanged": true,
+      "allChecksPassed": false,
+      "scope": "Scoped repair after the frozen full run exposed jb.rename reaching the directory-enabled shared relocation helper. Private directory selection is true only for jb.move; existing file-only rename refuses before provider startup even with a folder-capable provider. Frozen whole-run failures remain preserved; this replay is nonadditive."
+    },
+    "allProductCasesPassed": true,
+    "knownSymlinkPrerequisiteFailures": [
+      {
+        "testName": "source_symlink_cannot_redirect_a_forced_file_deletion",
+        "windowsError1314": true
+      }
+    ],
+    "sourceBinding": "post-freeze-repair-inputs.json",
+    "normalizedRuntimeDifferences": [
+      "native/src/agent_repl.rs",
+      "native/tests/facade_directory_move.rs"
+    ],
+    "wholeNativeRerun": false,
+    "countsAreNonadditive": true,
+    "postRepairTypescript": {
+      "checks": [
+        {
+          "gate": "typecheck",
+          "exitCode": 0,
+          "elapsedSeconds": 2.23,
+          "command": [
+            "npm.cmd",
+            "run",
+            "typecheck"
+          ]
+        },
+        {
+          "gate": "tests",
+          "exitCode": 0,
+          "elapsedSeconds": 58.585,
+          "command": [
+            "npm.cmd",
+            "test"
+          ]
+        }
+      ],
+      "sourceUnchanged": true
+    },
+    "integratedRuntimeCommit": "ab460da112c7fdd6de440234e1e3e6888a24c993"
+  },
+  "findings": [
+    "One complete captured text directory is selected under the existing host scope and exactly one explicitly registered provider language. A matching standard-LSP folder willRenameFiles filter is required; only checked original-coordinate text changes or null are accepted. Native code appends the sealed resource effect and prepares one plan. Multiple provider languages, ignored-capture or host-provider workspace-root migration, empty-only and uncaptured/binary trees remain unsupported; complete=false and source omissions remain visible.",
+    "The directory-move-v1 plan identity binds the original directory shape including empty directories, modes, stable directory and parent identities, exact captured files and mapped result. Legacy file-only serialization and IDs remain unchanged. Actual source membership, host spellings and bodies are rechecked before the journal. One native filesystem rename precedes byte repairs; cross-filesystem recursive copy is not introduced. Copied verification checks empty shape as well as source bytes. Recovery handles a renamed tree even when cancellation preceded appliedPaths publication and preserves foreign entries, bytes and directories for explicit reconciliation.",
+    "Finite selection admits 1..1000 text files, at most2000 directories and at most16000000 bytes counted per physical file, before source body reads. Real boundary cases cover1000/1001 files,2000/2001 directories and16000000/16000001 bytes even with identical CAS bodies. Existing plan, snapshot, diff, LSP frame/virtual-edit and request limits remain. Cooperative checks and identity observations do not establish an OS sandbox, atomic multi-file visibility or protection from hostile same-account races.",
+    "The first R2 integration run preserves one outdated directory-refusal assertion in the file facade; the revised contract requires capability negotiation and still refuses a file-only provider without publishing a plan. An actual RED reproduced Windows destination-parent case-alias acceptance; exact existing host spelling now refuses before provider startup. R3 passes425 library tests/7 ignored plus7 folder,8 file and13 saved-plan cases. R4 passes9 folder cases, including an actual unprivileged junction and zero-exit verifiers deleting/creating empty directories. These scoped counts overlap the final suite and are not added to its totals.",
+    "The separate actual installed rust-analyzer1.94.1 gate returned module-declaration and use repairs for an owned dependency-free Rust folder. Actual rustc1.94.1 compiled the copied result; exact approved workspace application and recovery passed. No fixture/server/compiler fallback, dependency build script, project execution, default model or proprietary IDE acceptance is asserted. The final integrated gate is recorded separately and remains nonadditive.",
+    "Initial all-target Clippy R5 preserves an err_expect diagnostic in one new test. The sole subsequent normalized R4-to-initial-full source difference changes err().expect() to expect_err(); the initial full integrated format/Clippy/test run uses that frozen source. Raw pre/post manifests, earlier failed assertions, actual RED source and live outputs remain preserved. The Windows full-suite profile serializes independent tests while retaining their internal concurrency adversaries. Remaining STATUS/R1-R9, upstream and platform certification, package/extension-host acceptance, main merge and release remain open.",
+    "The complete initial full run retains one genuine file-rename admission regression in addition to ten OS1314 fixture prerequisites. Its shared relocation helper entered the directory path for jb.rename, starting a provider. A separate two-input repair makes directory selection private and true only for jb.move; jb.rename refuses before provider startup/publication even with a folder-capable server. Existing rename tests and new V8/V9 omitted/null cases pass in the scoped repair. All repair inputs are source-bound; library and R1 regression counts are nonadditive, and the scoped run retains its unchanged OS1314 file-delete setup failure. Integrated whole-native acceptance is not inferred from this repair; the original full run remains failed."
+  ],
+  "r4ToInitialFullNormalizedSourceDifferences": [
+    "native/tests/facade_directory_move.rs"
+  ],
+  "artifacts": [
+    {
+      "path": "ci-directory-alias-red.py",
+      "bytes": 982,
+      "sha256": "d066c812528883aba00aec096f14da25cfec75a9cfcc8e140fafefd79c016f92"
+    },
+    {
+      "path": "ci-directory-clippy-r5.py",
+      "bytes": 1398,
+      "sha256": "2611a614bc036f4afdf98f3b8fc4922138e0b9bbb4b1c76d1bc973ebb47797d6"
+    },
+    {
+      "path": "ci-directory-freeze-complete.py",
+      "bytes": 1673,
+      "sha256": "b3a11b91fdb01500039b47c9fd0f8ba2f3c4a06f16482f721b9df9744d741e32"
+    },
+    {
+      "path": "ci-directory-r1.py",
+      "bytes": 877,
+      "sha256": "fa2bb2be6e18e0415fdcb3c6822547b0b222049ba268bdb75ef70148225cac73"
+    },
+    {
+      "path": "ci-directory-r2.py",
+      "bytes": 1720,
+      "sha256": "32c874d02f2a87c328695ba98be03f98cd22e2fc2f36eb3b45db63c32626d217"
+    },
+    {
+      "path": "ci-directory-r3.py",
+      "bytes": 2046,
+      "sha256": "4c18b447733de33d6d0743fbdacbae677c803bc735e3a36468a8970be322add6"
+    },
+    {
+      "path": "ci-directory-r4.py",
+      "bytes": 2569,
+      "sha256": "028b7f81929ada0f4a79a9e475f4e5600cc98375dc73ed9f24c1d598eb6d14b8"
+    },
+    {
+      "path": "ci-directory-repair-r6.py",
+      "bytes": 3811,
+      "sha256": "bbe1115052c137a74f09112b5579d6da8f4478187910ffb81c2abd82fccf8cce"
+    },
+    {
+      "path": "ci-directory-versions.py",
+      "bytes": 661,
+      "sha256": "e0ff1a55345c85ff3e0a754b786aa9e21800b8b33818a306661c622cc7cd6272"
+    },
+    {
+      "path": "development/actual-provider-r4.log",
+      "bytes": 3670,
+      "sha256": "b829b0a25fdfc8bdc5b622b93b769829371d1bb2fa6341cc70b82c6a950da4dd"
+    },
+    {
+      "path": "development/backend-r1.log",
+      "bytes": 1477,
+      "sha256": "fa802455e70dfca61c23aa3ec77e0eab84d7d6b9cca1df336e333548cd9c3fa1"
+    },
+    {
+      "path": "development/cargo-version.log",
+      "bytes": 36,
+      "sha256": "f53c9c2502e421a5a8d0c7948809c3de6e6d41a0189ddc23dfe4c661b11f7806"
+    },
+    {
+      "path": "development/case-alias-red-source/manifest.json",
+      "bytes": 430,
+      "sha256": "3adcee66f9e7ed2e5936ca5dccfaec6830d34233d647835c0c1a7b3dfd945ebc"
+    },
+    {
+      "path": "development/case-alias-red-source/native/src/changes_directory.rs",
+      "bytes": 24545,
+      "sha256": "13f1db946213873c84a59e0d3e43540e18504e5b3cb80977dc7127a123f920b2"
+    },
+    {
+      "path": "development/case-alias-red-source/native/tests/facade_directory_move.rs",
+      "bytes": 11831,
+      "sha256": "1e40be71e7e3d37b85a0ed85312ca46a756205a0e52e384e663c947bbddcd4fb"
+    },
+    {
+      "path": "development/case-alias-red.log",
+      "bytes": 1094,
+      "sha256": "2d6a631367d987669a8194df25a551ee9702d5f2402fef6d8be85d23e149a219"
+    },
+    {
+      "path": "development/clippy-r5.log",
+      "bytes": 750,
+      "sha256": "d4bf3ad63214d21c74e30b61e816b0c8a647df3d2e540ea938602be1daa891d6"
+    },
+    {
+      "path": "development/facade-r4.log",
+      "bytes": 1257,
+      "sha256": "e017023688d8f4b194f065ee3ce0fc7224f0bc9d954cffbd41ed2d99e8e39364"
+    },
+    {
+      "path": "development/fmt-r1.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "development/fmt-r2.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "development/fmt-r3.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "development/fmt-r4.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "development/format-r5.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "development/legacy-directory-refusal-r2/native/tests/facade_file_move.rs",
+      "bytes": 13196,
+      "sha256": "59901304741dc6740f87b40813a3c5c863981d41afbe7e9750b4d4576de43504"
+    },
+    {
+      "path": "development/native-r2.log",
+      "bytes": 52555,
+      "sha256": "c5bb47abed8fa7df74edaab69a8c0a801f91dd93a5bceb6aa234996e4e555837"
+    },
+    {
+      "path": "development/native-r3.log",
+      "bytes": 52758,
+      "sha256": "70e61869dd8182cb7907e4edd47d2d2e3617368212c4437fe019620a70fecb62"
+    },
+    {
+      "path": "development/post-repair-typescript/source-after.json",
+      "bytes": 69997,
+      "sha256": "9cee033c789dd2019d34043d547303d9d753f6a8640b90f74fd4642ea8791ff0"
+    },
+    {
+      "path": "development/post-repair-typescript/source-before.json",
+      "bytes": 69997,
+      "sha256": "9cee033c789dd2019d34043d547303d9d753f6a8640b90f74fd4642ea8791ff0"
+    },
+    {
+      "path": "development/post-repair-typescript/summary.json",
+      "bytes": 370,
+      "sha256": "ed7a5c5a33c0a43cdec8db457e19ca2d263eedb618a652caf85fdddf0b971322"
+    },
+    {
+      "path": "development/post-repair-typescript/tests.log",
+      "bytes": 25043,
+      "sha256": "f77af4c2d92450b7c81089e11b6658b58f64c569ad5070185c83db3653bffd28"
+    },
+    {
+      "path": "development/post-repair-typescript/typecheck.log",
+      "bytes": 101,
+      "sha256": "30ef9ce16cf042ab6f160e0a76c1fbfe22f02a3c3a3659ee62863ffc1efdbfdf"
+    },
+    {
+      "path": "development/pre-repair-full-source/manifest.json",
+      "bytes": 490,
+      "sha256": "45233660189112cdbedc8c1c87dd4c13820712bb9e7eb87f0d6db99e47cd6125"
+    },
+    {
+      "path": "development/pre-repair-full-source/native/src/agent_repl.rs",
+      "bytes": 116142,
+      "sha256": "24fc369e7315b4187c0313fc0d270fd64ddb82452f27c79881dfd07446e62822"
+    },
+    {
+      "path": "development/pre-repair-full-source/native/tests/facade_directory_move.rs",
+      "bytes": 14864,
+      "sha256": "487bb9e7d648efcc273d191763852adf3c46535ca5156a4723c23a99c697ae08"
+    },
+    {
+      "path": "development/r2-results.json",
+      "bytes": 567,
+      "sha256": "64a6a9dab489acaea6c56284c148e0136c2e6626f05abc64ba764bc4a1bf8b4f"
+    },
+    {
+      "path": "development/r2-source/manifest.json",
+      "bytes": 1573,
+      "sha256": "afa55d59df4193738a0fc268b3a74b86d71f3110f83ed093042bc802487c0b79"
+    },
+    {
+      "path": "development/r2-source/native/src/agent_repl.rs",
+      "bytes": 113208,
+      "sha256": "02af89fa8bc78922f84ffe983b91585967ac50522e41926de410629c1079ff6a"
+    },
+    {
+      "path": "development/r2-source/native/src/changes.rs",
+      "bytes": 30056,
+      "sha256": "41df908fec7b0d3faa732d468cdcadc797f9b39f583f94125f191fb0a797f1c2"
+    },
+    {
+      "path": "development/r2-source/native/src/changes_directory.rs",
+      "bytes": 24545,
+      "sha256": "13f1db946213873c84a59e0d3e43540e18504e5b3cb80977dc7127a123f920b2"
+    },
+    {
+      "path": "development/r2-source/native/src/changes_directory_tests.rs",
+      "bytes": 9208,
+      "sha256": "7238004f49b51b88337f7e5f099fde87fccd6272aed0c34ca08858293f242a34"
+    },
+    {
+      "path": "development/r2-source/native/src/changes_plan.rs",
+      "bytes": 14007,
+      "sha256": "bfe907bdc1f90521aa9e3410e531f9af32997eceff4a8d60dfb7d37b2d2dfd54"
+    },
+    {
+      "path": "development/r2-source/native/src/container.rs",
+      "bytes": 16829,
+      "sha256": "2f6d900ad50802f712823d1281b8b05542deee5e19201faa514d94b7ecb66814"
+    },
+    {
+      "path": "development/r2-source/native/src/lsp.rs",
+      "bytes": 142747,
+      "sha256": "2a4cab6f748b68c5254cb36a706af0937c643e7926fa8627c4618bbcd4737144"
+    },
+    {
+      "path": "development/r2-source/native/src/semantic_directory_move.rs",
+      "bytes": 2819,
+      "sha256": "c4495b0e95a4af5023adb0c2ff82c62bc6c9ae4a4e5264738f6dc7a96838e3a7"
+    },
+    {
+      "path": "development/r2-source/native/src/semantic_refactor.rs",
+      "bytes": 30087,
+      "sha256": "0dfda618bbe6fb1b52ced19dfaa59403252e23d8ff87f6b40d787ea76efac2fc"
+    },
+    {
+      "path": "development/r2-source/native/src/verify.rs",
+      "bytes": 10148,
+      "sha256": "19451229edc5aab539121b450d3ee5d9092523f0998c69fd8032bc770720aa4a"
+    },
+    {
+      "path": "development/r2-source/native/tests/facade_directory_move.rs",
+      "bytes": 11334,
+      "sha256": "da3ef4a47c389da508c941087749a24875b7cde4a0b41682cdbefdef767f29a8"
+    },
+    {
+      "path": "development/r2-source/native/tests/fixtures/directory-move-lsp.mjs",
+      "bytes": 2868,
+      "sha256": "92a1f5e02a173f1217217162af5674c1fccfd7c9d2e9c07c54df9d67a0bf6d93"
+    },
+    {
+      "path": "development/r2-source/native/tests/plan_integrity.rs",
+      "bytes": 17136,
+      "sha256": "d23dee13a8f589f697fefbb235f5fb6045416891f8ae659aa803c72b1a7a0223"
+    },
+    {
+      "path": "development/r3-source/native/src/agent_repl.rs",
+      "bytes": 113208,
+      "sha256": "02af89fa8bc78922f84ffe983b91585967ac50522e41926de410629c1079ff6a"
+    },
+    {
+      "path": "development/r3-source/native/src/changes.rs",
+      "bytes": 30056,
+      "sha256": "41df908fec7b0d3faa732d468cdcadc797f9b39f583f94125f191fb0a797f1c2"
+    },
+    {
+      "path": "development/r3-source/native/src/changes_directory.rs",
+      "bytes": 25350,
+      "sha256": "4dd0f0d1424a0194aa6f3e3ad0c61e703da12492a2b54f1bb49302b727b038c3"
+    },
+    {
+      "path": "development/r3-source/native/src/changes_directory_tests.rs",
+      "bytes": 14795,
+      "sha256": "225e7a031958c49ab28baae641b4cd80ac8963f5c539a41c6393b65c49d2c69f"
+    },
+    {
+      "path": "development/r3-source/native/src/changes_plan.rs",
+      "bytes": 14007,
+      "sha256": "bfe907bdc1f90521aa9e3410e531f9af32997eceff4a8d60dfb7d37b2d2dfd54"
+    },
+    {
+      "path": "development/r3-source/native/src/container.rs",
+      "bytes": 16829,
+      "sha256": "2f6d900ad50802f712823d1281b8b05542deee5e19201faa514d94b7ecb66814"
+    },
+    {
+      "path": "development/r3-source/native/src/lsp.rs",
+      "bytes": 142747,
+      "sha256": "2a4cab6f748b68c5254cb36a706af0937c643e7926fa8627c4618bbcd4737144"
+    },
+    {
+      "path": "development/r3-source/native/src/semantic_directory_move.rs",
+      "bytes": 2819,
+      "sha256": "c4495b0e95a4af5023adb0c2ff82c62bc6c9ae4a4e5264738f6dc7a96838e3a7"
+    },
+    {
+      "path": "development/r3-source/native/src/semantic_refactor.rs",
+      "bytes": 30087,
+      "sha256": "0dfda618bbe6fb1b52ced19dfaa59403252e23d8ff87f6b40d787ea76efac2fc"
+    },
+    {
+      "path": "development/r3-source/native/src/verify.rs",
+      "bytes": 10148,
+      "sha256": "19451229edc5aab539121b450d3ee5d9092523f0998c69fd8032bc770720aa4a"
+    },
+    {
+      "path": "development/r3-source/native/tests/facade_directory_move.rs",
+      "bytes": 11831,
+      "sha256": "1e40be71e7e3d37b85a0ed85312ca46a756205a0e52e384e663c947bbddcd4fb"
+    },
+    {
+      "path": "development/r3-source/native/tests/facade_file_move.rs",
+      "bytes": 13327,
+      "sha256": "885f8cc34f65e5df5ed708115121a889693099de07b8b5e58529c514ecb89183"
+    },
+    {
+      "path": "development/r3-source/native/tests/fixtures/directory-move-lsp.mjs",
+      "bytes": 2868,
+      "sha256": "92a1f5e02a173f1217217162af5674c1fccfd7c9d2e9c07c54df9d67a0bf6d93"
+    },
+    {
+      "path": "development/r3-source/native/tests/plan_integrity.rs",
+      "bytes": 17136,
+      "sha256": "d23dee13a8f589f697fefbb235f5fb6045416891f8ae659aa803c72b1a7a0223"
+    },
+    {
+      "path": "development/r4-results.json",
+      "bytes": 982,
+      "sha256": "01d1705a2d6805e6bb8e2ec905b5a87e602f32e75a8cbb64ca1b9ce4ac212441"
+    },
+    {
+      "path": "development/r4-source/native/src/agent_repl.rs",
+      "bytes": 113199,
+      "sha256": "19a7a52d7e9d4f545cda94cf6323e1c7b153b5cf2352168f02867a7680b2f0e3"
+    },
+    {
+      "path": "development/r4-source/native/src/changes.rs",
+      "bytes": 30056,
+      "sha256": "41df908fec7b0d3faa732d468cdcadc797f9b39f583f94125f191fb0a797f1c2"
+    },
+    {
+      "path": "development/r4-source/native/src/changes_directory.rs",
+      "bytes": 25350,
+      "sha256": "4dd0f0d1424a0194aa6f3e3ad0c61e703da12492a2b54f1bb49302b727b038c3"
+    },
+    {
+      "path": "development/r4-source/native/src/changes_directory_tests.rs",
+      "bytes": 14795,
+      "sha256": "225e7a031958c49ab28baae641b4cd80ac8963f5c539a41c6393b65c49d2c69f"
+    },
+    {
+      "path": "development/r4-source/native/src/changes_plan.rs",
+      "bytes": 14007,
+      "sha256": "bfe907bdc1f90521aa9e3410e531f9af32997eceff4a8d60dfb7d37b2d2dfd54"
+    },
+    {
+      "path": "development/r4-source/native/src/container.rs",
+      "bytes": 16829,
+      "sha256": "2f6d900ad50802f712823d1281b8b05542deee5e19201faa514d94b7ecb66814"
+    },
+    {
+      "path": "development/r4-source/native/src/lsp.rs",
+      "bytes": 142747,
+      "sha256": "2a4cab6f748b68c5254cb36a706af0937c643e7926fa8627c4618bbcd4737144"
+    },
+    {
+      "path": "development/r4-source/native/src/semantic_directory_move.rs",
+      "bytes": 2819,
+      "sha256": "c4495b0e95a4af5023adb0c2ff82c62bc6c9ae4a4e5264738f6dc7a96838e3a7"
+    },
+    {
+      "path": "development/r4-source/native/src/semantic_refactor.rs",
+      "bytes": 30087,
+      "sha256": "0dfda618bbe6fb1b52ced19dfaa59403252e23d8ff87f6b40d787ea76efac2fc"
+    },
+    {
+      "path": "development/r4-source/native/src/verify.rs",
+      "bytes": 10440,
+      "sha256": "66f5d25b3f9ece732acfec7f5c1d3023293fca1ba2aa79148e3a696f42eb0b04"
+    },
+    {
+      "path": "development/r4-source/native/tests/directory_move_live.rs",
+      "bytes": 4286,
+      "sha256": "1ac823462941786d0011ea9ae158e948207bda2f9ee7231feeeede7dbe6d48af"
+    },
+    {
+      "path": "development/r4-source/native/tests/facade_directory_move.rs",
+      "bytes": 14459,
+      "sha256": "6acf144d1527665a0b85b057f1bc4949a1ac4faa0a04fa0c198020c91cf16f33"
+    },
+    {
+      "path": "development/r4-source/native/tests/facade_file_move.rs",
+      "bytes": 13327,
+      "sha256": "885f8cc34f65e5df5ed708115121a889693099de07b8b5e58529c514ecb89183"
+    },
+    {
+      "path": "development/r4-source/native/tests/fixtures/directory-move-lsp.mjs",
+      "bytes": 2868,
+      "sha256": "92a1f5e02a173f1217217162af5674c1fccfd7c9d2e9c07c54df9d67a0bf6d93"
+    },
+    {
+      "path": "development/r4-source/native/tests/plan_integrity.rs",
+      "bytes": 17136,
+      "sha256": "d23dee13a8f589f697fefbb235f5fb6045416891f8ae659aa803c72b1a7a0223"
+    },
+    {
+      "path": "development/r5-results.json",
+      "bytes": 706,
+      "sha256": "93872351e5a6f3fc9ec1b8188f4f81602efd57c3fe3950223e336c128f9bf47a"
+    },
+    {
+      "path": "development/remote-pending-verification.json",
+      "bytes": 508,
+      "sha256": "f93dc8f3cf4fdbf52915600511c856ee9f4e31d8cfd72ab009b08002c2b8fedb"
+    },
+    {
+      "path": "development/rename-admission-repair/actual-directory-provider.log",
+      "bytes": 3669,
+      "sha256": "e03f053bcb58a2f2e54c63c25f454fa1098cbfcc54d9d152eb176fd053d2daf8"
+    },
+    {
+      "path": "development/rename-admission-repair/clippy.log",
+      "bytes": 185,
+      "sha256": "d940de9bec12cd357a6428efa52842e6e537fe12d0563d2d222485157fa750f3"
+    },
+    {
+      "path": "development/rename-admission-repair/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "development/rename-admission-repair/receipts.json",
+      "bytes": 2519,
+      "sha256": "6f8f768a4a00a0bd811f7b145ff8bcbe35948ce78f24752f0e1e362431f3c33c"
+    },
+    {
+      "path": "development/rename-admission-repair/repair.patch",
+      "bytes": 3266,
+      "sha256": "f6af285b78bdb225b2170f4d8859d4745bd3d9d1bc5b539eb9197da3b19eab54"
+    },
+    {
+      "path": "development/rename-admission-repair/scoped-native.log",
+      "bytes": 58473,
+      "sha256": "22145f5253510f275be94105554da80f029bba51455c5743e62fad42ce5766d3"
+    },
+    {
+      "path": "development/rename-admission-repair/source/native/src/agent_repl.rs",
+      "bytes": 113516,
+      "sha256": "f4f25b0304c1f3f01040951bb071074fbd70537da8229f01c1f12a1dfb5ff01e"
+    },
+    {
+      "path": "development/rename-admission-repair/source/native/tests/facade_directory_move.rs",
+      "bytes": 15264,
+      "sha256": "eb60915a524a898c6b0370a3e4436f25a6c0cf8d86672ae48978791259084dd5"
+    },
+    {
+      "path": "development/rename-admission-repair/source-after.json",
+      "bytes": 58751,
+      "sha256": "52a41c65da622fc6ab81e4d4e1ae67b4af968f2c83a7f9ae4d20468d3e093dd2"
+    },
+    {
+      "path": "development/rename-admission-repair/source-before.json",
+      "bytes": 58751,
+      "sha256": "52a41c65da622fc6ab81e4d4e1ae67b4af968f2c83a7f9ae4d20468d3e093dd2"
+    },
+    {
+      "path": "development/rename-admission-repair/summary.json",
+      "bytes": 3201,
+      "sha256": "f3743ff2a99a00a3989ed3f7334f862475acb23b3e2e032907711de014958914"
+    },
+    {
+      "path": "development/rust-analyzer-version.log",
+      "bytes": 43,
+      "sha256": "837ef86b018f1f79e858247c06a2d0674251424f68ba8278517e87d121ed34e2"
+    },
+    {
+      "path": "development/rustc-version.log",
+      "bytes": 36,
+      "sha256": "7fc9b9708715204ec50ebe62619084b002bd1ba3ae68cd4d5d586a74797d4f7b"
+    },
+    {
+      "path": "development/source-after-r2.json",
+      "bytes": 59189,
+      "sha256": "28a8bb98d84248bed2f8744ba4163557981b4638fcdb4b62b0f3dc7a43e26630"
+    },
+    {
+      "path": "development/source-after-r3.json",
+      "bytes": 59189,
+      "sha256": "4d56c5da5e35a4262d0104dca65e564490b452c636cf2e1ee0669038e9976a31"
+    },
+    {
+      "path": "development/source-after-r4.json",
+      "bytes": 59299,
+      "sha256": "9716334a6eab054fb5408b38e8b7204f3d3b8576715572edc4e838960e7d1412"
+    },
+    {
+      "path": "development/source-after-r5.json",
+      "bytes": 59299,
+      "sha256": "9716334a6eab054fb5408b38e8b7204f3d3b8576715572edc4e838960e7d1412"
+    },
+    {
+      "path": "development/source-before-format-r2.json",
+      "bytes": 59189,
+      "sha256": "572f73029fc7e8c55b392c995c4de269fd66bb0f47a7c9decab83288cf48ccce"
+    },
+    {
+      "path": "development/source-before-r2.json",
+      "bytes": 59189,
+      "sha256": "28a8bb98d84248bed2f8744ba4163557981b4638fcdb4b62b0f3dc7a43e26630"
+    },
+    {
+      "path": "development/source-before-r3.json",
+      "bytes": 59189,
+      "sha256": "4d56c5da5e35a4262d0104dca65e564490b452c636cf2e1ee0669038e9976a31"
+    },
+    {
+      "path": "development/source-before-r4.json",
+      "bytes": 59299,
+      "sha256": "9716334a6eab054fb5408b38e8b7204f3d3b8576715572edc4e838960e7d1412"
+    },
+    {
+      "path": "development/tool-versions.json",
+      "bytes": 748,
+      "sha256": "5c5ad821143d8fba767906b2f3e4e78c7c05f342c21c84efdc518c81630607dd"
+    },
+    {
+      "path": "failure-classification.json",
+      "bytes": 6091,
+      "sha256": "d2570c5c29db31083fff816e730dfda44c614f97956ef66f0581403be0a0ef90"
+    },
+    {
+      "path": "final/actual-directory-provider.log",
+      "bytes": 3487,
+      "sha256": "55eebcb0a360113ed23c5061cbc000d26803df528597f1e3834441d309d5de62"
+    },
+    {
+      "path": "final/clippy.log",
+      "bytes": 172,
+      "sha256": "91315f15beb2bde7e585b5eb751ae3071d59d4803cf3e7f4c2b67759a8cff9f8"
+    },
+    {
+      "path": "final/doctests.log",
+      "bytes": 193,
+      "sha256": "8d471120d8db2d93934d7e33fda94043e64d38820f709eededa8b7fa13acc957"
+    },
+    {
+      "path": "final/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "final/native-target-coverage.json",
+      "bytes": 16556,
+      "sha256": "48cc2a6bb2f989e6ab4543657189010b5c8744edf1a4c12a98ce74afa27bbc23"
+    },
+    {
+      "path": "final/native-target-inventory.json",
+      "bytes": 88716,
+      "sha256": "c8314d9cb831c891b03cc2801c7ffabad82f1aa252b6bda9bf51e91bd9eff883"
+    },
+    {
+      "path": "final/python-contracts.log",
+      "bytes": 2845,
+      "sha256": "c28384786848099008ce95f99586fa607e2583c5693a0ddd4bdc34ba7a3bd4f3"
+    },
+    {
+      "path": "final/receipts.json",
+      "bytes": 26011,
+      "sha256": "b2e5b8aed089fa6d8a796f41cc2b5ad75868cccb9386ed0b85f1a61880323f50"
+    },
+    {
+      "path": "final/source-after.json",
+      "bytes": 70660,
+      "sha256": "36836d8d7ae169d8369a5ced9c7f8a3f18ec8391f169581800005c5a856ca759"
+    },
+    {
+      "path": "final/source-before.json",
+      "bytes": 70660,
+      "sha256": "36836d8d7ae169d8369a5ced9c7f8a3f18ec8391f169581800005c5a856ca759"
+    },
+    {
+      "path": "final/summary.json",
+      "bytes": 47489,
+      "sha256": "083d3c13ed1096a5390fe37e6d3e0d0327824ca0ea74a2d5fbdea2188da69d3f"
+    },
+    {
+      "path": "final/tested-native-binary.json",
+      "bytes": 122,
+      "sha256": "0c4091f299c9c88e0e206df420c5d2f8e83edd1461f874a4f5f31aa75710fce7"
+    },
+    {
+      "path": "final/typescript-tests.log",
+      "bytes": 25031,
+      "sha256": "b449bdb5e2d6164aff897c1c7b3bd87bf72d7b4d27c60febe026ad3bc5337924"
+    },
+    {
+      "path": "final/typescript-typecheck.log",
+      "bytes": 101,
+      "sha256": "30ef9ce16cf042ab6f160e0a76c1fbfe22f02a3c3a3659ee62863ffc1efdbfdf"
+    },
+    {
+      "path": "final/whole-native.log",
+      "bytes": 292031,
+      "sha256": "5e4487786986166d361ad2ee4a724d1d264f53fe161f5479306838e24d7110fe"
+    },
+    {
+      "path": "frozen-tracker.json",
+      "bytes": 480142,
+      "sha256": "b1e5a9015fd57c725bc958e51f54a8a42865e815205c72e912402f675482c5a4"
+    },
+    {
+      "path": "metadata-after-freeze.json",
+      "bytes": 714,
+      "sha256": "26f4015cd319fd80e1ff420628cf3fe7b0be0c75623ef0dec51bdacaa47100d1"
+    },
+    {
+      "path": "new-source/native/src/changes_directory.rs",
+      "bytes": 26088,
+      "sha256": "afd35ecaff10b1786cc255c5a6bf8c7d324d49e21c421ba3d0103727d81004fc"
+    },
+    {
+      "path": "new-source/native/src/changes_directory_tests.rs",
+      "bytes": 15192,
+      "sha256": "7cf39918062e8623747dab644d355e8b1379d37e4b2d43e1f1aa00be057ca9ac"
+    },
+    {
+      "path": "new-source/native/src/semantic_directory_move.rs",
+      "bytes": 2901,
+      "sha256": "0d8af9938336480af681de8fe738f5d5b92283325bc18c96e2fb2338776f1d1c"
+    },
+    {
+      "path": "new-source/native/tests/directory_move_live.rs",
+      "bytes": 4395,
+      "sha256": "f4b3aeada234067843fa9300599a1f159350131f23a9e036375b98695ca43b7c"
+    },
+    {
+      "path": "new-source/native/tests/facade_directory_move.rs",
+      "bytes": 14864,
+      "sha256": "487bb9e7d648efcc273d191763852adf3c46535ca5156a4723c23a99c697ae08"
+    },
+    {
+      "path": "new-source/native/tests/fixtures/directory-move-lsp.mjs",
+      "bytes": 2910,
+      "sha256": "59d050a0892af428e5ed0896a078dc4eadc65c0eee931cd91ede90fd07e64b39"
+    },
+    {
+      "path": "post-freeze-repair-inputs.json",
+      "bytes": 158293,
+      "sha256": "c3bf3f12bf1ac1f5ad93a1a3ac2c57687d969f88877c74426a200878c5b7bf24"
+    },
+    {
+      "path": "preserve-directory-moves.py",
+      "bytes": 11794,
+      "sha256": "7ad391bd07eddb8e02bf59955e4230e0ee8bc69c2e7eeaaa3afcbc52240e39a5"
+    },
+    {
+      "path": "run-directory-final.py",
+      "bytes": 5808,
+      "sha256": "10401f21fc9bd8083e0f8246dc37653e29bbbe850819e977beab2fca419c7089"
+    },
+    {
+      "path": "run-directory-post-repair-ts.py",
+      "bytes": 1231,
+      "sha256": "34d5c40bea4e28afa0a37d8d164297579caa068ef798b7f4cb69cfa909278ef8"
+    },
+    {
+      "path": "runtime-change.patch",
+      "bytes": 97209,
+      "sha256": "363800b1d112ee160cc09a6a9529c0a821071f923ea61ce3652eb3bf87d29233"
+    },
+    {
+      "path": "source-materialization.json",
+      "bytes": 241665,
+      "sha256": "1edaee1c1e9dbfb12575aec8c0669c5e55eddf2f862ebbf5d24aa031a200dcd8"
+    },
+    {
+      "path": "update-directory-docs.py",
+      "bytes": 11630,
+      "sha256": "ea122e912b23d03cb7174e5f49617cc275418c1092216adc69823829d88966dc"
+    },
+    {
+      "path": "verify-directory-staged.py",
+      "bytes": 3506,
+      "sha256": "5c79e45e73edf1ccd9012de8e7e0f653b926a2d8195187d178e38fd112d3b982"
+    }
+  ],
+  "metadataAfterFreeze": "metadata-after-freeze.json",
+  "sourceMaterialization": "source-materialization.json"
+}

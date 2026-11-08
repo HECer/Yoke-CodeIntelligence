@@ -1,0 +1,8 @@
+{
+    "operation":  "stop_owned_failed_test_runner_and_its_children",
+    "checkedAtUtc":  "2026-10-15T20:11:42.2349679Z",
+    "processId":  69624,
+    "reason":  "Observed stalled runProcess Deadline100ms fixture has a live infinite-interval child for more than eight minutes; abort the suite for deterministic lifecycle diagnosis.",
+    "acceptedFullRun":  false,
+    "countsInterpretation":  "Partial raw attempt only; never imported into a successful matrix."
+}

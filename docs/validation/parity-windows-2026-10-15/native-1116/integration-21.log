@@ -1,0 +1,68 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+    Finished `test` profile [unoptimized] target(s) in 10.19s
+     Running tests\operations.rs (target\debug\deps\operations-ed9395c3e80089b9.exe)
+
+running 8 tests
+test binary_resource_reads_cannot_abort_the_next_mcp_request ... ok
+test cross_file_imports_are_recomputed_after_dependency_changes ... ok
+test additional_real_grammars_extract_symbols_without_running_source ... ok
+test additional_grammar_call_sites_have_exact_evidence_and_labeled_candidates ... ok
+test lsp_unicode_position_roundtrip_rejects_split_surrogates ... ok
+test mcp_stdio_initialization_lists_exactly_eight_tools_and_rejects_host_authority ... ok
+test symbol_insertions_and_overlaps_use_immutable_exact_ranges ... ok
+test real_grammars_extract_multilingual_symbols_and_diagnostics ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.52s
+
+     Running tests\parity_cli.rs (target\debug\deps\parity_cli-c7f5b814c46c6b5e.exe)
+
+running 8 tests
+test public_graph_view_cli_combines_manifest_nodes_and_reads_historical_view ... ok
+test public_named_notes_cli_is_persistent_and_global_store_is_explicit ... ok
+test public_graph_cli_analyzes_and_exports_without_overwriting_human_cards ... ok
+test public_retrieval_cli_ranks_task_words_in_source_bodies ... ok
+test public_session_stdio_cli_serves_the_extended_profile_and_exits_on_eof ... ok
+test public_session_cli_resumes_host_registered_project_and_notes ... ok
+test public_agent_repl_cli_executes_persistent_cells_only_with_host_trust ... ok
+test public_serena_stdio_cli_preserves_cells_and_reports_errors_under_host_authority ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.10s
+
+     Running tests\parity_construct_review.rs (target\debug\deps\parity_construct_review-cc6b783fc409aaf8.exe)
+
+running 2 tests
+test quoted_lisp_declarations_do_not_create_executable_declaration_entities ... ok
+test lisp_let_binding_pairs_are_not_invocations_of_same_named_functions ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\parity_retention.rs (target\debug\deps\parity_retention-f49e3418d1911aab.exe)
+
+running 8 tests
+test development_six_cache_missing_only_embedded_language_keeps_exact_old_schema ... ok
+test duplicate_provenance_fields_are_refused_before_dependency_interpretation ... ok
+test rehashed_report_with_unknown_nested_schema_is_refused ... ok
+test parity_record_future_fields_and_corrupt_bindings_never_grant_purge ... ok
+test released_analyzer_four_extraction_cache_is_readable_without_rewriting_old_payloads ... ok
+test source_bound_reports_exports_and_markdown_artifacts_are_known_retention_dependencies ... ok
+test valid_capture_notes_session_and_unpublished_capture_do_not_disable_retention ... ok
+test structural_semantic_and_view_artifacts_preserve_exact_source_roots ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.61s
+
+     Running tests\parity_source_review.rs (target\debug\deps\parity_source_review-223360b1f37f3121.exe)
+
+running 1 test
+test corrupted_oversized_cas_is_rejected_before_an_unbounded_source_buffer_allocation ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.08s
+
+     Running tests\parity_view_review.rs (target\debug\deps\parity_view_review-5885658842c4425e.exe)
+
+running 3 tests
+test resealed_view_cannot_invent_canonical_labels_or_parent_claims ... ok
+test resealed_view_cannot_remove_canonical_observations ... ok
+test resealed_view_cannot_relabel_a_selected_overlay_or_upgrade_its_precision ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.25s
+

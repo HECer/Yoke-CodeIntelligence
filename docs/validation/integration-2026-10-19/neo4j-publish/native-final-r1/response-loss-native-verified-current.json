@@ -1,0 +1,1 @@
+{"data":{"fields":["s.activeRevision","s.lockCounter","COUNT { MATCH (n:YokeNativeElement {scopeKey:$key}) }","COUNT { MATCH ()-[r:YOKE_NATIVE_OBSERVATION {scopeKey:$key}]->() }"],"values":[["424fab81463d80aa46feb75fa2f6a58cbe56e80bef0681204163cf7f83414431",1,11,6]]},"queryType":"r","resultAvailableAfter":1,"resultConsumedAfter":4,"bookmarks":["FB:kcwQmUo9TQJNTaCox0zk0szNfiuQ"]}

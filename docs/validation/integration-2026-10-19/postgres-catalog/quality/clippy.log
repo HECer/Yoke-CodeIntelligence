@@ -1,0 +1,26 @@
+    Checking yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+error: items after a test module
+   --> native\src\postgres_catalog_client.rs:225:1
+    |
+225 | mod uri_tests {
+    | ^^^^^^^^^^^^^
+...
+254 | fn connection(spec: &Spec, scratch: &Path) -> Result<String> {
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+...
+287 | fn command(spec: &Spec, scratch: &Path) -> Command {
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+...
+302 | fn capture(command: Command, input: &[u8], cap: usize, d: &Deadline) -> Result<Vec<u8>> {
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+...
+332 | pub fn receive(spec: &Spec, p: &Permissions, limits: &Limits, d: &Deadline) -> Result<Catalog> {
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#items_after_test_module
+    = note: `-D clippy::items-after-test-module` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::items_after_test_module)]`
+    = help: move the items to before the test module was defined
+
+error: could not compile `yoke-code-intelligence` (lib test) due to 1 previous error
+warning: build failed, waiting for other jobs to finish...

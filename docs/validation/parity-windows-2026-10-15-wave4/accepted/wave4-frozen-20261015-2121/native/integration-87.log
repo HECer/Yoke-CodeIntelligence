@@ -1,0 +1,28 @@
+    Finished `test` profile [unoptimized] target(s) in 0.76s
+     Running tests\runtime.rs (target\debug\deps\runtime-78dd1c087d67934d.exe)
+
+running 14 tests
+test explicit_eval_and_repl_have_actual_module_global_semantics ... ok
+test inspecting_a_metaclass_does_not_call_its_equality_hook ... ok
+test actual_debugger_pauses_steps_and_hits_hash_bound_unicode_breakpoints ... ok
+test modifying_copied_source_invalidates_runtime_evidence ... ok
+test ordinary_function_locals_use_intrinsic_frame_storage ... ok
+test program_exceptions_remain_program_outcomes_and_never_protocol_success ... ok
+test runtime_and_evaluation_authority_are_distinct_and_source_cannot_grant_them ... ok
+test stack_metadata_does_not_execute_string_subclass_hooks ... ok
+test stale_breakpoints_forged_snapshots_and_relative_interpreters_are_denied ... ok
+test unsupported_custom_locals_are_explicit_failed_operations_without_hooks ... ok
+test variable_inspection_does_not_execute_custom_repr ... ok
+test variable_inspection_bypasses_custom_dictionary_accessors ... ok
+test variable_inspection_does_not_execute_equality_of_non_string_global_keys ... ok
+test deadline_and_output_bounds_terminate_sessions_without_source_writes ... ok
+
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.73s
+
+     Running tests\scoped_parent_performance.rs (target\debug\deps\scoped_parent_performance-d7d573f20e7ab13e.exe)
+
+running 1 test
+test wide_comment_siblings_preserve_source_facts_within_the_request_deadline ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.27s
+

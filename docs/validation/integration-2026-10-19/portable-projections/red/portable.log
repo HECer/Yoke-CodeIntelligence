@@ -1,0 +1,22 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 19s
+     Running tests\meaning_projection_portable.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\meaning_projection_portable-fc76200b5d18ca95.exe)
+
+running 1 test
+test actual_exports_remain_data_after_source_store_and_provider_disappear ... FAILED
+
+failures:
+
+---- actual_exports_remain_data_after_source_store_and_provider_disappear stdout ----
+
+thread 'actual_exports_remain_data_after_source_store_and_provider_disappear' (22708) panicked at native\tests\meaning_projection_portable.rs:31:70:
+called `Result::unwrap()` on an `Err` value: meaning_projection_import_unavailable
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    actual_exports_remain_data_after_source_store_and_provider_disappear
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.13s
+
+error: test failed, to rerun pass `--test meaning_projection_portable`

@@ -1,0 +1,25 @@
+   Compiling yoke-code-intelligence v0.5.0 (G:\NN-Developed\Dev-Tools\Yoke-CodeIntelligence\Code-Intelligence\native)
+warning: unused import: `PathBuf`
+  --> native\src\federation_http.rs:16:18
+   |
+16 |     path::{Path, PathBuf},
+   |                  ^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `yoke-code-intelligence` (lib) generated 1 warning (run `cargo fix --lib -p yoke-code-intelligence` to apply 1 suggestion)
+    Finished `test` profile [unoptimized] target(s) in 34.24s
+     Running tests\workflow_cli.rs (target\debug\deps\workflow_cli-df3e580128d03842.exe)
+
+running 8 tests
+test actual_native_cli_tls_service_and_client_load_os_credentials ... ignored, Actual native CLI TLS service/client and Windows credential store; creates/removes only unique test credentials
+test ambiguous_json_rpc_ids_and_nested_lsp_results_are_refused ... ok
+test host_profiles_reject_duplicate_keys_instead_of_replacing_policy ... ok
+test host_only_execution_and_retention_never_inherit_authority_from_config_json ... ok
+test model_worker_deadline_includes_an_input_pipe_that_never_closes ... ok
+test readonly_mcp_dataflow_and_native_cli_share_exact_snapshot_evidence ... ok
+test runtime_cli_preserves_failed_program_evidence_and_returns_failure ... ok
+test native_runtime_cli_preserves_state_across_authorized_repl_commands ... ok
+
+test result: ok. 7 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 1.16s
+

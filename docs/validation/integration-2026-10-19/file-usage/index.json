@@ -1,0 +1,572 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-19T14:40:44.083429+00:00",
+  "parentCommit": "e9a88de4b8bb4e06b7305029c9b22943e60ff87e",
+  "implementationCommit": "ca52ccda60b42255401f724a26364d04fc74908a",
+  "integratedRuntimeCommit": "e0d4e2e9f6eb77452432d3e5cb6740575cf02b04",
+  "accepted": false,
+  "allLocalChecksPassed": false,
+  "wholeNativeRerun": false,
+  "frozenIntegratedInputCount": 665,
+  "finalScopedTotals": {
+    "passed": 63,
+    "failed": 1,
+    "ignored": 0
+  },
+  "finalScopedResultGroups": 6,
+  "allScopedProductCasesPassed": true,
+  "actualCompositeGateRustTestsPassed": 1,
+  "actualOwnedLanguages": [
+    "typescript",
+    "javascript"
+  ],
+  "countsAreNonadditive": true,
+  "initialLibraryObservation": {
+    "passed": 425,
+    "failed": 0,
+    "ignored": 7,
+    "source": "development/source-before-r1.json",
+    "currentPrivateBulkLoopDiffers": true
+  },
+  "initialToFinalScopedInputChanges": [
+    "native/src/semantic_file_delete.rs",
+    "native/tests/facade_file_usage.rs"
+  ],
+  "finalScopedSource": "development/r3/source-before.json",
+  "integrationSummary": {
+    "checks": [
+      {
+        "gate": "format",
+        "exitCode": 0,
+        "elapsedSeconds": 5.836,
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "fmt",
+          "--all",
+          "--check"
+        ]
+      },
+      {
+        "gate": "python-contracts",
+        "exitCode": 0,
+        "elapsedSeconds": 1.399,
+        "command": [
+          "python",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "scripts/tests",
+          "-v"
+        ]
+      },
+      {
+        "gate": "typecheck",
+        "exitCode": 0,
+        "elapsedSeconds": 5.403,
+        "command": [
+          "npm.cmd",
+          "run",
+          "typecheck"
+        ]
+      },
+      {
+        "gate": "tests",
+        "exitCode": 0,
+        "elapsedSeconds": 68.4,
+        "command": [
+          "npm.cmd",
+          "test"
+        ]
+      }
+    ],
+    "sourceUnchanged": true,
+    "scopedInputsMatched": 550,
+    "allIntegrationChecksPassed": true,
+    "runtimeCommit": "e0d4e2e9f6eb77452432d3e5cb6740575cf02b04",
+    "wholeNativeRerun": false
+  },
+  "nativeSummary": {
+    "checks": [
+      {
+        "gate": "clippy",
+        "exitCode": 0,
+        "elapsedSeconds": 208.494,
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "clippy",
+          "--locked",
+          "--all-targets",
+          "--keep-going",
+          "-j1",
+          "--target-dir",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+          "--",
+          "-D",
+          "warnings"
+        ],
+        "groups": []
+      },
+      {
+        "gate": "scoped-native",
+        "exitCode": 101,
+        "elapsedSeconds": 218.379,
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "test",
+          "--locked",
+          "--no-fail-fast",
+          "-j1",
+          "--target-dir",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+          "--test",
+          "facade_file_usage",
+          "--test",
+          "facade_file_delete",
+          "--test",
+          "semantic_refactor",
+          "--test",
+          "refactor_intents",
+          "--test",
+          "facade_directory_move",
+          "--test",
+          "plan_integrity",
+          "--",
+          "--test-threads=1"
+        ],
+        "groups": [
+          {
+            "passed": 10,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 9,
+            "failed": 1,
+            "ignored": 0
+          },
+          {
+            "passed": 9,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 13,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 15,
+            "failed": 0,
+            "ignored": 0
+          },
+          {
+            "passed": 7,
+            "failed": 0,
+            "ignored": 0
+          }
+        ]
+      },
+      {
+        "gate": "actual-provider",
+        "exitCode": 0,
+        "elapsedSeconds": 19.846,
+        "command": [
+          "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+          "test",
+          "--locked",
+          "-j1",
+          "--target-dir",
+          "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+          "--test",
+          "file_usage_live",
+          "--",
+          "--ignored",
+          "--nocapture",
+          "--test-threads=1"
+        ],
+        "groups": [
+          {
+            "passed": 1,
+            "failed": 0,
+            "ignored": 0
+          }
+        ]
+      }
+    ],
+    "sourceUnchanged": true,
+    "libraryReplay": "Initial R1 library425/0/7 remains a separate earlier source observation; only the new private bulk-read loop changed, and its boundary/refusal/approval/recovery integration cases are replayed here."
+  },
+  "inventoryPreserved": {
+    "inventoryLedger": true,
+    "historicalInventory": true,
+    "ledgerSummary": true
+  },
+  "toolVersions": [
+    {
+      "name": "node",
+      "command": [
+        "node",
+        "--version"
+      ],
+      "versionObservedAfterValidation": "v24.21.0"
+    },
+    {
+      "name": "typescript-language-server",
+      "command": [
+        "node",
+        "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\typescript-5.8.3-lsp-5.1.3\\node_modules\\typescript-language-server\\lib\\cli.mjs",
+        "--version"
+      ],
+      "versionObservedAfterValidation": "5.1.3"
+    },
+    {
+      "name": "typescript",
+      "command": [
+        "node",
+        "C:\\Users\\Lomi\\AppData\\Local\\YokeValidation\\typescript-5.8.3-lsp-5.1.3\\node_modules\\typescript\\lib\\tsc.js",
+        "--version"
+      ],
+      "versionObservedAfterValidation": "Version 5.8.3"
+    }
+  ],
+  "newSourceFiles": [
+    {
+      "source": "native/src/semantic_file_delete.rs",
+      "artifact": "new-source/native/src/semantic_file_delete.rs",
+      "sha256": "7249acd15398d827a134165e47ff5aafd267122d622f8ceb7e7f602ceb923e2c"
+    },
+    {
+      "source": "native/tests/facade_file_usage.rs",
+      "artifact": "new-source/native/tests/facade_file_usage.rs",
+      "sha256": "4a092ae4aae3133c15540bec5e453f02d9715d5d62c88e3de69adb95470fd8b3"
+    },
+    {
+      "source": "native/tests/file_usage_live.rs",
+      "artifact": "new-source/native/tests/file_usage_live.rs",
+      "sha256": "5886685feae2f6d3a641b108b162791bf64857a985dd791d3b817801ded5041c"
+    },
+    {
+      "source": "native/tests/fixtures/file-usage-lsp.mjs",
+      "artifact": "new-source/native/tests/fixtures/file-usage-lsp.mjs",
+      "sha256": "84b0099830d8732814c965adac4989cf991579665389e457044937eb220a02d8"
+    }
+  ],
+  "findings": [
+    "Default omitted/null jb.safe_delete file selection now routes to the explicit captured_es_module_functions_v1 policy for writable .ts TypeScript or .js JavaScript ES modules containing named functions and at least one export. Other declaration shapes/languages and propagation refuse. Explicit forced-file deletion retains its visible skipped-usage behavior, and file/symbol selectors, edit permissions, host grants and standard guarded plan/application/recovery remain distinct.",
+    "Native syntax/byte/entity admission, conservative graph/path/name candidates and full captured text hashes precede selected provider definition/reference checks. Every declaration requires one exact self-bound definition and a bounded reference response including that declaration; all references must be inside the selected file. Missing/empty/truncated/foreign replies or inconsistent provider/source context refuse without publishing a plan. Provider source omissions and host passive/execution policy remain visible. No default model, provider command or analyzed-project execution is introduced.",
+    "Limits admit at most2000 files,16000000 captured bytes counted per physical file,256000 selected module bytes and8 declarations, producing at most16 provider queries. The initial 2000-file case failed under the unchanged30s deadline because each literal read rebuilt the captured source scope. A separate actual diagnostic RED records Request deadline exceeded after31.03s of test runtime. Only the private loop changes to one admitted CapturedSourceScope with source_in_scope; every path, membership, size, hash and cancellation check remains. Identical2000/2001 assertions and deadline then pass, alongside16m/16m+1 and8/9 boundaries. This is an owned boundary observation, not a universal performance claim.",
+    "Final scoped regression records63 passed/1 failed/0 ignored across6 groups; all9 new cases pass. The remaining failure is the unchanged actual OS1314 forced-delete symlink setup before assertions. The separate actual installed TypeScript language-server/compiler gate contains two owned TypeScript/JavaScript fixtures; both repair-free unused-module plans, copied-result compilation, approved application, exact recovery and used-module refusals pass. It is one Rust test and remains nonadditive.",
+    "Initial library425/0/7 and other initial regressions use the earlier private bulk-loop source; they are retained as separate observations. Only the new private loop and test diagnostic differ between those scoped source maps. Final all-target Clippy passes, and550 scoped runtime inputs match the integrated checkout by exact bytes or explicitly recorded CRLF materialization. Integrated formatting, Python17, mandatory typecheck and TypeScript260/3 existing skips pass with all final integration inputs unchanged. No whole-native rerun or hosted/platform acceptance follows.",
+    "The result keeps complete=false, exhaustiveCompilerProof=false and remainingUsagesMayBreak=true. Captured path/name matches conservatively deny possible usage and can reject unrelated prose; dynamic, omitted, external and differently configured consumers remain unknown. Host-selected provider replies are observations, not execution attestation or exhaustive absence proof. All353 original inventory identities,73 unreconciled rows,77 backend unknowns and false full-contract certifications remain. Broader R1-R9, full upstream/parity, packaging, main merge and release stay open."
+  ],
+  "artifacts": [
+    {
+      "path": "ci-file-usage-quota-red-r2.py",
+      "bytes": 1387,
+      "sha256": "22d99eacbde63e1db7f0314ca41f6ed37a2f4681da486bf991f934061f67c08f"
+    },
+    {
+      "path": "ci-file-usage-r1.py",
+      "bytes": 3134,
+      "sha256": "9a400bd323275bf1f3a5902f7cfe97e5f7c3cb7ea0105b2ca60dff991b083ccb"
+    },
+    {
+      "path": "ci-file-usage-r3.py",
+      "bytes": 3626,
+      "sha256": "434eb2c80c70b96e6a25c61144ba159bfb4016baba31f3a5eac19d9cadddf5d1"
+    },
+    {
+      "path": "development/actual-provider-r1.log",
+      "bytes": 7617,
+      "sha256": "5a5f50d771c2431474a5d64ee8985070b566e3e098b4679dd84b1a38b3564d4c"
+    },
+    {
+      "path": "development/format-r1.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "development/quota-red-r2/native.log",
+      "bytes": 1038,
+      "sha256": "b6fe7b05822dda187c1677f85e7e4aa3d23f8195ac9973b8f538ae9d3cd3a972"
+    },
+    {
+      "path": "development/quota-red-r2/result.json",
+      "bytes": 957,
+      "sha256": "cf1c6af307056122ef5a60ac5b3817c931870ed50082b18cedda3c5eb1e59387"
+    },
+    {
+      "path": "development/quota-red-r2/source/native/src/semantic_file_delete.rs",
+      "bytes": 12690,
+      "sha256": "40b9e97a892ff92a971a908bbcd4b263ca11b0a979d701525c9fae623c469f7e"
+    },
+    {
+      "path": "development/quota-red-r2/source/native/tests/facade_file_usage.rs",
+      "bytes": 15148,
+      "sha256": "a9ca61fef523f5e58d4133cc38aaba42c778da4d81416e19ae539ad02cb1a08a"
+    },
+    {
+      "path": "development/r1-results.json",
+      "bytes": 2126,
+      "sha256": "77c975db3953c1d2a66ae7c6c6f900a54531b1ea56d89fbfc158515253e6953d"
+    },
+    {
+      "path": "development/r1-source/native/docs/file-usage.md",
+      "bytes": 3347,
+      "sha256": "b051971e4e284e908475f4ae12473a86910a4a8604b09773ed532446bb0e7ed5"
+    },
+    {
+      "path": "development/r1-source/native/src/agent_repl.rs",
+      "bytes": 113717,
+      "sha256": "2f2ec7225c2f27bc8550db68bd6faec54d46fc6f8ce496d5775ae58991fe22ac"
+    },
+    {
+      "path": "development/r1-source/native/src/semantic_file_delete.rs",
+      "bytes": 12690,
+      "sha256": "40b9e97a892ff92a971a908bbcd4b263ca11b0a979d701525c9fae623c469f7e"
+    },
+    {
+      "path": "development/r1-source/native/src/semantic_refactor.rs",
+      "bytes": 31099,
+      "sha256": "6adbad6d75e5bc3fc74815c704884b5dbf6467bff231f6f1e826d9f68deef140"
+    },
+    {
+      "path": "development/r1-source/native/tests/facade_directory_move.rs",
+      "bytes": 15264,
+      "sha256": "eb60915a524a898c6b0370a3e4436f25a6c0cf8d86672ae48978791259084dd5"
+    },
+    {
+      "path": "development/r1-source/native/tests/facade_file_usage.rs",
+      "bytes": 15077,
+      "sha256": "21691e6abe928e469315423d83aed5d214a26855a3b7f1112cf0f8be4be6c94a"
+    },
+    {
+      "path": "development/r1-source/native/tests/file_usage_live.rs",
+      "bytes": 5451,
+      "sha256": "9d1076769b0b6dfa058085cb9e72a6c57bd413830609dcea2eb716a0fdd2f9b1"
+    },
+    {
+      "path": "development/r1-source/native/tests/fixtures/file-usage-lsp.mjs",
+      "bytes": 2346,
+      "sha256": "28c50aebf4cb43d39274f4d7c02e13cd9df9dcfdcb0bfdce742a70fd9d48dcfa"
+    },
+    {
+      "path": "development/r3/actual-provider.log",
+      "bytes": 7742,
+      "sha256": "b6b63fa6af218cd23e0c3746587572491dce9dfd069b67c9dfc31ec3f96f0d45"
+    },
+    {
+      "path": "development/r3/clippy.log",
+      "bytes": 186,
+      "sha256": "c1cda4af67aa7585da5cbd68e98ad2325decfe1d9634bf679aa8b328b007f291"
+    },
+    {
+      "path": "development/r3/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "development/r3/receipts.json",
+      "bytes": 2074,
+      "sha256": "91af57b78098f46bd1f3ce87693a52bce4a5b6b2e711c1507f257b318e4fe023"
+    },
+    {
+      "path": "development/r3/scoped-native.log",
+      "bytes": 8115,
+      "sha256": "0492d00227829cd3cd4e30039cc02799af5efe60fc820ef1b740ab67b8855bc0"
+    },
+    {
+      "path": "development/r3/source/native/docs/file-usage.md",
+      "bytes": 3347,
+      "sha256": "b051971e4e284e908475f4ae12473a86910a4a8604b09773ed532446bb0e7ed5"
+    },
+    {
+      "path": "development/r3/source/native/src/agent_repl.rs",
+      "bytes": 113717,
+      "sha256": "2f2ec7225c2f27bc8550db68bd6faec54d46fc6f8ce496d5775ae58991fe22ac"
+    },
+    {
+      "path": "development/r3/source/native/src/semantic_file_delete.rs",
+      "bytes": 12852,
+      "sha256": "d092050339113cef048dfd3093135c380c4b820902860489b8f954c862734c1a"
+    },
+    {
+      "path": "development/r3/source/native/src/semantic_refactor.rs",
+      "bytes": 31099,
+      "sha256": "6adbad6d75e5bc3fc74815c704884b5dbf6467bff231f6f1e826d9f68deef140"
+    },
+    {
+      "path": "development/r3/source/native/tests/facade_directory_move.rs",
+      "bytes": 15264,
+      "sha256": "eb60915a524a898c6b0370a3e4436f25a6c0cf8d86672ae48978791259084dd5"
+    },
+    {
+      "path": "development/r3/source/native/tests/facade_file_usage.rs",
+      "bytes": 15194,
+      "sha256": "ab89d599c99f18660b020496793175f5e679297340410313910756ef97e3e374"
+    },
+    {
+      "path": "development/r3/source/native/tests/file_usage_live.rs",
+      "bytes": 5451,
+      "sha256": "9d1076769b0b6dfa058085cb9e72a6c57bd413830609dcea2eb716a0fdd2f9b1"
+    },
+    {
+      "path": "development/r3/source/native/tests/fixtures/file-usage-lsp.mjs",
+      "bytes": 2346,
+      "sha256": "28c50aebf4cb43d39274f4d7c02e13cd9df9dcfdcb0bfdce742a70fd9d48dcfa"
+    },
+    {
+      "path": "development/r3/source-after.json",
+      "bytes": 59185,
+      "sha256": "64430a77bc18976220386a50e47296ea64786aa1d78849e34ea8bad601678e82"
+    },
+    {
+      "path": "development/r3/source-before.json",
+      "bytes": 59185,
+      "sha256": "64430a77bc18976220386a50e47296ea64786aa1d78849e34ea8bad601678e82"
+    },
+    {
+      "path": "development/r3/summary.json",
+      "bytes": 2549,
+      "sha256": "fd29b23b6e8498ae02581911ea879a7b1c7bfced7536c4793f42651ba969d2c9"
+    },
+    {
+      "path": "development/scoped-r1.log",
+      "bytes": 58516,
+      "sha256": "ec6f22c743fe21ff1425aa12b194a98b2a749301eea3e076baa2517f824a4f8d"
+    },
+    {
+      "path": "development/source-after-r1.json",
+      "bytes": 59185,
+      "sha256": "a476186ad8a2223bd6a35aaa60be38abebfc06ae05d3c7c86bc10a3b1586d41c"
+    },
+    {
+      "path": "development/source-before-r1.json",
+      "bytes": 59185,
+      "sha256": "a476186ad8a2223bd6a35aaa60be38abebfc06ae05d3c7c86bc10a3b1586d41c"
+    },
+    {
+      "path": "failure-classification.json",
+      "bytes": 570,
+      "sha256": "eff65034330a52ef0b9a97365895df07aeadf03f28bb782b49405de1d68862c4"
+    },
+    {
+      "path": "frozen-tracker.json",
+      "bytes": 483126,
+      "sha256": "f8b21a17f57a5811a7438b47b696ca7cb659703ea3ff38d46236864b9cc2e5b5"
+    },
+    {
+      "path": "integrated/format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "integrated/python-contracts.log",
+      "bytes": 2845,
+      "sha256": "5445bc18cc0bdbbde6b8539fa8b706e9d1cdd9dee33111bfe2635d88cdf209fa"
+    },
+    {
+      "path": "integrated/scoped-source-materialization.json",
+      "bytes": 159165,
+      "sha256": "2eadeeefbfe56609f118034a493696c7ee352ded33b4273c7fe849a76a1a5fdf"
+    },
+    {
+      "path": "integrated/source-after.json",
+      "bytes": 70431,
+      "sha256": "b9c34e39af07c13e714b011ed75203a36f9a2cb548d811d889718fbda3598f96"
+    },
+    {
+      "path": "integrated/source-before.json",
+      "bytes": 70431,
+      "sha256": "b9c34e39af07c13e714b011ed75203a36f9a2cb548d811d889718fbda3598f96"
+    },
+    {
+      "path": "integrated/summary.json",
+      "bytes": 996,
+      "sha256": "a53e06c5485f589973ab714511488d554b0d5393918ab81675ba8701c5ac2eee"
+    },
+    {
+      "path": "integrated/tests.log",
+      "bytes": 25043,
+      "sha256": "9f6759cfc0ee029b9637286e4291fd03fbce79777b858fcc863aae4918f67219"
+    },
+    {
+      "path": "integrated/typecheck.log",
+      "bytes": 101,
+      "sha256": "30ef9ce16cf042ab6f160e0a76c1fbfe22f02a3c3a3659ee62863ffc1efdbfdf"
+    },
+    {
+      "path": "metadata-after-freeze.json",
+      "bytes": 346,
+      "sha256": "11413a692f29c9b231791a20c0cbdf5dc56f8ccf7318826d97b57460df815076"
+    },
+    {
+      "path": "new-source/native/src/semantic_file_delete.rs",
+      "bytes": 13170,
+      "sha256": "7249acd15398d827a134165e47ff5aafd267122d622f8ceb7e7f602ceb923e2c"
+    },
+    {
+      "path": "new-source/native/tests/facade_file_usage.rs",
+      "bytes": 15594,
+      "sha256": "4a092ae4aae3133c15540bec5e453f02d9715d5d62c88e3de69adb95470fd8b3"
+    },
+    {
+      "path": "new-source/native/tests/file_usage_live.rs",
+      "bytes": 5588,
+      "sha256": "5886685feae2f6d3a641b108b162791bf64857a985dd791d3b817801ded5041c"
+    },
+    {
+      "path": "new-source/native/tests/fixtures/file-usage-lsp.mjs",
+      "bytes": 2370,
+      "sha256": "84b0099830d8732814c965adac4989cf991579665389e457044937eb220a02d8"
+    },
+    {
+      "path": "node-version.log",
+      "bytes": 10,
+      "sha256": "44ce64f1806e1aa8fa0bdd85b10e0413acd78557c88a8d52e94a0eb70f40b7ee"
+    },
+    {
+      "path": "preserve-file-usage.py",
+      "bytes": 9427,
+      "sha256": "ef646f3af72471f114b6d6d88e8636e6c409a0bcc53e373d1d6c019bfa673f2d"
+    },
+    {
+      "path": "run-file-usage-integrated.py",
+      "bytes": 3056,
+      "sha256": "ac133374b41ff4032704344ccea22604d9063761d8f9933b9d8aff7187b2588c"
+    },
+    {
+      "path": "runtime-change.patch",
+      "bytes": 40111,
+      "sha256": "2c8ac9e06c37b4d64c0be5e21cfbe68ba58142424b31bbea00ae604fb06d3f33"
+    },
+    {
+      "path": "source-materialization.json",
+      "bytes": 243034,
+      "sha256": "430dcc22ff6820f6729e4a2decf828e701e652425f19fdc8efed49278fc874c1"
+    },
+    {
+      "path": "typescript-language-server-version.log",
+      "bytes": 6,
+      "sha256": "d915c3cfb280a9fa1bb4cb35ef822c1fdb7a4b759943ab1279a64ff500a1e894"
+    },
+    {
+      "path": "typescript-version.log",
+      "bytes": 15,
+      "sha256": "205a2051df62f7f6620fcb95e4daee4d6c751369f0fa870dcf39bb86a51517ec"
+    },
+    {
+      "path": "update-file-usage-docs.py",
+      "bytes": 9303,
+      "sha256": "a59087250de254d063c7dbf583396226df39dba25e305d5b7480f33dd05c842f"
+    },
+    {
+      "path": "verify-file-usage-staged.py",
+      "bytes": 2404,
+      "sha256": "47ef1ef31ce8c314792ea0238d9c83c3a777768b0639a57b2eaf2df871b30cbf"
+    }
+  ],
+  "metadataAfterFreeze": "metadata-after-freeze.json",
+  "sourceMaterialization": "source-materialization.json"
+}

@@ -1,0 +1,35 @@
+    Finished `test` profile [unoptimized] target(s) in 0.98s
+     Running tests\meaning_view_archives.rs (target\debug\deps\meaning_view_archives-51ea5f08bcf57128.exe)
+
+running 9 tests
+test missing_historical_uncited_file_and_wrong_same_path_bytes_are_not_repaired_from_live_state ... ok
+test complete_wire_and_distinct_source_limits_are_admitted_without_store_side_effects ... ok
+test archive_replay_rejects_publicly_resealed_source_view_and_meaning_changes ... ok
+test portable_transport_keeps_task_totals_current_attempt_usage_and_original_unknown_response_distinct ... ok
+test portable_archive_replays_both_epochs_without_a_store_live_tree_or_worker ... ok
+test portable_wire_rejects_unknown_nested_properties_duplicate_keys_and_unknown_profiles ... ok
+test portable_bridge_requires_complete_raw_closure_and_rejects_foreign_or_unpaired_sidecars ... ok
+test replay_preserves_typed_claim_ids_ordered_roles_exact_quotes_and_unknown_receipts ... ok
+test published_id_preparation_returns_exact_checked_transport_without_load_or_publication ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 13.04s
+
+     Running tests\media.rs (target\debug\deps\media-96dd54905e72b0ab.exe)
+
+running 13 tests
+test media_cannot_bypass_source_scope_links_ignore_or_protected_paths ... ok
+test malformed_and_truncated_containers_fail_without_fabricated_metadata ... ok
+test explicitly_captured_binary_assets_are_published_with_exact_ids_and_paged_bytes ... ok
+test native_media_metadata_is_technical_and_binary_capture_is_explicit ... ok
+test pdf_worker_deadline_and_malformed_input_fail_closed ... ok
+test native_pdf_worker_extracts_actual_text_without_opening_a_source_index ... ok
+test media_persistence_refreshes_the_remaining_deadline_after_asset_capture ... ok
+test strict_pdf_visitor_decodes_nonbmp_tounicode_and_text_array_line_operators ... ok
+test strict_pdf_visitor_discloses_form_text_exclusion_and_enforces_page_text_cap ... ok
+test supplied_unicode_transcript_binds_asset_digest_and_discloses_unverified_authorship ... ok
+test strict_pdf_visitor_refuses_unknown_fonts_malformed_encodings_and_content ... ok
+test strict_pdf_visitor_respects_code_spaces_and_rejects_ambiguous_or_invalid_unicode ... ok
+test strict_pdf_visitor_validates_every_page_tree_child_count_and_parent ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.35s
+

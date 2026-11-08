@@ -1,0 +1,80 @@
+{
+  "baseline": "d1796478389559fa0390ceac3789b10caaea14da",
+  "wholePython": {
+    "passed": 103,
+    "failed": 0,
+    "skipped": 0,
+    "warningsAreErrors": true
+  },
+  "changedRustfmtFiles": 3,
+  "changedRustfmtExit": 0,
+  "typecheckExit": 0,
+  "npmExit": 0,
+  "npm": {
+    "passed": 260,
+    "failed": 0,
+    "existingSkipped": 3
+  },
+  "productionBehaviorCargoAndWorkflowUnchanged": true,
+  "originalAssertionsAndBudgetsPreserved": true,
+  "newNativeTestFunctions": 0,
+  "modifiedNativeTestsCompiledOrExecutedLocally": false,
+  "nativeYokeImageReadOrExecutedLocally": false,
+  "runtimeStartupOrSchedulingCauseMeasured": false,
+  "nativeMatrixAccepted": false,
+  "fullStatusComplete": false,
+  "localNativeFullBuildAdmissionBytes": 1200000000,
+  "freeBytesObserved": 1077612544,
+  "gitLooseKiBObserved": 18930,
+  "gitCompactionAttempted": false,
+  "sources": [
+    {
+      "path": "native/tests/editor_http.rs",
+      "sha256": "ef7b1230b574e2e6e65a82819f5cb1a0308ab27225111a9af972c00f1c88f23a",
+      "gitBlobSha": "0a622bc8a6620e30a86b3218f6f7fd95d1908fc2",
+      "existingTestFunctionNamesExact": true
+    },
+    {
+      "path": "native/src/git_history_read_tests.rs",
+      "sha256": "2b8ab1be914c668db68aff6f6cf84b44ddfce5a88f93325dc6ad16271e0bc326",
+      "gitBlobSha": "fd549cf1b0c38ae70338b10ea64ae0f4defc703c",
+      "existingTestFunctionNamesExact": true
+    },
+    {
+      "path": "native/tests/github_app_ingress.rs",
+      "sha256": "9fc0cc8ce59d78352054fa80e2cc0c533b2c43862123717fcf88c542ad244e90",
+      "gitBlobSha": "aa67de0b4daa1a7d24ac36a8a90d70f9df02d8f3",
+      "existingTestFunctionNamesExact": true
+    }
+  ],
+  "logs": [
+    {
+      "path": "python-all.txt",
+      "sha256": "b0508fedd6adcb6f392fd922b3a9074c80c14b60133a7726853eb2205f4a9d73",
+      "originalSha256": "8062eebb24a0ee96290539fce14cc31df98cd0e6778973149259d3f28c233c28",
+      "originalEncoding": "utf-16",
+      "displayTransform": "UTF-16 to UTF-8, LF, trim trailing whitespace"
+    },
+    {
+      "path": "rustfmt.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "originalEncoding": "utf-16",
+      "displayTransform": "UTF-16 to UTF-8, LF, trim trailing whitespace"
+    },
+    {
+      "path": "typecheck.txt",
+      "sha256": "926574d568c3c291900406576bdf0c74392af5572ca03f4e4bdde5aa1e3e68f1",
+      "originalSha256": "7a27ec2a552cd547b247fd9b33bdecc95f2ade52af093c180e905efa0ce3d40b",
+      "originalEncoding": "utf-16",
+      "displayTransform": "UTF-16 to UTF-8, LF, trim trailing whitespace"
+    },
+    {
+      "path": "npm-test.txt",
+      "sha256": "c8e429c16573d503ea16b39540743bf58f99811eb156575116d2e3e99c21e346",
+      "originalSha256": "1c87c86865e393684ad003ffed69b6d0495fe8d025e9e4063b2d4820b9441d99",
+      "originalEncoding": "utf-16",
+      "displayTransform": "UTF-16 to UTF-8, LF, trim trailing whitespace"
+    }
+  ]
+}

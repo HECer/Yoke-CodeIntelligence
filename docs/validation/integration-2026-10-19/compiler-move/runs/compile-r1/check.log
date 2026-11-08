@@ -1,0 +1,23 @@
+    Checking yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+warning: unused imports: `Snapshot` and `analysis`
+ --> native\src\compiler_move.rs:3:13
+  |
+3 |     Engine, analysis,
+  |             ^^^^^^^^
+...
+6 |     model::{Entity, Snapshot, identity},
+  |                     ^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `check_span` is never used
+   --> native\src\compiler_move_ast.rs:507:15
+    |
+507 | pub(super) fn check_span(span: &Span, contents: &Contents) -> Result<()> {
+    |               ^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `yoke-code-intelligence` (lib) generated 2 warnings (run `cargo fix --lib -p yoke-code-intelligence` to apply 1 suggestion)
+warning: `yoke-code-intelligence` (lib test) generated 2 warnings (2 duplicates)
+    Finished `dev` profile [unoptimized] target(s) in 1m 39s

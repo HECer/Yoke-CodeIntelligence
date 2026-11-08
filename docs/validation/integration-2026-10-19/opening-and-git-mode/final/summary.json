@@ -1,0 +1,221 @@
+{
+  "allChecksPassed": false,
+  "sourceUnchanged": true,
+  "checks": [
+    {
+      "gate": "format",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "fmt",
+        "--all",
+        "--check"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 4.485,
+      "recordedAt": "2026-10-19T03:05:21.354705+00:00",
+      "resultGroups": []
+    },
+    {
+      "gate": "opening-and-mapped-history",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "--no-fail-fast",
+        "-j2",
+        "--test",
+        "store_open_deadline",
+        "--test",
+        "github_app_digest_mapping",
+        "--",
+        "--test-threads=2"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 82.841,
+      "recordedAt": "2026-10-19T03:06:44.196372+00:00",
+      "resultGroups": [
+        {
+          "passed": 13,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "passed": 7,
+          "failed": 0,
+          "ignored": 0
+        }
+      ]
+    },
+    {
+      "gate": "native-opening-regressions",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--locked",
+        "--no-fail-fast",
+        "-j2",
+        "--lib",
+        "--test",
+        "store_cancellation",
+        "--test",
+        "store_read_only",
+        "--test",
+        "store_identity",
+        "--test",
+        "store_review",
+        "--test",
+        "deadline_scope",
+        "--test",
+        "deadlines",
+        "--test",
+        "ledger",
+        "--test",
+        "ledger_admission_review",
+        "--test",
+        "ledger_batches",
+        "--test",
+        "ledger_batches_review",
+        "--test",
+        "federation",
+        "--test",
+        "federation_http",
+        "--test",
+        "maintenance",
+        "--test",
+        "github_app_digest",
+        "--test",
+        "github_app_digest_cli",
+        "--",
+        "--test-threads=2"
+      ],
+      "exitCode": 101,
+      "elapsedSeconds": 174.954,
+      "recordedAt": "2026-10-19T03:09:39.151150+00:00",
+      "resultGroups": [
+        {
+          "passed": 403,
+          "failed": 0,
+          "ignored": 7
+        },
+        {
+          "passed": 2,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "passed": 12,
+          "failed": 1,
+          "ignored": 0
+        },
+        {
+          "passed": 16,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "passed": 35,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "passed": 38,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "passed": 5,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "passed": 6,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "passed": 3,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "passed": 11,
+          "failed": 1,
+          "ignored": 0
+        },
+        {
+          "passed": 9,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "passed": 4,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "passed": 7,
+          "failed": 0,
+          "ignored": 0
+        },
+        {
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0
+        }
+      ]
+    },
+    {
+      "gate": "clippy",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "clippy",
+        "--workspace",
+        "--all-targets",
+        "--locked",
+        "--keep-going",
+        "-j2",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 88.841,
+      "recordedAt": "2026-10-19T03:11:07.992815+00:00",
+      "resultGroups": []
+    },
+    {
+      "gate": "typescript-typecheck",
+      "command": [
+        "npm.cmd",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 2.818,
+      "recordedAt": "2026-10-19T03:11:10.811657+00:00",
+      "resultGroups": []
+    },
+    {
+      "gate": "typescript-tests",
+      "command": [
+        "npm.cmd",
+        "test"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 57.574,
+      "recordedAt": "2026-10-19T03:12:08.386263+00:00",
+      "resultGroups": []
+    }
+  ],
+  "scope": "Scoped Windows opening/deadline/Git mapping checks. Unix chmod branch requires actual hosted Unix validation; no emulation/certification. Symlink setup failures remain visible; no security fixture gated away."
+}

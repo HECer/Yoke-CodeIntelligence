@@ -1,0 +1,12 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+    Finished `test` profile [unoptimized] target(s) in 1m 11s
+     Running tests\neo4j_publish.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\neo4j_publish-491c3a1e96396b67.exe)
+
+running 4 tests
+test altered_graph_labels_or_an_unrelated_source_store_cannot_be_published_as_verified ... ok
+test closed_limits_and_expired_requests_cannot_grant_network_or_source_authority ... ok
+test exact_serialized_capacity_is_admitted_and_lower_budgets_publish_nothing ... ok
+test verified_payload_preserves_parallel_directions_exact_evidence_and_original_source_bytes ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.18s
+

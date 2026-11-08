@@ -1,0 +1,38 @@
+{
+  "after": {
+    "dist/core/process.js": "dbe007f14631548213663ac00a4a17dc82a71098b4770914bdc0f39fe6788f56",
+    "src/core/process.ts": "9468729193c4c2582458008ba185cbf012cc557f2d0832add80a0777124ecab8",
+    "test/process-cleanup.test.mjs": "5d1606bdd7c69ba34475f314c56cbdfba490606a89941d9daf09d81f80cff2b5",
+    "test/process-deadline-transition.test.mjs": "ee60282d44e65e0b918d09e891422447afdceb75ea1b6346abaae917580c1d19",
+    "test/process-killer-failure.test.mjs": "e82d4701f0d92a41a7a167c1a8861f05804e7dff2703707a7c81a0b67e4498b7",
+    "test/process-spawn-failure.test.mjs": "589ecc46244e9b2ef2d3657a799d455a37163063528b18b36cbda26c1d4f3a16"
+  },
+  "before": {
+    "dist/core/process.js": "dbe007f14631548213663ac00a4a17dc82a71098b4770914bdc0f39fe6788f56",
+    "src/core/process.ts": "9468729193c4c2582458008ba185cbf012cc557f2d0832add80a0777124ecab8",
+    "test/process-cleanup.test.mjs": "5d1606bdd7c69ba34475f314c56cbdfba490606a89941d9daf09d81f80cff2b5",
+    "test/process-deadline-transition.test.mjs": "ee60282d44e65e0b918d09e891422447afdceb75ea1b6346abaae917580c1d19",
+    "test/process-killer-failure.test.mjs": "e82d4701f0d92a41a7a167c1a8861f05804e7dff2703707a7c81a0b67e4498b7",
+    "test/process-spawn-failure.test.mjs": "589ecc46244e9b2ef2d3657a799d455a37163063528b18b36cbda26c1d4f3a16"
+  },
+  "command": [
+    "node",
+    "--test",
+    "test/process-killer-failure.test.mjs",
+    "test/process-cleanup.test.mjs",
+    "test/process-deadline-transition.test.mjs",
+    "test/process-spawn-failure.test.mjs"
+  ],
+  "counts": {
+    "cancelled": "0",
+    "fail": "0",
+    "pass": "11",
+    "skipped": "0",
+    "tests": "11",
+    "todo": "0"
+  },
+  "exitCode": 0,
+  "logSha256": "bfba6180d5a809a48b35bf0cefa6ccd909c7f954a6a05cb35ac9deda1076667e",
+  "seconds": 16.89,
+  "tempRoot": "D:\\Yoke-Test-Scratch\\process-helper-and-lifetime-green-20261016"
+}

@@ -1,0 +1,65 @@
+{
+  "runs": [
+    {
+      "name": "clippy",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "clippy",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exitCode": 0,
+      "seconds": 1.3786592483520508
+    },
+    {
+      "name": "format",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "exitCode": 0,
+      "seconds": 4.844128131866455
+    },
+    {
+      "name": "cli",
+      "command": [
+        "C:\\Users\\Lomi\\.cargo\\bin\\cargo.exe",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2",
+        "--target-dir",
+        "C:\\Users\\Lomi\\Documents\\NN-Developed\\Yoke-CodeIntelligence\\target",
+        "--test",
+        "neo4j_publish_cli",
+        "--",
+        "--test-threads=1"
+      ],
+      "exitCode": 0,
+      "seconds": 4.059990406036377
+    }
+  ],
+  "allChecksPassed": true,
+  "sourceUnchanged": true,
+  "inputs": 708,
+  "bridge": {
+    "path": "native/tests/neo4j_publish_cli.rs",
+    "priorSha256": "b69756e40aac2ebb248ccfa921c603566bf916a154da5c1e2db9633a8627e8d8",
+    "currentSha256": "0a6200645642f812a44f28d727facea81bb75ac957b56e263fc0abff07d8cb12",
+    "reason": "Windows-only Stdio import is cfg-gated for non-Windows compiler hygiene; no runtime or test behavior change on Windows"
+  },
+  "productionBinarySha256": "370b7fbbb0d6ea68e55661115e220a748cafc535469ab8581c71263d5f5d3042",
+  "productionBinaryUnchanged": true
+}

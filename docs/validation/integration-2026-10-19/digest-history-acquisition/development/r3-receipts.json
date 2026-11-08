@@ -1,0 +1,66 @@
+[
+  {
+    "gate": "r3-native",
+    "command": [
+      "cargo",
+      "test",
+      "--locked",
+      "--no-fail-fast",
+      "-j2",
+      "--test",
+      "digest_history_acquisition",
+      "--test",
+      "github_app_digest_mapping",
+      "--test",
+      "capture_policy",
+      "--test",
+      "git_epochs",
+      "--",
+      "--test-threads=2"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 106.72,
+    "recordedAt": "2026-10-19T06:25:50.489100+00:00",
+    "resultGroups": [
+      {
+        "passed": 9,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 10,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 9,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 13,
+        "failed": 0,
+        "ignored": 0
+      }
+    ]
+  },
+  {
+    "gate": "r3-clippy",
+    "command": [
+      "cargo",
+      "clippy",
+      "--workspace",
+      "--all-targets",
+      "--locked",
+      "--keep-going",
+      "-j2",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "exitCode": 101,
+    "elapsedSeconds": 43.497,
+    "recordedAt": "2026-10-19T06:26:33.987172+00:00",
+    "resultGroups": []
+  }
+]

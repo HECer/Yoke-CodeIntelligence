@@ -1,0 +1,22 @@
+   Compiling yoke-code-intelligence v0.5.0 (C:\Users\Lomi\Documents\NN-Developed\Yoke-CI-r1-attach\native)
+    Finished `test` profile [unoptimized] target(s) in 2m 49s
+     Running tests\git_owners.rs (C:\Users\Lomi\Documents\NN-Developed\Yoke-CodeIntelligence\target\debug\deps\git_owners-3b54c702c2046e09.exe)
+
+running 1 test
+test explicit_empty_rule_has_its_own_exact_quote_and_preserves_legacy_parent ... FAILED
+
+failures:
+
+---- explicit_empty_rule_has_its_own_exact_quote_and_preserves_legacy_parent stdout ----
+
+thread 'explicit_empty_rule_has_its_own_exact_quote_and_preserves_legacy_parent' (23644) panicked at native\tests\git_owners.rs:14:77:
+called `Result::unwrap()` on an `Err` value: git_owners_unavailable
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    explicit_empty_rule_has_its_own_exact_quote_and_preserves_legacy_parent
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.91s
+
+error: test failed, to rerun pass `--test git_owners`
