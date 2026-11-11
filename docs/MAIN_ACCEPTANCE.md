@@ -35,13 +35,29 @@ lookup in that overlay, unchanged saved source and stop. The original Rust
 fixture remains unchanged. Final acceptance requires all five source-bound
 phase receipts and independently observed natural process-tree exits.
 
-Local typecheck passes. The complete Node suite reports 270 passed, zero failed,
-three existing skips; its four new fixture tests use a labeled inert VS Code
+Local typecheck passes. The complete Node suite reports 272 passed, zero failed,
+three existing skips; its six fixture tests use a labeled inert VS Code
 API substitute. Separately, 60 admission/lifecycle/inventory tests pass,
 including missing/forged TypeScript results and failed final cleanup. These
 local tests are not actual editor-host acceptance. Fresh hosted compilation,
 packaging and all three real host scopes must still pass on the follow-up head.
 No native/VS Code payload execution is claimed locally for this change.
+
+### First hosted TypeScript attempt
+
+At `7fd7a6f4`, the real TypeScript host refuses at its workspace-path
+precondition: prepared settings retain `D:`, while VS Code reports `d:`.
+This is a fixture comparison defect before extension activation, not evidence
+of a TypeScript runtime failure or success. Both Rust host receipts pass with
+natural owned-tree exits; the separate TSGo workflow steps also pass.
+
+The correction normalizes only the initial ASCII drive letter. Different
+drives/directories and opaque Unicode spellings still refuse, as do all prior
+source/hash/symbol, authority and lifecycle failures. The original failure is
+preserved in artifact `13894754487`, SHA-256
+`9a69f3305a54ffed4676e5009c63887af40269939241ff5255fdeacdc57e05fc`.
+Fresh complete hosted qualification remains required. The Python admission
+implementation/tests are unchanged from their prior 60-pass local run.
 
 ## Acceptance still open
 

@@ -7,6 +7,10 @@ const crypto = require('node:crypto');
 const { execFileSync } = require('node:child_process');
 const vscode = require('vscode');
 
+// VS Code may lowercase a Windows drive letter. Keep every other byte exact,
+// including opaque Unicode directory names; this is not a filesystem alias test.
+const driveSpelling = value => value.replace(/^[A-Z](?=:)/, letter => letter.toLowerCase());
+
 exports.run = async function () {
     const node = process.env.YOKE_VSCODE_NODE, resultPath = process.env.YOKE_VSCODE_RESULT;
     assert(node && resultPath, 'Owned launcher must supply Node and result paths');
@@ -17,7 +21,8 @@ exports.run = async function () {
     const settings = JSON.parse(fs.readFileSync(path.join(folder.uri.fsPath, '.vscode/settings.json'), 'utf8'));
     assert.equal(settings['codeIntelligence.runtime'], 'rust');
     for (const key of ['nodeExecutable', 'cliPath'])
-        assert.equal(settings['codeIntelligence.' + key], path.join(folder.uri.fsPath, 'must-not-run.exe'));
+        assert.equal(driveSpelling(settings['codeIntelligence.' + key]),
+            driveSpelling(path.join(folder.uri.fsPath, 'must-not-run.exe')));
     const config = vscode.workspace.getConfiguration('codeIntelligence');
     assert.equal(config.inspect('cliPath').globalValue, undefined, 'Bundled CLI must have no global override');
     assert.equal(config.inspect('nativeExecutable').globalValue, undefined);

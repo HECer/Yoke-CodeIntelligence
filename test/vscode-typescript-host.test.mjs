@@ -6,17 +6,23 @@ import crypto from 'node:crypto';
 import { readFileSync } from 'node:fs';
 
 // Inert API/protocol adversaries for the fixture, not real VS Code acceptance.
-function fixture({ badHash = false, missingSymbol = false, native = undefined, cliOverride = undefined } = {}) {
-    const root = path.resolve('owned-typescript-fixture'), extensionPath = path.resolve('owned-vsix-extension');
-    const node = path.resolve('owned-tools/node.exe'), resultPath = path.join(root, 'result.json');
-    const source = path.join(root, 'main.ts'), saved = 'export function saved_symbol(): number { return 1; }\n';
-    const files = new Map([[source, saved], [path.join(root, '.vscode/settings.json'), JSON.stringify({
-        'codeIntelligence.runtime': 'rust', 'codeIntelligence.nodeExecutable': path.join(root, 'must-not-run.exe'),
-        'codeIntelligence.cliPath': path.join(root, 'must-not-run.exe') })]]);
+function fixture({ badHash = false, missingSymbol = false, native = undefined, cliOverride = undefined,
+    windowsDriveSpelling = false, workspaceRoot = undefined, workspacePath = value => value } = {}) {
+    const paths = windowsDriveSpelling ? path.win32 : path;
+    const root = workspaceRoot ?? (windowsDriveSpelling ? 'd:\\owned-typescript-fixture' : paths.resolve('owned-typescript-fixture'));
+    const extensionPath = paths.resolve('owned-vsix-extension');
+    const node = paths.resolve('owned-tools/node.exe'), resultPath = paths.join(root, 'result.json');
+    const source = paths.join(root, 'main.ts'), saved = 'export function saved_symbol(): number { return 1; }\n';
+    const selectedPath = paths.join(root, 'must-not-run.exe');
+    const selected = workspacePath(windowsDriveSpelling
+        ? selectedPath.replace(/^[a-z](?=:)/, letter => letter.toUpperCase()) : selectedPath);
+    const files = new Map([[source, saved], [paths.join(root, '.vscode/settings.json'), JSON.stringify({
+        'codeIntelligence.runtime': 'rust', 'codeIntelligence.nodeExecutable': selected,
+        'codeIntelligence.cliPath': selected })]]);
     const settings = new Map(cliOverride === undefined ? [] : [['cliPath', cliOverride]]), calls = [], launches = [];
     let text = saved;
     const doc = { uri: source, isDirty: false, getText: () => text };
-    const docs = [], cli = path.join(extensionPath, 'runtime/dist/cli.js');
+    const docs = [], cli = paths.join(extensionPath, 'runtime/dist/cli.js');
     const vscode = {
         version: '1.143.1', ConfigurationTarget: { Global: 1 },
         Position: class {}, WorkspaceEdit: class { insert(uri, position, value) { this.value = value; } },
@@ -34,7 +40,7 @@ function fixture({ badHash = false, missingSymbol = false, native = undefined, c
                 files: [{ path: 'main.ts', hash: badHash ? 'forged' : crypto.createHash('sha256').update(text).digest('hex') }] }) });
         } }
     };
-    const modules = { 'node:assert/strict': assert, 'node:path': path, 'node:crypto': crypto, vscode,
+    const modules = { 'node:assert/strict': assert, 'node:path': paths, 'node:crypto': crypto, vscode,
         'node:fs': { readFileSync: name => { assert(files.has(name)); return files.get(name); },
             writeFileSync: (name, value) => files.set(name, value),
             statSync: name => { assert.equal(name, cli); return { isFile: () => true }; } },
@@ -66,6 +72,27 @@ test('TypeScript host fixture selects global Node and bundled CLI without source
     assert.equal(report.runtime, 'typescript');
     assert.equal(report.bundledCliSelected, true);
     assert.equal(report.protectedOpenBufferExcluded, true);
+});
+
+test('TypeScript host fixture accepts VS Code drive-letter spelling without changing path scope', async () => {
+    const f = fixture({ windowsDriveSpelling: true });
+    await f.run();
+    assert.equal(JSON.parse(f.files.get(f.resultPath)).workspaceExecutableIgnored, true);
+    assert.equal(f.launches.length, 1);
+});
+
+test('TypeScript host fixture preserves other directories and opaque Unicode spellings', async () => {
+    for (const options of [
+        { windowsDriveSpelling: true, workspacePath: value => value.replace(/^D:/, 'E:') },
+        { windowsDriveSpelling: true, workspacePath: value => value.replace('owned-typescript-fixture', 'foreign') },
+        { windowsDriveSpelling: true, workspaceRoot: 'd:\\owned-\u0130-fixture',
+            workspacePath: value => value.replace('\u0130', 'i\u0307') }
+    ]) {
+        const f = fixture(options);
+        await assert.rejects(f.run());
+        assert.equal(f.launches.length, 0);
+        assert(!f.files.has(f.resultPath));
+    }
 });
 
 test('TypeScript host fixture refuses stale overlay bytes before querying', async () => {

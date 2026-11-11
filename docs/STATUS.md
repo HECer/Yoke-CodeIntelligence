@@ -13,10 +13,19 @@ host over the extracted bundled CLI. It preserves the original Rust test body,
 worker/source admission, 180-second worker bounds, natural tree-exit proof and
 checked cleanup. Workspace runtime/Node/CLI overrides, missing unsaved source
 proof, absent symbols, stale receipts and incomplete trees cannot qualify it.
-Local typecheck, npm (270 passed, three existing skips) and 60 inert admission/
+Local typecheck, npm (272 passed, three existing skips) and 60 inert admission/
 lifecycle/inventory tests pass. Actual hosted editor execution remains pending;
 no release, full backend/runtime, original-353 or visual acceptance is inferred.
 
+
+The first hosted TypeScript attempt at `7fd7a6f4` stops before extension
+activation: the fixture compares prepared `D:` with VS Code's `d:` spelling.
+Its two Rust hosts and separate TSGo steps pass; TypeScript runtime acceptance
+is still absent. The fixture now canonicalizes only the ASCII drive letter.
+Two added API-fixture adversaries accept that spelling difference while refusing
+foreign drives/directories and Unicode folding. Typecheck and the complete
+Node suite pass (272/0/3 existing skips); unchanged Python admissions retain the
+prior 60-pass result. Full fresh CI is required; the original failure is retained.
 
 ## Required startup notes: macOS worker-limit repair (2026-11-01)
 
