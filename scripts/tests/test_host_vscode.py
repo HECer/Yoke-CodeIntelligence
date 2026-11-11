@@ -9,6 +9,7 @@ import struct
 import subprocess
 import tempfile
 import unittest
+import types
 from unittest import mock
 import zipfile
 
@@ -17,8 +18,8 @@ def functions():
     scripts = Path(__file__).resolve().parents[1]
     namespace = {"json": json, "Path": Path, "PureWindowsPath": PureWindowsPath, "re": re, "stat": stat,
                  "struct": struct, "subprocess": subprocess}
-    sources = [(scripts / "vscode_owned_job.py", {"require", "admit_receipt"}),
-               (scripts / "host_vscode.py", {"require", "unique_object", "reject_constant", "decode", "admit_lifecycle", "producer_role", "safe_members", "admit_host_report", "admit_state", "zip_directory", "admit_stage_result", "source_inventory_command", "source_inputs"})]
+    sources = [(scripts / "vscode_owned_job.py", {"require", "admit_receipt", "windows_path", "code_arguments"}),
+               (scripts / "host_vscode.py", {"require", "unique_object", "reject_constant", "decode", "admit_lifecycle", "producer_role", "safe_members", "admit_host_report", "admit_state", "zip_directory", "admit_stage_result", "source_inventory_command", "source_inputs", "admit_typescript_host_report", "typescript_code_arguments", "admit_typescript_node_role", "finish"})]
     for path, names in sources:
         if not path.is_file():
             continue
@@ -26,6 +27,7 @@ def functions():
         selected = [n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name in names]
         exec(compile(ast.Module(body=selected, type_ignores=[]), "<inert-vsix-admission>", "exec"), namespace)
         namespace["admit_job"] = namespace["admit_receipt"]
+        namespace["JOB"] = types.SimpleNamespace(code_arguments=namespace["code_arguments"], windows_path=namespace["windows_path"])
     return namespace
 
 
@@ -75,6 +77,102 @@ class Admission(unittest.TestCase):
         return {"kind": "actual-vscode-extension-host", "passed": True, "runtime": "rust",
                 "bundledRuntime": False, "vscodeVersion": "1.143.1", "unsavedSourceBound": True,
                 "workspaceExecutableIgnored": True, "protectedOpenBufferExcluded": True, "savedSourceUnchanged": True}
+
+    def typescript_report(self):
+        return {**self.report(), "runtime": "typescript", "bundledRuntime": True,
+                "workspaceRuntimeIgnored": True, "workspaceCliIgnored": True,
+                "bundledCliSelected": True, "symbolFound": True}
+
+    def test_typescript_scope_cannot_reuse_a_native_or_incomplete_receipt(self):
+        self.call("admit_typescript_host_report", self.typescript_report())
+        with self.assertRaises(ValueError):
+            self.call("admit_typescript_host_report", self.report())
+        with self.assertRaises(ValueError):
+            self.call("admit_host_report", self.typescript_report(), True)
+        for key in self.typescript_report():
+            value = self.typescript_report()
+            del value[key]
+            with self.subTest(missing=key), self.assertRaises(ValueError):
+                self.call("admit_typescript_host_report", value)
+        value = self.typescript_report()
+        value["allowExecution"] = True
+        with self.assertRaises(ValueError):
+            self.call("admit_typescript_host_report", value)
+
+    def test_typescript_scope_requires_exact_true_flags_and_pinned_editor(self):
+        report = self.typescript_report()
+        for key in [key for key, value in report.items() if value is True]:
+            for invalid in (False, 1, "true", None):
+                value = self.typescript_report()
+                value[key] = invalid
+                with self.subTest(key=key, invalid=invalid), self.assertRaises(ValueError):
+                    self.call("admit_typescript_host_report", value)
+        for key, invalid in (("runtime", "rust"), ("kind", "mock-editor"), ("vscodeVersion", "foreign")):
+            value = self.typescript_report()
+            value[key] = invalid
+            with self.subTest(key=key), self.assertRaises(ValueError):
+                self.call("admit_typescript_host_report", value)
+
+    def test_typescript_arguments_preserve_original_isolation_and_only_select_fixed_fixture(self):
+        spec = {"fixtureRoot": r"D:\temporary\owned", "repositoryRoot": r"C:\owned",
+                "extensionDirectory": r"D:\temporary\unpacked\extension"}
+        before = copy.deepcopy(spec)
+        native = self.functions["JOB"].code_arguments(spec)
+        actual = self.call("typescript_code_arguments", spec)
+        self.assertEqual(spec, before)
+        index = native.index("--extensionTestsPath") + 1
+        self.assertEqual(actual[:index], native[:index])
+        self.assertEqual(actual[index + 1:], native[index + 1:])
+        self.assertEqual(actual[index], r"C:\owned\scripts\vscode_typescript_host.cjs")
+        self.assertEqual(native[index], r"C:\owned\extensions\vscode\test-host.cjs")
+        for invalid in ([], [native[index], native[index]]):
+            with mock.patch.object(self.functions["JOB"], "code_arguments", return_value=invalid), self.assertRaises(ValueError):
+                self.call("typescript_code_arguments", spec)
+
+    def test_typescript_node_cannot_be_project_fixture_or_unsafe_path(self):
+        root, fixture = PureWindowsPath(r"C:\owned"), PureWindowsPath(r"D:\private\fixture")
+        self.assertEqual(self.call("admit_typescript_node_role", r"C:\host tools\node.exe", root, fixture),
+                         PureWindowsPath(r"C:\host tools\node.exe"))
+        for value in (r"C:\owned\node.exe", r"c:\OWNED\nested\node.exe",
+                      r"D:\private\fixture\node.exe", r"C:\host\other.exe",
+                      r"C:\host\..\node.exe", r"C:\host\node.exe:stream", "node.exe"):
+            with self.subTest(path=value), self.assertRaises(ValueError):
+                self.call("admit_typescript_node_role", value, root, fixture)
+
+    def test_finish_requires_separate_typescript_success_and_natural_exit(self):
+        def records():
+            values = {"source-inputs.json": {"sha256": {"source": "pinned"}},
+                      "built-inputs.json": {"sha256": {"built": "pinned"}}}
+            for phase in ("tool", "package", "explicit", "bundled", "typescript"):
+                report = self.typescript_report() if phase == "typescript" else {**self.report(), "bundledRuntime": phase == "bundled"}
+                values[phase + "-job.json"] = self.job()
+                values[phase + ".json"] = {"schemaVersion": 1, "sourceRevision": "a" * 40, "phase": phase,
+                    "complete": True, "workerAdmission": {"specificJobMembership": True, "queryHandleClosedBeforePayloadRead": True},
+                    "nativeSHA256": "b" * 64, "sourceInputsUnchanged": True, "builtInputsUnchanged": True,
+                    "observation": {"hostReport": report}}
+            return values
+        values, written = records(), []
+        self.functions.update(OUTPUT=Path("owned-results"), CODE_VERSION="1.143.1",
+            identity=lambda: ("a" * 40, {}), read_json=lambda path: values[path.name],
+            source_inputs=lambda: {"source": "pinned"}, built_inputs=lambda: {"built": "pinned"},
+            write_json=lambda path, value: written.append(value))
+        self.assertEqual(self.call("finish"), 0)
+        self.assertTrue(written[-1]["typescriptExtensionModeExecuted"])
+        self.assertTrue(written[-1]["bundledTypeScriptHostPassed"])
+        mutations = (
+            lambda v: v.pop("typescript.json"),
+            lambda v: v["typescript.json"]["observation"].update(hostReport=self.report()),
+            lambda v: v["typescript-job.json"].update(treeExitedBeforeCleanup=False),
+            lambda v: v["typescript.json"].update(sourceRevision="c" * 40),
+            lambda v: v["typescript.json"].update(builtInputsUnchanged=False),
+        )
+        for mutate in mutations:
+            values = records()
+            written.clear()
+            mutate(values)
+            with self.subTest(mutation=mutate), self.assertRaises((ValueError, KeyError)):
+                self.call("finish")
+            self.assertEqual(written, [])
 
     def test_source_inventory_filters_excluded_history_before_output_admission(self):
         selected = {"Cargo.toml", "native/src/main.rs", "scripts/owned.py", ".github/workflows/ci.yml",
@@ -160,7 +258,8 @@ class Admission(unittest.TestCase):
         return {"schemaVersion": 1, "sourceRevision": "a" * 40, "toolRoot": r"D:\temporary\yvs-aaaaaaaaaaaaaaaa",
                 "compilerHomes": {"CARGO_HOME": r"C:\tools\cargo", "RUSTUP_HOME": r"C:\tools\rustup"},
                 "workerRoots": {"tool": r"C:\owned\validation\ci-vscode-workers\tool", "package": r"C:\owned\validation\ci-vscode-workers\package",
-                                "explicit": r"D:\temporary\yvh-explicit-aaaaaaaaaaaaaaaa", "bundled": r"D:\temporary\yvh-bundled-bbbbbbbbbbbbbbbb"}}
+                                "explicit": r"D:\temporary\yvh-explicit-aaaaaaaaaaaaaaaa", "bundled": r"D:\temporary\yvh-bundled-bbbbbbbbbbbbbbbb",
+                                "typescript": r"D:\temporary\yvh-typescript-cccccccccccccccc"}}
 
     def test_real_host_fixture_roots_cannot_inherit_the_checkout(self):
         value = self.state()
@@ -170,7 +269,7 @@ class Admission(unittest.TestCase):
 
     def test_state_binds_fresh_fixed_roles_and_host_selected_compiler_homes(self):
         self.call("admit_state", self.state(), "a" * 40, PureWindowsPath(r"C:\owned"), PureWindowsPath(r"D:\temporary"))
-        for role in ("tool", "package", "explicit", "bundled"):
+        for role in ("tool", "package", "explicit", "bundled", "typescript"):
             value = self.state(); value["workerRoots"][role] = r"D:\foreign\role"
             with self.subTest(role=role), self.assertRaises(ValueError):
                 self.call("admit_state", value, "a" * 40, PureWindowsPath(r"C:\owned"), PureWindowsPath(r"D:\temporary"))

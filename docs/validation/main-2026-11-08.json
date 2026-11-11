@@ -1,0 +1,322 @@
+{
+  "schemaVersion": 1,
+  "sourceRevision": "3d58d07b382040e135a47e36fb24e81dc36185d7",
+  "sourceTree": "401254215948957f61a77034135358b6c24b5cc6",
+  "pr": "https://github.com/HECer/Yoke-CodeIntelligence/pull/7",
+  "remoteMainVerified": true,
+  "scope": "Post-merge CI and Rust core workflow metadata; not independent raw-log, visual, original353-contract or all-backend/runtime certification.",
+  "workflowRuns": [
+    {
+      "id": 42469372002,
+      "name": "CI",
+      "url": "https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/42469372002"
+    },
+    {
+      "id": 42469372178,
+      "name": "Rust core",
+      "url": "https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/42469372178"
+    }
+  ],
+  "counts": {
+    "success": 36,
+    "skipped": 1
+  },
+  "checks": [
+    {
+      "id": 128706132072,
+      "name": "native-rust (macos-latest)",
+      "headSha": "3d58d07b382040e135a47e36fb24e81dc36185d7",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/42469372178/job/128706132072"
+    },
+    {
+      "id": 128704299558,
+      "name": "native-rust (windows-latest)",
+      "headSha": "3d58d07b382040e135a47e36fb24e81dc36185d7",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/42469372178/job/128704299558"
+    },
+    {
+      "id": 128701047688,
+      "name": "native-rust (ubuntu-latest)",
+      "headSha": "3d58d07b382040e135a47e36fb24e81dc36185d7",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/42469372178/job/128701047688"
+    },
+    {
+      "id": 128696437874,
+      "name": "Windows combined VSIX and real Rust extension-host acceptance",
+      "headSha": "3d58d07b382040e135a47e36fb24e81dc36185d7",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/42469372002/job/128696437874"
+    },
+    {
+      "id": 128696323772,
+      "name": "Windows history browser diagnostic (not full native acceptance)",
+      "headSha": "3d58d07b382040e135a47e36fb24e81dc36185d7",
+      "status": "completed",
+      "conclusion": "skipped",
+      "url": "https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/42469372178/job/128696323772"
+    },
+    {
+      "id": 128696323558,
+      "name": "native-shards (windows-latest, 0)",
+      "headSha": "3d58d07b382040e135a47e36fb24e81dc36185d7",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/42469372178/job/128696323558"
+    },
+    {
+      "id": 128696323302,
+      "name": "native-shards (ubuntu-latest, 2)",
+      "headSha": "3d58d07b382040e135a47e36fb24e81dc36185d7",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/42469372178/job/128696323302"
+    },
+    {
+      "id": 128696323300,
+      "name": "native-shards (macos-latest, 6)",
+      "headSha": "3d58d07b382040e135a47e36fb24e81dc36185d7",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/42469372178/job/128696323300"
+    },
+    {
+      "id": 128696323298,
+      "name": "native-shards (macos-latest, 7)",
+      "headSha": "3d58d07b382040e135a47e36fb24e81dc36185d7",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/42469372178/job/128696323298"
+    },
+    {
+      "id": 128696323290,
+      "name": "native-shards (ubuntu-latest, 4)",
+      "headSha": "3d58d07b382040e135a47e36fb24e81dc36185d7",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/42469372178/job/128696323290"
+    },
+    {
+      "id": 128696323265,
+      "name": "native-shards (windows-latest, 3)",
+      "headSha": "3d58d07b382040e135a47e36fb24e81dc36185d7",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/42469372178/job/128696323265"
+    },
+    {
+      "id": 128696323257,
+      "name": "native-shards (macos-latest, 2)",
+      "headSha": "3d58d07b382040e135a47e36fb24e81dc36185d7",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/42469372178/job/128696323257"
+    },
+    {
+      "id": 128696323252,
+      "name": "native-shards (macos-latest, 0)",
+      "headSha": "3d58d07b382040e135a47e36fb24e81dc36185d7",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/42469372178/job/128696323252"
+    },
+    {
+      "id": 128696323240,
+      "name": "native-shards (ubuntu-latest, 0)",
+      "headSha": "3d58d07b382040e135a47e36fb24e81dc36185d7",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/42469372178/job/128696323240"
+    },
+    {
+      "id": 128696323238,
+      "name": "native-shards (macos-latest, 4)",
+      "headSha": "3d58d07b382040e135a47e36fb24e81dc36185d7",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/42469372178/job/128696323238"
+    },
+    {
+      "id": 128696323206,
+      "name": "native-shards (ubuntu-latest, 1)",
+      "headSha": "3d58d07b382040e135a47e36fb24e81dc36185d7",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/42469372178/job/128696323206"
+    },
+    {
+      "id": 128696323193,
+      "name": "native-shards (windows-latest, 7)",
+      "headSha": "3d58d07b382040e135a47e36fb24e81dc36185d7",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/42469372178/job/128696323193"
+    },
+    {
+      "id": 128696323184,
+      "name": "native-shards (macos-latest, 3)",
+      "headSha": "3d58d07b382040e135a47e36fb24e81dc36185d7",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/42469372178/job/128696323184"
+    },
+    {
+      "id": 128696323181,
+      "name": "native-shards (macos-latest, 1)",
+      "headSha": "3d58d07b382040e135a47e36fb24e81dc36185d7",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/42469372178/job/128696323181"
+    },
+    {
+      "id": 128696323179,
+      "name": "native-shards (windows-latest, 6)",
+      "headSha": "3d58d07b382040e135a47e36fb24e81dc36185d7",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/42469372178/job/128696323179"
+    },
+    {
+      "id": 128696323159,
+      "name": "native-shards (ubuntu-latest, 3)",
+      "headSha": "3d58d07b382040e135a47e36fb24e81dc36185d7",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/42469372178/job/128696323159"
+    },
+    {
+      "id": 128696323154,
+      "name": "native-shards (windows-latest, 1)",
+      "headSha": "3d58d07b382040e135a47e36fb24e81dc36185d7",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/42469372178/job/128696323154"
+    },
+    {
+      "id": 128696323153,
+      "name": "native-shards (ubuntu-latest, 7)",
+      "headSha": "3d58d07b382040e135a47e36fb24e81dc36185d7",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/42469372178/job/128696323153"
+    },
+    {
+      "id": 128696323147,
+      "name": "native-shards (ubuntu-latest, 6)",
+      "headSha": "3d58d07b382040e135a47e36fb24e81dc36185d7",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/42469372178/job/128696323147"
+    },
+    {
+      "id": 128696323143,
+      "name": "native-shards (windows-latest, 4)",
+      "headSha": "3d58d07b382040e135a47e36fb24e81dc36185d7",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/42469372178/job/128696323143"
+    },
+    {
+      "id": 128696323141,
+      "name": "native-shards (ubuntu-latest, 5)",
+      "headSha": "3d58d07b382040e135a47e36fb24e81dc36185d7",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/42469372178/job/128696323141"
+    },
+    {
+      "id": 128696323108,
+      "name": "native-shards (windows-latest, 2)",
+      "headSha": "3d58d07b382040e135a47e36fb24e81dc36185d7",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/42469372178/job/128696323108"
+    },
+    {
+      "id": 128696323102,
+      "name": "native-shards (windows-latest, 5)",
+      "headSha": "3d58d07b382040e135a47e36fb24e81dc36185d7",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/42469372178/job/128696323102"
+    },
+    {
+      "id": 128696323075,
+      "name": "native-shards (macos-latest, 5)",
+      "headSha": "3d58d07b382040e135a47e36fb24e81dc36185d7",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/42469372178/job/128696323075"
+    },
+    {
+      "id": 128696322990,
+      "name": "Windows credential-backed TLS (single explicit ignored case)",
+      "headSha": "3d58d07b382040e135a47e36fb24e81dc36185d7",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/42469372178/job/128696322990"
+    },
+    {
+      "id": 128696322653,
+      "name": "native (ubuntu-latest, 22.16.0)",
+      "headSha": "3d58d07b382040e135a47e36fb24e81dc36185d7",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/42469372002/job/128696322653"
+    },
+    {
+      "id": 128696322509,
+      "name": "native (macos-latest, 22.16.0)",
+      "headSha": "3d58d07b382040e135a47e36fb24e81dc36185d7",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/42469372002/job/128696322509"
+    },
+    {
+      "id": 128696322431,
+      "name": "native (windows-latest, 24)",
+      "headSha": "3d58d07b382040e135a47e36fb24e81dc36185d7",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/42469372002/job/128696322431"
+    },
+    {
+      "id": 128696322424,
+      "name": "native (ubuntu-latest, 24)",
+      "headSha": "3d58d07b382040e135a47e36fb24e81dc36185d7",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/42469372002/job/128696322424"
+    },
+    {
+      "id": 128696322412,
+      "name": "native (windows-latest, 22.16.0)",
+      "headSha": "3d58d07b382040e135a47e36fb24e81dc36185d7",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/42469372002/job/128696322412"
+    },
+    {
+      "id": 128696322359,
+      "name": "native (macos-latest, 24)",
+      "headSha": "3d58d07b382040e135a47e36fb24e81dc36185d7",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/42469372002/job/128696322359"
+    },
+    {
+      "id": 128696322272,
+      "name": "Windows VS Code launcher Job lifecycle (no VSIX acceptance)",
+      "headSha": "3d58d07b382040e135a47e36fb24e81dc36185d7",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/42469372002/job/128696322272"
+    }
+  ]
+}

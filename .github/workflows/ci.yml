@@ -55,7 +55,7 @@ jobs:
           path: validation/ci-vscode-owned-job
           if-no-files-found: warn
   windows-vsix:
-    name: Windows combined VSIX and real Rust extension-host acceptance
+    name: Windows combined VSIX and real Rust/TypeScript extension-host acceptance
     if: github.event_name == 'push'
     needs: vscode-owned-job
     runs-on: windows-latest
@@ -98,7 +98,10 @@ jobs:
       - name: Exercise the extracted bundled native selection in the real extension host
         timeout-minutes: 4
         run: python scripts/host_vscode.py stage --phase bundled
-      - name: Require both source-bound host results and natural owned-tree exits
+      - name: Exercise bundled TypeScript in a separate real extension host
+        timeout-minutes: 4
+        run: python scripts/host_vscode.py stage --phase typescript
+      - name: Require all three source-bound host results and natural owned-tree exits
         timeout-minutes: 1
         run: python scripts/host_vscode.py finish
       - name: Preserve only VSIX acceptance text receipts and bounded logs

@@ -1,5 +1,23 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Main baseline and packaged TypeScript host follow-up (2026-11-11)
+
+PR #7 merged normally as `3d58d07b`, preserving the qualified source tree and
+feature histories. Both post-merge workflows pass: 36 successful checks and one
+conditional history-browser skip. The [current acceptance summary](MAIN_ACCEPTANCE.md)
+records the exact source, remote job identities and limits of that metadata.
+The dated pending records below retain their historical checkpoints.
+
+The combined VSIX profile now additionally requires a separate real TypeScript
+host over the extracted bundled CLI. It preserves the original Rust test body,
+worker/source admission, 180-second worker bounds, natural tree-exit proof and
+checked cleanup. Workspace runtime/Node/CLI overrides, missing unsaved source
+proof, absent symbols, stale receipts and incomplete trees cannot qualify it.
+Local typecheck, npm (270 passed, three existing skips) and 60 inert admission/
+lifecycle/inventory tests pass. Actual hosted editor execution remains pending;
+no release, full backend/runtime, original-353 or visual acceptance is inferred.
+
+
 ## Required startup notes: macOS worker-limit repair (2026-11-01)
 
 PR #34's original `f165514611de6faf91c1a42f199e830c93c0f0ab` macOS shards

@@ -1,4 +1,4 @@
-"""Fresh source-bound Windows combined VSIX and real Rust extension-host CI.
+"""Fresh source-bound Windows combined VSIX and real Rust/TypeScript extension-host CI.
 
 Every payload/hash/version/package/editor operation runs in an owned worker.
 The same-run Python lifecycle probe is a prerequisite, not VSIX acceptance.
@@ -181,6 +181,32 @@ def admit_host_report(value, bundled):
                 "protectedOpenBufferExcluded", "savedSourceUnchanged")), "Host assertions incomplete")
 
 
+def admit_typescript_host_report(value):
+    expected = {"kind", "passed", "runtime", "bundledRuntime", "vscodeVersion", "unsavedSourceBound",
+                "workspaceExecutableIgnored", "workspaceRuntimeIgnored", "workspaceCliIgnored",
+                "bundledCliSelected", "symbolFound", "protectedOpenBufferExcluded", "savedSourceUnchanged"}
+    require(isinstance(value, dict) and set(value) == expected, "TypeScript host result fields differ")
+    require(value["kind"] == "actual-vscode-extension-host" and value["runtime"] == "typescript"
+            and value["vscodeVersion"] == "1.143.1", "TypeScript host result scope differs")
+    require(all(value[key] is True for key in expected - {"kind", "runtime", "vscodeVersion"}),
+            "TypeScript host assertions incomplete")
+
+
+def admit_typescript_node_role(value, root, fixture):
+    node = JOB.windows_path(value)
+    require(node.name.lower() == "node.exe" and not node.is_relative_to(root)
+            and not node.is_relative_to(fixture), "External host-selected Node required")
+    return node
+
+
+def typescript_code_arguments(spec):
+    arguments = JOB.code_arguments(spec)
+    original = str(PureWindowsPath(spec["repositoryRoot"]) / "extensions/vscode/test-host.cjs")
+    require(arguments.count(original) == 1, "Original host fixture selection differs")
+    return [str(PureWindowsPath(spec["repositoryRoot"]) / "scripts/vscode_typescript_host.cjs")
+            if argument == original else argument for argument in arguments]
+
+
 def admit_stage_result(value, phase, revision):
     require(isinstance(value, dict) and set(value) == {"schemaVersion", "sourceRevision", "phase", "complete",
         "workerAdmission", "nativeSHA256", "sourceInputsUnchanged", "builtInputsUnchanged", "observation"}, "Stage fields differ")
@@ -200,7 +226,7 @@ def admit_state(value, revision, root, temp):
     tool = PureWindowsPath(value["toolRoot"])
     require(tool.parent == temp and re.fullmatch(r"yvs-[0-9a-f]{16}", tool.name) is not None, "Editor tool role differs")
     roots = value["workerRoots"]
-    require(isinstance(roots, dict) and set(roots) == {"tool", "package", "explicit", "bundled"}, "Worker roles differ")
+    require(isinstance(roots, dict) and set(roots) == {"tool", "package", "explicit", "bundled", "typescript"}, "Worker roles differ")
     for phase, name in roots.items():
         path = PureWindowsPath(name)
         if phase in ("tool", "package"):
@@ -384,7 +410,8 @@ def prepare():
     state = {"schemaVersion": 1, "sourceRevision": revision, "toolRoot": str(tool), "compilerHomes": homes,
         "workerRoots": {"tool": str(WORKERS / "tool"), "package": str(WORKERS / "package"),
             "explicit": str(temp / ("yvh-explicit-" + os.urandom(8).hex())),
-            "bundled": str(temp / ("yvh-bundled-" + os.urandom(8).hex()))}}
+            "bundled": str(temp / ("yvh-bundled-" + os.urandom(8).hex())),
+            "typescript": str(temp / ("yvh-typescript-" + os.urandom(8).hex()))}}
     admit_state(state, revision, PureWindowsPath(str(ROOT)), PureWindowsPath(str(temp)))
     write_json(WORKERS / "state.json", state)
     return 0
@@ -613,7 +640,8 @@ def host_phase(phase, state, environment, native_hash):
     require(hash_file(PACKAGES / "combined.vsix", 256_000_000) == packaged["vsixSHA256"]
             and hash_file(PACKAGES / "package-inputs.json", 4_000_000) == packaged["inputMapSHA256"], "VSIX input changed")
     check_tree(PACKAGES / "unpacked", read_json(PACKAGES / "package-inputs.json", 4_000_000), NATIVE_MAX, 384_000_000)
-    bundled = phase == "bundled"
+    typescript = phase == "typescript"
+    bundled = phase in ("bundled", "typescript")
     native = PACKAGES / "unpacked/extension/runtime/native/yoke.exe" if bundled else ROOT / "target/release/yoke.exe"
     require(hash_file(native, NATIVE_MAX) == native_hash, "Selected host CLI differs")
     fixture = Path(state["workerRoots"][phase]) / "host"
@@ -621,8 +649,14 @@ def host_phase(phase, state, environment, native_hash):
     workspace, profile, extensions = fixture / "workspace", fixture / "profile", fixture / "extensions"
     for directory in (workspace / ".vscode", profile / "User", extensions):
         directory.mkdir(parents=True)
-    (workspace / "main.rs").write_bytes(b'fn main() { println!("fixture"); }\n')
-    write_json(workspace / ".vscode/settings.json", {"codeIntelligence.nativeExecutable": str(workspace / "must-not-run.exe"), "codeIntelligence.runtime": "typescript"})
+    source_name = "main.ts" if typescript else "main.rs"
+    source_bytes = b"export function saved_symbol(): number { return 1; }\n" if typescript else b'fn main() { println!("fixture"); }\n'
+    (workspace / source_name).write_bytes(source_bytes)
+    settings = {"codeIntelligence.nativeExecutable": str(workspace / "must-not-run.exe"), "codeIntelligence.runtime": "typescript"}
+    if typescript:
+        settings.update({"codeIntelligence.runtime": "rust", "codeIntelligence.nodeExecutable": str(workspace / "must-not-run.exe"),
+                         "codeIntelligence.cliPath": str(workspace / "must-not-run.exe")})
+    write_json(workspace / ".vscode/settings.json", settings)
     write_json(profile / "User/settings.json", {"security.workspace.trust.enabled": False, "telemetry.telemetryLevel": "off",
         "update.mode": "none", "extensions.autoCheckUpdates": False, "extensions.autoUpdate": False,
         "workbench.startupEditor": "none", "window.restoreWindows": "none"})
@@ -631,24 +665,48 @@ def host_phase(phase, state, environment, native_hash):
         "repositoryRoot": str(ROOT), "extensionDirectory": str(extension), "timeoutSeconds": 180})
     for key in ("GH_TOKEN", "GITHUB_TOKEN", "ACTIONS_RUNTIME_TOKEN", "ACTIONS_ID_TOKEN_REQUEST_TOKEN"):
         environment.pop(key, None)
-    environment.update(YOKE_VSCODE_NATIVE=str(native), YOKE_VSCODE_RESULT=str(fixture / "result.json"), YOKE_VSCODE_BUNDLED="1" if bundled else "0")
+    environment.update(YOKE_VSCODE_RESULT=str(fixture / "result.json"), YOKE_VSCODE_BUNDLED="1" if bundled else "0")
+    arguments = JOB.code_arguments(spec)
+    node = None
+    node_hash = None
+    if typescript:
+        environment.pop("YOKE_VSCODE_NATIVE", None)
+        selected = shutil.which("node.exe", path=environment.get("PATH", ""))
+        require(selected is not None, "Host-selected Node unavailable")
+        node = Path(selected)
+        JOB.ordinary(node)
+        node = node.resolve(strict=True)
+        admit_typescript_node_role(str(node), PureWindowsPath(str(ROOT.resolve(strict=True))), PureWindowsPath(str(fixture)))
+        node_hash = hash_file(node, 128_000_000)
+        require(subprocess.check_output([str(node), "--version"], env=environment, text=True, timeout=10).strip() == "v22.16.0",
+                "TypeScript host Node version differs")
+        environment["YOKE_VSCODE_NODE"] = str(node)
+        arguments = typescript_code_arguments(spec)
+    else:
+        environment["YOKE_VSCODE_NATIVE"] = str(native)
     startup = subprocess.STARTUPINFO()
     startup.dwFlags = subprocess.STARTF_USESHOWWINDOW
     startup.wShowWindow = subprocess.SW_HIDE
     PROGRESS.append("host-launch")
     with (fixture / "editor.stdout").open("xb") as stdout, (fixture / "editor.stderr").open("xb") as stderr:
-        ran = subprocess.run([str(code), *JOB.code_arguments(spec)], cwd=workspace, env=environment,
+        ran = subprocess.run([str(code), *arguments], cwd=workspace, env=environment,
             stdout=stdout, stderr=stderr, startupinfo=startup, creationflags=subprocess.CREATE_NO_WINDOW, timeout=180)
     require(ran.returncode == 0, "Actual editor root did not exit successfully")
     PROGRESS.append("host-report")
     report = read_json(fixture / "result.json", 65536)
-    admit_host_report(report, bundled)
-    require((workspace / "main.rs").read_bytes() == b'fn main() { println!("fixture"); }\n', "Fixture saved source changed")
+    if typescript:
+        admit_typescript_host_report(report)
+        require(hash_file(node, 128_000_000) == node_hash, "Host-selected Node changed")
+    else:
+        admit_host_report(report, bundled)
+    require((workspace / source_name).read_bytes() == source_bytes, "Fixture saved source changed")
     require(hash_file(native, NATIVE_MAX) == native_hash, "Host CLI changed during execution")
     check_tree(tool / "editor", read_json(tool / "tool-inputs.json", 4_000_000), 256_000_000, CODE_EXPANDED)
     check_tree(PACKAGES / "unpacked", read_json(PACKAGES / "package-inputs.json", 4_000_000), NATIVE_MAX, 384_000_000)
     return {"hostReport": report, "editorExitCode": ran.returncode, "nativeSHA256": native_hash,
+            "testHostSHA256": hash_file(ROOT / ("scripts/vscode_typescript_host.cjs" if typescript else "extensions/vscode/test-host.cjs"), 1_000_000),
             "originalTestHostSHA256": hash_file(ROOT / "extensions/vscode/test-host.cjs", 1_000_000),
+            "selectedNodeSHA256": node_hash,
             "editorInputsUnchanged": True, "VSIXInputsByteVerified": True, "savedFixtureSourceUnchanged": True}
 
 
@@ -704,7 +762,7 @@ def stage(phase):
     revision, _ = identity()
     state = load_state(revision)
     require(state["sourceRevision"] == revision, "Stage source differs")
-    order = ["tool", "package", "explicit", "bundled"]
+    order = ["tool", "package", "explicit", "bundled", "typescript"]
     for earlier in order[:order.index(phase)]:
         admit_job(read_json(OUTPUT / (earlier + "-job.json")))
         prior = read_json(OUTPUT / (earlier + ".json"))
@@ -729,7 +787,7 @@ def stage(phase):
 def finish():
     revision, _ = identity()
     rows = {}
-    for phase in ("tool", "package", "explicit", "bundled"):
+    for phase in ("tool", "package", "explicit", "bundled", "typescript"):
         admit_job(read_json(OUTPUT / (phase + "-job.json")))
         row = read_json(OUTPUT / (phase + ".json"))
         admit_stage_result(row, phase, revision)
@@ -737,13 +795,15 @@ def finish():
     require(len({r["nativeSHA256"] for r in rows.values()}) == 1, "Stage native identities differ")
     for phase in ("explicit", "bundled"):
         admit_host_report(rows[phase]["observation"]["hostReport"], phase == "bundled")
+    admit_typescript_host_report(rows["typescript"]["observation"]["hostReport"])
     require(source_inputs() == read_json(OUTPUT / "source-inputs.json")["sha256"]
             and built_inputs() == read_json(OUTPUT / "built-inputs.json")["sha256"], "Final source/built inputs changed")
     write_json(OUTPUT / "result.json", {"schemaVersion": 1, "sourceRevision": revision, "complete": True,
         "product": "Code Intelligence", "nativeVersion": "0.5.0", "retainedTypeScriptVersion": "0.3.0", "editorVersion": CODE_VERSION,
-        "scope": "Fresh combined VSIX bytes and explicit/bundled real Rust extension-host assertions",
+        "scope": "Fresh combined VSIX bytes, explicit/bundled Rust and bundled TypeScript real extension-host assertions",
         "explicitRustHostPassed": True, "bundledRustHostPassed": True, "allOwnedTreesExitedBeforeCleanup": True,
-        "typescriptRuntimeBundledAndByteVerified": True, "typescriptExtensionModeExecuted": False,
+        "typescriptRuntimeBundledAndByteVerified": True, "typescriptExtensionModeExecuted": True,
+        "bundledTypeScriptHostPassed": True,
         "wholePlatformCombinedFeatureParityMainOrReleaseAccepted": False})
     return 0
 
@@ -751,8 +811,8 @@ def finish():
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("operation", choices=("prepare", "stage", "finish"), nargs="?")
-    parser.add_argument("--phase", choices=("tool", "package", "explicit", "bundled"))
-    parser.add_argument("--worker", choices=("tool", "package", "explicit", "bundled"), help=argparse.SUPPRESS)
+    parser.add_argument("--phase", choices=("tool", "package", "explicit", "bundled", "typescript"))
+    parser.add_argument("--worker", choices=("tool", "package", "explicit", "bundled", "typescript"), help=argparse.SUPPRESS)
     args = parser.parse_args()
     require((args.worker is not None) != (args.operation is not None), "Select one acceptance operation")
     if args.worker:

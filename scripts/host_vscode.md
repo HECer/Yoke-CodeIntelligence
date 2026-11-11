@@ -1,7 +1,8 @@
 # Fresh Windows combined VSIX acceptance
 
 The additive push-only `windows-vsix` CI job qualifies only its exact source and
-the two stated Rust extension-host modes. It depends on the same-run
+the two stated Rust extension-host modes and separately selected bundled
+TypeScript extension-host mode. It depends on the same-run
 `vscode-owned-job` success, downloads that small text artifact, and independently
 requires its source revision and all four expected lifecycle outcomes. A probe
 receipt is not a native, editor or VSIX result.
@@ -32,7 +33,7 @@ The post-query policy check, ordinary-file checks, 16 MB per-file and 96 MB tota
 source-byte limits remain mandatory. Filtering earlier does not narrow the
 logical selected source set or enlarge any capacity.
 
-## Four owned workers
+## Five owned workers
 
 Each phase gets an assigned-before-resume kill-on-close Job through the existing
 launcher, an at-most-180-second lifetime, disk/output checks, independent natural
@@ -57,17 +58,25 @@ fresh Cargo role and unchanged metadata.
    the fresh release CLI in a fresh private profile/workspace/extensions fixture.
 4. **Bundled:** Use a different private fixture and the actual extracted VSIX
    extension/native CLI, retaining the original no-global-override assertions.
+5. **TypeScript:** Use another private fixture and the extracted VSIX's advanced
+   TypeScript CLI. Pin the host-selected Node image and require version 22.16.0.
+   A separate fixed test host selects TypeScript globally while workspace
+   runtime/Node/CLI overrides point to refused selections. It requires exact
+   unsaved TypeScript overlay bytes and real symbol lookup through that CLI,
+   protected-buffer exclusion, unchanged saved source and stop. No native CLI
+   selection is passed to this host.
 
-Both real workspaces live outside the checkout under runner temp, preserving
+All three real workspaces live outside the checkout under runner temp, preserving
 the original launcher's isolation from parent Git-ignore/source policy. Code
-uses the original fixed arguments and unchanged `test-host.cjs`: real extension
+uses the original fixed isolation arguments and unchanged `test-host.cjs` for
+Rust (a separate `vscode_typescript_host.cjs` for TypeScript): real extension
 activation, ignored workspace executable selection, protected open-buffer
 exclusion, unsaved source-bound overlay/hash, actual native symbol lookup,
 unchanged saved source and stop. The reported editor version must be 1.143.1.
 No user profile or extension installation is selected. Token environment fields
 needed only by the license phase do not enter the editor child.
 
-Only after all four source-bound phase receipts and all four complete natural
+Only after all five source-bound phase receipts and all five complete natural
 Job exits pass can `finish` write a complete result. A successful editor marker
 cannot qualify a leaking process tree. Partial stage files, changed inputs,
 foreign roles, stale probe receipts and missing scopes refuse.
@@ -93,14 +102,17 @@ assuming it shares the checkout drive.
 
 `combined-vsix-rust-host-windows` uploads only selected text receipts and bounded
 logs, including closed failure-phase labels. Editor/native/VSIX payloads and
-private profile trees stay outside it. The four workers and two host modes keep
+private profile trees stay outside it. The five workers and three host scopes keep
 their own results; counts are not native test totals.
 
-The retained TypeScript 0.3 runtime is bundled and byte-verified; these host runs
-select Rust 0.5 and do not execute the advanced TypeScript extension mode. The
-profile changes no UI, native implementation, packager, importer, extension or
-original test body. Local checks use only inert source-extracted admissions,
-syntax/source audits and required npm checks. Actual procurement, compilation,
-native packaging, Windows kernel behavior and both real host modes remain
-unrun locally and require hosted evidence. Full backend/feature-combined parity,
-all platform gates, main/publication and release acceptance remain open.
+The retained TypeScript 0.3 runtime must now pass its own real host phase;
+bundling and byte verification alone cannot supply that result. Package-only
+receipts still state that TypeScript host mode has not executed. Only final
+acceptance after all five owned phases can state otherwise. The profile changes
+no UI, native implementation, packager, importer, extension or original Rust
+test body. Local source-extracted admission and labeled API-fixture tests are
+not actual VS Code execution. Fresh hosted procurement, compilation, packaging
+and all three host scopes remain required for the follow-up head. The existing
+worker/step and 60-minute whole-job ceilings are unchanged. Full backend/feature
+parity, visual/platform, publication and release acceptance remain separate;
+the earlier verified main merge is recorded in [current acceptance](../docs/MAIN_ACCEPTANCE.md).
