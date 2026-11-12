@@ -1,5 +1,27 @@
 # Release status â€” native 0.5.0 and retained TypeScript 0.3.0
 
+## Main TypeScript host qualification and Explorer startup follow-up (2026-11-12)
+
+PR #37 merged as `9fc652a44e`, retaining the exact qualified `c4ed8a8f` tree.
+Both push and PR checks passed before merge, including actual bundled TypeScript
+VS Code host execution alongside both original Rust hosts. The successful
+unchanged-source native retry does not explain its earlier deadline failures.
+The [current acceptance summary](MAIN_ACCEPTANCE.md) records that scope.
+
+Post-merge CI passes, but Rust core fails: Windows shard 6 has 47 successful
+groups and one failed Explorer target (six passed, two failed). Both failures
+occur before readiness with an unlocalized deadline error. All 96 group logs
+and the 1,203 selected source hashes are verified against the actual main tree,
+including separately identified LF/CRLF-only differences. The original failed
+artifact remains intact; main is not fully qualified by the earlier PR checks.
+
+The follow-up adds fixed `select-input`/`export-view` startup error contexts and
+two refusal regressions for no readiness/capability publication, restored host
+write settings and preserved Unicode/CRLF source and saved captures. Original
+deadlines, assertions, test parallelism and permission gates are unchanged.
+These diagnostics are not a causal repair of the intermittent timeout. Fresh
+native execution and the broader production/release gates remain required.
+
 ## Main baseline and packaged TypeScript host follow-up (2026-11-11)
 
 PR #7 merged normally as `3d58d07b`, preserving the qualified source tree and

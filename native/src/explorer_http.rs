@@ -5,7 +5,7 @@ use crate::{
     export::{self, SourceExplorerOptions},
     model::valid_id,
 };
-use anyhow::{Result, ensure};
+use anyhow::{Context, Result, ensure};
 use serde::Deserialize;
 use serde_json::json;
 use std::{
@@ -290,13 +290,15 @@ pub fn serve(engine: &mut Engine, config: Config, mut output: impl Write) -> Res
     engine.allow_writes = false;
     let result = (|| -> Result<()> {
         let deadline = Deadline::new(config.request_timeout_ms);
-        let (snapshot, graph) = engine.select(
-            &config
-                .snapshot_id
-                .as_ref()
-                .map_or_else(|| json!({}), |id| json!({"snapshotId":id})),
-            &deadline,
-        )?;
+        let (snapshot, graph) = engine
+            .select(
+                &config
+                    .snapshot_id
+                    .as_ref()
+                    .map_or_else(|| json!({}), |id| json!({"snapshotId":id})),
+                &deadline,
+            )
+            .context("Explorer startup failed; phase=select-input")?;
         let mut view = View {
             snapshot: snapshot.id.clone(),
             revision: 0,
@@ -306,7 +308,8 @@ pub fn serve(engine: &mut Engine, config: Config, mut output: impl Write) -> Res
                 &graph,
                 &config.export_options,
                 &deadline,
-            )?,
+            )
+            .context("Explorer startup failed; phase=export-view")?,
         };
         engine.store.clear_deadline();
         let mut bytes = [0; 32];
