@@ -16,7 +16,7 @@ jobs:
     timeout-minutes: 45
     steps: &native-shard-steps
       - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@1.94.1
+      - uses: dtolnay/rust-toolchain@1.120.0
         with:
           components: clippy, rustfmt, rust-analyzer
       - uses: actions/setup-node@v4
@@ -180,7 +180,7 @@ jobs:
     timeout-minutes: 45
     steps: &native-acceptance-steps
       - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@1.94.1
+      - uses: dtolnay/rust-toolchain@1.120.0
         with:
           components: clippy, rustfmt, rust-analyzer
       - uses: actions/setup-node@v4
@@ -386,7 +386,7 @@ jobs:
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@1.94.1
+      - uses: dtolnay/rust-toolchain@1.120.0
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
@@ -502,7 +502,7 @@ jobs:
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@1.94.1
+      - uses: dtolnay/rust-toolchain@1.120.0
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
