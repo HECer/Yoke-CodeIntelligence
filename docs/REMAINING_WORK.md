@@ -1,5 +1,20 @@
 # Remaining implementation and acceptance
 
+## Current main baseline and next host gate (2026-11-11)
+
+PR #7 is merged into main at `3d58d07b`; its post-merge CI and Rust core
+workflows pass (36 successes and one conditional skip). The
+[current acceptance summary](MAIN_ACCEPTANCE.md) separates this source-bound
+baseline from the historical pending notes below. Their source identities and
+original failures remain intact; CI totals do not certify every original
+contract, provider runtime, visual state or release.
+
+A new fifth VSIX phase requires actual bundled TypeScript extension-host
+execution, independently of the two existing Rust host scopes. Local checks
+pass, but fresh hosted qualification is pending. Remaining runtime, strict
+resource/DAP, visual and release/publication gates stay open in that summary.
+
+
 ## Strict LSP lifecycle and current acceptance follow-up (2026-10-31)
 
 Compile and run both new strict lifecycle/native explicit-null fixtures, then
@@ -2870,9 +2885,11 @@ External service qualification retains its exact selected runtime, version,
 credentials and permission boundaries. Configured production deployment and
 full upstream contract certification require their own actual evidence.
 
-PR #7 remains a draft against main. Main integration, release packaging and the
-separate `HECer/Code-Intelligence` publisher require real remote verification
-before release status changes. The integration branch is not a release receipt.
+The preceding checkpoints predate main integration. PR #7 was subsequently
+merged and remotely verified at `3d58d07b`; see the current summary above.
+Release packaging and the separate `HECer/Code-Intelligence` publisher still
+require real remote verification before release status changes. The integration
+branch is not a release receipt.
 
 
 ## Combined inherited repair checkpoint (2026-11-01)
