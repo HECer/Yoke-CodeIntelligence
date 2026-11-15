@@ -14,7 +14,9 @@ process.stdin.on('data', chunk => {
     if (bytes.length < end + 4 + length) return;
     const message = JSON.parse(bytes.subarray(end+4,end+4+length));
     bytes = bytes.subarray(end+4+length);
-    if (message.method === 'initialize') send({jsonrpc:'2.0',id:message.id,result:{capabilities:{hoverProvider:true}}});
+    if (message.method === 'initialize') {
+      if (process.argv[3] !== '--stall-initialize') send({jsonrpc:'2.0',id:message.id,result:{capabilities:{hoverProvider:true}}});
+    }
     else if (message.method === 'textDocument/hover') fs.appendFileSync(process.argv[2], 'hover\n');
     else if (message.method === 'shutdown') send({jsonrpc:'2.0',id:message.id,result:null});
     else if (message.method === 'exit') process.exit(0);
