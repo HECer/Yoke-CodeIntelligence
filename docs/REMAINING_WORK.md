@@ -1,5 +1,19 @@
 # Remaining implementation and acceptance
 
+## Current main Explorer startup qualification (2026-11-12)
+
+The [current acceptance summary](MAIN_ACCEPTANCE.md) records PR #37's real
+packaged TypeScript host qualification and merge at `9fc652a44e`. Its new main
+CI workflow passes, but the Windows Explorer target fails two startup cases
+before readiness. Preserve the original failed artifact and qualify the new
+fixed startup phase labels and refusal regressions on fresh native CI.
+Selection versus HTML export and the underlying timeout cause remain unknown;
+neither new contexts nor a later passing retry establish a causal repair.
+
+No original timeout, assertion, source/budget/permission or lifecycle guard is
+relaxed. Full original-contract/backend, strict resource/DAP, current visual and
+release/publication acceptance remains open independently of this follow-up.
+
 ## Current main baseline and next host gate (2026-11-11)
 
 PR #7 is merged into main at `3d58d07b`; its post-merge CI and Rust core

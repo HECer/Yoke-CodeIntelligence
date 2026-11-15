@@ -1,0 +1,333 @@
+{
+  "schemaVersion": 1,
+  "capturedAt": "2026-11-12T20:41:13.948Z",
+  "sourceRevision": "9fc652a44ec8867d25371d39e76fd7bb58499c7e",
+  "tree": "afaa25929a617ee81235ba779f2ff97e1873fa74",
+  "pullRequest": 37,
+  "head": "c4ed8a8fc0b335bd7dc4b3faf426f6c23ccaf83d",
+  "postMergeAcceptance": false,
+  "scope": "Workflow/job metadata; not independent raw qualification of every successful job or visual approval.",
+  "runs": [
+    {
+      "id": 43127421645,
+      "name": "Rust core",
+      "event": "push",
+      "attempt": 1,
+      "head": "9fc652a44ec8867d25371d39e76fd7bb58499c7e",
+      "status": "completed",
+      "conclusion": "failure",
+      "url": "https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/43127421645"
+    },
+    {
+      "id": 43127421987,
+      "name": "CI",
+      "event": "push",
+      "attempt": 1,
+      "head": "9fc652a44ec8867d25371d39e76fd7bb58499c7e",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/43127421987"
+    }
+  ],
+  "counts": {
+    "total": 37,
+    "success": 34,
+    "failure": 2,
+    "skipped": 1
+  },
+  "jobs": [
+    {
+      "id": 130882932446,
+      "name": "Windows VS Code launcher Job lifecycle (no VSIX acceptance)",
+      "status": "completed",
+      "conclusion": "success",
+      "failedSteps": []
+    },
+    {
+      "id": 130882932631,
+      "name": "native (windows-latest, 24)",
+      "status": "completed",
+      "conclusion": "success",
+      "failedSteps": []
+    },
+    {
+      "id": 130882932643,
+      "name": "native (ubuntu-latest, 24)",
+      "status": "completed",
+      "conclusion": "success",
+      "failedSteps": []
+    },
+    {
+      "id": 130882932696,
+      "name": "native (macos-latest, 24)",
+      "status": "completed",
+      "conclusion": "success",
+      "failedSteps": []
+    },
+    {
+      "id": 130882932697,
+      "name": "native (ubuntu-latest, 22.16.0)",
+      "status": "completed",
+      "conclusion": "success",
+      "failedSteps": []
+    },
+    {
+      "id": 130882932705,
+      "name": "native (macos-latest, 22.16.0)",
+      "status": "completed",
+      "conclusion": "success",
+      "failedSteps": []
+    },
+    {
+      "id": 130882932773,
+      "name": "native (windows-latest, 22.16.0)",
+      "status": "completed",
+      "conclusion": "success",
+      "failedSteps": []
+    },
+    {
+      "id": 130885926830,
+      "name": "Windows combined VSIX and real Rust/TypeScript extension-host acceptance",
+      "status": "completed",
+      "conclusion": "success",
+      "failedSteps": []
+    },
+    {
+      "id": 130882931152,
+      "name": "Windows credential-backed TLS (single explicit ignored case)",
+      "status": "completed",
+      "conclusion": "success",
+      "failedSteps": []
+    },
+    {
+      "id": 130882931480,
+      "name": "native-shards (macos-latest, 6)",
+      "status": "completed",
+      "conclusion": "success",
+      "failedSteps": []
+    },
+    {
+      "id": 130882931500,
+      "name": "native-shards (windows-latest, 5)",
+      "status": "completed",
+      "conclusion": "success",
+      "failedSteps": []
+    },
+    {
+      "id": 130882931510,
+      "name": "native-shards (windows-latest, 0)",
+      "status": "completed",
+      "conclusion": "success",
+      "failedSteps": []
+    },
+    {
+      "id": 130882931527,
+      "name": "native-shards (windows-latest, 6)",
+      "status": "completed",
+      "conclusion": "failure",
+      "failedSteps": [
+        "Test complete default Cargo target groups"
+      ]
+    },
+    {
+      "id": 130882931574,
+      "name": "native-shards (macos-latest, 1)",
+      "status": "completed",
+      "conclusion": "success",
+      "failedSteps": []
+    },
+    {
+      "id": 130882931603,
+      "name": "native-shards (macos-latest, 2)",
+      "status": "completed",
+      "conclusion": "success",
+      "failedSteps": []
+    },
+    {
+      "id": 130882931614,
+      "name": "native-shards (windows-latest, 7)",
+      "status": "completed",
+      "conclusion": "success",
+      "failedSteps": []
+    },
+    {
+      "id": 130882931638,
+      "name": "native-shards (macos-latest, 3)",
+      "status": "completed",
+      "conclusion": "success",
+      "failedSteps": []
+    },
+    {
+      "id": 130882931655,
+      "name": "native-shards (macos-latest, 4)",
+      "status": "completed",
+      "conclusion": "success",
+      "failedSteps": []
+    },
+    {
+      "id": 130882931663,
+      "name": "native-shards (macos-latest, 0)",
+      "status": "completed",
+      "conclusion": "success",
+      "failedSteps": []
+    },
+    {
+      "id": 130882931666,
+      "name": "native-shards (windows-latest, 4)",
+      "status": "completed",
+      "conclusion": "success",
+      "failedSteps": []
+    },
+    {
+      "id": 130882931711,
+      "name": "native-shards (ubuntu-latest, 1)",
+      "status": "completed",
+      "conclusion": "success",
+      "failedSteps": []
+    },
+    {
+      "id": 130882931717,
+      "name": "native-shards (windows-latest, 2)",
+      "status": "completed",
+      "conclusion": "success",
+      "failedSteps": []
+    },
+    {
+      "id": 130882931744,
+      "name": "native-shards (ubuntu-latest, 4)",
+      "status": "completed",
+      "conclusion": "success",
+      "failedSteps": []
+    },
+    {
+      "id": 130882931794,
+      "name": "native-shards (ubuntu-latest, 0)",
+      "status": "completed",
+      "conclusion": "success",
+      "failedSteps": []
+    },
+    {
+      "id": 130882931820,
+      "name": "native-shards (windows-latest, 1)",
+      "status": "completed",
+      "conclusion": "success",
+      "failedSteps": []
+    },
+    {
+      "id": 130882931821,
+      "name": "native-shards (ubuntu-latest, 6)",
+      "status": "completed",
+      "conclusion": "success",
+      "failedSteps": []
+    },
+    {
+      "id": 130882931826,
+      "name": "native-shards (macos-latest, 5)",
+      "status": "completed",
+      "conclusion": "success",
+      "failedSteps": []
+    },
+    {
+      "id": 130882931875,
+      "name": "native-shards (macos-latest, 7)",
+      "status": "completed",
+      "conclusion": "success",
+      "failedSteps": []
+    },
+    {
+      "id": 130882931881,
+      "name": "native-shards (ubuntu-latest, 5)",
+      "status": "completed",
+      "conclusion": "success",
+      "failedSteps": []
+    },
+    {
+      "id": 130882931897,
+      "name": "native-shards (ubuntu-latest, 7)",
+      "status": "completed",
+      "conclusion": "success",
+      "failedSteps": []
+    },
+    {
+      "id": 130882931943,
+      "name": "native-shards (ubuntu-latest, 3)",
+      "status": "completed",
+      "conclusion": "success",
+      "failedSteps": []
+    },
+    {
+      "id": 130882931970,
+      "name": "native-shards (windows-latest, 3)",
+      "status": "completed",
+      "conclusion": "success",
+      "failedSteps": []
+    },
+    {
+      "id": 130882932023,
+      "name": "native-shards (ubuntu-latest, 2)",
+      "status": "completed",
+      "conclusion": "success",
+      "failedSteps": []
+    },
+    {
+      "id": 130882932978,
+      "name": "Windows history browser diagnostic (not full native acceptance)",
+      "status": "completed",
+      "conclusion": "skipped",
+      "failedSteps": []
+    },
+    {
+      "id": 130889365504,
+      "name": "native-rust (ubuntu-latest)",
+      "status": "completed",
+      "conclusion": "success",
+      "failedSteps": []
+    },
+    {
+      "id": 130894084188,
+      "name": "native-rust (macos-latest)",
+      "status": "completed",
+      "conclusion": "success",
+      "failedSteps": []
+    },
+    {
+      "id": 130897045749,
+      "name": "native-rust (windows-latest)",
+      "status": "completed",
+      "conclusion": "failure",
+      "failedSteps": [
+        "Require every default target exactly once on identical selected inputs",
+        "Preserve real browser automation and PNGs (human visual review unclaimed)",
+        "Preserve serena browser automation and six PNGs",
+        "Preserve persistent-python browser automation and six PNGs",
+        "Preserve HTTP browser automation and six PNGs",
+        "Preserve tool statistics browser automation and six PNGs"
+      ]
+    }
+  ],
+  "failureArtifact": {
+    "id": 13904586684,
+    "sha256": "20ab47d61cc3ca2b016669f39ff3cb11325cb264538ee34aef33269d284e54f0",
+    "zipMembers": 97,
+    "crcVerified": true,
+    "groups": 48,
+    "passedGroups": 47,
+    "logsVerified": 96,
+    "sourceInputs": 1203,
+    "gitExactMatches": 42,
+    "gitLFToCRLFMatches": 1161,
+    "failedGroup": "yoke-code-intelligence:test:explorer_http:test",
+    "failedTests": [
+      "absent_host_rebuild_grant_cannot_be_supplied_by_request_or_source",
+      "explicit_rebuild_replaces_view_but_reload_retains_captured_source_and_old_snapshot"
+    ],
+    "targetCounts": {
+      "passed": 6,
+      "failed": 2,
+      "ignored": 0,
+      "filtered": 0
+    },
+    "phase": "serve before readiness; selection versus export not localized",
+    "cause": "unknown"
+  }
+}

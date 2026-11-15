@@ -111,6 +111,34 @@ Private test capabilities and process/profile files are excluded from publicatio
 
 ## Receive-failure observations in the native integration fixture
 
+### Startup failure phases (2026-11-12)
+
+Main `9fc652a44e` fails the rebuild/reload and missing-host-grant cases in Windows
+Rust core run `43127421645`, job `130882931527`, before readiness. The complete
+target reports six passed and two failed. Its retained artifact `13904586684`
+(SHA-256 `20ab47d61cc3ca2b016669f39ff3cb11325cb264538ee34aef33269d284e54f0`)
+has matching log lengths/hashes and source inputs; the error does not localize
+the original deadline failure to input selection or source HTML export.
+
+Initial selection/capture and initial HTML export now add the fixed outer
+contexts `Explorer startup failed; phase=select-input` and
+`Explorer startup failed; phase=export-view`, respectively. The contexts contain
+no source, path, snapshot, URL or capability; the original error chain remains
+available separately and is not a sanitized logging channel. Config validation,
+binding, randomness and output errors retain their existing behavior. One
+original deadline still covers selection and export; no retry is introduced.
+
+Two new integration functions exercise a missing immutable snapshot and a
+zero-source-byte export refusal, with both original host-write flag states.
+They require the exact phase, retained original error, empty readiness output,
+restored write state and unchanged Unicode/CRLF source. Selection failure must
+leave the engine usable; export refusal must retain the saved source bytes.
+The existing eight cases and all their limits/assertions remain unchanged.
+Native execution is still required; a passing run cannot itself explain or
+repair the earlier timeout. See [current acceptance](../../docs/MAIN_ACCEPTANCE.md).
+
+### Earlier HTTP receive checkpoint
+
 At source `85d0893d`, Windows push run `41096155077` fails the existing
 rebuild/reload test at its missing HTTP header-delimiter assertion. Its five
 other cases and the six-case Linux/macOS targets pass at that source. The

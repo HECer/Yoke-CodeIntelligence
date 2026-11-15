@@ -358,6 +358,96 @@ impl Drop for Server {
         }
     }
 }
+
+#[test]
+fn startup_selection_failure_publishes_no_readiness_and_restores_host_authority() {
+    let dir = tempfile::tempdir().unwrap();
+    let source = "// owned startup canary: π 😀\r\nexport function original() {}\r\n";
+    let path = dir.path().join("π.ts");
+    fs::write(&path, source).unwrap();
+    let mut engine = Engine::open(dir.path()).unwrap();
+    for prior_writes in [false, true] {
+        engine.allow_writes = prior_writes;
+        let mut output = Vec::new();
+        let error = serve(
+            &mut engine,
+            Config {
+                port: 0,
+                request_timeout_ms: 1000,
+                max_requests: Some(1),
+                allow_rebuild: true,
+                snapshot_id: Some("f".repeat(64)),
+                export_options: SourceExplorerOptions::default(),
+            },
+            &mut output,
+        )
+        .unwrap_err();
+        // The outer label has only a closed phase; the original error chain is
+        // retained separately, rather than copying selected paths or source.
+        assert_eq!(
+            error.to_string(),
+            "Explorer startup failed; phase=select-input"
+        );
+        assert!(error.chain().count() > 1);
+        assert!(output.is_empty(), "Failed startup announced a capability");
+        assert_eq!(engine.allow_writes, prior_writes);
+        assert_eq!(fs::read(&path).unwrap(), source.as_bytes());
+    }
+    // A failed selection must leave the same engine usable with a fresh bound.
+    let (snapshot, _, _, _) = engine.index(&yoke::capture::Deadline::new(10000)).unwrap();
+    assert_eq!(snapshot.files.len(), 1);
+    assert_eq!(snapshot.files[0].hash, yoke::model::hash(source.as_bytes()));
+}
+
+#[test]
+fn startup_export_refusal_retains_snapshot_and_publishes_no_readiness() {
+    let dir = tempfile::tempdir().unwrap();
+    let source = "// owned startup canary: π 😀\r\nexport function original() {}\r\n";
+    let path = dir.path().join("π.ts");
+    fs::write(&path, source).unwrap();
+    let mut engine = Engine::open(dir.path()).unwrap();
+    let (snapshot, _, _, _) = engine.index(&yoke::capture::Deadline::new(10000)).unwrap();
+    engine.store.clear_deadline();
+    for prior_writes in [false, true] {
+        engine.allow_writes = prior_writes;
+        let mut output = Vec::new();
+        let error = serve(
+            &mut engine,
+            Config {
+                port: 0,
+                request_timeout_ms: 1000,
+                max_requests: Some(1),
+                allow_rebuild: true,
+                snapshot_id: Some(snapshot.id.clone()),
+                export_options: SourceExplorerOptions {
+                    max_source_bytes: 0,
+                    ..Default::default()
+                },
+            },
+            &mut output,
+        )
+        .unwrap_err();
+        assert_eq!(
+            error.to_string(),
+            "Explorer startup failed; phase=export-view"
+        );
+        assert!(
+            error.chain().any(|cause| {
+                cause.to_string() == "Source explorer source byte budget exceeded"
+            })
+        );
+        assert!(output.is_empty(), "Failed startup announced a capability");
+        assert_eq!(engine.allow_writes, prior_writes);
+        assert_eq!(fs::read(&path).unwrap(), source.as_bytes());
+        let saved = engine.store.snapshot(&snapshot.id).unwrap();
+        assert_eq!(saved.files[0].hash, snapshot.files[0].hash);
+        assert_eq!(
+            engine.store.read_blob(&saved.files[0].hash).unwrap(),
+            source.as_bytes()
+        );
+    }
+}
+
 #[test]
 fn explicit_rebuild_replaces_view_but_reload_retains_captured_source_and_old_snapshot() {
     let mut s = Server::new(true, 9, 16000000);
