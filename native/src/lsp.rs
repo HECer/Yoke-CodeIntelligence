@@ -231,6 +231,8 @@ pub struct HostConfiguration {
     pub max_configuration_callback_items: Option<u8>,
     #[serde(default, skip_serializing_if = "is_false")]
     pub await_roslyn_project_initialization: bool,
+    #[serde(default, skip_serializing_if = "is_false")]
+    pub await_document_diagnostics: bool,
     #[serde(default)]
     pub tcp_endpoint: Option<SocketAddr>,
     #[serde(default)]
@@ -621,19 +623,30 @@ pub fn position_to_byte(text: &str, position: &Value) -> Result<usize> {
     Ok(text.len())
 }
 pub fn read_frame(input: &mut impl BufRead) -> Result<Value> {
-    let value = read_content_frame(input)?;
+    let (value, _) = read_content_frame(input, usize::MAX)?;
     ensure!(
         value.is_object() && value["jsonrpc"] == "2.0",
         "Invalid LSP JSON-RPC message"
     );
     Ok(value)
 }
-pub(crate) fn read_content_frame(input: &mut impl BufRead) -> Result<Value> {
+pub(crate) fn read_content_frame(
+    input: &mut impl BufRead,
+    byte_budget: usize,
+) -> Result<(Value, usize)> {
     let mut length = None;
     let mut total = 0;
     loop {
+        let remaining = byte_budget - total;
+        ensure!(remaining > 0, "Framed protocol byte budget exceeded");
         let mut header = Vec::new();
-        let bytes = input.take(8193).read_until(b'\n', &mut header)?;
+        let bytes = input
+            .take(remaining.min(8193) as u64)
+            .read_until(b'\n', &mut header)?;
+        ensure!(
+            bytes < remaining || header.ends_with(b"\n"),
+            "Framed protocol byte budget exceeded"
+        );
         ensure!(
             bytes > 0 && bytes <= 8192,
             "LSP header missing or too large"
@@ -659,12 +672,50 @@ pub(crate) fn read_content_frame(input: &mut impl BufRead) -> Result<Value> {
         length > 0 && length <= 4_000_000,
         "LSP message budget exceeded"
     );
+    ensure!(
+        length <= byte_budget - total,
+        "Framed protocol byte budget exceeded"
+    );
     let mut bytes = vec![0; length];
     input.read_exact(&mut bytes)?;
-    crate::json::parse(&bytes, 4_000_000)
+    Ok((crate::json::parse(&bytes, 4_000_000)?, total + length))
 }
 const DEFAULT_CONFIGURATION_CALLBACK_ITEMS: u8 = 64;
 const MAX_CONFIGURATION_CALLBACK_ITEMS: u8 = 128;
+
+#[cfg(test)]
+mod content_frame_tests {
+    use super::*;
+
+    #[test]
+    fn counts_headers_and_original_json_bytes_across_frames() {
+        let first = b"Content-Length: 6\r\n\r\n {  } ";
+        let second = b"Content-Length: 2\r\n\r\n{}";
+        let bytes = [first.as_slice(), second.as_slice()].concat();
+        let mut input = bytes.as_slice();
+        let budget = input.len();
+
+        let (message, used) = read_content_frame(&mut input, budget).unwrap();
+        assert_eq!(message, json!({}));
+        assert_eq!(used, first.len());
+        let (_, used) = read_content_frame(&mut input, budget - used).unwrap();
+        assert_eq!(used, second.len());
+        assert!(input.is_empty());
+    }
+
+    #[test]
+    fn short_allowance_never_reads_the_payload() {
+        let header = b"Content-Length: 2\r\n\r\n";
+        let payload = b"{}";
+        let bytes = [header.as_slice(), payload.as_slice()].concat();
+        for (budget, consumed) in [(3, 3), (header.len() + 1, header.len())] {
+            let mut input = bytes.as_slice();
+            let err = read_content_frame(&mut input, budget).unwrap_err();
+            assert_eq!(err.to_string(), "Framed protocol byte budget exceeded");
+            assert_eq!(input, &bytes[consumed..]);
+        }
+    }
+}
 
 struct Session {
     child: Option<crate::process::ManagedChild>,
@@ -3075,6 +3126,19 @@ fn initialize_provider_at(
     }
     if configuration.is_some_and(|config| config.await_roslyn_project_initialization) {
         session.await_ready(|session| session.roslyn_project_initialized, deadline)?;
+    }
+    if configuration.is_some_and(|config| config.await_document_diagnostics) {
+        let scope = crate::capture::source_scope_policy(&engine.store, snapshot)?;
+        let publication = session
+            .await_diagnostics(tree.path(), snapshot, &scope, path, deadline)
+            .map_err(|error| provider_error(error, ProviderStage::PublishedDiagnostics))?;
+        ensure!(
+            publication["diagnostics"].is_array()
+                && publication
+                    .get("version")
+                    .is_none_or(|version| version == 1),
+            "Invalid diagnostics readiness publication"
+        );
     }
     #[cfg(any(test, debug_assertions))]
     test_startup_phases::record(test_startup_phases::Phase::ProviderReady);

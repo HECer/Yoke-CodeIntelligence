@@ -236,17 +236,15 @@ impl DebugAdapter {
         let (frames, messages) = mpsc::sync_channel(8);
         let raw_errors = frames.clone();
         workers.push(thread::spawn(move || {
-            let mut stdout = BufReader::new(stdout);
-            let mut bytes = 0usize;
+            let mut stdout = BufReader::new(stdout.take(MAX_LIFETIME as u64));
+            let mut remaining = MAX_LIFETIME;
             loop {
-                let value = crate::lsp::read_content_frame(&mut stdout).and_then(|value| {
-                    bytes = bytes.saturating_add(serde_json::to_vec(&value)?.len());
-                    ensure!(
-                        bytes <= MAX_LIFETIME,
-                        "DAP lifetime protocol budget exceeded"
-                    );
-                    Ok(value)
-                });
+                let value = crate::lsp::read_content_frame(&mut stdout, remaining).map(
+                    |(value, frame_bytes)| {
+                        remaining -= frame_bytes;
+                        value
+                    },
+                );
                 let failed = value.is_err();
                 if frames.send(value).is_err() || failed {
                     break;

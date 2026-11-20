@@ -139,7 +139,7 @@ class NativeVsix(unittest.TestCase):
         original = zipfile.ZipFile.infolist
         for index, sizes in enumerate([
             {"manifest.json": 1_000_001},
-            {"yoke": 128_000_001},
+            {"one": 128_000_001},
             {"one": 128_000_000, "two": 128_000_000},
         ]):
             self.output = self.root / f"budget-{index}.vsix"
@@ -196,11 +196,20 @@ class NativeVsix(unittest.TestCase):
             if Path(archive.filename) == self.native:
                 for entry in entries:
                     if entry.filename == "yoke.exe":
-                        entry.file_size = MODULE.NATIVE_WINDOWS_BINARY_BYTES + 1
+                        entry.file_size = MODULE.NATIVE_BINARY_BYTES + 1
             return entries
 
         with patch.object(zipfile.ZipFile, "infolist", declared):
             self.assert_refused_before_native_payload()
+
+    def test_larger_linux_executable_is_admitted_under_its_manifest_role(self):
+        with patch.object(MODULE, "NATIVE_ENTRY_BYTES", 512):
+            large = b"synthetic Linux executable" * 30
+            self.binary = large
+            self.native_members()
+            self.package()
+        with zipfile.ZipFile(self.output) as archive:
+            self.assertEqual(archive.read("extension/runtime/native/yoke"), large)
 
     def test_larger_windows_role_requires_the_windows_manifest_selection(self):
         self.native_members([("yoke.exe", b"Inert unselected metadata fixture")])
