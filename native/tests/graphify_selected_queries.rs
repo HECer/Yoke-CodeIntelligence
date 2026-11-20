@@ -173,14 +173,30 @@ fn selected_neighbors_preserve_parallel_directions_and_exact_utf8_evidence() {
     assert_eq!(actual, expected);
 
     let document = node_id(&f.selected, "document", "guide.md");
+    let section = node_id(&f.selected, "heading", "Flow");
+    let headings = selected_call(
+        &mut f,
+        "get_neighbors",
+        json!({"node_id":document,"relation_filter":"contains","token_budget":65536}),
+    );
+    let edges = headings["observations"].as_array().unwrap();
+    assert_eq!(edges.len(), 1);
+    assert_eq!(edges[0]["source"], document);
+    assert_eq!(edges[0]["target"], section);
+    let span = &headings["evidence"][0];
+    assert_eq!(span["anchor"], "exact_authored_heading");
+    let start = span["startByte"].as_u64().unwrap() as usize;
+    let end = span["endByte"].as_u64().unwrap() as usize;
+    assert_eq!(&GUIDE[start..end], "# Flow");
+
     let result = selected_call(
         &mut f,
         "get_neighbors",
-        json!({"node_id":document,"relation_filter":"cites_symbol","token_budget":65536}),
+        json!({"node_id":section,"relation_filter":"cites_symbol","token_budget":65536}),
     );
     assert_eq!(result["observations"].as_array().unwrap().len(), 2);
     for edge in result["observations"].as_array().unwrap() {
-        assert_eq!(edge["source"], document);
+        assert_eq!(edge["source"], section);
         assert_eq!(edge["target"], alpha);
         assert_eq!(edge["resolution"], "unique_name_candidate");
     }
@@ -204,15 +220,21 @@ fn selected_query_graph_traverses_the_selected_document_and_induced_parallel_edg
         let result = selected_call(
             &mut f,
             "query_graph",
-            json!({"question":document,"mode":mode,"depth":3,"token_budget":65536}),
+            json!({"question":document,"mode":mode,"depth":4,"token_budget":65536}),
         );
         assert_eq!(
             labels(&result),
-            BTreeSet::from(["guide.md".into(), "α".into(), "beta".into(), "gamma".into()])
+            BTreeSet::from([
+                "guide.md".into(),
+                "Flow".into(),
+                "α".into(),
+                "beta".into(),
+                "gamma".into()
+            ])
         );
         assert_eq!(result["traversalDirection"], "stored_outgoing");
         let edges = result["observations"].as_array().unwrap();
-        assert_eq!(edges.len(), 5);
+        assert_eq!(edges.len(), 6);
         assert_eq!(
             edges
                 .iter()
@@ -227,7 +249,7 @@ fn selected_query_graph_traverses_the_selected_document_and_induced_parallel_edg
                 .count(),
             2
         );
-        assert_eq!(result["evidence"].as_array().unwrap().len(), 5);
+        assert_eq!(result["evidence"].as_array().unwrap().len(), 6);
     }
 }
 
@@ -235,23 +257,29 @@ fn selected_query_graph_traverses_the_selected_document_and_induced_parallel_edg
 fn selected_shortest_path_keeps_stored_direction_and_an_explicit_undirected_option() {
     let mut f = fixture(AnalyzerEpoch::V8);
     let document = node_id(&f.selected, "document", "guide.md");
-    let result = selected_call(
+    let too_short = selected_call(
         &mut f,
         "shortest_path",
         json!({"source":document,"target":"gamma","max_hops":3}),
     );
+    assert_eq!(too_short["found"], false);
+    let result = selected_call(
+        &mut f,
+        "shortest_path",
+        json!({"source":document,"target":"gamma","max_hops":4}),
+    );
     assert_eq!(result["found"], true);
-    assert_eq!(result["hops"], 3);
+    assert_eq!(result["hops"], 4);
     let nodes = result["nodes"].as_array().unwrap();
     assert_eq!(
         nodes
             .iter()
             .map(|node| node["name"].as_str().unwrap())
             .collect::<Vec<_>>(),
-        ["guide.md", "α", "beta", "gamma"]
+        ["guide.md", "Flow", "α", "beta", "gamma"]
     );
     let edges = result["observations"].as_array().unwrap();
-    assert_eq!(edges.len(), 3);
+    assert_eq!(edges.len(), 4);
     assert_eq!(
         result["pathObservationIds"],
         json!(edges.iter().map(|edge| &edge["id"]).collect::<Vec<_>>())
@@ -263,17 +291,17 @@ fn selected_shortest_path_keeps_stored_direction_and_an_explicit_undirected_opti
     let reverse = selected_call(
         &mut f,
         "shortest_path",
-        json!({"source":"gamma","target":document,"max_hops":3}),
+        json!({"source":"gamma","target":document,"max_hops":4}),
     );
     assert_eq!(reverse["found"], false);
     assert_eq!(reverse["nodes"], json!([]));
     let undirected = selected_call(
         &mut f,
         "shortest_path",
-        json!({"source":"gamma","target":document,"max_hops":3,"undirected":true}),
+        json!({"source":"gamma","target":document,"max_hops":4,"undirected":true}),
     );
     assert_eq!(undirected["found"], true);
-    assert_eq!(undirected["hops"], 3);
+    assert_eq!(undirected["hops"], 4);
     assert_eq!(undirected["undirected"], true);
 }
 
