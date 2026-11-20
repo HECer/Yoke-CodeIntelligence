@@ -600,6 +600,7 @@ fn replay_archived_inputs(
                             "yoke-manifest-graph-1"
                                 | "yoke-config-graph-1"
                                 | "yoke-markdown-graph-2"
+                                | crate::markdown_graph::PRODUCER
                         )
                     ),
                 "Archive structural origin mismatch"
@@ -871,6 +872,7 @@ fn normalize_anchor(snapshot: &Snapshot, sources: &Sources, value: &Value) -> Re
             "file",
             "unique_literal_occurrence",
             "exact_authored_link",
+            "exact_authored_heading",
             "exact_authored_citation",
             "descriptor_line",
             "call_range",
@@ -1049,7 +1051,12 @@ fn source_overlay(
     ensure!(
         matches!(
             value["producer"].as_str(),
-            Some("yoke-manifest-graph-1" | "yoke-config-graph-1" | "yoke-markdown-graph-2")
+            Some(
+                "yoke-manifest-graph-1"
+                    | "yoke-config-graph-1"
+                    | "yoke-markdown-graph-2"
+                    | crate::markdown_graph::PRODUCER
+            )
         ),
         "Unsupported structural graph overlay producer"
     );
@@ -1592,6 +1599,7 @@ pub fn build(
                             "yoke-manifest-graph-1"
                                 | "yoke-config-graph-1"
                                 | "yoke-markdown-graph-2"
+                                | crate::markdown_graph::PRODUCER
                         )
                     ),
                 "Prepared structural overlay source scope mismatch"
