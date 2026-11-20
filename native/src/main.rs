@@ -35,6 +35,7 @@ mod github_app_publication_cli;
 mod github_app_worker_cli;
 mod github_discussions_cli;
 mod graph_diagnostics_cli;
+mod graph_union_cli;
 mod host_documents_cli;
 mod host_install_cli;
 mod meaning_archive_cli;
@@ -924,6 +925,8 @@ enum GraphOperation {
     CompareViews(Box<view_comparison_cli::Arguments>),
     /// Audit edge collapse risks in a selected Graphify graph or extraction file.
     Diagnose(graph_diagnostics_cli::Arguments),
+    /// Union two Graphify graph files while retaining parallel observations.
+    UnionMerge(graph_union_cli::Arguments),
     Export {
         #[arg(long)]
         format: String,
@@ -2274,6 +2277,7 @@ fn run_parity(
                 }
                 GraphOperation::CompareViews(_) => bail!(view_comparison_cli::INPUT),
                 GraphOperation::Diagnose(_) => bail!(graph_diagnostics_cli::INPUT),
+                GraphOperation::UnionMerge(_) => bail!(graph_union_cli::INPUT),
                 GraphOperation::Export {
                     format,
                     output,
@@ -3663,9 +3667,11 @@ fn run(cli: Cli) -> Result<bool> {
     );
 
     if let Operation::Extensions(extension) = &operation
-        && let ExtensionOperation::Graph {
-            command: GraphOperation::Diagnose(args),
-        } = extension.as_ref()
+        && let ExtensionOperation::Graph { command } = extension.as_ref()
+        && matches!(
+            command,
+            GraphOperation::Diagnose(_) | GraphOperation::UnionMerge(_)
+        )
     {
         ensure!(
             cli.snapshot.is_none()
@@ -3675,9 +3681,13 @@ fn run(cli: Cli) -> Result<bool> {
                 && cli.language_server_config.is_none()
                 && !cli.trust_servers
                 && !cli.allow_writes,
-            graph_diagnostics_cli::INPUT
+            "Graph file tools accept selected files without source, provider or workspace write flags"
         );
-        return args.run(cli.timeout, cli.max_bytes);
+        return match command {
+            GraphOperation::Diagnose(args) => args.run(cli.timeout, cli.max_bytes),
+            GraphOperation::UnionMerge(args) => args.run(cli.timeout, cli.max_bytes),
+            _ => unreachable!("Checked graph file command"),
+        };
     }
     if let Operation::Extensions(extension) = &operation
         && let ExtensionOperation::Graph {
