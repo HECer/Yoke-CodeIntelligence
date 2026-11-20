@@ -20,6 +20,7 @@ mod git_affected_cli;
 mod git_areas_cli;
 mod git_compiler_affected_cli;
 mod git_conflicts_cli;
+mod git_graph_hooks_cli;
 mod git_impact_cli;
 mod git_owner_changes_cli;
 mod git_owners_cli;
@@ -2716,6 +2717,8 @@ fn run_document(
 }
 #[derive(Subcommand)]
 enum GitOperation {
+    /// Manage commit, checkout and merge refresh hooks for a local graph.
+    GraphHooks(Box<git_graph_hooks_cli::Arguments>),
     RepositoryPreferences(Box<git_repository_preferences_cli::Arguments>),
     RepositoryScope(Box<git_repository_scope_cli::Arguments>),
     CompilerAffected(Box<git_compiler_affected_cli::Arguments>),
@@ -2778,6 +2781,7 @@ fn selected_git(path: Option<PathBuf>, trusted: bool) -> Result<yoke::git_workfl
 }
 fn run_git(mut engine: Engine, operation: GitOperation, deadline: &Deadline) -> Result<bool> {
     match operation {
+        GitOperation::GraphHooks(_) => bail!(git_graph_hooks_cli::INPUT),
         GitOperation::OwnerChanges(_) => bail!("Git owner changes host dispatch error"),
         GitOperation::Areas(_) => bail!("Git area host dispatch error"),
         GitOperation::Owners(_) => bail!("Git owners host dispatch error"),
@@ -3705,6 +3709,22 @@ fn run(cli: Cli) -> Result<bool> {
             view_comparison_cli::INPUT
         );
         return view_comparison_cli::run(args, &cli.root, cli.timeout, cli.max_bytes);
+    }
+    if let Operation::Extensions(extension) = &operation
+        && let ExtensionOperation::Git(git) = extension.as_ref()
+        && let GitOperation::GraphHooks(args) = &git.operation
+    {
+        ensure!(
+            cli.snapshot.is_none()
+                && cli.capture_config.is_none()
+                && cli.include_ignored_dir.is_empty()
+                && cli.analyzer_epoch.is_none()
+                && cli.language_server_config.is_none()
+                && !cli.trust_servers
+                && !cli.allow_writes,
+            git_graph_hooks_cli::INPUT
+        );
+        return args.run(&cli.root, cli.timeout, cli.max_bytes);
     }
     if let Operation::Extensions(extension) = &operation
         && let ExtensionOperation::Git(git) = extension.as_ref()
