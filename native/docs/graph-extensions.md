@@ -49,3 +49,35 @@ The library exposes no internal cancellation callback. Checks occur before and a
 Snapshot comparison matches unique structural identities comprising path, kind, qualified name and parent context. It compares exact source-body hashes independently of snapshot-dependent entity IDs and shifted byte positions. Added, removed, body-modified and relocated entities are separate. Repeated semantic identities are explicit ambiguous groups; renames and cross-path moves are not guessed.
 
 Observation comparison uses semantic endpoints, relation/resolution and exact evidence-snippet hashes as a multiset. Parallel call-site multiplicity is preserved. Edges involving ambiguous entity identities are reported separately. This is source-structure comparison, not formal behavioral equivalence. Communities with unique structural members have stable member-derived IDs. Communities containing ambiguous member identities use explicit snapshot-scoped IDs so distinct source groups cannot collide. Community history matching is a deterministic one-to-one, unique highest member-overlap candidate at or above 0.5; ties remain explicit ambiguity.
+
+## Import cycles
+
+Set `importCycles` to an object in the `graph analyze` options or the selected
+View report options to include file-level cycles in JSON and Markdown.
+
+~~~json
+{"importCycles":{"maxLength":5,"limit":20,"maxSearchSteps":250000}}
+~~~
+
+Cycles are directed and sorted by length, then by their lexicographically
+smallest path rotation. The report includes ordered file pairs and a shared
+`links` table with all captured import sites for those pairs. Each site includes
+its content hash, byte span and any matching original observation and evidence
+IDs. Report-specific syntax sites, including static re-exports, have their own
+captured source spans.
+
+The analysis reads top-level JavaScript, TypeScript and Python statements.
+Relative JavaScript and TypeScript modules and Python modules must resolve to
+one file in the selected capture. Type-only declarations, deferred JS/TS
+imports, and nested Python imports are excluded from these syntax candidates.
+Other languages contribute resolved, source-backed import observations
+already present in the graph. The result records unresolved admissions and
+parse-error omissions. The cycle report describes captured import candidates.
+Runtime resolution and execution require separate evidence.
+
+The search supports lengths from one through twelve, up to one hundred
+results, and at most two million search steps. It distinguishes exhaustion of
+the search budget from finding more cycles than the result limit. Reports
+without the option retain the original JSON and Markdown identities.
+
+[Graphify import-cycle reference](https://github.com/Graphify-Labs/graphify/blob/fe085cedddde3a18554f8749b230bfe47f3dcce7/graphify/analyze.py)

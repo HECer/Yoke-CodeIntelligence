@@ -21,6 +21,9 @@ pub use policy::{Category as AnalysisCategory, SourceCategoryPolicy};
 #[path = "graph_community_policy.rs"]
 mod community;
 pub use community::CommunityPolicy;
+#[path = "graph_import_cycles.rs"]
+mod import_cycles;
+pub use import_cycles::ImportCycleOptions;
 
 pub const REPORT_KIND: &str = "native_graph_report_v1";
 pub const VIEW_REPORT_KIND: &str = "native_graph_view_report_v1";
@@ -57,6 +60,8 @@ pub struct AnalysisOptions {
     pub source_category_policy: Option<SourceCategoryPolicy>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub community_policy: Option<CommunityPolicy>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub import_cycles: Option<ImportCycleOptions>,
 }
 fn default_limit() -> usize {
     10
@@ -88,6 +93,7 @@ impl Default for AnalysisOptions {
             previous_snapshot_id: None,
             source_category_policy: None,
             community_policy: None,
+            import_cycles: None,
         }
     }
 }
@@ -99,6 +105,9 @@ const MAX_EDGES: usize = 50000;
 const LIMITATIONS: &str = "Partial structural graph: not runtime or compiler proof. Rankings and suggested questions are heuristics, not probabilities or independently confirmed facts. Source snapshots and parallel directed observations remain unchanged.";
 
 pub(crate) fn validate_options(options: &AnalysisOptions) -> Result<()> {
+    if let Some(cycles) = &options.import_cycles {
+        cycles.validate()?;
+    }
     if let Some(policy) = &options.source_category_policy {
         policy.validate()?;
     }
@@ -669,6 +678,29 @@ pub(crate) fn markdown(report: &Value) -> String {
         }
         text.push('\n');
     }
+    if let Some(cycles) = report["importCycles"]["cycles"].as_array() {
+        text.push_str("## Import cycles\n\n");
+        if cycles.is_empty() {
+            text.push_str("No cycles found within the checked bounds.\n\n");
+        }
+        for cycle in cycles {
+            let mut paths: Vec<_> = cycle["paths"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .filter_map(Value::as_str)
+                .map(markdown_text)
+                .collect();
+            if let Some(start) = paths.first().cloned() {
+                paths.push(start);
+            }
+            text.push_str(&format!("- {}\n", paths.join(" → ")));
+        }
+        if report["importCycles"]["truncated"] == true {
+            text.push_str("\nCycle search or result limit reached.\n");
+        }
+        text.push('\n');
+    }
     if !report["diff"].is_null() {
         text.push_str("## Snapshot comparison\n\nMatched by source path, kind, qualified name and parent context. Duplicate semantic identities are reported as ambiguous. Location churn alone is not a source-body change.\n\n");
     }
@@ -748,7 +780,11 @@ pub(crate) fn reconstruct_report(
     } else {
         None
     };
-    build_report(snapshot, graph, options, previous.as_ref(), deadline)
+    let mut report = build_report(snapshot, graph, options, previous.as_ref(), deadline)?;
+    if let Some(cycles) = &options.import_cycles {
+        report["importCycles"] = import_cycles::report(store, snapshot, graph, cycles, deadline)?;
+    }
+    Ok(report)
 }
 
 // Pure report construction: source-scope validation and publication belong to
@@ -784,6 +820,9 @@ fn build_report(
     Ok(report)
 }
 fn canonical_producer(options: &AnalysisOptions) -> &'static str {
+    if options.import_cycles.is_some() {
+        return "yoke-import-cycles-report-1";
+    }
     match options.community_policy {
         Some(CommunityPolicy::NeighborMajorityV1 {}) => COMMUNITY_PRODUCER,
         None if options.source_category_policy.is_some() => CATEGORY_PRODUCER,
@@ -791,6 +830,9 @@ fn canonical_producer(options: &AnalysisOptions) -> &'static str {
     }
 }
 fn view_producer(options: &AnalysisOptions) -> &'static str {
+    if options.import_cycles.is_some() {
+        return "yoke-import-cycles-view-report-1";
+    }
     match options.community_policy {
         Some(CommunityPolicy::NeighborMajorityV1 {}) => COMMUNITY_VIEW_PRODUCER,
         None if options.source_category_policy.is_some() => CATEGORY_VIEW_PRODUCER,
@@ -1155,6 +1197,9 @@ pub fn prepare_view_report(
     let canonical = store.graph(&view.snapshot_id)?;
     let mut report = build_report(&snapshot, &graph, options, None, deadline)?;
     view_report_anchors(&mut report, view, deadline)?;
+    if let Some(cycles) = &options.import_cycles {
+        report["importCycles"] = import_cycles::report(store, &snapshot, &graph, cycles, deadline)?;
+    }
     report["producer"] = json!(view_producer(options));
     report["graphViewId"] = json!(view.id);
     report["viewArtifactId"] = json!(view.artifact_id);
