@@ -68,7 +68,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22.16.0'
-      - uses: dtolnay/rust-toolchain@1.94.1
+      - uses: dtolnay/rust-toolchain@1.120.0
       - name: Use the canonical Windows temporary directory
         run: python scripts/ci_windows_temp.py
       - uses: actions/download-artifact@v4
