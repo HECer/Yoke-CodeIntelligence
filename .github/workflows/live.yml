@@ -6,9 +6,10 @@ permissions:
 jobs:
   native-live:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@1.94.1
       - uses: actions/setup-node@v4
         with:
           node-version: '22.16.0'
@@ -29,5 +30,19 @@ jobs:
       - run: npm run build
       - run: node scripts/live-tests.mjs native
       - run: node scripts/live-tests.mjs communities
-      - name: Package VS Code extension (host test still separate)
-        run: python scripts/package-vscode.py
+      - name: Build and package the native CLI
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python scripts/package-native.py --fetch-missing-licenses --output "$RUNNER_TEMP/yoke-live-native.zip"
+      - name: Package the combined VS Code extension
+        run: |
+          python scripts/package-vscode.py --native-archive "$RUNNER_TEMP/yoke-live-native.zip" --include-typescript --output "$RUNNER_TEMP/yoke-live.vsix"
+      - name: Preserve the verified packages
+        uses: actions/upload-artifact@v4
+        with:
+          name: linux-live-packages
+          path: |
+            ${{ runner.temp }}/yoke-live-native.zip
+            ${{ runner.temp }}/yoke-live.vsix
+          if-no-files-found: error
