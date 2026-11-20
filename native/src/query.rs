@@ -9,6 +9,10 @@ use serde_json::{Value, json};
 use std::collections::{HashMap, HashSet, VecDeque};
 use unicode_normalization::{UnicodeNormalization, char::is_combining_mark};
 
+#[path = "query_token_benchmark.rs"]
+mod token_benchmark;
+pub use token_benchmark::token_benchmark;
+
 pub fn source(store: &Store, snapshot: &Snapshot, path: &str) -> Result<(String, String)> {
     let scope = crate::capture::source_scope_policy(store, snapshot)?;
     source_in_scope(store, &scope, path)

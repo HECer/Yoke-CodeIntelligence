@@ -77,7 +77,7 @@ test('publisher dry run names the public owner and makes no remote changes', () 
     const result = spawnSync(process.execPath, ['scripts/publish-github.mjs', '--dry-run'], { encoding: 'utf8' });
     assert.equal(result.status, 0, result.stderr);
     const data = JSON.parse(result.stdout);
-    assert.equal(data.repository, 'HECer/Code-Intelligence');
+    assert.equal(data.repository, 'HECer/Yoke-CodeIntelligence');
     assert.equal(data.visibility, 'public');
     assert.match(data.tag, /^v\d+\.\d+\.\d+/);
     assert.equal(data.tag, `v${data.version}`);

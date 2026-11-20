@@ -17,8 +17,11 @@ const MAX_BYTES: usize = 32_000_000;
 pub const RECORD_KIND: &str = "native_graph_view_v1";
 #[path = "graph_view_comparison_input.rs"]
 pub(crate) mod comparison_input;
+#[path = "graph_view_exploration.rs"]
+mod exploration;
 #[path = "graph_view_source_claims.rs"]
 pub mod source_claims;
+pub use exploration::{Options as ExplorationOptions, explore};
 
 #[cfg(all(test, windows))]
 #[path = "graph_view_comparison_input_tests.rs"]
@@ -2410,24 +2413,7 @@ struct MixedArc<'a> {
     neutral: bool,
     kind: MixedArcKind<'a>,
 }
-fn trace_meaning_inner(view: &View, args: &Value, deadline: &Deadline) -> Result<Value> {
-    let layer = view.meaning.as_ref().context("Meaning layer missing")?;
-    let mut rows = view.nodes.clone();
-    rows.extend(meaning_items(view, deadline)?);
-    let known: BTreeSet<_> = rows.iter().filter_map(|row| row["id"].as_str()).collect();
-    let mut visited: BTreeSet<String> = args["entityIds"]
-        .as_array()
-        .unwrap()
-        .iter()
-        .map(|id| id.as_str().unwrap().into())
-        .collect();
-    ensure!(
-        visited.iter().all(|id| known.contains(id.as_str())),
-        "Unknown typed view trace entity"
-    );
-    let depth = maximum(args, "depth", 2, 0, 8)?;
-    let maximum = maximum(args, "maxVisited", 300, 1, 20000)?;
-    let direction = args["direction"].as_str().unwrap_or("out");
+fn view_arcs<'a>(view: &'a View, deadline: &Deadline) -> Result<Vec<MixedArc<'a>>> {
     let mut arcs = Vec::new();
     for (index, arc) in view.observations.iter().enumerate() {
         deadline.check()?;
@@ -2440,6 +2426,9 @@ fn trace_meaning_inner(view: &View, args: &Value, deadline: &Deadline) -> Result
             kind: MixedArcKind::Source(index),
         });
     }
+    let Some(layer) = &view.meaning else {
+        return Ok(arcs);
+    };
     for packet in &layer.packets {
         for arc in &packet.relations {
             deadline.check()?;
@@ -2481,6 +2470,27 @@ fn trace_meaning_inner(view: &View, args: &Value, deadline: &Deadline) -> Result
             });
         }
     }
+    Ok(arcs)
+}
+fn trace_meaning_inner(view: &View, args: &Value, deadline: &Deadline) -> Result<Value> {
+    let layer = view.meaning.as_ref().context("Meaning layer missing")?;
+    let mut rows = view.nodes.clone();
+    rows.extend(meaning_items(view, deadline)?);
+    let known: BTreeSet<_> = rows.iter().filter_map(|row| row["id"].as_str()).collect();
+    let mut visited: BTreeSet<String> = args["entityIds"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .map(|id| id.as_str().unwrap().into())
+        .collect();
+    ensure!(
+        visited.iter().all(|id| known.contains(id.as_str())),
+        "Unknown typed view trace entity"
+    );
+    let depth = maximum(args, "depth", 2, 0, 8)?;
+    let maximum = maximum(args, "maxVisited", 300, 1, 20000)?;
+    let direction = args["direction"].as_str().unwrap_or("out");
+    let arcs = view_arcs(view, deadline)?;
     let mut adjacency: BTreeMap<&str, Vec<usize>> = BTreeMap::new();
     for (index, arc) in arcs.iter().enumerate() {
         deadline.check()?;

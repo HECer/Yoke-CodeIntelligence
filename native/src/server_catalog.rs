@@ -810,6 +810,7 @@ impl HostRegistration {
             configuration: crate::lsp::HostConfiguration {
                 passive_profile: self.passive_profile,
                 allow_source_execution: self.allow_source_execution,
+                await_document_diagnostics: false,
                 refactor_intent_profile: None,
                 tcp_endpoint: self.tcp_endpoint,
                 initialization_options: self.initialization_options.clone(),
