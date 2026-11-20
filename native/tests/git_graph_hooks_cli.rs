@@ -41,7 +41,11 @@ fn git(root: &Path, arguments: &[&str]) -> Output {
 
 fn root() -> TempDir {
     let root = TempDir::new().unwrap();
-    let path = root.path();
+    seed_repository(root.path());
+    root
+}
+
+fn seed_repository(path: &Path) {
     git(path, &["init", "-q", "--initial-branch=main"]);
     git(path, &["config", "--local", "user.name", "Owned Fixture"]);
     git(
@@ -52,7 +56,6 @@ fn root() -> TempDir {
     fs::write(path.join("original.rs"), b"pub fn obsolete() {}\r\n").unwrap();
     git(path, &["add", "--", "original.rs"]);
     git(path, &["commit", "-qm", "baseline"]);
-    root
 }
 
 fn hooks(root: &Path, arguments: &[&str]) -> Output {
@@ -268,4 +271,148 @@ fn a_custom_hook_directory_needs_matching_explicit_selection() {
         0
     );
     assert!(!custom.join("post-commit").exists());
+}
+
+#[test]
+fn local_registration_drives_a_real_merge_and_preserves_unrelated_config() {
+    let root = tempfile::Builder::new()
+        .prefix("merge %P ' ")
+        .tempdir()
+        .unwrap();
+    let path = root.path();
+    seed_repository(path);
+    fs::create_dir(path.join("graphs")).unwrap();
+    let graph = "graphs/bill [Q]' π.json";
+    let sibling = "graphs/bill Q' π.json";
+    fs::write(path.join(graph), br#"{"nodes":[],"links":[]}"#).unwrap();
+    fs::write(path.join(sibling), br#"{"nodes":[],"links":[]}"#).unwrap();
+    git(path, &["add", "--", "graphs"]);
+    git(path, &["commit", "-qm", "graph base"]);
+    git(path, &["branch", "topic"]);
+    let attrs = path.join(".git/info/attributes");
+    let original_attrs = b"# existing local policy\r\n*.txt text";
+    fs::write(&attrs, original_attrs).unwrap();
+    git(path, &["config", "--local", "yoke.fixture", "keep-me"]);
+    let install = [
+        "install",
+        "--trust-git",
+        "--allow-hook-write",
+        "--union-graph",
+        graph,
+    ];
+    let installed = success(&hooks(path, &install));
+    assert_eq!(
+        installed["unionDriver"],
+        serde_json::json!({"path":graph,"attributeOwned":true,"driverOwned":true})
+    );
+    assert_eq!(
+        success(&hooks(path, &install))["unionDriver"],
+        installed["unionDriver"]
+    );
+    let sibling_attribute = git(path, &["check-attr", "-z", "merge", "--", sibling]);
+    assert_eq!(
+        sibling_attribute.stdout,
+        format!("{sibling}\0merge\0unspecified\0").as_bytes()
+    );
+
+    let receipt: Value = serde_json::from_slice(
+        &fs::read(path.join(".git/yoke-graph-hooks/installation.json")).unwrap(),
+    )
+    .unwrap();
+    let scratch = [
+        ".merge_file_aaaaaa",
+        ".merge_file_bbbbbb",
+        ".merge_file_cccccc",
+    ];
+    for file in scratch {
+        fs::write(path.join(file), br#"{"nodes":[],"links":[]}"#).unwrap();
+    }
+    let unauthorized = hooks(
+        path,
+        &[
+            "merge-union",
+            receipt["installationId"].as_str().unwrap(),
+            scratch[0],
+            scratch[1],
+            scratch[2],
+            "--",
+            sibling,
+        ],
+    );
+    assert!(!unauthorized.status.success());
+    assert!(String::from_utf8_lossy(&unauthorized.stderr).contains("unselected path"));
+    assert_eq!(
+        fs::read(path.join(scratch[1])).unwrap(),
+        br#"{"nodes":[],"links":[]}"#
+    );
+    for file in scratch {
+        fs::remove_file(path.join(file)).unwrap();
+    }
+
+    fs::write(path.join(graph), br#"{"nodes":[{"id":"ours"}],"links":[]}"#).unwrap();
+    git(path, &["commit", "-qam", "ours"]);
+    git(path, &["switch", "-q", "topic"]);
+    fs::write(
+        path.join(graph),
+        br#"{"nodes":[{"id":"theirs"}],"edges":[]}"#,
+    )
+    .unwrap();
+    git(path, &["commit", "-qam", "theirs"]);
+    git(path, &["switch", "-q", "main"]);
+    git(path, &["merge", "--no-edit", "topic"]);
+    let merged: Value = serde_json::from_slice(&fs::read(path.join(graph)).unwrap()).unwrap();
+    assert_eq!(
+        merged["nodes"],
+        serde_json::json!([{"id":"ours"},{"id":"theirs"}])
+    );
+    assert_eq!(head_graph(path, "post-merge")["directed"], true);
+    let removed = success(&hooks(path, &["uninstall", "--allow-hook-write"]));
+    assert!(removed.get("unionDriver").is_none());
+    assert_eq!(fs::read(&attrs).unwrap(), original_attrs);
+    assert!(!path.join(".gitattributes").exists());
+    assert_eq!(
+        git(path, &["config", "--local", "--get", "yoke.fixture"]).stdout,
+        b"keep-me\n"
+    );
+    let attribute = git(path, &["check-attr", "-z", "merge", "--", graph]);
+    assert_eq!(
+        attribute.stdout,
+        format!("{graph}\0merge\0unspecified\0").as_bytes()
+    );
+}
+
+#[test]
+fn foreign_driver_setting_prevents_registration_and_hook_activation() {
+    let root = root();
+    let path = root.path();
+    fs::write(path.join("graph.json"), br#"{"nodes":[],"links":[]}"#).unwrap();
+    git(path, &["add", "--", "graph.json"]);
+    git(path, &["commit", "-qm", "graph"]);
+    git(
+        path,
+        &["config", "--local", "merge.yoke-graphify.driver", "false"],
+    );
+    let refused = hooks(
+        path,
+        &[
+            "install",
+            "--trust-git",
+            "--allow-hook-write",
+            "--union-graph",
+            "graph.json",
+        ],
+    );
+    assert!(!refused.status.success());
+    assert!(String::from_utf8_lossy(&refused.stderr).contains("foreign or duplicated"));
+    assert!(!path.join(".git/yoke-graph-hooks/active").exists());
+    assert!(!path.join(".git/hooks/post-merge").exists());
+    assert!(!path.join(".git/info/attributes").exists());
+    assert_eq!(
+        git(
+            path,
+            &["config", "--local", "--get", "merge.yoke-graphify.driver"]
+        )
+        .stdout,
+        b"false\n"
+    );
 }

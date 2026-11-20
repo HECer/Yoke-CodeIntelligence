@@ -16,8 +16,11 @@ use yoke::{
     git_workflows::{HostGit, capture_commit_at},
     model::{Graph, Snapshot, hash, identity, valid_id},
     paths::is_link,
-    process::{CaptureLimits, run_capture},
+    process::{CaptureLimits, CapturedOutput, run_capture},
 };
+
+#[path = "git_graph_hooks_union.rs"]
+mod union_registration;
 
 pub(super) const INPUT: &str = "git_graph_hooks_input_invalid";
 const CONFIG_BYTES: usize = 32_000;
@@ -64,6 +67,9 @@ enum Operation {
         /// Required when the effective Git hook directory is outside .git.
         #[arg(long)]
         hooks_dir: Option<PathBuf>,
+        /// Install the union driver for this exact tracked Graphify graph path.
+        #[arg(long)]
+        union_graph: Option<String>,
     },
     /// Read the installation receipt and verify the managed files.
     Status,
@@ -74,6 +80,14 @@ enum Operation {
     },
     #[command(hide = true)]
     Refresh { event: Hook },
+    #[command(hide = true)]
+    MergeUnion {
+        installation: String,
+        base: PathBuf,
+        current: PathBuf,
+        other: PathBuf,
+        path: String,
+    },
 }
 
 #[derive(Clone, Copy, ValueEnum)]
@@ -145,6 +159,7 @@ impl Arguments {
                     return output(&json!({"state":"absent"}), max_bytes, &deadline);
                 }
                 Operation::Refresh { .. } => return Ok(true),
+                Operation::MergeUnion { .. } => anyhow::bail!("Graph union installation is absent"),
                 Operation::Install { .. } => {}
             }
         }
@@ -154,6 +169,7 @@ impl Arguments {
                 trust_git,
                 origin,
                 hooks_dir,
+                union_graph,
                 ..
             } => {
                 let host = crate::selected_git(git.clone(), *trust_git)?;
@@ -168,6 +184,7 @@ impl Arguments {
                     git,
                     yoke,
                     origin.as_deref(),
+                    union_graph.as_deref(),
                     &deadline,
                 )?
             }
@@ -194,6 +211,25 @@ impl Arguments {
                     refresh(&state, &receipt, *event, &deadline)?;
                 }
                 return Ok(true);
+            }
+            Operation::MergeUnion {
+                installation,
+                base,
+                current,
+                other,
+                path,
+            } => {
+                let _state_guard = directory_guards(&state, &deadline)?;
+                let _lock = lock(&state, &deadline)?;
+                let receipt = load_receipt(&root, &state, &deadline)?.context(INPUT)?;
+                ensure!(
+                    receipt.installation_id == *installation
+                        && active(&state, &receipt, &deadline)?,
+                    "Graph union installation is inactive or changed"
+                );
+                ensure!(std::env::current_dir()?.canonicalize()? == root, INPUT);
+                union_registration::admit_merge(&state, &receipt, path, &deadline)?;
+                return super::graph_union_cli::merge_scratch(base, current, other, &deadline);
             }
         };
         output(&result, max_bytes, &deadline)
@@ -224,7 +260,12 @@ fn external_binary(path: &Path, root: &Path, deadline: &Deadline) -> Result<Path
     Ok(path)
 }
 
-fn git_query(binary: &Path, root: &Path, args: &[&str], deadline: &Deadline) -> Result<String> {
+fn git_command(
+    binary: &Path,
+    root: &Path,
+    args: &[&str],
+    deadline: &Deadline,
+) -> Result<CapturedOutput> {
     let mut command = Command::new(binary);
     for name in LOCAL_GIT_ENV {
         command.env_remove(name);
@@ -236,6 +277,7 @@ fn git_query(binary: &Path, root: &Path, args: &[&str], deadline: &Deadline) -> 
             "--no-replace-objects",
             "--no-lazy-fetch",
             "--no-pager",
+            "--literal-pathspecs",
             "-c",
             "core.fsmonitor=false",
         ])
@@ -251,12 +293,20 @@ fn git_query(binary: &Path, root: &Path, args: &[&str], deadline: &Deadline) -> 
         },
     )?;
     ensure!(
-        obtained.exit_code == Some(0)
-            && !obtained.timed_out
+        !obtained.timed_out
             && !obtained.output_exceeded
             && obtained.output_complete
             && obtained.stdin_complete
             && !obtained.io_error,
+        "Git graph hook metadata request failed"
+    );
+    Ok(obtained)
+}
+
+fn git_query(binary: &Path, root: &Path, args: &[&str], deadline: &Deadline) -> Result<String> {
+    let obtained = git_command(binary, root, args, deadline)?;
+    ensure!(
+        obtained.exit_code == Some(0),
         "Git graph hook metadata request failed"
     );
     let value = String::from_utf8(obtained.stdout)?;
@@ -367,24 +417,25 @@ fn active(state: &Path, receipt: &Receipt, deadline: &Deadline) -> Result<bool> 
     Ok(true)
 }
 
+fn shell_quote(path: &Path) -> Result<String> {
+    let path = path.to_str().context(INPUT)?;
+    #[cfg(windows)]
+    let path = path
+        .strip_prefix(r"\\?\")
+        .unwrap_or(path)
+        .replace('\\', "/");
+    ensure!(!path.chars().any(char::is_control), INPUT);
+    Ok(format!("'{}'", path.replace('\'', "'\"'\"'")))
+}
+
 fn script(receipt: &Receipt, hook: Hook) -> Result<Vec<u8>> {
-    let quote = |path: &Path| -> Result<String> {
-        let path = path.to_str().context(INPUT)?;
-        #[cfg(windows)]
-        let path = path
-            .strip_prefix(r"\\?\")
-            .unwrap_or(path)
-            .replace('\\', "/");
-        ensure!(!path.chars().any(char::is_control), INPUT);
-        Ok(format!("'{}'", path.replace('\'', "'\"'\"'")))
-    };
     let checkout = if matches!(hook, Hook::Checkout) {
         "[ \"$3\" = 1 ] || exit 0\n"
     } else {
         ""
     };
     Ok(format!("#!/bin/sh\n# Yoke installation {}\n{checkout}unset {}\nexec {} --root {} --timeout 15000 git graph-hooks refresh {}\n",
-        receipt.installation_id, LOCAL_GIT_ENV.join(" "), quote(&receipt.yoke)?, quote(&receipt.root)?, hook.argument()).into_bytes())
+        receipt.installation_id, LOCAL_GIT_ENV.join(" "), shell_quote(&receipt.yoke)?, shell_quote(&receipt.root)?, hook.argument()).into_bytes())
 }
 
 struct RegisteredHook {
@@ -425,6 +476,7 @@ fn install(
     git: PathBuf,
     yoke: PathBuf,
     origin: Option<&str>,
+    union_graph: Option<&str>,
     deadline: &Deadline,
 ) -> Result<Value> {
     ensure!(origin.is_none_or(valid_id), INPUT);
@@ -488,11 +540,13 @@ fn install(
         }
     };
     let enrolled = active(state, &receipt, deadline)?;
+    let registered = registered_hooks(&receipt, deadline)?;
+    union_registration::install(state, &receipt, union_graph, deadline)?;
     for RegisteredHook {
         path,
         expected,
         present,
-    } in registered_hooks(&receipt, deadline)?
+    } in registered
     {
         if !present {
             let mut file = tempfile::NamedTempFile::new_in(hooks)?;
@@ -545,15 +599,18 @@ fn status(state: &Path, receipt: &Receipt, deadline: &Deadline) -> Result<Value>
         (false, 0) => "inactive",
         _ => "incomplete",
     };
-    Ok(
-        json!({"state":installation,"ownedHooks":hooks,"originSnapshotId":receipt.origin,
-        "graph":state.join("graph.json"),"hasGraph":exists(&state.join("graph.json"))?}),
-    )
+    let mut result = json!({"state":installation,"ownedHooks":hooks,"originSnapshotId":receipt.origin,
+        "graph":state.join("graph.json"),"hasGraph":exists(&state.join("graph.json"))?});
+    if let Some(union) = union_registration::status(state, receipt, deadline)? {
+        result["unionDriver"] = union;
+    }
+    Ok(result)
 }
 
 fn uninstall(state: &Path, receipt: &Receipt, deadline: &Deadline) -> Result<Value> {
     let _held = directory_guards(&receipt.hooks_dir, deadline)?;
     let hooks = registered_hooks(receipt, deadline)?;
+    union_registration::uninstall(state, receipt, deadline)?;
     if active(state, receipt, deadline)? {
         fs::remove_file(state.join("active"))?;
     }

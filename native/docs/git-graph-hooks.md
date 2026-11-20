@@ -32,3 +32,18 @@ Working-tree edits and untracked files do not enter the committed graph.
 The [Git merge driver](graph-union.md) can separately merge a tracked
 Graphify artifact. The managed hooks publish a fresh local graph using the
 committed source, including when a merged change deletes an old symbol.
+
+Select a tracked graph with --union-graph to install the driver alongside
+the hooks.
+
+~~~sh
+yoke --root /host/project git graph-hooks install --trust-git --allow-hook-write --union-graph graphs/graph.json
+~~~
+
+Yoke records the exact repository-relative path in the local receipt.
+It adds the driver to the repository's Git configuration and adds a
+literal assignment to .git/info/attributes. The starting merge attribute
+must be unspecified. The driver verifies the path Git passes before
+combining the scratch graph files. Install can resume a partial registration.
+Uninstall removes the owned driver setting and attribute block and
+preserves unrelated local Git configuration.
