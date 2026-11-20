@@ -34,6 +34,7 @@ mod github_app_pages_cli;
 mod github_app_publication_cli;
 mod github_app_worker_cli;
 mod github_discussions_cli;
+mod graph_diagnostics_cli;
 mod host_documents_cli;
 mod host_install_cli;
 mod meaning_archive_cli;
@@ -921,6 +922,8 @@ enum GraphOperation {
     },
     /// Compare two explicitly pinned historical Views without capture or publication.
     CompareViews(Box<view_comparison_cli::Arguments>),
+    /// Audit edge collapse risks in a selected Graphify graph or extraction file.
+    Diagnose(graph_diagnostics_cli::Arguments),
     Export {
         #[arg(long)]
         format: String,
@@ -2270,6 +2273,7 @@ fn run_parity(
                     )?)?;
                 }
                 GraphOperation::CompareViews(_) => bail!(view_comparison_cli::INPUT),
+                GraphOperation::Diagnose(_) => bail!(graph_diagnostics_cli::INPUT),
                 GraphOperation::Export {
                     format,
                     output,
@@ -3658,6 +3662,23 @@ fn run(cli: Cli) -> Result<bool> {
         "session_prompt_host_route_required"
     );
 
+    if let Operation::Extensions(extension) = &operation
+        && let ExtensionOperation::Graph {
+            command: GraphOperation::Diagnose(args),
+        } = extension.as_ref()
+    {
+        ensure!(
+            cli.snapshot.is_none()
+                && cli.capture_config.is_none()
+                && cli.include_ignored_dir.is_empty()
+                && cli.analyzer_epoch.is_none()
+                && cli.language_server_config.is_none()
+                && !cli.trust_servers
+                && !cli.allow_writes,
+            graph_diagnostics_cli::INPUT
+        );
+        return args.run(cli.timeout, cli.max_bytes);
+    }
     if let Operation::Extensions(extension) = &operation
         && let ExtensionOperation::Graph {
             command: GraphOperation::CompareViews(args),
