@@ -19,7 +19,7 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
           cache: npm
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: '3.13'
       - uses: actions/setup-go@v5
@@ -38,7 +38,7 @@ jobs:
     timeout-minutes: 4
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: '3.13'
       - name: Check inert launcher admission and output-inventory adversaries
@@ -62,7 +62,7 @@ jobs:
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: '3.13'
       - uses: actions/setup-node@v4
