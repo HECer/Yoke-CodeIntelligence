@@ -75,6 +75,78 @@ fn persistent_dap_evaluates_only_stopped_source_bound_frames_and_closes_owned_ta
 }
 
 #[test]
+fn debugpy_reorders_messages_before_binding_a_stopped_frame() {
+    let root = tempfile::tempdir().unwrap();
+    let log = tempfile::NamedTempFile::new().unwrap();
+    let source = "value = 40\nresult = value + 2\n";
+    fs::write(root.path().join("main.py"), source).unwrap();
+    let mut engine = Engine::open(root.path()).unwrap();
+    let deadline = Deadline::new(20000);
+    let snapshot = engine.index(&deadline).unwrap().0;
+    let mut profile = profile(log.path(), "reordered-sequences");
+    profile.adapter_id = "debugpy".into();
+    let mut adapter = DebugAdapter::start(&engine.store, &snapshot, &profile, &deadline).unwrap();
+    assert_eq!(
+        adapter.info()["frame"]["contentHash"],
+        yoke::model::hash(source)
+    );
+    assert_eq!(
+        adapter.evaluate("value + 2", &deadline).unwrap()["result"],
+        "42"
+    );
+    adapter.close(&deadline).unwrap();
+    assert_eq!(adapter.info()["ownedProcessCleanupProven"], true);
+    assert_eq!(
+        fs::read_to_string(root.path().join("main.py")).unwrap(),
+        source
+    );
+}
+
+#[test]
+fn dap_rejects_replayed_or_excessively_reordered_sequences() {
+    let root = tempfile::tempdir().unwrap();
+    fs::write(
+        root.path().join("main.py"),
+        "value = 40\nresult = value + 2\n",
+    )
+    .unwrap();
+    let mut engine = Engine::open(root.path()).unwrap();
+    let deadline = Deadline::new(20000);
+    let snapshot = engine.index(&deadline).unwrap().0;
+    for (adapter_id, mode, diagnostic) in [
+        (
+            "debugpy",
+            "duplicate-queued-sequence",
+            "invalid or repeated",
+        ),
+        ("debugpy", "replayed-sequence", "invalid or repeated"),
+        (
+            "debugpy",
+            "sequence-window-overflow",
+            "exceeds debugpy reorder window",
+        ),
+        (
+            "independent-fixture",
+            "reordered-sequences",
+            "invalid or repeated",
+        ),
+    ] {
+        let log = tempfile::NamedTempFile::new().unwrap();
+        let mut profile = profile(log.path(), mode);
+        profile.adapter_id = adapter_id.into();
+        let error = DebugAdapter::start(&engine.store, &snapshot, &profile, &Deadline::new(3000))
+            .err()
+            .expect("Unsafe debugger sequence accepted");
+        assert!(error.to_string().contains(diagnostic), "{mode}: {error:#}");
+        assert!(
+            !fs::read_to_string(log.path())
+                .unwrap()
+                .contains("stackTrace")
+        );
+    }
+}
+
+#[test]
 fn active_debugger_evaluation_observes_host_cancellation_before_its_original_deadline() {
     use std::sync::{
         Arc,

@@ -1,7 +1,12 @@
 // Independent DAP protocol fixture; no debuggee execution occurs here.
 import fs from 'node:fs';import path from 'node:path';
 const [log,mode]=process.argv.slice(2);let buffer=Buffer.alloc(0),seq=0,program,launch;
-function send(message){const body=Buffer.from(JSON.stringify({seq:++seq,...message}));process.stdout.write(`Content-Length: ${body.length}\r\n\r\n`);process.stdout.write(body);}
+function writeFrame(message) {
+  const body = Buffer.from(JSON.stringify(message));
+  process.stdout.write('Content-Length: ' + body.length + '\r\n\r\n');
+  process.stdout.write(body);
+}
+function send(message){writeFrame({seq:++seq,...message});}
 function reply(m,body={}){send({type:'response',request_seq:m.seq,success:true,command:m.command,body});}
 function event(event,body={}){send({type:'event',event,body});}
 function handle(m){fs.appendFileSync(log,JSON.stringify({type:m.type,command:m.command,seq:m.seq,pid:process.pid})+'\n');
@@ -10,10 +15,37 @@ function handle(m){fs.appendFileSync(log,JSON.stringify({type:m.type,command:m.c
  if(m.command==='launch'){program=m.arguments.program;launch=m;
    if(mode==='reverse-run'){send({type:'request',command:'runInTerminal',arguments:{args:['unapproved.exe']}});return;}
    if(mode==='no-configuration-phase'){reply(m);event('stopped',{reason:'entry',threadId:1});return;}
+   if (mode === 'reordered-sequences' || mode === 'duplicate-queued-sequence') {
+     const initialized = {seq: ++seq, type: 'event', event: 'initialized'};
+     const output = {seq: ++seq, type: 'event', event: 'output', body: {output: 'ready'}};
+     writeFrame(output);
+     if (mode === 'duplicate-queued-sequence') writeFrame(output);
+     writeFrame(initialized);
+     return;
+   }
+   if (mode === 'sequence-window-overflow' || mode === 'replayed-sequence') {
+     const invalid = mode === 'sequence-window-overflow' ? seq + 10 : seq;
+     writeFrame({seq: invalid, type: 'event', event: 'initialized'});
+     return;
+   }
    event('initialized');return;
  }
  if(m.command==='setBreakpoints'){reply(m,{breakpoints:m.arguments.breakpoints.map(b=>({verified:true,line:b.line}))});return;}
- if(m.command==='configurationDone'){reply(m);reply(launch);if(mode==='changed-source')fs.writeFileSync(program,'changed bytes\n');if(mode!=='not-stopped')event('stopped',{reason:'breakpoint',...(mode==='no-thread-id'?{}:{threadId:1}),allThreadsStopped:true});return;}
+ if (m.command === 'configurationDone') {
+   reply(m);
+   reply(launch);
+   if (mode === 'changed-source') fs.writeFileSync(program, 'changed bytes\n');
+   if (mode === 'not-stopped') return;
+   const stopped = {reason: 'breakpoint', ...(mode === 'no-thread-id' ? {} : {threadId: 1}), allThreadsStopped: true};
+   if (mode === 'reordered-sequences') {
+     const continued = {seq: ++seq, type: 'event', event: 'continued'};
+     event('stopped', stopped);
+     writeFrame(continued);
+   } else {
+     event('stopped', stopped);
+   }
+   return;
+ }
  if(m.command==='threads'){reply(m,{threads:[{id:1,name:'owned'}]});return;}
  if(m.command==='stackTrace'){reply(m,{stackFrames:[{id:7,name:'actual',source:{path:mode==='foreign-frame'?path.resolve(program,'../../outside.py'):program},line:2,column:1}],totalFrames:1});return;}
  if(m.command==='evaluate'){if(m.arguments.frameId!==7||m.arguments.context!=='repl'){process.exit(3);}if(mode==='stalled-evaluate')return;reply(m,{result:m.arguments.expression==='value + 2'?'42':'40',variablesReference:0});return;}
