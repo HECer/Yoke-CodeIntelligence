@@ -894,8 +894,12 @@ impl From<ParsedOperation> for Operation {
         }
     }
 }
+mod graph_benchmark_cli;
+
 #[derive(Subcommand)]
 enum GraphOperation {
+    /// Estimate corpus and context response tokens on a saved snapshot.
+    Benchmark(graph_benchmark_cli::Arguments),
     /// Admit one explicit host file against an existing captured snapshot.
     ImportSourceClaims {
         #[arg(long)]
@@ -2269,6 +2273,7 @@ fn run_parity(
                         deadline,
                     )?)?;
                 }
+                GraphOperation::Benchmark(_) => bail!(graph_benchmark_cli::INPUT),
                 GraphOperation::CompareViews(_) => bail!(view_comparison_cli::INPUT),
                 GraphOperation::Export {
                     format,
@@ -3658,6 +3663,26 @@ fn run(cli: Cli) -> Result<bool> {
         "session_prompt_host_route_required"
     );
 
+    if let Operation::Extensions(extension) = &operation
+        && let ExtensionOperation::Graph {
+            command: GraphOperation::Benchmark(args),
+        } = extension.as_ref()
+    {
+        ensure!(
+            cli.capture_config.is_none()
+                && cli.include_ignored_dir.is_empty()
+                && cli.analyzer_epoch.is_none()
+                && cli.language_server_config.is_none()
+                && !cli.trust_servers
+                && !cli.allow_writes,
+            graph_benchmark_cli::INPUT
+        );
+        let snapshot = cli
+            .snapshot
+            .as_deref()
+            .context("Graph benchmark needs --snapshot")?;
+        return args.run(&cli.root, snapshot, cli.timeout, cli.max_bytes);
+    }
     if let Operation::Extensions(extension) = &operation
         && let ExtensionOperation::Graph {
             command: GraphOperation::CompareViews(args),
