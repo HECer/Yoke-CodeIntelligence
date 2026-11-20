@@ -812,6 +812,7 @@ impl HostRegistration {
                 allow_source_execution: self.allow_source_execution,
                 max_configuration_callback_items: None,
                 await_roslyn_project_initialization: false,
+                roslyn_workspace: None,
                 await_document_diagnostics: false,
                 refactor_intent_profile: None,
                 tcp_endpoint: self.tcp_endpoint,

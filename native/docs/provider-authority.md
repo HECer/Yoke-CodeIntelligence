@@ -66,6 +66,19 @@ outputs such as `bin/` and `obj/` belong outside the captured source set, for
 example through the project's Git ignore rules. If the server rewrites a file
 that was captured, Yoke refuses the result.
 
+For a Roslyn server that requires an explicit workspace selection, set
+`configuration.roslynWorkspace` to one of these forms.
+
+- `{"kind":"projects","paths":["src/Owned.vbproj"]}`
+- `{"kind":"solution","path":"Owned.sln"}`
+
+The host must also select `allowSourceExecution`. The selection is limited to
+exact paths in the captured snapshot and the corresponding private workspace
+copy. Project selection allows up to 64 distinct C# or Visual Basic project
+files. Solution selection accepts a single SLN or SLNX file. Yoke sends the
+corresponding open notification and waits for project initialization within
+the existing request deadline.
+
 Semantic overlay schema 2 binds `providerContext` and its hash into immutable
 node, evidence, and observation identities. The context contains only exact host
 permission, a strict known policy string, and bounded ordered omission records.

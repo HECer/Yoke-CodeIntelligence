@@ -231,6 +231,8 @@ pub struct HostConfiguration {
     pub max_configuration_callback_items: Option<u8>,
     #[serde(default, skip_serializing_if = "is_false")]
     pub await_roslyn_project_initialization: bool,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub roslyn_workspace: Option<RoslynWorkspace>,
     #[serde(default, skip_serializing_if = "is_false")]
     pub await_document_diagnostics: bool,
     #[serde(default)]
@@ -250,6 +252,13 @@ pub struct HostConfiguration {
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub refactor_intent_profile: Option<RefactorIntentProfile>,
 }
+#[derive(Clone, Debug, Deserialize, Serialize)]
+#[serde(tag = "kind", rename_all = "snake_case", deny_unknown_fields)]
+pub enum RoslynWorkspace {
+    Projects { paths: Vec<String> },
+    Solution { path: String },
+}
+
 #[derive(Clone, Copy, Debug, Serialize, PartialEq, Eq)]
 pub enum RefactorIntentProfile {
     #[serde(rename = "own_v1")]
@@ -2875,6 +2884,52 @@ struct InitializedProvider {
     exclusions: std::collections::BTreeSet<String>,
 }
 #[allow(clippy::too_many_arguments)]
+fn roslyn_workspace_notification(
+    configuration: &HostConfiguration,
+    selection: &RoslynWorkspace,
+    snapshot: &Snapshot,
+    exclusions: &std::collections::BTreeSet<String>,
+    root: &Path,
+) -> Result<(&'static str, Value)> {
+    ensure!(
+        configuration.allow_source_execution,
+        "Roslyn workspace selection requires host source execution permission"
+    );
+    let selected_uri = |path: &str, allowed: &[&str]| -> Result<String> {
+        ensure!(
+            path.len() <= 4096
+                && !exclusions.contains(path)
+                && Path::new(path)
+                    .extension()
+                    .and_then(|extension| extension.to_str())
+                    .is_some_and(|extension| allowed
+                        .iter()
+                        .any(|kind| extension.eq_ignore_ascii_case(kind)))
+                && snapshot.files.iter().any(|file| file.path == path),
+            "Roslyn workspace selection must identify an exact captured solution or project"
+        );
+        uri(&scoped(root, path)?)
+    };
+    match selection {
+        RoslynWorkspace::Projects { paths } => {
+            ensure!(
+                (1..=64).contains(&paths.len())
+                    && paths.iter().collect::<HashSet<_>>().len() == paths.len(),
+                "Roslyn project selection must contain 1 to 64 distinct paths"
+            );
+            let projects = paths
+                .iter()
+                .map(|path| selected_uri(path, &["csproj", "vbproj"]))
+                .collect::<Result<Vec<_>>>()?;
+            Ok(("project/open", json!({ "projects": projects })))
+        }
+        RoslynWorkspace::Solution { path } => Ok((
+            "solution/open",
+            json!({ "solution": selected_uri(path, &["sln", "slnx"])? }),
+        )),
+    }
+}
+
 fn initialize_provider_at(
     engine: &Engine,
     host: (&Server, Option<&HostConfiguration>),
@@ -2900,6 +2955,17 @@ fn initialize_provider_at(
         exclusions.len() <= 1000 && !exclusions.contains(path),
         "Passive provider selector omission capacity or target invalid"
     );
+    let roslyn_workspace = configuration
+        .and_then(|config| {
+            config
+                .roslyn_workspace
+                .as_ref()
+                .map(|selection| (config, selection))
+        })
+        .map(|(config, selection)| {
+            roslyn_workspace_notification(config, selection, snapshot, &exclusions, tree.path())
+        })
+        .transpose()?;
     let passive_rust = passive_rust(server, configuration);
     let mut resources = configuration
         .map(resource_settings::effective)
@@ -3079,6 +3145,9 @@ fn initialize_provider_at(
         "Server selected unsupported position encoding"
     );
     session.notify("initialized", json!({}))?;
+    if let Some((method, arguments)) = &roslyn_workspace {
+        session.notify(method, arguments.clone())?;
+    }
     if !session.settings.is_null() {
         session.notify(
             "workspace/didChangeConfiguration",
@@ -3124,7 +3193,9 @@ fn initialize_provider_at(
     {
         session.await_ready(|session| session.quiescent, deadline)?;
     }
-    if configuration.is_some_and(|config| config.await_roslyn_project_initialization) {
+    if roslyn_workspace.is_some()
+        || configuration.is_some_and(|config| config.await_roslyn_project_initialization)
+    {
         session.await_ready(|session| session.roslyn_project_initialized, deadline)?;
     }
     if configuration.is_some_and(|config| config.await_document_diagnostics) {
@@ -3984,6 +4055,58 @@ fn run_at_unprofiled(
 #[cfg(test)]
 mod uri_tests {
     use super::*;
+
+    #[test]
+    fn roslyn_workspace_admits_exact_captured_paths_with_host_authority() {
+        let root = tempfile::tempdir().unwrap();
+        fs::write(root.path().join("Owned.vbproj"), "<Project/>").unwrap();
+        fs::write(root.path().join("Owned.sln"), "owned solution").unwrap();
+        let mut engine = Engine::open(root.path()).unwrap();
+        let (snapshot, _, _, _) = engine.index(&Deadline::new(10_000)).unwrap();
+        let mut config = HostConfiguration::default();
+        let mut exclusions = std::collections::BTreeSet::new();
+        let selection = RoslynWorkspace::Projects {
+            paths: vec!["Owned.vbproj".into()],
+        };
+        let check = |config: &HostConfiguration,
+                     selection: &RoslynWorkspace,
+                     exclusions: &std::collections::BTreeSet<String>| {
+            roslyn_workspace_notification(config, selection, &snapshot, exclusions, root.path())
+        };
+
+        assert!(check(&config, &selection, &exclusions).is_err());
+        config.allow_source_execution = true;
+        let (method, payload) = check(&config, &selection, &exclusions).unwrap();
+        assert_eq!(method, "project/open");
+        assert_eq!(
+            payload["projects"][0],
+            uri(&root.path().join("Owned.vbproj")).unwrap()
+        );
+        let (method, payload) = check(
+            &config,
+            &RoslynWorkspace::Solution {
+                path: "Owned.sln".into(),
+            },
+            &exclusions,
+        )
+        .unwrap();
+        assert_eq!(method, "solution/open");
+        assert_eq!(
+            payload["solution"],
+            uri(&root.path().join("Owned.sln")).unwrap()
+        );
+
+        for paths in [
+            vec!["owned.vbproj".into()],
+            vec!["Owned.vbproj".into(), "Owned.vbproj".into()],
+            vec!["../Owned.vbproj".into()],
+            vec!["Owned.sln".into()],
+        ] {
+            assert!(check(&config, &RoslynWorkspace::Projects { paths }, &exclusions).is_err());
+        }
+        exclusions.insert("Owned.vbproj".into());
+        assert!(check(&config, &selection, &exclusions).is_err());
+    }
     #[test]
     fn grown_provider_copy_is_rejected_without_reading_unbounded_source() {
         let dir = tempfile::tempdir().unwrap();
