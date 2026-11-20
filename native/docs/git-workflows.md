@@ -1,11 +1,18 @@
 # Native Git workflows
 
-The Windows Rust implementation uses a host-selected Git executable for committed
+The Rust implementation uses a host-selected Git executable for committed
 objects, reference metadata, history and committed branch comparisons. It never
 invokes working-tree `status`, `diff`, fetch, checkout, hooks, text conversion or
 clean/smudge filters. Captured working source is compared with verified committed
 source directly in Rust. Implicit fetching of missing promisor objects is disabled;
 a missing object fails the request instead of executing a remote helper.
+
+The selected Git must support `--no-lazy-fetch`, available in Git 2.45 and later.
+This can be checked with `/path/to/git --no-lazy-fetch --version`. On hosts with
+older system Git, including the Git 2.43 shipped with Ubuntu 24.04, select a
+compatible executable using `--git /absolute/path/to/git` on Git workflow commands
+or the corresponding host profile setting. Keep the executable outside the
+project being analyzed. [Git 2.45 release notes](https://github.com/git/git/blob/v2.45.0/Documentation/RelNotes/2.45.0.txt)
 
 `git_workflows::analyze` accepts bounded `WorkflowOptions`: a base ref, an optional
 committed head ref, optional merge-base selection, incoming impact depth, and owner,
