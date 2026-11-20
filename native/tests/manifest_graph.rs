@@ -1,6 +1,83 @@
 use std::fs;
 use tempfile::TempDir;
 use yoke::{Engine, capture::Deadline, manifest_graph};
+
+#[test]
+fn maven_coordinates_resolve_only_from_the_captured_pom_and_unique_modules() {
+    let root = TempDir::new().unwrap();
+    for dir in ["consumer", "library", "duplicate"] {
+        fs::create_dir(root.path().join(dir)).unwrap();
+    }
+    let consumer = r#"<project xmlns="http://maven.apache.org/POM/4.0.0">
+  <parent><groupId>org.fixture</groupId><artifactId>parent</artifactId><version>1</version></parent>
+  <artifactId>consumer</artifactId>
+  <properties><library.suffix><![CDATA[core]]></library.suffix><invalid>https://example.invalid/private</invalid></properties>
+  <dependencies>
+    <dependency><groupId>${project.groupId}</groupId><artifactId>library-${library.suffix}</artifactId><scope>runtime</scope></dependency>
+    <dependency><groupId>${env.POM_GROUP}</groupId><artifactId>external</artifactId></dependency>
+    <dependency><groupId>org.fixture</groupId><artifactId>${invalid}</artifactId></dependency>
+    <dependency><groupId>org.fixture</groupId><artifactId>library<ignored/>-core</artifactId></dependency>
+  </dependencies>
+</project>"#;
+    let library =
+        "<project><groupId>org.fixture</groupId><artifactId>library-core</artifactId></project>";
+    fs::write(root.path().join("consumer/pom.xml"), consumer).unwrap();
+    fs::write(root.path().join("library/pom.xml"), library).unwrap();
+    let mut engine = Engine::open(root.path()).unwrap();
+    let deadline = Deadline::new(30000);
+    let (snapshot, graph, _, _) = engine.index(&deadline).unwrap();
+    let original = manifest_graph::extract(&engine.store, &snapshot, &graph, &deadline).unwrap();
+    let consumer_id = &original
+        .nodes
+        .iter()
+        .find(|node| node["name"] == "org.fixture:consumer")
+        .unwrap()["id"];
+    let library_id = &original
+        .nodes
+        .iter()
+        .find(|node| node["name"] == "org.fixture:library-core")
+        .unwrap()["id"];
+    let binds: Vec<_> = original
+        .observations
+        .iter()
+        .filter(|edge| edge["targetLabel"] == "org.fixture:library-core")
+        .collect();
+    assert_eq!(binds.len(), 1);
+    assert_eq!(&binds[0]["source"], consumer_id);
+    assert_eq!(&binds[0]["target"], library_id);
+    assert_eq!(binds[0]["resolution"], "manifest_coordinate");
+    assert_eq!(binds[0]["scope"], "runtime");
+    for label in ["${env.POM_GROUP}:external", "org.fixture:${invalid}"] {
+        assert!(
+            original
+                .observations
+                .iter()
+                .any(|edge| edge["targetLabel"] == label && edge["target"].is_null())
+        );
+    }
+    assert!(
+        !serde_json::to_string(&original)
+            .unwrap()
+            .contains("example.invalid")
+    );
+
+    fs::write(root.path().join("duplicate/pom.xml"), library).unwrap();
+    let (snapshot, graph, _, _) = engine.index(&deadline).unwrap();
+    let duplicate = manifest_graph::extract(&engine.store, &snapshot, &graph, &deadline).unwrap();
+    let ambiguous = duplicate
+        .observations
+        .iter()
+        .find(|edge| edge["targetLabel"] == "org.fixture:library-core")
+        .unwrap();
+    assert_eq!(ambiguous["resolution"], "ambiguous_manifest_coordinate");
+    assert!(ambiguous["target"].is_null());
+    let saved = engine.store.read_artifact(&original.artifact_id).unwrap();
+    let saved: serde_json::Value = serde_json::from_slice(&saved).unwrap();
+    assert_eq!(
+        saved["observations"],
+        serde_json::json!(original.observations)
+    );
+}
 #[test]
 fn derived_publication_refuses_an_existing_record_with_different_scope() {
     let d = TempDir::new().unwrap();

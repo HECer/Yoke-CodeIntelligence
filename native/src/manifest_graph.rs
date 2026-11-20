@@ -398,7 +398,7 @@ pub fn prepare<'a>(
             "apm.yml" | "apm.yaml" => apm(file, &text, deadline)?,
             "go.mod" => go(file, &text)?,
             "Cargo.toml" | "pyproject.toml" => toml_package(file, &text)?,
-            "pom.xml" => maven(file, &text)?,
+            "pom.xml" => maven(file, &text, deadline)?,
             _ => unreachable!(),
         };
         packages.push(package);
@@ -410,6 +410,19 @@ pub fn prepare<'a>(
                 p.file.path.clone(),
                 builder.node(&p.file, &p.text, "package", &p.name, &p.ecosystem)?,
             );
+        }
+    }
+    let mut maven_ids = BTreeMap::new();
+    for package in &packages {
+        deadline.check()?;
+        if package.ecosystem == "maven"
+            && !package.name.contains("${")
+            && let Some(id) = ids.get(&package.file.path)
+        {
+            maven_ids
+                .entry(package.name.as_str())
+                .and_modify(|target| *target = None)
+                .or_insert(Some(id));
         }
     }
     for p in &packages {
@@ -448,13 +461,22 @@ pub fn prepare<'a>(
                 .as_ref()
                 .and_then(|path| packages.iter().find(|p| &p.file.path == path))
                 .is_some_and(|target| target.name != dep.name);
-            let target = if mismatch {
-                None
+            let (target, resolution) = if mismatch {
+                (None, "manifest_package_mismatch")
+            } else if let Some(target) = target_path.as_ref().and_then(|path| ids.get(path)) {
+                (Some(target), "manifest_path")
+            } else if p.ecosystem == "maven"
+                && let Some(target) = maven_ids.get(dep.name.as_str())
+            {
+                match target {
+                    Some(target) => (Some(*target), "manifest_coordinate"),
+                    None => (None, "ambiguous_manifest_coordinate"),
+                }
             } else {
-                target_path.as_ref().and_then(|path| ids.get(path))
+                (None, "declared_dependency")
             };
             let anchor = builder.declaration(&p.file, &p.text, &dep.alias)?;
-            builder.edge(source,target.map(String::as_str),&dep.name,"depends_on",if mismatch{"manifest_package_mismatch"}else if target.is_some(){"manifest_path"}else{"declared_dependency"},&anchor,json!({"dependencyAlias":dep.alias,"scope":dep.scope,"ecosystem":p.ecosystem,"inherited":dep.inherited}))?;
+            builder.edge(source,target.map(String::as_str),&dep.name,"depends_on",resolution,&anchor,json!({"dependencyAlias":dep.alias,"scope":dep.scope,"ecosystem":p.ecosystem,"inherited":dep.inherited}))?;
         }
     }
     builder.finish()
@@ -671,57 +693,149 @@ fn toml_package(file: &SourceFile, text: &str) -> Result<Package> {
                 .is_some(),
     })
 }
-fn maven(file: &SourceFile, text: &str) -> Result<Package> {
+fn maven_atom(value: &str) -> bool {
+    value
+        .bytes()
+        .all(|byte| byte.is_ascii_alphanumeric() || matches!(byte, b'_' | b'.' | b'-'))
+}
+
+fn maven_expand(value: &str, properties: &BTreeMap<String, String>) -> Option<String> {
+    let mut expanded = String::new();
+    let mut remainder = value.trim();
+    while let Some((literal, reference)) = remainder.split_once("${") {
+        let (property, following) = reference.split_once('}')?;
+        if !maven_atom(literal) || property.is_empty() || !maven_atom(property) {
+            return None;
+        }
+        expanded.push_str(literal);
+        if let Some(value) = properties
+            .get(property)
+            .map(|value| value.trim())
+            .filter(|value| !value.is_empty() && maven_atom(value))
+        {
+            expanded.push_str(value);
+        } else {
+            expanded.push_str("${");
+            expanded.push_str(property);
+            expanded.push('}');
+        }
+        if expanded.len() > 4096 {
+            return None;
+        }
+        remainder = following;
+    }
+    if !maven_atom(remainder) || expanded.len() + remainder.len() > 4096 {
+        return None;
+    }
+    expanded.push_str(remainder);
+    (!expanded.is_empty()).then_some(expanded)
+}
+
+fn maven_name(
+    fields: &BTreeMap<String, String>,
+    group: Option<&str>,
+    properties: &BTreeMap<String, String>,
+) -> Option<String> {
+    let artifact = maven_expand(fields.get("artifactId")?, properties)?;
+    if let Some(group) = group {
+        let group = maven_expand(group, properties)?;
+        return Some(format!("{group}:{artifact}"));
+    }
+    Some(artifact)
+}
+
+fn maven(file: &SourceFile, text: &str, deadline: &Deadline) -> Result<Package> {
     use quick_xml::events::Event;
     let mut reader = quick_xml::Reader::from_str(text);
-    let mut stack = Vec::<String>::new();
-    let mut root = BTreeMap::new();
-    let mut current = BTreeMap::new();
-    let mut dependencies = vec![];
+    struct Element {
+        name: String,
+        text: String,
+        nested: bool,
+    }
+    let mut stack = Vec::<Element>::new();
+    let mut root = BTreeMap::<String, String>::new();
+    let mut parent = BTreeMap::<String, String>::new();
+    let mut properties = BTreeMap::<String, String>::new();
+    let mut current = BTreeMap::<String, String>::new();
+    let mut declarations = vec![];
     let mut dep_depth = None;
     loop {
+        deadline.check()?;
         match reader.read_event()? {
             Event::Start(e) => {
                 ensure!(stack.len() < 128, "XML nesting capacity exceeded");
-                let tag = e.local_name().as_ref().to_owned();
-                stack.push(tag.clone());
-                if tag == "dependency" {
-                    ensure!(dep_depth.is_none(), "Nested dependency declaration");
-                    dep_depth = Some(stack.len());
-                    current.clear();
+                let name = e.local_name().as_ref().to_owned();
+                if let Some(parent) = stack.last_mut() {
+                    parent.nested = true;
+                    if name == "dependency" && parent.name == "dependencies" {
+                        ensure!(dep_depth.is_none(), "Nested dependency declaration");
+                        dep_depth = Some(stack.len() + 1);
+                    }
                 }
+                stack.push(Element {
+                    name,
+                    text: String::new(),
+                    nested: false,
+                });
             }
             Event::End(_) => {
                 if dep_depth == Some(stack.len()) {
-                    if let (Some(group), Some(artifact)) =
-                        (current.get("groupId"), current.get("artifactId"))
-                    {
-                        let name = format!("{group}:{artifact}");
-                        dependencies.push(Dependency {
-                            alias: name.clone(),
-                            name,
-                            scope: current
-                                .get("scope")
-                                .cloned()
-                                .unwrap_or_else(|| "compile".into()),
-                            path: None,
-                            inherited: false,
-                        });
-                    }
+                    declarations.push(std::mem::take(&mut current));
                     dep_depth = None;
                 }
-                stack.pop();
+                let Some(element) = stack.pop() else { continue };
+                if element.nested || element.text.trim().is_empty() {
+                    continue;
+                }
+                let coordinate =
+                    matches!(element.name.as_str(), "groupId" | "artifactId" | "version");
+                let target = match stack.as_slice() {
+                    [project] if project.name == "project" && coordinate => &mut root,
+                    [project, container]
+                        if project.name == "project"
+                            && container.name == "parent"
+                            && coordinate =>
+                    {
+                        &mut parent
+                    }
+                    [project, container]
+                        if project.name == "project" && container.name == "properties" =>
+                    {
+                        &mut properties
+                    }
+                    _ if dep_depth == Some(stack.len())
+                        && matches!(element.name.as_str(), "groupId" | "artifactId" | "scope") =>
+                    {
+                        &mut current
+                    }
+                    _ => continue,
+                };
+                ensure!(
+                    target.insert(element.name, element.text).is_none(),
+                    "Duplicate Maven field"
+                );
             }
             Event::Text(e) => {
-                let value = e
-                    .xml_content(quick_xml::XmlVersion::Implicit1_0)
-                    .into_owned();
-                if let Some(tag) = stack.last() {
-                    if dep_depth.is_some() {
-                        current.insert(tag.clone(), value);
-                    } else if stack.len() == 2 {
-                        root.insert(tag.clone(), value);
-                    }
+                if let Some(element) = stack.last_mut()
+                    && !element.nested
+                {
+                    element
+                        .text
+                        .push_str(&e.xml_content(quick_xml::XmlVersion::Implicit1_0));
+                }
+            }
+            Event::CData(e) => {
+                if let Some(element) = stack.last_mut()
+                    && !element.nested
+                {
+                    element
+                        .text
+                        .push_str(&e.xml_content(quick_xml::XmlVersion::Implicit1_0));
+                }
+            }
+            Event::Empty(_) | Event::GeneralRef(_) => {
+                if let Some(element) = stack.last_mut() {
+                    element.nested = true;
                 }
             }
             Event::DocType(_) => anyhow::bail!("XML DTD and entity declarations refused"),
@@ -729,17 +843,49 @@ fn maven(file: &SourceFile, text: &str) -> Result<Package> {
             _ => (),
         }
     }
-    let name = format!(
-        "{}:{}",
-        root.get("groupId").map(String::as_str).unwrap_or(""),
-        root.get("artifactId")
-            .map(String::as_str)
-            .unwrap_or(&file.path)
-    );
+    let project_group = root.get("groupId").or_else(|| parent.get("groupId"));
+    let project_version = root.get("version").or_else(|| parent.get("version"));
+    for (key, value) in [
+        ("project.groupId", project_group),
+        ("project.artifactId", root.get("artifactId")),
+        ("project.version", project_version),
+        ("project.parent.groupId", parent.get("groupId")),
+        ("project.parent.artifactId", parent.get("artifactId")),
+        ("project.parent.version", parent.get("version")),
+    ] {
+        if let Some(value) = value {
+            properties
+                .entry(key.into())
+                .or_insert_with(|| value.clone());
+        }
+    }
+    let mut dependencies = Vec::new();
+    for declaration in declarations {
+        deadline.check()?;
+        let Some(name) = maven_name(
+            &declaration,
+            declaration.get("groupId").map(String::as_str),
+            &properties,
+        ) else {
+            continue;
+        };
+        dependencies.push(Dependency {
+            alias: name.clone(),
+            name,
+            scope: declaration
+                .get("scope")
+                .map(|value| value.trim())
+                .filter(|value| !value.is_empty() && maven_atom(value))
+                .unwrap_or("compile")
+                .into(),
+            path: None,
+            inherited: false,
+        });
+    }
     Ok(Package {
         file: file.clone(),
         text: text.into(),
-        name,
+        name: maven_name(&root, project_group.map(String::as_str), &properties).unwrap_or_default(),
         ecosystem: "maven".into(),
         dependencies,
         declares_workspace: false,
