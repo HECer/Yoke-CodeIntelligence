@@ -463,6 +463,55 @@ fn meaning_trace_preserves_direction_and_ordered_hyperedge_incidence_without_a_c
 }
 
 #[test]
+fn ranked_view_exploration_keeps_original_meaning_incidence_and_skips_provider_calls() {
+    let f = fixture();
+    let view = selected(&f);
+    let serialized = serde_json::to_value(&view).unwrap();
+    let packet = serialized["meaning"]["packets"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .find(|packet| !packet["hyperedges"].as_array().unwrap().is_empty())
+        .unwrap();
+    let claim = &packet["hyperedges"][0];
+    let left = &claim["participants"][0]["concept"];
+    let right = &claim["participants"][1]["concept"];
+    let query = |direction: &str, depth: usize| {
+        graph_view::explore(
+            &f.engine.store,
+            &view.id,
+            Some(&f.snapshot.id),
+            serde_json::from_value(json!({
+                "seeds":[left],"contexts":["coordinates"],"mode":"dfs","direction":direction,"depth":depth
+            })).unwrap(),
+            false,
+            &d(),
+        ).unwrap()
+    };
+    let outward = query("out", 2);
+    assert_eq!(outward["entities"].as_array().unwrap().len(), 1);
+    assert!(
+        outward["meaningObservations"]
+            .as_array()
+            .unwrap()
+            .is_empty()
+    );
+    let first = query("both", 1);
+    assert_eq!(first["entities"].as_array().unwrap().len(), 2);
+    assert_eq!(first["meaningObservations"][0]["id"], claim["id"]);
+    assert_eq!(first["meaningObservations"][0]["neutral"], true);
+    assert_eq!(
+        first["meaningClaims"][0]["participants"],
+        claim["participants"]
+    );
+    let second = query("both", 2);
+    assert_eq!(second["visits"][2]["id"], *right);
+    assert_eq!(second["visits"][2]["depth"], 2);
+    assert_eq!(second["meaningObservations"].as_array().unwrap().len(), 2);
+    assert_eq!(fs::read_to_string(&f.marker).unwrap().lines().count(), 3);
+}
+
+#[test]
 fn source_only_projection_consumers_refuse_meaning_before_report_or_archive_publication() {
     let f = fixture();
     let view = selected(&f);

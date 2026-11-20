@@ -3676,6 +3676,50 @@ fn run(cli: Cli) -> Result<bool> {
         return view_comparison_cli::run(args, &cli.root, cli.timeout, cli.max_bytes);
     }
     if let Operation::Extensions(extension) = &operation
+        && let ExtensionOperation::Graph {
+            command:
+                GraphOperation::View {
+                    view,
+                    operation,
+                    args,
+                },
+        } = extension.as_ref()
+        && matches!(operation.as_str(), "query" | "explain")
+    {
+        ensure!(
+            cli.capture_config.is_none()
+                && cli.include_ignored_dir.is_empty()
+                && cli.analyzer_epoch.is_none()
+                && cli.language_server_config.is_none()
+                && !cli.trust_servers
+                && !cli.allow_writes,
+            "Graph view exploration requires saved inputs without capture or provider flags"
+        );
+        ensure!(
+            (1..=600_000).contains(&cli.timeout) && (2..=4_000_000).contains(&cli.max_bytes),
+            "Graph view exploration deadline or output budget is out of range"
+        );
+        let deadline = Deadline::new(cli.timeout);
+        let options = yoke::json::decode(yoke::json::parse(args.as_bytes(), 128_000)?)?;
+        let store = yoke::store::Store::open_existing_read_only(&cli.root, &deadline)?;
+        let result = yoke::graph_view::explore(
+            &store,
+            view,
+            cli.snapshot.as_deref(),
+            options,
+            operation == "explain",
+            &deadline,
+        )?;
+        let mut output =
+            yoke::json::encode_bounded(&result, cli.max_bytes as usize - 1, &deadline)?;
+        output.push(b'\n');
+        deadline.check()?;
+        let mut stdout = io::stdout().lock();
+        stdout.write_all(&output)?;
+        stdout.flush()?;
+        return Ok(true);
+    }
+    if let Operation::Extensions(extension) = &operation
         && let ExtensionOperation::Git(git) = extension.as_ref()
         && let GitOperation::OwnerChanges(args) = &git.operation
     {

@@ -67,3 +67,39 @@ Without `graphViewId`, the existing native query behavior and defaults apply.
 Status, prepare, apply and verify do not accept this selector. Discovery through
 a view never grants source-write authority; changes require canonical source
 hashes and the existing plan, approval and recovery workflow.
+
+## Ranked traversal and explanations
+
+~~~sh
+yoke --root /project graph view VIEW_ID query --args '{"query":"what calls processInvoice","mode":"dfs","direction":"in"}'
+yoke --root /project graph view VIEW_ID explain --args '{"seeds":["src/invoice.ts"],"contexts":["call","import"]}'
+~~~
+
+These commands open a published View in the existing store read-only. Choose
+either a text query or a list of exact selectors. A selector matches an entity
+ID, exact name, qualified name, or captured path of a file node. Unresolved
+and ambiguous selectors report candidate counts. A text query ranks normalized
+name, qualified-name and path matches with deterministic ties. The report
+returns each ranked seed's score and matched terms.
+
+Both commands accept BFS and DFS, inbound, outbound and bidirectional
+traversal, depths from zero to eight, and a visit cap. Query defaults to three
+seeds and three hops. Explain defaults to one ranked seed and one hop. Explicit
+seeds keep their supplied order. Visit explanations identify an original
+observation and a predecessor. A later shorter route can improve an explanation
+and expand the remaining depth.
+
+Use `contexts`, `relations` or `resolutions` to restrict the neighborhood. Contexts
+such as call, import and reference derive from native relation labels. Without
+an explicit context list, recognized intent words in a query can select a
+context. An explicit empty list disables inference. The report records the
+selected filters and their origin.
+
+The result keeps parallel and opposite observations between selected endpoints,
+their original source evidence and the selected snapshot ID. A directed edge
+retains its stored direction even when visited from the target. Meaning
+incidences and source citations are neutral and available for bidirectional
+traversal. The result keeps their original claim IDs and participant records.
+Source notes and provider claims retain their original trust attributes.
+
+[Graphify query reference](https://github.com/Graphify-Labs/graphify/blob/fe085cedddde3a18554f8749b230bfe47f3dcce7/graphify/serve.py)
