@@ -227,6 +227,10 @@ pub struct HostConfiguration {
     pub passive_profile: Option<PassiveProfile>,
     #[serde(default, skip_serializing_if = "is_false")]
     pub allow_source_execution: bool,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub max_configuration_callback_items: Option<u8>,
+    #[serde(default, skip_serializing_if = "is_false")]
+    pub await_roslyn_project_initialization: bool,
     #[serde(default)]
     pub tcp_endpoint: Option<SocketAddr>,
     #[serde(default)]
@@ -659,6 +663,9 @@ pub(crate) fn read_content_frame(input: &mut impl BufRead) -> Result<Value> {
     input.read_exact(&mut bytes)?;
     crate::json::parse(&bytes, 4_000_000)
 }
+const DEFAULT_CONFIGURATION_CALLBACK_ITEMS: u8 = 64;
+const MAX_CONFIGURATION_CALLBACK_ITEMS: u8 = 128;
+
 struct Session {
     child: Option<crate::process::ManagedChild>,
     socket: Option<TcpStream>,
@@ -669,7 +676,9 @@ struct Session {
     diagnostics: Vec<Value>,
     diagnostic_bytes: usize,
     quiescent: bool,
+    roslyn_project_initialized: bool,
     settings: Value,
+    max_configuration_callback_items: usize,
     resource_settings: Option<resource_settings::Binding>,
     workspace_folders: Option<Value>,
     _cargo_home: Option<tempfile::TempDir>,
@@ -830,7 +839,9 @@ impl Session {
             diagnostics: Vec::new(),
             diagnostic_bytes: 0,
             quiescent: false,
+            roslyn_project_initialized: false,
             settings: Value::Null,
+            max_configuration_callback_items: usize::from(DEFAULT_CONFIGURATION_CALLBACK_ITEMS),
             resource_settings: None,
             workspace_folders: None,
             _cargo_home: None,
@@ -867,6 +878,11 @@ impl Session {
             self.diagnostic_bytes += bytes;
             self.diagnostics.push(message["params"].clone());
         }
+        if message["method"] == "workspace/projectInitializationComplete"
+            && message.get("id").is_none()
+        {
+            self.roslyn_project_initialized = true;
+        }
         if message["method"] == "experimental/serverStatus" {
             self.quiescent = message["params"]["quiescent"].as_bool().unwrap_or(false);
             ensure!(
@@ -893,7 +909,7 @@ impl Session {
                         .as_array()
                         .context("Configuration callback items missing")?;
                     ensure!(
-                        items.len() <= 64,
+                        items.len() <= self.max_configuration_callback_items,
                         "Configuration callback item budget exceeded"
                     );
                     let mut selected = Vec::new();
@@ -944,12 +960,12 @@ impl Session {
         }
         Ok(())
     }
-    fn await_ready(&mut self, deadline: &Deadline) -> Result<()> {
+    fn await_ready(&mut self, ready: impl Fn(&Self) -> bool, deadline: &Deadline) -> Result<()> {
         for _ in 0..4096 {
-            if self.quiescent {
+            deadline.check()?;
+            if ready(self) {
                 return Ok(());
             }
-            deadline.check()?;
             let message = receive_cooperatively(&self.messages, deadline)
                 .context("Language server did not finish loading the snapshot")??;
             ensure!(
@@ -2820,6 +2836,13 @@ fn initialize_provider_at(
     #[cfg(any(test, debug_assertions))]
     test_startup_phases::record(test_startup_phases::Phase::ProviderSetup);
     let (server, configuration) = host;
+    let max_configuration_callback_items = configuration
+        .and_then(|config| config.max_configuration_callback_items)
+        .unwrap_or(DEFAULT_CONFIGURATION_CALLBACK_ITEMS);
+    ensure!(
+        (1..=MAX_CONFIGURATION_CALLBACK_ITEMS).contains(&max_configuration_callback_items),
+        "Host configuration callback item limit out of range"
+    );
     let tree = tempfile::Builder::new().prefix("yoke-lsp-").tempdir()?;
     let exclusions = passive_source_exclusions(server, configuration, snapshot);
     ensure!(
@@ -2886,6 +2909,7 @@ fn initialize_provider_at(
             initialize["initializationOptions"] = configuration.initialization_options.clone();
         }
         session.settings = configuration.settings.clone();
+        session.max_configuration_callback_items = usize::from(max_configuration_callback_items);
         if !configuration.workspace_folders.is_empty() {
             let mut folders = Vec::new();
             for folder in &configuration.workspace_folders {
@@ -3047,7 +3071,10 @@ fn initialize_provider_at(
         .file_stem()
         .is_some_and(|name| name == "rust-analyzer")
     {
-        session.await_ready(deadline)?;
+        session.await_ready(|session| session.quiescent, deadline)?;
+    }
+    if configuration.is_some_and(|config| config.await_roslyn_project_initialization) {
+        session.await_ready(|session| session.roslyn_project_initialized, deadline)?;
     }
     #[cfg(any(test, debug_assertions))]
     test_startup_phases::record(test_startup_phases::Phase::ProviderReady);

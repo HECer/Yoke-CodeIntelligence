@@ -52,6 +52,20 @@ hash, original omitted path/hash/reason, and host permission. TCP peer code and
 transitive plugins remain unattested. Other production families need a measured
 strategy or an explicit host `allowSourceExecution: true` selection.
 
+A host registration can set `configuration.maxConfigurationCallbackItems`
+to an integer from 1 through 128. The default is 64. The existing reply byte
+and per-section limits also apply. Microsoft Roslyn 5.13 requested a batch
+of 77 items during initial project load. A registration for this server can
+also select `configuration.awaitRoslynProjectInitialization` to wait for its
+`workspace/projectInitializationComplete` notification within the original
+request deadline. These options grant no additional provider permissions.
+
+For the Microsoft server's C# auto-load workflow, select `--stdio` and
+`--autoLoadProjects` and configure the captured workspace folder `.`. Build
+outputs such as `bin/` and `obj/` belong outside the captured source set, for
+example through the project's Git ignore rules. If the server rewrites a file
+that was captured, Yoke refuses the result.
+
 Semantic overlay schema 2 binds `providerContext` and its hash into immutable
 node, evidence, and observation identities. The context contains only exact host
 permission, a strict known policy string, and bounded ordered omission records.
