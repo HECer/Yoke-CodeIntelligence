@@ -31,6 +31,7 @@ jobs:
       - run: node scripts/live-tests.mjs native
       - run: node scripts/live-tests.mjs communities
       - name: Build and package the native CLI
+        id: native_package
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -38,7 +39,8 @@ jobs:
       - name: Package the combined VS Code extension
         run: |
           python scripts/package-vscode.py --native-archive "$RUNNER_TEMP/yoke-live-native.zip" --include-typescript --output "$RUNNER_TEMP/yoke-live.vsix"
-      - name: Preserve the verified packages
+      - name: Preserve the package results
+        if: ${{ !cancelled() && steps.native_package.outcome == 'success' }}
         uses: actions/upload-artifact@v4
         with:
           name: linux-live-packages
