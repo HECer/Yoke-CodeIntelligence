@@ -1,0 +1,74 @@
+name: Release candidate packages
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  packages:
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            target: x86_64-unknown-linux-gnu
+          - os: windows-latest
+            target: x86_64-pc-windows-msvc
+          - os: macos-latest
+            target: aarch64-apple-darwin
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: dtolnay/rust-toolchain@1.94.1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.16.0'
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Build the locked TypeScript runtime
+        shell: bash
+        run: |
+          npm ci --ignore-scripts
+          npm run build
+      - name: Build and verify the portable archive
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          YOKE_PACKAGE_TARGET: ${{ matrix.target }}
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $target = (rustc -vV | Select-String '^host: ').Line.Substring(6)
+          if ($target -ne $env:YOKE_PACKAGE_TARGET) { throw "Unexpected Rust host $target" }
+          $destination = Join-Path $env:RUNNER_TEMP 'yoke-candidate'
+          python scripts/package-native.py --fetch-missing-licenses --output (Join-Path $destination "yoke-$target.zip")
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Package the VSIX and bind both checksums to the source commit
+        shell: pwsh
+        env:
+          YOKE_PACKAGE_TARGET: ${{ matrix.target }}
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $target = $env:YOKE_PACKAGE_TARGET
+          $destination = Join-Path $env:RUNNER_TEMP 'yoke-candidate'
+          $native = Join-Path $destination "yoke-$target.zip"
+          $vsix = Join-Path $destination "yoke-$target.vsix"
+          python scripts/package-vscode.py --native-archive $native --include-typescript --output $vsix
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $source = git rev-parse HEAD
+          if ($LASTEXITCODE -ne 0 -or $source -ne $env:GITHUB_SHA) { throw 'Source revision differs' }
+          git diff --exit-code HEAD --
+          if ($LASTEXITCODE -ne 0) { throw 'Tracked source changed while packaging' }
+          $hashes = Get-FileHash -LiteralPath $native, $vsix -Algorithm SHA256
+          $hashes | ForEach-Object {
+            "$($_.Hash.ToLowerInvariant())  $(Split-Path -Leaf $_.Path)"
+          } | Set-Content -LiteralPath (Join-Path $destination 'SHA256SUMS') -Encoding ascii
+          Set-Content -LiteralPath (Join-Path $destination 'SOURCE_COMMIT') -Value $source -Encoding ascii
+      - uses: actions/upload-artifact@v4
+        with:
+          name: yoke-release-candidate-${{ matrix.target }}
+          path: ${{ runner.temp }}/yoke-candidate/
+          if-no-files-found: error

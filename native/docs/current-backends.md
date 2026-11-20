@@ -30,6 +30,13 @@ this additive catalog response.
   provider requires schema configuration. A catalog entry does not authorize
   reading configuration outside captured scope or executing project code.
 
+  For GraphQL servers that initialize the project after opening a document,
+  host registration may set `configuration.awaitDocumentDiagnostics` to true.
+  Yoke waits within the original request deadline for a diagnostics publication
+  on the exact opened file before dispatching the semantic request. The
+  publication may contain no diagnostics. If supplied, its document version
+  must match the opened version. This setting grants no additional authority.
+
 Real processes still require an absolute host-selected registration and trust,
 plus the original measured passive profile or explicit source-execution grant.
 Neither YAML declarations nor MCP requests can create those grants. Unknown IDs,

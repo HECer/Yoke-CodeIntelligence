@@ -36,3 +36,31 @@ below supplies separate performance and cost measures.
 Drivers receive one JSON request on stdin, including the workspace, task, cold/warm preparation flag and cost reservation. They modify that copy and return one JSON response with `schema:1`, the requested `model`, `usage` and numeric `actualCost` or null. Setup/indexing, retries, warm-up and nested model calls belong in driver accounting. Drivers are responsible for equivalent model settings and genuinely distinct cold/warm behavior. A label alone is not proof of equivalent execution. Unknown cost keeps its reservation; all attempts are checkpointed before execution. Driver exit, protected test files and independent verification are checked separately. Results group success and cost per successful task by arm. Missing cost makes that metric unknown rather than zero.
 
 This harness does not supply a commercial agent subscription, provider key, trusted oracle, OS sandbox, independent billing meter or statistically representative task set. The shipped harness tests use an explicitly artificial protocol driver to exercise accounting and refusal paths. **No actual paired multi-agent/model campaign has been run for v0.3.0.** Trusted external programs can execute code; review them, keep credentials out of repository config, and use an appropriate operating-system/container boundary for untrusted tasks.
+
+## Saved snapshot token benchmark
+
+~~~sh
+yoke --root /project index
+yoke --root /project --snapshot <snapshot-id> graph benchmark \
+  --question "authentication" --question "main entry point"
+~~~
+
+The command opens the existing store read-only and retrieves context using the
+same native query as `yoke context`. It measures the compact JSON data payload
+before transport formatting and records its character count and SHA-256 for each
+query. Estimates use one token per four Unicode scalar values, rounded down
+with a minimum of one for a query that returns items. Queries without items
+remain visible with zero estimated tokens and are excluded from the average.
+If all queries miss, the average and ratio are null.
+
+The corpus baseline uses whitespace-delimited words in the saved, decoded
+source files, with four estimated tokens per three words. The capture and
+omission counts describe the baseline's scope. Supply `--corpus-words` to use an
+independently counted corpus. Repeat `--question` for up to 20 queries, or use
+the five built-in prompts. The graph and snapshot must already exist. The
+command runs locally without executing a provider or project code.
+
+The estimates describe context size. Measuring model tokenization, billing and
+answer quality requires separate evidence. Graphify measures its own text
+responses, so the two formats can yield different estimates.
+[Graphify benchmark source](https://github.com/Graphify-Labs/graphify/blob/fe085cedddde3a18554f8749b230bfe47f3dcce7/graphify/benchmark.py)

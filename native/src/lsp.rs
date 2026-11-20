@@ -227,6 +227,8 @@ pub struct HostConfiguration {
     pub passive_profile: Option<PassiveProfile>,
     #[serde(default, skip_serializing_if = "is_false")]
     pub allow_source_execution: bool,
+    #[serde(default, skip_serializing_if = "is_false")]
+    pub await_document_diagnostics: bool,
     #[serde(default)]
     pub tcp_endpoint: Option<SocketAddr>,
     #[serde(default)]
@@ -3097,6 +3099,19 @@ fn initialize_provider_at(
         .is_some_and(|name| name == "rust-analyzer")
     {
         session.await_ready(deadline)?;
+    }
+    if configuration.is_some_and(|config| config.await_document_diagnostics) {
+        let scope = crate::capture::source_scope_policy(&engine.store, snapshot)?;
+        let publication = session
+            .await_diagnostics(tree.path(), snapshot, &scope, path, deadline)
+            .map_err(|error| provider_error(error, ProviderStage::PublishedDiagnostics))?;
+        ensure!(
+            publication["diagnostics"].is_array()
+                && publication
+                    .get("version")
+                    .is_none_or(|version| version == 1),
+            "Invalid diagnostics readiness publication"
+        );
     }
     #[cfg(any(test, debug_assertions))]
     test_startup_phases::record(test_startup_phases::Phase::ProviderReady);
