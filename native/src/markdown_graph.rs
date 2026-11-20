@@ -203,6 +203,60 @@ fn emit_link(
     Ok(())
 }
 
+fn emit_frontmatter(
+    builder: &mut Builder<'_>,
+    documents: &Documents<'_>,
+    file: &SourceFile,
+    text: &str,
+    span: Range<usize>,
+) -> Result<()> {
+    let mut offset = span.start;
+    for (index, line) in text[span].split_inclusive('\n').enumerate() {
+        builder.deadline.check()?;
+        let start = offset;
+        offset += line.len();
+        if index == 0 {
+            continue;
+        }
+        let trimmed = line.trim_start();
+        if trimmed.starts_with('#') {
+            continue;
+        }
+        if trimmed.len() == line.len()
+            && let Some((key, _)) = line.split_once(':')
+            && !key.trim().is_empty()
+        {
+            builder.node(file, text, "frontmatter_key", key.trim(), "markdown")?;
+        }
+        if !trimmed.contains('[') {
+            continue;
+        }
+        let start = start + line.len() - trimmed.len();
+        for (event, link_span) in
+            Parser::new_ext(trimmed, Options::ENABLE_WIKILINKS).into_offset_iter()
+        {
+            builder.deadline.check()?;
+            if let Event::Start(Tag::Link {
+                dest_url,
+                link_type,
+                ..
+            }) = event
+            {
+                emit_link(
+                    builder,
+                    documents,
+                    file,
+                    text,
+                    &dest_url,
+                    matches!(link_type, LinkType::WikiLink { .. }),
+                    (start + link_span.start)..(start + link_span.end),
+                )?;
+            }
+        }
+    }
+    Ok(())
+}
+
 fn headings(
     builder: &mut Builder<'_>,
     file: &SourceFile,
@@ -501,16 +555,7 @@ pub fn prepare<'a>(
             }
             match event {
                 Event::Start(Tag::MetadataBlock(_)) => {
-                    for line in text[span].lines().skip(1) {
-                        deadline.check()?;
-                        if !line.starts_with(char::is_whitespace)
-                            && !line.starts_with('#')
-                            && let Some((key, _)) = line.split_once(':')
-                            && !key.trim().is_empty()
-                        {
-                            builder.node(file, text, "frontmatter_key", key.trim(), "markdown")?;
-                        }
-                    }
+                    emit_frontmatter(&mut builder, &documents, file, text, span)?;
                 }
                 Event::Start(Tag::Link {
                     dest_url,

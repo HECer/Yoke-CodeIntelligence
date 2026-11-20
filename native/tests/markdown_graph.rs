@@ -30,6 +30,53 @@ fn commonmark_nested_labels_multiline_definitions_and_indented_code_have_correct
 }
 
 #[test]
+fn frontmatter_links_preserve_captured_targets_and_exact_byte_ranges() {
+    let root = TempDir::new().unwrap();
+    fs::create_dir(root.path().join("docs")).unwrap();
+    fs::write(root.path().join("related.md"), "# Related\n").unwrap();
+    let markdown = "---\r\ntitle: Übersicht 🦀\r\nnotes:\r\n    - '[[related#Intro]]'\r\n    - '[contact](https://example.invalid/info)'\r\n# [[commented]]\r\n---\r\n\r\n# Body\r\n";
+    fs::write(root.path().join("docs/guide.md"), markdown).unwrap();
+    let deadline = Deadline::new(30000);
+    let mut engine = Engine::open(root.path()).unwrap();
+    let (snapshot, graph, _, _) = engine.index(&deadline).unwrap();
+    let out = markdown_graph::extract(&engine.store, &snapshot, &graph, &deadline).unwrap();
+    let observations = [
+        ("related.md", "links_document", "[[related#Intro]]"),
+        (
+            "https://example.invalid/info",
+            "links_external",
+            "[contact](https://example.invalid/info)",
+        ),
+    ];
+    for (target, relation, authored) in observations {
+        let edge = out
+            .observations
+            .iter()
+            .find(|edge| edge["targetLabel"] == target && edge["relation"] == relation)
+            .unwrap();
+        assert_eq!(edge["target"].is_string(), relation == "links_document");
+        let source = out
+            .evidence
+            .iter()
+            .find(|source| source["id"] == edge["evidenceIds"][0])
+            .unwrap();
+        let start = source["startByte"].as_u64().unwrap() as usize;
+        let end = source["endByte"].as_u64().unwrap() as usize;
+        assert_eq!(&markdown[start..end], authored);
+    }
+    assert!(
+        out.observations
+            .iter()
+            .all(|edge| edge["targetLabel"] != "docs/commented.md")
+    );
+    assert!(
+        out.nodes
+            .iter()
+            .any(|node| node["kind"] == "frontmatter_key" && node["name"] == "notes")
+    );
+}
+
+#[test]
 fn headings_keep_exact_ranges_and_citations_keep_their_section_and_owner() {
     let root = TempDir::new().unwrap();
     let code = "struct Widget;\nimpl Widget { fn render(&self) {} }\nfn startup() {}\n";
