@@ -165,7 +165,20 @@ fn existing_graphify_hubs_include_parallel_citations_and_count_self_loops_twice(
         .iter()
         .find(|item| item["entityId"] == document["id"])
         .expect("Selected document must appear in the hub candidate set");
-    assert_eq!(document_hub["degree"], 2);
+    assert_eq!(document_hub["degree"], 1);
+    let heading = view
+        .nodes
+        .iter()
+        .find(|node| node["kind"] == "heading" && node["name"] == "Guide")
+        .unwrap();
+    let heading_hub = hubs["items"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .find(|item| item["entityId"] == heading["id"])
+        .expect("Selected heading must appear in the hub candidate set");
+    assert_eq!(heading_hub["degree"], 3);
+    assert_eq!(heading_hub["anchor"], heading["sourceBindings"][0]);
 }
 
 #[test]
@@ -235,15 +248,15 @@ fn selected_report_preserves_provider_claims_and_every_original_anchor_family() 
     );
     assert_eq!(report["audit"]["coverage"]["complete"], false);
     // Canonical: 2 function contains + 3 calls; the Guide concept has no contains arc.
-    // Structural: 2 citations, 1 unresolved dependency, 1 dependencies -> external key arc.
+    // Structural: 1 heading contains, 2 citations, 1 unresolved dependency and 1 config key arc.
     // Semantic: 2 parallel caller -> helper provider calls, in the overlay namespace.
     assert_eq!(
         report["audit"]["byRelation"],
-        json!({"contains":2,"calls":5,"cites_symbol":2,"depends_on":1,"contains_key":1}),
+        json!({"contains":3,"calls":5,"cites_symbol":2,"depends_on":1,"contains_key":1}),
         "Actual selected observations: {}",
         report["observations"]
     );
-    assert_eq!(report["audit"]["totalObservations"], 11);
+    assert_eq!(report["audit"]["totalObservations"], 12);
     assert_eq!(report["audit"]["unresolvedObservations"], 1);
     for family in ["godNodes", "communities", "surprises", "questions"] {
         assert!(!report[family].as_array().unwrap().is_empty());
