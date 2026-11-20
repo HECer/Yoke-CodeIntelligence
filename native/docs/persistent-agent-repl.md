@@ -121,7 +121,10 @@ the host. Adapter launch trust, target execution, and evaluation require separat
 host permissions. Evaluation uses verified stopped frames and captured source
 hashes; it may execute authorized target code and is not a sandbox. A real isolated
 debugpy 1.8.22 Windows gate evaluated two cells and completed owned disconnect.
-No proprietary debugger engine is included.
+No proprietary debugger engine is included. Each owned debugger can receive
+up to 16,000,000 stdout bytes, including the original frame headers, JSON
+payloads and whitespace. The parser checks the remaining budget and the
+4,000,000-byte frame payload ceiling before allocating a payload buffer.
 
 Validation: the current grouped Windows gate passed 21 integration tests, three
 option tests, four semantic-option tests, two documentation tests, four diagnostic
