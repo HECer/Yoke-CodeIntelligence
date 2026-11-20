@@ -70,7 +70,7 @@ fn read_selected(path: &Path, cap: usize, deadline: &Deadline) -> Result<Vec<u8>
         .context("Graph diagnostics could not read the selected regular host file")
 }
 
-fn node_id(value: &Value) -> Option<Cow<'_, str>> {
+pub(super) fn node_id(value: &Value) -> Option<Cow<'_, str>> {
     match value {
         Value::String(id) if !id.is_empty() => Some(Cow::Borrowed(id)),
         Value::Number(id) if id.is_i64() || id.is_u64() => Some(Cow::Owned(id.to_string())),
@@ -86,7 +86,9 @@ fn endpoint<'a>(edge: &'a Map<String, Value>, name: &str, alias: &str) -> Option
     }
 }
 
-fn directed_endpoints(edge: &Map<String, Value>) -> Option<(Cow<'_, str>, Cow<'_, str>)> {
+pub(super) fn directed_endpoints(
+    edge: &Map<String, Value>,
+) -> Option<(Cow<'_, str>, Cow<'_, str>)> {
     let source = endpoint(edge, "source", "from")?;
     let target = endpoint(edge, "target", "to")?;
     match (edge.get("_src"), edge.get("_tgt")) {
