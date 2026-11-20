@@ -24,8 +24,8 @@ function observe(phase,method){
  try{observationSocket.send(bytes,observationPort,'127.0.0.1',()=>{});}catch{observationSocket=undefined;}
 }
 observe('started','startup');
-const configurationItems = adversary === 'host-settings-batch' ? 77 : 1;
 let buffer = Buffer.alloc(0), uri, settingsChecked=false, pendingTypeQuery;
+const configurationItems = adversary === 'host-settings-batch' ? 77 : 1;
 const declaration = {start:{line:1,character:3},end:{line:1,character:9}};
 const helper = {name:'helper',kind:12,uri:'',range:{start:{line:1,character:0},end:{line:1,character:14}},selectionRange:declaration,data:{providerOpaque:'retained'}};
 const caller = {name:'main',kind:12,uri:'',range:{start:{line:2,character:0},end:{line:2,character:23}},selectionRange:{start:{line:2,character:3},end:{line:2,character:7}},data:{providerOpaque:'caller-retained'}};
