@@ -8,4 +8,4 @@ Do not add default model calls or automatic execution of project code. Do not by
 
 The own core is MIT. Do not copy GPL Serena application code. External provider changes require new contract tests, live validation when available, and an honest capability/status update.
 
-The GitHub publisher targets HECer/Code-Intelligence, public, without force. Do not modify unrelated repositories or embed credentials. Update release status only after real remote verification.
+The GitHub publisher targets HECer/Yoke-CodeIntelligence, public, without force. Do not modify unrelated repositories or embed credentials. Update release status only after real remote verification.

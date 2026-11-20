@@ -126,7 +126,7 @@ implementation/tests are unchanged from their prior 60-pass local run.
 - Inspect actual current visual/motion and visible-shell behavior where required.
   Historical screenshots and browser metadata are not current visual approval.
 - Produce and verify the intended release artifacts and public publication to
-  `HECer/Code-Intelligence`. A merged implementation or CI-built test VSIX is not
+  `HECer/Yoke-CodeIntelligence`. A merged implementation or CI-built test VSIX is not
   a release, deployment or publisher receipt.
 
 The dated sections of [remaining work](REMAINING_WORK.md) and [status](STATUS.md)
