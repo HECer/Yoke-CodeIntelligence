@@ -25,6 +25,7 @@ function observe(phase,method){
 }
 observe('started','startup');
 let buffer = Buffer.alloc(0), uri, settingsChecked=false, pendingTypeQuery;
+const configurationItems = adversary === 'host-settings-batch' ? 77 : 1;
 const declaration = {start:{line:1,character:3},end:{line:1,character:9}};
 const helper = {name:'helper',kind:12,uri:'',range:{start:{line:1,character:0},end:{line:1,character:14}},selectionRange:declaration,data:{providerOpaque:'retained'}};
 const caller = {name:'main',kind:12,uri:'',range:{start:{line:2,character:0},end:{line:2,character:23}},selectionRange:{start:{line:2,character:3},end:{line:2,character:7}},data:{providerOpaque:'caller-retained'}};
@@ -34,11 +35,11 @@ function reply(message,result){send({jsonrpc:'2.0',id:message.id,result});observ
 function error(message,text){send({jsonrpc:'2.0',id:message.id,error:{code:-32602,message:text}});observe('reply_queued',message.method);}
 function handle(m){
  observe('received',m.method);
- if(m.id==='fixture-config'){settingsChecked=m.result?.[0]?.enabled===true;if(pendingTypeQuery){if(settingsChecked)reply(pendingTypeQuery,{uri,range:declaration});else error(pendingTypeQuery,'Host settings did not reach workspace/configuration');pendingTypeQuery=undefined;}return;}
+ if(m.id==='fixture-config'){settingsChecked=m.result?.length===configurationItems&&m.result.every(item=>item?.enabled===true);if(pendingTypeQuery){if(settingsChecked)reply(pendingTypeQuery,{uri,range:declaration});else error(pendingTypeQuery,'Host settings did not reach workspace/configuration');pendingTypeQuery=undefined;}return;}
  if(m.method==='initialize'){const capabilities={positionEncoding:'utf-16',textDocumentSync:1,hoverProvider:true,declarationProvider:true,implementationProvider:true,typeDefinitionProvider:adversary!=='unsupported',callHierarchyProvider:true,typeHierarchyProvider:true,documentSymbolProvider:true,completionProvider:{resolveProvider:false},signatureHelpProvider:{triggerCharacters:['(']},diagnosticProvider:{interFileDependencies:false,workspaceDiagnostics:false},renameProvider:{prepareProvider:true},codeActionProvider:true};if(adversary.startsWith('push-'))delete capabilities.diagnosticProvider;reply(m,{capabilities});return;}
- if(m.method==='initialized'){if(adversary==='host-settings')send({jsonrpc:'2.0',id:'fixture-config',method:'workspace/configuration',params:{items:[{section:'feature'}]}});if(adversary==='configuration-flood')send({jsonrpc:'2.0',id:'fixture-flood',method:'workspace/configuration',params:{items:Array.from({length:1000},()=>({}))}});return;}
+ if(m.method==='initialized'){if(adversary.startsWith('host-settings'))send({jsonrpc:'2.0',id:'fixture-config',method:'workspace/configuration',params:{items:Array.from({length:configurationItems},()=>({section:'feature'}))}});if(adversary==='configuration-flood')send({jsonrpc:'2.0',id:'fixture-flood',method:'workspace/configuration',params:{items:Array.from({length:1000},()=>({}))}});return;}
  if(m.method==='textDocument/didOpen'){uri=m.params.textDocument.uri;helper.uri=uri;caller.uri=uri;if(adversary.startsWith('push-'))send({jsonrpc:'2.0',method:'textDocument/publishDiagnostics',params:{uri:adversary==='push-upper-drive'?uri.replace(/^file:\/\/\/([a-z]):/,(_,drive)=>`file:///${drive.toUpperCase()}:`):uri,version:adversary==='push-stale'?99:1,diagnostics:[{range:call,severity:2,message:'Published fixture warning'}]}});return;}
- if(m.method==='textDocument/typeDefinition'){if(adversary==='diagnostic-flood')for(let n=0;n<20;n++)send({jsonrpc:'2.0',method:'textDocument/publishDiagnostics',params:{uri,version:1,diagnostics:[{range:call,severity:2,message:'x'.repeat(600000)}]}});if(adversary==='host-settings'&&!settingsChecked){pendingTypeQuery=m;return;}reply(m,{uri,range:declaration});return;}
+ if(m.method==='textDocument/typeDefinition'){if(adversary==='diagnostic-flood')for(let n=0;n<20;n++)send({jsonrpc:'2.0',method:'textDocument/publishDiagnostics',params:{uri,version:1,diagnostics:[{range:call,severity:2,message:'x'.repeat(600000)}]}});if(adversary.startsWith('host-settings')&&!settingsChecked){pendingTypeQuery=m;return;}reply(m,{uri,range:declaration});return;}
  if(m.method==='textDocument/declaration'){reply(m,{uri,range:declaration});return;}
  if(m.method==='textDocument/hover'){reply(m,{contents:{kind:'markdown',value:'Independent fixture hover information'},range:declaration});return;}
  if(m.method==='textDocument/implementation'){reply(m,[{uri,range:caller.selectionRange}]);return;}

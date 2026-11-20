@@ -111,6 +111,54 @@ fn configuration_callbacks_are_bounded_before_host_settings_are_replicated() {
 }
 
 #[test]
+fn only_host_selected_configuration_callback_limits_admit_larger_batches() {
+    let _fixture = FIXTURE.lock().unwrap_or_else(|e| e.into_inner());
+    let root = TempDir::new().unwrap();
+    fs::write(root.path().join("main.rs"), SOURCE).unwrap();
+    let mut engine = Engine::open(root.path()).unwrap();
+    let deadline = Deadline::new(20_000);
+    let (snapshot, graph, _, _) = engine.index(&deadline).unwrap();
+    let mut configured = lsp::ConfiguredServer {
+        server: server("host-settings-batch"),
+        configuration: lsp::HostConfiguration {
+            passive_profile: Some(lsp::PassiveProfile::ContractFixture),
+            settings: json!({"feature":{"enabled":true}}),
+            ..Default::default()
+        },
+    };
+    for (limit, error) in [
+        (
+            Some(129),
+            Some("Host configuration callback item limit out of range"),
+        ),
+        (None, Some("Configuration callback item budget exceeded")),
+        (Some(77), None),
+    ] {
+        configured.configuration.max_configuration_callback_items = limit;
+        let result = lsp::run_at_configured(
+            &mut engine,
+            &configured,
+            &snapshot,
+            &graph,
+            lsp::SemanticRequest {
+                path: "main.rs",
+                offset: 44,
+                operation: "typeDefinition",
+                new_name: None,
+            },
+            &json!({}),
+            &deadline,
+        );
+        if let Some(error) = error {
+            let actual = result.unwrap_err();
+            assert!(actual.to_string().contains(error), "{actual:#}");
+        } else {
+            assert_eq!(result.unwrap()["locations"][0]["text"], "helper");
+        }
+    }
+}
+
+#[test]
 fn semantic_profiles_distinguish_host_settings_for_identical_source_results() {
     let _fixture = FIXTURE.lock().unwrap_or_else(|e| e.into_inner());
     let root = TempDir::new().unwrap();

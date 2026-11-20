@@ -810,6 +810,8 @@ impl HostRegistration {
             configuration: crate::lsp::HostConfiguration {
                 passive_profile: self.passive_profile,
                 allow_source_execution: self.allow_source_execution,
+                max_configuration_callback_items: None,
+                await_roslyn_project_initialization: false,
                 await_document_diagnostics: false,
                 refactor_intent_profile: None,
                 tcp_endpoint: self.tcp_endpoint,

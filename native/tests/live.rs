@@ -166,6 +166,77 @@ fn actual_python_server_cross_file_unicode_historical_navigation_and_rename() {
 }
 
 #[test]
+#[ignore = "requires YOKE_ROSLYN_LSP pointing to the installed Microsoft Roslyn executable"]
+fn actual_roslyn_resolves_a_captured_cross_file_csharp_definition() {
+    let command = std::env::var("YOKE_ROSLYN_LSP").expect("Select an installed Roslyn executable");
+    assert!(Path::new(&command).is_absolute() && Path::new(&command).is_file());
+    let root = TempDir::new().unwrap();
+    let library = "public static class Library { public static int Marker() => 42; }\n";
+    let usage = "public static class Use { public static int Value() => Library.Marker(); }\n";
+    let sources = [
+        ("Library.cs", library),
+        ("Use.cs", usage),
+        (
+            "Owned.csproj",
+            r#"<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><TargetFramework>net10.0</TargetFramework></PropertyGroup></Project>"#,
+        ),
+    ];
+    for (name, text) in sources {
+        fs::write(root.path().join(name), text).unwrap();
+    }
+    let mut engine = Engine::open(root.path()).unwrap();
+    let deadline = Deadline::new(50_000);
+    let (snapshot, graph, _, _) = engine.index(&deadline).unwrap();
+    let server = ConfiguredServer {
+        server: Server {
+            command,
+            args: [
+                "--stdio",
+                "--autoLoadProjects",
+                "--telemetryLevel",
+                "off",
+                "--logLevel",
+                "None",
+            ]
+            .into_iter()
+            .map(str::to_owned)
+            .collect(),
+            language: "csharp".into(),
+            trust: true,
+        },
+        configuration: HostConfiguration {
+            allow_source_execution: true,
+            max_configuration_callback_items: Some(77),
+            await_roslyn_project_initialization: true,
+            workspace_folders: vec![".".into()],
+            ..Default::default()
+        },
+    };
+    let result = lsp::run_at_configured(
+        &mut engine,
+        &server,
+        &snapshot,
+        &graph,
+        SemanticRequest {
+            path: "Use.cs",
+            offset: usage.find("Marker").unwrap() + 1,
+            operation: "definition",
+            new_name: None,
+        },
+        &json!({}),
+        &deadline,
+    )
+    .unwrap();
+    let location = &result["locations"][0];
+    assert_eq!(location["path"], "Library.cs", "{result}");
+    assert_eq!(location["text"], "Marker", "{result}");
+    assert_eq!(result["snapshotId"], snapshot.id);
+    for (name, text) in sources {
+        assert_eq!(fs::read(root.path().join(name)).unwrap(), text.as_bytes());
+    }
+}
+
+#[test]
 #[ignore = "requires an actual installed rust-analyzer"]
 fn actual_rust_analyzer_definition_references_and_rename() {
     let dir = TempDir::new().unwrap();
