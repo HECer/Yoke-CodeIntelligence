@@ -356,3 +356,77 @@ fn actual_typescript_server_cross_file_definition_and_rename() {
         text
     );
 }
+
+#[test]
+#[ignore = "requires YOKE_GRAPHQL_LSP pointing to the installed GraphQL language-service CLI"]
+fn actual_graphql_server_resolves_a_captured_cross_file_fragment() {
+    let cli = std::env::var("YOKE_GRAPHQL_LSP").expect("Select an installed GraphQL CLI");
+    assert!(Path::new(&cli).is_absolute() && Path::new(&cli).is_file());
+    let root = TempDir::new().unwrap();
+    let query = "query ReadGreeting { ...GreetingFields }\n";
+    let fragment = "fragment GreetingFields on Query { greeting }";
+    for (path, text) in [
+        ("query.graphql", query),
+        ("fragment.graphql", fragment),
+        ("schema.graphql", "type Query { greeting: String! }\n"),
+        (
+            "graphql.config.json",
+            r#"{"schema":"schema.graphql","documents":["query.graphql","fragment.graphql"]}"#,
+        ),
+    ] {
+        fs::write(root.path().join(path), text).unwrap();
+    }
+    let mut engine = Engine::open(root.path()).unwrap();
+    engine
+        .capture_options
+        .language_overrides
+        .insert("graphql".into(), "graphql".into());
+    let deadline = Deadline::new(30_000);
+    let (snapshot, graph, _, _) = engine.index(&deadline).unwrap();
+    let result = lsp::run_at_configured(
+        &mut engine,
+        &ConfiguredServer {
+            server: Server {
+                command: "node".into(),
+                args: vec![
+                    cli,
+                    "server".into(),
+                    "--method".into(),
+                    "stream".into(),
+                    "--configDir".into(),
+                    ".".into(),
+                ],
+                language: "graphql".into(),
+                trust: true,
+            },
+            configuration: HostConfiguration {
+                allow_source_execution: true,
+                await_document_diagnostics: true,
+                ..Default::default()
+            },
+        },
+        &snapshot,
+        &graph,
+        SemanticRequest {
+            path: "query.graphql",
+            offset: query.find("GreetingFields").unwrap() + 2,
+            operation: "definition",
+            new_name: None,
+        },
+        &json!({}),
+        &deadline,
+    )
+    .unwrap();
+    let location = &result["locations"][0];
+    assert_eq!(location["path"], "fragment.graphql", "{result}");
+    assert_eq!(location["text"], fragment, "{result}");
+    assert_eq!(result["snapshotId"], snapshot.id);
+    assert_eq!(
+        fs::read(root.path().join("query.graphql")).unwrap(),
+        query.as_bytes()
+    );
+    assert_eq!(
+        fs::read(root.path().join("fragment.graphql")).unwrap(),
+        fragment.as_bytes()
+    );
+}

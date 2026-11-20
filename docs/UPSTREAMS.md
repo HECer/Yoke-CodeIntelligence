@@ -42,7 +42,17 @@ An already installed server can now be called through `lsp definition|references
 
 The native optional **Jedi 0.20.0**, **Go/go-types 1.23.2**, **clangd 17**, **NetworkX 3.6.1**, **PyMuPDF 1.26.7**, and **Pillow 12.3.0** paths now have actual installed-provider tests on Linux. The earlier blanket “no real external server run” statement above describes the historical 0.2 LSP milestone; see the current report for the 0.3 results.
 
-Graft/Graphify structural bridges verify every captured source file under the same ordinary-file/read-only-dependency policy used for materialization. Graphify's host-owned temporary cache is separate from its explicit scan root; the parent checks allocated cleanup paths and attempts both cache and materialization cleanup on failure. Windows cache paths use their namespaced spelling. Provider cache data grants no source identity or authority. Serena has a broader schema-discovered selected-tool gateway, including guarded edit preparation and explicitly authorized runtime commands; it still has no real installed Serena test here.
+Graft/Graphify structural bridges verify every captured source file under the same ordinary-file/read-only-dependency policy used for materialization. Graphify's host-owned temporary cache is separate from its explicit scan root; the parent checks allocated cleanup paths and attempts both cache and materialization cleanup on failure. Windows cache paths use their namespaced spelling. Provider cache data grants no source identity or authority. Serena has a broader schema-discovered selected-tool gateway, including guarded edit preparation and explicitly authorized runtime commands.
+
+### Installed Serena symbol query
+
+The Windows live gate ran against Serena 2.1.1.dev0 at
+[`ede329aaf0c824bea75455a2926f01420d7aa620`](https://github.com/oraios/serena/commit/ede329aaf0c824bea75455a2926f01420d7aa620)
+with Python 3.12.9 and Node 24. It discovered the actual `find_symbol` tool,
+resolved `greet` in the captured `a.py` fixture, and checked that the original
+file bytes and snapshot identity stayed unchanged. The test used stdio with
+dashboard and GUI startup disabled. Other Serena commands and runtime
+configurations still need separate evidence.
 
 ### Installed structural checkpoint — 2026-10-19
 

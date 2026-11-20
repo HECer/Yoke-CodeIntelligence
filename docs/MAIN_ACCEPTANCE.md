@@ -185,7 +185,7 @@ implementation/tests are unchanged from their prior 60-pass local run.
 - Complete motion and visible-shell acceptance and review visual surfaces beyond
   the five Windows dashboard flows documented above.
 - Produce and verify the intended release artifacts and public publication to
-  `HECer/Code-Intelligence`. A merged implementation or CI-built test VSIX is not
+  `HECer/Yoke-CodeIntelligence`. A merged implementation or CI-built test VSIX is not
   a release, deployment or publisher receipt.
 
 The dated sections of [remaining work](REMAINING_WORK.md) and [status](STATUS.md)

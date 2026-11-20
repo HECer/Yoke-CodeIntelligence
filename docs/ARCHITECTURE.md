@@ -1,11 +1,10 @@
 # Architecture and design decisions
 
-The native VSIX importer retains a 128,000,000-byte ceiling for ordinary archive
-entries and Unix binaries. The manifest-selected Windows `yoke.exe` has a separate
-160,000,000-byte ceiling to accommodate the full release CLI. Before any native
-payload is inflated, the importer binds that larger role to the Windows target;
-an oversized unselected `yoke.exe` refuses. The 256,000,000-byte archive and total
-payload ceilings, entry-count and manifest bounds remain unchanged.
+The native VSIX importer admits ordinary archive entries up to 128,000,000 bytes.
+The supported target's manifest-selected release executable may use up to
+160,000,000 bytes. The importer binds that role before inflating native payloads.
+The archive and total payload each have a 256,000,000-byte ceiling, with separate
+entry-count and manifest bounds.
 
 ## Native Rust ownership
 

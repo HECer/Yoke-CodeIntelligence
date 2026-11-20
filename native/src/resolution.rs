@@ -1165,6 +1165,115 @@ pub fn enrich_at(
 
 /// One lookup result can contain several possible dispatch targets. None means legacy metadata.
 type MemberCache = HashMap<(String, String), Option<Vec<String>>>;
+pub(crate) fn captured_module_paths(
+    from: &str,
+    module: &str,
+    language: &str,
+    present: impl Fn(&str) -> bool,
+    compatible: impl Fn(&str) -> bool,
+) -> Vec<String> {
+    let mut paths = Vec::new();
+    let mut bases = Vec::new();
+    let mut components: Vec<_> = from.split('/').collect();
+    components.pop();
+    let module = module.trim_matches(['\'', '"']);
+    if language == "rust" {
+        let mut parts = module.split("::").peekable();
+        if parts.peek() == Some(&"crate") {
+            parts.next();
+            components = if from.starts_with("src/") {
+                vec!["src"]
+            } else {
+                Vec::new()
+            };
+        }
+        while parts
+            .peek()
+            .is_some_and(|part| *part == "self" || *part == "super")
+        {
+            if parts.next() == Some("super") && components.pop().is_none() {
+                return paths;
+            }
+        }
+        components.extend(parts);
+        bases.push(components.join("/"));
+    } else if language == "python" {
+        let leading = module.chars().take_while(|c| *c == '.').count();
+        for _ in 1..leading {
+            if components.pop().is_none() {
+                return paths;
+            }
+        }
+        let value = module.trim_start_matches('.').replace('.', "/");
+        bases.push(if components.is_empty() {
+            value.clone()
+        } else {
+            format!("{}/{value}", components.join("/"))
+        });
+        if leading == 0 {
+            bases.push(value);
+        }
+    } else {
+        if module.starts_with('.') {
+            for part in module.split('/') {
+                match part {
+                    "" | "." => {}
+                    ".." => {
+                        if components.pop().is_none() {
+                            return paths;
+                        }
+                    }
+                    _ => components.push(part),
+                }
+            }
+            bases.push(components.join("/"));
+        } else {
+            bases.push(module.into());
+        }
+    }
+    for base in bases {
+        for suffix in [
+            "",
+            ".ts",
+            ".tsx",
+            ".js",
+            ".jsx",
+            ".mjs",
+            ".cjs",
+            ".py",
+            ".pyi",
+            ".rs",
+            ".go",
+            ".java",
+            ".cpp",
+            ".h",
+            "/index.ts",
+            "/index.js",
+            "/__init__.py",
+            "/mod.rs",
+        ] {
+            let candidate = format!("{base}{suffix}");
+            if present(&candidate) && compatible(&candidate) {
+                paths.push(candidate);
+            }
+        }
+        // A TypeScript import of a emitted .js module may refer to captured .ts source.
+        if let Some(stem) = base.strip_suffix(".js") {
+            for suffix in [".ts", ".tsx"] {
+                let candidate = format!("{stem}{suffix}");
+                if present(&candidate)
+                    && matches!(language, "typescript" | "tsx" | "javascript" | "jsx")
+                {
+                    paths.push(candidate);
+                }
+            }
+        }
+    }
+    paths.sort();
+    paths.dedup();
+    paths
+}
+
 pub struct Resolver<'a> {
     arities: HashMap<String, (usize, Option<usize>)>,
     entities: &'a [Entity],
@@ -1367,88 +1476,13 @@ impl<'a> Resolver<'a> {
         None
     }
     fn module_paths(&self, from: &str, module: &str, language: &str) -> Vec<String> {
-        let mut paths = Vec::new();
-        let mut bases = Vec::new();
-        let mut components: Vec<_> = from.split('/').collect();
-        components.pop();
-        let module = module.trim_matches(['\'', '"']);
-        if language == "rust" {
-            let mut parts = module.split("::").peekable();
-            if parts.peek() == Some(&"crate") {
-                parts.next();
-                components = if from.starts_with("src/") {
-                    vec!["src"]
-                } else {
-                    Vec::new()
-                };
-            }
-            while parts
-                .peek()
-                .is_some_and(|part| *part == "self" || *part == "super")
-            {
-                if parts.next() == Some("super") && components.pop().is_none() {
-                    return paths;
-                }
-            }
-            components.extend(parts);
-            bases.push(components.join("/"));
-        } else if language == "python" {
-            let leading = module.chars().take_while(|c| *c == '.').count();
-            for _ in 1..leading {
-                if components.pop().is_none() {
-                    return paths;
-                }
-            }
-            let value = module.trim_start_matches('.').replace('.', "/");
-            bases.push(if components.is_empty() {
-                value.clone()
-            } else {
-                format!("{}/{value}", components.join("/"))
-            });
-            if leading == 0 {
-                bases.push(value);
-            }
-        } else {
-            if module.starts_with('.') {
-                for part in module.split('/') {
-                    match part {
-                        "" | "." => {}
-                        ".." => {
-                            if components.pop().is_none() {
-                                return paths;
-                            }
-                        }
-                        _ => components.push(part),
-                    }
-                }
-                bases.push(components.join("/"));
-            } else {
-                bases.push(module.into());
-            }
-        }
-        for base in bases {
-            for suffix in [
-                "",
-                ".ts",
-                ".tsx",
-                ".js",
-                ".jsx",
-                ".mjs",
-                ".cjs",
-                ".py",
-                ".pyi",
-                ".rs",
-                ".go",
-                ".java",
-                ".cpp",
-                ".h",
-                "/index.ts",
-                "/index.js",
-                "/__init__.py",
-                "/mod.rs",
-            ] {
-                let candidate = format!("{base}{suffix}");
-                let compatible = self.languages.get(&candidate).is_some_and(|candidate| {
+        captured_module_paths(
+            from,
+            module,
+            language,
+            |candidate| self.data.contains_key(candidate),
+            |candidate| {
+                self.languages.get(candidate).is_some_and(|candidate| {
                     candidate == language
                         || (matches!(language, "typescript" | "tsx" | "javascript" | "jsx")
                             && matches!(
@@ -1457,26 +1491,9 @@ impl<'a> Resolver<'a> {
                             ))
                         || (matches!(language, "c" | "cpp")
                             && matches!(candidate.as_str(), "c" | "cpp"))
-                });
-                if self.data.contains_key(&candidate) && compatible {
-                    paths.push(candidate);
-                }
-            }
-            // A TypeScript import of a emitted .js module may refer to captured .ts source.
-            if let Some(stem) = base.strip_suffix(".js") {
-                for suffix in [".ts", ".tsx"] {
-                    let candidate = format!("{stem}{suffix}");
-                    if self.data.contains_key(&candidate)
-                        && matches!(language, "typescript" | "tsx" | "javascript" | "jsx")
-                    {
-                        paths.push(candidate);
-                    }
-                }
-            }
-        }
-        paths.sort();
-        paths.dedup();
-        paths
+                })
+            },
+        )
     }
     fn file_symbols(&self, path: &str, name: &str, depth: usize) -> Vec<String> {
         if depth > 16 || !self.tick() {

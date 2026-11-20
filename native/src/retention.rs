@@ -367,9 +367,13 @@ fn report_shape(
     bytes: &[u8],
     deadline: &Deadline,
 ) -> Result<()> {
-    if record.options.source_category_policy.is_some() || record.options.community_policy.is_some()
+    if record.options.source_category_policy.is_some()
+        || record.options.community_policy.is_some()
+        || record.options.import_cycles.is_some()
     {
-        let mismatch = if record.options.community_policy.is_some() {
+        let mismatch = if record.options.import_cycles.is_some() {
+            "Retained import-cycle report differs from canonical reconstruction"
+        } else if record.options.community_policy.is_some() {
             "Retained community policy report differs from canonical reconstruction"
         } else {
             "Retained source-category report differs from canonical reconstruction"
