@@ -36,6 +36,10 @@ impl Arguments {
     pub(super) fn run(&self, timeout: u64, max_bytes: u64) -> Result<bool> {
         ensure!((1..=600_000).contains(&timeout) && max_bytes > 1, INPUT);
         let deadline = Deadline::new(timeout);
+        self.run_bounded(max_bytes, &deadline)
+    }
+
+    fn run_bounded(&self, max_bytes: u64, deadline: &Deadline) -> Result<bool> {
         if self.write_git_current {
             let base = scratch_name(&self.base)?;
             let current = scratch_name(&self.current)?;
@@ -45,17 +49,17 @@ impl Arguments {
         let base = std::path::absolute(&self.base)?;
         let current = std::path::absolute(&self.current)?;
         let other = std::path::absolute(&self.other)?;
-        read_input(&base, FILE_CAPACITY, &deadline)?;
-        let before = read_input(&current, FILE_CAPACITY, &deadline)?;
+        read_input(&base, FILE_CAPACITY, deadline)?;
+        let before = read_input(&current, FILE_CAPACITY, deadline)?;
         let left = read_graph(&before)?;
-        let right = read_graph(&read_input(&other, FILE_CAPACITY, &deadline)?)?;
-        let graph = union(left, right, &deadline)?;
+        let right = read_graph(&read_input(&other, FILE_CAPACITY, deadline)?)?;
+        let graph = union(left, right, deadline)?;
         let size = max_bytes.min(FILE_CAPACITY as u64) as usize;
         if self.write_git_current {
-            let output = yoke::json::encode_bounded(&graph, FILE_CAPACITY - 1, &deadline)?;
-            replace_git_scratch(&current, &before, &output, &deadline)?;
+            let output = yoke::json::encode_bounded(&graph, FILE_CAPACITY - 1, deadline)?;
+            replace_git_scratch(&current, &before, &output, deadline)?;
         } else {
-            let output = yoke::json::encode_bounded(&graph, size - 1, &deadline)?;
+            let output = yoke::json::encode_bounded(&graph, size - 1, deadline)?;
             let mut stdout = io::stdout().lock();
             deadline.check()?;
             stdout.write_all(&output)?;
@@ -64,6 +68,21 @@ impl Arguments {
         }
         Ok(true)
     }
+}
+
+pub(super) fn merge_scratch(
+    base: &Path,
+    current: &Path,
+    other: &Path,
+    deadline: &Deadline,
+) -> Result<bool> {
+    Arguments {
+        base: base.to_owned(),
+        current: current.to_owned(),
+        other: other.to_owned(),
+        write_git_current: true,
+    }
+    .run_bounded(FILE_CAPACITY as u64, deadline)
 }
 
 fn scratch_name(path: &Path) -> Result<String> {
