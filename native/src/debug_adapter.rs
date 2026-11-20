@@ -20,6 +20,7 @@ use std::{
 };
 const MAX_FRAME: usize = 4_000_000;
 const MAX_LIFETIME: usize = 16_000_000;
+const DEBUGPY_SEQUENCE_WINDOW: u64 = 8;
 type Input = SyncSender<(Vec<u8>, Sender<Result<()>>)>;
 
 fn receive_cooperatively<T>(receiver: &Receiver<T>, deadline: &Deadline) -> Result<T> {
@@ -120,6 +121,7 @@ pub struct DebugAdapter {
     profile_hash: String,
     sequence: u64,
     last_adapter_sequence: u64,
+    debugpy_reorder: Option<BTreeMap<u64, Value>>,
     pending: BTreeMap<u64, String>,
     replies: BTreeMap<u64, Value>,
     initialized: bool,
@@ -284,6 +286,7 @@ impl DebugAdapter {
             profile_hash,
             sequence: 0,
             last_adapter_sequence: 0,
+            debugpy_reorder: (profile.adapter_id == "debugpy").then(BTreeMap::new),
             pending: BTreeMap::new(),
             replies: BTreeMap::new(),
             initialized: false,
@@ -529,15 +532,7 @@ impl DebugAdapter {
     }
     fn receive_inner(&mut self, deadline: &Deadline) -> Result<()> {
         deadline.check()?;
-        let message = receive_cooperatively(
-            self.messages.as_ref().context("Debugger channel closed")?,
-            deadline,
-        )
-        .context("DAP response deadline exceeded")??;
-        let seq = message["seq"]
-            .as_u64()
-            .filter(|seq| *seq > self.last_adapter_sequence && *seq <= i32::MAX as u64)
-            .context("DAP adapter sequence is invalid or repeated")?;
+        let (seq, message) = self.next_adapter_message(deadline)?;
         self.last_adapter_sequence = seq;
         match message["type"].as_str() {
             Some("response") => {
@@ -628,6 +623,44 @@ impl DebugAdapter {
             _ => bail!("Unsupported DAP message type"),
         }
         deadline.check()
+    }
+    fn next_adapter_message(&mut self, deadline: &Deadline) -> Result<(u64, Value)> {
+        let expected = self.last_adapter_sequence + 1;
+        if let Some(message) = self
+            .debugpy_reorder
+            .as_mut()
+            .and_then(|queued| queued.remove(&expected))
+        {
+            return Ok((expected, message));
+        }
+
+        let messages = self.messages.as_ref().context("Debugger channel closed")?;
+        loop {
+            let message = receive_cooperatively(messages, deadline)
+                .context("DAP response deadline exceeded")??;
+            let seq = message["seq"]
+                .as_u64()
+                .filter(|seq| *seq >= expected && *seq <= i32::MAX as u64)
+                .context("DAP adapter sequence is invalid or repeated")?;
+            let Some(queued) = self.debugpy_reorder.as_mut() else {
+                return Ok((seq, message));
+            };
+            if seq == expected {
+                return Ok((seq, message));
+            }
+            // debugpy allocates sequence numbers separately from its serialized
+            // writes. Replay protocol order so a delayed event cannot revive a
+            // stopped frame after a later resume.
+            ensure!(
+                seq - expected <= DEBUGPY_SEQUENCE_WINDOW,
+                "DAP adapter sequence exceeds debugpy reorder window"
+            );
+            ensure!(
+                !queued.contains_key(&seq),
+                "DAP adapter sequence is invalid or repeated"
+            );
+            queued.insert(seq, message);
+        }
     }
     fn select_frame(&mut self, deadline: &Deadline) -> Result<()> {
         let mut thread = self.stopped.context("Stopped target required")?;
@@ -836,6 +869,7 @@ mod cleanup_tests {
             profile_hash: "c".repeat(64),
             sequence: 0,
             last_adapter_sequence: 0,
+            debugpy_reorder: None,
             pending: BTreeMap::new(),
             replies: BTreeMap::new(),
             initialized: false,

@@ -125,6 +125,11 @@ No proprietary debugger engine is included. Each owned debugger can receive
 up to 16,000,000 stdout bytes, including the original frame headers, JSON
 payloads and whitespace. The parser checks the remaining budget and the
 4,000,000-byte frame payload ceiling before allocating a payload buffer.
+For a host profile with the adapter ID `debugpy`, messages arriving up to eight
+sequence numbers ahead can wait for their predecessors within the request's
+existing deadline. The client applies events in sequence order before binding
+stopped frames. Duplicate numbers and larger gaps close the owned session.
+Other adapter IDs require strictly increasing sequence numbers on the wire.
 
 Validation: the current grouped Windows gate passed 21 integration tests, three
 option tests, four semantic-option tests, two documentation tests, four diagnostic
