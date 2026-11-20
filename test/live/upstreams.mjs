@@ -4,6 +4,7 @@ import assert from 'node:assert/strict';
 import { fixture } from '../helpers.mjs';
 import { runBridge } from '../../dist/adapters/bridges.js';
 import { runSerena } from '../../dist/adapters/serena-command.js';
+import { normalizeSerenaSymbols } from '../../dist/adapters/graph-import.js';
 if (!process.env.CI_LIVE_UPSTREAMS)
     throw Error('Run only with explicit CI_LIVE_UPSTREAMS=1 after reviewing installed providers');
 for (const backend of ['graft', 'graphify'])
@@ -21,4 +22,23 @@ for (const backend of ['graft', 'graphify'])
         assert.equal(f.read('a.py'), source);
         assert.equal(f.read('b.py'), caller);
     });
-test('LIVE installed Serena capability discovery and selected semantic symbol query', async (t) => { assert(process.env.CI_SERENA_COMMAND, 'Set reviewed CI_SERENA_COMMAND and JSON CI_SERENA_ARGS including {workspace}'); const args = JSON.parse(process.env.CI_SERENA_ARGS ?? '[]'), f = fixture(t, { 'a.py': 'def greet(name):\n    return name\n' }), s = f.snapshot(), options = { trusted: true, command: process.env.CI_SERENA_COMMAND, args, snapshotId: s.id, timeoutMs: 120000 }; const caps = await runSerena(f.engine, 'capabilities', undefined, {}, options); assert(caps.capabilities.length > 0); const result = await runSerena(f.engine, 'read', 'find_symbol', { name_path_pattern: 'greet', relative_path: 'a.py', include_body: false }, options); assert.equal(result.sourceFilesUnchanged, true); assert(JSON.stringify(result.result).includes('greet')); });
+test('LIVE installed Serena capability discovery and selected semantic symbol query', async (t) => {
+    assert(process.env.CI_SERENA_COMMAND, 'Set reviewed CI_SERENA_COMMAND and JSON CI_SERENA_ARGS including {workspace}');
+    const args = JSON.parse(process.env.CI_SERENA_ARGS ?? '[]');
+    const source = 'def greet(name):\n    return name\n';
+    const f = fixture(t, { 'a.py': source });
+    const snapshot = f.snapshot();
+    const options = { trusted: true, command: process.env.CI_SERENA_COMMAND, args, snapshotId: snapshot.id, timeoutMs: 120000 };
+    const caps = await runSerena(f.engine, 'capabilities', undefined, {}, options);
+    assert(caps.capabilities.some(tool => tool.name === 'find_symbol'));
+    const response = await runSerena(f.engine, 'read', 'find_symbol', { name_path_pattern: 'greet', relative_path: 'a.py', include_body: false }, options);
+    assert.equal(response.sourceFilesUnchanged, true);
+    assert.equal(response.snapshotId, snapshot.id);
+    assert.equal(f.read('a.py'), source);
+    let payload = response.data;
+    if (Array.isArray(payload) && payload.length === 1 && payload[0]?.type === 'text')
+        payload = payload[0].text;
+    if (typeof payload?.result === 'string')
+        payload = payload.result;
+    assert(normalizeSerenaSymbols(payload).some(symbol => symbol.namePath === 'greet' && symbol.path === 'a.py'));
+});
