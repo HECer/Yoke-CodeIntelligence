@@ -196,6 +196,25 @@ impl<'a> Builder<'a> {
         }
         Ok(id)
     }
+    pub fn node_at_anchor(
+        &mut self,
+        file: &SourceFile,
+        kind: &str,
+        name: &str,
+        ecosystem: &str,
+        anchor: &str,
+    ) -> Result<String> {
+        self.deadline.check()?;
+        ensure!(
+            self.output.nodes.len() < 20000 && name.len() <= 4096,
+            "Derived node capacity exceeded"
+        );
+        let id = identity(&(&self.snapshot.id, &file.path, kind, name, ecosystem, anchor));
+        if self.node_ids.insert(id.clone()) {
+            self.output.nodes.push(json!({"id":id,"snapshotId":self.snapshot.id,"path":file.path,"kind":kind,"name":name,"ecosystem":ecosystem,"evidenceIds":[anchor]}));
+        }
+        Ok(id)
+    }
     #[allow(clippy::too_many_arguments)] // Explicit source, target, relation and evidence avoid hidden mutable edge state.
     pub fn edge(
         &mut self,

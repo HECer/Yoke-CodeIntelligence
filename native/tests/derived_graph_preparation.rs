@@ -203,7 +203,54 @@ fn config_preparation_keeps_authentic_v8_v9_released_bytes_without_publication()
 
 #[test]
 fn markdown_preparation_keeps_authentic_v8_v9_released_bytes_without_publication() {
-    exact_released_bytes(Kind::Markdown, "guide.md", "# Guide\n");
+    use yoke::graph_view::{self, BuildOptions, StructuralKind};
+    let content = "# Guide\n";
+    for epoch in [AnalyzerEpoch::V8, AnalyzerEpoch::V9] {
+        let f = fixture(epoch, &[("guide.md", content)]);
+        let d = Deadline::new(30000);
+        let store = &f.engine.store;
+        let before = state(&f);
+        let legacy_bytes = expected(&f, Kind::Markdown, "guide.md", content);
+        let legacy_id = hash(&legacy_bytes);
+        let current = Kind::Markdown.prepare(&f, &d).unwrap();
+        assert_ne!(current.artifact_id(), legacy_id);
+        assert_eq!(
+            state(&f),
+            before,
+            "Current preparation wrote structural state"
+        );
+        assert_eq!(store.artifact(&legacy_bytes).unwrap(), legacy_id);
+        store.record(yoke::manifest_graph::RECORD_KIND, &legacy_id, &json!({
+            "snapshotId":f.snapshot.id, "workspaceId":f.snapshot.workspace_id,
+            "graphHash":identity(&f.graph), "artifactId":legacy_id, "producer":"yoke-markdown-graph-2"
+        })).unwrap();
+        let options = BuildOptions {
+            structural_kinds: vec![],
+            structural_overlay_ids: vec![legacy_id.clone()],
+            ..BuildOptions::default()
+        };
+        let legacy = graph_view::build(store, &f.snapshot, &f.graph, &options, &d).unwrap();
+        assert!(legacy.nodes.iter().all(|node| node["kind"] != "heading"));
+        assert_eq!(
+            graph_view::load(store, &legacy.id, &d)
+                .unwrap()
+                .observations,
+            legacy.observations
+        );
+        let current = graph_view::build(
+            store,
+            &f.snapshot,
+            &f.graph,
+            &BuildOptions {
+                structural_kinds: vec![StructuralKind::Markdown],
+                ..BuildOptions::default()
+            },
+            &d,
+        )
+        .unwrap();
+        assert!(current.nodes.iter().any(|node| node["kind"] == "heading"));
+        assert_eq!(store.read_artifact(&legacy_id).unwrap(), legacy_bytes);
+    }
 }
 
 fn all_fixture() -> Fixture {
