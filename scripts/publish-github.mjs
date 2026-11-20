@@ -12,7 +12,7 @@ if (typeof VERSION !== 'string' || !/^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?$/.test(V
     throw new Error('Invalid package version.');
 const TAG = `v${VERSION}`;
 const OWNER = 'HECer';
-const REPO = `${OWNER}/Code-Intelligence`;
+const REPO = `${OWNER}/Yoke-CodeIntelligence`;
 const HTTPS = `https://github.com/${REPO}.git`;
 const SSH = `git@github.com:${REPO}.git`;
 const dryRun = process.argv.includes('--dry-run');
@@ -32,7 +32,7 @@ try {
     if (dryRun) {
         console.log(JSON.stringify({ dryRun: true, repository: REPO, visibility: 'public', version: VERSION, tag: TAG, changesMade: false,
             steps: ['Require a clean, committed local main branch', 'Verify gh account is HECer',
-                'Create the public repository if absent; refuse an existing private repository',
+                'Verify the selected repository already exists and is public',
                 'Refuse an unexpected origin or unrelated/divergent remote history',
                 'Configure GitHub CLI credential helper; push main without force',
                 `Push the local ${TAG} tag if present; verify GitHub visibility and HEAD`] }, null, 2));
@@ -52,15 +52,9 @@ try {
     const origin = run('git', ['remote', 'get-url', 'origin'], { allowFailure: true });
     if (origin.ok && ![HTTPS, SSH, HTTPS.slice(0, -4)].includes(origin.stdout))
         throw new Error('Unexpected origin; refusing to replace a remote.');
-    let metadata = run('gh', ['api', `repos/${REPO}`], { allowFailure: true });
-    if (!metadata.ok) {
-        if (!/404|Not Found/i.test(metadata.stderr + metadata.stdout))
-            throw new Error('Cannot inspect target repository. Check connection and permissions.');
-        run('gh', ['repo', 'create', REPO, '--public', '--description', 'Local, evidence-first code intelligence for coding agents: snapshots, semantic navigation, directed graphs and reviewable changes.']);
-        metadata = run('gh', ['api', `repos/${REPO}`]);
-    }
-    const repo = JSON.parse(metadata.stdout);
-    if (repo.private || repo.owner?.login?.toLowerCase() !== OWNER.toLowerCase())
+    const repo = JSON.parse(run('gh', ['api', `repos/${REPO}`]).stdout);
+    if (repo.private || repo.full_name?.toLowerCase() !== REPO.toLowerCase()
+        || repo.owner?.login?.toLowerCase() !== OWNER.toLowerCase())
         throw new Error('Target is private or owned by another account; no visibility or ownership change will be attempted.');
     if (!origin.ok)
         run('git', ['remote', 'add', 'origin', HTTPS]);
