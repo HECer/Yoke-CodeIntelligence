@@ -1,6 +1,65 @@
 # Current main acceptance and next gates
 
-## Current merged source: 2026-11-12
+## Verified main baseline and dashboard captures (2026-11-20)
+
+PR #38 merged at `21cdc071546139b6278c4a262278dc4bdb8b97b9`.
+[CI](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/43762643170)
+and [Rust core](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/43762643032)
+both passed on that merge. The earlier Explorer startup failures below remain
+valid for their original revisions. This passing run exercises the new startup
+and session-expiry cases. The intermittent timeout's root cause is still unknown.
+
+Five Windows dashboard runs captured desktop (1440 px) and mobile (390 px)
+before, pending and after states. All 30 captures were inspected and paired
+with their DOM observations. The configuration views showed the draft, recovery
+review and guarded save with visible controls. The statistics views showed
+the totals, confirmation, desktop stale-reset message and mobile cleared state.
+None of the 30 DOM observations recorded horizontal overflow. The five runs
+report real headless browser execution and empty owned process trees before
+Job cleanup. The HTTP run also records peer-session survival.
+
+The ZIP bytes matched the SHA-256 digests returned by GitHub. All five source
+manifests list the same 1,203 files, whose hashes match the checked-out Windows
+bytes for the stated main revision. The receipts report the same native binary
+SHA-256, `1feba5035eb0e8a361a88ea7a32cd6ba9b4051f59845f5b7681bc1c7765e7f59`.
+
+| Dashboard flow | GitHub Actions artifact | ZIP SHA-256 |
+| --- | --- | --- |
+| Native stdio history | [14183775550](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/43762643032/artifacts/14183775550) | `f116215e93b6b619a6770a89a3f27a63c0296ed33dedcae000c7f33be349405f` |
+| Serena stdio history | [14183376458](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/43762643032/artifacts/14183376458) | `cfb84dc8806bb41e772d5b6ba1316713d94886e2f8edeca35e0d1c0d8fa86d3e` |
+| Persistent Python history | [14183541088](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/43762643032/artifacts/14183541088) | `7ce3240b73c1b5112a80709bd0cdc5ebe9e0363b46cf422751aacafe587a631a` |
+| HTTP Session history | [14183651636](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/43762643032/artifacts/14183651636) | `3f440949ba5ac524543a8027d705ff4261bcde7f58c98e3320bac43b5e2f673c` |
+| Serena tool statistics | [14183014504](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/43762643032/artifacts/14183014504) | `3fc2c8f0e4ed177253d72a3fd4fc1deafc812b9476e9c865116d5ba0f015601c` |
+
+The visual review covers these captured dashboard states. Motion, visible
+desktop shell, physical mobile devices, other surfaces and human approval
+remain outside this evidence.
+
+### Selected Windows contract results
+
+All eight Windows shard ZIP digests and every retained group log's length and
+SHA-256 matched their receipts. The 382 group results were successful across the
+eight shards. The following whole-target results are part of that same run.
+
+| Original contract or follow-up | Native target | Passed | Ignored | Artifact |
+| --- | --- | ---: | ---: | --- |
+| Graphify audio transcription (`graphify:asr`) | `media_asr` | 6 | 0 | [14182225236](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/43762643032/artifacts/14182225236) |
+| Serena project encoding (`serena:configuration:projectKeys:2`) | `source_encodings`, `source_encodings_transport` | 24 + 14 | 0 | [14181159307](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/43762643032/artifacts/14181159307), [14181243718](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/43762643032/artifacts/14181243718) |
+| Serena project initial prompt (`serena:configuration:projectKeys:19`) | `session_prompt_runtime` | 11 | 0 | [14181490915](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/43762643032/artifacts/14181490915) |
+| Serena project activation command and timeout (`serena:configuration:projectKeys:23`, `:24`) | `project_activation` | 27 | 0 | [14181490915](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/43762643032/artifacts/14181490915) |
+| Persistent Debug Adapter Protocol | `debug_adapter` | 7 | 1 | [14181089359](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/43762643032/artifacts/14181089359) |
+| Explorer startup and MCP HTTP review | `explorer_http`, `mcp_http_review` | 10 + 2 | 0 | [14182225236](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/43762643032/artifacts/14182225236), [14181381664](https://github.com/HECer/Yoke-CodeIntelligence/actions/runs/43762643032/artifacts/14181381664) |
+
+The ASR target checks the owned worker transport, resources and result replay.
+Actual selected faster-whisper inference has its own earlier
+[owned CPU trial](validation/integration-2026-10-23/native-asr/README.md).
+Encoding coverage is limited to the explicitly selected [codecs and consumers](../native/docs/source-encodings.md).
+[Prompt rendering](../native/docs/session-prompt-runtime.md)
+and [activation commands](../native/docs/project-activation.md) use
+independent host grants. Upstream template parity and deployment policy remain
+open. The ignored DAP case is the selected live debugpy gate.
+
+## Earlier merged source: 2026-11-12
 
 [PR #37](https://github.com/HECer/Yoke-CodeIntelligence/pull/37) merged normally
 as `9fc652a44ec8867d25371d39e76fd7bb58499c7e`, with original main `3d58d07b`
@@ -123,8 +182,8 @@ implementation/tests are unchanged from their prior 60-pass local run.
   export retain their own explicit prerequisites and host permissions.
 - Complete the remaining strict resource/DAP and full platform/feature scopes.
   A passing finite fixture does not establish unrestricted upstream equivalence.
-- Inspect actual current visual/motion and visible-shell behavior where required.
-  Historical screenshots and browser metadata are not current visual approval.
+- Complete motion and visible-shell acceptance and review visual surfaces beyond
+  the five Windows dashboard flows documented above.
 - Produce and verify the intended release artifacts and public publication to
   `HECer/Code-Intelligence`. A merged implementation or CI-built test VSIX is not
   a release, deployment or publisher receipt.
