@@ -14,7 +14,9 @@ endpoints, self-loops, duplicate edge objects, and variations in relation,
 source location and context. Directed and undirected collapse counts show
 how many present edges a one-edge-per-pair representation would discard.
 Endpoints take string or integer IDs. Edge aliases may use source/target or
-from/to. An undeclared target whose ID starts with ref_ is counted separately
+from/to. Paired _src/_tgt markers restore the original direction when both
+identify the same endpoints. Partial or conflicting markings count as invalid.
+An undeclared target whose ID starts with ref_ is counted separately
 when its source is present. The optional producer scan reports candidate
 suppression declarations by line and identifier without evaluating the file.
 

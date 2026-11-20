@@ -81,6 +81,35 @@ fn diagnoses_raw_parallel_reverse_self_and_out_of_corpus_edges() {
 }
 
 #[test]
+fn uses_historical_direction_markers_only_for_the_same_endpoint_pair() {
+    let root = TempDir::new().unwrap();
+    let graph = json!({
+        "directed": false,
+        "nodes": [{"id":"a"},{"id":"b"},{"id":"c"}],
+        "links": [
+            {"source":"a","target":"b","_src":"b","_tgt":"a","relation":"calls"},
+            {"source":"a","target":"b","_src":"a","_tgt":"b","relation":"imports"},
+            {"source":"a","target":"b","_src":"c","_tgt":"b","relation":"calls"},
+            {"source":"a","target":"b","_src":"a","relation":"imports"}
+        ]
+    });
+    let original = serde_json::to_vec(&graph).unwrap();
+    let path = root.path().join("legacy.json");
+    fs::write(&path, &original).unwrap();
+    let output = run(root.path(), "legacy.json", 32000, &[]);
+    let result = json_output(&output);
+    assert_eq!(result["declaredDirected"], false);
+    let counts = &result["counts"];
+    assert_eq!(counts["boundEdges"], 2);
+    assert_eq!(counts["invalidEndpointEdges"], 2);
+    assert_eq!(counts["reverseDirectionGroups"], 1);
+    assert_eq!(counts["directedCollapseLoss"], 0);
+    assert_eq!(counts["undirectedCollapseLoss"], 1);
+    assert_eq!(fs::read(path).unwrap(), original);
+    assert!(!root.path().join(".yoke").exists());
+}
+
+#[test]
 fn scans_only_the_selected_producer_and_retains_counts_without_examples() {
     let root = TempDir::new().unwrap();
     let raw = b"{\"nodes\":[],\"edges\":[]}";

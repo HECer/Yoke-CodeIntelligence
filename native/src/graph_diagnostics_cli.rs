@@ -86,6 +86,22 @@ fn endpoint<'a>(edge: &'a Map<String, Value>, name: &str, alias: &str) -> Option
     }
 }
 
+fn directed_endpoints(edge: &Map<String, Value>) -> Option<(Cow<'_, str>, Cow<'_, str>)> {
+    let source = endpoint(edge, "source", "from")?;
+    let target = endpoint(edge, "target", "to")?;
+    match (edge.get("_src"), edge.get("_tgt")) {
+        (None, None) => Some((source, target)),
+        (Some(original_source), Some(original_target)) => {
+            let original_source = node_id(original_source)?;
+            let original_target = node_id(original_target)?;
+            ((original_source == source && original_target == target)
+                || (original_source == target && original_target == source))
+                .then_some((original_source, original_target))
+        }
+        _ => None,
+    }
+}
+
 fn edge_digest(edge: &Map<String, Value>) -> Result<String> {
     let mut normalized: BTreeMap<_, _> = edge
         .iter()
@@ -190,10 +206,7 @@ fn audit(graph: &Value, max_examples: usize, deadline: &Deadline) -> Result<(Cou
             counts.non_object_edges += 1;
             continue;
         };
-        let (Some(source), Some(target)) = (
-            endpoint(edge, "source", "from"),
-            endpoint(edge, "target", "to"),
-        ) else {
+        let Some((source, target)) = directed_endpoints(edge) else {
             counts.invalid_endpoint_edges += 1;
             continue;
         };
